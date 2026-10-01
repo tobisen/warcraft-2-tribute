@@ -1,3 +1,4 @@
+import { combatConfig } from '../config/combat';
 import { productionConfig, soldierProductionConfig } from '../config/production';
 import { soldierStats } from '../config/unit';
 import { worldConfig } from '../config/buildings';
@@ -55,7 +56,7 @@ export function updateProduction(gathering: GatheringState, production: Producti
   const common = { id: `unit-${number}`, position, target: { ...position }, selected: false };
   const unit: Unit = building.kind === 'base'
     ? { ...common, kind: 'worker', cargo: 0, order: { kind: 'idle' } }
-    : { ...common, kind: 'soldier', cargo: 0, order: { kind: 'idle' } };
+    : { ...common, kind: 'soldier', cargo: 0, hp: combatConfig.soldierHP, order: { kind: 'idle' } };
   return {
     gathering: { ...gathering, units: [...gathering.units, unit] },
     production: { remainingSeconds: null, nextUnitNumber: number + 1 },

@@ -1,18 +1,31 @@
 import Phaser from 'phaser';
+import { createMatch, updateMatch, type MatchOutcome, type MatchState } from '../gameplay/match';
+import { waveSchedule } from '../config/waves';
+import type { WaveState } from '../gameplay/waves';
+import { combatConfig } from '../config/combat';
+import { enemyAt, orderAttack, type CombatState } from '../gameplay/combat';
 import { soldierStats, unitStats } from '../config/unit';
 import type { Position } from '../gameplay/movement';
 import { gatheringConfig } from '../config/gathering';
 import { productionConfig, soldierProductionConfig } from '../config/production';
 import { barracksConfig } from '../config/buildings';
 import { barracksFootprint, beginPlacement, cancelPlacement, placementError, placementObstacles, placeBarracks, type PlacementState } from '../gameplay/placement';
-import { canStartProduction, startProduction, updateProduction, type ProductionState } from '../gameplay/production';
-import { isNodeHit, orderUnits, updateGathering, type GatheringState } from '../gameplay/gathering';
+import { canStartProduction, startProduction, type ProductionState } from '../gameplay/production';
+import { isNodeHit, orderUnits, type GatheringState } from '../gameplay/gathering';
 import {
   isSelectionDrag, selectionRectangle,
   selectUnitAt, selectUnitsInRectangle,
 } from '../gameplay/selection';
 
 export class BootScene extends Phaser.Scene {
+  private outcome: MatchOutcome = 'playing';
+  private restartButton!: HTMLButtonElement;
+  private restartPending = false;
+  private matchStatus!: HTMLElement;
+  private waves!: WaveState;
+  private combat!: CombatState;
+  private enemyVisuals = new Map<string, { body: Phaser.GameObjects.Rectangle; label: Phaser.GameObjects.Text }>();
+  private combatText!: Phaser.GameObjects.Text;
   private gathering!: GatheringState;
   private placement: PlacementState = { active: false, barracks: null };
   private previewPoint: Position = { x: 0, y: 0 };
@@ -38,15 +51,23 @@ export class BootScene extends Phaser.Scene {
   }
 
   create(): void {
-    this.gathering = {
-      units: [280, 400, 520].map((x, index) => ({
-        kind: 'worker', id: `unit-${index + 1}`, position: { x, y: 300 }, target: { x, y: 300 },
-        selected: false, order: { kind: 'idle' }, cargo: 0,
-      })),
-      node: { id: 'wood-1', position: { ...gatheringConfig.nodePosition }, remaining: gatheringConfig.initialWood },
-      wood: 0,
-      base: { ...gatheringConfig.basePosition },
+    this.applyMatch(createMatch());
+    this.restartPending = false;
+    this.previewPoint = { x: 0, y: 0 };
+    this.matchStatus = document.querySelector<HTMLElement>('#match-status')!;
+    this.restartButton = document.querySelector<HTMLButtonElement>('#restart-match')!;
+    const restart = () => {
+      if (this.outcome === 'playing' || this.restartPending) return;
+      this.restartPending = true;
+      this.restartButton.disabled = true;
+      this.scene.restart();
     };
+    this.restartButton.addEventListener('click', restart);
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      this.restartButton.removeEventListener('click', restart);
+    });
+    this.enemyVisuals.clear();
+    this.combatText = this.add.text(16, 70, '', { fontSize: '16px', color: '#ffffff' });
     this.add.rectangle(this.gathering.base.x, this.gathering.base.y,
       gatheringConfig.baseSize, gatheringConfig.baseSize, 0x537eb5);
     this.add.text(this.gathering.base.x, this.gathering.base.y + 30, 'Base',
@@ -58,7 +79,6 @@ export class BootScene extends Phaser.Scene {
     this.drag = undefined;
     this.dragBox = this.add.rectangle(0, 0, 0, 0, 0xffdc73, 0.1)
       .setOrigin(0).setStrokeStyle(1, 0xffdc73).setVisible(false).setDepth(10);
-    this.placement = { active: false, barracks: null };
     this.placementClick = false;
     this.barracksVisual = undefined;
     const buildingSize = barracksConfig.tileSize * barracksConfig.footprintTiles;
@@ -68,6 +88,7 @@ export class BootScene extends Phaser.Scene {
     this.placementStatus = document.querySelector<HTMLElement>('#placement-status')!;
     this.buildButton.textContent = `Bygg barracks – ${barracksConfig.cost} wood`;
     const begin = () => {
+      if (this.outcome !== 'playing') return;
       this.placement = beginPlacement(this.placement);
       this.drag = undefined;
       this.dragBox.setVisible(false);
@@ -75,6 +96,7 @@ export class BootScene extends Phaser.Scene {
       this.syncVisuals();
     };
     const cancel = () => {
+      if (this.outcome !== 'playing') return;
       this.placement = cancelPlacement(this.placement);
       this.syncVisuals();
     };
@@ -84,11 +106,11 @@ export class BootScene extends Phaser.Scene {
       this.buildButton.removeEventListener('click', begin);
       this.input.keyboard?.off('keydown-ESC', cancel);
     });
-    this.production = { remainingSeconds: null, nextUnitNumber: 4 };
     this.trainButton = document.querySelector<HTMLButtonElement>('#train-worker')!;
     this.productionStatus = document.querySelector<HTMLElement>('#production-status')!;
     this.trainButton.textContent = `Träna arbetare – ${productionConfig.workerCost} wood`;
     const train = () => {
+      if (this.outcome !== 'playing') return;
       const result = startProduction(this.gathering, this.production);
       this.gathering = result.gathering;
       this.production = result.production;
@@ -98,11 +120,11 @@ export class BootScene extends Phaser.Scene {
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       this.trainButton.removeEventListener('click', train);
     });
-    this.soldierProduction = { remainingSeconds: null, nextUnitNumber: 4 };
     this.soldierButton = document.querySelector<HTMLButtonElement>('#train-soldier')!;
     this.soldierProductionStatus = document.querySelector<HTMLElement>('#soldier-production-status')!;
     this.soldierButton.textContent = `Träna soldier – ${soldierProductionConfig.cost} wood`;
     const trainSoldier = () => {
+      if (this.outcome !== 'playing') return;
       const result = startProduction(this.gathering, this.soldierProduction,
         { kind: 'barracks', footprint: this.placement.barracks });
       this.gathering = result.gathering;
@@ -139,6 +161,7 @@ export class BootScene extends Phaser.Scene {
   }
 
   private handleDown(pointer: Phaser.Input.Pointer): void {
+    if (this.outcome !== 'playing') return;
     const world = this.worldPoint(pointer);
     if (this.placement.active) {
       this.placementClick = true;
@@ -156,12 +179,14 @@ export class BootScene extends Phaser.Scene {
     if (pointer.button === 0) {
       this.drag = { world, screen: this.screenPoint(pointer), active: false };
     } else if (pointer.button === 2) {
-      this.gathering.units = orderUnits(this.gathering.units, world,
-        isNodeHit(world, this.gathering.node) ? this.gathering.node : undefined);
+      const enemy = enemyAt(this.combat.enemies, world);
+      this.gathering.units = enemy ? orderAttack(this.gathering.units, enemy.id)
+        : orderUnits(this.gathering.units, world, isNodeHit(world, this.gathering.node) ? this.gathering.node : undefined);
     }
   }
 
   private handleMove(pointer: Phaser.Input.Pointer): void {
+    if (this.outcome !== 'playing') return;
     if (this.placement.active) {
       this.previewPoint = this.worldPoint(pointer);
       this.syncPlacement();
@@ -175,6 +200,7 @@ export class BootScene extends Phaser.Scene {
   }
 
   private handleUp(pointer: Phaser.Input.Pointer): void {
+    if (this.outcome !== 'playing') return;
     if (this.placementClick) {
       this.placementClick = false;
       return;
@@ -200,7 +226,7 @@ export class BootScene extends Phaser.Scene {
     const error = placementError(this.placement, this.previewPoint, this.gathering.wood, placementObstacles(this.gathering));
     this.placementPreview.setPosition(rect.x, rect.y)
       .setFillStyle(error ? 0xe05b5b : 0x7bd389, 0.4).setVisible(this.placement.active);
-    this.buildButton.disabled = this.placement.active || this.placement.barracks !== null;
+    this.buildButton.disabled = this.outcome !== 'playing' || this.placement.active || this.placement.barracks !== null;
     this.placementStatus.textContent = this.placement.active
       ? `${error ?? 'Giltig plats'} – klicka för placering, Esc/högerklick avbryter`
       : this.placement.barracks ? 'Barracks byggd' : '';
@@ -211,18 +237,50 @@ export class BootScene extends Phaser.Scene {
   }
 
   private syncVisuals(): void {
+    if (this.outcome !== 'playing') {
+      this.drag = undefined;
+      this.dragBox.setVisible(false);
+    }
+    this.restartButton.hidden = this.outcome === 'playing';
+    this.restartButton.disabled = this.restartPending;
+    this.matchStatus.textContent = this.outcome === 'defeat' ? 'Defeat – basen är förstörd'
+      : this.outcome === 'victory' ? 'Victory – alla vågor besegrade' : 'Försvara basen';
     this.syncPlacement();
     this.resourceText.setText(`Wood: ${this.gathering.wood.toFixed(1)}\nNode: ${this.gathering.node.remaining.toFixed(1)} wood`);
     this.nodeVisual.setFillStyle(this.gathering.node.remaining > 0 ? 0x9a683b : 0x555555);
-    this.trainButton.disabled = !canStartProduction(this.gathering, this.production);
+    this.trainButton.disabled = this.outcome !== 'playing' || !canStartProduction(this.gathering, this.production);
     this.productionStatus.textContent = this.production.remainingSeconds === null
       ? 'Bas ledig' : `Återstår: ${this.production.remainingSeconds.toFixed(1)} s`;
     const barracks = { kind: 'barracks' as const, footprint: this.placement.barracks };
     this.soldierButton.hidden = this.placement.barracks === null;
     this.soldierProductionStatus.hidden = this.soldierButton.hidden;
-    this.soldierButton.disabled = !canStartProduction(this.gathering, this.soldierProduction, barracks);
+    this.soldierButton.disabled = this.outcome !== 'playing' || !canStartProduction(this.gathering, this.soldierProduction, barracks);
     this.soldierProductionStatus.textContent = this.soldierProduction.remainingSeconds === null
       ? 'Barracks ledig' : `Soldier återstår: ${this.soldierProduction.remainingSeconds.toFixed(1)} s`;
+    const nextWave = waveSchedule[this.waves.nextWave];
+    this.combatText.setText(`Base HP: ${Math.ceil(this.combat.baseHP)}/${combatConfig.baseHP}
+Wave: ${this.waves.nextWave}/${waveSchedule.length}`
+      + (nextWave ? ` – nästa om ${Math.max(0, nextWave.atSeconds - this.waves.elapsedSeconds).toFixed(1)} s` : ' – alla spawnade'));
+
+    for (const [id, visual] of this.visuals) {
+      if (!this.gathering.units.some(u => u.id === id)) {
+        visual.body.destroy(); visual.ring.destroy(); visual.cargo.destroy(); this.visuals.delete(id);
+      }
+    }
+    for (const [id, visual] of this.enemyVisuals) {
+      if (!this.combat.enemies.some(e => e.id === id)) {
+        visual.body.destroy(); visual.label.destroy(); this.enemyVisuals.delete(id);
+      }
+    }
+    for (const enemy of this.combat.enemies) {
+      if (!this.enemyVisuals.has(enemy.id)) this.enemyVisuals.set(enemy.id, {
+        body: this.add.rectangle(enemy.position.x, enemy.position.y, combatConfig.enemySize, combatConfig.enemySize, combatConfig.enemyColor),
+        label: this.add.text(0, 0, '', { fontSize: '14px', color: '#ffffff' }).setOrigin(0.5, 0),
+      });
+      const visual = this.enemyVisuals.get(enemy.id)!;
+      visual.body.setPosition(enemy.position.x, enemy.position.y);
+      visual.label.setPosition(enemy.position.x, enemy.position.y - 32).setText(`Enemy ${Math.ceil(enemy.hp)} HP`);
+    }
     for (const unit of this.gathering.units) {
       if (!this.visuals.has(unit.id)) {
         const ring = this.add.circle(unit.position.x, unit.position.y, 20)
@@ -237,19 +295,29 @@ export class BootScene extends Phaser.Scene {
       visual.body.setPosition(unit.position.x, unit.position.y);
       visual.ring.setPosition(unit.position.x, unit.position.y).setVisible(unit.selected);
       visual.cargo.setPosition(unit.position.x, unit.position.y - 32)
-        .setText(unit.kind === 'worker' ? `${unit.cargo.toFixed(1)}/${gatheringConfig.capacity}` : 'Soldier');
+        .setText(unit.kind === 'worker' ? `${unit.cargo.toFixed(1)}/${gatheringConfig.capacity}` : `Soldier ${Math.ceil(unit.hp)} HP`);
     }
+    // DOM controls can move the canvas (restart visibility, wrapping, scrolling).
+    this.scale.updateBounds();
   }
 
   update(_time: number, delta: number): void {
-    this.gathering = updateGathering(this.gathering, delta / 1000);
-    const result = updateProduction(this.gathering, this.production, delta / 1000);
-    this.gathering = result.gathering;
-    this.production = result.production;
-    const soldierResult = updateProduction(this.gathering, this.soldierProduction, delta / 1000,
-      { kind: 'barracks', footprint: this.placement.barracks });
-    this.gathering = soldierResult.gathering;
-    this.soldierProduction = soldierResult.production;
+    const match = updateMatch({
+      gathering: this.gathering, combat: this.combat, waves: this.waves,
+      production: this.production, soldierProduction: this.soldierProduction,
+      placement: this.placement, outcome: this.outcome,
+    }, delta / 1000);
+    this.applyMatch(match);
     this.syncVisuals();
+  }
+
+  private applyMatch(match: MatchState): void {
+    this.gathering = match.gathering;
+    this.combat = match.combat;
+    this.waves = match.waves;
+    this.production = match.production;
+    this.soldierProduction = match.soldierProduction;
+    this.placement = match.placement;
+    this.outcome = match.outcome;
   }
 }

@@ -374,3 +374,110 @@
   `feat: add soldier production at barracks`.
 - `git diff --check` passerade inför commit. Tester, typecheck, build och
   browserkontroll är redovisade i implementationsposten ovan.
+
+## 2026-10-01 – RTS-010: Manual soldier attack
+
+- Implementerade attack-order, HP och delta-baserad melee med approach före skada.
+  Workers/orders och tidigare selection/movement bevaras; döda fiender och
+  deras renderobjekt tas bort, angripare blir idle. Config och beslut dokumenterade.
+- 113 tester, typecheck och build passerade. Chromium: verklig insamling av
+  60 wood, barracks/soldier-produktion, klickselection, attack, HP-minskning
+  och borttagning vid död utan runtime-/konsol-/nätverksfel.
+- Granskade diff för inputprioritet, orderbyte, delta/räckvidd och renderstädning:
+  inga blockerande fynd. Uppdaterade docs och markerade Done. Bundle-varning
+  kvarstår enligt scope; ingen commit/push.
+
+## 2026-10-01 – RTS-011: Simple enemy movement and attack
+
+- Fiender går mot nearest soldier inom aggro, annars basen. Approach/skada
+  återanvänder combat-logiken. Skada appliceras samtidigt, HP klampas och
+  döda soldiers tas bort inklusive rendering/selection. Workers angrips inte.
+- 119 tester, typecheck/build passerade. Browser verifierade approach, basskada
+  och faktisk insamling/produktion/manuell strid utan browserfel.
+- Granskningen rättade en risk för återanvända ID:n efter död: produktionernas
+  nästa ID synkas; döda combatants kan inte ge skada. Regressionstester tillagda.
+  Tidigare test av stationär fiende anpassades till att AI nu flyttar target.
+- Docs/beslut uppdaterade, Done. Inga kvarvarande blockerande fynd.
+
+## 2026-10-01 – RTS-012: Finite configured enemy waves
+
+- Ersatte övningsfienden med tre ändliga waves vid 60/90/120 sekunder,
+  1/2/3 enemies och monotona ID:n. Enkel våg/countdown-text. Befintlig
+  800 × 600-värld är en öppen MVP-arena. Nod ökad till 400 wood, startsaldo 0.
+- 125 tester, typecheck/build passerade. Browser: faktiskt samla 60 wood,
+  barracks/soldier redo före första vågen, sedan spawn och manuell strid
+  till fiendedöd. Inga browserfel. Resursbudget och wave-gränser testade.
+- Granskade progression, tidssteg, ID:n och scope utan blockerande fynd.
+  Docs/beslut uppdaterade och task Done.
+
+## 2026-10-01 – RTS-013: Defeat and game-over freeze
+
+- MatchState/updateMatch samordnar befintliga system, lifetids-ID:n och
+  defeat. Simulation stannar tillsammans; alla gameplay-handlers spärras
+  vid game over och gesture/placement-preview städas. Inga orders nollställs.
+- Delta delas vid vågtider; nyspawnade enemies får ingen simulationstid före
+  spawn. Ingen fixed timestep. 130 tester, typecheck/build passerade.
+- Chromium: verklig gathering utan försvar gav defeat efter cirka 101 s.
+  Deep-compare bekräftade frysta system, blockerad canvas och forcerade
+  DOM-klick/Escape; pågående preview rensades. Inga browserfel.
+- Granskade uppdateringsordning, HP-gräns, inputguard och wave-splitting utan
+  blockerande fynd. Docs/beslut uppdaterade och Done.
+
+## 2026-10-01 – RTS-014: Victory after final wave
+
+- Victory kräver sista wave spawnad och tom enemy-lista. Defeat har företräde
+  vid samtidig utgång. Återanvände simulation-/inputstoppet och status-text.
+- 134 tester, typecheck/build passerade. Integrationstest spelade hela
+  ekonomin/produktionen/alla waves till victory med bevarad wood-total.
+- Chromium spelade matchen med faktiska DOM-/musklick, inga ändrade stats,
+  påhittade resurser eller tidsskalning: samlade, byggde, producerade soldiers
+  och angrep alla tre waves. Victory vid cirka 124 s, bas 240 HP. Deep-compare
+  verifierade fryst state/input efter vinst; inga runtime-/konsol-/nätverksfel.
+  Slutbild granskad i /tmp/w2t-victory.png.
+- Granskade slutvillkor/prioritet, systemintegration, delta och scope utan
+  blockerande fynd. Docs uppdaterade och Done.
+
+## 2026-10-01 – RTS-015: Restart the complete match
+
+- createMatch skapar oberoende initial gameplay-state och är enda källa för
+  matchstart/restart. Scenen startas om via knapp efter game over, städar
+  lyssnare/Maps/inputgest och bygger om rendering. Dubbla restart-anrop spärras.
+- 137 tester (104 befintliga och 33 nya totalt i körningen), typecheck/build
+  passerade på slutlig kod. State/objekt-ägande, reset från båda outcomes och
+  ny produktion/ID:n testade. Inga nya dependencies eller testsystem.
+- Browsergranskningen hittade en riktig restart-regression: visad/dold knapp
+  flyttade canvas 21 px utan att Phaser upptäckte DOM-layoutändringen.
+  Resursklick (650, 180) tolkades som (650, 159) och gav move. Scenen synkar
+  nu canvasBounds efter DOM-presentation; riktad browserkontroll efter sex
+  omstarter gav exakta (650, 180) och gather-order. Ingen mocktest som bara
+  speglar anropet infördes; beteendet verifierades i browser.
+- Slutlig Chromium-körning spelade naturlig match med riktiga resurser/timers
+  till victory (~122 s), bas 240 HP och alla waves besegrade. Restart från
+  denna vinst återställde enheter, HP, node/saldo, IDs/timers, byggnader,
+  selection/orders, gest/preview och UI. Tre ytterligare fokuserade outcome-
+  fixtures (defeat/victory/defeat) verifierade reset från båda utgångarna.
+- Efter fyra omstarter spelades ny insamling av 80 wood, barracks-placering,
+  samtidig worker-/soldier-produktion med exakt 40 wood debiterat, ID unit-4/5
+  och ny soldier-selection/movement. Inga runtime-/konsol-/nätverksfel.
+  Slutbild granskad i /tmp/w2t-restarted-match.png. Tidigare naturlig defeat
+  verifierades i RTS-013; restart-fixtures ändrade endast outcome-förutsättningar.
+- Separat browserkontroll med sex ytterligare fixture-cykler och Chrome
+  DevTools Protocol bekräftade exakt en click-lyssnare på var och en av fyra
+  DOM-knappar, en av varje pointer-handler, en Escape-lyssnare och 16 initiala
+  displayobjekt efter varje restart. Inga kvarlämnade soldier/enemy/barracks-
+  renderobjekt eller browserfel. Tillfälliga browserverktyg ligger i /tmp.
+- Granskade samlad diff samt nya gameplay-/testfiler för regressioner, scope,
+  simultan utgång, ID:n, state-ägande, input/bounds och cleanup. Inga kvarstående
+  blockerande fynd. README/GAME_DESIGN beskriver hela matchen; ARCHITECTURE och
+  DECISIONS beskriver implementation/balans och medvetna förenklingar.
+- Alla 143 dokumentreferenser och git diff --check passerade. Markerade Done.
+  RTS-010–015 (sex tasks) klara; RTS-001–009 bevarade. Ingen dokumenterad
+  MVP-task kvar. Befintlig bundle-varning kvarstår (~1,39 MB/363 kB gzip).
+  Ingen commit eller push.
+
+## 2026-10-01 – RTS-010–015 för commit
+
+- Användaren godkände commit och push av MVP-ändringarna.
+- Commitmeddelande: `feat: complete playable MVP with combat waves and restart`.
+- `git diff --check` passerade inför commit. 137 tester, typecheck, build och
+  browserkontroller är redovisade i implementationsposterna ovan.

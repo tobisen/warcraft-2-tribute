@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-009 – Soldier production from barracks** — **Done**.
+**RTS-015 – Restart the complete match** — **Done**.
 
 Denna fil styr arbetet. En task åt gången. Framtida tasks konkretiseras med
 underlag i utvecklingsordningen movement → selection → resources → buildings
@@ -349,3 +349,113 @@ Chromium verifierade samla → bygg barracks → samtidig worker-/soldier-produk
 → välj/flytta soldier, samt blandad selection och bevarade UI-orders utan fel.
 Befintlig bundle-varning kvarstår. Nästa föreslagna scope är en första combat-slice;
 ingen ytterligare task har skapats eller implementerats.
+
+## RTS-010 – Manual soldier attack
+
+**Status:** Done.
+
+**Mål:** Markerade soldiers kan angripa en synlig stillastående fiende.
+
+**Krav och acceptance criteria:** Högerklick på fiende ger soldiers attack-order och bevarar workers orders. Soldiers går rakt till melee-räckvidd, gör tidsbaserad skada och har HP. Fiende med 0 HP tas bort; attack mot dött mål blir idle; nytt move ersätter attack. Visa HP och städa renderobjekt vid död. Fristående gameplay-logik och configvärden. Alla tester, typecheck, build och relevant browserflöde verifieras; docs uppdateras.
+
+**Non-goals:** Enemy AI, waves, game over och restart. Gemensamma non-goals gäller också.
+
+**Tester:** Räckvidd, delta=0, skada över tidssteg, död, saknat mål, markeringskrav och orderbyte. Browser: producera soldier → angrip → fiende försvinner. Befintliga regressionstester.
+
+**Relevanta docs:** [ARCHITECTURE.md](ARCHITECTURE.md), [GAME_DESIGN.md](GAME_DESIGN.md), [DECISIONS.md](DECISIONS.md), [README.md](README.md), [DEV_LOG.md](DEV_LOG.md).
+
+**Verifiering:** 113 tester, typecheck och build passerade. Chromium verifierade verklig insamling/produktion/attack och borttagna renderobjekt utan fel. Diff granskad utan blockerande fynd.
+
+## RTS-011 – Simple enemy movement and attack
+
+**Status:** Done.
+
+**Mål:** Fiender kan gå mot och skada soldiers eller spelarens bas.
+
+**Krav och acceptance criteria:** Fiende väljer närmaste soldier inom config-aggro, annars bas. Rak approach och melee-skada; både sidor tar skada i samma steg. Döda soldiers tas bort och selection-rendering städas. Bas-HP visas. Fristående gameplay-logik och configvärden. Alla tester, typecheck, build och relevant browserflöde verifieras; docs uppdateras.
+
+**Non-goals:** Avancerad AI, worker-/barracks-attacker, waves och game over. Gemensamma non-goals gäller också.
+
+**Tester:** Approach utan skada utanför räckvidd, aggro/targetbyte, soldatdöd, basskada och samtidig död. Browser: fiende approach/strid och basens HP minskar. Befintliga regressionstester.
+
+**Relevanta docs:** [ARCHITECTURE.md](ARCHITECTURE.md), [GAME_DESIGN.md](GAME_DESIGN.md), [DECISIONS.md](DECISIONS.md), [README.md](README.md), [DEV_LOG.md](DEV_LOG.md).
+
+**Verifiering:** 119 tester, typecheck/build och browserkontroll passerade. Fiende gick till bas, skadade den och besegrades av producerad soldier. Granskning rättade livstids-ID:n och uteslöt döda angripare.
+
+## RTS-012 – Finite configured enemy waves
+
+**Status:** Done.
+
+**Mål:** En ändlig match med tydlig vågprogression och resurser för försvar.
+
+**Krav och acceptance criteria:** Ersätt tillfällig fiende med ändliga config-waves i gameplay-tid. Unika enemy-ID:n, ingen dubbelspawn, visa våg/countdown. Tillräcklig wood-nod och första vågen ger tid att samla/bygga/producera. Befintliga 800 × 600-världen är MVP:s öppna arena. Fristående gameplay-logik och configvärden. Alla tester, typecheck, build och relevant browserflöde verifieras; docs uppdateras.
+
+**Non-goals:** Oändliga waves, procedural generation och terräng/pathfinding. Gemensamma non-goals gäller också.
+
+**Tester:** Spawn-gränser, flera passerade tider, tidssteg, unika ID:n, sista vågen och resursbudget. Browser: samla/bygga/producera före första vågen samt vågspawn. Befintliga regressionstester.
+
+**Relevanta docs:** [ARCHITECTURE.md](ARCHITECTURE.md), [GAME_DESIGN.md](GAME_DESIGN.md), [DECISIONS.md](DECISIONS.md), [README.md](README.md), [DEV_LOG.md](DEV_LOG.md).
+
+**Verifiering:** 125 tester, typecheck/build och Chromium passerade. Verkligt försvar producerades före första vågen; första vågen spawnade och besegrades. Diff granskad utan blockerande fynd.
+
+## RTS-013 – Defeat and game-over freeze
+
+**Status:** Done.
+
+**Mål:** Matchen förloras när basens HP når 0.
+
+**Krav och acceptance criteria:** Defeat vid bas-HP 0. Visa förlust. Stoppa hela simulationen och canvas-/produktions-/placeringsinput; rensa pågående gest/preview utan orders. Fristående gameplay-logik och configvärden. Alla tester, typecheck, build och relevant browserflöde verifieras; docs uppdateras.
+
+**Non-goals:** Victory och restart. Gemensamma non-goals gäller också.
+
+**Tester:** Bas-HP-gräns, stopp för gathering/movement/produktion/waves/combat och blockerad input. Browser: förlust, fryst state och avvisade gameplay-klick. Befintliga regressionstester.
+
+**Relevanta docs:** [ARCHITECTURE.md](ARCHITECTURE.md), [GAME_DESIGN.md](GAME_DESIGN.md), [DECISIONS.md](DECISIONS.md), [README.md](README.md), [DEV_LOG.md](DEV_LOG.md).
+
+**Verifiering:** 130 tester, typecheck/build passerade. Chromium verifierade naturlig defeat (~101 s), fryst state, avvisad canvas/forcerad UI-input och rensad preview utan fel. Diff granskad utan blockerande fynd.
+
+## RTS-014 – Victory after final wave
+
+**Status:** Done.
+
+**Mål:** Vinst när alla ändliga vågor och fiender klarats.
+
+**Krav och acceptance criteria:** Victory bara när sista vågen spawnat och inga fiender återstår. Defeat har företräde när båda villkoren uppstår samtidigt. Samma simulation/input-stopp som defeat. Fristående gameplay-logik och configvärden. Alla tester, typecheck, build och relevant browserflöde verifieras; docs uppdateras.
+
+**Non-goals:** Nya objectives, extra banor och restart. Gemensamma non-goals gäller också.
+
+**Tester:** Inte för tidig victory, sista fiendens död, simultan defeat/victory och fryst vinst. Browser: besegra hela vågserien och få victory. Befintliga regressionstester.
+
+**Relevanta docs:** [ARCHITECTURE.md](ARCHITECTURE.md), [GAME_DESIGN.md](GAME_DESIGN.md), [DECISIONS.md](DECISIONS.md), [README.md](README.md), [DEV_LOG.md](DEV_LOG.md).
+
+**Verifiering:** 134 tester, typecheck/build passerade. Chromium spelade ekonomi, produktion och alla waves till victory vid ~124 s med bas-HP 240; simulation/input fryst utan browserfel. Diff granskad utan blockerande fynd.
+
+## RTS-015 – Restart the complete match
+
+**Status:** Done.
+
+**Mål:** En ny match kan startas från game over utan omladdning.
+
+**Krav och acceptance criteria:** Restart-knapp efter vinst/förlust. Återställ hela gameplay-state, timers, ID:n, saldo/nod, bas-HP, enheter, waves, byggnader, selection, inputgest och presentation. Inga dubbla DOM-/inputlyssnare. Dokumentera hela spelgången. Fristående gameplay-logik och configvärden. Alla tester, typecheck, build och relevant browserflöde verifieras; docs uppdateras.
+
+**Non-goals:** Persistens, deployment och grafikpolish. Gemensamma non-goals gäller också.
+
+**Tester:** Ny oberoende initial state, restart från båda outcomes, ny ekonomi/produktion/placering och flera restart-cykler. Browser: vinst/förlust → restart → ny fungerande match. Befintliga regressionstester.
+
+**Relevanta docs:** [ARCHITECTURE.md](ARCHITECTURE.md), [GAME_DESIGN.md](GAME_DESIGN.md), [DECISIONS.md](DECISIONS.md), [README.md](README.md), [DEV_LOG.md](DEV_LOG.md).
+
+**Verifiering:** 137 tester, typecheck/build passerade. Chromium: naturlig victory,
+restart från båda outcomes, fyra cykler och ny faktisk ekonomi/placering/samtidig
+produktion/movement passerade. Sex ytterligare fixture-cykler verifierade exakt
+oförändrade DOM/pointer/keyboard-lyssnare och rena renderobjekt. Canvas-bounds-
+regression efter DOM-layoutändring rättad och verifierad. Inga browserfel.
+Slutdiff granskad utan kvarstående blockerande fynd. Alla docs/filreferenser kontrollerade.
+
+## MVP-status efter RTS-015
+
+RTS-001–015 är Done. Sex nya tasks slutfördes i denna körning. Befintlig MVP
+kan spelas från ekonomi/produktion till waves och win/loss samt startas om.
+Inga återstående dokumenterade MVP-tasks. Avsiktliga begränsningar: öppen arena,
+placeholders, manuell soldier-attack, rak movement/överlapp och enkel AI som
+angriper soldiers/bas. Non-goals kvarstår; bundle-varningen är inte åtgärdad.
+Inga ytterligare tasks, dependencies, commit eller push ingår i körningen.

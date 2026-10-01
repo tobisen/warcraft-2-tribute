@@ -12,7 +12,8 @@ export interface Worker extends SelectableUnit {
 }
 export interface Soldier extends SelectableUnit {
   kind: 'soldier';
-  order: { kind: 'idle' } | { kind: 'move' };
+  order: { kind: 'idle' } | { kind: 'move' } | { kind: 'attack'; enemyId: string };
+  hp: number;
   cargo: 0;
 }
 export type Unit = Worker | Soldier;
@@ -53,7 +54,7 @@ export function updateGathering(state: GatheringState, deltaSeconds: number): Ga
   let wood = state.wood;
   const units = state.units.map(original => {
     if (original.kind === 'soldier') {
-      if (original.order.kind === 'idle') return original;
+      if (original.order.kind !== 'move') return original;
       const position = moveTowards(original.position, original.target, soldierStats.speed, Math.max(0, deltaSeconds));
       return { ...original, position, order: position.x === original.target.x && position.y === original.target.y
         ? { kind: 'idle' as const } : original.order };

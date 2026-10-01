@@ -6,7 +6,8 @@ RTS-001 har implementerat en minimal bootstrap med Phaser 4.2.1, strict
 TypeScript 7.0.2 och Vite 8.3.2. Appen körs i webbläsaren utan backend eller
 konton. RTS-002 inför movement, RTS-003 klickselection, RTS-004 dragselection
 och gruppkommandon, RTS-005 gathering, RTS-006 bas och leverans samt RTS-007
-arbetarproduktion, RTS-008 barracks-placering och RTS-009 soldier-produktion. Ansvarsfördelningen nedan styr
+arbetarproduktion, RTS-008 barracks-placering och RTS-009 soldier-produktion.
+RTS-010–015 inför manuell melee, enemy AI, waves, win/loss och restart. Ansvarsfördelningen nedan styr
 både nuvarande och kommande arbete.
 
 ## Ansvarsfördelning
@@ -25,12 +26,13 @@ både nuvarande och kommande arbete.
   separata DOM-kontroller för worker-/soldier-produktion och barracks-placering utanför canvasen.
 - [src/main.ts](src/main.ts) skapar Phaser.Game med automatisk renderer, en
   mörk bakgrund och en canvas på 800 × 600 pixlar från worldConfig.
-- [src/scenes/BootScene.ts](src/scenes/BootScene.ts) skapar tre gröna placeholders
+- [src/scenes/BootScene.ts](src/scenes/BootScene.ts) presenterar tre gröna placeholders från createMatch
   (24 × 24 px) med ID unit-1, unit-2 och unit-3 vid (280, 300), (400, 300) och
   (520, 300). Varje arbetare har position, mål, order och selected-state separat från
   renderobjekten, som kopplas via en Map med ID som nyckel.
   Scenen adapterar pointer-input, visar dragrektangel och ringar, konverterar
-  delta till sekunder och synkar rendering av arbetare, lasttext, bas, resursnod och saldotext.
+  delta till sekunder och synkar rendering av enheter, HP, lasttext, bas, resursnod och saldo.
+  Gameplay-steget delegeras till updateMatch.
   Gathering och produktion uppdateras med samma gameplay-delta. Nya arbetares
   renderobjekt skapas efter spawn. Input- och knapplyssnare tas bort vid shutdown.
 - [src/gameplay/movement.ts](src/gameplay/movement.ts) är en ren funktion utan
@@ -42,7 +44,7 @@ både nuvarande och kommande arbete.
   till nod-ID; deliver minns samma nod för återgång. Idle utför inget arbete. Endast markerade får nya order.
   Ny move-order ersätter arbetsloopen och bevarar last; selection-funktionerna
   bevarar order-state och last.
-- [src/config/gathering.ts](src/config/gathering.ts) anger 100 initial wood,
+- [src/config/gathering.ts](src/config/gathering.ts) anger nu 400 initial wood,
   24 px gather-/leveransräckvidd, 1 wood/s, lastkapacitet 5, nodradie 20 px,
   nodposition (650, 180), basposition (400, 450) och basstorlek 48 px.
 - [src/gameplay/gathering.test.ts](src/gameplay/gathering.test.ts) verifierar
@@ -85,7 +87,7 @@ både nuvarande och kommande arbete.
 
 Vite använder standardinställningarna och behöver ingen separat configfil.
 Ingen framtida systemstruktur har skapats. Movement ligger separat från
-bootstrap och scene. World-config definierar den nuvarande placeringsvärlden; ingen karta har införts.
+bootstrap och scene. World-config definierar MVP:s öppna arena; inget terrängsystem har införts.
 
 ## Koordinater och tid
 
@@ -102,8 +104,8 @@ Tröskeln använder DOM-eventets client-koordinater, oberoende av skalad canvas;
 rektangeln och träfftesterna använder world pixels. Pointerup utanför canvas
 avslutar också gesten. Scenen håller endast gest- och renderadapterstate.
 Det finns ingen shift-selection, formation, collision avoidance, kontrollgrupp,
-ekonomi-UI utöver enkla texter samt produktions-/byggknapp, pathfinding, hinderhantering, karta,
-kameraimplementation eller AI.
+ekonomi-UI utöver enkla texter samt produktions-/byggknapp, pathfinding, hinderhantering
+eller kameraimplementation. Enkel enemy AI beskrivs nedan.
 Enheterna kan överlappa vid samma mål.
 Se [DECISIONS.md](DECISIONS.md).
 
@@ -177,7 +179,7 @@ rivning, pathfinding, unit-collision eller generell byggmeny finns.
 ## Soldier-produktion och blandade enheter (RTS-009)
 
 GatheringState.units innehåller Unit = Worker | Soldier med kind som typmarkör.
-Workers har arbetsorder och last; soldiers har bara idle/move och cargo är
+Workers har arbetsorder och last; soldiers har idle/move/attack och cargo är
 alltid 0. orderUnits skickar movement till alla markerade, men resursklick ger
 endast workers gather-order. Soldiers behåller tidigare mål och order.
 updateGathering uppdaterar soldiers med samma rena movement-funktion utan
@@ -202,7 +204,7 @@ DOM-input bevarar selection och orders enligt samma regler som basens knapp.
 [src/gameplay/soldierProduction.test.ts](src/gameplay/soldierProduction.test.ts)
 verifierar startvillkor, debitering, tid och exakt en spawn, samtidighet,
 ID:n, spawn vid världens kanter samt blandad selection/movement/resursorder.
-Combat och HP ingår inte.
+Combat och HP tillkommer genom RTS-010/011 nedan.
 
 ## Verifiering
 
@@ -217,3 +219,77 @@ Inga tester som speglar bootstrap-koden har skapats. Dokumentationsändringar
 verifieras genom konsekvens och giltiga filreferenser.
 
 Se [GAME_DESIGN.md](GAME_DESIGN.md) för MVP och [BACKLOG.md](BACKLOG.md) för scope.
+
+## Manuell combat (RTS-010)
+
+[src/gameplay/combat.ts](src/gameplay/combat.ts) håller CombatState med enemies
+(ID, position, HP) och baseHP. Soldier får hp och attack-order med enemyId.
+Gathering uppdaterar endast soldier move; combat äger attack-approach och skada.
+orderAttack/ enemyAt hanterar kommandon och träffyta utan Phaser. Restid till
+32 px räckvidd dras från delta före skada. Döda targets tas bort och order
+mot dem avslutas. Ny move ersätter attack. Bas-HP kopplas till defeat genom RTS-013 nedan.
+[src/config/combat.ts](src/config/combat.ts) håller stats. Scenen adapterar
+input, visar röda enemies/HP och förstör borttagna enheters renderobjekt.
+[src/gameplay/combat.test.ts](src/gameplay/combat.test.ts) verifierar reglerna.
+Tidigare RTS-009-avgränsning om combat/HP gäller bara den historiska slicen.
+
+## Enemy AI (RTS-011)
+
+updateCombat väljer nearest soldier inom config-aggro eller basen från samma
+snapshot som soldier-attacker. approach delar delta i restid och tid i melee.
+Skada ackumuleras per mål före samtidig applicering och filtrering av döda.
+En död soldier försvinner från units, inklusive dess selection; scenens Map
+städar kropp/ring/text. BaseHP klampas till 0 och visas. AI och damage ligger
+helt utan Phaser i combat.ts; config innehåller hastighet, räckvidd, HP/skada.
+Combat-tester täcker också basapproach, aggro, retargeting och simultan död.
+
+## Ändliga waves och arena (RTS-012)
+
+[src/gameplay/waves.ts](src/gameplay/waves.ts) hanterar WaveState med förfluten
+gameplay-tid, nästa vågindex och monotont enemy-ID. updateWaves spawnar alla
+konfigurerade vågor vars tid passerats, exakt en gång. En tom levande-lista
+återställer aldrig progression. [src/config/waves.ts](src/config/waves.ts)
+håller tre vågor och spawnpositioner; [src/gameplay/waves.test.ts](src/gameplay/waves.test.ts)
+täcker gränser, tidssteg, sista vågen, ID:n, världens gränser och ekonomibudget.
+Ingen övningsfiende finns längre. Scenen visar vågnummer och countdown.
+Arenan är befintlig worldConfig 800 × 600 med bas/nod. gatheringConfig har nu
+400 initial wood; de tidigare 100 gäller historiska gathering-slices.
+
+## Matchuppdatering och defeat (RTS-013)
+
+[src/gameplay/match.ts](src/gameplay/match.ts) samlar befintliga system i
+MatchState och updateMatch; inget nytt generellt engine-lager. Uppdateringen
+kör gathering, bas/barracks-produktion, combat och wave-klocka samt samordnar
+nästa unit-ID mellan byggnader. Delta delas endast vid wave-gränser; enemies
+spawnar efter tidigare segments simulation. resolveOutcome kontrollerar bas-HP
+före och efter uppdatering. Defeat lämnar state fryst och avbryter placement.
+Scenen delegerar simulation, adapterar state och blockerar alla gameplay-handlers
+vid game over. Drag-/preview-rendering rensas och DOM-status visar Defeat.
+[src/gameplay/match.test.ts](src/gameplay/match.test.ts) verifierar defeat,
+fryst simulation, spawnålder och livstids-ID:n efter död.
+
+## Victory (RTS-014)
+
+resolveOutcome i match.ts kontrollerar först baseHP <= 0, därefter att
+waves.nextWave == waveSchedule.length och enemies är tom. Samma game-over-
+väg fryser båda outcomes. Match-tester verifierar tidig/korrekt victory,
+fryst slutläge och simultan defeat/victory. Ett integrationstest spelar riktiga
+gathering/leverans/placering/produktion/attack genom alla vågor och verifierar
+victory samt wood-bevarande inklusive spenderade bygg-/produktionskostnader.
+
+## Restart och state-ägande (RTS-015)
+
+createMatch i match.ts är enda initialisering av gameplay-state. Den återanvänder
+configvärden men äger nya objekt, arrays och positioner för varje match. Scenens
+applyMatch adapterar initial- och uppdaterat state. Restart-knappen kallar
+scene.restart bara vid game over med spärr för dubbla anrop. Shutdown tar bort
+DOM-, pointer- och keyboard-handlers innan create återregistrerar en gång.
+Phaser städar scenens displayobjekt; create rensar render-Maps, selectiongest,
+previewPoint och placementClick samt bygger om presentationen. Ingen state från
+föregående match återanvänds. Match-tester verifierar initialt state, från både
+outcomes, oberoende objekt och ny fungerande produktion/ID:n.
+
+DOM-kontroller kan flytta canvasen när restart-knappen visas/döljs eller raden
+radbryts. syncVisuals uppdaterar därför Phasers canvasBounds efter DOM-synk,
+så world-input fortsätter träffa rätt efter restart, layoutändring och scroll.
+Detta verifieras i browser, utan mocktester som bara speglar Phaser-anropet.

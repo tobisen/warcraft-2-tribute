@@ -1,5 +1,5 @@
 export const gatheringConfig = {
-  initialWood: 100,
+  initialWood: 400,
   range: 24,
   woodPerSecond: 1,
   nodeRadius: 20,

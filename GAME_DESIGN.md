@@ -17,8 +17,8 @@ grafik styr arbetet. Placeholders är tillåtna.
 - Enkla fiendevågor.
 - Tydliga win/loss-tillstånd.
 
-Exakta resurstyper, kostnader, stats, vågparametrar och villkor för win/loss
-specificeras i relevanta framtida tasks. De är inte beslutade här.
+Kostnader, stats, vågor och win/loss beskrivs i implementerade slices nedan
+och definieras i TypeScript-config.
 
 ## Implementerat selection- och command-beteende (RTS-004)
 
@@ -44,7 +44,7 @@ Shift-selection, kontrollgrupper, pathfinding och HUD ingår inte i denna slice.
 ## Resurssamling med bas och leverans (RTS-006)
 
 De tre enheterna är placeholder-arbetare. Den bruna noden vid (650, 180) börjar
-med 100 wood, och en fast blå bas står vid (400, 450). Markera arbetare och
+med 400 wood efter RTS-012 (ursprungligen 100), och en fast blå bas står vid (400, 450). Markera arbetare och
 högerklicka på noden för gather. Inom 24 world pixels från nodcentrum samlar
 varje arbetare 1 wood/sekund till sin last, högst 5 wood. Text vid arbetaren
 visar last/kapacitet med en decimal.
@@ -110,8 +110,9 @@ för workers. Soldier kan inte samla eller bära wood. Vid blandad selection och
 högerklick på resursnoden får workers gather-order medan soldiers behåller sina
 order. UI-interaktion ändrar varken selection eller unit-orders.
 
-Ingen combat, HP, fiender, rally point, kö, population cap, collision eller
-pathfinding ingår. Spelaren markerar och flyttar den nya soldaten själv.
+I RTS-009 tillkom bara produktion/movement. Combat, HP och fiender har sedan
+införts i RTS-010/011. Rally point, kö, population cap, collision och pathfinding
+ingår fortfarande inte. Spelaren markerar och kommenderar soldaten själv.
 
 ## Utvecklingsordning
 
@@ -127,3 +128,65 @@ för att verifiera gameplay.
 
 Se [DECISIONS.md](DECISIONS.md) för beslut och [ARCHITECTURE.md](ARCHITECTURE.md)
 för tekniska principer.
+
+## Manuell melee (RTS-010)
+
+Markera soldiers och högerklicka på en röd enemy för att angripa. Soldiers går
+rakt till 32 px centrumavstånd och skadar med 18 HP/s. En enemy börjar med
+36 HP; soldier med 60 HP. HP visas vid kropparna. Fiende med HP 0 försvinner
+och soldiers blir idle. Attack följer mål-ID; move avbryter, avmarkering och
+resursklick gör det inte. Workers angriper inte och behåller sin arbetsorder.
+En stillastående övningsfiende används tills wave-slicen ersätter den.
+
+## Enemy AI (RTS-011)
+
+Röda enemies går mot basen eller närmaste soldier inom 140 px. De gör 6 HP/s
+inom 32 px och rör sig med 65 px/s. Basen börjar med 240 HP och visar återstående
+HP. Soldiers med HP 0 försvinner. Båda sidor kan dö samtidigt. Workers och
+barracks angrips inte; soldiers måste fortfarande få manuell attack-order.
+
+## Arena och waves (RTS-012)
+
+Den enda kartan är en öppen 800 × 600-arena med befintlig bas/wood-nod.
+Noden har nu 400 wood (tidigare 100). Samla från start, placera barracks och
+producera flera soldiers före första vågen. Tre vågor anländer efter 60, 90 och
+120 gameplay-sekunder med 1, 2 och 3 enemies från övre högra delen. Wave/countdown
+visas vid basens HP. Endast dessa sex enemies spawnar; inga oändliga vågor.
+Övningsfienden från RTS-010/011 är borttagen.
+
+## Defeat (RTS-013)
+
+När basens HP når 0 visas ”Defeat – basen är förstörd”. Simulation och gameplay-
+input stoppas, inklusive insamling, enheter, produktion och waves. Selection
+bevaras, pågående placeringsläge/dragpreview avslutas. Slutläget visas på arenan.
+
+## Victory (RTS-014)
+
+Efter sista vågens spawn: besegra alla kvarvarande enemies för ”Victory – alla
+vågor besegrade”. Inga fler vågor anländer. Defeat har företräde om basen
+förstörs samtidigt som sista enemy dör. Victory stoppar simulation/input precis
+som defeat. Alla soldiers angriper manuellt; ge nytt mål när föregående dör.
+
+## Starta om (RTS-015)
+
+Efter victory eller defeat visas ”Starta om”. En ny match börjar direkt utan
+sidomladdning: 240 bas-HP, 400 wood i noden, saldo 0 och tre omarkerade idle-
+workers. Byggnader, soldiers, enemies, last, produktion, orders, markering,
+waves och alla timers/ID-räknare återställs. Börja samla och bygg nytt försvar.
+
+## Spela hela MVP-matchen
+
+1. Dragmarkera de tre gröna workers och högerklicka på bruna noden. De samlar
+   och levererar automatiskt. Avmarkering avbryter inte deras arbete.
+2. Vid 40 wood: placera barracks, till exempel omkring (512, 384), fri från
+   bas/nod. Fortsätt samla och träna soldiers för 20 wood och 5 sekunder vardera.
+3. Markera orange soldiers med klick/drag. Högerklicka på röda enemies för
+   manuell attack; ge nästa mål när den föregående dör. Workers i samma urval
+   behåller sin arbetsorder när högerklicket träffar en enemy.
+4. Försvara basen mot tre vågor efter 60/90/120 sekunder. Alla sex enemies döda
+   efter sista spawn ger victory; bas-HP 0 ger defeat. Restart börjar om.
+
+Inga formationer, collision eller pathfinding finns. Workers och barracks
+angrips inte; soldiers har ingen automatisk attack. Överlappande kroppar/ringar
+kan göra separata enheter svåra att se; gruppurval fungerar ändå. Grafik/ljud,
+save/load och avancerad AI ingår inte.
