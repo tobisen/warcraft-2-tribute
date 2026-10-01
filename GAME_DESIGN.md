@@ -20,20 +20,26 @@ grafik styr arbetet. Placeholders är tillåtna.
 Exakta resurstyper, kostnader, stats, vågparametrar och villkor för win/loss
 specificeras i relevanta framtida tasks. De är inte beslutade här.
 
-## Implementerat selection- och command-beteende (RTS-003)
+## Implementerat selection- och command-beteende (RTS-004)
 
-Den befintliga placeholder-enheten börjar omarkerad. Vänsterklick på dess
-kvadratiska yta markerar och visar en enkel ring. Vänsterklick på tom mark
-avmarkerar; ringen i sig räknas inte som enhetens klickyta.
+Tre placeholder-enheter med unika ID:n börjar omarkerade på separata positioner.
+Vänsterklick på en enhets kvadratiska yta ersätter selection med den enheten.
+Vänsterklick på tom mark avmarkerar alla. Ringarna är inte klickytor; vid
+överlapp väljer klick den sist renderade enheten.
 
-Högerklick ger move-command endast när enheten är markerad. Ett nytt kommando
-ersätter föregående mål. Avmarkering tar bort ringen men stoppar inte pågående
-rörelse och ändrar inte målet. Den omarkerade enheten ignorerar nya högerklick
-tills den markeras igen. Rörelsen är fortsatt rak, delta-baserad och stannar
-exakt vid målet utan overshoot.
+Vänsterdrag visar en markeringsrektangel i alla riktningar. Vid release ersätts
+selection med enheter vars centrum ligger inom rektangeln inklusive kanten.
+Tom rektangel avmarkerar alla. Gester under 5 screen pixels behandlas som klick;
+vid 5 pixlar eller mer blir gesten drag. En gest som nått tröskeln förblir drag
+även om pekaren återvänder. Varje markerad enhet får en ring som följer rörelsen.
 
-Dragselection, flera enheter, shift-selection, grupper och HUD är inte
-implementerade i denna slice; dragselection kvarstår i MVP-målet.
+Högerklick skickar samma move-command till alla markerade enheter och ersätter
+deras tidigare mål. Avmarkering stoppar inte pågående rörelse eller ändrar
+målen. Omarkerade enheter ignorerar nya kommandon. Rörelsen är fortsatt rak,
+delta-baserad och stannar exakt utan overshoot. Enheter får överlappa vid samma
+mål; inga formationer eller collision avoidance finns.
+
+Shift-selection, kontrollgrupper, pathfinding och HUD ingår inte i denna slice.
 
 ## Utvecklingsordning
 

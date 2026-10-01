@@ -5,7 +5,7 @@ och Command & Conquer. Projektet är local-first och prioriterar gameplay före
 grafik. Placeholders är tillåtna.
 
 Teknik: Phaser, strict TypeScript och Vite. Bootstrapen har nu en första
-spelbar movement-slice med en synlig placeholder-enhet.
+spelbar movement-slice med tre synliga placeholder-enheter.
 
 ## Installation och lokal utveckling
 
@@ -18,11 +18,12 @@ npm run dev
 ```
 
 Öppna adressen Vite skriver ut (normalt http://localhost:5173/). Startsidan
-visar en mörk Phaser-canvas på 800 × 600 pixlar med en grön enhet.
-Vänsterklicka på enheten för att markera den; en gul ring visas. Högerklicka
-sedan på canvas för att flytta den rakt till målet med 160 px/s.
+visar en mörk Phaser-canvas på 800 × 600 pixlar med tre gröna enheter.
+Vänsterklicka på en enhet eller vänsterdra en rektangel för att ersätta
+markeringen. Markerade enheter får gula ringar. Högerklicka sedan på canvas
+för att flytta alla markerade enheter till samma mål med 160 px/s.
 Ett nytt högerklick ersätter tidigare mål, även under rörelse. Vänsterklick på
-tom mark avmarkerar utan att stoppa rörelsen. Omarkerad enhet ignorerar nya
+tom mark avmarkerar utan att stoppa rörelsen. Omarkerade enheter ignorerar nya
 move-commands. Kontextmenyn är förhindrad över canvas.
 Canvasstorleken är tillfällig; inget kart- eller gridsystem finns.
 
@@ -54,8 +55,8 @@ Utvecklingsordningen är movement → selection → resources → buildings → 
 - [Implementer](.agents/implementer.md), [Reviewer](.agents/reviewer.md) och
   [Finisher](.agents/finisher.md): rollinstruktioner.
 
-RTS-001, RTS-002 och RTS-003 är Done. Nästa föreslagna
-task är att avgränsa dragselection; den är inte implementerad.
+RTS-004 följs i BACKLOG.md. Nästa föreslagna task är att avgränsa resources
+enligt utvecklingsordningen; den är inte implementerad.
 Rollfilerna är instruktioner och konfigurerar inte automatiskt några agenter.
 
 Multiplayer, backend, konton, procedural generation, modding och deployment

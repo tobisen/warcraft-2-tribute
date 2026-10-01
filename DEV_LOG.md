@@ -123,3 +123,41 @@
   `feat: add unit click selection`.
 - `git diff --check` passerade inför commit. Tester, typecheck, build och
   browserkontroll är redovisade i implementationsposten ovan.
+
+
+## 2026-10-01 – RTS-004: Drag selection and group commands
+
+- Läste AGENTS, implementer-roll, backlog, arkitektur och befintlig selection,
+  input och movement. Arbetsytan var ren. Lade till RTS-004 som nästa lediga ID,
+  satte In Progress före implementation och Done efter uppfyllda kriterier.
+- Tre enheter med unika ID:n och separata positioner; egna mål och selection-state
+  utanför Phaser-renderobjekten. Återanvände befintlig movement och klickregler.
+- Fristående selection-logik normaliserar rektanglar, väljer centrum inklusive
+  kanten och ersätter urvalet. Klick väljer en enhet; vid överlapp väljs sist
+  renderade enheten. Tomt urval avmarkerar alla utan att ändra mål.
+- Scenen visar dragrektangel och ringar, adapterar input och skickar kommandon
+  till alla markerade. Tröskeln är 5 CSS/client-pixlar och är oberoende av world
+  coordinates. Gesten förblir drag efter uppnådd tröskel; selection ändras vid release.
+- `npm test`: 36 tester passerade (17 nya och alla 19 tidigare). Initial
+  typkontroll hittade MouseEvent/TouchEvent-unionen; korrigerade koordinatadapter.
+  Därefter passerade `npm run typecheck` och `npm run build`. Bundle-varningen
+  kvarstår: cirka 1,38 MB minifierat och 359 kB gzip.
+- Browserkontroll med tillfälligt Playwright i /tmp och lokal Chromium passerade:
+  tre unika ID:n, klick och kort drag, fyra dragriktningar, centrum på kant,
+  tom rektangel, ringar, kommandon enbart till markerade, målbyte under rörelse,
+  avmarkering utan stopp och exakt gemensamt mål. Den tredje enheten stod kvar.
+  Kontextmenyn förhindrades; inga runtime-, konsol- eller nätverksfel fångades.
+- Skalad-canvas-kontrollen behövde uppdatera Phaser scale efter testverktygets
+  tillfälliga CSS-ändring; därefter verifierades att 4 client-pixlar är klick
+  även när de motsvarar 8 world pixels. Ingen produktändring behövdes för detta.
+  /tmp/w2t-drag-box.png granskades manuellt; browserartefakter ligger utanför repot.
+- Uppdaterade BACKLOG, ARCHITECTURE, GAME_DESIGN och README. Dokumentreferenser
+  och `git diff --check` kontrollerades. Inga dependencies eller non-goals infördes.
+- Nästa föreslagna task: avgränsa resources. Ingen commit eller push.
+
+## 2026-10-01 – RTS-004 för commit
+
+- Användaren godkände commit och push med meddelandet
+  `feat: add drag selection and group movement`.
+- `git diff --check` passerade inför commit. Tester, typecheck, build och
+  browserkontroll är redovisade i implementationsposten ovan.

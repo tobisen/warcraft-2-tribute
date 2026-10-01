@@ -2,10 +2,10 @@
 
 ## Current Focus
 
-**RTS-003 – Click selection** — **Done**.
+**RTS-004 – Drag selection and group commands** — **Done**.
 
-Ingen ny task är aktiv. Nästa föreslagna task är att avgränsa dragselection;
-den är inte implementerad här.
+Ingen ny task är aktiv. Nästa föreslagna task är att avgränsa resources enligt
+utvecklingsordningen; den är inte implementerad här.
 
 Denna fil styr arbetet. En task åt gången. Framtida tasks konkretiseras med
 underlag i utvecklingsordningen movement → selection → resources → buildings
@@ -128,6 +128,42 @@ mål. Tester, typecheck, build och browserkontroll passerar och docs uppdateras.
 **Tester:** Klickträff/tom mark, kommandon kräver markering och avmarkering
 bevarar move-order. Befintliga movement-tester ska fortsätta passera.
 Browserkontroll av klick, ring, målbyte och rörelse efter avmarkering.
+
+**Relevanta docs:** [ARCHITECTURE.md](ARCHITECTURE.md),
+[GAME_DESIGN.md](GAME_DESIGN.md), [README.md](README.md), [DEV_LOG.md](DEV_LOG.md).
+
+
+## RTS-004 – Drag selection and group commands
+
+**Status:** Done.
+
+**Verifierat 2026-10-01:** 36 tester passerade, inklusive alla 19 befintliga.
+Typecheck och build passerade. Chromium verifierade klick, alla dragriktningar,
+kantträff, tomt urval, skalad canvas-tröskel, ringar, gruppkommandon och bevarad
+rörelse vid avmarkering. Inga fångade browserfel. Dragrektangeln granskades
+visuellt. Tidigare bundle-varning kvarstår.
+
+**Mål:** Markera och styra flera av tre synliga enheter med unika ID:n.
+
+**Krav:** Bevara klickselection. Vänsterdrag visar en rektangel; vid release
+ersätts selection med enheter vars centrum ligger inom rektangeln inklusive
+kanten. Alla dragriktningar stöds. Drag under 5 screen pixels behandlas som
+klick. Tom rektangel avmarkerar alla. Varje markerad enhet har en ring och
+högerklick skickar samma move-command till alla markerade. Avmarkering bevarar
+pågående rörelse. Selection-logik ska vara fristående från Phaser.
+
+**Non-goals:** Shift-selection, formationer, collision avoidance, pathfinding,
+kontrollgrupper och HUD. Enheter får överlappa vid samma mål.
+
+**Acceptance criteria:** Tre enheter på separata startpositioner med unika ID:n;
+klick och drag ersätter selection korrekt; tröskeln mäts i screen pixels;
+ringar följer selection; gruppkommandon påverkar bara markerade enheter;
+avmarkering bevarar order. Tester, typecheck, build och browserkontroll passerar.
+Dokumentation beskriver faktisk implementation.
+
+**Tester:** Alla dragriktningar, centrum på kant, flera/inga träffar,
+ersatt selection, klick/drag-tröskel och kommandon bara till markerade.
+Befintliga tester ska passera. Browserkontroll av klick, drag och gruppförflyttning.
 
 **Relevanta docs:** [ARCHITECTURE.md](ARCHITECTURE.md),
 [GAME_DESIGN.md](GAME_DESIGN.md), [README.md](README.md), [DEV_LOG.md](DEV_LOG.md).
