@@ -1,12 +1,12 @@
 import Phaser from 'phaser';
-import { unitStats } from '../config/unit';
+import { soldierStats, unitStats } from '../config/unit';
 import type { Position } from '../gameplay/movement';
 import { gatheringConfig } from '../config/gathering';
-import { productionConfig } from '../config/production';
+import { productionConfig, soldierProductionConfig } from '../config/production';
 import { barracksConfig } from '../config/buildings';
 import { barracksFootprint, beginPlacement, cancelPlacement, placementError, placementObstacles, placeBarracks, type PlacementState } from '../gameplay/placement';
 import { canStartProduction, startProduction, updateProduction, type ProductionState } from '../gameplay/production';
-import { isNodeHit, orderWorkers, updateGathering, type GatheringState } from '../gameplay/gathering';
+import { isNodeHit, orderUnits, updateGathering, type GatheringState } from '../gameplay/gathering';
 import {
   isSelectionDrag, selectionRectangle,
   selectUnitAt, selectUnitsInRectangle,
@@ -21,7 +21,10 @@ export class BootScene extends Phaser.Scene {
   private barracksVisual?: Phaser.GameObjects.Rectangle;
   private buildButton!: HTMLButtonElement;
   private placementStatus!: HTMLElement;
-  private production: ProductionState = { remainingSeconds: null, nextWorkerNumber: 4 };
+  private production: ProductionState = { remainingSeconds: null, nextUnitNumber: 4 };
+  private soldierProduction: ProductionState = { remainingSeconds: null, nextUnitNumber: 4 };
+  private soldierButton!: HTMLButtonElement;
+  private soldierProductionStatus!: HTMLElement;
   private trainButton!: HTMLButtonElement;
   private productionStatus!: HTMLElement;
   private nodeVisual!: Phaser.GameObjects.Arc;
@@ -36,8 +39,8 @@ export class BootScene extends Phaser.Scene {
 
   create(): void {
     this.gathering = {
-      workers: [280, 400, 520].map((x, index) => ({
-        id: `unit-${index + 1}`, position: { x, y: 300 }, target: { x, y: 300 },
+      units: [280, 400, 520].map((x, index) => ({
+        kind: 'worker', id: `unit-${index + 1}`, position: { x, y: 300 }, target: { x, y: 300 },
         selected: false, order: { kind: 'idle' }, cargo: 0,
       })),
       node: { id: 'wood-1', position: { ...gatheringConfig.nodePosition }, remaining: gatheringConfig.initialWood },
@@ -81,7 +84,7 @@ export class BootScene extends Phaser.Scene {
       this.buildButton.removeEventListener('click', begin);
       this.input.keyboard?.off('keydown-ESC', cancel);
     });
-    this.production = { remainingSeconds: null, nextWorkerNumber: 4 };
+    this.production = { remainingSeconds: null, nextUnitNumber: 4 };
     this.trainButton = document.querySelector<HTMLButtonElement>('#train-worker')!;
     this.productionStatus = document.querySelector<HTMLElement>('#production-status')!;
     this.trainButton.textContent = `Träna arbetare – ${productionConfig.workerCost} wood`;
@@ -94,6 +97,21 @@ export class BootScene extends Phaser.Scene {
     this.trainButton.addEventListener('click', train);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       this.trainButton.removeEventListener('click', train);
+    });
+    this.soldierProduction = { remainingSeconds: null, nextUnitNumber: 4 };
+    this.soldierButton = document.querySelector<HTMLButtonElement>('#train-soldier')!;
+    this.soldierProductionStatus = document.querySelector<HTMLElement>('#soldier-production-status')!;
+    this.soldierButton.textContent = `Träna soldier – ${soldierProductionConfig.cost} wood`;
+    const trainSoldier = () => {
+      const result = startProduction(this.gathering, this.soldierProduction,
+        { kind: 'barracks', footprint: this.placement.barracks });
+      this.gathering = result.gathering;
+      this.soldierProduction = result.production;
+      this.syncVisuals();
+    };
+    this.soldierButton.addEventListener('click', trainSoldier);
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      this.soldierButton.removeEventListener('click', trainSoldier);
     });
     this.syncVisuals();
     this.input.mouse?.disableContextMenu();
@@ -138,7 +156,7 @@ export class BootScene extends Phaser.Scene {
     if (pointer.button === 0) {
       this.drag = { world, screen: this.screenPoint(pointer), active: false };
     } else if (pointer.button === 2) {
-      this.gathering.workers = orderWorkers(this.gathering.workers, world,
+      this.gathering.units = orderUnits(this.gathering.units, world,
         isNodeHit(world, this.gathering.node) ? this.gathering.node : undefined);
     }
   }
@@ -169,9 +187,9 @@ export class BootScene extends Phaser.Scene {
     }
     this.handleMove(pointer);
     const end = this.worldPoint(pointer);
-    this.gathering.workers = this.drag.active
-      ? selectUnitsInRectangle(this.gathering.workers, this.drag.world, end)
-      : selectUnitAt(this.gathering.workers, end, unitStats.size);
+    this.gathering.units = this.drag.active
+      ? selectUnitsInRectangle(this.gathering.units, this.drag.world, end)
+      : selectUnitAt(this.gathering.units, end, unitStats.size);
     this.drag = undefined;
     this.dragBox.setVisible(false);
     this.syncVisuals();
@@ -199,11 +217,18 @@ export class BootScene extends Phaser.Scene {
     this.trainButton.disabled = !canStartProduction(this.gathering, this.production);
     this.productionStatus.textContent = this.production.remainingSeconds === null
       ? 'Bas ledig' : `Återstår: ${this.production.remainingSeconds.toFixed(1)} s`;
-    for (const unit of this.gathering.workers) {
+    const barracks = { kind: 'barracks' as const, footprint: this.placement.barracks };
+    this.soldierButton.hidden = this.placement.barracks === null;
+    this.soldierProductionStatus.hidden = this.soldierButton.hidden;
+    this.soldierButton.disabled = !canStartProduction(this.gathering, this.soldierProduction, barracks);
+    this.soldierProductionStatus.textContent = this.soldierProduction.remainingSeconds === null
+      ? 'Barracks ledig' : `Soldier återstår: ${this.soldierProduction.remainingSeconds.toFixed(1)} s`;
+    for (const unit of this.gathering.units) {
       if (!this.visuals.has(unit.id)) {
         const ring = this.add.circle(unit.position.x, unit.position.y, 20)
           .setStrokeStyle(2, 0xffdc73).setVisible(false);
-        const body = this.add.rectangle(unit.position.x, unit.position.y, unitStats.size, unitStats.size, 0x7bd389);
+        const stats = unit.kind === 'worker' ? unitStats : soldierStats;
+        const body = this.add.rectangle(unit.position.x, unit.position.y, stats.size, stats.size, stats.color);
         const cargo = this.add.text(unit.position.x, unit.position.y - 32, '',
           { fontSize: '14px', color: '#ffffff' }).setOrigin(0.5, 0);
         this.visuals.set(unit.id, { body, ring, cargo });
@@ -212,7 +237,7 @@ export class BootScene extends Phaser.Scene {
       visual.body.setPosition(unit.position.x, unit.position.y);
       visual.ring.setPosition(unit.position.x, unit.position.y).setVisible(unit.selected);
       visual.cargo.setPosition(unit.position.x, unit.position.y - 32)
-        .setText(`${unit.cargo.toFixed(1)}/${gatheringConfig.capacity}`);
+        .setText(unit.kind === 'worker' ? `${unit.cargo.toFixed(1)}/${gatheringConfig.capacity}` : 'Soldier');
     }
   }
 
@@ -221,6 +246,10 @@ export class BootScene extends Phaser.Scene {
     const result = updateProduction(this.gathering, this.production, delta / 1000);
     this.gathering = result.gathering;
     this.production = result.production;
+    const soldierResult = updateProduction(this.gathering, this.soldierProduction, delta / 1000,
+      { kind: 'barracks', footprint: this.placement.barracks });
+    this.gathering = soldierResult.gathering;
+    this.soldierProduction = soldierResult.production;
     this.syncVisuals();
   }
 }

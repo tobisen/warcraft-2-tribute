@@ -326,3 +326,51 @@
   `feat: add barracks placement`.
 - `git diff --check` passerade inför commit. Tester, typecheck, build och
   browserkontroll är redovisade i implementationsposten ovan.
+
+## 2026-10-01 – RTS-009: Soldier production from barracks
+
+- Läste agentinstruktioner, implementer-roll, backlog, arkitektur, game design
+  och befintlig produktion/input/enhetslogik. Skapade RTS-009 med nästa lediga
+  ID och satte In Progress före implementation.
+- Återanvände production-modulens start/timer/spawn för soldier: 20 wood vid
+  godkänd start, 5 gameplay-sekunder, en produktion per byggnad utan kö.
+  Bas och barracks har oberoende timers och gemensamt saldo. Alla enhets-ID:n
+  kontrolleras vid spawn även när båda byggnaderna producerar samtidigt.
+- Införde Unit = Worker | Soldier och GatheringState.units. Soldiers har bara
+  idle/move och cargo 0. Anpassade tidigare testfixtures till typmarkör och
+  gemensam enhetslista; tidigare gathering-/leveransregler bevaras.
+  Resursklick ger endast markerade workers arbetsorder och bevarar soldiers order.
+- Soldatknappen visas efter barracks-placering och visar återstående tid.
+  Nya soldiers börjar omarkerade/idle och visas orange med etiketten Soldier.
+  Spawn prövar sidor kring footprint och håller hela kroppen inom världen med
+  8 px avstånd från footprint. Stats och produktionsvärden ligger i config.
+  UI ändrar inte selection eller orders. Ingen combat/HP eller collision infördes.
+- `npm test`: 104 tester passerade (93 tidigare och 11 nya soldier-tester).
+  Verifierade kostnad, startvillkor, exakt en spawn, tidssteg, samtidig
+  produktion, unika ID:n, spawn vid världskanter, klick/dragselection, movement
+  och soldiers utan gathering/last. `npm run typecheck` och `npm run build`
+  passerade. Befintlig bundle-varning kvarstår (~1,39 MB, 362 kB gzip).
+- Browserkontroll med tillfälligt Playwright i /tmp och Chromium passerade:
+  samlade 80 wood via riktiga arbetare, placerade barracks vid (96, 96),
+  startade bas och barracks samtidigt för återstående 40 wood och fick två
+  unika enheter efter produktion. Soldier spawnade vid (180, 128), omarkerad
+  med cargo 0. Klickselection och movement till (700, 300) fungerade.
+  Dragmarkerade blandad grupp; resursklick gav workers arbetsorder medan
+  soldiers tidigare move-order bevarades. UI-start bevarade selection/orders.
+  Inga runtime-, konsol- eller nätverksfel. Orange soldier och markeringsring
+  granskades i /tmp/w2t-soldier-production.png.
+- Browserverktygets första assert krävde gather även vid uttömd nod; anpassade
+  kontrollen till leverans/idle vid uttömning. Efter Vite-omladdning behövde
+  observations-hooken följa modulens cacheparametrar. Slutkörningen passerade;
+  inga hooks eller browsertestverktyg lades till i repot.
+- Uppdaterade BACKLOG, ARCHITECTURE, GAME_DESIGN och README. Markerade RTS-009
+  Done efter verifiering. Alla 105 dokumentreferenser och git diff --check
+  passerade. Inga nya dependencies.
+- Nästa föreslagna task: avgränsa en första combat-slice. Ingen commit eller push.
+
+## 2026-10-01 – RTS-009 för commit
+
+- Användaren godkände commit och push med meddelandet
+  `feat: add soldier production at barracks`.
+- `git diff --check` passerade inför commit. Tester, typecheck, build och
+  browserkontroll är redovisade i implementationsposten ovan.

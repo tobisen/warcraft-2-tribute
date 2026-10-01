@@ -6,7 +6,7 @@ RTS-001 har implementerat en minimal bootstrap med Phaser 4.2.1, strict
 TypeScript 7.0.2 och Vite 8.3.2. Appen körs i webbläsaren utan backend eller
 konton. RTS-002 inför movement, RTS-003 klickselection, RTS-004 dragselection
 och gruppkommandon, RTS-005 gathering, RTS-006 bas och leverans samt RTS-007
-arbetarproduktion samt RTS-008 barracks-placering. Ansvarsfördelningen nedan styr
+arbetarproduktion, RTS-008 barracks-placering och RTS-009 soldier-produktion. Ansvarsfördelningen nedan styr
 både nuvarande och kommande arbete.
 
 ## Ansvarsfördelning
@@ -22,7 +22,7 @@ både nuvarande och kommande arbete.
 ## Implementerad struktur
 
 - [index.html](index.html) är Vites startpunkt med containern `#game` och
-  separata DOM-kontroller för arbetarproduktion och barracks-placering utanför canvasen.
+  separata DOM-kontroller för worker-/soldier-produktion och barracks-placering utanför canvasen.
 - [src/main.ts](src/main.ts) skapar Phaser.Game med automatisk renderer, en
   mörk bakgrund och en canvas på 800 × 600 pixlar från worldConfig.
 - [src/scenes/BootScene.ts](src/scenes/BootScene.ts) skapar tre gröna placeholders
@@ -68,7 +68,7 @@ både nuvarande och kommande arbete.
   med en enhet; vid överlapp väljs sist renderade enheten. Dragrektangeln
   normaliseras med min/max och väljer centrum inklusive kanten. Tomt urval
   avmarkerar alla. Gruppkommandon ändrar mål enbart på markerade enheter.
-  Befintliga selection/command-tester behålls. Scenen använder nu orderWorkers
+  Befintliga selection/command-tester behålls. Scenen använder nu orderUnits
   för idle/move/gather/deliver; selectUnitAt och selectUnitsInRectangle bevarar även
   arbetarnas utökade state via generisk typning.
 - [src/gameplay/selection.test.ts](src/gameplay/selection.test.ts) och
@@ -152,7 +152,7 @@ Knappens click-handler anropar bara produktionslogiken. Canvas-input lyssnar på
 canvasen; release över produktionskontrollerna avbryter en eventuell draggest
 utan att ändra selection. UI-klick kan därför inte ge order eller avmarkera.
 Scenen synkar knapp, tidstext och renderobjekt och tar bort DOM-lyssnaren vid
-shutdown. Ingen kö, avbrytning/refund, rally point, population cap eller barracks-produktion införs.
+shutdown. Ingen kö, avbrytning/refund, rally point, eller population cap införs.
 
 ## Barracks-placering (RTS-008)
 
@@ -171,8 +171,38 @@ fortgå och spendera saldo under placeringsläge; aktuellt saldo kontrolleras p�
 
 Se [DECISIONS.md](DECISIONS.md) för footprints: barracks 64 × 64 (övre vänster),
 bas 48 × 48 centrerad och nodens bounding box 40 × 40. Kantkontakt tillåts,
-positiv areaöverlapp förbjuds. Ingen byggtid, arbetarbyggande, barracks-produktion,
+positiv areaöverlapp förbjuds. Ingen byggtid, arbetarbyggande,
 rivning, pathfinding, unit-collision eller generell byggmeny finns.
+
+## Soldier-produktion och blandade enheter (RTS-009)
+
+GatheringState.units innehåller Unit = Worker | Soldier med kind som typmarkör.
+Workers har arbetsorder och last; soldiers har bara idle/move och cargo är
+alltid 0. orderUnits skickar movement till alla markerade, men resursklick ger
+endast workers gather-order. Soldiers behåller tidigare mål och order.
+updateGathering uppdaterar soldiers med samma rena movement-funktion utan
+att delta i arbetsloopen. Selection-funktionerna bevarar båda enheternas state.
+
+Den befintliga production-modulen tar en byggnadstyp och använder samma
+start-/timer-/spawnflöde för bas och barracks. Scenen håller ett ProductionState
+per byggnad, så produktionerna kan pågå samtidigt med gemensamt saldo.
+nextUnitNumber kontrolleras mot alla befintliga enhets-ID:n vid spawn; separata
+produktionsräknare kan därför inte skapa dubbletter.
+
+[src/config/production.ts](src/config/production.ts) anger soldier-kostnad 20,
+produktionstid 5 sekunder och 8 px mellan kropp och footprint vid spawn.
+soldierSpawn prövar höger, vänster, nedanför och ovanför barracks och väljer
+första position där hela enheten ligger inom världen. Ingen collision införs.
+[src/config/unit.ts](src/config/unit.ts) anger soldierStats: 160 px/s, 24 px
+storlek och orange färg; workers är gröna. Soldiers får etiketten Soldier.
+Nya enheter börjar idle och omarkerade. Soldatknappen visas först efter placering,
+spärras vid upptagen barracks/lågt saldo och har separat återstående tid.
+DOM-input bevarar selection och orders enligt samma regler som basens knapp.
+
+[src/gameplay/soldierProduction.test.ts](src/gameplay/soldierProduction.test.ts)
+verifierar startvillkor, debitering, tid och exakt en spawn, samtidighet,
+ID:n, spawn vid världens kanter samt blandad selection/movement/resursorder.
+Combat och HP ingår inte.
 
 ## Verifiering
 

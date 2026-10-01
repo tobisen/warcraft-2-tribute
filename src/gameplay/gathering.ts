@@ -1,21 +1,28 @@
 import { gatheringConfig } from '../config/gathering';
-import { unitStats } from '../config/unit';
+import { soldierStats, unitStats } from '../config/unit';
 import { moveTowards, type Position } from './movement';
 import type { SelectableUnit } from './selection';
 
 export type WorkerOrder = { kind: 'idle' } | { kind: 'move' }
   | { kind: 'gather' | 'deliver'; nodeId: string };
 export interface Worker extends SelectableUnit {
+  kind: 'worker';
   order: WorkerOrder;
   cargo: number;
 }
+export interface Soldier extends SelectableUnit {
+  kind: 'soldier';
+  order: { kind: 'idle' } | { kind: 'move' };
+  cargo: 0;
+}
+export type Unit = Worker | Soldier;
 export interface ResourceNode {
   id: string;
   position: Position;
   remaining: number;
 }
 export interface GatheringState {
-  workers: Worker[];
+  units: Unit[];
   node: ResourceNode;
   base: Position;
   wood: number;
@@ -25,22 +32,32 @@ export function isNodeHit(point: Position, node: ResourceNode): boolean {
   return Math.hypot(point.x - node.position.x, point.y - node.position.y) <= gatheringConfig.nodeRadius;
 }
 
-export function orderWorkers(workers: Worker[], target: Position, node?: ResourceNode): Worker[] {
-  return workers.map(worker => worker.selected ? {
-    ...worker,
-    target: { ...(node ? node.position : target) },
-    order: !node ? { kind: 'move' }
-      : worker.cargo >= gatheringConfig.capacity || (node.remaining <= 0 && worker.cargo > 0)
-        ? { kind: 'deliver', nodeId: node.id }
-        : node.remaining > 0 ? { kind: 'gather', nodeId: node.id } : { kind: 'idle' },
-  } : worker);
+export function orderUnits(units: Unit[], target: Position, node?: ResourceNode): Unit[] {
+  return units.map(unit => {
+    if (!unit.selected || (node && unit.kind === 'soldier')) return unit;
+    if (unit.kind === 'soldier') return { ...unit, target: { ...target }, order: { kind: 'move' } };
+    return {
+      ...unit,
+      target: { ...(node ? node.position : target) },
+      order: !node ? { kind: 'move' }
+        : unit.cargo >= gatheringConfig.capacity || (node.remaining <= 0 && unit.cargo > 0)
+          ? { kind: 'deliver', nodeId: node.id }
+          : node.remaining > 0 ? { kind: 'gather', nodeId: node.id } : { kind: 'idle' },
+    };
+  });
 }
 
 /** Spend delta across approach, gathering, delivery and return without losing time. */
 export function updateGathering(state: GatheringState, deltaSeconds: number): GatheringState {
   let remaining = state.node.remaining;
   let wood = state.wood;
-  const workers = state.workers.map(original => {
+  const units = state.units.map(original => {
+    if (original.kind === 'soldier') {
+      if (original.order.kind === 'idle') return original;
+      const position = moveTowards(original.position, original.target, soldierStats.speed, Math.max(0, deltaSeconds));
+      return { ...original, position, order: position.x === original.target.x && position.y === original.target.y
+        ? { kind: 'idle' as const } : original.order };
+    }
     let worker: Worker = { ...original, position: { ...original.position } };
     let time = Math.max(0, deltaSeconds);
     while (worker.order.kind !== 'idle') {
@@ -83,12 +100,12 @@ export function updateGathering(state: GatheringState, deltaSeconds: number): Ga
     }
     return worker;
   });
-  // Depletion also redirects workers already processed in this step.
+  // Depletion also redirects units already processed in this step.
   return {
     ...state,
-    workers: remaining === 0 ? workers.map(worker => worker.order.kind === 'gather'
+    units: remaining === 0 ? units.map(worker => worker.kind === 'worker' && worker.order.kind === 'gather'
       ? { ...worker, order: worker.cargo > 0
-        ? { kind: 'deliver', nodeId: worker.order.nodeId } : { kind: 'idle' } } : worker) : workers,
+        ? { kind: 'deliver', nodeId: worker.order.nodeId } : { kind: 'idle' } } : worker) : units,
     node: { ...state.node, remaining }, wood,
   };
 }

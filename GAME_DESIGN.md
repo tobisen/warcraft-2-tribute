@@ -75,7 +75,7 @@ idle och utan markering. Den kan klick-/dragmarkeras, flyttas och samla/leverera
 precis som startarbetarna. Produktionsknappen ändrar inte selection eller ger
 order. Spelaren markerar och kommenderar den nya arbetaren själv.
 
-Basproduktionen inför ingen stridsenhet, avbrytning/refund,
+Basproduktionen har ingen avbrytning/refund,
 rally point eller population cap införs. Den begränsade noden och produktions-
 kostnaderna sätter naturliga gränser för antalet nya arbetare i denna slice.
 
@@ -93,8 +93,25 @@ Byggknappen kan öppna preview vid lågt saldo; det kontrolleras vid placering.
 Basens och nodens footprints samt kantkontakt beskrivs i [DECISIONS.md](DECISIONS.md).
 Arbetare blockerar inte platsen. Basproduktion påverkas inte av placeringsläget.
 
-Ingen byggtid, byggande arbetare, barracks-produktion, rivning, pathfinding,
+Ingen byggtid, byggande arbetare, rivning, pathfinding,
 unit-collision eller generell byggmeny ingår.
+
+## Soldier-produktion från barracks (RTS-009)
+
+Efter placering visas ”Träna soldier – 20 wood”. Godkänd start drar 20 wood
+omedelbart och tar 5 gameplay-sekunder. En produktion åt gången per byggnad,
+ingen kö; bas och barracks kan producera samtidigt. Otillräckligt saldo eller
+upptagen barracks blockerar start. Återstående tid visas bredvid knappen.
+
+Soldier skapas strax utanför barracks footprint, med hela kroppen inom världen,
+unikt ID, idle, utan markering och utan last. Orange färg och texten Soldier
+skiljer den från gröna workers. Klick-/dragselection och movement fungerar som
+för workers. Soldier kan inte samla eller bära wood. Vid blandad selection och
+högerklick på resursnoden får workers gather-order medan soldiers behåller sina
+order. UI-interaktion ändrar varken selection eller unit-orders.
+
+Ingen combat, HP, fiender, rally point, kö, population cap, collision eller
+pathfinding ingår. Spelaren markerar och flyttar den nya soldaten själv.
 
 ## Utvecklingsordning
 

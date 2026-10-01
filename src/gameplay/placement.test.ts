@@ -7,7 +7,7 @@ import { gatheringConfig } from '../config/gathering';
 
 const idle = (): PlacementState => ({ active: false, barracks: null });
 const obstacles = placementObstacles({
-  workers: [], wood: 100, base: gatheringConfig.basePosition,
+  units: [], wood: 100, base: gatheringConfig.basePosition,
   node: { id: 'wood', position: gatheringConfig.nodePosition, remaining: 100 },
 });
 
@@ -35,7 +35,7 @@ describe('barracks placement', () => {
     expect(obstacles).toEqual([
       {x:376,y:426,width:48,height:48}, {x:630,y:160,width:40,height:40},
     ]);
-    expect(placementObstacles({workers:[],wood:0,base:gatheringConfig.basePosition,
+    expect(placementObstacles({units:[],wood:0,base:gatheringConfig.basePosition,
       node:{id:'wood',position:gatheringConfig.nodePosition,remaining:0}})).toEqual(obstacles);
   });
 

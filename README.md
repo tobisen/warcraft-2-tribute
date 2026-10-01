@@ -33,12 +33,16 @@ avbryter loopen men bevarar last, avmarkering påverkar inte loopen. Vid uttömn
 levereras partiallast innan idle.
 Efter leverans av minst 20 wood: klicka ”Träna arbetare – 20 wood”. Kostnaden
 dras direkt och en arbetare skapas nära basen efter 5 gameplay-sekunder.
-Endast en produktion pågår åt gången. Markera den nya arbetaren för nya order;
+Endast en produktion per byggnad pågår åt gången. Markera den nya arbetaren för nya order;
 produktionsknappen ändrar inte selection. Återstående tid visas vid knappen.
 ”Bygg barracks – 40 wood” öppnar placeringsläge. Flytta musen för grön/röd
 preview och klicka på en giltig plats för att bygga direkt. Escape eller
 högerklick avbryter gratis. 64 × 64 px footprint snappar till 32 px-grid;
 placera inom världen utan överlapp med bas/nod. Högst en barracks.
+Efter placering: ”Träna soldier – 20 wood” producerar en orange soldier på
+5 gameplay-sekunder. Bas och barracks kan producera samtidigt. Markera den
+nya soldaten och högerklicka för movement. Soldiers kan inte samla wood;
+resursklick med blandad selection ger bara workers gather-order.
 Ingen karta eller movement-grid finns.
 
 ```sh
@@ -69,8 +73,8 @@ Utvecklingsordningen är movement → selection → resources → buildings → 
 - [Implementer](.agents/implementer.md), [Reviewer](.agents/reviewer.md) och
   [Finisher](.agents/finisher.md): rollinstruktioner.
 
-RTS-008 är Done. Nästa föreslagna task är att avgränsa barracks-produktion
-enligt utvecklingsordningen; den är inte implementerad.
+RTS-009 är Done och inför soldier-produktion. Nästa föreslagna task är en avgränsad
+combat-slice enligt utvecklingsordningen; den är inte implementerad.
 Rollfilerna är instruktioner och konfigurerar inte automatiskt några agenter.
 
 Multiplayer, backend, konton, procedural generation, modding och deployment

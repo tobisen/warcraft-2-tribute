@@ -2,10 +2,7 @@
 
 ## Current Focus
 
-**RTS-008 – Place a barracks** — **Done**.
-
-Ingen ny task är aktiv. Nästa föreslagna task är att avgränsa barracks-produktion;
-ingen sådan implementation ingår här.
+**RTS-009 – Soldier production from barracks** — **Done**.
 
 Denna fil styr arbetet. En task åt gången. Framtida tasks konkretiseras med
 underlag i utvecklingsordningen movement → selection → resources → buildings
@@ -316,3 +313,39 @@ Alla befintliga tester. Browserkontroll av preview, placering och båda avbrotte
 
 **Relevanta docs:** [GAME_DESIGN.md](GAME_DESIGN.md), [ARCHITECTURE.md](ARCHITECTURE.md),
 [DECISIONS.md](DECISIONS.md), [README.md](README.md), [DEV_LOG.md](DEV_LOG.md).
+
+
+## RTS-009 – Soldier production from barracks
+
+**Status:** Done.
+
+**Mål:** Producera en soldier som kan väljas och flyttas.
+
+**Krav:** Knapp ”Träna soldier – 20 wood” tillgänglig efter barracks-placering.
+Kostnad vid start, 5 gameplay-sekunder, en produktion per byggnad utan kö.
+Bas/barracks kan producera samtidigt med gemensamt saldo. Återanvänd produktion
+praktiskt. Soldier: unikt ID, idle, omarkerad, spawn utanför footprint inom
+världen, visuellt skild från worker. Klick/dragselection och movement fungerar;
+soldier kan inte samla/bära wood. Resursklick vid blandad selection ger workers
+gather och bevarar soldiers order. UI bevarar selection/orders. Configvärden.
+
+**Non-goals:** Combat, HP, fiender, rally point, kö, population cap, collision
+och pathfinding.
+
+**Acceptance criteria:** Korrekt kostnad/startspärr/tid/exakt en spawn,
+parallella timers och unika ID:n. Spawn-position giltig, soldier tydlig och
+styrbar, workers-only gather. Tester, typecheck, build och browserflöde
+samla → bygg barracks → producera → flytta soldier passerar. Docs uppdateras.
+
+**Tester:** Kostnad, startvillkor, tid, en spawn, samtidig produktion, unika ID:n,
+giltig spawn nära även världskanter, selection/movement och blandade order.
+Alla befintliga tester och browserkontroll.
+
+**Relevanta docs:** [ARCHITECTURE.md](ARCHITECTURE.md), [GAME_DESIGN.md](GAME_DESIGN.md),
+[README.md](README.md), [DEV_LOG.md](DEV_LOG.md).
+
+**Verifiering:** 104 tester passerade, typecheck och build passerade.
+Chromium verifierade samla → bygg barracks → samtidig worker-/soldier-produktion
+→ välj/flytta soldier, samt blandad selection och bevarade UI-orders utan fel.
+Befintlig bundle-varning kvarstår. Nästa föreslagna scope är en första combat-slice;
+ingen ytterligare task har skapats eller implementerats.
