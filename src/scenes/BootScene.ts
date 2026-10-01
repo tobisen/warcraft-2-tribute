@@ -1,13 +1,17 @@
 import Phaser from 'phaser';
 import { unitStats } from '../config/unit';
-import { moveTowards, type Position } from '../gameplay/movement';
+import type { Position } from '../gameplay/movement';
+import { gatheringConfig } from '../config/gathering';
+import { isNodeHit, orderWorkers, updateGathering, type GatheringState } from '../gameplay/gathering';
 import {
-  commandSelectedUnits, isSelectionDrag, selectionRectangle,
-  selectUnitAt, selectUnitsInRectangle, type SelectableUnit,
+  isSelectionDrag, selectionRectangle,
+  selectUnitAt, selectUnitsInRectangle,
 } from '../gameplay/selection';
 
 export class BootScene extends Phaser.Scene {
-  private units: SelectableUnit[] = [];
+  private gathering!: GatheringState;
+  private nodeVisual!: Phaser.GameObjects.Arc;
+  private resourceText!: Phaser.GameObjects.Text;
   private visuals = new Map<string, { body: Phaser.GameObjects.Rectangle; ring: Phaser.GameObjects.Arc }>();
   private drag?: { world: Position; screen: Position; active: boolean };
   private dragBox!: Phaser.GameObjects.Rectangle;
@@ -17,12 +21,20 @@ export class BootScene extends Phaser.Scene {
   }
 
   create(): void {
-    this.units = [280, 400, 520].map((x, index) => ({
-      id: `unit-${index + 1}`, position: { x, y: 300 }, target: { x, y: 300 }, selected: false,
-    }));
+    this.gathering = {
+      workers: [280, 400, 520].map((x, index) => ({
+        id: `unit-${index + 1}`, position: { x, y: 300 }, target: { x, y: 300 },
+        selected: false, order: { kind: 'idle' },
+      })),
+      node: { id: 'wood-1', position: { ...gatheringConfig.nodePosition }, remaining: gatheringConfig.initialWood },
+      wood: 0,
+    };
+    this.nodeVisual = this.add.circle(this.gathering.node.position.x, this.gathering.node.position.y,
+      gatheringConfig.nodeRadius, 0x9a683b);
+    this.resourceText = this.add.text(16, 16, '', { fontSize: '18px', color: '#ffffff' });
     this.visuals.clear();
     this.drag = undefined;
-    for (const unit of this.units) {
+    for (const unit of this.gathering.workers) {
       const ring = this.add.circle(unit.position.x, unit.position.y, 20)
         .setStrokeStyle(2, 0xffdc73).setVisible(false);
       const body = this.add.rectangle(unit.position.x, unit.position.y, unitStats.size, unitStats.size, 0x7bd389);
@@ -59,7 +71,8 @@ export class BootScene extends Phaser.Scene {
     if (pointer.button === 0) {
       this.drag = { world, screen: this.screenPoint(pointer), active: false };
     } else if (pointer.button === 2) {
-      this.units = commandSelectedUnits(this.units, world);
+      this.gathering.workers = orderWorkers(this.gathering.workers, world,
+        isNodeHit(world, this.gathering.node) ? this.gathering.node : undefined);
     }
   }
 
@@ -75,16 +88,18 @@ export class BootScene extends Phaser.Scene {
     if (pointer.button !== 0 || !this.drag) return;
     this.handleMove(pointer);
     const end = this.worldPoint(pointer);
-    this.units = this.drag.active
-      ? selectUnitsInRectangle(this.units, this.drag.world, end)
-      : selectUnitAt(this.units, end, unitStats.size);
+    this.gathering.workers = this.drag.active
+      ? selectUnitsInRectangle(this.gathering.workers, this.drag.world, end)
+      : selectUnitAt(this.gathering.workers, end, unitStats.size);
     this.drag = undefined;
     this.dragBox.setVisible(false);
     this.syncVisuals();
   }
 
   private syncVisuals(): void {
-    for (const unit of this.units) {
+    this.resourceText.setText(`Wood: ${this.gathering.wood.toFixed(1)}\nNode: ${this.gathering.node.remaining.toFixed(1)} wood`);
+    this.nodeVisual.setFillStyle(this.gathering.node.remaining > 0 ? 0x9a683b : 0x555555);
+    for (const unit of this.gathering.workers) {
       const visual = this.visuals.get(unit.id)!;
       visual.body.setPosition(unit.position.x, unit.position.y);
       visual.ring.setPosition(unit.position.x, unit.position.y).setVisible(unit.selected);
@@ -92,9 +107,7 @@ export class BootScene extends Phaser.Scene {
   }
 
   update(_time: number, delta: number): void {
-    for (const unit of this.units) {
-      unit.position = moveTowards(unit.position, unit.target, unitStats.speed, delta / 1000);
-    }
+    this.gathering = updateGathering(this.gathering, delta / 1000);
     this.syncVisuals();
   }
 }

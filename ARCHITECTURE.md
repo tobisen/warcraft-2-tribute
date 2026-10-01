@@ -4,8 +4,9 @@
 
 RTS-001 har implementerat en minimal bootstrap med Phaser 4.2.1, strict
 TypeScript 7.0.2 och Vite 8.3.2. Appen körs i webbläsaren utan backend eller
-konton. RTS-002 inför movement, RTS-003 klickselection och RTS-004 dragselection/gruppkommandon; ansvarsfördelningen nedan
-styr både nuvarande och kommande arbete.
+konton. RTS-002 inför movement, RTS-003 klickselection, RTS-004 dragselection
+och gruppkommandon samt RTS-005 gathering. Ansvarsfördelningen nedan styr
+både nuvarande och kommande arbete.
 
 ## Ansvarsfördelning
 
@@ -24,20 +25,32 @@ styr både nuvarande och kommande arbete.
   mörk bakgrund och en canvas på 800 × 600 pixlar.
 - [src/scenes/BootScene.ts](src/scenes/BootScene.ts) skapar tre gröna placeholders
   (24 × 24 px) med ID unit-1, unit-2 och unit-3 vid (280, 300), (400, 300) och
-  (520, 300). Varje enhet har position, mål och selected-state separat från
+  (520, 300). Varje arbetare har position, mål, order och selected-state separat från
   renderobjekten, som kopplas via en Map med ID som nyckel.
   Scenen adapterar pointer-input, visar dragrektangel och ringar, konverterar
-  delta till sekunder och synkar rendering. Inputlyssnare tas bort vid shutdown.
+  delta till sekunder och synkar rendering av arbetare, resursnod och saldotext.
+  Gathering-steget anropas från update; inputlyssnare tas bort vid shutdown.
 - [src/gameplay/movement.ts](src/gameplay/movement.ts) är en ren funktion utan
   Phaser-beroende: normaliserad riktning × hastighet × delta i sekunder,
   begränsat till återstående avstånd. Samma start/mål och delta=0 är säkra.
+- [src/gameplay/gathering.ts](src/gameplay/gathering.ts) innehåller WorkerOrder
+  (idle/move/gather), ResourceNode och GatheringState samt fristående order-
+  och uppdateringsfunktioner. Move använder arbetarnas target, gather refererar
+  till nod-ID och idle utför inget arbete. Endast markerade får nya order.
+  Ny move-order ersätter gathering; selection-funktionerna bevarar order-state.
+- [src/config/gathering.ts](src/config/gathering.ts) anger 100 initial wood,
+  24 px räckvidd, 1 wood/s, nodradie 20 px och nodposition (650, 180).
+- [src/gameplay/gathering.test.ts](src/gameplay/gathering.test.ts) verifierar
+  räckvidd, tidssteg, begränsad resurs, saldo, uttömning och orderbyte.
 - [src/config/unit.ts](src/config/unit.ts) anger hastighet 160 px/s och storlek 24 px.
 - [src/gameplay/selection.ts](src/gameplay/selection.ts) hanterar selection och
   kommandon utan Phaser. Klick använder kvadratisk träffyta och ersätter selection
   med en enhet; vid överlapp väljs sist renderade enheten. Dragrektangeln
   normaliseras med min/max och väljer centrum inklusive kanten. Tomt urval
   avmarkerar alla. Gruppkommandon ändrar mål enbart på markerade enheter.
-  De befintliga selectAt/commandMove-reglerna återanvänds och testas fortsatt.
+  Befintliga selection/command-tester behålls. Scenen använder nu orderWorkers
+  för idle/move/gather; selectUnitAt och selectUnitsInRectangle bevarar även
+  arbetarnas utökade state via generisk typning.
 - [src/gameplay/selection.test.ts](src/gameplay/selection.test.ts) och
   [src/gameplay/groupSelection.test.ts](src/gameplay/groupSelection.test.ts)
   verifierar klick, rektanglar, tröskel, ersatt selection och gruppkommandon.
@@ -69,9 +82,28 @@ Tröskeln använder DOM-eventets client-koordinater, oberoende av skalad canvas;
 rektangeln och träfftesterna använder world pixels. Pointerup utanför canvas
 avslutar också gesten. Scenen håller endast gest- och renderadapterstate.
 Det finns ingen shift-selection, formation, collision avoidance, kontrollgrupp,
-HUD, pathfinding, hinderhantering, karta, kameraimplementation, resurser eller AI.
+ekonomi-UI utöver enkel saldotext, pathfinding, hinderhantering, karta,
+kameraimplementation eller AI.
 Enheterna kan överlappa vid samma mål.
 Se [DECISIONS.md](DECISIONS.md).
+
+## Gathering och direkt kreditering
+
+Högerklick inom nodens synliga cirkel ger gather-order till markerade arbetare;
+övriga högerklick ger move-order. Nodens position är world pixels. Arbetarna
+stannar inom 24 px från dess centrum. Steget beräknar approach-tiden och samlar
+bara för den del av delta som återstår efter att arbetaren nått räckvidden.
+Det ger jämförbar total insamling över olika tidssteg även under approach.
+
+Wood är kontinuerliga tal med 1 wood/sekund per arbetare; text visas med en
+decimal. Varje uttag begränsas till nodens återstående mängd. Arbetarna behandlas
+i stabil listordning när det sista wood delas, utan löfte om rättvis fördelning.
+Saldo ökar med exakt samma uttag som minskar noden. Vid uttömning blir alla
+order till noden idle, även arbetare på väg dit. Move blir idle vid målet.
+
+Direkt kreditering till gemensamt saldo är denna slices förenkling: ingen bas,
+leverans, bärkapacitet eller ekonomi-UI implementeras. Uttömd nod ligger kvar
+som grå placeholder med 0 wood; högerklick på den ger idle.
 
 ## Verifiering
 

@@ -39,7 +39,7 @@ export function isSelectionDrag(start: Position, end: Position): boolean {
   return Math.hypot(end.x - start.x, end.y - start.y) >= 5;
 }
 
-export function selectUnitsInRectangle(units: SelectableUnit[], start: Position, end: Position): SelectableUnit[] {
+export function selectUnitsInRectangle<T extends SelectableUnit>(units: T[], start: Position, end: Position): T[] {
   const rect = selectionRectangle(start, end);
   return units.map(unit => ({
     ...unit,
@@ -48,7 +48,7 @@ export function selectUnitsInRectangle(units: SelectableUnit[], start: Position,
   }));
 }
 
-export function selectUnitAt(units: SelectableUnit[], click: Position, size: number): SelectableUnit[] {
+export function selectUnitAt<T extends SelectableUnit>(units: T[], click: Position, size: number): T[] {
   // Last rendered unit wins when placeholders overlap.
   const hit = [...units].reverse().find(unit => selectAt(unit, click, unit.position, size).selected);
   return units.map(unit => ({ ...unit, selected: unit.id === hit?.id }));

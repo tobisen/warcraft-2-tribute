@@ -161,3 +161,43 @@
   `feat: add drag selection and group movement`.
 - `git diff --check` passerade inför commit. Tester, typecheck, build och
   browserkontroll är redovisade i implementationsposten ovan.
+
+
+## 2026-10-01 – RTS-005: Simple wood gathering
+
+- Läste AGENTS, implementer-roll, backlog, game design, arkitektur och befintlig
+  input/unit/movement-kod. Arbetsytan var ren. Skapade RTS-005 med nästa lediga ID,
+  satte In Progress före implementation och Done efter verifiering.
+- Befintliga tre enheter är arbetare med Phaser-fristående idle/move/gather-order.
+  Införde en nod med 100 wood, högerklick för gather och approach till 24 px
+  räckvidd. Numeriska gather-inställningar ligger i src/config/gathering.ts.
+- Insamling är kontinuerlig (1 wood/sekund per arbetare) och tar hänsyn till
+  approach-tid inom varje delta. Varje uttag begränsas till kvarvarande wood
+  och krediteras direkt till gemensamt saldo. Vid uttömning blir alla gather-
+  order till noden idle. Ny move-order avbryter; avmarkering bevarar ordern.
+- Scenen renderar nod och enkel text med en decimal samt adapterar input och
+  anropar gathering-steget. Selection-funktionernas generiska typer bevarar
+  worker/order-state. Inga dependencies tillkom och tidigare tester behölls.
+- `npm test`: 50 tester passerade (14 nya, 36 tidigare). Tester omfattar räckvidd,
+  approach mitt i delta, olika tidssteg, flera arbetare, begränsad mängd,
+  bevarad total, uttömning, orderbyte, avmarkering och nodträff.
+  `npm run typecheck` och `npm run build` passerade. Bundle-varningen kvarstår
+  (cirka 1,38 MB minifierat och 360 kB gzip).
+- Browserkontroll med tillfälligt Playwright i /tmp och Chromium verifierade
+  att omarkerade ignorerar gather, gruppselection, approach utan omedelbar
+  insamling, fortsatt gathering efter avmarkering, move-order som stoppar
+  insamling, nytt gather-kommando och faktisk uttömning av hela noden.
+  Alla tre blev idle. Saldo var 100 inom flyttalstolerans och noden exakt 0;
+  text visade Wood: 100.0 / Node: 0.0 wood. Inga runtime-, konsol- eller
+  nätverksfel fångades. /tmp/w2t-gathering-depleted.png granskades manuellt.
+- Uppdaterade BACKLOG, ARCHITECTURE, GAME_DESIGN och README; direkt kreditering
+  dokumenterades som denna slices förenkling utan bas, leverans eller bärkapacitet.
+  Dokumentreferenser och `git diff --check` kontrollerades.
+- Nästa föreslagna task: avgränsa buildings. Ingen commit eller push.
+
+## 2026-10-01 – RTS-005 för commit
+
+- Användaren godkände commit och push med meddelandet
+  `feat: add basic wood gathering`.
+- `git diff --check` passerade inför commit. Tester, typecheck, build och
+  browserkontroll är redovisade i implementationsposten ovan.

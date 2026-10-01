@@ -25,6 +25,10 @@ för att flytta alla markerade enheter till samma mål med 160 px/s.
 Ett nytt högerklick ersätter tidigare mål, även under rörelse. Vänsterklick på
 tom mark avmarkerar utan att stoppa rörelsen. Omarkerade enheter ignorerar nya
 move-commands. Kontextmenyn är förhindrad över canvas.
+Markera arbetare och högerklicka på den bruna noden vid (650, 180) för att samla
+wood (100 initialt, 1 per sekund och arbetare inom 24 px). Saldot krediteras
+direkt och visas med nodens återstående mängd. Move-order avbryter gathering;
+avmarkering gör det inte. Uttömd nod blir grå och arbetarna idle.
 Canvasstorleken är tillfällig; inget kart- eller gridsystem finns.
 
 ```sh
@@ -33,7 +37,7 @@ npm run typecheck
 npm run build
 ```
 
-`test` kör movement- och selection-unit-tester en gång med Vitest i Node, utan browser.
+`test` kör movement-, selection- och gathering-unit-tester en gång med Vitest i Node, utan browser.
 `typecheck` kontrollerar projektkoden och testerna med strict TypeScript utan att skriva
 filer. `build` kör först typkontroll och skapar sedan byggoutput i `dist/`.
 `node_modules/` och `dist/` ignoreras av Git. Paketversioner låses med
@@ -55,7 +59,7 @@ Utvecklingsordningen är movement → selection → resources → buildings → 
 - [Implementer](.agents/implementer.md), [Reviewer](.agents/reviewer.md) och
   [Finisher](.agents/finisher.md): rollinstruktioner.
 
-RTS-004 följs i BACKLOG.md. Nästa föreslagna task är att avgränsa resources
+RTS-005 följs i BACKLOG.md. Nästa föreslagna task är att avgränsa buildings
 enligt utvecklingsordningen; den är inte implementerad.
 Rollfilerna är instruktioner och konfigurerar inte automatiskt några agenter.
 

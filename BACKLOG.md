@@ -2,10 +2,10 @@
 
 ## Current Focus
 
-**RTS-004 – Drag selection and group commands** — **Done**.
+**RTS-005 – Simple wood gathering** — **Done**.
 
-Ingen ny task är aktiv. Nästa föreslagna task är att avgränsa resources enligt
-utvecklingsordningen; den är inte implementerad här.
+Ingen ny task är aktiv. Nästa föreslagna task är att avgränsa buildings enligt
+utvecklingsordningen; ingen sådan implementation ingår här.
 
 Denna fil styr arbetet. En task åt gången. Framtida tasks konkretiseras med
 underlag i utvecklingsordningen movement → selection → resources → buildings
@@ -167,3 +167,40 @@ Befintliga tester ska passera. Browserkontroll av klick, drag och gruppförflytt
 
 **Relevanta docs:** [ARCHITECTURE.md](ARCHITECTURE.md),
 [GAME_DESIGN.md](GAME_DESIGN.md), [README.md](README.md), [DEV_LOG.md](DEV_LOG.md).
+
+
+## RTS-005 – Simple wood gathering
+
+**Status:** Done.
+
+**Verifierat 2026-10-01:** 50 tester passerade (14 gathering och 36 tidigare),
+typecheck och build passerade. Chromium verifierade selection, approach,
+gathering efter avmarkering, avbrott med move-order, återupptagen gathering,
+faktisk uttömning av 100 wood och idle för alla arbetare. Saldotext och grå
+uttömd nod granskades visuellt. Inga fångade browserfel. Tidigare bundle-varning kvarstår.
+
+**Mål:** Befintliga placeholder-enheter fungerar som arbetare och samlar wood.
+
+**Krav:** Synlig nod med 100 wood; högerklick på nod ger gather-order till
+markerade arbetare. De går till noden och samlar inom 24 world pixels med
+1 wood/sekund per arbetare. Wood krediteras direkt till gemensamt saldo.
+Enkel text visar saldo och återstående mängd. Flera arbetare delar noden utan
+negativ mängd; vid uttömning blir samlande arbetare idle. Ny move-order avbryter
+gathering, avmarkering gör det inte. Gathering/order-state är Phaser-fristående
+med numeriska inställningar i enkel config.
+
+**Non-goals:** Bas, leverans, bärkapacitet, animationer, collision, pathfinding,
+byggnader och ekonomi-UI utöver den begärda enkla texten.
+
+**Acceptance criteria:** Hela flödet från selection och nodkommando till approach,
+gathering, saldo och uttömning fungerar. Ingen insamling utanför räckvidden;
+resursöverföring bevarar totalen och orderbyte fungerar. Tester, typecheck,
+build och browserkontroll passerar. Direkt kreditering dokumenteras som
+slicespecifik förenkling.
+
+**Tester:** Räckvidd, mängd över tid/olika tidssteg, flera arbetare med begränsad
+mängd, saldo kontra nodminskning, uttömning och orderbyte. Tidigare tester ska
+passera. Browserkontroll av hela gather-flödet.
+
+**Relevanta docs:** [GAME_DESIGN.md](GAME_DESIGN.md), [ARCHITECTURE.md](ARCHITECTURE.md),
+[README.md](README.md), [DEV_LOG.md](DEV_LOG.md).
