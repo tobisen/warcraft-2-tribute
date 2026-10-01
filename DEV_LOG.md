@@ -201,3 +201,47 @@
   `feat: add basic wood gathering`.
 - `git diff --check` passerade inför commit. Tester, typecheck, build och
   browserkontroll är redovisade i implementationsposten ovan.
+
+## 2026-10-01 – RTS-006: Base and wood delivery
+
+- Läste AGENTS, implementer-roll, backlog, game design, arkitektur och befintlig
+  gathering/order/movement. Arbetsytan var ren. Skapade RTS-006 som nästa lediga
+  task och satte In Progress innan implementation.
+- Införde en fast blå bas vid (400, 450), lastkapacitet 5 och leveransräckvidd
+  24 px i gathering-config. Last visas som enkel text vid varje arbetare.
+- Phaser-fristående arbetsloop överför nod → last → saldo. Full last startar
+  deliver som minns nod-ID för återgång. Delvis last levereras vid uttömning;
+  sedan idle. Ny move avbryter utan lastförlust; gather med full last levererar
+  först. Avmarkering bevarar order och last.
+- Delta förbrukas över flera övergångar utan att förlora resttid. Noduttag
+  begränsas av återstående mängd och ledig lastkapacitet. Uppdateringen kopierar
+  state; rendering och inputadapter finns fortsatt i BootScene.
+- Anpassade 14 tidigare gathering-tester till lastmodellen och lade till 11
+  delivery-tester. `npm test`: 61 tester passerade, inklusive 36 tidigare
+  movement/selection-tester. `npm run typecheck` och `npm run build` passerade.
+  Buildens tidigare bundle-varning kvarstår (cirka 1,38 MB minifierat, 360 kB gzip).
+- Tester verifierar saldo först vid leverans, delvis/full last, upprepade turer
+  över olika tidssteg, full gather-order, avbruten loop, avmarkering, totalbevarande
+  och att manuell move till basen inte implicit levererar last.
+- Browserns första observationsverktyg timeoutade när det försökte ersätta update
+  efter Phasers callback-bindning. Flyttade endast testverktygets observation
+  till postupdate och körde om utan att ändra spelkod eller spelhastighet.
+- Uppdaterade ARCHITECTURE, GAME_DESIGN och README till leveransmodellen;
+  RTS-005:s backlogpost är märkt som historisk. Direkt kreditering är ersatt.
+- Browserkontroll i lokal Chromium via tillfälligt Playwright i /tmp passerade
+  utan ändrad spelhastighet. Markerade tre arbetare, gav gather och avmarkerade;
+  observerade last innan saldoökning och sju leveransturer per arbetare.
+  Hela noden tömdes och även slutlast levererades. Slutstate: nod exakt 0,
+  saldo 100 inom flyttalstolerans, samtliga arbetare idle med last 0.
+  Inga runtime-, konsol- eller nätverksfel fångades.
+  /tmp/w2t-cargo.png och /tmp/w2t-delivery-depleted.png granskades visuellt.
+- Dokumentreferenser och `git diff --check` kontrollerades. RTS-006 markerades
+  Done efter verifiering. Inga dependencies eller non-goals infördes.
+- Nästa föreslagna task: avgränsa produktionsbyggnad. Ingen commit eller push.
+
+## 2026-10-01 – RTS-006 för commit
+
+- Användaren godkände commit och push med meddelandet
+  `feat: add base and automatic wood delivery`.
+- `git diff --check` passerade inför commit. Tester, typecheck, build och
+  browserkontroll är redovisade i implementationsposten ovan.

@@ -12,7 +12,7 @@ export class BootScene extends Phaser.Scene {
   private gathering!: GatheringState;
   private nodeVisual!: Phaser.GameObjects.Arc;
   private resourceText!: Phaser.GameObjects.Text;
-  private visuals = new Map<string, { body: Phaser.GameObjects.Rectangle; ring: Phaser.GameObjects.Arc }>();
+  private visuals = new Map<string, { body: Phaser.GameObjects.Rectangle; ring: Phaser.GameObjects.Arc; cargo: Phaser.GameObjects.Text }>();
   private drag?: { world: Position; screen: Position; active: boolean };
   private dragBox!: Phaser.GameObjects.Rectangle;
 
@@ -24,11 +24,16 @@ export class BootScene extends Phaser.Scene {
     this.gathering = {
       workers: [280, 400, 520].map((x, index) => ({
         id: `unit-${index + 1}`, position: { x, y: 300 }, target: { x, y: 300 },
-        selected: false, order: { kind: 'idle' },
+        selected: false, order: { kind: 'idle' }, cargo: 0,
       })),
       node: { id: 'wood-1', position: { ...gatheringConfig.nodePosition }, remaining: gatheringConfig.initialWood },
       wood: 0,
+      base: { ...gatheringConfig.basePosition },
     };
+    this.add.rectangle(this.gathering.base.x, this.gathering.base.y,
+      gatheringConfig.baseSize, gatheringConfig.baseSize, 0x537eb5);
+    this.add.text(this.gathering.base.x, this.gathering.base.y + 30, 'Base',
+      { fontSize: '16px', color: '#ffffff' }).setOrigin(0.5, 0);
     this.nodeVisual = this.add.circle(this.gathering.node.position.x, this.gathering.node.position.y,
       gatheringConfig.nodeRadius, 0x9a683b);
     this.resourceText = this.add.text(16, 16, '', { fontSize: '18px', color: '#ffffff' });
@@ -38,7 +43,9 @@ export class BootScene extends Phaser.Scene {
       const ring = this.add.circle(unit.position.x, unit.position.y, 20)
         .setStrokeStyle(2, 0xffdc73).setVisible(false);
       const body = this.add.rectangle(unit.position.x, unit.position.y, unitStats.size, unitStats.size, 0x7bd389);
-      this.visuals.set(unit.id, { body, ring });
+      const cargo = this.add.text(unit.position.x, unit.position.y - 32, '',
+        { fontSize: '14px', color: '#ffffff' }).setOrigin(0.5, 0);
+      this.visuals.set(unit.id, { body, ring, cargo });
     }
     this.dragBox = this.add.rectangle(0, 0, 0, 0, 0xffdc73, 0.1)
       .setOrigin(0).setStrokeStyle(1, 0xffdc73).setVisible(false);
@@ -103,6 +110,8 @@ export class BootScene extends Phaser.Scene {
       const visual = this.visuals.get(unit.id)!;
       visual.body.setPosition(unit.position.x, unit.position.y);
       visual.ring.setPosition(unit.position.x, unit.position.y).setVisible(unit.selected);
+      visual.cargo.setPosition(unit.position.x, unit.position.y - 32)
+        .setText(`${unit.cargo.toFixed(1)}/${gatheringConfig.capacity}`);
     }
   }
 

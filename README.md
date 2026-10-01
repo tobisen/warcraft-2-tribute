@@ -26,9 +26,11 @@ Ett nytt högerklick ersätter tidigare mål, även under rörelse. Vänsterklic
 tom mark avmarkerar utan att stoppa rörelsen. Omarkerade enheter ignorerar nya
 move-commands. Kontextmenyn är förhindrad över canvas.
 Markera arbetare och högerklicka på den bruna noden vid (650, 180) för att samla
-wood (100 initialt, 1 per sekund och arbetare inom 24 px). Saldot krediteras
-direkt och visas med nodens återstående mängd. Move-order avbryter gathering;
-avmarkering gör det inte. Uttömd nod blir grå och arbetarna idle.
+wood (100 initialt, 1 per sekund och arbetare inom 24 px). Arbetarna bär högst 5 wood,
+levererar automatiskt inom 24 px från den blå basen vid (400, 450) och återgår
+till noden. Saldo ökar först vid leverans; last visas vid arbetarna. Move-order
+avbryter loopen men bevarar last, avmarkering påverkar inte loopen. Vid uttömning
+levereras partiallast innan idle.
 Canvasstorleken är tillfällig; inget kart- eller gridsystem finns.
 
 ```sh
@@ -37,7 +39,7 @@ npm run typecheck
 npm run build
 ```
 
-`test` kör movement-, selection- och gathering-unit-tester en gång med Vitest i Node, utan browser.
+`test` kör movement-, selection-, gathering- och delivery-unit-tester en gång med Vitest i Node, utan browser.
 `typecheck` kontrollerar projektkoden och testerna med strict TypeScript utan att skriva
 filer. `build` kör först typkontroll och skapar sedan byggoutput i `dist/`.
 `node_modules/` och `dist/` ignoreras av Git. Paketversioner låses med
@@ -59,7 +61,7 @@ Utvecklingsordningen är movement → selection → resources → buildings → 
 - [Implementer](.agents/implementer.md), [Reviewer](.agents/reviewer.md) och
   [Finisher](.agents/finisher.md): rollinstruktioner.
 
-RTS-005 följs i BACKLOG.md. Nästa föreslagna task är att avgränsa buildings
+RTS-006 är Done. Nästa föreslagna task är att avgränsa produktionsbyggnad
 enligt utvecklingsordningen; den är inte implementerad.
 Rollfilerna är instruktioner och konfigurerar inte automatiskt några agenter.
 

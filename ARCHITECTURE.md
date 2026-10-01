@@ -5,7 +5,7 @@
 RTS-001 har implementerat en minimal bootstrap med Phaser 4.2.1, strict
 TypeScript 7.0.2 och Vite 8.3.2. Appen körs i webbläsaren utan backend eller
 konton. RTS-002 inför movement, RTS-003 klickselection, RTS-004 dragselection
-och gruppkommandon samt RTS-005 gathering. Ansvarsfördelningen nedan styr
+och gruppkommandon, RTS-005 gathering samt RTS-006 bas och leverans. Ansvarsfördelningen nedan styr
 både nuvarande och kommande arbete.
 
 ## Ansvarsfördelning
@@ -28,20 +28,24 @@ både nuvarande och kommande arbete.
   (520, 300). Varje arbetare har position, mål, order och selected-state separat från
   renderobjekten, som kopplas via en Map med ID som nyckel.
   Scenen adapterar pointer-input, visar dragrektangel och ringar, konverterar
-  delta till sekunder och synkar rendering av arbetare, resursnod och saldotext.
+  delta till sekunder och synkar rendering av arbetare, lasttext, bas, resursnod och saldotext.
   Gathering-steget anropas från update; inputlyssnare tas bort vid shutdown.
 - [src/gameplay/movement.ts](src/gameplay/movement.ts) är en ren funktion utan
   Phaser-beroende: normaliserad riktning × hastighet × delta i sekunder,
   begränsat till återstående avstånd. Samma start/mål och delta=0 är säkra.
 - [src/gameplay/gathering.ts](src/gameplay/gathering.ts) innehåller WorkerOrder
-  (idle/move/gather), ResourceNode och GatheringState samt fristående order-
+  (idle/move/gather/deliver), last, ResourceNode och GatheringState samt fristående order-
   och uppdateringsfunktioner. Move använder arbetarnas target, gather refererar
-  till nod-ID och idle utför inget arbete. Endast markerade får nya order.
-  Ny move-order ersätter gathering; selection-funktionerna bevarar order-state.
+  till nod-ID; deliver minns samma nod för återgång. Idle utför inget arbete. Endast markerade får nya order.
+  Ny move-order ersätter arbetsloopen och bevarar last; selection-funktionerna
+  bevarar order-state och last.
 - [src/config/gathering.ts](src/config/gathering.ts) anger 100 initial wood,
-  24 px räckvidd, 1 wood/s, nodradie 20 px och nodposition (650, 180).
+  24 px gather-/leveransräckvidd, 1 wood/s, lastkapacitet 5, nodradie 20 px,
+  nodposition (650, 180), basposition (400, 450) och basstorlek 48 px.
 - [src/gameplay/gathering.test.ts](src/gameplay/gathering.test.ts) verifierar
-  räckvidd, tidssteg, begränsad resurs, saldo, uttömning och orderbyte.
+  räckvidd, tidssteg, begränsad resurs, last, uttömning och orderbyte.
+  [src/gameplay/delivery.test.ts](src/gameplay/delivery.test.ts) verifierar
+  leverans, återgång, upprepade turer, totalbevarande och avbruten loop.
 - [src/config/unit.ts](src/config/unit.ts) anger hastighet 160 px/s och storlek 24 px.
 - [src/gameplay/selection.ts](src/gameplay/selection.ts) hanterar selection och
   kommandon utan Phaser. Klick använder kvadratisk träffyta och ersätter selection
@@ -49,7 +53,7 @@ både nuvarande och kommande arbete.
   normaliseras med min/max och väljer centrum inklusive kanten. Tomt urval
   avmarkerar alla. Gruppkommandon ändrar mål enbart på markerade enheter.
   Befintliga selection/command-tester behålls. Scenen använder nu orderWorkers
-  för idle/move/gather; selectUnitAt och selectUnitsInRectangle bevarar även
+  för idle/move/gather/deliver; selectUnitAt och selectUnitsInRectangle bevarar även
   arbetarnas utökade state via generisk typning.
 - [src/gameplay/selection.test.ts](src/gameplay/selection.test.ts) och
   [src/gameplay/groupSelection.test.ts](src/gameplay/groupSelection.test.ts)
@@ -87,23 +91,32 @@ kameraimplementation eller AI.
 Enheterna kan överlappa vid samma mål.
 Se [DECISIONS.md](DECISIONS.md).
 
-## Gathering och direkt kreditering
+## Gathering och leverans (RTS-006)
 
-Högerklick inom nodens synliga cirkel ger gather-order till markerade arbetare;
-övriga högerklick ger move-order. Nodens position är world pixels. Arbetarna
-stannar inom 24 px från dess centrum. Steget beräknar approach-tiden och samlar
-bara för den del av delta som återstår efter att arbetaren nått räckvidden.
-Det ger jämförbar total insamling över olika tidssteg även under approach.
+Högerklick på nodens cirkel ger gather-order, övriga högerklick ger move-order.
+Varje arbetare har kontinuerlig last (cargo) från 0 till 5 wood. Gathering
+överför nod → last inom 24 px från nodcentrum med 1 wood/s. Full last byter
+automatiskt till deliver. Inom 24 px från basens centrum överförs hela lasten
+till gemensamt saldo; bara denna övergång krediterar saldot.
 
-Wood är kontinuerliga tal med 1 wood/sekund per arbetare; text visas med en
-decimal. Varje uttag begränsas till nodens återstående mängd. Arbetarna behandlas
-i stabil listordning när det sista wood delas, utan löfte om rättvis fördelning.
-Saldo ökar med exakt samma uttag som minskar noden. Vid uttömning blir alla
-order till noden idle, även arbetare på väg dit. Move blir idle vid målet.
+Deliver minns resursnodens ID. Efter leverans återgår arbetaren till noden om
+wood finns, annars idle. Vid uttömning levereras även partiallast; tomma arbetare
+blir idle. Ny gather-order med full last levererar först. Gather mot tom nod
+levererar kvarvarande last eller blir idle om lasten är tom. Move avbryter
+loopen utan att kasta eller leverera lasten, även om målet ligger vid basen.
+Avmarkering ändrar varken order eller last.
 
-Direkt kreditering till gemensamt saldo är denna slices förenkling: ingen bas,
-leverans, bärkapacitet eller ekonomi-UI implementeras. Uttömd nod ligger kvar
-som grå placeholder med 0 wood; högerklick på den ger idle.
+Uppdateringen förbrukar delta över approach, gathering, leverans och återgång,
+så ett långt steg kan innehålla flera övergångar. Arbetarna behandlas i stabil
+listordning vid delning av den begränsade noden. Uttag begränsas både av nodens
+mängd och ledig lastkapacitet. Summa nod + laster + saldo bevaras inom
+flyttalstolerans. Depletion efter en senare arbetare dirigerar även tidigare
+arbetares kvarvarande gather-order till slutleverans.
+
+Basen är en fast blå placeholder. Text vid varje arbetare visar last/kapacitet
+med en decimal, och saldotext visar wood och nodens mängd. Ingen byggplacering,
+produktion, kostnader, manuell leveransorder eller collision införs. Den tidigare
+direkta krediteringen från RTS-005 har ersatts av denna leveransmodell.
 
 ## Verifiering
 

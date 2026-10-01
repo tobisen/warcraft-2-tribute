@@ -2,10 +2,10 @@
 
 ## Current Focus
 
-**RTS-005 – Simple wood gathering** — **Done**.
+**RTS-006 – Base and wood delivery** — **Done**.
 
-Ingen ny task är aktiv. Nästa föreslagna task är att avgränsa buildings enligt
-utvecklingsordningen; ingen sådan implementation ingår här.
+Ingen ny task är aktiv. Nästa föreslagna task är att avgränsa produktionsbyggnad;
+ingen sådan implementation ingår här.
 
 Denna fil styr arbetet. En task åt gången. Framtida tasks konkretiseras med
 underlag i utvecklingsordningen movement → selection → resources → buildings
@@ -171,6 +171,8 @@ Befintliga tester ska passera. Browserkontroll av klick, drag och gruppförflytt
 
 ## RTS-005 – Simple wood gathering
 
+Historisk slice: direkt kreditering har ersatts av leveransmodellen i RTS-006.
+
 **Status:** Done.
 
 **Verifierat 2026-10-01:** 50 tester passerade (14 gathering och 36 tidigare),
@@ -201,6 +203,42 @@ slicespecifik förenkling.
 **Tester:** Räckvidd, mängd över tid/olika tidssteg, flera arbetare med begränsad
 mängd, saldo kontra nodminskning, uttömning och orderbyte. Tidigare tester ska
 passera. Browserkontroll av hela gather-flödet.
+
+**Relevanta docs:** [GAME_DESIGN.md](GAME_DESIGN.md), [ARCHITECTURE.md](ARCHITECTURE.md),
+[README.md](README.md), [DEV_LOG.md](DEV_LOG.md).
+
+
+## RTS-006 – Base and wood delivery
+
+**Status:** Done.
+
+**Verifierat 2026-10-01:** Alla 61 tester, typecheck och build passerade.
+Chromium verifierade sju turer per arbetare, uttömning av hela noden och
+slutleverans med saldo 100 inom flyttalstolerans. Alla arbetare var idle med
+last 0 efteråt, trots avmarkering. Bas, lasttext och sluttext granskades visuellt.
+Inga fångade browserfel. Tidigare bundle-varning kvarstår.
+
+**Mål:** Arbetare transporterar wood till en fast placeholder-bas.
+
+**Krav:** Last högst 5 wood per arbetare. Gathering överför nod → last;
+full last startar automatisk leverans. Inom 24 px från bascentrum överförs last
+till saldo. Återgå till noden om wood finns. Vid uttömning levereras även
+partiallast innan idle. Move avbryter loop men bevarar last; gather med full
+last levererar först. Avmarkering påverkar inte loopen. Visa last vid arbetaren.
+Phaser-fristående logik och numeriska värden i config.
+
+**Non-goals:** Byggplacering, produktion, kostnader, fler resurser, pathfinding,
+collision och manuell leveransorder.
+
+**Acceptance criteria:** Synlig fast bas; saldo ökar bara vid leverans;
+upprepade turer och slutleverans fungerar utan överfyllnad eller förlust.
+Orderbyte och avmarkering bevarar last. Alla tester, typecheck, build och
+browserkontroll av minst två turer samt uttömning passerar. Docs beskriver
+leveransmodellen i stället för direkt kreditering.
+
+**Tester:** Leverans först i räckvidd, full och delvis last, återgång och flera
+turer, orderbyte/full last, totalbevarande mellan nod/laster/saldo. Tidigare
+gathering-tester anpassas; andra tester ska passera.
 
 **Relevanta docs:** [GAME_DESIGN.md](GAME_DESIGN.md), [ARCHITECTURE.md](ARCHITECTURE.md),
 [README.md](README.md), [DEV_LOG.md](DEV_LOG.md).

@@ -41,22 +41,27 @@ mål; inga formationer eller collision avoidance finns.
 
 Shift-selection, kontrollgrupper, pathfinding och HUD ingår inte i denna slice.
 
-## Enkel resurssamling (RTS-005)
+## Resurssamling med bas och leverans (RTS-006)
 
-De tre befintliga enheterna är placeholder-arbetare. En brun resursnod vid
-(650, 180) innehåller 100 wood. Markera arbetare och högerklicka på noden för
-att ersätta deras order med gather. De går till noden och samlar inom 24 world
-pixels från centrum, med 1 wood/sekund per arbetare.
+De tre enheterna är placeholder-arbetare. Den bruna noden vid (650, 180) börjar
+med 100 wood, och en fast blå bas står vid (400, 450). Markera arbetare och
+högerklicka på noden för gather. Inom 24 world pixels från nodcentrum samlar
+varje arbetare 1 wood/sekund till sin last, högst 5 wood. Text vid arbetaren
+visar last/kapacitet med en decimal.
 
-Wood krediteras direkt till spelarens gemensamma saldo. Detta är en förenkling
-för denna slice: ingen bas, leverans eller bärkapacitet finns. Insamlingen är
-kontinuerlig; enkel text visar saldo och nodens återstående mängd med en decimal.
-Flera arbetare delar samma begränsade mängd utan att den blir negativ.
+Full last startar en automatisk tur till basen. Inom 24 px från bascentrum
+levereras hela lasten till gemensamt saldo. Arbetaren går sedan tillbaka till
+sin resursnod om wood finns. Vid uttömning levereras även delvis fylld last,
+sedan blir arbetaren idle. Enkla texter visar saldo och nodens återstående wood.
+Den tidigare direkta krediteringen från RTS-005 är ersatt: saldo ökar först
+vid leverans. Nod, laster och saldo bevarar totalt wood.
 
-Vid uttömning blir arbetare med gather-order till noden idle, även om de ännu
-är på väg dit. Noden blir grå och ligger kvar med 0 wood. Ny move-order avbryter
-gathering; avmarkering påverkar inte ordern. Högerklick på en tom nod ger idle.
-Inga animationer, collision, pathfinding, byggnader eller ekonomi-UI införs.
+Move-order avbryter arbetsloopen men bevarar lasten. En ny gather-order med
+full last levererar först; partiallast fortsätter fyllas om noden har wood.
+Gather på uttömd nod levererar eventuell kvarvarande last och avslutas sedan.
+Avmarkering påverkar inte loopen. Det finns ingen manuell leveransorder.
+Enheter får överlappa. Byggplacering, produktion, kostnader, fler resurser,
+pathfinding och collision ingår inte i denna slice.
 
 ## Utvecklingsordning
 
