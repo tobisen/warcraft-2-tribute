@@ -285,3 +285,44 @@
   `feat: add worker production at base`.
 - `git diff --check` passerade inför commit. Tester, typecheck, build och
   browserkontroll är redovisade i implementationsposten ovan.
+
+
+## 2026-10-01 – RTS-008: Place a barracks
+
+- Läste AGENTS, implementer-roll, backlog, game design, arkitektur, beslut och
+  befintlig input/ekonomi/baslogik. Arbetsytan var ren. Skapade RTS-008 med nästa
+  lediga ID, satte In Progress före implementation och Done efter verifiering.
+- Införde byggknapp och grön/röd preview med förklarande text. Barracks är
+  2 × 2 tiles, övre vänster snappas nedåt till 32 px-grid. World-config 800 × 600
+  delas mellan bootstrap och placeringsregler.
+- Phaser-fristående regler validerar gränser, bas/nod-footprints, aktuellt saldo
+  och max en barracks. Giltig placering drar 40 wood en gång; fel och avbrott
+  drar inget. Escape/högerklick avbryter. Inputläget och dess release konsumeras
+  utan ändrad selection eller unit-orders. Ingen reservation vid lägesstart.
+- Footprints dokumenterade i DECISIONS: barracks 64 × 64 med övre vänster-position,
+  centrerad bas 48 × 48 och nodens centrerade bounding box 40 × 40. Kantkontakt
+  tillåts, areaöverlapp förbjuds. Även uttömd nod blockerar; arbetare blockerar inte.
+- `npm test`: 93 tester passerade (21 placement, 72 tidigare). Testade snapping,
+  negativa koordinater, världens kanter, bas/nodöverlapp, kantkontakt, saldo,
+  en debitering, avbrott och andra barracks. `npm run typecheck` och
+  `npm run build` passerade. Tidigare bundle-varning kvarstår (cirka 1,39 MB
+  minifierat och 361 kB gzip).
+- Browserkontroll med tillfälligt Playwright i /tmp och Chromium passerade utan
+  ändrad spelhastighet/påhittat saldo. Verifierade lågt saldo, aktiv preview,
+  kostnadsfria avbrott med Escape/högerklick, bas-/nodöverlapp och världens kant.
+  Samlade 40 wood via befintliga arbetare, placerade vid (96, 96) och fick saldo 0.
+  Selection och orders förblev oförändrade efter även klickets release. Andra
+  barracks blockerades, även vid forcerat DOM-klick på spärrad byggknapp.
+  Inga runtime-, konsol- eller nätverksfel fångades. Preview och färdig byggnad
+  granskades i /tmp/w2t-placement-valid.png och /tmp/w2t-barracks-placed.png.
+- Uppdaterade BACKLOG, ARCHITECTURE, GAME_DESIGN, DECISIONS och README.
+  Dokumentreferenser och `git diff --check` kontrollerades. Inga dependencies
+  eller non-goals infördes; basens befintliga arbetarproduktion bevarades.
+- Nästa föreslagna task: avgränsa barracks-produktion. Ingen commit eller push.
+
+## 2026-10-01 – RTS-008 för commit
+
+- Användaren godkände commit och push med meddelandet
+  `feat: add barracks placement`.
+- `git diff --check` passerade inför commit. Tester, typecheck, build och
+  browserkontroll är redovisade i implementationsposten ovan.

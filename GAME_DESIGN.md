@@ -60,8 +60,8 @@ Move-order avbryter arbetsloopen men bevarar lasten. En ny gather-order med
 full last levererar först; partiallast fortsätter fyllas om noden har wood.
 Gather på uttömd nod levererar eventuell kvarvarande last och avslutas sedan.
 Avmarkering påverkar inte loopen. Det finns ingen manuell leveransorder.
-Enheter får överlappa. Byggplacering, byggkostnader och fler resurser,
-pathfinding och collision ingår inte i denna slice.
+Enheter får överlappa. Arbetsloopen har ingen pathfinding eller collision och
+använder endast wood.
 
 ## Arbetarproduktion från basen (RTS-007)
 
@@ -75,9 +75,26 @@ idle och utan markering. Den kan klick-/dragmarkeras, flyttas och samla/leverera
 precis som startarbetarna. Produktionsknappen ändrar inte selection eller ger
 order. Spelaren markerar och kommenderar den nya arbetaren själv.
 
-Ingen separat produktionsbyggnad, byggplacering, stridsenhet, avbrytning/refund,
+Basproduktionen inför ingen stridsenhet, avbrytning/refund,
 rally point eller population cap införs. Den begränsade noden och produktions-
 kostnaderna sätter naturliga gränser för antalet nya arbetare i denna slice.
+
+## Barracks-placering (RTS-008)
+
+”Bygg barracks – 40 wood” öppnar placeringsläge med synlig preview. Barracks
+är 2 × 2 tiles och dess övre vänstra hörn snappas till 32 px-grid. Grön preview
+är giltig; röd preview och text visar fel. Vänsterklick placerar direkt om hela
+footprinten ligger i världen, inte överlappar bas/nod och saldo är minst 40.
+Kostnaden dras exakt en gång vid lyckad placering; bara en barracks får byggas.
+
+Escape eller högerklick avbryter gratis. Ogiltiga klick stannar i placeringsläge
+utan debitering. Selection och unit-orders ändras inte av placeringsinput.
+Byggknappen kan öppna preview vid lågt saldo; det kontrolleras vid placering.
+Basens och nodens footprints samt kantkontakt beskrivs i [DECISIONS.md](DECISIONS.md).
+Arbetare blockerar inte platsen. Basproduktion påverkas inte av placeringsläget.
+
+Ingen byggtid, byggande arbetare, barracks-produktion, rivning, pathfinding,
+unit-collision eller generell byggmeny ingår.
 
 ## Utvecklingsordning
 

@@ -6,7 +6,7 @@ RTS-001 har implementerat en minimal bootstrap med Phaser 4.2.1, strict
 TypeScript 7.0.2 och Vite 8.3.2. Appen körs i webbläsaren utan backend eller
 konton. RTS-002 inför movement, RTS-003 klickselection, RTS-004 dragselection
 och gruppkommandon, RTS-005 gathering, RTS-006 bas och leverans samt RTS-007
-arbetarproduktion. Ansvarsfördelningen nedan styr
+arbetarproduktion samt RTS-008 barracks-placering. Ansvarsfördelningen nedan styr
 både nuvarande och kommande arbete.
 
 ## Ansvarsfördelning
@@ -22,9 +22,9 @@ både nuvarande och kommande arbete.
 ## Implementerad struktur
 
 - [index.html](index.html) är Vites startpunkt med containern `#game` och
-  separata DOM-kontroller för arbetarproduktion utanför canvasen.
+  separata DOM-kontroller för arbetarproduktion och barracks-placering utanför canvasen.
 - [src/main.ts](src/main.ts) skapar Phaser.Game med automatisk renderer, en
-  mörk bakgrund och en canvas på 800 × 600 pixlar.
+  mörk bakgrund och en canvas på 800 × 600 pixlar från worldConfig.
 - [src/scenes/BootScene.ts](src/scenes/BootScene.ts) skapar tre gröna placeholders
   (24 × 24 px) med ID unit-1, unit-2 och unit-3 vid (280, 300), (400, 300) och
   (520, 300). Varje arbetare har position, mål, order och selected-state separat från
@@ -56,6 +56,12 @@ både nuvarande och kommande arbete.
   5 sekunders produktion och spawn-offset (60, 0) relativt basen.
 - [src/gameplay/production.test.ts](src/gameplay/production.test.ts) verifierar
   startspärrar, kostnad, tid, spawn, unika ID:n och ny arbetares gameplay.
+- [src/config/buildings.ts](src/config/buildings.ts) anger worldConfig 800 × 600,
+  32 px tile-storlek, barracks 2 × 2 tiles och kostnad 40 wood.
+- [src/gameplay/placement.ts](src/gameplay/placement.ts) hanterar placeringsläge,
+  snapping, footprints, gränser, överlapp, saldo och max en barracks utan Phaser.
+- [src/gameplay/placement.test.ts](src/gameplay/placement.test.ts) verifierar
+  dessa regler inklusive negativa koordinater, kantkontakt och exakt en debitering.
 - [src/config/unit.ts](src/config/unit.ts) anger hastighet 160 px/s och storlek 24 px.
 - [src/gameplay/selection.ts](src/gameplay/selection.ts) hanterar selection och
   kommandon utan Phaser. Klick använder kvadratisk träffyta och ersätter selection
@@ -79,12 +85,12 @@ både nuvarande och kommande arbete.
 
 Vite använder standardinställningarna och behöver ingen separat configfil.
 Ingen framtida systemstruktur har skapats. Movement ligger separat från
-bootstrap och scene. Canvasstorleken avgör inte kartans storlek.
+bootstrap och scene. World-config definierar den nuvarande placeringsvärlden; ingen karta har införts.
 
 ## Koordinater och tid
 
-Positioner och mål anges i world pixels. Framtida tiles är 32 × 32 px, men inget
-grid finns. Scenen omvandlar Phasers delta till sekunder (`delta / 1000`);
+Positioner och mål anges i world pixels. Byggplacering snappar till 32 × 32 px; något gameplay-
+eller movement-grid finns inte. Scenen omvandlar Phasers delta till sekunder (`delta / 1000`);
 movement använder delta-baserade steg utan fixed timestep. Funktionen arbetar
 med ändliga positioner, icke-negativ hastighet och delta från scenen.
 Högerklick ersätter målet på alla markerade enheter. Alla börjar omarkerade.
@@ -96,7 +102,7 @@ Tröskeln använder DOM-eventets client-koordinater, oberoende av skalad canvas;
 rektangeln och träfftesterna använder world pixels. Pointerup utanför canvas
 avslutar också gesten. Scenen håller endast gest- och renderadapterstate.
 Det finns ingen shift-selection, formation, collision avoidance, kontrollgrupp,
-ekonomi-UI utöver enkel saldotext och produktionsknapp, pathfinding, hinderhantering, karta,
+ekonomi-UI utöver enkla texter samt produktions-/byggknapp, pathfinding, hinderhantering, karta,
 kameraimplementation eller AI.
 Enheterna kan överlappa vid samma mål.
 Se [DECISIONS.md](DECISIONS.md).
@@ -124,8 +130,7 @@ flyttalstolerans. Depletion efter en senare arbetare dirigerar även tidigare
 arbetares kvarvarande gather-order till slutleverans.
 
 Basen är en fast blå placeholder. Text vid varje arbetare visar last/kapacitet
-med en decimal, och saldotext visar wood och nodens mängd. Ingen byggplacering,
-byggkostnader, manuell leveransorder eller collision införs. Den tidigare
+med en decimal, och saldotext visar wood och nodens mängd. Ingen manuell leveransorder eller collision införs i arbetsloopen. Den tidigare
 direkta krediteringen från RTS-005 har ersatts av denna leveransmodell.
 
 ## Arbetarproduktion från basen (RTS-007)
@@ -147,8 +152,27 @@ Knappens click-handler anropar bara produktionslogiken. Canvas-input lyssnar på
 canvasen; release över produktionskontrollerna avbryter en eventuell draggest
 utan att ändra selection. UI-klick kan därför inte ge order eller avmarkera.
 Scenen synkar knapp, tidstext och renderobjekt och tar bort DOM-lyssnaren vid
-shutdown. Ingen kö, avbrytning/refund, rally point, population cap eller separat
-produktionsbyggnad införs.
+shutdown. Ingen kö, avbrytning/refund, rally point, population cap eller barracks-produktion införs.
+
+## Barracks-placering (RTS-008)
+
+PlacementState håller active och en valfri barracks-footprint. Byggknappen
+öppnar läget även vid lågt saldo så att preview kan visa varför platsen är
+ogiltig. Vänsterklick validerar aktuellt saldo, footprint och världens gränser
+innan en direkt placering debiterar 40 wood. Inga pengar reserveras vid start.
+Escape/högerklick avslutar gratis. Bara en barracks tillåts; byggknappen spärras
+när en redan finns. Reglerna kontrollerar också maxgränsen oberoende av UI.
+
+Scenen visar en grön/röd preview med statustext och adapterar världspointer till
+reglerna. Placement har företräde framför selection och unit-orders. Den release
+som hör till placeringsklicket konsumeras även efter lyckad placering eller
+högerklicksavbrott. Preview och unit-orderstate är separata. Basproduktion kan
+fortgå och spendera saldo under placeringsläge; aktuellt saldo kontrolleras på nytt.
+
+Se [DECISIONS.md](DECISIONS.md) för footprints: barracks 64 × 64 (övre vänster),
+bas 48 × 48 centrerad och nodens bounding box 40 × 40. Kantkontakt tillåts,
+positiv areaöverlapp förbjuds. Ingen byggtid, arbetarbyggande, barracks-produktion,
+rivning, pathfinding, unit-collision eller generell byggmeny finns.
 
 ## Verifiering
 

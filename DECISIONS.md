@@ -30,3 +30,23 @@
 De tidigare öppna gridstorleks-, koordinat- och tidsfrågorna har avgjorts av
 användaren inför denna slice. Se
 [ARCHITECTURE.md](ARCHITECTURE.md) och [BACKLOG.md](BACKLOG.md).
+
+
+## Placement-footprints – RTS-008, 2026-10-01
+
+- Barracks har en axis-aligned rektangulär footprint på 2 × 2 tiles (64 × 64 px).
+  Positionen är dess övre vänstra hörn, snappat nedåt med floor till 32 px-grid.
+  Snapping gäller bara byggplacering; enhetspositioner förblir world pixels.
+- Världen är i denna slice 800 × 600 world pixels, samma som canvasens config.
+  Hela footprinten måste ligga inom gränserna; koordinater klampas inte till
+  en giltig plats. De sista 24 pixlarna längst ned är inte en hel gridrad.
+- Basens footprint är den befintliga synliga 48 × 48-rektangeln centrerad på
+  (400, 450), alltså övre vänster (376, 426). Basen flyttas eller snappas inte.
+- Resursnodens footprint är dess cirkels bounding box: 40 × 40 px centrerad på
+  (650, 180), alltså övre vänster (630, 160). Även uttömd nod blockerar placering.
+- Positiv areaöverlappning förbjuds; enbart kantkontakt är tillåten. Arbetare,
+  ringar och texter är inte placeringshinder. Footprints används enbart för
+  byggplacering och inför ingen movement-collision eller pathfinding.
+- Högst en barracks och kostnad 40 wood kontrolleras vid själva placeringen.
+  Placeringsläget kan öppnas utan tillräckligt saldo för att visa preview;
+  otillräckligt saldo gör den ogiltig. Escape/högerklick avbryter gratis.

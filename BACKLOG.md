@@ -2,9 +2,9 @@
 
 ## Current Focus
 
-**RTS-007 – Train workers from base** — **Done**.
+**RTS-008 – Place a barracks** — **Done**.
 
-Ingen ny task är aktiv. Nästa föreslagna task är att avgränsa produktionsbyggnad;
+Ingen ny task är aktiv. Nästa föreslagna task är att avgränsa barracks-produktion;
 ingen sådan implementation ingår här.
 
 Denna fil styr arbetet. En task åt gången. Framtida tasks konkretiseras med
@@ -279,3 +279,40 @@ Browserkontroll av hela flödet och knappens inputisolering.
 
 **Relevanta docs:** [GAME_DESIGN.md](GAME_DESIGN.md), [ARCHITECTURE.md](ARCHITECTURE.md),
 [README.md](README.md), [DEV_LOG.md](DEV_LOG.md).
+
+
+## RTS-008 – Place a barracks
+
+**Status:** Done.
+
+**Verifierat 2026-10-01:** Alla 93 tester, typecheck och build passerade.
+Chromium verifierade preview, snapping, ogiltiga platser/lågt saldo, Escape och
+högerklick, exakt kostnad 40 vid placering samt max en barracks. Selection och
+unit-orders bevarades. Inga fångade browserfel. Preview/byggnad granskades visuellt.
+Tidigare bundle-varning kvarstår.
+
+**Mål:** Spelaren placerar en barracks för levererat wood.
+
+**Krav:** Knapp ”Bygg barracks – 40 wood” aktiverar placeringsläge med preview.
+Övre vänstra hörnet snappas till 32 px-grid; footprint 2 × 2 tiles. Vänsterklick
+på giltig plats placerar direkt. Helt inom världen, ingen överlapp med bas
+eller resursnod. Ogiltigt visas tydligt utan debitering. Saldo kontrolleras vid
+placering och kostnaden 40 dras exakt en gång. Escape/högerklick avbryter gratis.
+Placeringsinput ändrar inte selection eller unit-orders. Högst en barracks.
+Phaser-fristående regler, enkla configvärden och dokumenterad footprint-modell.
+
+**Non-goals:** Byggtid, byggande arbetare, barracks-produktion, rivning,
+pathfinding, unit-collision och generell byggmeny. Befintlig basproduktion bevaras.
+
+**Acceptance criteria:** Preview med giltig/ogiltig status; korrekt snapping,
+världsgränser och footprint-spärrar. Giltig placering debiterar exakt en gång.
+Felplats, lågt saldo, avbrott och andra barracks ändrar inte saldo/byggnader.
+Selection/order-input är isolerad. Tester, typecheck, build och browserkontroll
+passerar; docs uppdateras.
+
+**Tester:** Snapping/gränser, bas/nodöverlapp, kantkontakt, giltig kostnad,
+ogiltig placering, otillräckligt saldo, avbrytning och max en barracks.
+Alla befintliga tester. Browserkontroll av preview, placering och båda avbrotten.
+
+**Relevanta docs:** [GAME_DESIGN.md](GAME_DESIGN.md), [ARCHITECTURE.md](ARCHITECTURE.md),
+[DECISIONS.md](DECISIONS.md), [README.md](README.md), [DEV_LOG.md](DEV_LOG.md).
