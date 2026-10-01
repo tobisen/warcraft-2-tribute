@@ -2,6 +2,8 @@ import Phaser from 'phaser';
 import { unitStats } from '../config/unit';
 import type { Position } from '../gameplay/movement';
 import { gatheringConfig } from '../config/gathering';
+import { productionConfig } from '../config/production';
+import { canStartProduction, startProduction, updateProduction, type ProductionState } from '../gameplay/production';
 import { isNodeHit, orderWorkers, updateGathering, type GatheringState } from '../gameplay/gathering';
 import {
   isSelectionDrag, selectionRectangle,
@@ -10,6 +12,9 @@ import {
 
 export class BootScene extends Phaser.Scene {
   private gathering!: GatheringState;
+  private production: ProductionState = { remainingSeconds: null, nextWorkerNumber: 4 };
+  private trainButton!: HTMLButtonElement;
+  private productionStatus!: HTMLElement;
   private nodeVisual!: Phaser.GameObjects.Arc;
   private resourceText!: Phaser.GameObjects.Text;
   private visuals = new Map<string, { body: Phaser.GameObjects.Rectangle; ring: Phaser.GameObjects.Arc; cargo: Phaser.GameObjects.Text }>();
@@ -39,16 +44,23 @@ export class BootScene extends Phaser.Scene {
     this.resourceText = this.add.text(16, 16, '', { fontSize: '18px', color: '#ffffff' });
     this.visuals.clear();
     this.drag = undefined;
-    for (const unit of this.gathering.workers) {
-      const ring = this.add.circle(unit.position.x, unit.position.y, 20)
-        .setStrokeStyle(2, 0xffdc73).setVisible(false);
-      const body = this.add.rectangle(unit.position.x, unit.position.y, unitStats.size, unitStats.size, 0x7bd389);
-      const cargo = this.add.text(unit.position.x, unit.position.y - 32, '',
-        { fontSize: '14px', color: '#ffffff' }).setOrigin(0.5, 0);
-      this.visuals.set(unit.id, { body, ring, cargo });
-    }
     this.dragBox = this.add.rectangle(0, 0, 0, 0, 0xffdc73, 0.1)
-      .setOrigin(0).setStrokeStyle(1, 0xffdc73).setVisible(false);
+      .setOrigin(0).setStrokeStyle(1, 0xffdc73).setVisible(false).setDepth(10);
+    this.production = { remainingSeconds: null, nextWorkerNumber: 4 };
+    this.trainButton = document.querySelector<HTMLButtonElement>('#train-worker')!;
+    this.productionStatus = document.querySelector<HTMLElement>('#production-status')!;
+    this.trainButton.textContent = `Träna arbetare – ${productionConfig.workerCost} wood`;
+    const train = () => {
+      const result = startProduction(this.gathering, this.production);
+      this.gathering = result.gathering;
+      this.production = result.production;
+      this.syncVisuals();
+    };
+    this.trainButton.addEventListener('click', train);
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      this.trainButton.removeEventListener('click', train);
+    });
+    this.syncVisuals();
     this.input.mouse?.disableContextMenu();
     this.input.on('pointerdown', this.handleDown, this);
     this.input.on('pointermove', this.handleMove, this);
@@ -93,6 +105,11 @@ export class BootScene extends Phaser.Scene {
 
   private handleUp(pointer: Phaser.Input.Pointer): void {
     if (pointer.button !== 0 || !this.drag) return;
+    if (pointer.event.target instanceof Element && pointer.event.target.closest('#production-controls')) {
+      this.drag = undefined;
+      this.dragBox.setVisible(false);
+      return;
+    }
     this.handleMove(pointer);
     const end = this.worldPoint(pointer);
     this.gathering.workers = this.drag.active
@@ -106,7 +123,18 @@ export class BootScene extends Phaser.Scene {
   private syncVisuals(): void {
     this.resourceText.setText(`Wood: ${this.gathering.wood.toFixed(1)}\nNode: ${this.gathering.node.remaining.toFixed(1)} wood`);
     this.nodeVisual.setFillStyle(this.gathering.node.remaining > 0 ? 0x9a683b : 0x555555);
+    this.trainButton.disabled = !canStartProduction(this.gathering, this.production);
+    this.productionStatus.textContent = this.production.remainingSeconds === null
+      ? 'Bas ledig' : `Återstår: ${this.production.remainingSeconds.toFixed(1)} s`;
     for (const unit of this.gathering.workers) {
+      if (!this.visuals.has(unit.id)) {
+        const ring = this.add.circle(unit.position.x, unit.position.y, 20)
+          .setStrokeStyle(2, 0xffdc73).setVisible(false);
+        const body = this.add.rectangle(unit.position.x, unit.position.y, unitStats.size, unitStats.size, 0x7bd389);
+        const cargo = this.add.text(unit.position.x, unit.position.y - 32, '',
+          { fontSize: '14px', color: '#ffffff' }).setOrigin(0.5, 0);
+        this.visuals.set(unit.id, { body, ring, cargo });
+      }
       const visual = this.visuals.get(unit.id)!;
       visual.body.setPosition(unit.position.x, unit.position.y);
       visual.ring.setPosition(unit.position.x, unit.position.y).setVisible(unit.selected);
@@ -117,6 +145,9 @@ export class BootScene extends Phaser.Scene {
 
   update(_time: number, delta: number): void {
     this.gathering = updateGathering(this.gathering, delta / 1000);
+    const result = updateProduction(this.gathering, this.production, delta / 1000);
+    this.gathering = result.gathering;
+    this.production = result.production;
     this.syncVisuals();
   }
 }

@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-006 – Base and wood delivery** — **Done**.
+**RTS-007 – Train workers from base** — **Done**.
 
 Ingen ny task är aktiv. Nästa föreslagna task är att avgränsa produktionsbyggnad;
 ingen sådan implementation ingår här.
@@ -239,6 +239,43 @@ leveransmodellen i stället för direkt kreditering.
 **Tester:** Leverans först i räckvidd, full och delvis last, återgång och flera
 turer, orderbyte/full last, totalbevarande mellan nod/laster/saldo. Tidigare
 gathering-tester anpassas; andra tester ska passera.
+
+**Relevanta docs:** [GAME_DESIGN.md](GAME_DESIGN.md), [ARCHITECTURE.md](ARCHITECTURE.md),
+[README.md](README.md), [DEV_LOG.md](DEV_LOG.md).
+
+
+## RTS-007 – Train workers from base
+
+**Status:** Done.
+
+**Verifierat 2026-10-01:** Alla 72 tester, typecheck och build passerade.
+Chromium verifierade samla/leverera 20 wood, start med exakt kostnad, countdown,
+spärrat dubbelklick, en ny idle/omarkerad arbetare efter produktion samt dess
+selection, insamling och leverans. Knappinteraktion ändrade inte selection eller
+order. Inga fångade browserfel. Knapp/countdown granskades visuellt.
+Tidigare bundle-varning kvarstår.
+
+**Mål:** Producera en arbetare från befintlig bas efter resursleverans.
+
+**Krav:** Enkel knapp ”Träna arbetare – 20 wood”. Godkänd start kostar 20 wood
+omedelbart och tar 5 gameplay-sekunder. En pågående produktion, ingen kö;
+blockera start vid otillräckligt saldo eller upptagen bas. Visa återstående tid.
+Spawn nära basen med unikt ID, tom last, idle och omarkerad. Nya arbetare
+stöder befintlig selection, movement och gathering/leverans. Knappinteraktion
+ska inte ändra selection eller ge order. Phaser-fristående produktion och configvärden.
+
+**Non-goals:** Produktionsbyggnad, byggplacering, stridsenheter, produktionskö,
+avbrytning/refund, rally point och population cap.
+
+**Acceptance criteria:** Start blockerad/med exakt kostnad, countdown i gameplay-
+tid, en spawn först vid färdig produktion; upprepade produktioner har unika ID:n.
+Ny arbetare kan väljas och samla/leverera. Knappen är isolerad från spelinput.
+Alla tester, typecheck, build och browserflödet samla → producera → välj → samla
+passerar. Dokumentation beskriver implementationen.
+
+**Tester:** Kostnad en gång, spärrar, spawn-tid/antal, olika tidssteg, unika ID:n
+vid upprepning samt ny arbetares selection/gather/leverans. Alla befintliga tester.
+Browserkontroll av hela flödet och knappens inputisolering.
 
 **Relevanta docs:** [GAME_DESIGN.md](GAME_DESIGN.md), [ARCHITECTURE.md](ARCHITECTURE.md),
 [README.md](README.md), [DEV_LOG.md](DEV_LOG.md).

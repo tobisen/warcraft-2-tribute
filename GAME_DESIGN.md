@@ -60,8 +60,24 @@ Move-order avbryter arbetsloopen men bevarar lasten. En ny gather-order med
 full last levererar först; partiallast fortsätter fyllas om noden har wood.
 Gather på uttömd nod levererar eventuell kvarvarande last och avslutas sedan.
 Avmarkering påverkar inte loopen. Det finns ingen manuell leveransorder.
-Enheter får överlappa. Byggplacering, produktion, kostnader, fler resurser,
+Enheter får överlappa. Byggplacering, byggkostnader och fler resurser,
 pathfinding och collision ingår inte i denna slice.
+
+## Arbetarproduktion från basen (RTS-007)
+
+Knappen ”Träna arbetare – 20 wood” startar produktion från den befintliga basen.
+Godkänd start drar 20 wood direkt från levererat saldo och tar 5 gameplay-
+sekunder. Endast en produktion får pågå; otillräckligt saldo och upptagen bas
+blockerar start. Återstående tid visas med enkel text; ingen kö finns.
+
+Den nya arbetaren skapas nära basen vid (460, 450) med unikt ID, tom last,
+idle och utan markering. Den kan klick-/dragmarkeras, flyttas och samla/leverera
+precis som startarbetarna. Produktionsknappen ändrar inte selection eller ger
+order. Spelaren markerar och kommenderar den nya arbetaren själv.
+
+Ingen separat produktionsbyggnad, byggplacering, stridsenhet, avbrytning/refund,
+rally point eller population cap införs. Den begränsade noden och produktions-
+kostnaderna sätter naturliga gränser för antalet nya arbetare i denna slice.
 
 ## Utvecklingsordning
 

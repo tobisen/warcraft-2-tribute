@@ -5,7 +5,8 @@
 RTS-001 har implementerat en minimal bootstrap med Phaser 4.2.1, strict
 TypeScript 7.0.2 och Vite 8.3.2. Appen körs i webbläsaren utan backend eller
 konton. RTS-002 inför movement, RTS-003 klickselection, RTS-004 dragselection
-och gruppkommandon, RTS-005 gathering samt RTS-006 bas och leverans. Ansvarsfördelningen nedan styr
+och gruppkommandon, RTS-005 gathering, RTS-006 bas och leverans samt RTS-007
+arbetarproduktion. Ansvarsfördelningen nedan styr
 både nuvarande och kommande arbete.
 
 ## Ansvarsfördelning
@@ -20,7 +21,8 @@ både nuvarande och kommande arbete.
 
 ## Implementerad struktur
 
-- [index.html](index.html) är Vites startpunkt med containern `#game`.
+- [index.html](index.html) är Vites startpunkt med containern `#game` och
+  separata DOM-kontroller för arbetarproduktion utanför canvasen.
 - [src/main.ts](src/main.ts) skapar Phaser.Game med automatisk renderer, en
   mörk bakgrund och en canvas på 800 × 600 pixlar.
 - [src/scenes/BootScene.ts](src/scenes/BootScene.ts) skapar tre gröna placeholders
@@ -29,7 +31,8 @@ både nuvarande och kommande arbete.
   renderobjekten, som kopplas via en Map med ID som nyckel.
   Scenen adapterar pointer-input, visar dragrektangel och ringar, konverterar
   delta till sekunder och synkar rendering av arbetare, lasttext, bas, resursnod och saldotext.
-  Gathering-steget anropas från update; inputlyssnare tas bort vid shutdown.
+  Gathering och produktion uppdateras med samma gameplay-delta. Nya arbetares
+  renderobjekt skapas efter spawn. Input- och knapplyssnare tas bort vid shutdown.
 - [src/gameplay/movement.ts](src/gameplay/movement.ts) är en ren funktion utan
   Phaser-beroende: normaliserad riktning × hastighet × delta i sekunder,
   begränsat till återstående avstånd. Samma start/mål och delta=0 är säkra.
@@ -46,6 +49,13 @@ både nuvarande och kommande arbete.
   räckvidd, tidssteg, begränsad resurs, last, uttömning och orderbyte.
   [src/gameplay/delivery.test.ts](src/gameplay/delivery.test.ts) verifierar
   leverans, återgång, upprepade turer, totalbevarande och avbruten loop.
+- [src/gameplay/production.ts](src/gameplay/production.ts) hanterar startspärr,
+  omedelbar kostnad, countdown och exakt en spawn utan Phaser-beroende.
+  ProductionState lagrar återstående tid (null när ledig) och nästa ID-nummer.
+- [src/config/production.ts](src/config/production.ts) anger 20 wood,
+  5 sekunders produktion och spawn-offset (60, 0) relativt basen.
+- [src/gameplay/production.test.ts](src/gameplay/production.test.ts) verifierar
+  startspärrar, kostnad, tid, spawn, unika ID:n och ny arbetares gameplay.
 - [src/config/unit.ts](src/config/unit.ts) anger hastighet 160 px/s och storlek 24 px.
 - [src/gameplay/selection.ts](src/gameplay/selection.ts) hanterar selection och
   kommandon utan Phaser. Klick använder kvadratisk träffyta och ersätter selection
@@ -86,7 +96,7 @@ Tröskeln använder DOM-eventets client-koordinater, oberoende av skalad canvas;
 rektangeln och träfftesterna använder world pixels. Pointerup utanför canvas
 avslutar också gesten. Scenen håller endast gest- och renderadapterstate.
 Det finns ingen shift-selection, formation, collision avoidance, kontrollgrupp,
-ekonomi-UI utöver enkel saldotext, pathfinding, hinderhantering, karta,
+ekonomi-UI utöver enkel saldotext och produktionsknapp, pathfinding, hinderhantering, karta,
 kameraimplementation eller AI.
 Enheterna kan överlappa vid samma mål.
 Se [DECISIONS.md](DECISIONS.md).
@@ -115,8 +125,30 @@ arbetares kvarvarande gather-order till slutleverans.
 
 Basen är en fast blå placeholder. Text vid varje arbetare visar last/kapacitet
 med en decimal, och saldotext visar wood och nodens mängd. Ingen byggplacering,
-produktion, kostnader, manuell leveransorder eller collision införs. Den tidigare
+byggkostnader, manuell leveransorder eller collision införs. Den tidigare
 direkta krediteringen från RTS-005 har ersatts av denna leveransmodell.
+
+## Arbetarproduktion från basen (RTS-007)
+
+En DOM-knapp ”Träna arbetare – 20 wood” ligger utanför canvasen. Den är disabled
+när saldo är under 20 wood eller basen redan producerar. startProduction
+kontrollerar samma regler oberoende av UI och drar kostnaden bara vid godkänd
+start. Ett nytt klick under pågående produktion köas inte och debiterar inte.
+
+updateProduction använder gameplay-delta i sekunder, samma delta som gathering.
+Countdown visas med en decimal. Efter 5 sekunder skapas en arbetare vid basens
+position + (60, 0), med cargo 0, idle och selected=false. Monotont nästa ID-nummer
+samt kontroll mot befintliga ID:n förhindrar kollisioner. Ett avslutat steg
+skapar bara en arbetare även med stort delta; resttid startar ingen ny produktion.
+Nya arbetare går genom samma selection, movement, gathering och leverans som de
+befintliga. Float-tolerans används enbart vid timeravslut.
+
+Knappens click-handler anropar bara produktionslogiken. Canvas-input lyssnar på
+canvasen; release över produktionskontrollerna avbryter en eventuell draggest
+utan att ändra selection. UI-klick kan därför inte ge order eller avmarkera.
+Scenen synkar knapp, tidstext och renderobjekt och tar bort DOM-lyssnaren vid
+shutdown. Ingen kö, avbrytning/refund, rally point, population cap eller separat
+produktionsbyggnad införs.
 
 ## Verifiering
 

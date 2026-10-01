@@ -31,6 +31,10 @@ levererar automatiskt inom 24 px från den blå basen vid (400, 450) och återg�
 till noden. Saldo ökar först vid leverans; last visas vid arbetarna. Move-order
 avbryter loopen men bevarar last, avmarkering påverkar inte loopen. Vid uttömning
 levereras partiallast innan idle.
+Efter leverans av minst 20 wood: klicka ”Träna arbetare – 20 wood”. Kostnaden
+dras direkt och en arbetare skapas nära basen efter 5 gameplay-sekunder.
+Endast en produktion pågår åt gången. Markera den nya arbetaren för nya order;
+produktionsknappen ändrar inte selection. Återstående tid visas vid knappen.
 Canvasstorleken är tillfällig; inget kart- eller gridsystem finns.
 
 ```sh
@@ -39,7 +43,7 @@ npm run typecheck
 npm run build
 ```
 
-`test` kör movement-, selection-, gathering- och delivery-unit-tester en gång med Vitest i Node, utan browser.
+`test` kör movement-, selection-, gathering-, delivery- och production-unit-tester en gång med Vitest i Node, utan browser.
 `typecheck` kontrollerar projektkoden och testerna med strict TypeScript utan att skriva
 filer. `build` kör först typkontroll och skapar sedan byggoutput i `dist/`.
 `node_modules/` och `dist/` ignoreras av Git. Paketversioner låses med
@@ -61,7 +65,7 @@ Utvecklingsordningen är movement → selection → resources → buildings → 
 - [Implementer](.agents/implementer.md), [Reviewer](.agents/reviewer.md) och
   [Finisher](.agents/finisher.md): rollinstruktioner.
 
-RTS-006 är Done. Nästa föreslagna task är att avgränsa produktionsbyggnad
+RTS-007 är Done. Nästa föreslagna task är att avgränsa produktionsbyggnad
 enligt utvecklingsordningen; den är inte implementerad.
 Rollfilerna är instruktioner och konfigurerar inte automatiskt några agenter.
 

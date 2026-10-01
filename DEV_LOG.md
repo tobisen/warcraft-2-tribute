@@ -245,3 +245,43 @@
   `feat: add base and automatic wood delivery`.
 - `git diff --check` passerade inför commit. Tester, typecheck, build och
   browserkontroll är redovisade i implementationsposten ovan.
+
+
+## 2026-10-01 – RTS-007: Train workers from base
+
+- Läste AGENTS, implementer-roll, backlog, game design, arkitektur och befintlig
+  unit/selection/gathering-logik. Arbetsytan var ren. Lade till nästa lediga ID
+  RTS-007, satte In Progress före implementation och Done efter verifiering.
+- Införde Phaser-fristående produktionsstate med en pågående timer och nästa
+  ID-nummer. Start spärras vid saldo under 20 eller pågående produktion.
+  Godkänd start drar 20 wood en gång och tar 5 gameplay-sekunder enligt config.
+- Timer använder gameplay-delta och liten flyttalstolerans vid avslut. Exakt
+  en worker skapas per slutförd produktion; ID-kontroll och monotont nummer
+  undviker kollisioner. Spawn vid bas + (60, 0), last 0, idle och omarkerad.
+- Införde en DOM-knapp utanför canvas och text för återstående tid. Knappen
+  påverkar endast produktion och är disabled vid spärrar. Release över
+  produktionskontroller avbryter eventuell draggest utan selection-ändring.
+  DOM-lyssnare tas bort vid shutdown. Renderobjekt skapas för nya workers.
+- `npm test`: 72 tester passerade (11 production, 61 tidigare). Testade kostnad
+  en gång, startspärrar, spawn-tid/antal, tidssteg, unika ID:n, spawn-state och
+  ny workers selection/movement/gathering/leverans. `npm run typecheck` och
+  `npm run build` passerade. Tidigare bundle-varning kvarstår (cirka 1,38 MB
+  minifierat och 360 kB gzip).
+- Browserkontroll med tillfälligt Playwright i /tmp och lokal Chromium passerade
+  utan ändrad spelhastighet eller påhittat saldo: samlade/levererade 20 wood,
+  startade via knapp och verifierade saldo 0, countdown, blockerad upprepad
+  start samt oförändrad selection/order efter vänster- och högerklick på knappen.
+  Ny unit-4 var idle, omarkerad och tom vid (460, 450). Den valdes med klick,
+  samlade wood och levererade 5 wood. Ingen spawn före färdig timer och endast
+  en ny worker. Inga runtime-, konsol- eller nätverksfel fångades.
+  /tmp/w2t-production-countdown.png granskades visuellt.
+- Uppdaterade BACKLOG, ARCHITECTURE, GAME_DESIGN och README. Kontrollerade
+  dokumentreferenser och `git diff --check`. Inga dependencies eller non-goals infördes.
+- Nästa föreslagna task: avgränsa produktionsbyggnad. Ingen commit eller push.
+
+## 2026-10-01 – RTS-007 för commit
+
+- Användaren godkände commit och push med meddelandet
+  `feat: add worker production at base`.
+- `git diff --check` passerade inför commit. Tester, typecheck, build och
+  browserkontroll är redovisade i implementationsposten ovan.
