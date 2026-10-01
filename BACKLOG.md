@@ -2,7 +2,11 @@
 
 ## Current Focus
 
-**RTS-001 – Initialize project structure** — **Todo**.
+**RTS-001 – Initialize project structure** — **Done**.
+
+Ingen ny task är aktiv. Nästa föreslagna task är en första movement-
+implementation. Konkretisera mål, krav, non-goals, acceptance criteria, tester
+och docs samt lös relevanta öppna beslut innan den tasken påbörjas.
 
 Denna fil styr arbetet. En task åt gången. Framtida tasks konkretiseras med
 underlag i utvecklingsordningen movement → selection → resources → buildings
@@ -10,10 +14,15 @@ underlag i utvecklingsordningen movement → selection → resources → buildin
 
 ## RTS-001 – Initialize project structure
 
-**Status:** Todo.
+**Status:** Done.
+
+**Verifierat 2026-10-01:** Installation med `npm ci`, `npm run typecheck` och
+`npm run build` passerade. Lokal dev-start verifierades i Chromium: synlig
+800 × 600-canvas, inga fångade runtime-, konsol- eller nätverksfel. Skärmbilden
+granskades manuellt. Builden gav en icke-blockerande varning om bundle-storlek.
 
 **Mål:** Etablera ett minimalt körbart projektskelett för det kommande spelet.
-Denna task är nästa implementation, inte del av dokumentationsuppdraget.
+Tasken genomförs som separat implementation efter dokumentationsgrunden.
 
 **Krav:**
 

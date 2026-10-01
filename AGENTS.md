@@ -38,5 +38,5 @@ innebär inte att agenter ska startas eller att arbete ska delegeras automatiskt
   Markera en task Done först när dess Definition of Done är uppfylld.
 - Slutrapporten beskriver ändringar, verifiering och kvarstående frågor.
 
-Gör commit eller push endast när det ingår i användarens uppdrag. Detta
-dokumentationsuppdrag omfattar ingen spelkod, dependencies eller commit/push.
+Gör commit eller push endast när det ingår i användarens uppdrag. Respektera
+det aktuella uppdragets scope och non-goals.

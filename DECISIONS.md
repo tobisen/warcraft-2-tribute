@@ -11,7 +11,7 @@
 | Stats i enkla TypeScript-configobjekt | Håll datadefinitioner enkla utan extra konfigurationssystem. |
 | MVP | En karta, drag selection, move commands, gathering, bas, produktionsbyggnad, stridsenhet, enkla fiendevågor och win/loss. |
 | Utvecklingsordning | Movement → selection → resources → buildings → combat → AI, efter projektinitialisering. |
-| Första task | RTS-001 – Initialize project structure; Current Focus är Todo. |
+| Första task | RTS-001 – Initialize project structure; aktuell status följs i BACKLOG.md. |
 | Save/load efter MVP | Persistens utökar inte MVP. Local-first innebär inte att save/load redan finns. |
 | Avgränsningar | Ingen multiplayer, backend, konton, procedural generation, modding eller deployment. |
 | Agentarbete | BACKLOG styr; en task åt gången; inga scope-utökningar eller spekulativ refaktorering. Relevanta tester och docs ingår i Definition of Done. |
