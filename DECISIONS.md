@@ -17,14 +17,16 @@
 | Agentarbete | BACKLOG styr; en task åt gången; inga scope-utökningar eller spekulativ refaktorering. Relevanta tester och docs ingår i Definition of Done. |
 | Rollfiler | Implementer bygger och testar, Reviewer granskar utan kodändringar, Finisher verifierar och uppdaterar docs. Filerna konfigurerar inte automatiskt agenter. |
 
-## Öppna beslut inför movement
+## Movement-beslut – RTS-002, 2026-10-01
 
-| Fråga | Status | När den ska lösas |
-| --- | --- | --- |
-| Gridstorlek | Öppen; inget värde fastställt. | Inför implementation av movement. |
-| Koordinatmodell | Öppen; inget koordinatsystem fastställt. | Inför implementation av movement. |
-| Tidsmodell | Öppen; fast eller variabelt tidssteg är inte valt. | Inför implementation av movement. |
+| Beslut | Motiv och konsekvenser |
+| --- | --- |
+| Positioner i world pixels | Input konverteras till world coordinates; gameplay-funktionen använder vanliga x/y-tal utan Phaser-beroende. |
+| Framtida tiles: 32 × 32 px | Fastställd framtida tile-storlek; inget grid, snapping eller tilesystem införs i denna slice. |
+| Delta-baserad movement | Hastighet anges i pixlar/sekund. Scenen omvandlar Phasers delta från millisekunder till sekunder. Ingen fixed timestep införs. |
+| Rakt mot senaste målet | Nytt kommando ersätter målet. Steget begränsas till återstående avstånd för exakt stopp utan overshoot. Ingen pathfinding eller hinderhantering. |
+| Vitest 4.1.11 för unit-tester | Enkel Node-baserad testning av fristående movement-logik, kompatibel med projektets Node 20 och Vite 8. Ingen Phaser-rendering behövs för unit-testerna. |
 
-Dokumentera valet, motivet och konsekvenserna när respektive fråga avgörs.
-Detta dokument registrerar inga antagna tidigare beslut. Se
+De tidigare öppna gridstorleks-, koordinat- och tidsfrågorna har avgjorts av
+användaren inför denna slice. Se
 [ARCHITECTURE.md](ARCHITECTURE.md) och [BACKLOG.md](BACKLOG.md).

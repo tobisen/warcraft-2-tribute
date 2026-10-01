@@ -53,3 +53,39 @@
 - Användaren godkände därefter commit och push av RTS-001.
 - `git diff --check` passerade inför commit. Implementationens typecheck,
   build och browserkontroll är redovisade ovan. RTS-001 är Done.
+
+## 2026-10-01 – RTS-002: First playable movement slice
+
+- Läste agentinstruktioner, implementer-roll, backlog, arkitektur, beslut,
+  README och bootstrap. Arbetsytan var ren. Lade till RTS-002 som nästa lediga
+  ID, satte In Progress före implementation och Done efter verifiering.
+- Skapade en fristående movement-funktion och enkel speed-config (160 px/s).
+  BootScene visar en grön placeholder och kopplar högerklick till senaste
+  world-målet. Delta konverteras från millisekunder till sekunder. Rörelsen
+  begränsas till avståndet så att enheten stannar exakt utan overshoot.
+- Förhindrade canvasens kontextmeny och tog bort inputlyssnaren vid shutdown.
+  Ingen selection, pathfinding, hinder, karta, resurser, kamera eller AI infördes.
+- Dokumenterade användarens beslut: world pixels, framtida tiles 32 × 32 px,
+  delta-baserad movement och ingen fixed timestep eller grid i denna slice.
+- Införde Vitest 4.1.11 (kompatibel med befintlig Node 20 och Vite 8) och
+  `npm test`. Alla 9 unit-tester passerade: riktning/hastighet, negativ riktning,
+  exakt stopp och overshoot, samma start/mål, delta=0, motsvarande rörelse med
+  olika tidssteg före och efter ankomst samt ersatt mål.
+- `npm run typecheck` och `npm run build` passerade. Buildens bundle-varning
+  kvarstår: cirka 1,38 MB minifierat och 358 kB gzip med Phaser inkluderat.
+- Browserkontroll via tillfälligt Playwright i /tmp och lokal Chromium mot
+  Vite på 127.0.0.1:5174 passerade. Faktiska musklick verifierade rörelse från
+  (400, 300), nytt mål under pågående rörelse och exakt stopp vid (200, 150).
+  Vänsterklick ignorerades och contextmenu-event var defaultPrevented.
+  Inga runtime-, konsol- eller nätverksfel fångades. Skärmbilden
+  /tmp/w2t-movement.png granskades manuellt. Browserverktyget exponerade endast
+  en scenreferens i sitt tillfälliga svar; ingen debug-API lades i projektet.
+- Uppdaterade README, ARCHITECTURE, DECISIONS och BACKLOG. Dokumentreferenser
+  och `git diff --check` kontrollerades. Nästa föreslagna task: avgränsa selection.
+- Ingen commit eller push.
+
+## 2026-10-01 – RTS-002 för commit
+
+- Användaren godkände därefter commit och push av movement-slicen.
+- `git diff --check` passerade inför commit. RTS-002:s tester, typecheck,
+  build och browserkontroll är redovisade i dess implementationspost.

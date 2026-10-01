@@ -2,11 +2,10 @@
 
 ## Current Focus
 
-**RTS-001 – Initialize project structure** — **Done**.
+**RTS-002 – First playable movement slice** — **Done**.
 
-Ingen ny task är aktiv. Nästa föreslagna task är en första movement-
-implementation. Konkretisera mål, krav, non-goals, acceptance criteria, tester
-och docs samt lös relevanta öppna beslut innan den tasken påbörjas.
+Ingen ny task är aktiv. Nästa föreslagna task är att avgränsa selection enligt
+utvecklingsordningen; ingen sådan implementation ingår här.
 
 Denna fil styr arbetet. En task åt gången. Framtida tasks konkretiseras med
 underlag i utvecklingsordningen movement → selection → resources → buildings
@@ -57,3 +56,46 @@ tester eller tester som enbart speglar konfigurationen.
 **Relevanta docs:** [README.md](README.md), [AGENTS.md](AGENTS.md),
 [GAME_DESIGN.md](GAME_DESIGN.md), [ARCHITECTURE.md](ARCHITECTURE.md),
 [DECISIONS.md](DECISIONS.md) och [DEV_LOG.md](DEV_LOG.md).
+
+## RTS-002 – First playable movement slice
+
+**Status:** Done.
+
+**Verifierat 2026-10-01:** `npm test` (9 tester), `npm run typecheck` och
+`npm run build` passerade. Chromium-kontroll verifierade högerklick,
+ersatt mål under rörelse, exakt stopp, att vänsterklick inte ger kommando
+och att kontextmenyn förhindras. Inga fångade browserfel. Skärmbilden granskades.
+Buildens tidigare varning om bundle-storlek kvarstår och blockerar inte build.
+
+**Mål:** Spelaren kan styra en synlig placeholder-enhet till ett nytt mål.
+
+**Krav:**
+
+- Högerklick på canvas anger mål i world pixels och ersätter föregående mål.
+- Enheten rör sig rakt mot målet med hastighet i pixlar/sekund och delta i
+  sekunder; stanna exakt vid målet utan overshoot.
+- Förhindra kontextmenyn över canvas. Håll scenen tunn och movement-logiken
+  fristående från Phaser.
+- Dokumentera world pixels, framtida tiles 32 × 32 px och delta-baserad
+  movement utan fixed timestep. Inför inget gridsystem.
+- Inför en enkel unit-testlösning och dokumentera testkommandot.
+
+**Non-goals:** Selection, pathfinding, hinder, karta, resurser, kamera, AI,
+gridsystem, fixed timestep och save/load.
+
+**Acceptance criteria:**
+
+- En synlig enhet flyttar sig vid högerklick och följer ett nytt mål när
+  kommandot ändras under rörelse. Kontextmenyn visas inte över canvas.
+- Movement följer riktning och hastighet oberoende av uppdelning i tidssteg,
+  hanterar samma start/mål och delta=0 samt stannar utan overshoot.
+- Unit-tester, typecheck och build passerar. Browserkontroll redovisas ärligt.
+- README, ARCHITECTURE, DECISIONS och DEV_LOG beskriver faktisk implementation.
+
+**Tester:** Riktning/hastighet, stopp utan overshoot, samma start/mål,
+delta=0 och motsvarande rörelse över olika tidssteg. Browser-smoke check av
+högerklick, målbyte och förhindrad kontextmeny om miljön tillåter.
+
+**Relevanta docs:** [AGENTS.md](AGENTS.md), [README.md](README.md),
+[ARCHITECTURE.md](ARCHITECTURE.md), [DECISIONS.md](DECISIONS.md),
+[DEV_LOG.md](DEV_LOG.md).
