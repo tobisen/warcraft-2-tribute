@@ -89,3 +89,37 @@
 - Användaren godkände därefter commit och push av movement-slicen.
 - `git diff --check` passerade inför commit. RTS-002:s tester, typecheck,
   build och browserkontroll är redovisade i dess implementationspost.
+
+## 2026-10-01 – RTS-003: Click selection
+
+- Läste agentinstruktioner, implementer-roll, backlog, arkitektur och befintlig
+  movement/input-kod. Arbetsytan var ren. Skapade nästa lediga task RTS-003,
+  satte In Progress och markerade Done efter uppfyllda acceptance criteria.
+- Införde Phaser-fristående selection/command-state med kvadratisk klickträff
+  på aktuell enhetsposition. Enheten börjar omarkerad. Tom mark avmarkerar
+  utan att ändra målet; nya move-commands accepteras endast vid markering.
+- BootScene översätter musklick och visar en gul markeringsring som följer
+  enheten. Flyttade placeholder-storleken 24 px till befintlig unit-config så
+  att rendering och klickyta använder samma värde. Movement-funktionen är oförändrad.
+- `npm test`: 19 tester passerade (10 selection och 9 befintliga movement).
+  `npm run typecheck` och `npm run build` passerade. Tidigare bundle-varning
+  kvarstår (cirka 1,38 MB minifierat, 358 kB gzip).
+- Browserkontroll med tillfälligt Playwright i /tmp och Chromium mot lokal Vite
+  verifierade omarkerad start, spärrat högerklick, klickmarkering och synlig ring,
+  ringens position under rörelse, nytt mål, avmarkering med bevarat mål och
+  fortsatt rörelse, ignorerat kommando vid avmarkering samt återmarkering vid
+  den nya positionen och exakt ankomst till nästa mål. Kontextmenyn förhindrades
+  fortfarande. Inga runtime-, konsol- eller nätverksfel fångades.
+  /tmp/w2t-selection-ring.png granskades visuellt. Scenreferensen exponerades
+  endast i browserverktygets tillfälliga svar, utan ändring av projektets API.
+- Uppdaterade BACKLOG, ARCHITECTURE, GAME_DESIGN och README. Kontrollerade
+  dokumentreferenser och `git diff --check`. Inga dependencies tillkom.
+- Inga non-goals infördes. Nästa föreslagna task: avgränsa dragselection.
+  Ingen commit eller push.
+
+## 2026-10-01 – RTS-003 för commit
+
+- Användaren godkände commit och push med meddelandet
+  `feat: add unit click selection`.
+- `git diff --check` passerade inför commit. Tester, typecheck, build och
+  browserkontroll är redovisade i implementationsposten ovan.

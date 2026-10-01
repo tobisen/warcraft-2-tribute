@@ -20,6 +20,21 @@ grafik styr arbetet. Placeholders är tillåtna.
 Exakta resurstyper, kostnader, stats, vågparametrar och villkor för win/loss
 specificeras i relevanta framtida tasks. De är inte beslutade här.
 
+## Implementerat selection- och command-beteende (RTS-003)
+
+Den befintliga placeholder-enheten börjar omarkerad. Vänsterklick på dess
+kvadratiska yta markerar och visar en enkel ring. Vänsterklick på tom mark
+avmarkerar; ringen i sig räknas inte som enhetens klickyta.
+
+Högerklick ger move-command endast när enheten är markerad. Ett nytt kommando
+ersätter föregående mål. Avmarkering tar bort ringen men stoppar inte pågående
+rörelse och ändrar inte målet. Den omarkerade enheten ignorerar nya högerklick
+tills den markeras igen. Rörelsen är fortsatt rak, delta-baserad och stannar
+exakt vid målet utan overshoot.
+
+Dragselection, flera enheter, shift-selection, grupper och HUD är inte
+implementerade i denna slice; dragselection kvarstår i MVP-målet.
+
 ## Utvecklingsordning
 
 Efter projektinitialisering: movement → selection → resources → buildings →

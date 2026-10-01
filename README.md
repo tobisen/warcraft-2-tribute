@@ -19,9 +19,11 @@ npm run dev
 
 Öppna adressen Vite skriver ut (normalt http://localhost:5173/). Startsidan
 visar en mörk Phaser-canvas på 800 × 600 pixlar med en grön enhet.
-Högerklicka på canvas för att flytta den rakt till målet med 160 px/s.
-Ett nytt högerklick ersätter tidigare mål, även under rörelse. Vänsterklick
-ger inget kommando. Kontextmenyn är förhindrad över canvas.
+Vänsterklicka på enheten för att markera den; en gul ring visas. Högerklicka
+sedan på canvas för att flytta den rakt till målet med 160 px/s.
+Ett nytt högerklick ersätter tidigare mål, även under rörelse. Vänsterklick på
+tom mark avmarkerar utan att stoppa rörelsen. Omarkerad enhet ignorerar nya
+move-commands. Kontextmenyn är förhindrad över canvas.
 Canvasstorleken är tillfällig; inget kart- eller gridsystem finns.
 
 ```sh
@@ -30,7 +32,7 @@ npm run typecheck
 npm run build
 ```
 
-`test` kör movement-unit-tester en gång med Vitest i Node, utan browser.
+`test` kör movement- och selection-unit-tester en gång med Vitest i Node, utan browser.
 `typecheck` kontrollerar projektkoden och testerna med strict TypeScript utan att skriva
 filer. `build` kör först typkontroll och skapar sedan byggoutput i `dist/`.
 `node_modules/` och `dist/` ignoreras av Git. Paketversioner låses med
@@ -52,8 +54,8 @@ Utvecklingsordningen är movement → selection → resources → buildings → 
 - [Implementer](.agents/implementer.md), [Reviewer](.agents/reviewer.md) och
   [Finisher](.agents/finisher.md): rollinstruktioner.
 
-RTS-001 och RTS-002 är Done. Nästa föreslagna task efter
-movement är att avgränsa selection; den är inte implementerad.
+RTS-001, RTS-002 och RTS-003 är Done. Nästa föreslagna
+task är att avgränsa dragselection; den är inte implementerad.
 Rollfilerna är instruktioner och konfigurerar inte automatiskt några agenter.
 
 Multiplayer, backend, konton, procedural generation, modding och deployment

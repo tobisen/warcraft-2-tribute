@@ -2,10 +2,10 @@
 
 ## Current Focus
 
-**RTS-002 – First playable movement slice** — **Done**.
+**RTS-003 – Click selection** — **Done**.
 
-Ingen ny task är aktiv. Nästa föreslagna task är att avgränsa selection enligt
-utvecklingsordningen; ingen sådan implementation ingår här.
+Ingen ny task är aktiv. Nästa föreslagna task är att avgränsa dragselection;
+den är inte implementerad här.
 
 Denna fil styr arbetet. En task åt gången. Framtida tasks konkretiseras med
 underlag i utvecklingsordningen movement → selection → resources → buildings
@@ -99,3 +99,35 @@ högerklick, målbyte och förhindrad kontextmeny om miljön tillåter.
 **Relevanta docs:** [AGENTS.md](AGENTS.md), [README.md](README.md),
 [ARCHITECTURE.md](ARCHITECTURE.md), [DECISIONS.md](DECISIONS.md),
 [DEV_LOG.md](DEV_LOG.md).
+
+## RTS-003 – Click selection
+
+**Status:** Done.
+
+**Verifierat 2026-10-01:** Alla 19 tester (10 selection, 9 movement),
+typecheck och build passerade. Chromium verifierade omarkerad start, klickträff,
+ring som följer enheten, kommandon endast vid markering, målbyte, avmarkering
+utan stopp och återmarkering på ny position. Inga fångade browserfel.
+Ringens skärmbild granskades. Tidigare bundle-varning kvarstår.
+
+**Mål:** Markera den befintliga enheten med klick och ge kommandon till den.
+
+**Krav:** Enheten börjar omarkerad. Vänsterklick på enheten markerar och visar
+en enkel ring; vänsterklick på tom mark avmarkerar. Högerklick ger endast
+move-command när enheten är markerad. Avmarkering ändrar inte pågående order.
+Behåll målbyte och movement-beteende; håll selection-state fristående från
+Phaser där praktiskt.
+
+**Non-goals:** Dragselection, flera enheter, shift-selection, grupper och HUD.
+
+**Acceptance criteria:** Klickträff markerar, tom mark avmarkerar och ringen
+följer enheten endast när den är markerad. Omarkerad enhet tar inte emot nya
+move-commands men fortsätter sin befintliga rörelse. Markerad enhet kan byta
+mål. Tester, typecheck, build och browserkontroll passerar och docs uppdateras.
+
+**Tester:** Klickträff/tom mark, kommandon kräver markering och avmarkering
+bevarar move-order. Befintliga movement-tester ska fortsätta passera.
+Browserkontroll av klick, ring, målbyte och rörelse efter avmarkering.
+
+**Relevanta docs:** [ARCHITECTURE.md](ARCHITECTURE.md),
+[GAME_DESIGN.md](GAME_DESIGN.md), [README.md](README.md), [DEV_LOG.md](DEV_LOG.md).
