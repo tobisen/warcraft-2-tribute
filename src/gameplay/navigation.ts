@@ -1,4 +1,5 @@
 import { navigationConfig } from '../config/navigation';
+import type { MovementGate } from './traffic';
 import { soldierStats, combatUnitStats, unitStats } from '../config/unit';
 import type { Unit } from './gathering';
 import { bodyFits, tileCenter, worldTile, type Tile, type WorldMap } from './map';
@@ -95,9 +96,9 @@ export function planRoute(map: WorldMap, position: Position, destination: Positi
     ...(!result.ok?{error:result.error}:{}) };
 }
 
-export function advanceRoute(map: WorldMap, position: Position, route: RouteState, speed: number, delta: number) {
+export function advanceRoute(map: WorldMap, position: Position, route: RouteState, speed: number, delta: number, gate?:MovementGate) {
   const current=route.revision===map.revision?route:planRoute(map,position,route.destination,route.commandNumber);
-  let point={...position},remaining=Math.max(0,delta);
+  let point={...position},remaining=Math.max(0,gate?gate(position,current,speed,Math.max(0,delta)):delta);
   if(current.status==='blocked')return {position:point,route:current,remaining};
   const waypoints=current.waypoints.map(p=>({...p}));
   while(waypoints.length) {
@@ -123,10 +124,10 @@ export function commandMappedMove(units: Unit[], destination: Position, map: Wor
   });
 }
 
-export function updateMappedMove(unit: Unit, map: WorldMap, delta: number): Unit {
+export function updateMappedMove(unit: Unit, map: WorldMap, delta: number, gate?:MovementGate): Unit {
   map={...map,bodyHalf:(unit.kind==='worker'?unitStats:combatUnitStats(unit)).size/2};
   const route=unit.navigation??planRoute(map,unit.position,unit.target);
-  const step=advanceRoute(map,unit.position,route,unit.kind==='worker'?unitStats.speed:combatUnitStats(unit).speed,delta);
+  const step=advanceRoute(map,unit.position,route,unit.kind==='worker'?unitStats.speed:combatUnitStats(unit).speed,delta,gate);
   return {...unit,position:step.position,navigation:step.route,
     order:{kind:step.route.status==='moving'?'move':'idle'}};
 }

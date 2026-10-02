@@ -1,3 +1,4 @@
+import type { MovementGate, GateFor } from './traffic';
 import { upgradeConfig } from '../config/upgrades';
 import { archerConfig } from '../config/archer';
 import { advanceProjectiles, type Projectile } from './projectiles';
@@ -40,7 +41,7 @@ function approach(position: Position, target: Position, speed: number, range: nu
 }
 
 function combatApproach(map: WorldMap, position: Position, target: Footprint, targetId: string,
-  speed: number, range: number, delta: number, cached?: RouteState) {
+  speed: number, range: number, delta: number, cached?: RouteState, gate?:MovementGate) {
   const center={x:target.x+target.width/2,y:target.y+target.height/2};
   const goalKey=`attack:${targetId}:${center.x}:${center.y}`;
   const retryAfter=Math.max(0,(cached?.retryAfter??0)-delta);
@@ -60,7 +61,7 @@ function combatApproach(map: WorldMap, position: Position, target: Footprint, ta
   if(route.waypoints[0] && !segmentFits(targetMap,position,route.waypoints[0])) {
     return {position:{...position},attackSeconds:0,navigation:{...route,waypoints:[],status:'arrived' as const}};
   }
-  const step=advanceRoute(targetMap,position,route,speed,delta);
+  const step=advanceRoute(targetMap,position,route,speed,delta,gate);
   return {position:step.position,attackSeconds:step.route.status==='arrived'
     && canInteract(map,step.position,target,range)?step.remaining:0,
     navigation:{...step.route,goalKey:route.goalKey,retryAfter:route.retryAfter}};
@@ -69,7 +70,7 @@ function combatApproach(map: WorldMap, position: Position, target: Footprint, ta
 const unitFootprint=(position:Position,size:number):Footprint=>({x:position.x-size/2,
   y:position.y-size/2,width:size,height:size});
 
-export function updateCombat(gathering: GatheringState, combat: CombatState, deltaSeconds: number, map?: WorldMap, placement?:PlacementState, visible?:EnemyVisibility,playerVisible:(target:PlayerTarget,enemy:Enemy)=>boolean=()=>true,projectileVisible?:(enemy:Enemy,projectile:Projectile)=>boolean) {
+export function updateCombat(gathering: GatheringState, combat: CombatState, deltaSeconds: number, map?: WorldMap, placement?:PlacementState, visible?:EnemyVisibility,playerVisible:(target:PlayerTarget,enemy:Enemy)=>boolean=()=>true,projectileVisible?:(enemy:Enemy,projectile:Projectile)=>boolean,gateFor?:GateFor) {
   const delta = Math.max(0, deltaSeconds);
   const damage = new Map<string, number>();
   const attackMultiplier=combat.upgrades?.attack?upgradeConfig.attackMultiplier:1;
@@ -78,7 +79,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
   const shots:{projectile:Projectile;time:number}[]=[];
   let units = (delta>0?acquireTargets(gathering.units,combat.enemies,map,visible):gathering.units).map(unit => {
     if(unit.kind==='soldier'&&unit.attackMoveTarget&&unit.order.kind==='move') {
-      const moved=map?updateMappedMove(unit,map,delta):{...unit,position:moveTowards(unit.position,unit.target,combatUnitStats(unit).speed,delta)};
+      const moved=map?updateMappedMove(unit,map,delta,gateFor?.(`player:${unit.id}`)):{...unit,position:moveTowards(unit.position,unit.target,combatUnitStats(unit).speed,delta)};
       const arrived=moved.position.x===unit.target.x&&moved.position.y===unit.target.y;
       return {...moved,...(rangedStats(unit)?{attackCooldown:Math.max(0,(unit.attackCooldown??0)-delta)}:{}),...(arrived||moved.navigation?.status==='blocked'?{attackMoveTarget:undefined,autoOrigin:undefined,order:{kind:'idle' as const}}:{})};
     }
@@ -89,7 +90,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
     const range=ranged?.range??combatConfig.soldierRange;
     const speed=combatUnitStats(unit).speed;
     const step = map ? combatApproach({...map,bodyHalf:combatUnitStats(unit).size/2},unit.position,enemy.footprint??unitFootprint(enemy.position,combatConfig.enemySize),
-      enemy.id,speed,range,delta,unit.navigation)
+      enemy.id,speed,range,delta,unit.navigation,gateFor?.(`player:${unit.id}`))
       : approach(unit.position, enemy.position, speed, range, delta);
     if(ranged) {
       let cooldown=Math.max(0,(unit.attackCooldown??0)-(delta-step.attackSeconds)),time=step.attackSeconds;
@@ -117,7 +118,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
     if(enemy.footprint||enemy.order?.kind==='idle')return enemy;
     if(enemy.order?.kind==='muster'){
       const route=enemy.navigation??(map?planRoute(map,enemy.position,enemy.order.destination):undefined);
-      const step=map&&route?advanceRoute(map,enemy.position,route,combatConfig.enemySpeed,delta):{position:moveTowards(enemy.position,enemy.order.destination,combatConfig.enemySpeed,delta),route:undefined};
+      const step=map&&route?advanceRoute(map,enemy.position,route,combatConfig.enemySpeed,delta,gateFor?.(`enemy:${enemy.id}`)):{position:moveTowards(enemy.position,enemy.order.destination,combatConfig.enemySpeed,delta),route:undefined};
       return {...enemy,position:step.position,...(step.route?{navigation:step.route}:{})};
     }
 
@@ -130,14 +131,14 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
     if(!target){
       if(enemy.order?.kind==='defend')return {...enemy,navigation:undefined,order:{kind:'idle' as const}};
       const goal=enemy.order?.kind==='attack-move'?enemy.order.destination:arenaConfig.base;
-      const step=map?combatApproach(map,enemy.position,baseFootprint(goal),'explore-goal',combatConfig.enemySpeed,combatConfig.enemyRange,delta,enemy.navigation?.targetId==='explore-goal'?enemy.navigation:undefined):approach(enemy.position,goal,combatConfig.enemySpeed,combatConfig.enemyRange,delta);
+      const step=map?combatApproach(map,enemy.position,baseFootprint(goal),'explore-goal',combatConfig.enemySpeed,combatConfig.enemyRange,delta,enemy.navigation?.targetId==='explore-goal'?enemy.navigation:undefined,gateFor?.(`enemy:${enemy.id}`)):approach(enemy.position,goal,combatConfig.enemySpeed,combatConfig.enemyRange,delta);
       return {...enemy,position:step.position,...(step.navigation?{navigation:step.navigation}:{})};
     }
     const moved=units.find(u=>u.id===target.id);
     const footprint=map&&moved?unitFootprint(moved.position,target.footprint.width):target.footprint;
     if(!playerVisible({...target,footprint},enemy))return {...enemy,navigation:undefined};
     const center={x:footprint.x+footprint.width/2,y:footprint.y+footprint.height/2};
-    const step=map?combatApproach(map,enemy.position,footprint,target.id,combatConfig.enemySpeed,combatConfig.enemyRange,delta,enemy.navigation)
+    const step=map?combatApproach(map,enemy.position,footprint,target.id,combatConfig.enemySpeed,combatConfig.enemyRange,delta,enemy.navigation,gateFor?.(`enemy:${enemy.id}`))
       :approach(enemy.position,center,combatConfig.enemySpeed,combatConfig.enemyRange,delta);
     playerDamage.set(target.id,(playerDamage.get(target.id)??0)+step.attackSeconds*combatConfig.enemyDamagePerSecond);
     return {...enemy,position:step.position,...(step.navigation?{navigation:step.navigation}:{})};

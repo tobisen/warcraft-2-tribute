@@ -703,3 +703,7 @@ RTS-062: QA-granskningen gav ingen bekräftad P0/P1-fixlista; gameplay/save-form
 ## RTS-063: lokal separation
 
 [separation.ts](src/gameplay/separation.ts) och [config](src/config/separation.ts) separerar kvadratiska unit-kroppar deterministiskt med max48 px/s correction, spatiala64px-celler/två pass/12 grannar. Terräng/world bounds respekteras; orders/last/selection/HP bevaras. Rörda pathcaches planeras om, blockerade kommandoresultat behålls utan automatisk fallback. Fog uppdateras efter separation; paus/game-over fryser. Save schema/config1 behålls utan ny persistent state. Kortvarig kontakt vid rörelse och omöjlig packning i trång terräng kan kvarstå; resource/passage-köer följer i RTS-064.
+
+## RTS-064: trängsel
+
+Wood/gold-noder betjänar högst tre samlande workers samtidigt. Vid fler arbetsorders väntar resten utanför räckvidden; prioriteten roterar var femte gameplay-sekund. Levererande workers räknas till sin nod tills loopen avslutas. Smala passager släpper fram en aktiv entrant åt gången, med företräde för den som redan är inne. Ny order eller död lämnar kön direkt. Pause fryser prioritet; save/load återskapar den. Last, hastighet och insamlingspris/rate är oförändrade. Detta är begränsad insläppning och mjuk separation, ingen garanti om perfekt tät packning eller formationer.

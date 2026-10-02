@@ -858,3 +858,11 @@ RTS-062: QA-granskningen gav ingen bekräftad P0/P1-fixlista; gameplay/save-form
 ## RTS-063: lokal separation
 
 [separation.ts](src/gameplay/separation.ts) och [config](src/config/separation.ts) separerar kvadratiska unit-kroppar deterministiskt med max48 px/s correction, spatiala64px-celler/två pass/12 grannar. Terräng/world bounds respekteras; orders/last/selection/HP bevaras. Rörda pathcaches planeras om, blockerade kommandoresultat behålls utan automatisk fallback. Fog uppdateras efter separation; paus/game-over fryser. Save schema/config1 behålls utan ny persistent state. Kortvarig kontakt vid rörelse och omöjlig packning i trång terräng kan kvarstå; resource/passage-köer följer i RTS-064.
+
+## RTS-064: härledda resurs- och passageköer
+
+`gameplay/resourceQueue.ts` använder live gather/deliver-orders och matchens sparade gameplay-tid. Vid fler än tre workers på samma nod väljs högst tre nåbara kontaktpunkter, med kroppsstorlekens avstånd mellan punkterna; övriga får väntpunkter utanför arbetsräckvidden. Prioritet roterar var femte sekund. Upp till tre workers behåller tidigare approach-beteende. `config/traffic.ts` samlar gränserna. Delivery krediterar fortfarande ekonomin först vid basen.
+
+`gameplay/traffic.ts` härleder smala, sammanhängande passager från kroppsgiltiga tilecentra med högst två fria grannar. En aktiv kropp i passagen får företräde; annars väljs en väntande entrant med roterande prioritet. `MovementGate` begränsar den del av delta som navigation får använda. Gather, build, move, attack-move och enemy movement delar samma gate. Väntan bevarar orders och waypoints; RTS-063:s mjuka separation gäller fortsatt.
+
+Köer/reservationer sparas inte som nya refs: de återskapas från positioner, orders och tid. Idle/döda/borttagna kroppar behåller inga lås. Maprevision och obstacle-geometri invaliderar härledd passagecache. `updateMatch` delar även större delta vid resursrotation; ingen fixed timestep eller generell trafik/pathfinding-ombyggnad.

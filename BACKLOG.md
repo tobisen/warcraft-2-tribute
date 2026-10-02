@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-064 – Köbildning vid resurser och smala passager** — **Todo**.
+**RTS-065 – Uppmätt prestandapass med större arméer** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
@@ -2094,7 +2094,7 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-064 – Köbildning vid resurser och smala passager
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Låta arbetare och arméer ta sig fram i trängsel.
 

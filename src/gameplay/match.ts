@@ -1,3 +1,5 @@
+import {trafficGates} from './traffic';
+import {trafficConfig} from '../config/traffic';
 import type { ControlGroups } from './controlGroups';
 import { separateBodies } from './separation';
 import { combatUnitStats, unitStats } from '../config/unit';
@@ -81,11 +83,12 @@ function resolveOutcome(state: MatchState): MatchState {
 
 function advance(state: MatchState, delta: number): MatchState {
   state=cleanDestroyed(state);
-  let gathering = updateGathering(state.gathering, delta, state.map);
-  const building = updateConstruction(gathering,state.placement,state.map,delta);
+  const gateFor=trafficGates(state.map,[...state.gathering.units.map(u=>({id:`player:${u.id}`,position:u.position,half:(u.kind==='worker'?unitStats:combatUnitStats(u)).size/2,speed:(u.kind==='worker'?unitStats:combatUnitStats(u)).speed,active:u.order.kind!=='idle',waypoints:u.navigation?.waypoints??[u.target]})),...state.combat.enemies.filter(e=>e.kind!=='base'&&e.hp>0).map(e=>({id:`enemy:${e.id}`,position:e.position,half:combatConfig.enemySize/2,speed:combatConfig.enemySpeed,active:e.order?.kind!=='idle',waypoints:e.navigation?.waypoints??(e.order?.kind==='muster'||e.order?.kind==='attack-move'?[e.order.destination]:[])}))],state.waves.elapsedSeconds,delta);
+  let gathering = updateGathering(state.gathering, delta, state.map,{elapsedSeconds:state.waves.elapsedSeconds,gateFor});
+  const building = updateConstruction(gathering,state.placement,state.map,delta,gateFor);
   const combat=state.research&&(state.research.attack||state.research.defense||state.combat.upgrades)?{...state.combat,upgrades:{attack:state.research.attack,defense:state.research.defense}}:state.combat;
   const vision=state.fog?matchFog({...state,gathering:building.gathering,combat,placement:building.placement}):undefined;
-  const fight=updateCombat(building.gathering,combat,delta,state.map,building.placement,vision?(e=>entityVisible(vision,'player',e)):undefined,vision?((t)=>entityVisible(vision,'enemy',{position:{x:t.footprint.x+t.footprint.width/2,y:t.footprint.y+t.footprint.height/2},...(t.kind==='worker'||t.kind==='soldier'?{}:{footprint:t.footprint})})):undefined,vision?(e=>entityVisible(vision,'player',e)):undefined);
+  const fight=updateCombat(building.gathering,combat,delta,state.map,building.placement,vision?(e=>entityVisible(vision,'player',e)):undefined,vision?((t)=>entityVisible(vision,'enemy',{position:{x:t.footprint.x+t.footprint.width/2,y:t.footprint.y+t.footprint.height/2},...(t.kind==='worker'||t.kind==='soldier'?{}:{footprint:t.footprint})})):undefined,vision?(e=>entityVisible(vision,'player',e)):undefined,gateFor);
   const cleaned=cleanDestroyed({...state,gathering:fight.gathering,combat:fight.combat,placement:fight.placement??building.placement});
   const research=updateResearch(cleaned.research??createResearch(),cleaned.placement,delta);
   const worker=cleaned.combat.baseHP>0?updateQueuedProduction(cleaned.gathering,cleaned.production,delta,{kind:'base'},
@@ -121,7 +124,8 @@ export function updateMatch(state: MatchState, deltaSeconds: number): MatchState
     }
     const definition=scenarioConfig[current.scenario??'survival'];
     const untilObjective=definition.victory==='timer'?Math.max(0,definition.holdSeconds!-current.waves.elapsedSeconds):Infinity;
-    const step = Math.min(remaining, untilWave,untilObjective,current.research?.job?.remainingSeconds??Infinity);
+    const untilService=(Math.floor((current.waves.elapsedSeconds+1e-9)/trafficConfig.resourceWindowSeconds)+1)*trafficConfig.resourceWindowSeconds-current.waves.elapsedSeconds;
+    const step = Math.min(remaining, untilWave,untilObjective,untilService,current.research?.job?.remainingSeconds??Infinity);
     current = advance(current, step);
     remaining = Math.max(0, remaining - step);
   }

@@ -31,3 +31,5 @@ Ingen P0/P1-fixlista valdes eftersom inga sådana fel reproducerades. QA-001/002
 
 
 RTS-063: QA-001 åtgärdad för stillastående grupper i öppet fält; betald armé minavstånd24,24px, save/load/gruppmove godkända. Soft separation kan ha kortvariga rörelsekontakter; fysisk passage/node-admission hanteras i RTS-064.
+
+RTS-064: QA-002 åtgärdad med högst tre serviceplatser vid överbelastade resursnoder, roterande prioritet och väntplatser. Åtta workers, 400 wood och 338,8 gameplay-sekunder verifierade i Chromium-fixture med riktig drag/right-click och Save/Load: alla fick last, allt levererades, noll strandsatta orders. Separat 12-kropps passagefixture slutfördes efter borttagning av en kropp. Fixtures är avsiktligt injicerad belastning, inte betald produktion. QA-003 (minimap keyboard) förblir P3 utanför denna etapp.

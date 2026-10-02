@@ -1,4 +1,5 @@
 import { barracksConfig, farmConfig } from '../config/buildings';
+import type { GateFor } from './traffic';
 import { approachRoute, canInteract } from './approach';
 import { advanceRoute } from './navigation';
 import { unitStats } from '../config/unit';
@@ -24,7 +25,7 @@ export function resumeConstruction(gathering:GatheringState,placement:PlacementS
       ? {...u,navigation:undefined,order:{kind:'build',buildingId:id}}
       : u.order.kind==='build'&&u.order.buildingId===id?{...u,navigation:undefined,target:{...u.position},order:{kind:'idle'}}:u)}};
 }
-function updateSite(gathering:GatheringState,job:ConstructionJob,rect:Footprint,id:SiteId,map:WorldMap,delta:number) {
+function updateSite(gathering:GatheringState,job:ConstructionJob,rect:Footprint,id:SiteId,map:WorldMap,delta:number,gateFor?:GateFor) {
   if (job.remainingSeconds<=0) return {gathering,job};
   const builder=gathering.units.find(u=>u.id===job.builderId && u.kind==='worker' && u.order.kind==='build'&&u.order.buildingId===id);
   if (!builder) return {gathering,job};
@@ -32,7 +33,7 @@ function updateSite(gathering:GatheringState,job:ConstructionJob,rect:Footprint,
   const goalKey=`build:${id}`,cached=builder.navigation;
   const route=cached?.goalKey===goalKey&&cached.revision===map.revision?cached
     : {...approachRoute(map,builder.position,rect,range),goalKey};
-  const step=advanceRoute(map,builder.position,route,unitStats.speed,Math.max(0,delta));
+  const step=advanceRoute(map,builder.position,route,unitStats.speed,Math.max(0,delta),gateFor?.(`player:${builder.id}`));
   const remainingSeconds=step.route.status==='arrived'&&canInteract(map,step.position,rect,range)
     ? Math.max(0,job.remainingSeconds-step.remaining):job.remainingSeconds;
   const done=remainingSeconds<=1e-10;
@@ -40,15 +41,15 @@ function updateSite(gathering:GatheringState,job:ConstructionJob,rect:Footprint,
     gathering:{...gathering,units:gathering.units.map((u):Unit=>u.id!==builder.id || u.kind!=='worker'?u:
       {...u,position:step.position,target:{...step.position},navigation:done?undefined:{...step.route,goalKey},order:done?{kind:'idle'}:u.order})}};
 }
-export function updateConstruction(gathering:GatheringState,placement:PlacementState,map:WorldMap,delta:number) {
+export function updateConstruction(gathering:GatheringState,placement:PlacementState,map:WorldMap,delta:number,gateFor?:GateFor) {
   let next=gathering,construction=placement.construction;
   if (construction && placement.barracks) {
-    const result=updateSite(next,construction,placement.barracks,'barracks',map,delta);next=result.gathering;construction=result.job;
+    const result=updateSite(next,construction,placement.barracks,'barracks',map,delta,gateFor);next=result.gathering;construction=result.job;
   }
   let forge=placement.forge;
-  if(forge){const result=updateSite(next,forge.construction,forge.footprint,'forge',map,delta);next=result.gathering;forge={...forge,construction:result.job};}
+  if(forge){const result=updateSite(next,forge.construction,forge.footprint,'forge',map,delta,gateFor);next=result.gathering;forge={...forge,construction:result.job};}
   const farms=placement.farms?.map(f=>{
-    const result=updateSite(next,f.construction,f.footprint,f.id,map,delta);next=result.gathering;
+    const result=updateSite(next,f.construction,f.footprint,f.id,map,delta,gateFor);next=result.gathering;
     return {...f,construction:result.job};
   });
   return {gathering:next,placement:{...placement,...(construction?{construction}:{}),...(farms?{farms}:{}),...(forge?{forge}:{})}};
