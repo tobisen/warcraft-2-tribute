@@ -1,10 +1,18 @@
+import type { ControlGroups } from './controlGroups';
+import { entityVisible } from './visibility';
+import { matchFog } from './matchFog';
+import type { FogState } from './fog';
+import { createEnemyAI,updateEnemyAI,type EnemyAIState } from './enemyAI';
+import { createEnemyProduction,updateEnemyProduction,type EnemyProductionState } from './enemyProduction';
+import { scenarioConfig,enemyBaseConfig,type MatchScenario } from '../config/scenarios';
+import { createResearch,updateResearch,type ResearchState } from './research';
 import { cleanDestroyed } from './destruction';
 import { updateConstruction, barracksReady } from './construction';
 import { arenaConfig } from '../config/arena';
 import { createMap, type WorldMap } from './map';
 import { gatheringConfig, goldConfig } from '../config/gathering';
 import { combatConfig } from '../config/combat';
-import { waveSchedule } from '../config/waves';
+import { difficultyProfiles,type Difficulty } from '../config/difficulty';
 import { updateCombat, type CombatState } from './combat';
 import { updateGathering, type GatheringState } from './gathering';
 import { placementObstacles, type PlacementState } from './placement';
@@ -15,6 +23,8 @@ import { updateWaves, type WaveState } from './waves';
 export type MatchOutcome = 'playing' | 'defeat' | 'victory';
 export interface MatchState {
   map: WorldMap;
+  fog?:FogState;
+  controlGroups?:ControlGroups;
   gathering: GatheringState;
   combat: CombatState;
   placement: PlacementState;
@@ -22,12 +32,18 @@ export interface MatchState {
   soldierProduction: ProductionState;
   waves: WaveState;
   outcome: MatchOutcome;
+  paused?:boolean;
+  research?:ResearchState;
+  scenario?:MatchScenario;
+  difficulty?:Difficulty;
+  enemyProduction?:EnemyProductionState;
+  enemyAI?:EnemyAIState;
 }
 
 /** A fresh state owns every mutable position/array; restart never reuses a previous match. */
-export function createMatch(): MatchState {
+export function createMatch(scenario:MatchScenario='survival',difficulty:Difficulty='normal'): MatchState {
   const state: MatchState = {
-    outcome: 'playing',
+    outcome: 'playing',paused:false,controlGroups:{},scenario,difficulty,research:createResearch(),
     map: createMap(),
     gathering: {
       units: arenaConfig.workers.map((position, index) => ({
@@ -45,13 +61,16 @@ export function createMatch(): MatchState {
     production: { remainingSeconds: null, nextUnitNumber: 4 },
     soldierProduction: { remainingSeconds: null, nextUnitNumber: 4 },
   };
+  if(scenarioConfig[scenario].enemyBase){state.enemyProduction=createEnemyProduction(difficultyProfiles[difficulty]);state.enemyAI=createEnemyAI();const footprint={...enemyBaseConfig.footprint};state.combat.enemies.push({id:enemyBaseConfig.id,kind:'base',owner:'enemy',hp:enemyBaseConfig.hp,footprint,position:{x:footprint.x+footprint.width/2,y:footprint.y+footprint.height/2}});state.map.obstacles.push(footprint);}
   state.map.obstacles.push(...placementObstacles(state.gathering));
+  state.fog=matchFog(state);
   return state;
 }
 
 function resolveOutcome(state: MatchState): MatchState {
-  const outcome: MatchOutcome = state.combat.baseHP <= 0 ? 'defeat'
-    : state.waves.nextWave === waveSchedule.length && state.combat.enemies.length === 0 ? 'victory' : 'playing';
+  const victory=scenarioConfig[state.scenario??'survival'].victory==='enemy-base'? !state.combat.enemies.some(e=>e.kind==='base'&&e.hp>0)
+    :state.waves.nextWave===difficultyProfiles[state.difficulty??'normal'].waves.length&&state.combat.enemies.every(e=>e.kind==='base');
+  const outcome:MatchOutcome=state.combat.baseHP<=0?'defeat':victory?'victory':'playing';
   return outcome === 'playing' ? state
     : { ...state, outcome, placement: { ...state.placement, active: false } };
 }
@@ -60,33 +79,41 @@ function advance(state: MatchState, delta: number): MatchState {
   state=cleanDestroyed(state);
   let gathering = updateGathering(state.gathering, delta, state.map);
   const building = updateConstruction(gathering,state.placement,state.map,delta);
-  const fight=updateCombat(building.gathering,state.combat,delta,state.map,building.placement);
+  const combat=state.research&&(state.research.attack||state.research.defense||state.combat.upgrades)?{...state.combat,upgrades:{attack:state.research.attack,defense:state.research.defense}}:state.combat;
+  const vision=state.fog?matchFog({...state,gathering:building.gathering,combat,placement:building.placement}):undefined;
+  const fight=updateCombat(building.gathering,combat,delta,state.map,building.placement,vision?(e=>entityVisible(vision,'player',e)):undefined,vision?((t)=>entityVisible(vision,'enemy',{position:{x:t.footprint.x+t.footprint.width/2,y:t.footprint.y+t.footprint.height/2},...(t.kind==='worker'||t.kind==='soldier'?{}:{footprint:t.footprint})})):undefined,vision?(e=>entityVisible(vision,'player',e)):undefined);
   const cleaned=cleanDestroyed({...state,gathering:fight.gathering,combat:fight.combat,placement:fight.placement??building.placement});
+  const research=updateResearch(cleaned.research??createResearch(),cleaned.placement,delta);
   const worker=cleaned.combat.baseHP>0?updateQueuedProduction(cleaned.gathering,cleaned.production,delta,{kind:'base'},
     {map:cleaned.map,enemies:cleaned.combat.enemies}):{gathering:cleaned.gathering,production:cleaned.production};
   const soldier=cleaned.combat.baseHP>0?updateQueuedProduction(worker.gathering,cleaned.soldierProduction,delta,
     {kind:'barracks',footprint:cleaned.placement.barracks,ready:barracksReady(cleaned.placement)},
     {map:cleaned.map,enemies:cleaned.combat.enemies}):{gathering:worker.gathering,production:cleaned.soldierProduction};
   const nextUnitNumber=Math.max(worker.production.nextUnitNumber,soldier.production.nextUnitNumber);
-  const incoming=updateWaves(cleaned.waves,cleaned.combat,delta);
-  return resolveOutcome({...cleaned,gathering:soldier.gathering,combat:incoming.combat,waves:incoming.waves,
-    production:{...worker.production,nextUnitNumber},soldierProduction:{...soldier.production,nextUnitNumber}});
+  const enemy=cleaned.enemyProduction?updateEnemyProduction(cleaned.enemyProduction,cleaned.combat,soldier.gathering,cleaned.map,delta):{combat:cleaned.combat,state:undefined};
+  const ai=cleaned.enemyAI?updateEnemyAI(cleaned.enemyAI,enemy.combat,cleaned.map,soldier.gathering.base,delta,soldier.gathering.units,difficultyProfiles[cleaned.difficulty??'normal'].ai,vision?((u)=>entityVisible(vision,'enemy',u)):undefined):{combat:enemy.combat,state:undefined};
+  const incoming=scenarioConfig[cleaned.scenario??'survival'].waves?updateWaves(cleaned.waves,ai.combat,delta,difficultyProfiles[cleaned.difficulty??'normal'].waves):{combat:ai.combat,waves:{...cleaned.waves,elapsedSeconds:cleaned.waves.elapsedSeconds+delta}};
+  const updated:MatchState={...cleaned,...(vision?{fog:vision}:{}),research,...(enemy.state?{enemyProduction:enemy.state}:{}),...(ai.state?{enemyAI:ai.state}:{}),gathering:soldier.gathering,combat:incoming.combat,waves:incoming.waves,
+    production:{...worker.production,nextUnitNumber},soldierProduction:{...soldier.production,nextUnitNumber}};
+  updated.fog=matchFog(updated);return resolveOutcome(updated);
 }
 
 /** Split only at wave boundaries, retaining delta-based gameplay rather than a fixed timestep. */
 export function updateMatch(state: MatchState, deltaSeconds: number): MatchState {
-  if (state.outcome !== 'playing') return state;
-  let current = resolveOutcome(cleanDestroyed(state));
+  if (state.paused||state.outcome !== 'playing') return state;
+  const cleaned=cleanDestroyed(state);
+  let current = resolveOutcome(cleaned);
+  if(cleaned.fog&&(deltaSeconds<=0||current.outcome!=='playing'))current={...current,fog:matchFog(cleaned)};
   let remaining = Math.max(0, deltaSeconds);
   while (remaining > 0 && current.outcome === 'playing') {
-    const next = waveSchedule[current.waves.nextWave];
+    const next = scenarioConfig[current.scenario??'survival'].waves?difficultyProfiles[current.difficulty??'normal'].waves[current.waves.nextWave]:undefined;
     const untilWave = next ? Math.max(0, next.atSeconds - current.waves.elapsedSeconds) : Infinity;
     if (untilWave === 0) {
-      const incoming = updateWaves(current.waves, current.combat, 0);
+      const incoming = updateWaves(current.waves, current.combat, 0,difficultyProfiles[current.difficulty??'normal'].waves);
       current = { ...current, ...incoming };
       continue;
     }
-    const step = Math.min(remaining, untilWave);
+    const step = Math.min(remaining, untilWave,current.research?.job?.remainingSeconds??Infinity);
     current = advance(current, step);
     remaining = Math.max(0, remaining - step);
   }

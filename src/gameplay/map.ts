@@ -5,6 +5,7 @@ import type { Footprint } from './placement';
 
 export interface Tile { column: number; row: number }
 export interface WorldMap {
+  bodyHalf?:number;
   width: number; height: number; tileSize: number;
   revision: number;
   obstacles: Footprint[];

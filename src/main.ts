@@ -5,6 +5,8 @@ import { viewportConfig } from './config/camera';
 
 new Phaser.Game({
   type: Phaser.AUTO,
+  pixelArt: true,
+  roundPixels: true,
   parent: 'game',
   width: viewportConfig.width,
   height: viewportConfig.height,

@@ -48,9 +48,9 @@ export function selectUnitsInRectangle<T extends SelectableUnit>(units: T[], sta
   }));
 }
 
-export function selectUnitAt<T extends SelectableUnit>(units: T[], click: Position, size: number): T[] {
+export function selectUnitAt<T extends SelectableUnit>(units: T[], click: Position, size: number|((unit:T)=>number)): T[] {
   // Last rendered unit wins when placeholders overlap.
-  const hit = [...units].reverse().find(unit => selectAt(unit, click, unit.position, size).selected);
+  const hit = [...units].reverse().find(unit => selectAt(unit, click, unit.position, typeof size==='function'?size(unit):size).selected);
   return units.map(unit => ({ ...unit, selected: unit.id === hit?.id }));
 }
 

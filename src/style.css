@@ -17,3 +17,13 @@ canvas { display: block; }
 
 #production-queue { height: 116px; overflow: auto; margin: 8px 0; }
 #production-queue button { display: block; width: 100%; margin-bottom: 4px; }
+
+#minimap { width: 200px; height: 150px; cursor: pointer; border: 1px solid #8c9b86; margin: 8px 0; }
+
+#command-guide { margin: 8px 0; }
+#command-guide-text { white-space: pre-line; line-height: 1.5; }
+
+#match-menu { box-sizing: border-box; width: min(800px,100%); padding: 12px; margin-bottom: 12px; background: #23303c; border: 1px solid #506273; }
+#match-menu h1 { font-size: 20px; margin: 0 0 12px; }
+#match-menu label { display: inline-block; margin: 4px 8px 8px 0; }
+#gameplay-controls { border: 0; padding: 0; margin: 0; min-width: 0; }

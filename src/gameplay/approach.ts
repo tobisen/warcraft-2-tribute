@@ -15,7 +15,7 @@ function targetFreeMap(map: WorldMap, target: Footprint): WorldMap {
 }
 
 export function canInteract(map: WorldMap, point: Position, target: Footprint, range: number): boolean {
-  if(!bodyFits(map,point,navigationConfig.halfBody) || footprintDistance(point,target)>range+1e-9)return false;
+  if(!bodyFits(map,point,map.bodyHalf??navigationConfig.halfBody) || footprintDistance(point,target)>range+1e-9)return false;
   const edge={x:Math.max(target.x,Math.min(point.x,target.x+target.width)),
     y:Math.max(target.y,Math.min(point.y,target.y+target.height))};
   return segmentFits(targetFreeMap(map,target),point,edge,0);
@@ -25,7 +25,7 @@ export function approachRoute(map: WorldMap, position: Position, target: Footpri
   commandNumber=1): RouteState {
   if(canInteract(map,position,target,range))return {commandNumber,destination:{...position},
     waypoints:[],revision:map.revision,status:'arrived'};
-  const half=navigationConfig.halfBody;
+  const half=map.bodyHalf??navigationConfig.halfBody;
   const points: Position[]=[
     {x:target.x-half,y:target.y+target.height/2},{x:target.x+target.width+half,y:target.y+target.height/2},
     {x:target.x+target.width/2,y:target.y-half},{x:target.x+target.width/2,y:target.y+target.height+half},

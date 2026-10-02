@@ -1,5 +1,5 @@
 import { navigationConfig } from '../config/navigation';
-import { soldierStats, unitStats } from '../config/unit';
+import { soldierStats, combatUnitStats, unitStats } from '../config/unit';
 import type { Unit } from './gathering';
 import { bodyFits, tileCenter, worldTile, type Tile, type WorldMap } from './map';
 import { moveTowards, type Position } from './movement';
@@ -21,7 +21,7 @@ const key = (tile: Tile) => `${tile.column},${tile.row}`;
 const same = (a: Position, b: Position) => a.x === b.x && a.y === b.y;
 
 /** Swept square-body collision, including the connector between a point and a tile center. */
-export function segmentFits(map: WorldMap, a: Position, b: Position, half = navigationConfig.halfBody): boolean {
+export function segmentFits(map: WorldMap, a: Position, b: Position, half = map.bodyHalf??navigationConfig.halfBody): boolean {
   if (!bodyFits(map, a, half) || !bodyFits(map, b, half)) return false;
   for (const obstacle of map.obstacles) {
     let enter = 0, exit = 1;
@@ -59,7 +59,7 @@ function connectors(map: WorldMap, point: Position, half: number): Tile[] {
 
 /** Bounded synchronous four-neighbor BFS; stable tie order, no diagonal corner cutting. */
 export function findRoute(map: WorldMap, start: Position, destination: Position,
-  half = navigationConfig.halfBody): RouteResult {
+  half = map.bodyHalf??navigationConfig.halfBody): RouteResult {
   if (!worldTile(map, destination)) return { ok: false, error: 'outside-world' };
   if (!bodyFits(map, destination, half)) return { ok: false, error: 'blocked-target' };
   if (!bodyFits(map, start, half)) return { ok: false, error: 'blocked-start' };
@@ -117,14 +117,16 @@ export function advanceRoute(map: WorldMap, position: Position, route: RouteStat
 export function commandMappedMove(units: Unit[], destination: Position, map: WorldMap): Unit[] {
   return units.map(unit=>{
     if(!unit.selected)return unit;
-    const navigation=planRoute(map,unit.position,destination,(unit.navigation?.commandNumber??0)+1);
+    const unitMap={...map,bodyHalf:(unit.kind==='worker'?unitStats:combatUnitStats(unit)).size/2};
+    const navigation=planRoute(unitMap,unit.position,destination,(unit.navigation?.commandNumber??0)+1);
     return {...unit,...(unit.kind==='soldier'?{attackMoveTarget:undefined,autoOrigin:undefined,autoDisabled:false}:{}),navigation,target:{...destination},order:{kind:navigation.status==='moving'?'move':'idle'}};
   });
 }
 
 export function updateMappedMove(unit: Unit, map: WorldMap, delta: number): Unit {
+  map={...map,bodyHalf:(unit.kind==='worker'?unitStats:combatUnitStats(unit)).size/2};
   const route=unit.navigation??planRoute(map,unit.position,unit.target);
-  const step=advanceRoute(map,unit.position,route,unit.kind==='worker'?unitStats.speed:soldierStats.speed,delta);
+  const step=advanceRoute(map,unit.position,route,unit.kind==='worker'?unitStats.speed:combatUnitStats(unit).speed,delta);
   return {...unit,position:step.position,navigation:step.route,
     order:{kind:step.route.status==='moving'?'move':'idle'}};
 }

@@ -5,12 +5,12 @@ import { unitStats } from '../config/unit';
 import type { GatheringState, Unit } from './gathering';
 import type { PlacementState, ConstructionJob, Footprint } from './placement';
 import type { WorldMap } from './map';
-type SiteId = 'barracks'|`farm-${number}`;
+type SiteId = 'barracks'|'forge'|`farm-${number}`;
 export function barracksReady(placement:PlacementState):boolean {
   return placement.barracks!==null && (!placement.construction || placement.construction.remainingSeconds===0);
 }
 export function resumeConstruction(gathering:GatheringState,placement:PlacementState,map:WorldMap,id:SiteId='barracks') {
-  const farm=placement.farms?.find(f=>f.id===id);
+  const farm=id==='forge'?placement.forge:placement.farms?.find(f=>f.id===id);
   const rect=id==='barracks'?placement.barracks:farm?.footprint;
   const job=id==='barracks'?placement.construction:farm?.construction;
   if (!rect || !job || job.remainingSeconds<=0) return {gathering,placement};
@@ -19,7 +19,7 @@ export function resumeConstruction(gathering:GatheringState,placement:PlacementS
   if (!builder || approachRoute(map,builder.position,rect,barracksConfig.constructionRange).status==='blocked') return {gathering,placement};
   const updated={...job,builderId:builder.id};
   return {placement:id==='barracks'?{...placement,construction:updated}
-      :{...placement,farms:placement.farms!.map(f=>f.id===id?{...f,construction:updated}:f)},
+      :id==='forge'?{...placement,forge:{...placement.forge!,construction:updated}}:{...placement,farms:placement.farms!.map(f=>f.id===id?{...f,construction:updated}:f)},
     gathering:{...gathering,units:gathering.units.map((u):Unit=>u.id===builder.id&&u.kind==='worker'
       ? {...u,navigation:undefined,order:{kind:'build',buildingId:id}}
       : u.order.kind==='build'&&u.order.buildingId===id?{...u,navigation:undefined,target:{...u.position},order:{kind:'idle'}}:u)}};
@@ -45,9 +45,11 @@ export function updateConstruction(gathering:GatheringState,placement:PlacementS
   if (construction && placement.barracks) {
     const result=updateSite(next,construction,placement.barracks,'barracks',map,delta);next=result.gathering;construction=result.job;
   }
+  let forge=placement.forge;
+  if(forge){const result=updateSite(next,forge.construction,forge.footprint,'forge',map,delta);next=result.gathering;forge={...forge,construction:result.job};}
   const farms=placement.farms?.map(f=>{
     const result=updateSite(next,f.construction,f.footprint,f.id,map,delta);next=result.gathering;
     return {...f,construction:result.job};
   });
-  return {gathering:next,placement:{...placement,...(construction?{construction}:{}),...(farms?{farms}:{})}};
+  return {gathering:next,placement:{...placement,...(construction?{construction}:{}),...(farms?{farms}:{}),...(forge?{forge}:{})}};
 }

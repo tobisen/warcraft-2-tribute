@@ -2,13 +2,13 @@
 
 ## Current Focus
 
-**RTS-037 – Archer med distansattack och projektiler** — **Todo**.
+**RTS-054 – Byggnadssprites och byggstadier** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
 Denna fil styr arbetet. En task åt gången. RTS-001–015 är historiskt färdiga;
 RTS-016–060 är en ny, användarbeställd roadmap efter MVP. Ingen gammal backlog
-har återuppstått. RTS-016–036 är nu implementerade; RTS-037–060 återstår. Rollfiler innebär inte automatisk agentstart.
+har återuppstått. RTS-016–053 är nu implementerade; RTS-054–060 återstår. Rollfiler innebär inte automatisk agentstart.
 
 ## Planeringskonventioner
 
@@ -1386,7 +1386,7 @@ Inga blockerande regressioner hittades; protokoll i [DEV_LOG.md](DEV_LOG.md).
 
 ## RTS-037 – Archer med distansattack och projektiler
 
-**Status:** Todo.
+**Status:** Done.
 
 **Priority:** P1.
 
@@ -1414,7 +1414,7 @@ Inga blockerande regressioner hittades; protokoll i [DEV_LOG.md](DEV_LOG.md).
 
 ## RTS-038 – Catapult med områdesskada
 
-**Status:** Todo.
+**Status:** Done.
 
 **Priority:** P1.
 
@@ -1442,7 +1442,7 @@ Inga blockerande regressioner hittades; protokoll i [DEV_LOG.md](DEV_LOG.md).
 
 ## RTS-039 – Uppgraderingsbyggnad för attack och försvar
 
-**Status:** Todo.
+**Status:** Done.
 
 **Priority:** P1.
 
@@ -1452,7 +1452,7 @@ Inga blockerande regressioner hittades; protokoll i [DEV_LOG.md](DEV_LOG.md).
 
 **Dependencies:** RTS-038, RTS-031, RTS-030.
 
-**Requirements:** En byggbar uppgraderingsbyggnad med ett begränsat configträd för attack/försvar. Bestäm bonusmodell, nivåer, pris/tid och giltighet för redan producerade units; inga nya dataplattformar.
+**Requirements:** Forge återanvänder workerbygge (40 wood/10 gold, 64 px, 5 s, HP 120, max en). Attack/defense max en nivå vardera, 40 wood/10 gold och 8 s, ett researchjobb utan kö. Attack ×1,25 damage och defense ×0,75 mottagen unit-damage gäller dynamiskt gamla/nya combat-units, inte workers/byggnader; ingen heal. Projektil behåller damage vid skott. Forge-död avbryter research utan refund, färdiga nivåer består vid rebuild. Global research-UI bevarar selection/orders; reset rensar nivåer och jobb.
 
 **Non-goals:** Omfattande tech tree, spellcasters och flera tidsåldrar.
 
@@ -1468,7 +1468,7 @@ Inga blockerande regressioner hittades; protokoll i [DEV_LOG.md](DEV_LOG.md).
 
 ## RTS-040 – Enhetsbalans och arméstrider
 
-**Status:** Todo.
+**Status:** Done.
 
 **Priority:** P1.
 
@@ -1494,7 +1494,7 @@ Inga blockerande regressioner hittades; protokoll i [DEV_LOG.md](DEV_LOG.md).
 
 ## RTS-041 – Attackbar och förstörbar fiendebas
 
-**Status:** Todo.
+**Status:** Done.
 
 **Priority:** P1.
 
@@ -1520,7 +1520,7 @@ Inga blockerande regressioner hittades; protokoll i [DEV_LOG.md](DEV_LOG.md).
 
 ## RTS-042 – Fiendeproduktion med begränsad resursbudget
 
-**Status:** Todo.
+**Status:** Done.
 
 **Priority:** P1.
 
@@ -1546,7 +1546,7 @@ Inga blockerande regressioner hittades; protokoll i [DEV_LOG.md](DEV_LOG.md).
 
 ## RTS-043 – AI samlar och skickar anfallsgrupper
 
-**Status:** Todo.
+**Status:** Done.
 
 **Priority:** P1.
 
@@ -1572,7 +1572,7 @@ Inga blockerande regressioner hittades; protokoll i [DEV_LOG.md](DEV_LOG.md).
 
 ## RTS-044 – AI försvarar basen och ersätter förluster
 
-**Status:** Todo.
+**Status:** Done.
 
 **Priority:** P1.
 
@@ -1598,7 +1598,7 @@ Inga blockerande regressioner hittades; protokoll i [DEV_LOG.md](DEV_LOG.md).
 
 ## RTS-045 – Skirmish med basförstörelse som segervillkor
 
-**Status:** Todo.
+**Status:** Done.
 
 **Priority:** P1.
 
@@ -1626,7 +1626,7 @@ Inga blockerande regressioner hittades; protokoll i [DEV_LOG.md](DEV_LOG.md).
 
 ## RTS-046 – Konfigurerade svårighetsgrader
 
-**Status:** Todo.
+**Status:** Done.
 
 **Priority:** P2.
 
@@ -1652,7 +1652,7 @@ Inga blockerande regressioner hittades; protokoll i [DEV_LOG.md](DEV_LOG.md).
 
 ## RTS-047 – Minimap med kameraindikator och klicknavigation
 
-**Status:** Todo.
+**Status:** Done.
 
 **Priority:** P1.
 
@@ -1678,7 +1678,7 @@ Inga blockerande regressioner hittades; protokoll i [DEV_LOG.md](DEV_LOG.md).
 
 ## RTS-048 – Fog of war och utforskad terräng
 
-**Status:** Todo.
+**Status:** Done.
 
 **Priority:** P1.
 
@@ -1706,7 +1706,7 @@ Inga blockerande regressioner hittades; protokoll i [DEV_LOG.md](DEV_LOG.md).
 
 ## RTS-049 – Synlighet styr rendering, targeting och minimap
 
-**Status:** Todo.
+**Status:** Done.
 
 **Priority:** P1.
 
@@ -1734,7 +1734,7 @@ Inga blockerande regressioner hittades; protokoll i [DEV_LOG.md](DEV_LOG.md).
 
 ## RTS-050 – Shift-selection och kontrollgrupper
 
-**Status:** Todo.
+**Status:** Done.
 
 **Priority:** P1.
 
@@ -1760,7 +1760,7 @@ Inga blockerande regressioner hittades; protokoll i [DEV_LOG.md](DEV_LOG.md).
 
 ## RTS-051 – Hotkeys och lättillgänglig kommandoguide
 
-**Status:** Todo.
+**Status:** Done.
 
 **Priority:** P1.
 
@@ -1786,7 +1786,7 @@ Inga blockerande regressioner hittades; protokoll i [DEV_LOG.md](DEV_LOG.md).
 
 ## RTS-052 – Pause, matchstart och scenario-val
 
-**Status:** Todo.
+**Status:** Done.
 
 **Priority:** P1.
 
@@ -1814,7 +1814,7 @@ Inga blockerande regressioner hittades; protokoll i [DEV_LOG.md](DEV_LOG.md).
 
 ## RTS-053 – Egna pixeltiles för terräng och resurser
 
-**Status:** Todo.
+**Status:** Done.
 
 **Priority:** P2.
 

@@ -1,3 +1,5 @@
+import { catapultConfig } from '../config/catapult';
+import { archerConfig } from '../config/archer';
 import { costs, type ResourceCost } from '../config/economy';
 import { productionConfig, soldierProductionConfig, queueConfig } from '../config/production';
 import { canAfford, payCost } from './economy';
@@ -7,7 +9,7 @@ import type { GatheringState } from './gathering';
 import type { WorldMap } from './map';
 import type { Position } from './movement';
 export interface ProductionJob {
-  id:string; kind:'worker'|'soldier'; cost:ResourceCost;
+  id:string; kind:'worker'|'soldier'|'archer'|'catapult'; supply?:number; cost:ResourceCost;
   durationSeconds:number; remainingSeconds:number;
 }
 const base:ProductionBuilding={kind:'base'};
@@ -15,20 +17,20 @@ export function productionJobCount(p:ProductionState):number {
   return p.queue?.length??(p.remainingSeconds!==null?1:0);
 }
 export function canEnqueue(g:GatheringState,p:ProductionState,b:ProductionBuilding=base,pop?:Population):boolean {
-  return productionJobCount(p)<queueConfig.maxJobs && (!pop||hasPopulation(pop))
-    && canAfford(g,b.kind==='base'?costs.worker:costs.soldier)
+  return productionJobCount(p)<queueConfig.maxJobs && (!pop||hasPopulation(pop,b.kind==='barracks'&&b.unitType==='catapult'?catapultConfig.supply:1))
+    && canAfford(g,b.kind==='base'?costs.worker:(b.jobCost??costs[b.unitType??'soldier']))
     && (b.kind==='base'||b.ready!==false&&b.footprint!==null&&soldierSpawn(b.footprint)!==null);
 }
 export function enqueueProduction(gathering:GatheringState,production:ProductionState,
   building:ProductionBuilding=base,population?:Population,playing=true) {
   if(!playing||!canEnqueue(gathering,production,building,population))return {gathering,production};
-  const kind=building.kind==='base'?'worker':'soldier';
-  const cost=costs[kind],durationSeconds=kind==='worker'?productionConfig.durationSeconds:soldierProductionConfig.durationSeconds;
+  const kind=building.kind==='base'?'worker':building.unitType??'soldier';
+  const cost=building.kind==='barracks'?building.jobCost??costs[kind]:costs[kind],durationSeconds=building.kind==='barracks'&&building.durationSeconds!==undefined?building.durationSeconds:kind==='worker'?productionConfig.durationSeconds:kind==='archer'?archerConfig.durationSeconds:kind==='catapult'?catapultConfig.durationSeconds:soldierProductionConfig.durationSeconds;
   let number=production.nextJobNumber??1;
   const queue=production.queue??(production.remainingSeconds!==null?[{
     id:`${building.kind}-job-${number++}`,kind,cost:{...cost},durationSeconds,remainingSeconds:production.remainingSeconds,
   }]:[]);
-  const job:ProductionJob={id:`${building.kind}-job-${number}`,kind,cost:{...cost},durationSeconds,remainingSeconds:durationSeconds};
+  const job:ProductionJob={id:`${building.kind}-job-${number}`,kind,supply:kind==='catapult'?catapultConfig.supply:1,cost:{...cost},durationSeconds,remainingSeconds:durationSeconds};
   return {gathering:payCost(gathering,cost),production:{...production,queue:[...queue,job],nextJobNumber:number+1,
     remainingSeconds:queue.length?production.remainingSeconds:durationSeconds}};
 }
@@ -50,7 +52,7 @@ export function updateQueuedProduction(gathering:GatheringState,production:Produ
   let g=gathering,p=production,remaining=Math.max(0,delta);
   while(p.queue!.length) {
     const time=p.remainingSeconds??p.queue![0].remainingSeconds;
-    const result=updateProduction(g,p,remaining,building,context);
+    const result=updateProduction(g,p,remaining,building.kind==='barracks'?{...building,unitType:p.queue![0].kind==='catapult'?'catapult':p.queue![0].kind==='archer'?'archer':'soldier'}:building,context);
     if(result.production.remainingSeconds!==null) {
       const queue=p.queue!.map((j,i)=>i===0?{...j,remainingSeconds:result.production.remainingSeconds!}:j);
       return {gathering:result.gathering,production:{...result.production,queue}};

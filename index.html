@@ -6,10 +6,24 @@
     <title>warcraft-2-tribute</title>
   </head>
   <body>
+    <section id="match-menu" aria-label="Matchmeny">
+      <h1>warcraft-2-tribute</h1>
+      <label>Scenario <select id="scenario-select"><option value="survival">Wave-survival</option><option value="skirmish">Skirmish</option></select></label>
+      <label>Svårighetsgrad <select id="difficulty-select"><option value="easy">Easy</option><option value="normal" selected>Normal</option><option value="hard">Hard</option></select></label>
+      <label>Karta <select id="map-select" disabled><option value="arena">Handgjord arena</option></select></label>
+      <button id="start-match" type="button">Starta match</button>
+      <button id="pause-match" type="button" hidden>Pausa [P]</button>
+      <button id="resume-match" type="button" hidden>Återuppta [P]</button>
+      <button id="new-match" type="button" hidden>Ny match / meny</button>
+      <button id="restart-match" type="button" hidden>Starta om</button>
+      <p id="session-status" role="status"></p>
+    </section>
     <section id="hud" aria-label="Matchstatus och kommandon">
+      <p id="fog-fixture" hidden></p>
       <div id="match-overview">
         <span id="resource-status"></span><span id="health-status"></span><span id="wave-status"></span><span id="population-status"></span>
       </div>
+      <fieldset id="gameplay-controls">
       <div id="production-controls">
         <div class="control"><button id="train-worker" type="button" disabled>Träna arbetare – 20 wood</button>
           <span id="production-status"></span></div>
@@ -19,12 +33,22 @@
           <span id="soldier-production-status"></span></div>
         <div class="control"><button id="build-farm" type="button" disabled>Bygg farm – 20 wood</button><span id="farm-status"></span></div>
       </div>
+      <button id="train-archer" type="button" disabled>Träna archer – 20 wood + 10 gold</button>
+      <button id="train-catapult" type="button" disabled>Träna catapult – 40 wood + 20 gold</button>
+      <button id="build-forge" type="button" disabled>Bygg Forge</button>
+      <button id="research-attack" type="button" disabled>Attack +25 %</button>
+      <button id="research-defense" type="button" disabled>Defense −25 %</button>
+      <p id="research-status"></p>
       <div id="production-queue" aria-label="Produktionskö"></div>
       <button id="attack-move" type="button" disabled>Attack-move</button>
       <button id="stop-units" type="button" disabled>Stop</button>
+      </fieldset>
+      <details id="command-guide"><summary>Tangenter och kommandon</summary><div id="command-guide-text"></div></details>
+      <p id="group-status">Grupper: Ctrl+1–9 bind, 1–9 återkalla</p>
       <p id="selection-status"></p>
       <p id="match-status" role="status">Försvara basen</p>
-      <div id="restart-slot"><button id="restart-match" type="button" hidden>Starta om</button></div>
+      <canvas id="minimap" width="200" height="150" aria-label="Minimap – klicka för att flytta kameran"></canvas>
+
     </section>
     <div id="game"></div>
     <script type="module" src="/src/main.ts"></script>

@@ -4,13 +4,13 @@ import { placementObstacles } from './placement';
 import { updateMappedMove, type RouteState } from './navigation';
 import type { WorldMap } from './map';
 import { gatheringConfig } from '../config/gathering';
-import { soldierStats, unitStats } from '../config/unit';
+import { soldierStats, combatUnitStats, unitStats } from '../config/unit';
 import { moveTowards, type Position } from './movement';
 import type { SelectableUnit } from './selection';
 
 export type ResourceType = 'wood' | 'gold';
 export type WorkerOrder = { kind: 'idle' } | { kind: 'move' }
-  | { kind: 'gather' | 'deliver'; nodeId: string } | {kind:'build';buildingId:'barracks'|`farm-${number}`};
+  | { kind: 'gather' | 'deliver'; nodeId: string } | {kind:'build';buildingId:'barracks'|'forge'|`farm-${number}`};
 export interface Worker extends SelectableUnit {
   navigation?: RouteState;
   kind: 'worker';
@@ -21,6 +21,8 @@ export interface Worker extends SelectableUnit {
   cargoType?: ResourceType;
 }
 export interface Soldier extends SelectableUnit {
+  archetype?: 'archer'|'catapult';
+  attackCooldown?: number;
   autoOrigin?: Position;
   attackMoveTarget?: Position;
   autoDisabled?: boolean;
@@ -81,7 +83,7 @@ export function updateGathering(state: GatheringState, deltaSeconds: number, map
     if (original.kind === 'soldier') {
       if (original.attackMoveTarget) return original;
       if (original.order.kind !== 'move') return original;
-      const position = moveTowards(original.position, original.target, soldierStats.speed, Math.max(0, deltaSeconds));
+      const position = moveTowards(original.position, original.target, combatUnitStats(original).speed, Math.max(0, deltaSeconds));
       return { ...original, position, order: position.x === original.target.x && position.y === original.target.y
         ? { kind: 'idle' as const } : original.order };
     }

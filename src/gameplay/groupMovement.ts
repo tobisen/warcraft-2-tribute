@@ -1,3 +1,4 @@
+import { combatUnitStats,unitStats } from '../config/unit';
 import { navigationConfig } from '../config/navigation';
 import type { Unit } from './gathering';
 import { bodyFits, worldTile, type WorldMap } from './map';
@@ -21,13 +22,15 @@ export function commandGroupMove(units: Unit[], destination: Position, map: Worl
   const validClick=worldTile(map,destination)!==null && bodyFits(map,destination,navigationConfig.halfBody);
   const candidates=validClick?groupCandidates(destination).filter(p=>bodyFits(map,p,navigationConfig.halfBody)):[];
   for(const unit of selected) {
+    const unitMap={...map,bodyHalf:(unit.kind==='worker'?unitStats:combatUnitStats(unit)).size/2};
     const number=(unit.navigation?.commandNumber??0)+1;
-    if(!validClick){result.set(unit.id,planRoute(map,unit.position,destination,number));continue;}
+    if(!validClick){result.set(unit.id,planRoute(unitMap,unit.position,destination,number));continue;}
     let allocated=false;
     for(const point of candidates) {
+      if(!bodyFits(unitMap,point,unitMap.bodyHalf))continue;
       const key=`${point.x}:${point.y}`;
       if(used.has(key))continue;
-      const route=findRoute(map,unit.position,point);if(!route.ok)continue;
+      const route=findRoute(unitMap,unit.position,point);if(!route.ok)continue;
       result.set(unit.id,{commandNumber:number,destination:{...point},waypoints:route.waypoints,
         revision:map.revision,status:route.waypoints.length?'moving':'arrived'});
       used.add(key);allocated=true;break;

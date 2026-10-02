@@ -2,11 +2,11 @@
 
 ## Status och teknik
 
-Implementerat genom RTS-036: FIFO/refund, target-HP/destruktion, workerbygge, farms, population, kamera,
+Implementerat genom RTS-053: archer/projectiles, catapult/splash och Forge/research, FIFO/refund, target-HP/destruktion, workerbygge, farms, population, kamera,
 byggnadsselection, rally, Stop, gold och
 atomiska kostnader ovanpå etapp 1:s HUD, handgjorda karta och navigation för
 move/work/combat, separata gruppmål och säkra placement/spawn-regler.
-De ursprungliga MVP-avsnitten nedan är historik; RTS-018–036-avsnitten längst
+De ursprungliga MVP-avsnitten nedan är historik; RTS-018–053-avsnitten längst
 ned beskriver gällande ändringar av presentation, ranges och navigation.
 
 
@@ -578,3 +578,223 @@ dem mot kvarvarande destination när striden är slut. Scene hanterar enbart
 knapp/destination/cancel, med shutdown-cleanup och game-over-spärr.
 [attackMove.test.ts](src/gameplay/attackMove.test.ts) täcker resa/strid/återgång,
 orders, gruppmål, workers, dolt mål, blockering och enkel deltaförbrukning.
+
+## RTS-037 – Ranged-variant och projektiler
+
+Soldier är gameplay-klassen för stridsenheter; archetype=archer anger ranged
+variant. [archer.ts](src/config/archer.ts) och combatUnitStats ger numeriska
+värden utan Phaser. Queue-job lagrar archer-typ; completion väljer head-typ
+även när olika typer delar barracks-kö. [projectiles.ts](src/gameplay/projectiles.ts)
+flyttar fasta trajectories, kontrollerar LOS/target/lifetime och returnerar
+impact-damage exakt en gång. Combat håller monotona matchlokala arrow-ID:n
+och unit-cooldown, förbrukar approach-tid före skott och projektilflygtid
+efter skott. Enemy-skada och impacts ingår i samtidig damage/cleanup.
+Visibility-predicate tillämpas även på projectile-target; utan fog är kartan
+synlig. Scene skapar/destroyar cirklar efter aktuella projectile-ID:n.
+[archer.test.ts](src/gameplay/archer.test.ts) och
+[projectiles.test.ts](src/gameplay/projectiles.test.ts) täcker slice/lifecycle.
+
+## RTS-038 – Clearance och splash
+
+[catapult.ts](src/config/catapult.ts) ger stats/cost/supply. WorldMap.bodyHalf
+är tillfällig per-unit routing-context; den gemensamma matchkartan ändras inte.
+FindRoute, sweep, approach, gruppnavigation och spawn respekterar clearance.
+ProductionJob lagrar supply; population summerar faktiska units/reservations.
+Projectile.splashRadius återanvänder fast trajectory/lifetime; impactdamage
+beräknas endast för synliga Enemy-targets, inklusive optional footprint för
+stationära byggnadsmål. Förstörda enemy-footprints konsumeras av samma
+cleanup/revision som spelarbyggnader. [catapult.test.ts](src/gameplay/catapult.test.ts)
+täcker kant/splash, byggnader, initialtarget-död, friendly fire, kropp/spawn,
+supply och outcome. Ingen faktisk fiendebas införs före RTS-041.
+
+## RTS-039 – Forge och research-state
+
+Forge återanvänder placement/workerbygge, target-HP och death-cleanup.
+[upgrades.ts](src/config/upgrades.ts) är det begränsade configträdet.
+[research.ts](src/gameplay/research.ts) äger kostnads-/startspärrar, nivåer
+och ett jobb. Match delar delta vid research-completion, uppdaterar research
+efter combat-cleanup och använder föregående färdiga nivåer under intervallet.
+En Forge som dör vid completion-boundary ger ingen bonus. Combat tillämpar
+globala multipliers utan mutation av individuella grundstats; projectile
+damage lagras vid skott. [research.test.ts](src/gameplay/research.test.ts)
+täcker bygge, cost/time/duplicates, melee/ranged/armor och death/reset.
+
+## RTS-040 – Upprepningsbara balansfixtures
+
+[armyBalance.test.ts](src/gameplay/armyBalance.test.ts) kör melee-duel, ranged
+support och siege-kluster genom verklig combat/projectile-logik. Assertions
+jämför roller/invarianter i stället för att frysa ett godtyckligt DPS-tal.
+Config behålls efter dessa fixtures och naturlig mixed-army-survival;
+mätningar och browserbegränsningar finns i GAME_DESIGN/DEV_LOG.
+
+## RTS-041 – Scenario-konfiguration och enemy-footprint
+
+[scenarios.ts](src/config/scenarios.ts) deklarerar survival och siege-test.
+CreateMatch klonar bas/footprint per match och registrerar hindret. Enemy.kind
+base återanvänder stationärt footprint-target och befintliga attackorders/
+projectiles/cleanup. Wave-outcome räknar levande wave-units, inte stationär
+base. Scene läser tillfälligt siege-test från URL vid create/restart; ordinarie
+val kommer senare. [enemyBase.test.ts](src/gameplay/enemyBase.test.ts) testar
+ägare, fysisk kropp, alla army-attacker, cleanup och outcome-isolering.
+
+## RTS-042 – Enemy-production-adapter
+
+[enemyProduction.ts](src/gameplay/enemyProduction.ts) adapterar enemy-budget
+och egna units till gemensam FIFO/cost/supply/spawn. Temporära queue-Unit-
+objekt förs aldrig in i player gathering-state; completion översätts till
+enemy-owned IDs enemy-produced-N och enemy-stats. Player-unit-kroppar ingår
+i spawnkontrollen. Produktion stegdelas vid head-timers för olika delta;
+blockerad head håller resten. [enemyProduction.ts](src/config/enemyProduction.ts)
+är ändlig budget/roster-config. Enemy-base-död konsumerar reservations innan
+produktionsfas; survival saknar adapter-state.
+[enemyProduction.test.ts](src/gameplay/enemyProduction.test.ts) testar
+budget, tidssteg, cap, blockerad spawn, simultan produktion och death/reset.
+
+## RTS-043 – Medlemskap och dispatch
+
+[enemyAI.ts](src/gameplay/enemyAI.ts) håller elapsed, monotona grupp-ID:n,
+medlemmar, destinationspunkter och muster/ready/attack-faser. Bara lediga
+producerade IDs rekryteras. Gruppnavigation återanvänder commandGroupMove;
+Enemy muster flyttas med enemy speed i combat utan att attackera. Dispatch
+byter en gång till attack-move mot player-bas.
+[enemyAI.ts](src/config/enemyAI.ts) reglerar plats, storlek, timeout/grace/gap.
+Cleanup rensar döda referenser även före outcome-freeze.
+[enemyAI.test.ts](src/gameplay/enemyAI.test.ts) testar tidsregler, medlemskap,
+navigation utan cache, timeout, två grupper och death/reset.
+
+## RTS-044 – Försvarsöverföring
+
+[enemyDefense.ts](src/gameplay/enemyDefense.ts) planerar reserve, threat och
+borrowed-defenders före rekrytering/dispatch i enemyAI. Skyddade IDs undantas
+från anfallsgrupper och rekrytering. Defender metadata sparar tidigare grupp/
+destination; återgång återställer grupporder om plats finns. Enemy defend-order
+har explicit player-target-ID och combat använder det i stället för lokal
+fallback. Återkommande samma försvarsorder återställs inte varje frame.
+PlayerVisibility är planeringskontraktet inför fog; reachability använder
+24 px Enemy-approach. Cleanup tar bort döda member/target-referenser före
+outcome-freeze. [enemyDefense.test.ts](src/gameplay/enemyDefense.test.ts)
+täcker prioritet, unik membership, return, dold/onåbar raid, budget och reset.
+
+## RTS-045 – Valbara matchlägen
+
+Scenario-config i [scenarios.ts](src/config/scenarios.ts) styr enemy-base, waves
+och outcome-policy. [match.ts](src/gameplay/match.ts) skapar separat state och
+hoppar över wave-spawn och wave-tidsgränser i Skirmish. En gemensam gameplay-
+klocka fortsätter driva ekonomi/produktion/AI. BootScene binder ett enkelt
+DOM-val med shutdown-cleanup; restart behåller scenens val. URL-parametern
+scenario används endast som initialt preview-val, inte vid varje restart.
+
+## RTS-046 – Profilisolering
+
+[difficulty.ts](src/config/difficulty.ts) innehåller immutable profiler.
+MatchState sparar bara profil-ID; factory kopierar faktisk enemy-budget/cap/
+produktionstid till state. Shared production debiterar samma verkliga priser.
+AI får profilinställningar och waves tar en explicit schedule, med Normal
+som default för isolerade regressioner. Outcome och HUD använder matchens
+schedule. Inga globala configs muteras av factory, update eller restart.
+
+## RTS-047 – Kameraöverblick
+
+[minimap.ts](src/presentation/minimap.ts) ger rena koordinat-/clampfunktioner,
+indikator och färska snapshots med explicit marker-visibility-filter för
+RTS-049. [minimapView.ts](src/presentation/minimapView.ts) ritar en separat
+200 × 150 DOM-canvas och binder enbart camera-click; tar hänsyn till CSS-
+border vid koordinatkonvertering. BootScene skickar state/kamera och rensar
+lyssnaren på shutdown. Frames ritas från aktuellt state, utan marker-cache.
+Terrain använder aktuella footprints; full fog-datafiltrering kommer RTS-049.
+
+## RTS-048 – Separat fog-grid
+
+[fog.ts](src/gameplay/fog.ts) har oberoende boolean-arrayer visible/explored
+per team, begränsade radius-sökningar och rock-LOS via befintlig segment-
+geometri. [matchFog.ts](src/gameplay/matchFog.ts) härleder levande unit-/
+färdig-building-observers och rock-blockers; [fog.ts](src/config/fog.ts)
+ger radier. Matchfactory/update skapar och uppdaterar fog, efter spawn/
+destruction och även vid delta 0 för färsk observer-death. Legacy-fixtures
+utan fog ändras inte av zero-delta. Inga globala configs muteras.
+[fogView.ts](src/presentation/fogView.ts) ritar preview-Graphics på depth 40
+endast med märkt URL-fixture. Normal rendering/targeting påverkas inte förrän
+RTS-049. Explored är bara terrain-minne, inga enemy-state-snapshots.
+
+## RTS-049 – Aktivt visibility-kontrakt
+
+[visibility.ts](src/gameplay/visibility.ts) definierar unit-center, building-
+footprint, explored-resource och full-footprint-placement. Match beräknar
+vision efter gathering/building, skickar samma player/enemy-predicates till
+combat/AI och uppdaterar efter combat/production/spawn. Explored från dessa
+steg bevaras; redundant fog-beräkning före varje positivt delta togs bort.
+Delta 0/early outcome uppdaterar ändå death-vision.
+
+Combat filtrerar explicit targets, acquisition, enemy local targets/defense
+och projectile-impact. Förlorade explicit targets släpps; group/wave-AI kan
+utforska mot ett konfigurerat mål utan att läsa dold unit-position. Renderer
+filtrerar enemy bodies/HP/labels/order-markers och projectile-position; dolda
+objekts visuals förstörs. Unknown-mask är opak, explored är mörk terrain.
+Visible-minimap använder endast statisk terrain och filtrerade fresh markers,
+plus fog-mask; hidden enemy-footprints kommer aldrig via obstacle-listan.
+HUD visar own ekonomi, men hidden node-remaining är `?`; neutral icons
+avslöjar inte dold depletion. Input gate: hidden enemy kan inte hit-testas,
+resurs kräver explored, placement kräver current vision över hela footprint.
+Own preview/drag-UI ligger ovanför fog. Inga live enemy-memory snapshots.
+
+## RTS-050 – Selection-composition och gruppreferenser
+
+[controlGroups.ts](src/gameplay/controlGroups.ts) kombinerar urval och binder/
+återkallar/prunar ID:n utan order-mutation. MatchState.controlGroups är en
+ren slot→IDs-map, fresh i factory och death-pruned av destruction före
+outcome-freeze. [keyboard.ts](src/presentation/keyboard.ts) har ren focus/
+repeat/game-over-guard. BootScene latchar Shift på pointerdown, binder en
+group-key-listener med shutdown-cleanup och ger spelcanvas explicit fokus.
+Recall ändrar endast selection och cancellerar UI-preview. Group-status
+visar enbart egna gruppantal; hidden/foreign targets får inte återkallas.
+
+Visibility-granskning rättade dessutom cleanup för det fasta `explore-goal`:
+legitim navigationcache ska överleva även om det inte är ett levande target-ID.
+Regression verifierar fortsatt waypoint-cache utan dold bas-skada.
+
+## RTS-051 – En gemensam action-väg
+
+[hotkeys.ts](src/presentation/hotkeys.ts) beskriver mapping/guide och ren
+resolver/dispatcher. BootScene binder en action-listener med shutdown-cleanup
+och dispatchar till samma aktiverade HTML-knapp som mouse-UI; inget parallellt
+cost/order-system. Alla labels får samma config-suffix. Keyboard-context
+blockerar UI/editable, repeat, modifierade bokstäver, pause och game over.
+Escape går genom samma synkrona window-key-listener/cancel-handler; ingen
+blandning med Phasers frame-kö för Escape. Pause-flaggan i
+guarden kopplas till livscykel i RTS-052. Gruppsiffror har separat befintlig
+slot-kontrakt, så samma event ger inte både action och group recall.
+
+## RTS-052 – Session och gameplay-gate
+
+[session.ts](src/gameplay/session.ts) har rena menu/playing/paused/ended-
+övergångar, immutable startval och first-frame-delta-gate. MatchState.paused
+returnerar före cleanup/simulation så samtliga clocks/orders/projectiles/AI
+fryser. BootScene fortsätter view/render-menysteg; resume samlar ingen wall-
+time och skippar första gameplay-frame. Alla handlers/keyboard/action-knappar
+använder gameplayActive, och production-UI ligger i disabled-fieldset.
+Minimapkamera/guide/session-meny är separat aktiva under pause.
+
+Session start/restart köar fresh scene/match med pending-guard, fresh listeners
+och camera-reset. Menyval kan inte mutera aktiv session; Start skapar rätt
+scenario/profil. Canvas döljs i menu; vid show körs ScaleManager.refresh för
+att återställa displayScale (updateBounds ensamt kan ge NaN efter hidden).
+Meny-targets exkluderas från pointerup-selection. P/Escape går i samma key-
+router med fokusguard; Escape ger preview-cancel före pause.
+
+## RTS-053 – Reproducerbar native pixel-atlas
+
+[world.mjs](assets/sources/world.mjs) handkomponerar tiles/noder med egna
+integer-penslar i [pixelArt.mjs](scripts/pixelArt.mjs) och [palette.json](assets/palette.json).
+[export-assets.mjs](scripts/export-assets.mjs) skriver PNG 8-bit RGBA/atlas/
+manifest till public/assets. Inga raster-importer, nya dependencies eller
+runtime-mapgeneratorer. [assets.ts](src/presentation/assets.ts) mappar
+terrain/config och observed resource-state till stabila frames. BootScene
+preloadar atlas; native tileImages och centerankrade nodeImages ersätter
+rektanglar/cirklar. Phaser pixelArt/roundPixels gäller endast rendering.
+
+NodeFrame 64 × 64, anchor (32,40), origin (.5,.625), oförändrad logical
+footprint 40 × 40 kring world-node-center. Decorations utanför footprint
+ändrar inte hit-test/hinder. Hidden depletion ger statisk available-symbol,
+inte dold qty-state. [assets.test.mjs](tests/assets.test.mjs) validerar exporter
+med Node fs/zlib utanför src:s strikta browser-TypeScript; inga Node-typdeps
+införs. Produkt och gameplay-tester behåller strict TypeScript.

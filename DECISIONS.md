@@ -153,11 +153,11 @@ en ny plan. Tekniska alternativ får jämföras inom samma task/subtasks.
 | O-01 | Initial verifieringsmiljö vald i RTS-016: macOS 15.7.4, Chromium 147 headless, desktop 1280 × 720 samt resize/scroll vid 520 × 420 och 900 × 500. Blockerande fel innebär brutet normalt matchflöde, ekonomi, input, outcome eller reset. Överlapp och fast canvas är avsiktliga MVP-begränsningar. Slutliga browserstöd och enhets-/frame-/minnesbudgetar är fortfarande öppna. | RTS-060 slutprofil/budget. |
 | O-02 | Preliminära ekonomi/DPS/tider och mätbara balansmål; senare gold/wood-kostnader, supply och difficulty-budgetar. | RTS-017, RTS-030, RTS-032, RTS-040, RTS-046 före respektive balansimplementation. |
 | O-03 | RTS-019 fastställer handgjord layout, klippt 24 px-nederkant, positiv footprint-rasterisering och immutable hinderrevision. RTS-025 fastställer 1280 × 960 px world, 800 × 600 viewport, zoom 1 och mittenmusdrag. | RTS-025. |
-| O-04 | Fastställt i RTS-020–022: bounded BFS fyra grannar, svept 24-px-kropp, safe direct segment, revisions-/fas-/target-triggers och 0,25 s pursuit-cooldown. Senare kartstorlek kan kräva ny uppmätt sökbudget. | RTS-025/060 vid behov. |
+| O-04 | Fastställt i RTS-020–022: bounded BFS fyra grannar, svept 24-px-kropp, safe direct segment, revisions-/fas-/target-triggers och 0,25 s pursuit-cooldown. RTS-038 tillför faktisk 40 px clearance för catapult; senare kartstorlek kan kräva ny uppmätt sökbudget. | RTS-025/060 vid behov. |
 | O-05 | RTS-026 fastställer exklusiv unit/building-selection och unit-klickprioritet; RTS-029 fastställer en lasttyp och leverans av tidigare last före nodbyte. | RTS-026, RTS-029. |
 | O-06 | RTS-031: en barracks, 5 s arbete, paus utan byggrefund. RTS-032: högst tre farms, cap 8 +5/farm, unit/job 1 och reservation vid start. RTS-033 fastställer tre FIFO-jobb, 50 % aktiv refund och 100 % köad refund. | RTS-031, RTS-032, RTS-033. |
-| O-07 | Supply över cap fastställs i RTS-032. RTS-034 fastställer förlust av cargo, ingen refund vid byggnads-/jobbdöd och cleanup före produktion. Research-policy vid död kvarstår för RTS-039. | RTS-034, RTS-039; grundregler måste vara klara innan systems kod. |
-| O-08 | Autoattack-prioritet/idle-aggro/Stop, ranged LOS/targettap/projektil-livstid, catapult-falloff/friendly fire och uppgraderingsbonusmodell. | RTS-035, RTS-037, RTS-038, RTS-039. |
+| O-07 | Supply över cap fastställs i RTS-032. RTS-034 fastställer förlust av cargo, ingen refund vid byggnads-/jobbdöd och cleanup före produktion. RTS-039: aktiv research avbryts utan refund, färdiga nivåer består efter Forge-död. | RTS-034, RTS-039; grundregler måste vara klara innan systems kod. |
+| O-08 | Fastställt RTS-035–039: explicit attack prioriteras, Stop håller; ranged LOS och fasta projectile-aimpoints/lifetime; catapult flat splash utan friendly fire, supply 2; en nivå attack ×1,25/defense ×0,75. Fog-aktivering återstår i O-10. | RTS-035, RTS-037, RTS-038, RTS-039. |
 | O-09 | Enemy-budget/roster, group-size/timeout, försvar/reserv och difficulty-profiler. Full AI-worker-ekonomi ligger utanför plan. | RTS-042–046. |
 | O-10 | Fog-grid/radier/LOS, minne av enemy-buildings, targettap och synlighetsregler för projektilevents; offentlig wave-info kontra dold enemy-info. Inga läckor tillåtna oavsett val. | RTS-048 modell, RTS-049 aktiveringsgrind. |
 | O-11 | Tangentmappning/språk, modifierad selection, pause-input och startmeny/sceneövergångar. | RTS-050–052. |
@@ -382,3 +382,243 @@ Stop, vanlig Move och manuell attack ersätter hela ordern. Escape/högerklick
 avbryter väntande destination utan att ändra selection/orders. Blockerad
 destination avslutar ordern med befintligt route-fel; game over spärrar input
 och restart rensar både gameplay-state och kommandoläge.
+
+## RTS-037 – Archer-policy före implementation
+
+Archer är en combat-unit-variant med 24 px kropp, 40 HP, speed 140, range
+160 från target-footprint, aggro 200, 12 damage/1 s, supply 1. Kostnad
+20 wood/10 gold, träning 6 s. Projektiler går mot fast aim point vid avfyrning
+med speed 300, lifetime 2 s och hit-radius 16. Ingen homing: rörligt mål kan
+missas. LOS krävs vid skott och längs projektilsegment; hinder stoppar skott.
+Dött/osynligt mål tar bort projektilen utan damage. Ett impact förbrukar
+projektilen exakt en gång. Fog använder samma visibility-predicate som
+acquisition. Värden är första speltestsvärden, inte slutlig balans.
+
+## RTS-038 – Catapult-policy före implementation
+
+40 px kropp, speed 80, HP 80, supply 2; kostnad 40 wood/20 gold och
+träning 10 s. Range 224, aggro 260, skott var 2 s. Fast aim point, speed
+180/lifetime 3 s återanvänder projectile-lifecycle. Impact ger 24 damage
+inom 48 px inklusive kanten, utan falloff, endast fiendemål. Avstånd till
+byggnads-footprint används; byggnader får samma damage som units. Ingen
+friendly fire. Ett dött initialmål avbryter inte siege-projektilen: fast
+impact kan fortfarande skada andra mål. Hinder/LOS stoppar skott. Alla
+navigations- och spawnkontroller använder faktisk 40 px clearance; ingen
+collision avoidance införs. En verklig fiendebas kommer först i RTS-041;
+byggnadsskada verifieras här med footprint-target-fixtures.
+
+## RTS-039 – Forge och research-policy före implementation
+
+Forge: max en, 64 px footprint, workerbygge 5 s/range 24, HP 120,
+40 wood/10 gold. Attack och defense har max en nivå vardera, 40 wood/10 gold
+och 8 s per research, ett jobb åt gången utan kö/cancel. Attack multiplicerar
+combat-unit damage med 1,25; defense multiplicerar mottagen unit damage med
+0,75. Workers och byggnader får ingen bonus. Gäller gamla/nya combat-units
+dynamiskt; redan avfyrad projektil behåller damage vid skott. Ingen HP-heal
+eller HP-max-ändring. Forge-död avbryter aktiv research utan refund men
+färdiga bonusar består; rebuild tillåts och dubblerar aldrig nivåer. Restart
+rensar allt. Research-knappar är globala och ändrar inte selection/orders.
+
+## RTS-040 – Speltestade arméroller
+
+Preliminära configvärden behålls efter tre upprepningsbara fixtures
+(0,05 s steg, öppen karta): soldier vinner 36-HP melee-duel på 2,65 s med
+47,4 HP kvar. Mot 72 HP tar ensam soldier 4,65 s; soldier + archer bakom
+tar 3,30 s, soldier 43,5 HP och archer oskadad 40 HP. Catapult förstör två
+48-HP stationära footprint-targets inom splash på 3,15 s, själv 80 HP; mål
+utanför splash behåller 48 HP. Dessa mätningar visar tank/support/area-roller
+och är inte universell slutbalans.
+
+Naturlig full wave-match: två wood-workers och en gold-worker som bygger
+barracks och återupptar gold. Soldier först, sedan archer och catapult,
+manuella attackorders till blandad armé. Victory 126,79 s, bas 240 HP, tre
+producerade typer och två överlevande combat-units. Spenderat 120 wood/35 gold
+inklusive barracks, inget lostCargo; balans/resursbevarande och restart
+verifierade. Separat låg-bas-HP-fixture verifierar defeat, input/simulation-
+freeze och reset med samtliga army-typer. Ingen config ändrades utan mätbehov.
+
+## RTS-041 – Fiendebas och tillfälligt belägringsscenario
+
+Survival är fortsatt default utan fiendebas. ?scenario=siege-test skapar
+en fysisk enemy-base (96 px footprint vid 960,96, HP 240) för belägring med
+befintlig ekonomi/armé. Ingen produktion eller ny victory-policy införs;
+waves och defeat-prioritet behålls och stationär fiendebas påverkar inte
+wave-survival-villkoret. Basens ägare är enemy; endast attack är tillåten,
+aldrig spelarproduktion/rally. Skirmish och dess riktiga val/outcome kommer
+i RTS-045. Footprint/range/LOS och death-revision återanvänder RTS-038.
+
+## RTS-042 – Ändlig enemy-budget
+
+Siege-test startar med 80 wood/20 gold, cap 6 och endast soldier-liknande
+enemies (20 wood/5 gold, 5 s, supply 1, gemensam FIFO max 3). Högst fyra
+produceras ur budgeten, ingen refill/worker-ekonomi. Shared queue debiterar
+varje jobb/reserverar supply, adapter skapar enemy-owned IDs i egen namnrymd.
+Waves förblir separata och debiteras inte ur basbudgeten; survival har ingen
+enemy-production. Spawn väntar säkert på kropp/utgång och upptagna units från
+båda sidor. Basdöd tar bort jobb/reservations utan refund. Restart återställer
+budget/ID/timers. Producerade enemies är idle i denna slice; samling/anfall kommer i RTS-043.
+
+## RTS-043 – Samling och anfall
+
+Endast enemy-produced-N ingår i AI-grupper; wave-enemies behåller sin policy.
+Två medlemmar samlas nära 896,320 med separata säkra destinationspunkter.
+Full grupp med ankomna medlemmar är ready; 15 s timeout gör överlevande
+underbemannad/blockerad grupp ready utan nya units. Första dispatch tidigast
+60 gameplay-s för att ge ekonomin starttid, därefter minst 15 s mellan grupper.
+Ready-grupp skickas en gång med attack-move mot player-bas via befintlig
+navigation/lokalt enemy-targetval. Döda medlemmar/destinationsreferenser rensas;
+tomma grupper tas bort, ID-räknare återanvänds inte. Budgeten är fortfarande
+ändlig och varje unit tillhör högst en grupp. Ingen formation/collision AI.
+
+## RTS-044 – Lokalt försvar och återgång
+
+En producerad unit hålls som permanent reserve nära enemy-base. Hot är
+levande synliga player-combat-units inom 256 px från basens footprint;
+workers räknas inte som hot. Högst två nåbara defenders: reserve först, sedan
+befintliga defenders/närmaste tillgängliga units med stabilt ID. Befintligt
+giltigt target behålls. Borrowed unit tas ur anfallsgruppen, återgår till
+ursprunglig grupp när möjligt, annars till ny samling. Reserve återgår till
+säkert home utanför basen. Dispatch pausas under hot; redan skickade grupper
+fortsätter förutom borrowed defenders. Replacement använder samma ändliga
+budget och supply/timer – efter budgetslut finns ingen replacement. Player-
+visibility-predicate förbereder fog; inga hidden targets används när den
+är inkopplad. Basdöd släpper reserve till befintlig grupp-AI och stoppar
+produktion. Restart rensar försvar/target/home-referenser.
+
+## RTS-045 – Valbart scenario och outcome
+
+Survival är default: ändliga waves, victory först när sista wave spawnat och
+alla wave-enemies dött. Skirmish har enemy-bas/ändlig budget/AI men inga waves;
+victory när enemy-basen förstörs även om enemy-armé överlever. Player-bas 0
+ger defeat med företräde vid simultan basdöd. Båda startar samma initiala
+player-ekonomi, karta och army-system. Scenario-dropdown startar en ny match
+direkt; restart behåller valt scenario och återskapar allt state. URL-val är
+validerat och används bara för initial mode; siege-test behålls för tidigare
+regressioner. Full startmeny kommer RTS-052.
+
+## RTS-046 – Avgränsade profiler
+
+Endast enemy-budget/cap/produktionstid, gruppstorlek/first/gap och Survival-
+schedule varierar enligt [difficulty.ts](src/config/difficulty.ts). Normal
+är exakt tidigare configs; player-start, priser och alla combat-stats hålls
+lika. Easy/Hard är preliminära tryckprofiler, inte hidden cheats. Varje
+producerad enemy betalas ur synligt konfigurerad ändlig budget. Initialt
+URL-val valideras; UI-byte startar ny match och restart behåller båda ID:n.
+
+## RTS-047 – Minimap som separat kamera-UI
+
+Separat 200 × 150 DOM-canvas med axelvis world-skalning och samma viewport-
+clamp som huvudkameran. Endast vänsterklick/navigation; inga minimap-orders.
+Vit indikator visar world-viewport inklusive kant-clamp. Aktuella snapshots
+ritas utan gameplay-mutation/marker-cache; visibility-filter finns inför
+RTS-049 men fog aktiveras inte ännu. Listener rensas på scene-shutdown.
+
+## RTS-048 – Vision-policy före implementation
+
+Fog-grid 32 px, separat aktuell visible och persistent explored per player/
+enemy-team. Celler provas i centrum, inklusive radiuskanten: worker 160 px,
+combat/enemy-unit 192 px, färdig bas 256 px, färdig barracks/Forge 192 px,
+färdig farm 128 px. Byggnadsradie mäts från footprint-kanten. Endast levande
+observers; ofärdiga byggnader ger ingen vision. Rock blockerar rak vision;
+water och byggnader gör det inte. Rock-cellen själv kan avslöjas genom att
+dess eget footprint undantas från LOS; bakom rock förblir dolt.
+
+Explored gäller terrain under matchen och nollställs på restart. Inget minne
+av enemy-building/unit/HP införs. Factory/update håller grid fristående från
+Phaser. URL `fog-preview=player` eller `enemy` är uttryckligen en märkt
+modellfixture, inte ett spelbart fog-läge: mask/synlighet granskas där medan
+övrig information ännu inte filtreras. Normal visning aktiveras först RTS-049.
+
+## RTS-049 – Gemensamt visibility-kontrakt
+
+Units syns med centrumcellens current-visible; byggnad avslöjas om någon av
+footprint-cellerna är current-visible. Då visas hela objektet med aktuell HP.
+Ingen last-seen enemy-marker/HP-memory. Förlorad vision släpper explicit
+attack till idle utan fortsatt dold positionstracking; autoattack återgår
+som tidigare till origin/attack-move. Enemy-team använder samma union av egen
+vision för local targeting/defense. Anfallsgrupper/waves kan förflytta sig mot
+kartans konfigurerade basmål, men skadar endast synliga targets och följer
+inte dold unit-position. Ingen dold budget/timer visas i player-UI.
+
+Pilar tas bort om mål blir osynligt. Siege flyger till sin fasta siktpunkt
+oberoende av om initial target blivit dold eller dött; båda fallen ger samma
+flight, utan dold HP/position-läsning. Ingen
+splash-skada på osynliga enemies. Om skytten dött används fortfarande
+lagets vision för redan skjutna projektiler. Renderad projektil kräver aktuell
+vision vid projektilens punkt. Minimap filtrerar enemy-objekt och maskerar
+okänd/explored terrain; inget live enemy-footprint används som terrängdata.
+Resurser kan beordras efter att terrängen utforskats, men återstående mängd
+visas endast vid aktuell vision. Own saldo/units/orders/buildings är egna
+uppgifter. Rock-LOS/radier från RTS-048 behålls. Utforska innan första order
+till en ännu okänd resurs; normal fog aktiveras nu i båda modes.
+
+RTS-049: Byggplacering kräver current vision i samtliga footprint-celler innan
+occupancy granskas, så preview/kostnad inte avslöjar dold unit närvaro. Unknown
+world-mask är opak; egna placement/drag-preview ligger ovanför masken.
+
+RTS-049 granskning: Siege flight använder endast fast siktpunkt och target-
+footprint observerad vid avfyrning. Dold target-position/HP får inte styra
+flight; hidden och dead initial target ger identiska synliga skottbanor.
+Splash provar synlighet före live victim-position/HP. Arrow drop-policy är
+oförändrad. Detta undviker indirekt dödsläcka genom en synlig projektil.
+
+## RTS-050 – Avgränsad selection/group-policy
+
+Shift-click toggle, Shift-drag add, empty modifier bevarar selection; Shift
+latchas vid pointerdown. Byggnadsklick är exklusivt även med Shift. Ctrl/Cmd
++1–9 skriver över en slot med valid own selected IDs, vanliga 1–9 recall-
+ersätter unit-selection. Empty slot avmarkerar. Recall filtrerar nuvarande
+HP/ägare/vision och ändrar inte orders/kamera; cancellerar aktiva UI-preview.
+Death-pruning sker i cleanup även före freeze; grupper hör till MatchState,
+inte global app-state. Fokus på INPUT/TEXTAREA/SELECT/BUTTON/A/editable,
+repeat och Alt blockerar keys. Scene-shutdown tar bort listener och restart
+skapar fresh grupper. Spelcanvas är fokuserbar och pointerdown ger fokus.
+
+## RTS-051 – Svensk guide och tangentmappning före implementation
+
+Synliga svenska kommandobeskrivningar med befintliga unit-namn. S Stop, A
+attack-move, B barracks, F farm, G Forge, W worker (vald bas), T soldier/R
+archer/C catapult (vald barracks), U attack-research/D defense-research
+(färdig Forge). Shift/grupper enligt RTS-050; Escape cancellerar UI-mode.
+Varje action använder samma aktiverade knapp/validering, inte separat ekonomi.
+Inga actions vid repeat, Ctrl/Cmd/Alt-letter, UI/editable-fokus, pause eller
+game over. Slots Ctrl/Cmd+1–9 fortsätter hanteras av gruppkontraktet. Guide
+visar kontext och hänvisar till samma knappar/status för blockeringsorsaker.
+
+RTS-051 browsergranskning: Escape flyttas till samma window-key-listener som
+nya actions, med samma fokusguard. Snabb B→Escape→B måste bevara eventordning
+och nästa placement; undvik att Phaser-köad Escape cancellerar en senare
+synkron action. Ingen separat/duplicerad Escape-listener behålls.
+
+## RTS-052 – Livscykel-policy före implementation
+
+Första laddning visar startmeny. Välj Survival/Skirmish och Easy/Normal/Hard;
+enda stödda karta är den handgjorda arenan. Start skapar fresh match. Session
+har tydliga menu/playing/paused/ended-faser. Scenario/profil ändras bara i
+menu, aldrig i aktiv match. Pause fryser MatchState före någon simulation/
+cleanup/timer. Kamera via minimap, guide och session-meny fungerar i pause;
+selection/orders/ekonomi och huvudcanvas-input är spärrade. Ocommitterade
+placement/attack-mode/drag-preview cancelleras när pause/menu öppnas.
+
+P togglar pause/resume. Escape cancellerar aktiv preview först, annars pause;
+i paused återupptar Escape. UI/editable/modifierade bokstäver/repeat skyddas
+som tidigare. Resume skippar första gameplay-delta och samlar aldrig pausens
+wall-time. Restart från pause/outcome behåller val och skapar allt state på
+nytt; Ny match öppnar menu med bevarade val, Start ersätter gamla matchen.
+Ingen ny karta, lobby eller persistent campaign införs.
+
+RTS-052 browsergranskning: när spelcanvas visas efter menu måste Phaser
+ScaleManager.refresh köras, så displayScale räknas om från synliga canvas-
+bounds. updateBounds ensamt räcker inte efter display:none och kan annars
+ge NaN i world-input. Samma synlighetsövergång används efter varje menu.
+
+## RTS-053 – Pixelkällor och ankare
+
+Egna repo-lokala heltalskompositioner, begränsad palette och deterministic
+PNG RGBA-export med Node built-ins. Ingen lånad art och ingen ny dependency/
+runtime-procedural map. Atlas 256 × 128, fyra terrainframes 32 px och fyra
+resourceframes 64 px, no trim/rotation. Texture nearest; roundPixels endast
+visuellt. Resource-anchor (32,40) för befintlig center/radius20-footprint40.
+Originalsprite/palett/export/provenance dokumenteras i [assets/README.md](assets/README.md).
+World logic, resource amount/cost och fog-policy behålls. Artifact-validation
+är .mjs Node-test i tests/, så browser-tsconfig slipper Node-typdependencies.

@@ -861,3 +861,284 @@ Slutgranskning av fortsättningen RTS-033–036: 60 unika task-ID:n,
 36 Done/24 Todo, acykliska beroenden, 415 giltiga lokala filreferenser och
 bevarade ursprungliga RTS-001–015-texter. git diff --check passerar.
 Current Focus är RTS-037 (archer/projektiler). Ingen commit eller push.
+
+## 2026-10-02 – RTS-037
+
+Archer-produktion i blandad barracks-FIFO, stats/speed/range, blå placeholder,
+cooldown och fristående icke-homing-projectiles. Samma orders/navigation/
+visibility som soldiers, inga resursorders. 272 tester/33 filer, typecheck/build
+passerar. Chromium med valuta/färdig barracks och combat-fixtures verifierade
+faktisk produktion, blandad kö, dragselection, synliga pilar mot rörliga
+enemies i mixed army, Move, terrain-LOS, game over och restart utan browserfel.
+Granskningen rättade cooldown-tick under attack-move-färd med regressionstest.
+Diff-check passerar; bundle-varning kvarstår. Ingen commit/push.
+
+## 2026-10-02 – RTS-038
+
+Catapult med 40 px clearance, två supply, blandad FIFO, splash/lifecycle och
+stationära footprint-targets. 279 tester/34 filer, typecheck/build passerar.
+Chromium med färdig barracks/saldofixture verifierade faktisk mixedproduktion,
+klick på kroppens ytterkant, Move, siegeprojektil mot building/edge-targets,
+skyddad egen worker, hinder-cleanup, blockerad smal passage och restart utan
+browserfel. Building/edge-targets var tydligt stationära fixtures, ingen
+fiendebas eller AI-ekonomi tillkom. Friendly-fire-testets ursprungliga enemy
+melee mot bas ersattes av stationärt target för att isolera splash. Diff
+granskad för clearance, jobs/supply, livstid och cleanup; diff-check passerar.
+Bundle-varningen kvarstår. Ingen commit/push.
+
+## 2026-10-02 – RTS-039
+
+Byggbar Forge återanvänder workerbygge/HP/cleanup. Ett researchjobb och en
+attack-/defensenivå; dynamiska army-bonusar och snapshot av projectile-damage.
+Research-boundary delar delta och Forge-död före completion ger ingen bonus.
+288 tester/35 filer, typecheck/build och diff-check passerar. Chromium med
+valuta/duel-fixtures verifierade verkligt workerbygge, research/timer/kostnad,
+bevarad selection, DPS 18→22,5 och mottagen skada 6→4,5 per gameplay-sekund,
+Forge-död med aktivt jobb/ingen refund, bestående nivå och restart utan fel.
+Första browserkontrollens restart-väntan gick igenom på tre gamla workers;
+den rättades att vänta på nytt outcome/research-state och omkörningen passerade.
+Granskad timing, dubblering, byggväg och cleanup utan blockerande fynd.
+Bundle-varning kvarstår; ingen commit/push.
+
+## 2026-10-02 – RTS-040
+
+Tre upprepningsbara arméfixtures: melee 2,65 s/47,4 HP; mot 72 HP solo
+4,65 s kontra melee/ranged 3,30 s, archer oskadad; siege-kluster 3,15 s med
+kantmål skadat och utanför oskadat. Inga configändringar behövdes. 291 tester/
+36 filer, typecheck/build och diff-check passerar. Chromium naturlig full
+match med faktisk ekonomi/workerbygge/tre producerade typer vann vid
+126,79 s, bas 240 HP, första soldier 59,90 s, tre producerade/två överlevande.
+120 wood/35 gold spenderat; bevarande per typ, lostCargo 0 och reset utan
+browserfel. Separat army/låg-bas-HP-fixture verifierade faktisk enemy-defeat,
+fryst simulation/input och full render/model-reset med alla typer.
+Roller/ekonomi/damage-regressioner granskade utan blockerande fynd.
+Bundle-varning kvarstår. Ingen commit/push; fortsätter RTS-041.
+
+## 2026-10-02 – RTS-041
+
+Fysisk 96 px/240 HP enemy-base i URL-valt siege-test, default survival
+oförändrat. Återanvänder army-combat och death/hinder-cleanup utan ny outcome
+eller enemy-production. 297 tester/37 filer, typecheck/build och diff-check
+passerar. Chromium med valuta/färdig barracks-fixture producerade mixed
+army och angrep faktisk scenariobas via nåbar approach, förstörde den,
+kontrollerade hinder/target-cleanup, ingen förtidig victory/spelarproduktion,
+restart i samma scenario och default survival utan browserfel. Granskat
+scenario-isolering, ägare/input och footprint/LOS utan blockerande fynd.
+Bundle-varning kvarstår. Ingen commit/push; fortsätter RTS-042.
+
+## 2026-10-02 – RTS-042
+
+Ändlig enemy-budget/roster med shared FIFO/cost/supply/spawn, konfigurerbar
+job-cost/time och enemy-owned IDs. Producerade units är idle till AI-tasken.
+306 tester/38 filer, typecheck/build och diff-check passerar. Chromium
+verifierade riktig fyrunitsproduktion/budgetslut, player-saldo orört, faktisk
+melee mot producenten under jobb (låg-HP/attacker-fixture), queue-cleanup utan
+refund och restart med återställd total budget/IDs utan browserfel.
+Testfixturen för frigjord spawn rättades att flytta alla överlappande kroppar,
+inte bara en nästan-identisk kandidat; typnarrowing rättades i testet.
+Granskning av ID-isolering, cap, blockering, debitering/tid och cleanup utan
+blockerande fynd. Bundle-varning kvarstår; ingen commit/push.
+
+## 2026-10-02 – RTS-043
+
+AI muster/ready/attack, tvåunitsgrupper, timeout, 60 s grace/15 s gap,
+medlems-/destinations-cleanup och monotona IDs. 313 tester/39 filer,
+typecheck/build och diff-check passerar. Granskning rättade fallback till
+planRoute när muster saknar cache; regressionstest ingår.
+
+Chromium byggde verkligt farmhinder med worker och försvar med tre soldiers
+(valuta/färdig barracks var fixture), observerade två naturliga samlings-/
+anfallscykler till 75,20 s/lastDispatch 75,00 s, budget 0, bas 240 HP och reset
+utan browserfel. Kontrollen flaggade först passage genom farmens gamla
+footprint efter att farmen förstörts; instrumentering visade borttaget hinder
+och ändrad revision. Kontrollen följer nu levande footprints och omkörningen
+verifierade både blockering och frigjord väg efter död. Ingen navigationkod
+ändrades för den observationen. Budget/medlemskap/delta/death granskade utan
+blockerande fynd. 433 lokala filreferenser giltiga; historiska tasktexter
+bevarade. Bundle-varning kvarstår; ingen commit/push.
+
+## 2026-10-02 – RTS-044
+
+Permanent reserve, max två nåbara defenders, stabil explicit targeting,
+borrow/return utan dubbla gruppmedlemskap, dispatch-prioritet och begränsad
+replacement. Cleanup rensar även orphaned borrowed-group metadata före
+outcome-freeze. 321 tester/40 filer, typecheck/build och diff-check passerar.
+Chromium naturlig reserve/produktion plus raid-unit-fixture verifierade
+faktiskt försvar/borrow, Move-retreat, återgång till home, en-slot-budget/
+låg-HP-attacker-fixture med riktig melee och replacement efter 5 s/exakt
+20 wood/5 gold, nytt ID/reserve, basdöd och reset utan browserfel.
+Testet för budgetslut räknar producerade IDs separat från ändliga waves,
+som fortfarande är avsiktligt aktiva i siege-test. Granskat hot/visibility/
+reachability, transfer, återgång, budget och death-cleanup utan blockerande
+fynd. Bundle-varning kvarstår; ingen commit/push. Fortsätter RTS-045.
+
+## 2026-10-02 – RTS-045
+
+Separata Survival/Skirmish-konfigurationer, enkelt lägesval, mode-specifik
+outcome-policy och restart. 328 tester/41 filer, typecheck/build och diff-check
+passerar. Granskning rättade scenario-parametern till HUD; browser-smoke
+verifierade Skirmish-texten efteråt. 437 lokala referenser verifierade.
+Chromium vann naturlig Skirmish efter riktig ekonomi/barracks/tre soldiers
+vid 104,88 s, bas 240 HP, tre soldiers kvar; inga waves. Naturlig Survival
+med soldier/archer/catapult vann vid 127,44 s, bas 240 HP, två stridsunits
+kvar, resursbevarande och reset. Low-HP/army-fixture verifierade faktisk
+enemy-melee till Skirmish-defeat, fryst simulation/input och samma mode/reset.
+Första browserskripten väntade på ändrat scenfält innan Phaser-restart var
+färdig och gav felaktiga resultat; rättad väntan följer ny fysisk match.
+Omkörningar passerade utan browserfel. Defeat-prioritet och mode-isolering
+granskat/testat utan kvarstående blockerande fynd. Bundle-varning kvarstår.
+Ingen commit/push; fortsätter RTS-046.
+
+## 2026-10-02 – RTS-046
+
+Easy/Normal/Hard väljs separat från mode och behålls på restart. Bounded
+enemy-budget/cap/timer, grupptryck och wave-schedule; player/combat/priser
+oförändrade. 336 tester/42 filer, typecheck/build och diff-check passerar.
+Isolerade profiler, verklig budget/cap/debitering, första dispatch-tid och
+alla sex kombinationer testade. Normal är config-ekvivalent med RTS-045:s
+naturliga vinstspeltester (104,88 s Skirmish, 127,44 s Survival).
+Chromium jämförde alla sex mode/profil-kombinationer: rätt verklig första
+produktionstid, budget/kostnad, faktisk wave-spawn, dispatch och full reset
+samt live UI-byte. Clock/ready-fixtures märktes för tryckgränser; första
+kontrollen antog en anfallsgrupp redan när endast reserve hade spawnat.
+Rättad väntan på verklig grupp passerade; inga browserfel. Regressionstestets
+fulla state-jämförelse uppdaterades för nytt durationSeconds-fält. Profiler
+granskat för mutation, costs, queues, scenario/outcome/HUD utan blockerande
+fynd. Easy/Hard är preliminära; ingen full match-seger på dessa profiler
+påstås. Bundle-varning kvarstår; ingen commit/push. Fortsätter RTS-047.
+
+## 2026-10-02 – RTS-047
+
+Rena minimap-koordinater/indikator, färska data/filter och separat DOM-canvas
+för camera-click med listener-cleanup. 340 tester/43 filer, typecheck/build
+och diff-check passerar. Chromium verifierade fyra hörn/centrum, selection/
+orders bevarade, faktisk world-move efter minimap-pan, enemy-marker bort vid
+scenario-byte och tre restarts utan browserfel. Klickfixtur rättades att
+använda innehållet i canvas, inte en punkt utanför dess paddingbox. Browser
+verifierade exakta centrum/kanter efter CSS-border-konvertering. Granskning
+av conversion, snapshots, UI-isolering och shutdown utan blockerande fynd.
+Bundle-varning kvarstår; ingen commit/push. Fortsätter RTS-048.
+
+## 2026-10-02 – RTS-048
+
+Teamvis 32-px fog-grid med explored, levande/färdiga observers och avgränsad
+rock-LOS-policy. Bara märkt player/enemy-preview; normal fog aktiveras först
+efter RTS-049-filtrering. 346 tester/44 filer, typecheck/build och diff-check
+passerar. Tester täcker union/radiuskant/clip, LOS, team-byte, död/delta 0,
+completed buildings, water-policy, explored/immutability/reset. Legacy zero-
+delta-fixture utan fog behåller sin shape. Testets builder-fält rättades.
+Chromium observer-position-fixture följd av faktisk click/move verifierade
+utforskning, lämna-vision, death-cleanup, explored bevarat/reset, enemy-team
+isolering och inget overlay i normalt spel utan browserfel. Modell/render-
+granskning av observerlivstid, config/LOS och preview-gate utan blockerande
+fynd. Ingen enemy-memory införs. Bundle-varning kvarstår; ingen commit/push.
+Fortsätter RTS-049.
+
+## 2026-10-02 – RTS-049
+
+Aktiv fog i båda modes; gemensam visibility över renderer/HP/labels/order-
+markers, minimap/terrain, HUD/resursmängder, input/placement, combat/AI och
+projektiler. Explicit target försvinner till idle, auto return/resume behålls.
+Placement kräver full-footprint-current-vision. 357 tester/45 filer,
+typecheck/build, diff-check och 446 filreferenser passerar.
+
+Chromium combat-unit-fixture verifierade hidden enemy utan marker/HP/click/
+acquisition, reveal→faktisk attack→vision loss utan tracking/skada→återupptäckt
+med aktuell HP, minimap/order-mask och scenario-reset. Naturlig aktiv-fog
+Skirmish vann vid 106,76 s (bas 240, tre soldiers), Survival blandad army
+vann vid 126,64 s (bas 240, två survivors, tre workers, wood/gold bevarat,
+reset). Resurser upptäcktes först med faktisk move före gather-order.
+
+Granskning rättade resource-gate, neutral depletion-färg, preview-depth,
+minimapens tidigare enemy-footprint som terrain och opak unknown-mask.
+Överflödig pre-update fog slopades efter att full 4500-step regression nått
+5 s test-timeout; samma regression passerar därefter utan höjd timeout.
+Granskning hittade även indirekt siege-death-läcka via flight-livstid. Siege
+använder nu observerad footprint/fixed aim oberoende av hidden/dead target;
+impact provar visibility före live HP/position. Ny regression och browser
+med fixed-shot-fixture passerar. Arrow-policy behålls. Senaste browser-rerun
+verifierade filtreringen och sista siege-rättningen utan fel. Ingen full
+naturlig matchomkörning efter den isolerade shot-policy-rättningen påstås.
+Inga kvarstående blockerande fynd. Bundle-varning kvarstår; ingen commit/push.
+Fortsätter RTS-050.
+
+## 2026-10-02 – RTS-050
+
+Shift-click toggle/drag-add, live own ID-grupper Ctrl/Cmd+1–9 och recall 1–9,
+pure focus-guard, death-pruning och fresh restart. 372 tester/47 filer,
+typecheck/build och diff-check passerar. Chromium currency-fixture följt av
+faktiskt workerbygge och soldier/archer/catapult-FIFO verifierade Shift-
+klick/reverse-drag, tom Shift-gesture, group bind/recall utan ändrade orders,
+UI/text-focus, death-fixture med riktig cleanup, freeze/reset och exakt en
+keyboard-listener efter restart utan browserfel.
+Granskning av world/screen-modifier, byggnadsexklusivitet, ID-validering,
+fokus/repeat/modal och shutdown utan blockerande fynd. Related visibility-
+regression rättade cleanup som annars släppte legitima explore-goal-caches
+varje frame; regression verifierar waypoints/cache och ingen dold bas-skada.
+Bundle-varning kvarstår; ingen commit/push. Fortsätter RTS-051.
+
+## 2026-10-02 – RTS-051
+
+Config-driven svensk guide/knapp-labels, kontext-hotkeys via samma aktiverade
+knappar och återanvänd cost/order-gate. 376 tester/48 filer, typecheck/build
+och diff-check passerar. Chromium riktig explore/gather/Stop följt av
+currency-fixture med riktigt workerbygge, soldier/worker-key-production,
+attack-move/Stop, repeat/UI-focus/text/game-over och restart verifierade
+debitering exakt en gång och inga browserfel. Guide/labels motsvarar mapping.
+Browser-granskning hittade riktig snabb Escape/B-kapplöpning: Phaser-köad
+Escape kunde cancella senare synkron B. Escape flyttades till gemensam
+window-action-listener med focusguard; snabb synkron B→Escape→B följd av
+faktisk placement verifierades i omkörning. Inga duplicerade Escape-listeners.
+Pause-guard är unit-testad och kopplas till live lifecycle i RTS-052.
+Command-context, ekonomiväg, eventordning, cleanup och focus granskade utan
+kvarstående blockerande fynd. Bundle-varning kvarstår; ingen commit/push.
+Fortsätter RTS-052.
+
+## 2026-10-02 – RTS-052
+
+Ren session-state med menu/start/playing/paused/ended/resume/restart/new-
+match och mode/profil/enda karta före Start. Model-pause stoppar all cleanup/
+simulation; första resume/start-frame skippar delta. Alla gameplay-handlers
+och keyboard använder phase-gate, UI fieldset spärras, menu/guide/minimap
+fungerar fortsatt. 383 tester/49 filer, typecheck/build, diff-check och
+450 lokala referenser passerar.
+
+Chromium verifierade alla sex startval, faktisk worker-construction och
+player/enemy-production plus slow fixed-shot-fixture under 1,5 s pause,
+identisk hela model-JSON utan input/debit, tillåten minimap-camera, resume
+utan catch-up, P/Escape-prioritet, outcome/reset/new-menu och enkel worker-
+debit efter många scenes, utan browserfel. Första browsern hittade NaN
+world-input när canvas visades efter hidden menu; ScaleManager.refresh vid
+show rättade displayScale och nästa klick gav exakt (520,300). Fixture
+väntar också på verklig construction-progress efter worker-approach, så paus
+verifieras mitt i arbete snarare än före det.
+
+Det gamla 4500-frame full-match-testet nådde 5 s under samtidiga checks/
+browserlast; gav just denna integration en explicit 10 s timeout. Inga
+beteendekrav togs bort; omkörning hela suite passerade på 4,81 s. Tidigare
+RTS-049-optimering med färre fog-pass behålls. Guards, pending-restart, val,
+wall-time och renderfreeze granskade utan blockerande fynd. Bundle-varning
+kvarstår; ingen commit/push. Fortsätter RTS-053.
+
+## 2026-10-02 – RTS-053
+
+Egna 32-px tiles och 64-px wood/gold-states från repo-pixelkällor/palett till
+RGBA PNG/atlas/manifest. Nearest/native anchors, ingen logic/dependency-
+ändring. 388 tester/50 filer, typecheck/build och diff-check passerar.
+Exportartifacttest använder Node fs/zlib i tests/*.mjs; första placeringen
+under src/*.ts krävde oinstallerade Node-typer och flyttades för att bevara
+strict browser-TypeScript utan nya dependencies. Native format/transparens/
+palett/bounds/ID/walkability/config/anchors verifierade; atlas visuellt
+granskad. Node-logical-footprint är faktiskt 40 px, vilket bevaras.
+Chromium verifierade nearest-filter 1, 1200 tiles och origin (.5,.625), pan
+alla världshörn/minimap/fog, quantity-fixture 10 wood/10 gold följt av verklig
+gathering/depletion-frame/delivery för båda, fresh reset tillbaka 400/300 och
+available-frames, utan browserfel. Ingen full 400/300-depletion påstås.
+Source/provenance/rätt till projektbruk dokumenterad utan extern art.
+Granskning av native alignment/render-only rounding, resource-state/fog och
+export determinism utan blockerande fynd. Bundle-varning kvarstår; ingen
+commit/push. Fortsätter RTS-054.
+
+## 2026-10-02 – Checkpoint RTS-037–053
+
+Användarens tillägg läst vid task-gräns. Commit/push är godkänt efter varje task. Checkpoint omfattar färdigt arbete RTS-037–053; RTS-054 har ännu ingen implementation och står Todo. Skärpta assetkriterier granskas i den fortsatta körningen; särskilt sammanhängande terrängövergångar kompletteras innan grafiken rapporteras färdig. Pages införs först efter RTS-060:s releasekontroller; RTS-061–090 planeras utan implementation.

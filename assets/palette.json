@@ -1,0 +1,8 @@
+{
+  "ink":"#172422","grassDark":"#263c30","grass":"#31543b","grassLight":"#426344",
+  "leafDark":"#1e442b","leaf":"#34623c","leafLight":"#58834a","leafHighlight":"#82965c",
+  "barkDark":"#49352a","bark":"#795538","barkLight":"#ac8052",
+  "rockDark":"#3c464c","rock":"#647078","rockLight":"#8a999e","rockHighlight":"#bac3bc",
+  "waterDark":"#234553","water":"#315e76","waterLight":"#497f96","foam":"#80a8ac",
+  "goldDark":"#936d2e","gold":"#d2aa45","goldLight":"#f4d87a","earth":"#5a4931"
+}

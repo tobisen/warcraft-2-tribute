@@ -1,3 +1,4 @@
+import { forgeConfig } from '../config/upgrades';
 import { combatConfig } from '../config/combat';
 import { costs } from '../config/economy';
 import { canAfford, payCost } from './economy';
@@ -7,7 +8,7 @@ import { approachRoute } from './approach';
 import { bodyFits, overlaps, replaceObstacles, type WorldMap } from './map';
 import { spawnCandidates, hasSpawnExit, unitBody } from './spawning';
 import type { Unit } from './gathering';
-import { soldierStats, unitStats } from '../config/unit';
+import { soldierStats, combatUnitStats, unitStats } from '../config/unit';
 import { barracksConfig, farmConfig, worldConfig } from '../config/buildings';
 import { gatheringConfig } from '../config/gathering';
 import type { GatheringState } from './gathering';
@@ -23,7 +24,8 @@ export interface PlacementContext {
 export interface ConstructionJob {remainingSeconds:number;builderId:string|null}
 export interface Farm {owner?:'player';hp?:number;id:`farm-${number}`;footprint:Footprint;construction:ConstructionJob}
 export interface PlacementState {
-  kind?:'barracks'|'farm';
+  kind?:'barracks'|'farm'|'forge';
+  forge?:{id:'forge';owner:'player';hp:number;footprint:Footprint;construction:ConstructionJob};
   farms?:Farm[];
   nextFarmNumber?:number;
   construction?: ConstructionJob;
@@ -33,8 +35,8 @@ export interface PlacementState {
   barracksHP?:number;
 }
 
-export function buildingFootprint(point: Position,kind:'barracks'|'farm'='barracks'): Footprint {
-  const config=kind==='farm'?farmConfig:barracksConfig;
+export function buildingFootprint(point: Position,kind:'barracks'|'farm'|'forge'='barracks'): Footprint {
+  const config=kind==='forge'?forgeConfig:kind==='farm'?farmConfig:barracksConfig;
   const size = config.tileSize * config.footprintTiles;
   return {
     x: Math.floor(point.x / config.tileSize) * config.tileSize,
@@ -56,9 +58,9 @@ export function placementObstacles(state: GatheringState): Footprint[] {
   ];
 }
 
-export function beginPlacement(state: PlacementState,kind:'barracks'|'farm'='barracks'): PlacementState {
-  return kind==='barracks'&&state.barracks || kind==='farm'&&(state.farms?.length??0)>=farmConfig.maxCount
-    ? state : { ...state, active:true,...(kind==='farm'?{kind}: {kind:undefined}) };
+export function beginPlacement(state: PlacementState,kind:'barracks'|'farm'|'forge'='barracks'): PlacementState {
+  return kind==='forge'&&state.forge || kind==='barracks'&&state.barracks || kind==='farm'&&(state.farms?.length??0)>=farmConfig.maxCount
+    ? state : { ...state, active:true,...(kind!=='barracks'?{kind}: {kind:undefined}) };
 }
 
 export function cancelPlacement(state: PlacementState): PlacementState {
@@ -67,6 +69,7 @@ export function cancelPlacement(state: PlacementState): PlacementState {
 
 export function placementError(state: PlacementState, point: Position, wood: number, obstacles: Footprint[], context?: PlacementContext): string | null {
   const kind=state.kind??'barracks';
+  if(kind==='forge'&&state.forge)return 'En Forge finns redan';
   if (kind==='barracks'&&state.barracks) return 'En barracks finns redan';
   if (kind==='farm'&&(state.farms?.length??0)>=farmConfig.maxCount) return 'Max antal farms';
   const rect = buildingFootprint(point,kind);
@@ -80,7 +83,7 @@ export function placementError(state: PlacementState, point: Position, wood: num
   if (!canAfford({wood,goldBalance:context?.gathering.goldBalance},costs[kind])) return 'Otillräckligt wood/gold';
   if (context) {
     if(context.map.obstacles.some(o=>overlaps(rect,o)))return 'Överlappar terräng eller byggnad';
-    if(context.gathering.units.some(u=>overlaps(rect,unitBody(u.position,u.kind==='worker'?unitStats.size:soldierStats.size)))
+    if(context.gathering.units.some(u=>overlaps(rect,unitBody(u.position,u.kind==='worker'?unitStats.size:combatUnitStats(u).size)))
       || context.enemies.some(e=>overlaps(rect,unitBody(e.position,soldierStats.size))))return 'Överlappar en enhet';
     const after=replaceObstacles(context.map,[...context.map.obstacles,rect]);
     const [base,...nodes]=placementObstacles(context.gathering);
@@ -91,7 +94,7 @@ export function placementError(state: PlacementState, point: Position, wood: num
           && approachRoute(after,worker.position,target,range).status==='blocked')return 'Blockerar arbetarens bas- eller resursväg';
       }
     }
-    const sites=[...(state.barracks&&state.construction&&state.construction.remainingSeconds>0
+    const sites=[...(state.forge&&state.forge.construction.remainingSeconds>0?[{footprint:state.forge.footprint,job:state.forge.construction}]:[]),...(state.barracks&&state.construction&&state.construction.remainingSeconds>0
       ? [{footprint:state.barracks,job:state.construction}]:[]),
       ...(state.farms??[]).filter(f=>f.construction.remainingSeconds>0).map(f=>({footprint:f.footprint,job:f.construction}))];
     for(const site of sites) {
@@ -123,12 +126,12 @@ export function placeBuilding(state: PlacementState, point: Position, wood: numb
   if (!state.active || placementError(state, point, wood, obstacles, context)) return { placement: state, wood, ...(context?{map:context.map}:{}) };
   const kind=state.kind??'barracks';
   const rect=buildingFootprint(point,kind);
-  const id: 'barracks'|`farm-${number}` = kind==='barracks'?'barracks':`farm-${state.nextFarmNumber??1}`;
+  const id: 'barracks'|'forge'|`farm-${number}` = kind==='forge'?'forge':kind==='barracks'?'barracks':`farm-${state.nextFarmNumber??1}`;
   const builder=context?.gathering.units.filter(u=>u.kind==='worker'&&u.selected)
     .sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}))[0];
   const paid=payCost({...context?.gathering,wood},costs[kind]);
   return {
-    placement: kind==='barracks'
+    placement: kind==='forge'?{...state,active:false,kind:undefined,forge:{id:'forge',owner:'player',hp:forgeConfig.hp,footprint:rect,construction:{remainingSeconds:forgeConfig.constructionSeconds,builderId:builder?.id??null}}}:kind==='barracks'
       ? {...state,active:false,kind:undefined,barracks:rect,barracksOwner:'player',barracksHP:combatConfig.barracksHP,...(builder?{construction:{remainingSeconds:barracksConfig.constructionSeconds,builderId:builder.id}}:{})}
       : {...state,active:false,kind:undefined,nextFarmNumber:(state.nextFarmNumber??1)+1,
         farms:[...(state.farms??[]),{owner:'player',hp:combatConfig.farmHP,id:id as `farm-${number}`,footprint:rect,construction:{remainingSeconds:farmConfig.constructionSeconds,builderId:builder?.id??null}}]},
