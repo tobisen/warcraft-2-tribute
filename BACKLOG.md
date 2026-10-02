@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-067 – Andra spelbara fraktionen med egna namn och assets** — **Todo**.
+**RTS-068 – Fraktionsspecifika stats, kostnader och produktionsregler** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
@@ -2148,13 +2148,21 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-067 – Andra spelbara fraktionen med egna namn och assets
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Andra spelbara fraktionen med egna namn och assets.
+**Goal:** Göra Kronförbundet och Järnklanen valbara med egna namn och urskiljbara originalsprites.
+
+**Requirements:** Menyval för player-fraktion, motsatt enemy-fraktion i nya matcher. Egna human/orc-unit- och byggnadssprites för båda lagfärgerna, befintliga animationer/byggstadier. Fraktionsnamn i UI. Save/load/restart och ny match isolerar val; fog/death/selection/HP följer befintliga regler.
+
+**Non-goals:** Fraktionsstats/kostnadsskillnader, nya förmågor, AI-ekonomi, nya kartor och sjöstrid.
 
 **Dependencies:** RTS-066.
 
-**Acceptance criteria:** Två valbara fraktioner har egna läsbara licensierade assets och komplett start/reset.
+**Acceptance criteria:** Båda val kan starta, producera, samla/flytta/strida, laddas och startas om. Fraktionen syns som egen human/orc-silhuett/presentation oberoende av lagfärg. Alla erforderliga frames/byggstadier finns och tillåten ursprungs/licens dokumenteras. Inga saknade sprites eller fog-/inputregressioner.
+
+**Tester:** Fraktionsval/state-isolering, namn/frame-val, båda fraktioner/teams/directions/actions/stadier i assetvalidering, save/reset och befintliga regressioner. Browser: båda menyalternativ, riktig ekonomi/produktion, animation/strid, Load/restart och screenshots.
+
+**Docs:** [BACKLOG.md](BACKLOG.md), [DECISIONS.md](DECISIONS.md), [GAME_DESIGN.md](GAME_DESIGN.md), [ARCHITECTURE.md](ARCHITECTURE.md), [README.md](README.md), [DEV_LOG.md](DEV_LOG.md), [assets/README.md](assets/README.md).
 
 ## RTS-068 – Fraktionsspecifika stats, kostnader och produktionsregler
 

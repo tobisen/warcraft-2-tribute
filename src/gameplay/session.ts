@@ -1,7 +1,8 @@
+import type {FactionId} from '../config/factions';
 import type { Difficulty } from '../config/difficulty';
 import type { MatchScenario } from '../config/scenarios';
 export type SessionPhase='menu'|'playing'|'paused'|'ended';
-export interface MatchOptions {scenario:MatchScenario;difficulty:Difficulty;map:'arena'}
+export interface MatchOptions {scenario:MatchScenario;difficulty:Difficulty;map:'arena';faction?:FactionId}
 export interface MatchSession {phase:SessionPhase;options:MatchOptions}
 export type SessionAction='start'|'pause'|'resume'|'restart'|'new-match'|'end';
 export function createSession(options:MatchOptions):MatchSession{return {phase:'menu',options:{...options}};}

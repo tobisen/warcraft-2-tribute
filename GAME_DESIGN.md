@@ -713,3 +713,7 @@ RTS-065 ändrar beräkningsarbete, inte resursrate, kostnad, kroppsstorlek, atta
 ## RTS-066: fraktion och lag
 
 Fraktionens identitet är skild från lagfärg och player/enemy. Tekniska standard-ID:n är crown för player och clans för enemy; båda kan representeras på valfritt team i modellen/sparformatet. Befintliga unit/building/upgrade-system delas. Detta är data- och savegrunden; egna fraktionsnamn, grafik och UI-val kommer i RTS-067, fraktionsstats i RTS-068 och särskilda förmågor i RTS-069. Fraktionsnamn/förmågor är fortfarande öppna beslut.
+
+## RTS-067 – Två valbara fraktioner
+
+Välj Kronförbundet eller Järnklanen i startmenyn. Motståndaren får den andra fraktionen. Kronförbundets arbetare/soldat/bågskytt/katapult och borg/kasern/gård/smedja motsvaras av Järnklanens klansarbetare/yxkrigare/jägare/stenkastare och fäste/krigshydda/boskapshägn/ässja. Orcherna har grönt skinn, betar, yxor och trä/hud/ben-byggnader. Blå är spelarens lagfärg, röd fiendens, oavsett fraktion. Kostnader, HP, ekonomi och stridsregler är fortfarande lika; samla, leverera, bygg och träna med samma kommandon. Save/load/restart behåller fraktionen.

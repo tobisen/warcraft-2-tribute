@@ -8,7 +8,7 @@ import {productionConfig,soldierProductionConfig} from './production';
 import {barracksConfig,farmConfig,populationConfig} from './buildings';
 import {forgeConfig,upgradeConfig} from './upgrades';
 
-// Stable technical identity; displayed names and distinct art belong to RTS-067.
+// Stable identity is independent of team ownership and presentation.
 export const factionIds=['crown','clans'] as const;
 export type FactionId=typeof factionIds[number];
 export type UnitRole='worker'|'soldier'|'archer'|'catapult';
@@ -37,7 +37,7 @@ export type UnitDefinition=UnitData&{id:`${FactionId}:unit:${UnitRole}`;faction:
 export type BuildingDefinition=BuildingData&{id:`${FactionId}:building:${BuildingRole}`;faction:FactionId};
 export type UpgradeDefinition=UpgradeData&{id:`${FactionId}:upgrade:${UpgradeRole}`;faction:FactionId};
 export interface FactionDefinition {
-  id:FactionId;units:Record<UnitRole,UnitDefinition>;
+  id:FactionId;label:string;unitNames:Record<UnitRole,string>;buildingNames:Record<BuildingRole,string>;units:Record<UnitRole,UnitDefinition>;
   buildings:Record<BuildingRole,BuildingDefinition>;upgrades:Record<UpgradeRole,UpgradeDefinition>;
 }
 
@@ -71,8 +71,9 @@ const upgrades:Record<UpgradeRole,UpgradeData>={
   defense:{role:'defense',cost:upgradeConfig.cost,durationSeconds:upgradeConfig.durationSeconds,
     maxLevel:upgradeConfig.maxLevel,multiplier:upgradeConfig.defenseMultiplier},
 };
+const factionNames={crown:{label:'Kronförbundet',unitNames:{worker:'Arbetare',soldier:'Soldat',archer:'Bågskytt',catapult:'Katapult'},buildingNames:{base:'Borg',barracks:'Kasern',farm:'Gård',forge:'Smedja'}},clans:{label:'Järnklanen',unitNames:{worker:'Klansarbetare',soldier:'Yxkrigare',archer:'Jägare',catapult:'Stenkastare'},buildingNames:{base:'Fäste',barracks:'Krigshydda',farm:'Boskapshägn',forge:'Ässja'}}};
 function defineFaction(id:FactionId):FactionDefinition {
-  return {id,
+  return {id,...factionNames[id],
     units:Object.fromEntries(Object.entries(units).map(([role,data])=>[role,{...data,cost:{...data.cost},id:`${id}:unit:${role}`,faction:id}])) as FactionDefinition['units'],
     buildings:Object.fromEntries(Object.entries(buildings).map(([role,data])=>[role,{...data,cost:{...data.cost},id:`${id}:building:${role}`,faction:id}])) as FactionDefinition['buildings'],
     upgrades:Object.fromEntries(Object.entries(upgrades).map(([role,data])=>[role,{...data,cost:{...data.cost},id:`${id}:upgrade:${role}`,faction:id}])) as FactionDefinition['upgrades'],
@@ -82,3 +83,5 @@ export const factions:Record<FactionId,FactionDefinition>={crown:defineFaction('
 export function factionForTeam(match:{factions?:MatchFactions},team:keyof MatchFactions):FactionDefinition {
   return factions[(match.factions??defaultFactions)[team]];
 }
+
+export function factionsForPlayer(player:FactionId):MatchFactions {return {player,enemy:player==='crown'?'clans':'crown'};}

@@ -380,3 +380,5 @@ RTS-065: uppmätt optimering av routesökning; se [PERFORMANCE.md](PERFORMANCE.m
 Två tekniska fraktions-ID:n (`crown`, `clans`) har egna typ-ID:n för samma delade unit-/building-/upgrade-roller i [factions.ts](src/config/factions.ts). Fraktion lagras separat från player/enemy-owner och bevaras genom Save/Load/restart. Den vanliga matchens stats/ekonomi/grafik är tills vidare oförändrade; valbara namn/assets införs i RTS-067 och fraktionsbalans i RTS-068.
 
 Sparformat v2 stöder migration av tidigare v1-sparningar i samma lokala slot. Load skriver inte över den gamla sloten; nästa manuella Save lagrar v2. Okända fraktioner/versioner eller korrupta data avvisas utan att påverka aktiv match.
+
+RTS-067: startmenyn erbjuder **Kronförbundet** och **Järnklanen**, med egna originalsprites och namn. Nya matcher väljer motsatt fiendefraktion; sparning och omstart behåller sidval. Båda använder ännu samma spelvärden. `npm run assets:export` exporterar båda fraktionernas atlasvarianter; `npm test` kontrollerar samtliga frames och befintlig gameplay.
