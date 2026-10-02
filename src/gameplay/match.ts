@@ -56,6 +56,7 @@ export function createMatch(scenario:MatchScenario='survival',difficulty:Difficu
     outcome: 'playing',paused:false,controlGroups:{},scenario,difficulty,research:createResearch(),
     map: createMap(),
     gathering: {
+      faction:factions.player,
       units: arenaConfig.workers.map((position, index) => ({
         kind: 'worker',owner:'player',hp:combatConfig.workerHP, id: `unit-${index + 1}`, position: { ...position }, target: { ...position },
         selected: false, order: { kind: 'idle' }, cargo: 0,
@@ -111,7 +112,7 @@ function advance(state: MatchState, delta: number): MatchState {
     {kind:'barracks',footprint:cleaned.placement.barracks,ready:barracksReady(cleaned.placement)},
     {map:cleaned.map,enemies:cleaned.combat.enemies}):{gathering:worker.gathering,production:cleaned.soldierProduction};
   const nextUnitNumber=Math.max(worker.production.nextUnitNumber,soldier.production.nextUnitNumber);
-  const enemy=cleaned.enemyProduction?updateEnemyProduction(cleaned.enemyProduction,cleaned.combat,soldier.gathering,cleaned.map,delta):{combat:cleaned.combat,state:undefined};
+  const enemy=cleaned.enemyProduction?updateEnemyProduction(cleaned.enemyProduction,cleaned.combat,soldier.gathering,cleaned.map,delta,(cleaned.factions??defaultFactions).enemy):{combat:cleaned.combat,state:undefined};
   const ai=cleaned.enemyAI?updateEnemyAI(cleaned.enemyAI,enemy.combat,cleaned.map,soldier.gathering.base,delta,soldier.gathering.units,difficultyProfiles[cleaned.difficulty??'normal'].ai,vision?((u)=>entityVisible(vision,'enemy',u)):undefined):{combat:enemy.combat,state:undefined};
   const incoming=scenarioConfig[cleaned.scenario??'survival'].waves?updateWaves(cleaned.waves,ai.combat,delta,scenarioWaves(cleaned.scenario??'survival',cleaned.difficulty??'normal')):{combat:ai.combat,waves:{...cleaned.waves,elapsedSeconds:cleaned.waves.elapsedSeconds+delta}};
   const updated:MatchState={...cleaned,...(vision?{fog:vision}:{}),research,...(enemy.state?{enemyProduction:enemy.state}:{}),...(ai.state?{enemyAI:ai.state}:{}),gathering:soldier.gathering,combat:incoming.combat,waves:incoming.waves,

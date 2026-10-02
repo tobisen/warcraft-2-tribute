@@ -1,14 +1,12 @@
-import { catapultConfig } from '../config/catapult';
-import { archerConfig } from '../config/archer';
+import {productionFaction} from '../config/factions';
 import type { ProductionJob } from './productionQueue';
 import { hasPopulation, type Population } from './population';
-import { costs,type ResourceCost } from '../config/economy';
+import { type ResourceCost } from '../config/economy';
 import { canAfford, payCost } from './economy';
 import { commandMappedMove } from './navigation';
 import { chooseSpawn } from './spawning';
 import { gatheringConfig } from '../config/gathering';
 import type { WorldMap } from './map';
-import { combatConfig } from '../config/combat';
 import { productionConfig, soldierProductionConfig } from '../config/production';
 import { soldierStats } from '../config/unit';
 import { worldConfig } from '../config/buildings';
@@ -42,15 +40,15 @@ export function soldierSpawn(footprint: Footprint,size=soldierStats.size): Posit
 }
 
 export function canStartProduction(gathering: GatheringState, production: ProductionState, building: ProductionBuilding = base, population?:Population): boolean {
-  const cost = building.kind === 'base' ? costs.worker : (building.jobCost??costs[building.unitType??'soldier']);
-  return (!population || hasPopulation(population,building.kind==='barracks'&&building.unitType==='catapult'?catapultConfig.supply:1)) && production.remainingSeconds === null && canAfford(gathering,cost)
-    && (building.kind === 'base' || (building.ready !== false && building.footprint !== null && soldierSpawn(building.footprint) !== null));
+  const recipe=productionRecipe(gathering,building),cost=recipe.cost;
+  return (!population || hasPopulation(population,recipe.supply)) && production.remainingSeconds === null && canAfford(gathering,cost)
+    && (building.kind === 'base' || (building.ready !== false && building.footprint !== null && soldierSpawn(building.footprint,recipe.size) !== null));
 }
 
 export function startProduction(gathering: GatheringState, production: ProductionState, building: ProductionBuilding = base, population?:Population) {
   if (!canStartProduction(gathering, production, building,population)) return { gathering, production };
-  const cost = building.kind === 'base' ? costs.worker : (building.jobCost??costs[building.unitType??'soldier']);
-  const duration = building.kind === 'barracks'&&building.durationSeconds!==undefined?building.durationSeconds:building.kind === 'base' ? productionConfig.durationSeconds : building.unitType==='catapult'?catapultConfig.durationSeconds:building.unitType==='archer'?archerConfig.durationSeconds:soldierProductionConfig.durationSeconds;
+  const recipe=productionRecipe(gathering,building),cost=recipe.cost;
+  const duration = recipe.durationSeconds;
   return {
     gathering: payCost(gathering,cost),
     production: { ...production, remainingSeconds: duration },
@@ -68,22 +66,27 @@ export function updateProduction(gathering: GatheringState, production: Producti
   if(production.remainingSeconds===0 && production.blockedSpawnKey===spawnKey && context)return {gathering,production};
   const footprint=building.kind==='base'?{x:gathering.base.x-gatheringConfig.baseSize/2,
     y:gathering.base.y-gatheringConfig.baseSize/2,width:gatheringConfig.baseSize,height:gatheringConfig.baseSize}:building.footprint;
-  const variant=building.kind==='barracks'?(building.unitType==='catapult'?catapultConfig:building.unitType==='archer'?archerConfig:null):null;
-  const position = context ? footprint?chooseSpawn(context.map,footprint,building.kind,gathering.units,context.enemies,variant?.size):null
+  const recipe=productionRecipe(gathering,building);
+  const position = context ? footprint?chooseSpawn(context.map,footprint,building.kind,gathering.units,context.enemies,recipe.size):null
     : building.kind === 'base' ? {
     x: gathering.base.x + productionConfig.spawnOffset.x,
     y: gathering.base.y + productionConfig.spawnOffset.y,
-  } : building.footprint ? soldierSpawn(building.footprint,variant?.size) : null;
+  } : building.footprint ? soldierSpawn(building.footprint,recipe.size) : null;
   if (!position) return { gathering, production: context?{...production,remainingSeconds:0,blockedSpawnKey:spawnKey}:production };
   let number = production.nextUnitNumber;
   while (gathering.units.some(unit => unit.id === `unit-${number}`)) number++;
   const common = { owner:'player' as const, id: `unit-${number}`, position, target: { ...position }, selected: false };
   const unit: Unit = building.kind === 'base'
-    ? { ...common, kind: 'worker', hp:combatConfig.workerHP, cargo: 0, order: { kind: 'idle' } }
-    : { ...common, kind: 'soldier', ...(building.kind==='barracks'&&building.unitType&&building.unitType!=='soldier'?{archetype:building.unitType}:{}), cargo: 0, hp: variant?.hp??combatConfig.soldierHP, order: { kind: 'idle' } };
+    ? { ...common, kind: 'worker', hp:recipe.hp, cargo: 0, order: { kind: 'idle' } }
+    : { ...common, kind: 'soldier', ...(building.kind==='barracks'&&building.unitType&&building.unitType!=='soldier'?{archetype:building.unitType}:{}), cargo: 0, hp:recipe.hp, order: { kind: 'idle' } };
   return {
     gathering: { ...gathering, units: [...gathering.units, context && production.rally
       ? {...commandMappedMove([{...unit,selected:true}],production.rally,context.map)[0],selected:false} : unit] },
     production: { ...production, blockedSpawnKey:undefined, remainingSeconds: null, nextUnitNumber: number + 1 },
   };
+}
+
+export function productionRecipe(g:GatheringState,b:ProductionBuilding=base){
+ const kind=b.kind==='base'?'worker':b.unitType??'soldier',recipe=productionFaction(g).units[kind];
+ return {...recipe,cost:b.kind==='barracks'?b.jobCost??recipe.cost:recipe.cost,durationSeconds:b.kind==='barracks'?b.durationSeconds??recipe.durationSeconds:recipe.durationSeconds};
 }

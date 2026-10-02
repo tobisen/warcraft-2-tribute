@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-068 – Fraktionsspecifika stats, kostnader och produktionsregler** — **Todo**.
+**RTS-069 – En särskild enhet eller förmåga per fraktion** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
@@ -2166,13 +2166,21 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-068 – Fraktionsspecifika stats, kostnader och produktionsregler
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Fraktionsspecifika stats, kostnader och produktionsregler.
+**Goal:** Koppla båda fraktionernas unitrecept till gemensam betald produktion.
+
+**Requirements:** Kostnad, tid, supply och producerad HP kommer från fraktionsconfig. Kronförbundet behåller baslinjen. Järnklanens yxkrigare har 66 HP, kostar 18 wood/6 gold och tar 6 s. Gemensamma kö-, refund-, spawn- och ID-regler återanvänds; bas/barracks kan producera samtidigt. Fiendens ändliga budget betalar egen fraktionskostnad, med difficulty-tid plus receptets avvikelse från 5 s. Befintlig svagare enemy-stridsprofil kvarstår. UI visar faktisk kostnad, tid och max-HP. Äldre betalda köjobb behåller originalkostnad/tid efter validerad migration. Nya jobb använder valt recept; restart är färsk.
+
+**Non-goals:** Nya units/förmågor, AI-ekonomi, ändrad movement/gathering/footprints eller generell systemrefaktorering.
 
 **Dependencies:** RTS-067.
 
-**Acceptance criteria:** Varje fraktion använder config för ekonomi/produktion; kostnad och tid testas.
+**Acceptance criteria:** Båda fraktioner betalar och spawnar efter eget recept exakt en gång; otillräcklig ekonomi/population/kö blockerar. Refund använder betald kostnad. Save/load/restart bevarar fraktion och giltiga köjobb, avvisar manipulerad kostnad/tid. Browser visar båda receptens kostnad/tid/HP med fungerande produktion.
+
+**Tester:** Båda fraktioners kostnad, tid, HP, timestep-equivalence, blockerad start, refund, samtidig produktion, ändlig enemy-budget och legacy/new save-validering. Befintliga tester, typecheck, build, browser och diffgranskning.
+
+**Docs:** BACKLOG.md, DECISIONS.md, GAME_DESIGN.md, ARCHITECTURE.md, README.md och DEV_LOG.md.
 
 ## RTS-069 – En särskild enhet eller förmåga per fraktion
 

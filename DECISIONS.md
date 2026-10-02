@@ -696,3 +696,11 @@ Save schema2/config tribute-config-2. Endast tidigare schema1/config1 migreras, 
 ## RTS-067 – Fraktionernas presentation
 
 Arbetsnamnen är Kronförbundet (människor, `crown`) och Järnklanen (orcher, `clans`), enligt det kommunicerade standardförslaget medan namnfrågan är obesvarad. Menyval väljer spelarens fraktion; en ny match får motsatt fiendefraktion. Laddning och restart bevarar sparade sidval, även samma fraktion på båda sidor. Ägarskap och blå/röd lagfärg är separata från fraktion. Stats/kostnader är fortsatt identiska i denna slice; skillnader hör till RTS-068. Originalgrafiken använder repo-lokala pixelkällor, inga importerade Warcraft-assets.
+
+## RTS-068 – Första balansskillnaden och betalda recept
+
+Kronförbundets numeriska baslinje bevaras. Järnklanens yxkrigare har 66 HP, kostar 18 wood/6 gold och tar 6 gameplay-sekunder; supply 1, damage 18/s och speed 160 kvarstår. Detta är en liten preliminär tålighet/wood mot gold/tid-avvägning, inte påstående om slutbalans. Övriga enhetsrecept är identiska men lookup för kostnad/tid/supply/producerad HP använder vald fraktion. Byggnader, uppgraderingar, footprints, arbetarlast och navigation behåller befintliga värden.
+
+Fiendens ändliga ekonomi använder egen fraktionskostnad. Produktionstiden är difficulty-profilens 7/5/4 s plus receptets avvikelse från 5 s (Järnklanen +1 s). Befintlig fiendestridsprofil 36 HP/65 px/s/6 damage/s förblir separat från spelarens fulla enhetsstats tills senare AI-/balansetapper. Waves är oförändrade och använder ingen ekonomi.
+
+Save schema 2, config tribute-config-3; slotnyckeln oförändrad. Föregående config2 och v1/config1 migreras genom validering av tidigare betalda Järnklan-jobb mot den faktiska gamla kostnaden 20/5 och gamla player-/difficulty-tiden. Ett explicit legacyRecipe-fält bevarar dessa jobbs kostnad/tid över nästa Save. Ingen ytterligare kostnad, gratis refund eller förlorad tid vid Load; nya jobb får det nya receptet och färdiga enheter får aktuell HP-config. Existerande enheters HP förändras inte. Härledd gathering.faction återskapas från matchens player-ID och lagras inte som en andra auktoritet.

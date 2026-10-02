@@ -14,7 +14,7 @@ describe('bounded difficulty profiles',()=>{
   s=updateMatch(s,.001);expect(s.combat.enemies).toHaveLength(p.waves[0].count);expect(s.enemyProduction).toBeUndefined();expect(s.gathering.wood).toBe(0);expect(s.gathering.node.remaining).toBe(400);expect(s.combat.baseHP).toBe(240);expect(matchLabels(s).wave).toContain('Våg 1 / 3');
  });
  it.each(choices)('%s skirmish spends finite budget once, honors time/cap and dispatch grace',difficulty=>{
-  let s=createMatch('skirmish',difficulty);const p=difficultyProfiles[difficulty];s=updateMatch(s,p.durationSeconds-.001);expect(s.combat.enemies.filter(e=>e.kind!=='base')).toHaveLength(0);
+  let s=createMatch('skirmish',difficulty,{player:'crown',enemy:'crown'});const p=difficultyProfiles[difficulty];s=updateMatch(s,p.durationSeconds-.001);expect(s.combat.enemies.filter(e=>e.kind!=='base')).toHaveLength(0);
   s=updateMatch(s,.001);expect(s.combat.enemies.filter(e=>e.kind!=='base')).toHaveLength(1);expect(s.gathering.wood).toBe(0);expect(s.gathering.goldBalance).toBe(0);expect(s.enemyAI!.lastDispatchSeconds).toBeNull();
   for(let n=0;n<350;n++)s=updateMatch(s,.1);
   const e=s.enemyProduction!,units=s.combat.enemies.filter(e=>e.kind!=='base'),jobs=e.production.queue??[];

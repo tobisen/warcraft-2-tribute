@@ -717,3 +717,9 @@ Fraktionens identitet är skild från lagfärg och player/enemy. Tekniska standa
 ## RTS-067 – Två valbara fraktioner
 
 Välj Kronförbundet eller Järnklanen i startmenyn. Motståndaren får den andra fraktionen. Kronförbundets arbetare/soldat/bågskytt/katapult och borg/kasern/gård/smedja motsvaras av Järnklanens klansarbetare/yxkrigare/jägare/stenkastare och fäste/krigshydda/boskapshägn/ässja. Orcherna har grönt skinn, betar, yxor och trä/hud/ben-byggnader. Blå är spelarens lagfärg, röd fiendens, oavsett fraktion. Kostnader, HP, ekonomi och stridsregler är fortfarande lika; samla, leverera, bygg och träna med samma kommandon. Save/load/restart behåller fraktionen.
+
+## RTS-068 – Produktionsrecept
+
+Kronförbundets soldat: 20 wood + 5 gold, 5 s, 60 HP. Järnklanens yxkrigare: 18 wood + 6 gold, 6 s, 66 HP. Båda tar en supply och har samma rörelse och skada. Övriga enhetsrecept och byggnader är oförändrade. Knappen/kötiden och HP-stapeln följer fraktionen. Den ändliga enemy-budgeten betalar sin fraktionskostnad; Järnklanens enemy-produktion tar en sekund längre än difficulty-grunden. Waves och enemy-stridsprofil är fortfarande tidigare förenklingar. Slutlig balans verifieras i RTS-070.
+
+Äldre redan betalda köjobb bevarar sin originalkostnad och tid vid Load; en avbrytning återbetalar andelen av den faktiskt betalda kostnaden. Nyproduktion efter laddning följer nya recept. Restart börjar en helt ny match med vald fraktion.

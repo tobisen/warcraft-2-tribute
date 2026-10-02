@@ -30,7 +30,7 @@ describe('local enemy defense',()=>{
   expect(r.combat.enemies.find(e=>e.id==='enemy-produced-1')!.order).toEqual({kind:'muster',destination:{x:928,y:144}});
  });
  it('uses real finite budget to replace reserve losses and stops after budget exhaustion',()=>{
-  let s=createMatch('siege-test');s.enemyProduction!.cap=1;
+  let s=createMatch('siege-test','normal',{player:'crown',enemy:'crown'});s.enemyProduction!.cap=1;
   for(let i=0;i<4;i++){s=updateMatch(s,5);const unit=s.combat.enemies.find(e=>e.kind!=='base')!;expect(unit).toBeDefined();expect(s.enemyProduction!.acceptedJobs).toBe(i+1);unit.hp=0;s=updateMatch(s,0);expect(s.enemyAI!.reserve).toEqual([]);}
   expect(s.enemyProduction).toMatchObject({wood:0,gold:0,acceptedJobs:4});s=updateMatch(s,50);expect(s.combat.enemies.some(e=>e.id.startsWith('enemy-produced-'))).toBe(false);expect(s.enemyProduction!.acceptedJobs).toBe(4);
  });
@@ -41,17 +41,17 @@ describe('local enemy defense',()=>{
   expect(result.state.threatId).toBeNull();expect(result.state.defenders).toEqual([]);
  });
  it('base destruction cancels jobs and releases reserve to attack-group logic with no ghost targets',()=>{
-  let s=createMatch('siege-test');s=updateMatch(s,5);expect(s.enemyAI!.reserve).toHaveLength(1);s.combat.enemies.find(e=>e.kind==='base')!.hp=0;s=updateMatch(s,.1);
+  let s=createMatch('siege-test','normal',{player:'crown',enemy:'crown'});s=updateMatch(s,5);expect(s.enemyAI!.reserve).toHaveLength(1);s.combat.enemies.find(e=>e.kind==='base')!.hp=0;s=updateMatch(s,.1);
   expect(s.enemyAI!.reserve).toEqual([]);expect(s.enemyAI!.defenders).toEqual([]);expect(s.enemyProduction!.production.queue).toEqual([]);expect(s.enemyAI!.groups.flatMap(g=>g.members)).toContain('enemy-produced-1');
-  expect(createMatch('siege-test').enemyAI).toEqual(createEnemyAI());
+  expect(createMatch('siege-test','normal',{player:'crown',enemy:'crown'}).enemyAI).toEqual(createEnemyAI());
  });
  it('cleans orphaned borrowed group metadata when outcome freezes',()=>{
-  let s=createMatch('siege-test');s.combat.enemies.push(enemy(1),enemy(2),enemy(3));s.gathering.units=[threat()];const grouped=update(s.enemyAI!,s.combat);const r=update(grouped.state,grouped.combat,s.gathering.units);s.enemyAI=r.state;s.combat=r.combat;
+  let s=createMatch('siege-test','normal',{player:'crown',enemy:'crown'});s.combat.enemies.push(enemy(1),enemy(2),enemy(3));s.gathering.units=[threat()];const grouped=update(s.enemyAI!,s.combat);const r=update(grouped.state,grouped.combat,s.gathering.units);s.enemyAI=r.state;s.combat=r.combat;
   const remaining=s.enemyAI.groups.flatMap(g=>g.members);for(const e of s.combat.enemies)if(remaining.includes(e.id))e.hp=0;s.combat.baseHP=0;s=updateMatch(s,0);
   expect(s.enemyAI!.groups).toEqual([]);expect(s.enemyAI!.defenders.every(d=>d.groupId===undefined)).toBe(true);
  });
  it('dead target/defender references are removed even when defeat freezes simulation',()=>{
-  let s=createMatch('siege-test');s.combat.enemies.push(enemy(1));s.gathering.units=[threat()];const r=update(s.enemyAI!,s.combat,s.gathering.units);s.enemyAI=r.state;s.combat=r.combat;s.gathering.units[0].hp=0;s.combat.baseHP=0;s=updateMatch(s,0);
+  let s=createMatch('siege-test','normal',{player:'crown',enemy:'crown'});s.combat.enemies.push(enemy(1));s.gathering.units=[threat()];const r=update(s.enemyAI!,s.combat,s.gathering.units);s.enemyAI=r.state;s.combat=r.combat;s.gathering.units[0].hp=0;s.combat.baseHP=0;s=updateMatch(s,0);
   expect(s.enemyAI!.threatId).toBeNull();expect(s.combat.enemies.some(e=>e.order?.kind==='defend')).toBe(false);
  });
 });

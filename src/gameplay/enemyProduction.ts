@@ -1,3 +1,4 @@
+import {factions,type FactionId} from '../config/factions';
 import { enemyProductionConfig } from '../config/enemyProduction';
 import { combatConfig } from '../config/combat';
 import { canEnqueue,enqueueProduction,updateQueuedProduction } from './productionQueue';
@@ -11,14 +12,14 @@ export function createEnemyProduction(profile:{budget:{wood:number;gold:number};
  production:{remainingSeconds:null,nextUnitNumber:1},acceptedJobs:0};
 }
 /** Adapter to shared atomic queue/time/spawn rules; temporary units never enter player state. */
-export function updateEnemyProduction(state:EnemyProductionState,combat:CombatState,player:GatheringState,map:WorldMap,delta:number) {
+export function updateEnemyProduction(state:EnemyProductionState,combat:CombatState,player:GatheringState,map:WorldMap,delta:number,faction?:FactionId) {
  const base=combat.enemies.find(e=>e.kind==='base'&&e.hp>0);
  if(!base?.footprint)return {combat,state:{...state,production:{...state.production,queue:[],remainingSeconds:null,blockedSpawnKey:undefined}}};
  let next=state,c=combat,time=Math.max(0,delta);
- const building={kind:'barracks' as const,unitType:enemyProductionConfig.unitType,footprint:base.footprint,jobCost:enemyProductionConfig.cost,durationSeconds:state.durationSeconds??enemyProductionConfig.durationSeconds};
+ const building={kind:'barracks' as const,unitType:enemyProductionConfig.unitType,footprint:base.footprint,jobCost:faction?factions[faction].units.soldier.cost:enemyProductionConfig.cost,durationSeconds:(state.durationSeconds??enemyProductionConfig.durationSeconds)+(faction?factions[faction].units.soldier.durationSeconds-5:0)};
  for(;;){
   const units:Unit[]=c.enemies.filter(e=>e.kind!=='base').map(e=>({kind:'soldier',id:e.id,hp:e.hp,cargo:0,selected:false,position:{...e.position},target:{...e.position},order:{kind:'idle'}}));
-  let g:GatheringState={units,wood:next.wood,goldBalance:next.gold,base:base.position,node:{id:'unused',position:base.position,remaining:0}};
+  let g:GatheringState={faction,units,wood:next.wood,goldBalance:next.gold,base:base.position,node:{id:'unused',position:base.position,remaining:0}};
   let p=next.production,acceptedJobs=next.acceptedJobs;
   const population=()=>({cap:next.cap,used:units.length,reserved:p.queue?.reduce((n,j)=>n+(j.supply??1),0)??0});
   while(canEnqueue(g,p,building,population())){const started=enqueueProduction(g,p,building,population());g=started.gathering;p=started.production;acceptedJobs++;}

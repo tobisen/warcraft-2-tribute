@@ -4,7 +4,7 @@ import { createEnemyProduction,updateEnemyProduction } from './enemyProduction';
 import { spawnCandidates,unitBody } from './spawning';
 import { overlaps } from './map';
 import { enqueueProduction } from './productionQueue';
-const ready=()=>createMatch('siege-test');
+const ready=()=>createMatch('siege-test','normal',{player:'crown',enemy:'crown'});
 const tick=(s:ReturnType<typeof ready>,delta:number):MatchState=>{const r=updateEnemyProduction(s.enemyProduction!,s.combat,s.gathering,s.map,delta);return {...s,combat:r.combat,enemyProduction:r.state};};
 describe('finite enemy production',()=>{
  it('debits every accepted job once and preserves player economy',()=>{

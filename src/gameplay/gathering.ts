@@ -1,3 +1,4 @@
+import type {FactionId} from '../config/factions';
 import { approachRoute, canInteract } from './approach';
 import { resourceServices } from './resourceQueue';
 import type { GateFor } from './traffic';
@@ -43,6 +44,8 @@ export interface ResourceNode {
   remaining: number;
 }
 export interface GatheringState {
+  /** Derived from match ownership; reconstructed on Load rather than serialized. */
+  faction?:FactionId;
   units: Unit[];
   node: ResourceNode;
   gold?: ResourceNode;

@@ -291,7 +291,7 @@ export class BootScene extends Phaser.Scene {
     });
     this.trainButton = document.querySelector<HTMLButtonElement>('#train-worker')!;
     this.productionStatus = document.querySelector<HTMLElement>('#production-status')!;
-    this.trainButton.textContent = `Träna ${factions[this.factions.player].unitNames.worker} – ${costLabel(costs.worker)}`;
+    this.trainButton.textContent = `Träna ${factions[this.factions.player].unitNames.worker} – ${costLabel(factions[this.factions.player].units.worker.cost)}`;
     const train = () => {
       if (!allowsProduction(this.selectedBuilding, 'base', true, this.gameplayActive())) return;
       const result = enqueueProduction(this.gathering, this.production,{kind:'base'},populationState(this.gathering,this.placement,[this.production,this.soldierProduction]));
@@ -305,7 +305,7 @@ export class BootScene extends Phaser.Scene {
     });
     this.soldierButton = document.querySelector<HTMLButtonElement>('#train-soldier')!;
     this.soldierProductionStatus = document.querySelector<HTMLElement>('#soldier-production-status')!;
-    this.soldierButton.textContent = `Träna ${factions[this.factions.player].unitNames.soldier} – ${costLabel(costs.soldier)}`;
+    this.soldierButton.textContent = `Träna ${factions[this.factions.player].unitNames.soldier} – ${costLabel(factions[this.factions.player].units.soldier.cost)} · ${factions[this.factions.player].units.soldier.durationSeconds} s`;
     const trainSoldier = () => {
       if (!allowsProduction(this.selectedBuilding, 'barracks', this.placement.barracks !== null, this.gameplayActive())) return;
       const result = enqueueProduction(this.gathering, this.soldierProduction,
@@ -315,7 +315,7 @@ export class BootScene extends Phaser.Scene {
       this.syncVisuals();
     };
     this.archerButton=document.querySelector<HTMLButtonElement>('#train-archer')!;
-    this.archerButton.textContent=`Träna ${factions[this.factions.player].unitNames.archer} – ${costLabel(costs.archer)}`;
+    this.archerButton.textContent=`Träna ${factions[this.factions.player].unitNames.archer} – ${costLabel(factions[this.factions.player].units.archer.cost)}`;
     const trainArcher=()=>{
       if(!allowsProduction(this.selectedBuilding,'barracks',this.placement.barracks!==null,this.gameplayActive()))return;
       const result=enqueueProduction(this.gathering,this.soldierProduction,
@@ -324,7 +324,7 @@ export class BootScene extends Phaser.Scene {
       this.gathering=result.gathering;this.soldierProduction=result.production;this.syncVisuals();
     };
     this.catapultButton=document.querySelector<HTMLButtonElement>('#train-catapult')!;
-    this.catapultButton.textContent=`Träna ${factions[this.factions.player].unitNames.catapult} – ${costLabel(costs.catapult)}`;
+    this.catapultButton.textContent=`Träna ${factions[this.factions.player].unitNames.catapult} – ${costLabel(factions[this.factions.player].units.catapult.cost)}`;
     const trainCatapult=()=>{
       if(!allowsProduction(this.selectedBuilding,'barracks',this.placement.barracks!==null,this.gameplayActive()))return;
       const result=enqueueProduction(this.gathering,this.soldierProduction,
@@ -678,7 +678,7 @@ export class BootScene extends Phaser.Scene {
       visual.ring.setPosition(unit.position.x, unit.position.y).setVisible(unit.selected);
       visual.cargo.setPosition(unit.position.x, unit.position.y - 48)
         .setVisible(unit.kind==='worker'&&unit.selected).setText(unit.kind==='worker'?`${unit.cargo.toFixed(1)}/${gatheringConfig.capacity} ${unit.cargoType??'wood'}`:'');
-      this.drawHP(unit.position,unit.hp??combatConfig.workerHP,unit.kind==='worker'?combatConfig.workerHP:unit.archetype==='archer'?archerConfig.hp:unit.archetype==='catapult'?catapultConfig.hp:combatConfig.soldierHP,unit.kind==='soldier'&&unit.archetype==='catapult'?40:24,unit.kind==='soldier'&&unit.archetype==='catapult'?39:29,0x7398c1);
+      this.drawHP(unit.position,unit.hp??combatConfig.workerHP,unit.kind==='worker'?combatConfig.workerHP:factions[this.factions.player].units[unit.archetype??'soldier'].hp,unit.kind==='soldier'&&unit.archetype==='catapult'?40:24,unit.kind==='soldier'&&unit.archetype==='catapult'?39:29,0x7398c1);
     }
     for(const [id,e] of this.impacts){if(!impactAlive(e.impact,this.visualTime,p=>isVisible(this.fog,'player',p))){e.visual.destroy();this.impacts.delete(id);}else e.visual.setFrame(impactFrame(e.impact,this.visualTime));}
     for(const [id,d] of this.deaths){if(!effectAlive(d.effect,this.visualTime,isVisible(this.fog,'player',d.effect.motion.position))){d.visual.destroy();this.deaths.delete(id);}else d.visual.setFrame(unitFrame(d.effect.motion,this.visualTime));}

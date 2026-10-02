@@ -880,3 +880,9 @@ Köer/reservationer sparas inte som nya refs: de återskapas från positioner, o
 ## RTS-067 – Fraktionspresentation
 
 `config/factions.ts` innehåller namn och `factionsForPlayer` för nya matcher. Sessionens val är endast redigerbart i menyn; BootScene bevarar faktiska sparade faction-ID:n vid load/restart. Presentationens motion/death och buildingFrame väljer atlasvariant efter fraktion och team. Kronförbundet behåller befintliga frame-ID:n; Järnklanen har prefix `clans-`. Båda delar befintlig simulation, kostnader och geometri. Atlasexport och tester täcker 1 920 unit-frames och 48 byggframes; units-atlas är 2048×4096, buildings 1024×768. Gameplay drivs fortfarande av delta, inte animationer.
+
+## RTS-068 – Gemensam fraktionsproduktion
+
+`productionRecipe` hämtar kostnad/tid/supply/HP/size ur fraktionskatalogen för både direkt och FIFO-produktion. `GatheringState.faction` är härledd ägarcontext från createMatch/Load; isolerade äldre fixtures använder crown-baslinjen. Jobbet lagrar betald kostnad och återstående tid; refund och blocked spawn återanvänder befintlig logik. Enemy-adaptern anger fiendens faction och justerad difficulty-tid utan att föra tillfälliga units till player-state. Scene/HUD använder katalogens kostnader och spelarens max-HP; fraktionssystemen är Phaser-fria.
+
+Config3-save validerar jobbrecept mot rätt sida. Migration från config2/v1 stämplar gamla ändrade soldierrecept och validerar deras gamla kostnad/tid innan atomisk Load. Den stämpeln bevaras bara i köjobbet; nyproduktion använder aktuell config. `factionProduction.test.ts` kontrollerar betalning, deadlines, HP, timesteps, blockering, refund, samtidig produktion, migration och ändlig enemy-budget. Äldre difficulty/AI-regressioner använder explicit crown-enemy för oförändrad baslinje; nya tester kontrollerar clans-receptet.

@@ -1,36 +1,35 @@
-import { catapultConfig } from '../config/catapult';
-import { archerConfig } from '../config/archer';
-import { costs, type ResourceCost } from '../config/economy';
-import { productionConfig, soldierProductionConfig, queueConfig } from '../config/production';
+import { type ResourceCost } from '../config/economy';
+import { queueConfig } from '../config/production';
 import { canAfford, payCost } from './economy';
 import { hasPopulation, type Population } from './population';
-import { soldierSpawn, updateProduction, type ProductionState, type ProductionBuilding } from './production';
+import { productionRecipe,soldierSpawn, updateProduction, type ProductionState, type ProductionBuilding } from './production';
 import type { GatheringState } from './gathering';
 import type { WorldMap } from './map';
 import type { Position } from './movement';
 export interface ProductionJob {
   id:string; kind:'worker'|'soldier'|'archer'|'catapult'; supply?:number; cost:ResourceCost;
-  durationSeconds:number; remainingSeconds:number;
+  durationSeconds:number; remainingSeconds:number;legacyRecipe?:true;
 }
 const base:ProductionBuilding={kind:'base'};
 export function productionJobCount(p:ProductionState):number {
   return p.queue?.length??(p.remainingSeconds!==null?1:0);
 }
 export function canEnqueue(g:GatheringState,p:ProductionState,b:ProductionBuilding=base,pop?:Population):boolean {
-  return productionJobCount(p)<queueConfig.maxJobs && (!pop||hasPopulation(pop,b.kind==='barracks'&&b.unitType==='catapult'?catapultConfig.supply:1))
-    && canAfford(g,b.kind==='base'?costs.worker:(b.jobCost??costs[b.unitType??'soldier']))
-    && (b.kind==='base'||b.ready!==false&&b.footprint!==null&&soldierSpawn(b.footprint)!==null);
+  const recipe=productionRecipe(g,b);
+  return productionJobCount(p)<queueConfig.maxJobs && (!pop||hasPopulation(pop,recipe.supply))
+    && canAfford(g,recipe.cost)
+    && (b.kind==='base'||b.ready!==false&&b.footprint!==null&&soldierSpawn(b.footprint,recipe.size)!==null);
 }
 export function enqueueProduction(gathering:GatheringState,production:ProductionState,
   building:ProductionBuilding=base,population?:Population,playing=true) {
   if(!playing||!canEnqueue(gathering,production,building,population))return {gathering,production};
   const kind=building.kind==='base'?'worker':building.unitType??'soldier';
-  const cost=building.kind==='barracks'?building.jobCost??costs[kind]:costs[kind],durationSeconds=building.kind==='barracks'&&building.durationSeconds!==undefined?building.durationSeconds:kind==='worker'?productionConfig.durationSeconds:kind==='archer'?archerConfig.durationSeconds:kind==='catapult'?catapultConfig.durationSeconds:soldierProductionConfig.durationSeconds;
+  const recipe=productionRecipe(gathering,building),cost=recipe.cost,durationSeconds=recipe.durationSeconds;
   let number=production.nextJobNumber??1;
   const queue=production.queue??(production.remainingSeconds!==null?[{
     id:`${building.kind}-job-${number++}`,kind,cost:{...cost},durationSeconds,remainingSeconds:production.remainingSeconds,
   }]:[]);
-  const job:ProductionJob={id:`${building.kind}-job-${number}`,kind,supply:kind==='catapult'?catapultConfig.supply:1,cost:{...cost},durationSeconds,remainingSeconds:durationSeconds};
+  const job:ProductionJob={id:`${building.kind}-job-${number}`,kind,supply:recipe.supply,cost:{...cost},durationSeconds,remainingSeconds:durationSeconds};
   return {gathering:payCost(gathering,cost),production:{...production,queue:[...queue,job],nextJobNumber:number+1,
     remainingSeconds:queue.length?production.remainingSeconds:durationSeconds}};
 }

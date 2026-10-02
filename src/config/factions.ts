@@ -41,7 +41,7 @@ export interface FactionDefinition {
   buildings:Record<BuildingRole,BuildingDefinition>;upgrades:Record<UpgradeRole,UpgradeDefinition>;
 }
 
-// Baseline comes from existing config; this task introduces identity, not new balance.
+// Shared baseline, with the small RTS-068 recipe override below.
 const {color:_archerColor,...archerData}=archerConfig;
 const {color:_catapultColor,...catapultData}=catapultConfig;
 const units:Record<UnitRole,UnitData>={
@@ -80,6 +80,9 @@ function defineFaction(id:FactionId):FactionDefinition {
   };
 }
 export const factions:Record<FactionId,FactionDefinition>={crown:defineFaction('crown'),clans:defineFaction('clans')};
+factions.clans.units.soldier={...factions.clans.units.soldier,hp:66,cost:{wood:18,gold:6},durationSeconds:6};
+export function productionFaction(g:{faction?:FactionId}):FactionDefinition {return factions[g.faction??defaultFactions.player];}
+
 export function factionForTeam(match:{factions?:MatchFactions},team:keyof MatchFactions):FactionDefinition {
   return factions[(match.factions??defaultFactions)[team]];
 }

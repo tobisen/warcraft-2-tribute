@@ -22,7 +22,7 @@ it('both factions define all shared roles with distinct, globally unique type ID
   expect(ids.size).toBe(20);
 });
 it('catalog values preserve current baseline and costs do not alias the other faction',()=>{
-  for(const f of Object.values(factions)){
+  for(const f of [factions.crown]){
     for(const role of ['worker','soldier','archer','catapult'] as const)expect(f.units[role].cost).toEqual(costs[role]);
     expect(f.units.worker).toMatchObject({hp:combatConfig.workerHP,speed:unitStats.speed,durationSeconds:5});
     expect(f.units.archer).toMatchObject({hp:archerConfig.hp,range:archerConfig.range,supply:archerConfig.supply});

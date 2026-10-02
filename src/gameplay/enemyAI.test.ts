@@ -35,7 +35,7 @@ describe('enemy muster groups',()=>{
   expect(r.state.groups).toHaveLength(1);expect(r.state.groups[0]).toMatchObject({id:'enemy-group-2',members:['enemy-produced-3']});expect(Object.keys(r.state.groups[0].destinations)).toEqual(['enemy-produced-3']);
  });
  it('real match units gather around obstacles and two groups dispatch; budget remains exhausted',()=>{
-  let s=createMatch('siege-test');for(let i=0;i<770;i++)s=updateMatch(s,.1);
+  let s=createMatch('siege-test','normal',{player:'crown',enemy:'crown'});for(let i=0;i<770;i++)s=updateMatch(s,.1);
   expect(s.enemyProduction).toMatchObject({wood:0,gold:0,acceptedJobs:4});expect(s.enemyAI!.nextGroupNumber).toBe(3);
   expect(s.enemyAI!.groups.filter(g=>g.status==='attack')).toHaveLength(2);expect(s.enemyAI!.groups[0].dispatchedAt).toBeCloseTo(60);expect(s.enemyAI!.groups[1].dispatchedAt).toBeCloseTo(75);
   expect(s.enemyAI!.groups[0].members.every(id=>s.combat.enemies.find(e=>e.id===id)!.position.x<enemyAIConfig.muster.x)).toBe(true);
@@ -45,7 +45,7 @@ describe('enemy muster groups',()=>{
   const result=updateCombat(s.gathering,combat([e]),2,world);expect(result.combat.enemies[0].position).toEqual({x:896,y:320});expect(result.combat.baseHP).toBe(240);
  });
  it('death cleanup works even when outcome freezes before the AI phase; restart is fresh',()=>{
-  let s=createMatch('siege-test');s.combat.enemies.push(enemy(1));const grouped=update(createEnemyAI(),s.combat);s.enemyAI=grouped.state;s.combat=grouped.combat;s.combat.enemies.find(e=>e.id==='enemy-produced-1')!.hp=0;s.combat.baseHP=0;s=updateMatch(s,0);
-  expect(s.outcome).toBe('defeat');expect(s.enemyAI!.groups).toEqual([]);expect(createMatch('siege-test').enemyAI).toEqual(createEnemyAI());
+  let s=createMatch('siege-test','normal',{player:'crown',enemy:'crown'});s.combat.enemies.push(enemy(1));const grouped=update(createEnemyAI(),s.combat);s.enemyAI=grouped.state;s.combat=grouped.combat;s.combat.enemies.find(e=>e.id==='enemy-produced-1')!.hp=0;s.combat.baseHP=0;s=updateMatch(s,0);
+  expect(s.outcome).toBe('defeat');expect(s.enemyAI!.groups).toEqual([]);expect(createMatch('siege-test','normal',{player:'crown',enemy:'crown'}).enemyAI).toEqual(createEnemyAI());
  });
 });

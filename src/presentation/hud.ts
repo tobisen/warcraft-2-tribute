@@ -1,4 +1,4 @@
-import {factionForTeam} from '../config/factions';
+import {factionForTeam,productionFaction} from '../config/factions';
 import { isVisible } from '../gameplay/fog';
 import { canEnqueue, productionJobCount } from '../gameplay/productionQueue';
 import { queueConfig } from '../config/production';
@@ -27,7 +27,7 @@ export function productionLabel(gathering: GatheringState, production: Productio
   if (production.blockedSpawnKey) return 'Färdig – spawn-utgång blockerad'+queueText;
   if (production.remainingSeconds !== null) return `Producerar – ${production.remainingSeconds.toFixed(1)} s kvar${queueText}`;
   if (population && !hasPopulation(population)) return `Population full: ${population.used} + ${population.reserved} / ${population.cap}`;
-  const cost = building.kind === 'base' ? costs.worker : costs.soldier;
+  const cost = productionFaction(gathering).units[building.kind==='base'?'worker':building.unitType??'soldier'].cost;
   if (!canAfford(gathering,cost)) return `Behöver ${missingCost(gathering,cost)} till`;
   return canEnqueue(gathering, production, building,population) ? 'Redo att träna' : 'Ingen giltig spawn-position';
 }
