@@ -2,8 +2,8 @@
 
 ## Inriktning
 
-RTS-001–059 är implementerade. Slicebeskrivningarna visar utvecklingen;
-avsnitten RTS-018–059 längst ned anger dagens HUD, terrain/navigation,
+RTS-001–060 är implementerade. RTS-061–090 är endast planerade. Slicebeskrivningarna visar utvecklingen;
+avsnitten RTS-018–060 längst ned anger dagens HUD, terrain/navigation,
 kantbaserade ranges, gruppmål och säkra placering/spawn.
 
 
@@ -127,9 +127,9 @@ combat → AI. [BACKLOG.md](BACKLOG.md) definierar genomförbara tasks; ordninge
 
 ## Avgränsningar
 
-Ingen multiplayer, backend, konton, procedural generation, modding eller
-deployment. Save/load ligger efter MVP. Grafikproduktion är inte ett krav
-för att verifiera gameplay.
+Ingen multiplayer, backend, konton, procedural generation eller modding.
+Save/load infördes efter första MVP i RTS-059. Egna assets/ljud ingår i RTS-053–057,
+och Pages-publicering är godkänd inom RTS-060 efter releasekontroller.
 
 Se [DECISIONS.md](DECISIONS.md) för beslut och [ARCHITECTURE.md](ARCHITECTURE.md)
 för tekniska principer.
@@ -213,7 +213,7 @@ singleplayer-tribute enligt [BACKLOG.md](BACKLOG.md):
 Etappordning: stabilisering/navigation (016–024), kontroller/basbygge (025–034),
 armé/combat (035–040), fiendebas/skirmish (041–046), överblick/kontroller (047–052),
 presentation/releaseverifiering (053–060). Placeholders används till etapp 6;
-releaseverifiering är lokal och innebär ingen deployment.
+releaseverifiering börjar lokalt. Användarens senare tillägg godkänner därefter Pages-publicering i RTS-060.
 
 ### Spelkontrakt i planen
 
@@ -683,3 +683,10 @@ Spara lokalt skriver en manuell slot i denna browsers localStorage. Ladda sparni
 Schema 1 / tribute-config-1 innehåller hela modellen, scenario/arena/tid/outcome/pause, resurslaster/saldo, units/orders/IDs/HP, byggtid, FIFO-kostnader/rally/reservationer, research, projektiler, AI-budget/grupper/waves och fog/explored samt kamera/byggnadsselection. Navigation och render/audio/listeners/blocked-spawn-cache lagras inte. Matchens dynamiska footprints valideras mot sparade byggnader/resurser; enheternas clearance, ID-referenser, queue/config och fog-form granskas innan state byts atomiskt. Navigation planeras om från orders, current vision räknas om medan explored bevaras.
 
 Korrupt/okänd äldre/framtida schema eller annan config-version avvisas; ingen migration uppfinns. Aktiv match och tidigare slot förblir oförändrade vid load-/storagefel. Load rensar uncommitted previews och återskapar scenens render/listeners, ger ingen wall-time-bonus och laddar terminala matcher som terminala. save.ts och config/save.ts är Phaser-fria. Fog-factory sparar nu endast deklarerade worlddimensioner, inte oavsiktliga gamla map-obstacles.
+
+
+## RTS-060 – Spelbar releasebalans
+
+Alla fem modes och Easy/Normal/Hard kan vinnas utan extra resurser/HP/units. Accelererad legal kommandostrategi bygger barracks med wood först, samlar därefter gold, tränar upp till fyra soldiers och ger synliga attackmål. Gruppanfall, förstärkningar och skydd av gold-workers behövs särskilt i Hard Skirmish. Tidiga testförluster berodde på oskyddad gold-ekonomi och för tidiga enskilda anfall; inga stats, startresurser, vågor eller difficulty-värden ändrades för att få matrisen att passera. Aktiva order gör denna lilla RTS enklare än passivt försvar; resultaten är spelbarhetsbevis, inte en slutlig balansgaranti.
+
+Fem naturliga Normal-UI-flöden och 15 accelererade scenario/profile-flöden redovisas separat i [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md). Utposten tillåter kvarvarande enemies vid deadline, Skirmish vinner på basdöd trots kvarvarande enemies, och defeat har fortsatt företräde. RTS-061–090 är framtida planering; nya fraktioner/förmågor är inte del av releasen.

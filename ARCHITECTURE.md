@@ -2,11 +2,11 @@
 
 ## Status och teknik
 
-Implementerat genom RTS-059: archer/projectiles, catapult/splash och Forge/research, FIFO/refund, target-HP/destruktion, workerbygge, farms, population, kamera,
+Implementerat genom RTS-060: archer/projectiles, catapult/splash och Forge/research, FIFO/refund, target-HP/destruktion, workerbygge, farms, population, kamera,
 byggnadsselection, rally, Stop, gold och
 atomiska kostnader ovanpå etapp 1:s HUD, handgjorda karta och navigation för
 move/work/combat, separata gruppmål och säkra placement/spawn-regler.
-De ursprungliga MVP-avsnitten nedan är historik; RTS-018–059-avsnitten längst
+De ursprungliga MVP-avsnitten nedan är historik; RTS-018–060-avsnitten längst
 ned beskriver gällande ändringar av presentation, ranges och navigation.
 
 
@@ -834,3 +834,14 @@ Spara lokalt skriver en manuell slot i denna browsers localStorage. Ladda sparni
 Schema 1 / tribute-config-1 innehåller hela modellen, scenario/arena/tid/outcome/pause, resurslaster/saldo, units/orders/IDs/HP, byggtid, FIFO-kostnader/rally/reservationer, research, projektiler, AI-budget/grupper/waves och fog/explored samt kamera/byggnadsselection. Navigation och render/audio/listeners/blocked-spawn-cache lagras inte. Matchens dynamiska footprints valideras mot sparade byggnader/resurser; enheternas clearance, ID-referenser, queue/config och fog-form granskas innan state byts atomiskt. Navigation planeras om från orders, current vision räknas om medan explored bevaras.
 
 Korrupt/okänd äldre/framtida schema eller annan config-version avvisas; ingen migration uppfinns. Aktiv match och tidigare slot förblir oförändrade vid load-/storagefel. Load rensar uncommitted previews och återskapar scenens render/listeners, ger ingen wall-time-bonus och laddar terminala matcher som terminala. save.ts och config/save.ts är Phaser-fria. Fog-factory sparar nu endast deklarerade worlddimensioner, inte oavsiktliga gamla map-obstacles.
+
+
+## RTS-060 – Release och basrelativa assets
+
+[vite.config.ts](vite.config.ts) behåller dev på `/` och använder `/warcraft-2-tribute/` för build/preview. BootScene atlas-loader använder `import.meta.env.BASE_URL`; audio gör redan det och Vite skriver om CSS-assets. Exportmanifest har relativa assetvägar. `preview` är lokal kontroll av dist, ingen runtime-server/backend i produktion. Pages använder samma dist efter npm ci/test/typecheck/build.
+
+[src/gameplay/testHelpers/releaseBot.ts](src/gameplay/testHelpers/releaseBot.ts) är enbart teststrategi och importeras inte av appen: befintlig selection/order, fog, placement/construction och betald produktion, utan injicerad ekonomi/HP/units. [releaseMatrix.test.ts](src/gameplay/releaseMatrix.test.ts) kör fem scenarios × tre profiler, pause/save-roundtrip, terminal freeze, total resursbevarande och fresh factory. Ett valfritt observer-anrop användes för browserns accelererade rendering; naturliga UI-playthroughs redovisas separat i [releasekontrollerna](RELEASE_CHECKLIST.md).
+
+Save-status rensas vid ny match/restart och ändras från pausad till fortsätter vid resume, så gamla DOM-meddelanden inte beskriver ny simulation felaktigt. Ingen gameplaybalans eller bundle-split ändrades i denna task. Browsermätning använder scene pre/post-update (inklusive HUD-synk), RAF-intervall och CDP-GC/heap, inte uppskattad FPS från gameplay-delta.
+
+[Pages-workflow](.github/workflows/pages.yml) har separat build/deploy och pinade officiella actions: build-token contents/pages read, deploy-token pages/id-token write. Push main och workflow_dispatch delar concurrency pages utan avbruten pågående publicering. CI använder Node 22 och låst npm ci; deploy kör enbart godkänd dist.

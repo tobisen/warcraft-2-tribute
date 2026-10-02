@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-060 – Slutbalans, prestanda, regressioner och releaseverifiering** — **Todo**.
+**RTS-061 – Speltest och kvalitetsgranskning av första versionen** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
@@ -2006,7 +2006,7 @@ Inga blockerande regressioner hittades; protokoll i [DEV_LOG.md](DEV_LOG.md).
 
 ## RTS-060 – Slutbalans, prestanda, regressioner och releaseverifiering
 
-**Status:** Todo.
+**Status:** Done.
 
 **Priority:** P1.
 

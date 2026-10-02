@@ -5,21 +5,21 @@
   "origin": "original repo-local pixel sources; no imported game artwork",
   "atlases": {
     "world": {
-      "image": "/assets/world-atlas.png",
-      "data": "/assets/world-atlas.json",
+      "image": "assets/world-atlas.png",
+      "data": "assets/world-atlas.json",
       "width": 256,
       "height": 160
     },
     "buildings": {
-      "image": "/assets/buildings-atlas.png",
-      "data": "/assets/buildings-atlas.json",
+      "image": "assets/buildings-atlas.png",
+      "data": "assets/buildings-atlas.json",
       "width": 1024,
       "height": 384,
       "source": "assets/sources/buildings.mjs"
     },
     "units": {
-      "image": "/assets/units-atlas.png",
-      "data": "/assets/units-atlas.json",
+      "image": "assets/units-atlas.png",
+      "data": "assets/units-atlas.json",
       "width": 2048,
       "height": 2048,
       "source": "assets/sources/units.mjs",
@@ -68,8 +68,8 @@
       }
     },
     "ui": {
-      "image": "/assets/ui-atlas.png",
-      "data": "/assets/ui-atlas.json",
+      "image": "assets/ui-atlas.png",
+      "data": "assets/ui-atlas.json",
       "width": 512,
       "height": 128,
       "source": "assets/sources/ui.mjs",

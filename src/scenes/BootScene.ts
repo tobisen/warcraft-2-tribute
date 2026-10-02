@@ -134,13 +134,14 @@ export class BootScene extends Phaser.Scene {
     super('BootScene');
   }
 
-  preload():void {for(const key of ['world','buildings','units','ui'])if(!this.textures.exists(key))this.load.atlas(key,`/assets/${key}-atlas.png`,`/assets/${key}-atlas.json`);}
+  preload():void {for(const key of ['world','buildings','units','ui'])if(!this.textures.exists(key))this.load.atlas(key,`${import.meta.env.BASE_URL}assets/${key}-atlas.png`,`${import.meta.env.BASE_URL}assets/${key}-atlas.json`);}
 
   create(): void {
     this.audioSnapshot=undefined;gameAudio.setPhase('menu');gameAudio.reset();
     this.visualTime=0;this.motions.clear();this.deaths.clear();this.impacts.clear();this.nextImpact=1;
     this.hpBars=this.add.graphics().setDepth(7);
     const loaded=this.pendingLoad;this.pendingLoad=undefined;
+    if(!loaded)document.getElementById('save-status')!.textContent='';
     this.applyMatch(loaded?.match??createMatch(this.scenario,this.difficulty));
     this.game.canvas.tabIndex=0;this.game.canvas.setAttribute('aria-label','Spelvärld');
     const groupKey=(event:KeyboardEvent)=>{
@@ -366,7 +367,7 @@ export class BootScene extends Phaser.Scene {
     const next=sessionTransition(this.session,action);if(next===this.session||this.restartPending)return;
     this.session=next;gameAudio.setPhase(next.phase);
     if(action==='start'||action==='restart'){this.scenario=next.options.scenario;this.difficulty=next.options.difficulty;this.skipGameplayFrame=true;this.restartPending=true;this.restartButton.disabled=true;this.scene.restart();return;}
-    if(action==='resume')this.skipGameplayFrame=true;
+    if(action==='resume'){this.skipGameplayFrame=true;if(document.getElementById('save-status')!.textContent?.startsWith('Laddad – pausad'))document.getElementById('save-status')!.textContent='Laddad – matchen fortsätter';}
     if(action==='pause'||action==='new-match'){this.placement=cancelPlacement(this.placement);this.attackMoveMode=false;this.drag=undefined;this.cameraDrag=undefined;this.dragBox.setVisible(false);}
     this.syncVisuals();
   }

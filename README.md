@@ -2,7 +2,7 @@
 
 Browserbaserat singleplayer-RTS inspirerat av Warcraft 2, Age of Empires 2 och
 Command & Conquer. Phaser, strict TypeScript och Vite; local-first, gameplay
-före grafik. Implementerat genom RTS-059 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
+före grafik. Implementerat genom RTS-060 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
 
 ## Installation och lokal start
 
@@ -15,25 +15,25 @@ npm run dev
 
 Öppna adressen Vite skriver ut, normalt http://localhost:5173/.
 Världen är 1280 × 960 px, viewport 800 × 600. Dra med mittenmusknappen för
-begränsad pan; zoom är 1. HUD ligger ovanför canvas och följer inte kameran.
+begränsad pan; zoom är 1. Kommandopanelen ligger bredvid canvas på desktop och staplas under i mindre fönster.
 Små fönster kan scrollas.
 
 ## Spela matchen
 
-I startmenyn: välj Wave-survival eller Skirmish och Easy/Normal/Hard, sedan
+I startmenyn: välj Wave-survival, Skirmish eller något av de tre uppdragen och Easy/Normal/Hard, sedan
 ”Starta match”. Byt val via ”Ny match / meny” och starta där en ny match. Survival har tre ändliga waves; i Skirmish finns inga waves och målet
 är att förstöra fiendebasen vid (1008,144). Fienden producerar från sin
 ändliga budget, samlar grupper och håller ett lokalt försvar. Restart behåller
 valt läge. Förlust vid spelarbasens död har alltid företräde.
 
-1. Fog är aktiv. Välj två gröna workers och flytta mot (600,220) för att
+1. Fog är aktiv. Välj två blå workers och flytta mot (600,220) för att
    upptäcka wood; högerklicka sedan noden vid (650,180). Välj den tredje, pan
    åt höger och flytta mot (780,240) för att upptäcka gruvan vid (850,220);
    högerklicka gruvan.
    Workers samlar och levererar automatiskt till den blå basen vid (400,450).
 2. Vid 40 levererade wood: välj en worker och ”Bygg barracks – 40 wood”. Placera grön
    preview, exempelvis vid (512,384) om platsen är fri. Escape/högerklick avbryter.
-3. Efter 5 s byggarbete: ge builder ny gather-order. Välj barracks och träna orange soldiers för 20 wood + 5 gold och 5 gameplay-
+3. Efter 5 s byggarbete: ge builder ny gather-order. Välj barracks och träna blå soldiers för 20 wood + 5 gold och 5 gameplay-
    sekunder vardera. Välj basen för workers för 20 wood och 5 s. Tre FIFO-jobb per
    byggnad inklusive aktivt; bas och barracks kan producera samtidigt.
 4. Välj soldiers och högerklicka på röda enemies för manuell attack. Ge nästa
@@ -74,9 +74,9 @@ Alla kostnader kontrolleras atomiskt; preview/cancel är gratis. Högst en barra
 Om spawn-utgångar är upptagna väntar färdigt jobb på fri plats utan ny kostnad.
 
 Workers, bas, barracks, farms och projekt kan angripas. Worker-cargo förloras
-vid död; byggnadsdöd ger ingen refund och tar bort kö/rally/footprint. Soldiers angriper endast på kommando.
-Units kan överlappa under gång; ingen full collision avoidance, avancerad AI,
-ljud eller save/load finns. Balansen är preliminär; verifierade flöden finns i DEV_LOG.
+vid död; byggnadsdöd ger ingen refund och tar bort kö/rally/footprint. Soldiers stöder manuell attack, automatisk lokal targeting och attack-move.
+Units kan överlappa under gång; ingen full collision avoidance eller avancerad AI-ekonomi finns.
+Ljud och lokal save/load är implementerade i RTS-056/059. Balans och verifierade flöden finns i DEV_LOG och RELEASE_CHECKLIST.
 
 ## Checks
 
@@ -89,12 +89,12 @@ npm run build
 Vitest testar rena gameplay-/presentationregler i Node. Typecheck kör strict
 TypeScript; build kontrollerar typer och skriver till `dist/`. Dependencies
 låses i package-lock; `node_modules/` och `dist/` ignoreras. Den befintliga
-varningen om stor Phaser-bundle kvarstår. Ingen deployment.
+varningen om stor Phaser-bundle kvarstår inom releasebudgeten. Godkänd Pages-workflow införs i RTS-060.
 
 ## Dokumentation
 
 - [AGENTS.md](AGENTS.md): arbetsregler och Definition of Done.
-- [BACKLOG.md](BACKLOG.md): tasks till RTS-060 och Current Focus.
+- [BACKLOG.md](BACKLOG.md): RTS-001–060 klara, RTS-061–090 planerade och Current Focus.
 - [GAME_DESIGN.md](GAME_DESIGN.md): regler och framtida mål.
 - [ARCHITECTURE.md](ARCHITECTURE.md): faktisk struktur.
 - [DECISIONS.md](DECISIONS.md): beslut och öppna frågor.
@@ -102,8 +102,8 @@ varningen om stor Phaser-bundle kvarstår. Ingen deployment.
 - [Implementer](.agents/implementer.md), [Reviewer](.agents/reviewer.md) och
   [Finisher](.agents/finisher.md): rollinstruktioner, inte automatiska agenter.
 
-Nästa task är RTS-060, releasekontroller och godkänd Pages-publicering. Multiplayer, backend,
-konton, procedural generation, modding och deployment ingår inte.
+Nästa task är RTS-061, speltest och kvalitetsgranskning av releasen. RTS-061–090 implementeras inte i denna körning. Multiplayer, backend,
+konton, procedural generation och modding ingår inte. Pages-publicering ingår enligt användarens godkända tillägg.
 
 RTS-031: välj worker innan placering. Barracks reserveras direkt och kräver
 5 s arbete efter approach. Stop/ny order pausar utan refund. Högerklicka
@@ -336,3 +336,24 @@ Spara lokalt skriver en manuell slot i denna browsers localStorage. Ladda sparni
 Schema 1 / tribute-config-1 innehåller hela modellen, scenario/arena/tid/outcome/pause, resurslaster/saldo, units/orders/IDs/HP, byggtid, FIFO-kostnader/rally/reservationer, research, projektiler, AI-budget/grupper/waves och fog/explored samt kamera/byggnadsselection. Navigation och render/audio/listeners/blocked-spawn-cache lagras inte. Matchens dynamiska footprints valideras mot sparade byggnader/resurser; enheternas clearance, ID-referenser, queue/config och fog-form granskas innan state byts atomiskt. Navigation planeras om från orders, current vision räknas om medan explored bevaras.
 
 Korrupt/okänd äldre/framtida schema eller annan config-version avvisas; ingen migration uppfinns. Aktiv match och tidigare slot förblir oförändrade vid load-/storagefel. Load rensar uncommitted previews och återskapar scenens render/listeners, ger ingen wall-time-bonus och laddar terminala matcher som terminala. save.ts och config/save.ts är Phaser-fria. Fog-factory sparar nu endast deklarerade worlddimensioner, inte oavsiktliga gamla map-obstacles.
+
+
+## Release och GitHub Pages – RTS-060
+
+[Releasekontroller och mätningar](RELEASE_CHECKLIST.md) beskriver stödd desktopprofil, full scenariomatris, budget och begränsningar. RTS-001–060 är implementerade; RTS-061–090 är planerade och ligger utanför denna körning.
+
+Lokal produktionskontroll:
+
+```sh
+npm ci
+npm test
+npm run typecheck
+npm run build
+npm run preview
+```
+
+Öppna preview-adressen med `/warcraft-2-tribute/`, normalt http://localhost:4173/warcraft-2-tribute/. Dev fortsätter använda rotadressen som Vite skriver ut. [vite.config.ts](vite.config.ts) sätter projektets subpath för build/preview; sprites/ljud/CSS hämtas från samma bas.
+
+Godkänd publiceringsadress är [warcraft-2-tribute på Pages](https://tobisen.github.io/warcraft-2-tribute/). Efter godkända lokala releasechecks kör Pages-workflowen på push till main eller manuellt workflow_dispatch: låst npm ci, alla tester, typecheck och build före uppladdning/deploy. GitHub Pages måste använda GitHub Actions som källa. Inga konton/backend krävs för att spela; publicerad origin har en egen lokal sparslot och tar inte över localhost-saves. Faktiskt publiceringsresultat anges i DEV_LOG.
+
+Hard kräver tidig ekonomi/armé och aktiva order; samla gärna wood med alla tre först, bygg barracks och flytta sedan en till gold. Gold nära fiendebasen i Skirmish behöver skydd. Ingen balansändring behövdes för release-matrisens segrar; ett vunnet skriptflöde är inte generell garanti om svårighetsgrad. Andra browsermotorer/mobil och akustisk lyssning är ännu inte verifierade. Bundle-varningen är kvar inom fastställd storleksbudget.
