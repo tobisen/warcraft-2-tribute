@@ -2,7 +2,7 @@
 
 ## Inriktning
 
-RTS-001–060 är implementerade. RTS-061–090 är endast planerade. Slicebeskrivningarna visar utvecklingen;
+RTS-001–066 är implementerade. RTS-067–090 är planerade för fortsatt taskvis implementation. Slicebeskrivningarna visar utvecklingen;
 avsnitten RTS-018–060 längst ned anger dagens HUD, terrain/navigation,
 kantbaserade ranges, gruppmål och säkra placering/spawn.
 
@@ -709,3 +709,7 @@ RTS-062: QA-granskningen gav ingen bekräftad P0/P1-fixlista; gameplay/save-form
 Wood/gold-noder betjänar högst tre samlande workers samtidigt. Vid fler arbetsorders väntar resten utanför räckvidden; prioriteten roterar var femte gameplay-sekund. Levererande workers räknas till sin nod tills loopen avslutas. Smala passager släpper fram en aktiv entrant åt gången, med företräde för den som redan är inne. Ny order eller död lämnar kön direkt. Pause fryser prioritet; save/load återskapar den. Last, hastighet och insamlingspris/rate är oförändrade. Detta är begränsad insläppning och mjuk separation, ingen garanti om perfekt tät packning eller formationer.
 
 RTS-065 ändrar beräkningsarbete, inte resursrate, kostnad, kroppsstorlek, attacker, orders eller save-format. Större matcher har mätts med 64/128 injicerade kroppar, utan att ändra spelets supply eller ge dessa enheter till vanlig match. Se [PERFORMANCE.md](PERFORMANCE.md) för faktiska FPS/CPU-gränser.
+
+## RTS-066: fraktion och lag
+
+Fraktionens identitet är skild från lagfärg och player/enemy. Tekniska standard-ID:n är crown för player och clans för enemy; båda kan representeras på valfritt team i modellen/sparformatet. Befintliga unit/building/upgrade-system delas. Detta är data- och savegrunden; egna fraktionsnamn, grafik och UI-val kommer i RTS-067, fraktionsstats i RTS-068 och särskilda förmågor i RTS-069. Fraktionsnamn/förmågor är fortfarande öppna beslut.

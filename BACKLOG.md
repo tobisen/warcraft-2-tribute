@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-066 – Fraktionsdata för units, buildings och upgrades** — **Todo**.
+**RTS-067 – Andra spelbara fraktionen med egna namn och assets** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
@@ -2130,13 +2130,21 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-066 – Fraktionsdata för units, buildings och upgrades
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Fraktionsdata för units, buildings och upgrades.
+**Goal:** Införa två stabila fraktions-ID:n och fraktionsspecifika typ-ID:n ovanpå befintliga gemensamma gameplay-roller.
+
+**Requirements:** Enkel TypeScript-katalog för worker/soldier/archer/catapult, base/barracks/farm/forge och attack/defense. Fraktion är skild från team/owner. Matchstart, restart och save/load bevarar teamens fraktion. Befintliga stats/kostnader och system behålls; inga kopierade fraktionssystem.
+
+**Non-goals:** Fraktionsval i UI, ny grafik, fraktionsbalans, nya förmågor, AI-ekonomi och sjöstrid; dessa har egna efterföljande tasks.
 
 **Dependencies:** RTS-065.
 
-**Acceptance criteria:** Data skiljer fraktionernas typer utan duplicerade system; befintliga saves migreras eller avvisas tydligt.
+**Acceptance criteria:** Båda fraktioner har unika typ-ID:n med samma delade roller och kompletta data. Matchen lagrar player/enemy-fraktion oberoende av owner. Save v1 migreras atomiskt till v2 med tidigare standardfraktioner; okända/ogiltiga fraktioner/versioner avvisas tydligt. Befintliga matchflöden och numeriska värden är oförändrade.
+
+**Tester:** Katalogens roller/ID:n och baslinjevärden, team/fraktionsoberoende, start/reset, save v1-migration/v2-roundtrip och avvisning utan mutation. Alla regressioner, typecheck/build och browserkontroll av migrerad Save/Load/start/restart.
+
+**Docs:** [BACKLOG.md](BACKLOG.md), [DECISIONS.md](DECISIONS.md), [ARCHITECTURE.md](ARCHITECTURE.md), [GAME_DESIGN.md](GAME_DESIGN.md), [README.md](README.md), [DEV_LOG.md](DEV_LOG.md).
 
 ## RTS-067 – Andra spelbara fraktionen med egna namn och assets
 

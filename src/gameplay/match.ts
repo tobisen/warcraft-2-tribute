@@ -1,5 +1,6 @@
 import {trafficGates} from './traffic';
 import {trafficConfig} from '../config/traffic';
+import {defaultFactions,isFactionId,type MatchFactions} from '../config/factions';
 import {segmentFits,type RouteState} from './navigation';
 import type {Position} from './movement';
 import type { ControlGroups } from './controlGroups';
@@ -28,6 +29,7 @@ import { updateWaves, type WaveState } from './waves';
 
 export type MatchOutcome = 'playing' | 'defeat' | 'victory';
 export interface MatchState {
+  factions?:MatchFactions;
   map: WorldMap;
   fog?:FogState;
   controlGroups?:ControlGroups;
@@ -47,8 +49,10 @@ export interface MatchState {
 }
 
 /** A fresh state owns every mutable position/array; restart never reuses a previous match. */
-export function createMatch(scenario:MatchScenario='survival',difficulty:Difficulty='normal'): MatchState {
+export function createMatch(scenario:MatchScenario='survival',difficulty:Difficulty='normal',factions:MatchFactions={...defaultFactions}): MatchState {
+  if(!isFactionId(factions.player)||!isFactionId(factions.enemy))throw Error('Unknown faction');
   const state: MatchState = {
+    factions:{...factions},
     outcome: 'playing',paused:false,controlGroups:{},scenario,difficulty,research:createResearch(),
     map: createMap(),
     gathering: {

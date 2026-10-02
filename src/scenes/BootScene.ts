@@ -43,6 +43,7 @@ import { matchLabels, productionLabel } from '../presentation/hud';
 import Phaser from 'phaser';
 import { createMatch, updateMatch, type MatchOutcome, type MatchState } from '../gameplay/match';
 import type { WaveState } from '../gameplay/waves';
+import {defaultFactions,type MatchFactions} from '../config/factions';
 import { combatConfig } from '../config/combat';
 import { enemyAt, orderAttack, type CombatState } from '../gameplay/combat';
 import { soldierStats, combatUnitStats, unitStats } from '../config/unit';
@@ -59,6 +60,7 @@ import {
 } from '../gameplay/selection';
 
 export class BootScene extends Phaser.Scene {
+  private factions:MatchFactions={...defaultFactions};
   private controlGroups:ControlGroups={};
   private fog!:FogState;
   private fogOverlay?:Phaser.GameObjects.Graphics;
@@ -142,7 +144,7 @@ export class BootScene extends Phaser.Scene {
     this.hpBars=this.add.graphics().setDepth(7);
     const loaded=this.pendingLoad;this.pendingLoad=undefined;
     if(!loaded)document.getElementById('save-status')!.textContent='';
-    this.applyMatch(loaded?.match??createMatch(this.scenario,this.difficulty));
+    this.applyMatch(loaded?.match??createMatch(this.scenario,this.difficulty,this.factions));
     this.game.canvas.tabIndex=0;this.game.canvas.setAttribute('aria-label','Spelvärld');
     const groupKey=(event:KeyboardEvent)=>{
       if(!gameplayKeyAllowed(keyboardContext(event,this.gameplayActive()))||!validGroup(event.key))return;
@@ -695,7 +697,7 @@ export class BootScene extends Phaser.Scene {
     this.syncVisuals();
   }
 
-  private currentMatch():MatchState {return {map:this.map,gathering:this.gathering,combat:this.combat,waves:this.waves,production:this.production,soldierProduction:this.soldierProduction,placement:this.placement,outcome:this.outcome,paused:!this.gameplayActive(),controlGroups:this.controlGroups,fog:this.fog,research:this.research,scenario:this.scenario,difficulty:this.difficulty,enemyProduction:this.enemyProduction,enemyAI:this.enemyAI};}
+  private currentMatch():MatchState {return {factions:{...this.factions},map:this.map,gathering:this.gathering,combat:this.combat,waves:this.waves,production:this.production,soldierProduction:this.soldierProduction,placement:this.placement,outcome:this.outcome,paused:!this.gameplayActive(),controlGroups:this.controlGroups,fog:this.fog,research:this.research,scenario:this.scenario,difficulty:this.difficulty,enemyProduction:this.enemyProduction,enemyAI:this.enemyAI};}
 
   private drawHP(position:Position,hp:number,max:number,width:number,offset:number,color:number):void {this.hpBars?.fillStyle(0x172422).fillRect(position.x-width/2-1,position.y-offset-1,width+2,5).fillStyle(color).fillRect(position.x-width/2,position.y-offset,width*Math.max(0,Math.min(1,hp/max)),3);}
 
@@ -720,6 +722,7 @@ export class BootScene extends Phaser.Scene {
   }
 
   private applyMatch(match: MatchState): void {
+    this.factions={...(match.factions??defaultFactions)};
     this.controlGroups=match.controlGroups??{};
     this.enemyAI=match.enemyAI;
     this.enemyProduction=match.enemyProduction;

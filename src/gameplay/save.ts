@@ -1,4 +1,5 @@
 import {saveConfig} from '../config/save';
+import {defaultFactions,isFactionId} from '../config/factions';
 import {scenarioConfig,scenarioWaves,enemyBaseConfig,type MatchScenario} from '../config/scenarios';
 import {difficultyProfiles,type Difficulty} from '../config/difficulty';
 import {gatheringConfig,goldConfig} from '../config/gathering';
@@ -44,8 +45,15 @@ function checkTree(value:unknown){let nodes=0;function visit(v:unknown,depth:num
 export function decodeSave(json:string):LoadResult {
  try{
   ensure(json.length<=saveConfig.maxBytes&&new TextEncoder().encode(json).byteLength<=saveConfig.maxBytes,'size');const raw:unknown=JSON.parse(json);checkTree(raw);
-  const doc=r(raw,'document',['schemaVersion','configVersion','map','state','view']);ensure(doc.schemaVersion===saveConfig.schemaVersion,'schema version (ingen migration stöds)');ensure(doc.configVersion===saveConfig.configVersion,'config version');ensure(doc.map==='arena','map');
-  const s=r(doc.state,'match',['map','gathering','combat','placement','production','soldierProduction','waves','outcome','paused','research','scenario','difficulty','enemyProduction','enemyAI','fog','controlGroups']);
+  const doc=r(raw,'document',['schemaVersion','configVersion','map','state','view']);
+  if(doc.schemaVersion===1&&doc.configVersion==='tribute-config-1'){
+    const old=doc.state;ensure(old!==null&&typeof old==='object'&&!Array.isArray(old),'legacy match');
+    ensure(!Object.hasOwn(old,'factions'),'legacy faction field');
+    doc.state={...old,factions:{...defaultFactions}};doc.schemaVersion=2;doc.configVersion='tribute-config-2';
+  }
+  ensure(doc.schemaVersion===saveConfig.schemaVersion,'schema version (stöder v1-migration och v2)');ensure(doc.configVersion===saveConfig.configVersion,'config version');ensure(doc.map==='arena','map');
+  const s=r(doc.state,'match',['factions','map','gathering','combat','placement','production','soldierProduction','waves','outcome','paused','research','scenario','difficulty','enemyProduction','enemyAI','fog','controlGroups']);
+  const factionData=r(s.factions,'factions',['player','enemy']);ensure(isFactionId(factionData.player)&&isFactionId(factionData.enemy),'faction identity');
   choice(s.scenario,'scenario',Object.keys(scenarioConfig));choice(s.difficulty,'difficulty',['easy','normal','hard']);choice(s.outcome,'outcome',['playing','victory','defeat']);bool(s.paused,'pause');const scenario=s.scenario as MatchScenario,difficulty=s.difficulty as Difficulty,profile=difficultyProfiles[difficulty];
   const map=r(s.map,'world',['width','height','tileSize','revision','obstacles']);ensure(map.width===1280&&map.height===960&&map.tileSize===32,'world config');integer(map.revision,'revision');const obstacleValues=arr(map.obstacles,'obstacles',128).map(o=>footprint(o,'obstacle'));
   const g=r(s.gathering,'economy',['units','node','gold','goldBalance','base','wood','lostCargo']);num(g.wood,'wood',0,400+scenarioConfig[scenario].initial.wood);num(g.goldBalance,'gold',0,300+scenarioConfig[scenario].initial.gold);ensure(samePosition(position(g.base,'base'),gatheringConfig.basePosition),'base position');
@@ -85,7 +93,7 @@ export function decodeSave(json:string):LoadResult {
  }catch(error){return {ok:false,error:error instanceof Error?error.message:'Sparningen kunde inte läsas'};}
 }
 export function encodeSave(state:MatchState,view:SavedView):string{
- const json=JSON.stringify({schemaVersion:saveConfig.schemaVersion,configVersion:saveConfig.configVersion,map:'arena',state,view},(key,value)=>['navigation','blockedSpawnKey','rallyError','bodyHalf','destroyedEnemyFootprints'].includes(key)?undefined:value);
+ const json=JSON.stringify({schemaVersion:saveConfig.schemaVersion,configVersion:saveConfig.configVersion,map:'arena',state:{...state,factions:{...(state.factions??defaultFactions)}},view},(key,value)=>['navigation','blockedSpawnKey','rallyError','bodyHalf','destroyedEnemyFootprints'].includes(key)?undefined:value);
  const result=decodeSave(json);if(!result.ok)throw new Error(result.error);return json;
 }
 export interface SaveStorage {getItem(key:string):string|null;setItem(key:string,value:string):void}

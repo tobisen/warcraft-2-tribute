@@ -2,7 +2,7 @@
 
 ## Status och teknik
 
-Implementerat genom RTS-060: archer/projectiles, catapult/splash och Forge/research, FIFO/refund, target-HP/destruktion, workerbygge, farms, population, kamera,
+Implementerat genom RTS-066: archer/projectiles, catapult/splash och Forge/research, FIFO/refund, target-HP/destruktion, workerbygge, farms, population, kamera,
 byggnadsselection, rally, Stop, gold och
 atomiska kostnader ovanpå etapp 1:s HUD, handgjorda karta och navigation för
 move/work/combat, separata gruppmål och säkra placement/spawn-regler.
@@ -870,3 +870,9 @@ Köer/reservationer sparas inte som nya refs: de återskapas från positioner, o
 ## RTS-065: profileringsmotiverad navigation
 
 `approachRoute` använder rak avståndsgräns för att undvika BFS-kandidater som inte kan slå den funna rutten, med tidigare tie-ordning. Efter separation behålls moving-navigation när nästa segment har kroppsgiltig clearance; revisionsfel, blockerad sträcka och flyttad arrived-position ogiltigförklarar den. Det minskar upprepade combat-routesökningar utan nya system eller persistent state. Navigation är fortsatt cache och Load räknar om från sparade positioner. `testHelpers/loadFixture.ts` och `scripts/profile-browser.mjs` hör endast till verifiering, inte app-bootstrap/dist. Metod/budget/resultat finns i [PERFORMANCE.md](PERFORMANCE.md).
+
+## RTS-066: fraktionsidentitet och typkatalog
+
+[config/factions.ts](src/config/factions.ts) definierar stabila crown/clans-ID:n och unik typidentitet för fyra unitroller, fyra byggnadsroller och två uppgraderingsroller. Numeriska katalogvärden kommer från befintlig config, med separata costobjekt per fraktion. Katalogen är grunden för RTS-068; gameplay använder tills vidare tidigare stats och fiendeprofil. Team/owner är oberoende av fraktion.
+
+`MatchState.factions` skapas av createMatch, kopieras per match och bevaras av BootScene-adapterns apply/currentMatch samt restart. Fältet är valfritt för befintliga isolerade gameplay-fixtures, med explicita standarder vid lookup/Save; verkliga nya matcher och v2-sparningar har båda teamens ID:n. Save v2/config2 migrerar endast v1/config1 genom att tillföra standardidentitet innan samma fulla atomiska validering. Förändrade, okända eller spooffält avvisas. Slotnyckeln behålls för att hitta tidigare saves; migration skriver inte i storage förrän användaren sparar. Ingen UI/art-/balansändring i denna task.

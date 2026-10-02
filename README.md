@@ -2,7 +2,7 @@
 
 Browserbaserat singleplayer-RTS inspirerat av Warcraft 2, Age of Empires 2 och
 Command & Conquer. Phaser, strict TypeScript och Vite; local-first, gameplay
-före grafik. Implementerat genom RTS-065 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
+före grafik. Implementerat genom RTS-066 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
 
 ## Installation och lokal start
 
@@ -94,7 +94,7 @@ varningen om stor Phaser-bundle kvarstår inom releasebudgeten. Pages-workflow k
 ## Dokumentation
 
 - [AGENTS.md](AGENTS.md): arbetsregler och Definition of Done.
-- [BACKLOG.md](BACKLOG.md): RTS-001–065 klara, RTS-066–090 planerade och Current Focus.
+- [BACKLOG.md](BACKLOG.md): RTS-001–066 klara, RTS-067–090 planerade och Current Focus.
 - [GAME_DESIGN.md](GAME_DESIGN.md): regler och framtida mål.
 - [ARCHITECTURE.md](ARCHITECTURE.md): faktisk struktur.
 - [DECISIONS.md](DECISIONS.md): beslut och öppna frågor.
@@ -102,7 +102,7 @@ varningen om stor Phaser-bundle kvarstår inom releasebudgeten. Pages-workflow k
 - [Implementer](.agents/implementer.md), [Reviewer](.agents/reviewer.md) och
   [Finisher](.agents/finisher.md): rollinstruktioner, inte automatiska agenter.
 
-RTS-061–065 är klara. Nästa planerade task är RTS-066; implementation kräver ett nytt godkännande. Multiplayer, backend,
+RTS-066 är klar. Användaren har godkänt fortsatt arbete med återstående roadmap; nästa task är RTS-067. Multiplayer, backend,
 konton, procedural generation och modding ingår inte. Pages-publicering ingår enligt användarens godkända tillägg.
 
 RTS-031: välj worker innan placering. Barracks reserveras direkt och kräver
@@ -335,7 +335,7 @@ Spara lokalt skriver en manuell slot i denna browsers localStorage. Ladda sparni
 
 Schema 1 / tribute-config-1 innehåller hela modellen, scenario/arena/tid/outcome/pause, resurslaster/saldo, units/orders/IDs/HP, byggtid, FIFO-kostnader/rally/reservationer, research, projektiler, AI-budget/grupper/waves och fog/explored samt kamera/byggnadsselection. Navigation och render/audio/listeners/blocked-spawn-cache lagras inte. Matchens dynamiska footprints valideras mot sparade byggnader/resurser; enheternas clearance, ID-referenser, queue/config och fog-form granskas innan state byts atomiskt. Navigation planeras om från orders, current vision räknas om medan explored bevaras.
 
-Korrupt/okänd äldre/framtida schema eller annan config-version avvisas; ingen migration uppfinns. Aktiv match och tidigare slot förblir oförändrade vid load-/storagefel. Load rensar uncommitted previews och återskapar scenens render/listeners, ger ingen wall-time-bonus och laddar terminala matcher som terminala. save.ts och config/save.ts är Phaser-fria. Fog-factory sparar nu endast deklarerade worlddimensioner, inte oavsiktliga gamla map-obstacles.
+Save v1/config1 migreras atomiskt till v2/config2 med standardfraktionerna crown/clans. Korrupt/okänd äldre/framtida schema eller annan config-version avvisas. Aktiv match och tidigare slot förblir oförändrade vid load-/storagefel. Load rensar uncommitted previews och återskapar scenens render/listeners, ger ingen wall-time-bonus och laddar terminala matcher som terminala. save.ts och config/save.ts är Phaser-fria. Fog-factory sparar nu endast deklarerade worlddimensioner, inte oavsiktliga gamla map-obstacles.
 
 
 ## Release och GitHub Pages – RTS-060
@@ -374,3 +374,9 @@ RTS-062: QA-granskningen gav ingen bekräftad P0/P1-fixlista; gameplay/save-form
 RTS-064 kompletterar mjuk separation med resurskö vid fler än tre workers på samma nod och begränsad insläppning i smala passager. Prioritet följer gameplay-tid; save/load och nya orders fungerar utan nya sparade köfält. Vanlig insamling med upp till tre workers behåller tidigare beteende.
 
 RTS-065: uppmätt optimering av routesökning; se [PERFORMANCE.md](PERFORMANCE.md) för före/efter, 64/128-kroppars budget och reproducerbar browserprofil. RTS-066–090 är fortsatt planerade, utanför den avslutade etappen.
+
+## RTS-066: fraktionsgrund och save v2
+
+Två tekniska fraktions-ID:n (`crown`, `clans`) har egna typ-ID:n för samma delade unit-/building-/upgrade-roller i [factions.ts](src/config/factions.ts). Fraktion lagras separat från player/enemy-owner och bevaras genom Save/Load/restart. Den vanliga matchens stats/ekonomi/grafik är tills vidare oförändrade; valbara namn/assets införs i RTS-067 och fraktionsbalans i RTS-068.
+
+Sparformat v2 stöder migration av tidigare v1-sparningar i samma lokala slot. Load skriver inte över den gamla sloten; nästa manuella Save lagrar v2. Okända fraktioner/versioner eller korrupta data avvisas utan att påverka aktiv match.

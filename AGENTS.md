@@ -44,3 +44,5 @@ det aktuella uppdragets scope och non-goals.
 ## Godkänd leverans i aktuell körning
 
 Användaren har uttryckligen godkänt commit och push till befintlig remote efter varje färdig task. Kontrollera branch/remote/arbetskatalog; bevara andra ändringar. Kör tester, typecheck, build och git diff --check, granska och uppdatera docs/backlog före commit. Pusha utan force, history rewrite eller amend av pushade commits. Rapportera hash/push. Vid kvarstående check- eller pushfel: stanna vid task-gränsen. Pages-publicering är godkänd inom RTS-060 efter releasekontroller; Den tidigare körningen stannade vid RTS-060. Användaren har nu godkänt autonom implementation av RTS-061–065 efter verifierad Pages-publicering, med commit/push efter varje klar task. RTS-066–090 förblir planerade.
+
+Efter avslutad och publicerad RTS-065 har användaren sagt ”fortsätt gärna”. Fortsätt därför med återstående roadmap i ordning, en task åt gången, med samma godkända commit/push/checks. Tidigare stopp vid RTS-065 är upphävt. Detaljera varje aktuell task före implementation. Ta upp öppna fraktions-/förmågebeslut innan beroende kod byggs; fortsätt oberoende arbete under tiden.
