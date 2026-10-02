@@ -4,7 +4,7 @@ import { matchFog } from './matchFog';
 import type { FogState } from './fog';
 import { createEnemyAI,updateEnemyAI,type EnemyAIState } from './enemyAI';
 import { createEnemyProduction,updateEnemyProduction,type EnemyProductionState } from './enemyProduction';
-import { scenarioConfig,enemyBaseConfig,type MatchScenario } from '../config/scenarios';
+import { scenarioConfig,scenarioWaves,enemyBaseConfig,type MatchScenario } from '../config/scenarios';
 import { createResearch,updateResearch,type ResearchState } from './research';
 import { cleanDestroyed } from './destruction';
 import { updateConstruction, barracksReady } from './construction';
@@ -51,9 +51,9 @@ export function createMatch(scenario:MatchScenario='survival',difficulty:Difficu
         selected: false, order: { kind: 'idle' }, cargo: 0,
       })),
       gold: {id:'gold-1',resource:goldConfig.resource,position:{...goldConfig.position},remaining:goldConfig.initialAmount},
-      goldBalance:0,
+      goldBalance:scenarioConfig[scenario].initial.gold,
       node: { resource:'wood', id: 'wood-1', position: { ...gatheringConfig.nodePosition }, remaining: gatheringConfig.initialWood },
-      lostCargo:{wood:0,gold:0},wood: 0, base: { ...gatheringConfig.basePosition },
+      lostCargo:{wood:0,gold:0},wood: scenarioConfig[scenario].initial.wood, base: { ...gatheringConfig.basePosition },
     },
     combat: {baseOwner:'player', baseHP: combatConfig.baseHP, enemies: [] },
     waves: { elapsedSeconds: 0, nextWave: 0, nextEnemyNumber: 1 },
@@ -68,8 +68,10 @@ export function createMatch(scenario:MatchScenario='survival',difficulty:Difficu
 }
 
 function resolveOutcome(state: MatchState): MatchState {
-  const victory=scenarioConfig[state.scenario??'survival'].victory==='enemy-base'? !state.combat.enemies.some(e=>e.kind==='base'&&e.hp>0)
-    :state.waves.nextWave===difficultyProfiles[state.difficulty??'normal'].waves.length&&state.combat.enemies.every(e=>e.kind==='base');
+  const definition=scenarioConfig[state.scenario??'survival'];
+  const victory=definition.victory==='enemy-base'? !state.combat.enemies.some(e=>e.kind==='base'&&e.hp>0)
+    :definition.victory==='timer'?state.waves.elapsedSeconds+1e-10>=definition.holdSeconds!
+    :state.waves.nextWave===scenarioWaves(state.scenario??'survival',state.difficulty??'normal').length&&state.combat.enemies.every(e=>e.kind==='base');
   const outcome:MatchOutcome=state.combat.baseHP<=0?'defeat':victory?'victory':'playing';
   return outcome === 'playing' ? state
     : { ...state, outcome, placement: { ...state.placement, active: false } };
@@ -92,7 +94,7 @@ function advance(state: MatchState, delta: number): MatchState {
   const nextUnitNumber=Math.max(worker.production.nextUnitNumber,soldier.production.nextUnitNumber);
   const enemy=cleaned.enemyProduction?updateEnemyProduction(cleaned.enemyProduction,cleaned.combat,soldier.gathering,cleaned.map,delta):{combat:cleaned.combat,state:undefined};
   const ai=cleaned.enemyAI?updateEnemyAI(cleaned.enemyAI,enemy.combat,cleaned.map,soldier.gathering.base,delta,soldier.gathering.units,difficultyProfiles[cleaned.difficulty??'normal'].ai,vision?((u)=>entityVisible(vision,'enemy',u)):undefined):{combat:enemy.combat,state:undefined};
-  const incoming=scenarioConfig[cleaned.scenario??'survival'].waves?updateWaves(cleaned.waves,ai.combat,delta,difficultyProfiles[cleaned.difficulty??'normal'].waves):{combat:ai.combat,waves:{...cleaned.waves,elapsedSeconds:cleaned.waves.elapsedSeconds+delta}};
+  const incoming=scenarioConfig[cleaned.scenario??'survival'].waves?updateWaves(cleaned.waves,ai.combat,delta,scenarioWaves(cleaned.scenario??'survival',cleaned.difficulty??'normal')):{combat:ai.combat,waves:{...cleaned.waves,elapsedSeconds:cleaned.waves.elapsedSeconds+delta}};
   const updated:MatchState={...cleaned,...(vision?{fog:vision}:{}),research,...(enemy.state?{enemyProduction:enemy.state}:{}),...(ai.state?{enemyAI:ai.state}:{}),gathering:soldier.gathering,combat:incoming.combat,waves:incoming.waves,
     production:{...worker.production,nextUnitNumber},soldierProduction:{...soldier.production,nextUnitNumber}};
   updated.fog=matchFog(updated);return resolveOutcome(updated);
@@ -106,14 +108,16 @@ export function updateMatch(state: MatchState, deltaSeconds: number): MatchState
   if(cleaned.fog&&(deltaSeconds<=0||current.outcome!=='playing'))current={...current,fog:matchFog(cleaned)};
   let remaining = Math.max(0, deltaSeconds);
   while (remaining > 0 && current.outcome === 'playing') {
-    const next = scenarioConfig[current.scenario??'survival'].waves?difficultyProfiles[current.difficulty??'normal'].waves[current.waves.nextWave]:undefined;
+    const next = scenarioConfig[current.scenario??'survival'].waves?scenarioWaves(current.scenario??'survival',current.difficulty??'normal')[current.waves.nextWave]:undefined;
     const untilWave = next ? Math.max(0, next.atSeconds - current.waves.elapsedSeconds) : Infinity;
     if (untilWave === 0) {
-      const incoming = updateWaves(current.waves, current.combat, 0,difficultyProfiles[current.difficulty??'normal'].waves);
+      const incoming = updateWaves(current.waves, current.combat, 0,scenarioWaves(current.scenario??'survival',current.difficulty??'normal'));
       current = { ...current, ...incoming };
       continue;
     }
-    const step = Math.min(remaining, untilWave,current.research?.job?.remainingSeconds??Infinity);
+    const definition=scenarioConfig[current.scenario??'survival'];
+    const untilObjective=definition.victory==='timer'?Math.max(0,definition.holdSeconds!-current.waves.elapsedSeconds):Infinity;
+    const step = Math.min(remaining, untilWave,untilObjective,current.research?.job?.remainingSeconds??Infinity);
     current = advance(current, step);
     remaining = Math.max(0, remaining - step);
   }

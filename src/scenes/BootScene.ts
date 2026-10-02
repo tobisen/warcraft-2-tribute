@@ -20,7 +20,7 @@ import { bindMinimap } from '../presentation/minimapView';
 import { initialDifficulty,type Difficulty } from '../config/difficulty';
 import { type EnemyAIState } from '../gameplay/enemyAI';
 import { type EnemyProductionState } from '../gameplay/enemyProduction';
-import { initialScenario,type MatchScenario } from '../config/scenarios';
+import { initialScenario,scenarioConfig,playableScenarios,type MatchScenario } from '../config/scenarios';
 import { forgeConfig,upgradeConfig } from '../config/upgrades';
 import { createResearch,startResearch,canResearch,type ResearchState,type ResearchKind } from '../gameplay/research';
 import { commandAttackMove } from '../gameplay/attackMove';
@@ -150,8 +150,9 @@ export class BootScene extends Phaser.Scene {
     this.fogOverlay=this.add.graphics().setDepth(40);
     const fixture=document.getElementById('fog-fixture')!;fixture.hidden=!this.fogPreview;fixture.textContent=`FOG FIXTURE (${this.fogPreview}) – modellpreview; informationsfiltrering använder player-team`;
     this.scenarioSelect=document.querySelector<HTMLSelectElement>('#scenario-select')!;
+    this.scenarioSelect.replaceChildren(...playableScenarios.map(id=>{const option=document.createElement('option');option.value=id;option.textContent=scenarioConfig[id].label;return option;}));
     this.scenarioSelect.value=this.scenario==='siege-test'?'survival':this.scenario;
-    const changeScenario=()=>{this.session=changeOptions(this.session,{scenario:this.scenarioSelect.value==='skirmish'?'skirmish':'survival'});this.scenario=this.session.options.scenario;this.syncSession();};
+    const changeScenario=()=>{this.session=changeOptions(this.session,{scenario:initialScenario(this.scenarioSelect.value)});this.scenario=this.session.options.scenario;this.syncSession();};
     this.scenarioSelect.addEventListener('change',changeScenario);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.scenarioSelect.removeEventListener('change',changeScenario));
 
@@ -371,7 +372,8 @@ export class BootScene extends Phaser.Scene {
     (document.getElementById('gameplay-controls') as HTMLFieldSetElement).disabled=!this.gameplayActive();
     document.getElementById('hud')!.hidden=menu;const game=document.getElementById('game')!,wasHidden=game.hidden;game.hidden=menu;
     if(wasHidden&&!menu)this.scale.refresh();
-    document.getElementById('session-status')!.textContent=menu?'Välj scenario och svårighetsgrad, sedan Starta match':phase==='paused'?'Pausad – matchen är fryst':phase==='ended'?'Matchen är avslutad – starta om eller välj ny match':`${this.session.options.scenario==='skirmish'?'Skirmish':'Wave-survival'} · ${this.session.options.difficulty} · handgjord arena`;
+    document.getElementById('mission-instruction')!.textContent=scenarioConfig[this.session.options.scenario].instruction;
+    document.getElementById('session-status')!.textContent=menu?'Välj scenario och svårighetsgrad, sedan Starta match':phase==='paused'?'Pausad – matchen är fryst':phase==='ended'?'Matchen är avslutad – starta om eller välj ny match':`${scenarioConfig[this.session.options.scenario].label} · ${this.session.options.difficulty} · handgjord arena`;
   }
 
   private worldPoint(pointer: Phaser.Input.Pointer): Position {
@@ -568,8 +570,8 @@ export class BootScene extends Phaser.Scene {
     }
     this.restartButton.hidden = this.session.phase!=='paused'&&this.session.phase!=='ended';
     this.restartButton.disabled = this.restartPending;
-    this.matchStatus.textContent = this.outcome === 'defeat' ? 'Defeat – basen är förstörd'
-      : this.outcome === 'victory' ? this.scenario==='skirmish'?'Victory – fiendebasen är förstörd':'Victory – alla vågor besegrade' : this.scenario==='skirmish'?'Förstör fiendebasen och skydda din egen':'Försvara basen';
+    const definition=scenarioConfig[this.scenario];
+    this.matchStatus.textContent=this.outcome==='defeat'?'Defeat – basen är förstörd':this.outcome==='victory'?definition.victory==='enemy-base'?'Victory – fiendebasen är förstörd':definition.victory==='timer'?'Victory – utposten höll i 90 sekunder':'Victory – alla vågor besegrade':definition.instruction;
     this.syncPlacement();
     this.goldVisual.setFrame(resourceFrame('gold',this.gathering.gold!.remaining,isVisible(this.fog,'player',this.gathering.gold!.position)));
     this.nodeVisual.setFrame(resourceFrame('wood',this.gathering.node.remaining,isVisible(this.fog,'player',this.gathering.node.position)));

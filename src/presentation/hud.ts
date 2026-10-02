@@ -7,7 +7,7 @@ import { canAfford, missingCost } from '../gameplay/economy';
 import type { RouteError } from '../gameplay/navigation';
 import { combatConfig } from '../config/combat';
 import { gatheringConfig } from '../config/gathering';
-import { difficultyProfiles } from '../config/difficulty';
+import {scenarioConfig,scenarioWaves} from '../config/scenarios';
 import type { GatheringState } from '../gameplay/gathering';
 import type { MatchOutcome, MatchState } from '../gameplay/match';
 import { canStartProduction, type ProductionBuilding, type ProductionState } from '../gameplay/production';
@@ -33,14 +33,15 @@ export function productionLabel(gathering: GatheringState, production: Productio
 
 export function matchLabels(state: MatchState) {
   const population=populationState(state.gathering,state.placement,[state.production,state.soldierProduction]);
-  const waveSchedule=difficultyProfiles[state.difficulty??'normal'].waves;
+  const waveSchedule=scenarioWaves(state.scenario??'survival',state.difficulty??'normal');
+  const definition=scenarioConfig[state.scenario??'survival'];
   const next = waveSchedule[state.waves.nextWave];
   const remaining=(node:{position:{x:number;y:number};remaining:number}|undefined)=>!node?'0.0':!state.fog||isVisible(state.fog,'player',node.position)?node.remaining.toFixed(1):'?';
   return {
     population:`Population: ${population.used} + ${population.reserved} reserverade / ${population.cap}`,
     economy: `Wood: ${state.gathering.wood.toFixed(1)} · nod: ${remaining(state.gathering.node)} · Gold: ${(state.gathering.goldBalance ?? 0).toFixed(1)} · gruva: ${remaining(state.gathering.gold)}`,
     health: `Bas: ${Math.ceil(state.combat.baseHP)} / ${combatConfig.baseHP} HP`,
-    wave: state.scenario==='skirmish'?'Skirmish – förstör fiendebasen':`Våg ${state.waves.nextWave} / ${waveSchedule.length} · ` + (next
+    wave: definition.victory==='enemy-base'?`${definition.label} – förstör fiendebasen`:definition.victory==='timer'?`Utposten: ${Math.max(0,definition.holdSeconds!-state.waves.elapsedSeconds).toFixed(1)} s kvar`: `Våg ${state.waves.nextWave} / ${waveSchedule.length} · ` + (next
       ? `nästa om ${Math.max(0, next.atSeconds - state.waves.elapsedSeconds).toFixed(1)} s`
       : 'alla vågor har anlänt'),
     selected: state.gathering.units.filter(u => u.selected).map(u => u.kind === 'worker'
