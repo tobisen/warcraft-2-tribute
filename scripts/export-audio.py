@@ -1,0 +1,37 @@
+"""Original composed fantasy miniature and synthesized effects, deterministic PCM masters.
+Optional export tooling only: python3 + soundfile (libsndfile/Vorbis), no runtime dependency.
+"""
+from pathlib import Path
+import math, random, wave, struct, json, sys
+try:
+ import soundfile as sf
+except ImportError:
+ raise SystemExit('Audio export requires optional Python soundfile; install into a temporary environment (see assets/README.md).')
+root=Path(__file__).resolve().parent.parent
+master=root/'assets/audio';out=root/'public/audio';master.mkdir(exist_ok=True);out.mkdir(exist_ok=True)
+rate=24000
+noise=random.Random(2056)
+def hz(note):return 440*2**((note-69)/12)
+def music(t):
+ beat=2/3;notes=[62,65,69,67,65,62,60,62,69,72,74,72,69,67,65,62,60,64,67,69,65,64,62,57]
+ n=int(t/beat)%24;phase=(t%beat)/beat;f=hz(notes[n]);mel=(math.sin(2*math.pi*f*t)+.22*math.sin(4*math.pi*f*t))*.13*math.sin(math.pi*phase)**.65
+ chord=[50,46,53,48,55,50][n//4];pad=sum(math.sin(2*math.pi*hz(chord+x)*t) for x in [0,7,12])*.035
+ drum=math.sin(2*math.pi*(65-30*phase)*t)*math.exp(-phase*24)*.055
+ return (mel+pad+drum)*min(1,t/.1,(16-t)/.1)
+def sample(kind,t,duration):
+ env=math.sin(math.pi*t/duration)*math.exp(-t*4)
+ if kind=='command':return math.sin(2*math.pi*(480+900*t)*t)*env*.16
+ if kind=='impact':return (noise.uniform(-1,1)*.3+math.sin(2*math.pi*170*t)*.2)*env
+ if kind=='complete':return sum(math.sin(2*math.pi*hz(n)*t) for n in [74,77,81])*.09*env
+ if kind=='victory':return sum(math.sin(2*math.pi*hz(n)*t) for n in [62,66,69,74])*.075*env
+ return sum(math.sin(2*math.pi*hz(n)*t) for n in [38,41,44])*.085*env
+entries={}
+for kind,duration in [('music',16),('command',.14),('impact',.18),('complete',.5),('victory',1),('defeat',1)]:
+ samples=[max(-.85,min(.85,music(n/rate) if kind=='music' else sample(kind,n/rate,duration))) for n in range(round(duration*rate))]
+ data=b''.join(struct.pack('<h',round(v*32767)) for v in samples)
+ for path in [master/f'{kind}.wav',out/f'{kind}.wav']:
+  with wave.open(str(path),'wb') as f:f.setnchannels(1);f.setsampwidth(2);f.setframerate(rate);f.writeframes(data)
+ sf.write(str(out/f'{kind}.ogg'),samples,rate,format='OGG',subtype='VORBIS')
+ entries[kind]={'ogg':f'audio/{kind}.ogg','fallback':f'audio/{kind}.wav','master':f'assets/audio/{kind}.wav','duration':duration,'loop':kind=='music','volume':1}
+(out/'manifest.json').write_text(json.dumps({'version':1,'origin':'Original deterministic composition/synthesis in scripts/export-audio.py; no external recordings','sampleRate':rate,'entries':entries},indent=2)+'\n')
+print('Exported six original PCM WAV masters + Vorbis OGG/WAV runtime alternatives.')

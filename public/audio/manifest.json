@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "origin": "Original deterministic composition/synthesis in scripts/export-audio.py; no external recordings",
+  "sampleRate": 24000,
+  "entries": {
+    "music": {
+      "ogg": "audio/music.ogg",
+      "fallback": "audio/music.wav",
+      "master": "assets/audio/music.wav",
+      "duration": 16,
+      "loop": true,
+      "volume": 1
+    },
+    "command": {
+      "ogg": "audio/command.ogg",
+      "fallback": "audio/command.wav",
+      "master": "assets/audio/command.wav",
+      "duration": 0.14,
+      "loop": false,
+      "volume": 1
+    },
+    "impact": {
+      "ogg": "audio/impact.ogg",
+      "fallback": "audio/impact.wav",
+      "master": "assets/audio/impact.wav",
+      "duration": 0.18,
+      "loop": false,
+      "volume": 1
+    },
+    "complete": {
+      "ogg": "audio/complete.ogg",
+      "fallback": "audio/complete.wav",
+      "master": "assets/audio/complete.wav",
+      "duration": 0.5,
+      "loop": false,
+      "volume": 1
+    },
+    "victory": {
+      "ogg": "audio/victory.ogg",
+      "fallback": "audio/victory.wav",
+      "master": "assets/audio/victory.wav",
+      "duration": 1,
+      "loop": false,
+      "volume": 1
+    },
+    "defeat": {
+      "ogg": "audio/defeat.ogg",
+      "fallback": "audio/defeat.wav",
+      "master": "assets/audio/defeat.wav",
+      "duration": 1,
+      "loop": false,
+      "volume": 1
+    }
+  }
+}

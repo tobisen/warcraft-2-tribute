@@ -16,6 +16,14 @@
       <button id="resume-match" type="button" hidden>Återuppta [P]</button>
       <button id="new-match" type="button" hidden>Ny match / meny</button>
       <button id="restart-match" type="button" hidden>Starta om</button>
+      <details id="audio-controls"><summary>Ljud</summary>
+        <button id="audio-enable" type="button">Aktivera ljud</button>
+        <label><input id="audio-mute" type="checkbox"> Tyst</label>
+        <label>Master <input id="audio-master" type="range" min="0" max="1" step="0.05"></label>
+        <label>Effekter <input id="audio-effects" type="range" min="0" max="1" step="0.05"></label>
+        <label>Musik <input id="audio-music" type="range" min="0" max="1" step="0.05"></label>
+        <span id="audio-status" role="status">Ljud startar efter första klick eller tangenttryck</span>
+      </details>
       <p id="session-status" role="status"></p>
     </section>
     <section id="hud" aria-label="Matchstatus och kommandon">

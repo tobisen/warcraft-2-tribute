@@ -1,3 +1,5 @@
+import {gameAudio} from '../presentation/audio';
+import {audioEvents,type AudioSnapshot} from '../presentation/audioPolicy';
 import {archerConfig} from '../config/archer';
 import {catapultConfig} from '../config/catapult';
 import {canInteract} from '../gameplay/approach';
@@ -114,6 +116,7 @@ export class BootScene extends Phaser.Scene {
   private nodeVisual!: Phaser.GameObjects.Image;
 
   private visuals = new Map<string, { body: Phaser.GameObjects.Image; ring: Phaser.GameObjects.Arc; cargo: Phaser.GameObjects.Text }>();
+  private audioSnapshot?:AudioSnapshot;
   private visualTime=0;
   private motions=new Map<string,Motion>();
   private deaths=new Map<string,{effect:DeathEffect;visual:Phaser.GameObjects.Image}>();
@@ -127,6 +130,7 @@ export class BootScene extends Phaser.Scene {
   preload():void {for(const key of ['world','buildings','units'])if(!this.textures.exists(key))this.load.atlas(key,`/assets/${key}-atlas.png`,`/assets/${key}-atlas.json`);}
 
   create(): void {
+    this.audioSnapshot=undefined;gameAudio.setPhase('menu');gameAudio.reset();
     this.visualTime=0;this.motions.clear();this.deaths.clear();
     this.applyMatch(createMatch(this.scenario,this.difficulty));
     this.game.canvas.tabIndex=0;this.game.canvas.setAttribute('aria-label','Spelvärld');
@@ -345,13 +349,15 @@ export class BootScene extends Phaser.Scene {
   private gameplayActive():boolean{return this.session.phase==='playing'&&this.outcome==='playing'&&!this.restartPending;}
   private sessionAction(action:SessionAction):void {
     const next=sessionTransition(this.session,action);if(next===this.session||this.restartPending)return;
-    this.session=next;
+    this.session=next;gameAudio.setPhase(next.phase);
     if(action==='start'||action==='restart'){this.scenario=next.options.scenario;this.difficulty=next.options.difficulty;this.skipGameplayFrame=true;this.restartPending=true;this.restartButton.disabled=true;this.scene.restart();return;}
     if(action==='resume')this.skipGameplayFrame=true;
     if(action==='pause'||action==='new-match'){this.placement=cancelPlacement(this.placement);this.attackMoveMode=false;this.drag=undefined;this.cameraDrag=undefined;this.dragBox.setVisible(false);}
     this.syncVisuals();
   }
   private syncSession():void {
+    gameAudio.setPhase(this.session.phase);
+    if(gameAudio.status.loaded)document.getElementById('audio-status')!.textContent=`${gameAudio.status.loaded}/6 ljud laddade · ${gameAudio.settings.muted?'tyst':this.session.phase==='paused'?'pausat':'redo'}`;
     const phase=this.session.phase,menu=phase==='menu';
     this.scenarioSelect.disabled=!menu;this.scenarioSelect.value=this.session.options.scenario==='siege-test'?'survival':this.session.options.scenario;
     const difficulty=document.querySelector<HTMLSelectElement>('#difficulty-select')!;difficulty.disabled=!menu;difficulty.value=this.session.options.difficulty;
@@ -408,6 +414,7 @@ export class BootScene extends Phaser.Scene {
     if (pointer.button === 0) {
       this.drag = { world, screen: this.screenPoint(pointer), active: false,shift:'shiftKey' in pointer.event&&pointer.event.shiftKey };
     } else if (pointer.button === 2) {
+      if(this.selectedBuilding||this.gathering.units.some(u=>u.selected))gameAudio.play('command');
       if (this.selectedBuilding) {
         if (this.selectedBuilding === 'base') this.production = setRally(this.production, world, this.map,
           baseFootprint(this.gathering.base), 'base');
@@ -643,6 +650,7 @@ export class BootScene extends Phaser.Scene {
     if(this.fogOverlay)drawFog(this.fogOverlay,this.fog,this.fogPreview??'player');
     for(const shortcut of hotkeys){const button=document.getElementById(shortcut.button)!;button.textContent=`${button.textContent?.replace(/\s+\[[A-Z]\]$/,'')} [${shortcut.key}]`;button.title=shortcut.label;}
     document.getElementById('group-status')!.textContent=Object.entries(this.controlGroups).map(([slot,ids])=>`${slot}: ${ids.length}`).join(' · ')||'Grupper: Ctrl+1–9 bind, 1–9 återkalla';
+    this.syncAudio(visibleEnemies);
     this.minimap?.render();
     this.syncSession();
     // DOM controls can move the canvas (restart visibility, wrapping, scrolling).
@@ -661,6 +669,13 @@ export class BootScene extends Phaser.Scene {
     this.applyMatch(match);
     if(this.outcome!=='playing')this.session=sessionTransition(this.session,'end');
     this.syncVisuals();
+  }
+
+  private syncAudio(visibleEnemies:typeof this.combat.enemies):void {
+    const next:AudioSnapshot={baseHP:this.combat.baseHP,own:Object.fromEntries(this.gathering.units.map(u=>[u.id,u.hp??combatConfig.workerHP])),visibleEnemies:Object.fromEntries(visibleEnemies.map(e=>[e.id,e.hp])),completed:[...(barracksReady(this.placement)?['barracks']:[]),...(this.placement.farms??[]).filter(f=>f.construction.remainingSeconds===0).map(f=>f.id),...(this.placement.forge?.construction.remainingSeconds===0?['forge']:[])],outcome:this.outcome};
+    const wasPlaying=this.session.phase==='playing'||this.audioSnapshot?.outcome==='playing'&&this.outcome!=='playing';
+    for(const event of audioEvents(this.audioSnapshot,next,!!wasPlaying)){if(event==='victory'||event==='defeat'){gameAudio.setPhase('ended');gameAudio.play(event,true);}else gameAudio.play(event);}
+    this.audioSnapshot=next;
   }
 
   private animateUnit(id:string,body:Phaser.GameObjects.Image,position:Position,action:Action,type:UnitArt,owner:'player'|'enemy',aim?:Position):void {
