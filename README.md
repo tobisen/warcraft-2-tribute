@@ -300,3 +300,5 @@ depleted-frames. Nearest-neighbor i native world-skala; gameplay/footprints
 manifest är incheckningsbara filer och behövs inte genereras vid varje dev-
 start. [Källor, palett, ankare och provenance](assets/README.md) finns lokalt.
 Assetkonformitet körs med vanliga `npm test`; inga nya dependencies.
+
+RTS-053-tillägg: native gräs med enhetlig grundton, pixelstrand/bergskanter endast vid exponerade patchkanter och egna skogs-/gruvresurser. Övergångar ändrar inte navigation eller footprints. Exporten omfattar 16 world-frames.

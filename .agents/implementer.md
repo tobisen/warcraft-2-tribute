@@ -17,3 +17,5 @@ Lämna en tydlig överlämning: ändrade filer, uppfyllda acceptance criteria,
 körda checks med resultat och kvarstående frågor. Följ Definition of Done i
 AGENTS.md; backlog och dev log ska vara uppdaterade före eventuell commit.
 Rollen innebär inte automatiskt konfigurerad agent eller rätt att commit/pusha.
+
+Aktuell körning: användaren har godkänt commit/push efter färdig task enligt AGENTS.md. Reviewer granskar fortfarande utan att ändra filer eller göra commit. Implementer/Finisher följer task → checks → granskning → docs/backlog → commit → push; rapportera hash och faktiskt pushresultat. Ingen force-push eller history rewrite. Pages först inom verifierad RTS-060; senare roadmap planeras utan implementation.

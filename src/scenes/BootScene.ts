@@ -1,4 +1,4 @@
-import { terrainFrame,resourceFrame,resourceOrigin } from '../presentation/assets';
+import { terrainFrame,terrainEdges,resourceFrame,resourceOrigin } from '../presentation/assets';
 import { createSession,sessionTransition,changeOptions,gameplayDelta,type MatchSession,type SessionAction } from '../gameplay/session';
 import { hotkeys,hotkeyButton,dispatchHotkey,commandGuide } from '../presentation/hotkeys';
 import { bindGroup,recallGroup,combineSelection,validGroup,type ControlGroups } from '../gameplay/controlGroups';
@@ -197,6 +197,7 @@ export class BootScene extends Phaser.Scene {
       for (let column = 0; column < Math.ceil(this.map.width / this.map.tileSize); column++) {
         const rect = tileFootprint(this.map, { column, row })!;
         this.add.image(rect.x,rect.y,'world',terrainFrame(column,row)).setOrigin(0).setDepth(-10);
+        for(const edge of terrainEdges(column,row))this.add.image(rect.x,rect.y,'world',edge).setOrigin(0).setDepth(-9);
       }
     }
     this.baseVisual=this.add.rectangle(this.gathering.base.x, this.gathering.base.y,

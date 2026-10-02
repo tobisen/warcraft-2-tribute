@@ -13,7 +13,7 @@ eller be om förtydligande. Hitta inte på framtida tasks eller tidigare beslut.
 Projektet använder Phaser, strict TypeScript och Vite. Prioritera fungerande
 gameplay och local-first. Håll scenes tunna och separera gameplay-logik från
 Phaser där det är praktiskt. Lägg stats i enkla TypeScript-configobjekt.
-Placeholders är tillåtna. Se [ARCHITECTURE.md](ARCHITECTURE.md) och
+Placeholders är tillåtna före asset-etappen; RTS-053–057 kräver sammanhängande pixelgrafik, animationer och ljud enligt backlog och användarens tillägg. Se [ARCHITECTURE.md](ARCHITECTURE.md) och
 [DECISIONS.md](DECISIONS.md).
 
 ## Roller
@@ -40,3 +40,7 @@ innebär inte att agenter ska startas eller att arbete ska delegeras automatiskt
 
 Gör commit eller push endast när det ingår i användarens uppdrag. Respektera
 det aktuella uppdragets scope och non-goals.
+
+## Godkänd leverans i aktuell körning
+
+Användaren har uttryckligen godkänt commit och push till befintlig remote efter varje färdig task. Kontrollera branch/remote/arbetskatalog; bevara andra ändringar. Kör tester, typecheck, build och git diff --check, granska och uppdatera docs/backlog före commit. Pusha utan force, history rewrite eller amend av pushade commits. Rapportera hash/push. Vid kvarstående check- eller pushfel: stanna vid task-gränsen. Pages-publicering är godkänd inom RTS-060 efter releasekontroller; RTS-061–090 ska endast planeras i denna körning.

@@ -622,3 +622,7 @@ visuellt. Resource-anchor (32,40) för befintlig center/radius20-footprint40.
 Originalsprite/palett/export/provenance dokumenteras i [assets/README.md](assets/README.md).
 World logic, resource amount/cost och fog-policy behålls. Artifact-validation
 är .mjs Node-test i tests/, så browser-tsconfig slipper Node-typdependencies.
+
+RTS-053-tillägg: native gräs med enhetlig grundton, pixelstrand/bergskanter endast vid exponerade patchkanter och egna skogs-/gruvresurser. Övergångar ändrar inte navigation eller footprints. Exporten omfattar 16 world-frames.
+
+Användaren har godkänt taskvisa commits/push och GitHub Pages inom verifierad RTS-060. RTS-061–090 är framtida roadmap, endast planering i denna körning. Öppna beslut: fraktionernas namn/identitet, specialförmågor och balans.

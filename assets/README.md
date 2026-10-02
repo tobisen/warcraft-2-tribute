@@ -27,3 +27,5 @@ Positioner/ranges/timers förblir world-floats; resurser börjar fortsatt på
 områden och visar resource-depletion bara med current vision; utanför vision
 används en statisk known-resource-symbol utan dold depletion-information.
 Minimapens markörer och footprintdata behåller befintlig modell.
+
+RTS-053-tillägg: native gräs med enhetlig grundton, pixelstrand/bergskanter endast vid exponerade patchkanter och egna skogs-/gruvresurser. Övergångar ändrar inte navigation eller footprints. Exporten omfattar 16 world-frames.

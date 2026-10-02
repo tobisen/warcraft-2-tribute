@@ -798,3 +798,5 @@ footprint 40 × 40 kring world-node-center. Decorations utanför footprint
 inte dold qty-state. [assets.test.mjs](tests/assets.test.mjs) validerar exporter
 med Node fs/zlib utanför src:s strikta browser-TypeScript; inga Node-typdeps
 införs. Produkt och gameplay-tester behåller strict TypeScript.
+
+RTS-053-tillägg: native gräs med enhetlig grundton, pixelstrand/bergskanter endast vid exponerade patchkanter och egna skogs-/gruvresurser. Övergångar ändrar inte navigation eller footprints. Exporten omfattar 16 world-frames.

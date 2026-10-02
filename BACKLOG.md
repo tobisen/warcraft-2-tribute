@@ -2018,7 +2018,7 @@ Inga blockerande regressioner hittades; protokoll i [DEV_LOG.md](DEV_LOG.md).
 
 **Requirements:** Definiera browser-/viewport-/enhetsbudget och stödd releaseprofil innan mätning. Speltesta survival/skirmish/tre uppdrag, alla difficulty-profiler och save/load; dokumentera balans och uppmätta CPU/frame/minne/bundle. Bedöm kvarstående bundle-varning mot budget, inte automatisk omskrivning. Verifiera clean-install/build lokalt och kända begränsningar.
 
-**Non-goals:** Deployment, multiplayer, nya features och spekulativ stor refaktorering.
+**Non-goals:** Multiplayer, nya gameplayfeatures och spekulativ stor refaktorering. GitHub Pages-publicering ingår enligt användarens tillägg.
 
 **Acceptance criteria:** Alla checks/full playthroughs och save/reset-regressioner redovisas med miljö/resultat. Uppmätta budgets uppfylls eller tasken lämnas öppen med konkreta hinder; inga okända blockerande fel. Assets/ljud/formats fungerar från lokal production-build, docs och release-checklista är aktuella.
 
@@ -2030,4 +2030,350 @@ Inga blockerande regressioner hittades; protokoll i [DEV_LOG.md](DEV_LOG.md).
 
 **Primary Chat:** RTS-060 – Slutbalans, prestanda, regressioner och releaseverifiering (planerad implementationschatt).
 
+**Pages:** Först efter godkända releasekontroller: Actions på push main/workflow_dispatch, npm ci/test/typecheck/build, officiella Pages-actions, minimala permissions/concurrency, Vite base /warcraft-2-tribute/ och basrelativa assets. Verifiera lokal produktion under subpath samt Actions/publicerad sida när åtkomst finns; rapportera annars ej kontrollerat. Localhost-saves flyttas inte mellan origins.
+
 **Subtasks under samma ID:** 60a Mät-/releasekriterier. 60b Slutspeltest/balans. 60c Konkreta regressioner/prestandafynd. 60d Lokal releaseverifiering/dokumentation.
+
+## Etapp 7–11 – Planerad fortsättning (ingen implementation i denna körning)
+
+Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya system måste inkludera restart, save/load och teamvisibilitet där relevant. Befintliga system återanvänds.
+
+## RTS-061 – Speltest och kvalitetsgranskning av första versionen
+
+**Status:** Todo.
+
+**Goal:** Dokumentera reproducerbara fynd från publicerad och lokal release.
+
+**Requirements:** Spela ekonomi, basbygge, strid, missions, save/load och båda modes. Bedöm läsbarhet, tillgänglighet och verkliga större arméer. Ingen featureimplementation.
+
+**Non-goals:** Features utanför målet, deploymentändring och fraktions-/sjöimplementation.
+
+**Dependencies:** RTS-060.
+
+**Acceptance criteria:** Prioriterad fyndlista med reproduktionssteg, miljö, förväntat/faktiskt beteende och severity; inga obekräftade buggar rapporteras som fakta.
+
+**Tester:** Browsermatris och befintlig regression; dokumentationsgranskning.
+
+**Docs:** [BACKLOG.md](BACKLOG.md), [DEV_LOG.md](DEV_LOG.md), [ARCHITECTURE.md](ARCHITECTURE.md), [GAME_DESIGN.md](GAME_DESIGN.md), [DECISIONS.md](DECISIONS.md), [README.md](README.md).
+
+## RTS-062 – Prioriterade buggar och regressioner från granskningen
+
+**Status:** Todo.
+
+**Goal:** Rätta bekräftade blockerande/högt prioriterade fynd.
+
+**Requirements:** Välj begränsad fyndlista från RTS-061, ett reproduktionsfall och regression per beteendefel; bevara save-kompatibilitet eller dokumentera version.
+
+**Non-goals:** Features utanför målet, deploymentändring och fraktions-/sjöimplementation.
+
+**Dependencies:** RTS-061.
+
+**Acceptance criteria:** Valda fynd är åtgärdade och verifierade; övriga fynd står kvar med prioritet.
+
+**Tester:** Regression för varje fix, alla suites/typecheck/build och browser-repro.
+
+**Docs:** [BACKLOG.md](BACKLOG.md), [DEV_LOG.md](DEV_LOG.md), [ARCHITECTURE.md](ARCHITECTURE.md), [GAME_DESIGN.md](GAME_DESIGN.md), [DECISIONS.md](DECISIONS.md), [README.md](README.md).
+
+## RTS-063 – Förbättrad unit-separation och trängselhantering
+
+**Status:** Todo.
+
+**Goal:** Minska överlappning utan att blockera orders.
+
+**Requirements:** Besluta lokal separation med kroppsstorlek, determinism och begränsad beräkningskostnad; bevara pathfinding/orders/fog.
+
+**Non-goals:** Features utanför målet, deploymentändring och fraktions-/sjöimplementation.
+
+**Dependencies:** RTS-062.
+
+**Acceptance criteria:** Större blandade grupper separeras; inga NaN, teleporteringar eller permanent stopp i öppet fält; restart/save/load korrekt.
+
+**Tester:** Öppet fält, olika kroppsstorlekar, trängsel, tidssteg, save/reset och browser.
+
+**Docs:** [BACKLOG.md](BACKLOG.md), [DEV_LOG.md](DEV_LOG.md), [ARCHITECTURE.md](ARCHITECTURE.md), [GAME_DESIGN.md](GAME_DESIGN.md), [DECISIONS.md](DECISIONS.md), [README.md](README.md).
+
+## RTS-064 – Köbildning vid resurser och smala passager
+
+**Status:** Todo.
+
+**Goal:** Låta arbetare och arméer ta sig fram i trängsel.
+
+**Requirements:** Avgränsa köpolicy vid noder och passager; rättvis framdrift, avbrytning och döda refs. Ingen ny resursekonomi.
+
+**Non-goals:** Features utanför målet, deploymentändring och fraktions-/sjöimplementation.
+
+**Dependencies:** RTS-063.
+
+**Acceptance criteria:** Begränsad genomströmning utan deadlock; resurser och last bevaras; nya orders bryter kön och saves återställs.
+
+**Tester:** Kö/avbrytning/death, wood-konservation, smal passage och långt browserfall.
+
+**Docs:** [BACKLOG.md](BACKLOG.md), [DEV_LOG.md](DEV_LOG.md), [ARCHITECTURE.md](ARCHITECTURE.md), [GAME_DESIGN.md](GAME_DESIGN.md), [DECISIONS.md](DECISIONS.md), [README.md](README.md).
+
+## RTS-065 – Uppmätt prestandapass med större arméer
+
+**Status:** Todo.
+
+**Goal:** Verifiera beräkningsbudget för större matcher.
+
+**Requirements:** Definiera och mät konkreta unit-tal på dokumenterad enhet; profile gameplay/render/minne före optimering. Ingen spekulativ refaktor.
+
+**Non-goals:** Features utanför målet, deploymentändring och fraktions-/sjöimplementation.
+
+**Dependencies:** RTS-064.
+
+**Acceptance criteria:** Före/efter-resultat med FPS/frame CPU/minne; budget klar eller konkreta hinder redovisas; gameplay/save/fog lika.
+
+**Tester:** Belastning, långt spel/reset/heap, alla regressioner och production browser.
+
+**Docs:** [BACKLOG.md](BACKLOG.md), [DEV_LOG.md](DEV_LOG.md), [ARCHITECTURE.md](ARCHITECTURE.md), [GAME_DESIGN.md](GAME_DESIGN.md), [DECISIONS.md](DECISIONS.md), [README.md](README.md).
+
+## RTS-066 – Fraktionsdata för units, buildings och upgrades
+
+**Status:** Todo.
+
+**Goal:** Fraktionsdata för units, buildings och upgrades.
+
+**Dependencies:** RTS-065.
+
+**Acceptance criteria:** Data skiljer fraktionernas typer utan duplicerade system; befintliga saves migreras eller avvisas tydligt.
+
+## RTS-067 – Andra spelbara fraktionen med egna namn och assets
+
+**Status:** Todo.
+
+**Goal:** Andra spelbara fraktionen med egna namn och assets.
+
+**Dependencies:** RTS-066.
+
+**Acceptance criteria:** Två valbara fraktioner har egna läsbara licensierade assets och komplett start/reset.
+
+## RTS-068 – Fraktionsspecifika stats, kostnader och produktionsregler
+
+**Status:** Todo.
+
+**Goal:** Fraktionsspecifika stats, kostnader och produktionsregler.
+
+**Dependencies:** RTS-067.
+
+**Acceptance criteria:** Varje fraktion använder config för ekonomi/produktion; kostnad och tid testas.
+
+## RTS-069 – En särskild enhet eller förmåga per fraktion
+
+**Status:** Todo.
+
+**Goal:** En särskild enhet eller förmåga per fraktion.
+
+**Dependencies:** RTS-068.
+
+**Acceptance criteria:** Förmågebeslut dokumenteras före kod; två verifierade förmågor följer fog och save/reset.
+
+## RTS-070 – Fraktionsval och balans
+
+**Status:** Todo.
+
+**Goal:** Fraktionsval och balans.
+
+**Dependencies:** RTS-069.
+
+**Acceptance criteria:** Båda fraktioner kan vinna och förlora med dokumenterade speltest; val isoleras mellan matcher.
+
+## RTS-071 – Fiendearbetare samlar guld och trä
+
+**Status:** Todo.
+
+**Goal:** Fiendearbetare samlar guld och trä.
+
+**Dependencies:** RTS-070.
+
+**Acceptance criteria:** Fienden använder verkliga noder/last/leverans utan dold gratis ekonomi.
+
+## RTS-072 – AI bygger farms och produktionsbyggnader
+
+**Status:** Todo.
+
+**Goal:** AI bygger farms och produktionsbyggnader.
+
+**Dependencies:** RTS-071.
+
+**Acceptance criteria:** Giltig placement, kostnad, byggtid och supply används; blockerade byggen återhämtas.
+
+## RTS-073 – AI prioriterar ekonomi, armé och uppgraderingar
+
+**Status:** Todo.
+
+**Goal:** AI prioriterar ekonomi, armé och uppgraderingar.
+
+**Dependencies:** RTS-072.
+
+**Acceptance criteria:** Dokumenterad begränsad policy hanterar budget och samtidiga behov utan oändliga loops.
+
+## RTS-074 – AI expanderar och återhämtar sig efter förluster
+
+**Status:** Todo.
+
+**Goal:** AI expanderar och återhämtar sig efter förluster.
+
+**Dependencies:** RTS-073.
+
+**Acceptance criteria:** Förluster och expansion ger verifierbar återhämtning med verkliga resurser.
+
+## RTS-075 – AI utforskar och använder begränsad information
+
+**Status:** Todo.
+
+**Goal:** AI utforskar och använder begränsad information.
+
+**Dependencies:** RTS-074.
+
+**Acceptance criteria:** AI-order utgår från teamets syn/upptäckt; dolda tillstånd ändrar inte beslut.
+
+## RTS-076 – Tre skirmish-kartor med olika terräng och resurser
+
+**Status:** Todo.
+
+**Goal:** Tre skirmish-kartor med olika terräng och resurser.
+
+**Dependencies:** RTS-075.
+
+**Acceptance criteria:** Tre handgjorda spelbara kartor har giltiga spawns/paths och båda fraktioner.
+
+## RTS-077 – Matchinställningar för karta, fraktion och svårighet
+
+**Status:** Todo.
+
+**Goal:** Matchinställningar för karta, fraktion och svårighet.
+
+**Dependencies:** RTS-076.
+
+**Acceptance criteria:** Alla kombinationer skapar isolerat korrekt startstate och restart/save/load.
+
+## RTS-078 – Matchresultat med ekonomi- och stridsstatistik
+
+**Status:** Todo.
+
+**Goal:** Matchresultat med ekonomi- och stridsstatistik.
+
+**Dependencies:** RTS-077.
+
+**Acceptance criteria:** Resultat summerar faktiska events utan dubbelräkning och respekterar fog under spel.
+
+## RTS-079 – Balans för längre skirmish-matcher
+
+**Status:** Todo.
+
+**Goal:** Balans för längre skirmish-matcher.
+
+**Dependencies:** RTS-078.
+
+**Acceptance criteria:** Dokumenterade längre matcher och budget begränsar gratis ekonomifördelar.
+
+## RTS-080 – Verifierad release av tvåfraktionsversionen
+
+**Status:** Todo.
+
+**Goal:** Verifierad release av tvåfraktionsversionen.
+
+**Dependencies:** RTS-079.
+
+**Acceptance criteria:** Komplett testmatris, assets/licenser/save-kompatibilitet och publicerad version verifieras.
+
+## RTS-081 – Vattennavigation och kustregler
+
+**Status:** Todo.
+
+**Goal:** Vattennavigation och kustregler.
+
+**Dependencies:** RTS-080.
+
+**Acceptance criteria:** Land/sjö/kust regleras explicit och testas för kroppsstorlek, orders och save/reset.
+
+## RTS-082 – Hamnplacering och fartygsproduktion
+
+**Status:** Todo.
+
+**Goal:** Hamnplacering och fartygsproduktion.
+
+**Dependencies:** RTS-081.
+
+**Acceptance criteria:** Giltig kustfootprint och utgång, kostnad/kö/supply fungerar i båda fraktioner.
+
+## RTS-083 – Stridsfartyg med distansattack
+
+**Status:** Todo.
+
+**Goal:** Stridsfartyg med distansattack.
+
+**Dependencies:** RTS-082.
+
+**Acceptance criteria:** Fartygsattack följer räckvidd/projectiles/HP/fog och går att besegra.
+
+## RTS-084 – Transportfartyg med lastning och landsättning
+
+**Status:** Todo.
+
+**Goal:** Transportfartyg med lastning och landsättning.
+
+**Dependencies:** RTS-083.
+
+**Acceptance criteria:** Lastkapacitet, giltig landsättning, death och save/load bevarar enheters identitet.
+
+## RTS-085 – Ökarta med land- och sjöstrid
+
+**Status:** Todo.
+
+**Goal:** Ökarta med land- och sjöstrid.
+
+**Dependencies:** RTS-084.
+
+**Acceptance criteria:** Handgjord ökarta kan slutföras med transport och strid utan fastlåst progression.
+
+## RTS-086 – Sjö-AI och landstigningsanfall
+
+**Status:** Todo.
+
+**Goal:** Sjö-AI och landstigningsanfall.
+
+**Dependencies:** RTS-085.
+
+**Acceptance criteria:** AI kan producera och transportera med verklig ekonomi och begränsad syn.
+
+## RTS-087 – Balans mellan landarmé, flotta och transporter
+
+**Status:** Todo.
+
+**Goal:** Balans mellan landarmé, flotta och transporter.
+
+**Dependencies:** RTS-086.
+
+**Acceptance criteria:** Speltest dokumenterar fungerande motmedel och resurs-/supplykostnad.
+
+## RTS-088 – Sjöuppdrag och save/load-/fog-of-war-regressioner
+
+**Status:** Todo.
+
+**Goal:** Sjöuppdrag och save/load-/fog-of-war-regressioner.
+
+**Dependencies:** RTS-087.
+
+**Acceptance criteria:** Sjömål vinner/förlorar korrekt; mitttransport-/projektilsaves återställs utan informationsläcka.
+
+## RTS-089 – Presentation och ljud för fartyg och kust
+
+**Status:** Todo.
+
+**Goal:** Presentation och ljud för fartyg och kust.
+
+**Dependencies:** RTS-088.
+
+**Acceptance criteria:** Egna/licensierade riktade animations- och ljudassets är läsbara och fog-säkra.
+
+## RTS-090 – Verifierad release med sjöstrid
+
+**Status:** Todo.
+
+**Goal:** Verifierad release med sjöstrid.
+
+**Dependencies:** RTS-089.
+
+**Acceptance criteria:** Full matris för land/sjö/fraktioner/maps/save, prestanda och publicering verifieras.

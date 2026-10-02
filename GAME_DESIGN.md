@@ -647,3 +647,5 @@ Node-anchor (32,40) placeras vid samma world-center, footprint fortsatt
 40 px (radius 20) och range oförändrad. Kroppen utanför footprinten är dekor.
 Depletion-frame visas vid aktuell vision; utanför vision avslöjas ingen
 förändrad mängd/färg. Inga animationer eller gameplay-stat-ändringar.
+
+RTS-053-tillägg: native gräs med enhetlig grundton, pixelstrand/bergskanter endast vid exponerade patchkanter och egna skogs-/gruvresurser. Övergångar ändrar inte navigation eller footprints. Exporten omfattar 16 world-frames.

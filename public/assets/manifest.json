@@ -8,10 +8,90 @@
       "image": "/assets/world-atlas.png",
       "data": "/assets/world-atlas.json",
       "width": 256,
-      "height": 128
+      "height": 160
     }
   },
   "frames": {
+    "edge-water-n": {
+      "atlas": "world",
+      "kind": "transition",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "edge-water-e": {
+      "atlas": "world",
+      "kind": "transition",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "edge-water-s": {
+      "atlas": "world",
+      "kind": "transition",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "edge-water-w": {
+      "atlas": "world",
+      "kind": "transition",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "edge-rock-n": {
+      "atlas": "world",
+      "kind": "transition",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "edge-rock-e": {
+      "atlas": "world",
+      "kind": "transition",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "edge-rock-s": {
+      "atlas": "world",
+      "kind": "transition",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "edge-rock-w": {
+      "atlas": "world",
+      "kind": "transition",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 0,
+        "y": 0
+      }
+    },
     "grass-a": {
       "atlas": "world",
       "kind": "terrain",

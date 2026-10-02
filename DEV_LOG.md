@@ -1142,3 +1142,7 @@ commit/push. Fortsätter RTS-054.
 ## 2026-10-02 – Checkpoint RTS-037–053
 
 Användarens tillägg läst vid task-gräns. Commit/push är godkänt efter varje task. Checkpoint omfattar färdigt arbete RTS-037–053; RTS-054 har ännu ingen implementation och står Todo. Skärpta assetkriterier granskas i den fortsatta körningen; särskilt sammanhängande terrängövergångar kompletteras innan grafiken rapporteras färdig. Pages införs först efter RTS-060:s releasekontroller; RTS-061–090 planeras utan implementation.
+
+## 2026-10-02 – RTS-053 komplettering och leveranspolicy
+
+Checkpoint 4face75 pushad main. Skärpta terrängkrav kompletterade med åtta övergångsframes (strand/berg), inga interna patchsömmar och enhetlig gräsgrundton efter screenshotgranskning. 389 tester/50 filer, typecheck/build/diff-check godkända. Chromium: nearest/anchors/terrain, pan/fog, wood/gold-depletion och verklig leverans (10-enheters fixture), reset; inga browserfel. Screenshot granskad, befintliga labelöverlapp och geometriska units/buildings kvar till respektive assettask. AGENTS/roller uppdaterade med godkänd commit/push-policy; RTS-061–065 detaljerade, 066–090 kort planerade, inga nya system implementerade. RTS-060 kompletterad med Pages-grind; ingen deploy-workflow aktiverad ännu.
