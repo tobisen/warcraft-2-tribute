@@ -128,7 +128,7 @@ it('plays economy → barracks → soldiers → all waves to victory with conser
   expect(state.combat.baseHP).toBeGreaterThan(0);
   expect(state.gathering.wood+state.gathering.node.remaining+state.gathering.units.reduce((sum,u)=>sum+(u.kind==='worker'&&(u.cargoType??'wood')==='wood'?u.cargo:0),0)+spent+(state.gathering.lostCargo?.wood??0)).toBeCloseTo(400);
   expect((state.gathering.goldBalance??0)+state.gathering.gold!.remaining+state.gathering.units.reduce((sum,u)=>sum+(u.kind==='worker'&&u.cargoType==='gold'?u.cargo:0),0)+spentGold+(state.gathering.lostCargo?.gold??0)).toBeCloseTo(300);
-},10_000); // 4,500 gameplay frames with fog/navigation: integration budget, not per-unit timeout.
+},30_000); // 4,500 frames: CI exceeded 10s; browser profiling owns CPU budgets.
 
 describe('fresh match and restart state', () => {
   it('starts with exact economy, buildings, health, units and independent clocks/IDs', () => {

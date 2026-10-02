@@ -2,7 +2,7 @@
 
 Browserbaserat singleplayer-RTS inspirerat av Warcraft 2, Age of Empires 2 och
 Command & Conquer. Phaser, strict TypeScript och Vite; local-first, gameplay
-före grafik. Implementerat genom RTS-060 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
+före grafik. Implementerat genom RTS-065 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
 
 ## Installation och lokal start
 
@@ -89,12 +89,12 @@ npm run build
 Vitest testar rena gameplay-/presentationregler i Node. Typecheck kör strict
 TypeScript; build kontrollerar typer och skriver till `dist/`. Dependencies
 låses i package-lock; `node_modules/` och `dist/` ignoreras. Den befintliga
-varningen om stor Phaser-bundle kvarstår inom releasebudgeten. Godkänd Pages-workflow införs i RTS-060.
+varningen om stor Phaser-bundle kvarstår inom releasebudgeten. Pages-workflow kör verifiering och publicering på main.
 
 ## Dokumentation
 
 - [AGENTS.md](AGENTS.md): arbetsregler och Definition of Done.
-- [BACKLOG.md](BACKLOG.md): RTS-001–060 klara, RTS-061–090 planerade och Current Focus.
+- [BACKLOG.md](BACKLOG.md): RTS-001–065 klara, RTS-066–090 planerade och Current Focus.
 - [GAME_DESIGN.md](GAME_DESIGN.md): regler och framtida mål.
 - [ARCHITECTURE.md](ARCHITECTURE.md): faktisk struktur.
 - [DECISIONS.md](DECISIONS.md): beslut och öppna frågor.
@@ -102,7 +102,7 @@ varningen om stor Phaser-bundle kvarstår inom releasebudgeten. Godkänd Pages-w
 - [Implementer](.agents/implementer.md), [Reviewer](.agents/reviewer.md) och
   [Finisher](.agents/finisher.md): rollinstruktioner, inte automatiska agenter.
 
-Nästa task är RTS-061, speltest och kvalitetsgranskning av releasen. Ny godkänd etapp omfattar RTS-061–065. Multiplayer, backend,
+RTS-061–065 är klara. Nästa planerade task är RTS-066; implementation kräver ett nytt godkännande. Multiplayer, backend,
 konton, procedural generation och modding ingår inte. Pages-publicering ingår enligt användarens godkända tillägg.
 
 RTS-031: välj worker innan placering. Barracks reserveras direkt och kräver
@@ -340,7 +340,7 @@ Korrupt/okänd äldre/framtida schema eller annan config-version avvisas; ingen 
 
 ## Release och GitHub Pages – RTS-060
 
-[Releasekontroller och mätningar](RELEASE_CHECKLIST.md) beskriver stödd desktopprofil, full scenariomatris, budget och begränsningar. RTS-001–060 är implementerade; Ny godkänd etapp arbetar med RTS-061–065; RTS-066–090 förblir planerade.
+[Releasekontroller och mätningar](RELEASE_CHECKLIST.md) beskriver stödd desktopprofil, full scenariomatris, budget och begränsningar. RTS-001–065 är implementerade; RTS-066–090 förblir planerade.
 
 Lokal produktionskontroll:
 
@@ -372,3 +372,5 @@ RTS-062: QA-granskningen gav ingen bekräftad P0/P1-fixlista; gameplay/save-form
 [separation.ts](src/gameplay/separation.ts) och [config](src/config/separation.ts) separerar kvadratiska unit-kroppar deterministiskt med max48 px/s correction, spatiala64px-celler/två pass/12 grannar. Terräng/world bounds respekteras; orders/last/selection/HP bevaras. Rörda pathcaches planeras om, blockerade kommandoresultat behålls utan automatisk fallback. Fog uppdateras efter separation; paus/game-over fryser. Save schema/config1 behålls utan ny persistent state. Kortvarig kontakt vid rörelse och omöjlig packning i trång terräng kan kvarstå; resource/passage-köer följer i RTS-064.
 
 RTS-064 kompletterar mjuk separation med resurskö vid fler än tre workers på samma nod och begränsad insläppning i smala passager. Prioritet följer gameplay-tid; save/load och nya orders fungerar utan nya sparade köfält. Vanlig insamling med upp till tre workers behåller tidigare beteende.
+
+RTS-065: uppmätt optimering av routesökning; se [PERFORMANCE.md](PERFORMANCE.md) för före/efter, 64/128-kroppars budget och reproducerbar browserprofil. RTS-066–090 är fortsatt planerade, utanför den avslutade etappen.

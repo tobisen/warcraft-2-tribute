@@ -1,5 +1,7 @@
 import {trafficGates} from './traffic';
 import {trafficConfig} from '../config/traffic';
+import {segmentFits,type RouteState} from './navigation';
+import type {Position} from './movement';
 import type { ControlGroups } from './controlGroups';
 import { separateBodies } from './separation';
 import { combatUnitStats, unitStats } from '../config/unit';
@@ -81,6 +83,14 @@ function resolveOutcome(state: MatchState): MatchState {
     : { ...state, outcome, placement: { ...state.placement, active: false } };
 }
 
+/** A local correction need not discard a still-clear route and trigger another BFS. */
+function correctedNavigation(map:WorldMap,position:Position,half:number,route?:RouteState):RouteState|undefined {
+  if(!route||route.status==='blocked')return route;
+  if(route.revision!==map.revision)return undefined;
+  if(route.status==='arrived')return position.x===route.destination.x&&position.y===route.destination.y?route:undefined;
+  return route.waypoints[0]&&segmentFits(map,position,route.waypoints[0],half)?route:undefined;
+}
+
 function advance(state: MatchState, delta: number): MatchState {
   state=cleanDestroyed(state);
   const gateFor=trafficGates(state.map,[...state.gathering.units.map(u=>({id:`player:${u.id}`,position:u.position,half:(u.kind==='worker'?unitStats:combatUnitStats(u)).size/2,speed:(u.kind==='worker'?unitStats:combatUnitStats(u)).speed,active:u.order.kind!=='idle',waypoints:u.navigation?.waypoints??[u.target]})),...state.combat.enemies.filter(e=>e.kind!=='base'&&e.hp>0).map(e=>({id:`enemy:${e.id}`,position:e.position,half:combatConfig.enemySize/2,speed:combatConfig.enemySpeed,active:e.order?.kind!=='idle',waypoints:e.navigation?.waypoints??(e.order?.kind==='muster'||e.order?.kind==='attack-move'?[e.order.destination]:[])}))],state.waves.elapsedSeconds,delta);
@@ -103,7 +113,7 @@ function advance(state: MatchState, delta: number): MatchState {
   const updated:MatchState={...cleaned,...(vision?{fog:vision}:{}),research,...(enemy.state?{enemyProduction:enemy.state}:{}),...(ai.state?{enemyAI:ai.state}:{}),gathering:soldier.gathering,combat:incoming.combat,waves:incoming.waves,
     production:{...worker.production,nextUnitNumber},soldierProduction:{...soldier.production,nextUnitNumber}};
   const separated=separateBodies(updated.map,[...updated.gathering.units.map(u=>({id:`player:${u.id}`,position:u.position,half:(u.kind==='worker'?unitStats:combatUnitStats(u)).size/2})),...updated.combat.enemies.filter(e=>e.kind!=='base').map(e=>({id:`enemy:${e.id}`,position:e.position,half:combatConfig.enemySize/2}))],delta);
-  if(separated.size){updated.gathering={...updated.gathering,units:updated.gathering.units.map(u=>{const position=separated.get(`player:${u.id}`);return position?{...u,position,navigation:u.navigation?.status==='blocked'?u.navigation:undefined}:u;})};updated.combat={...updated.combat,enemies:updated.combat.enemies.map(e=>{const position=separated.get(`enemy:${e.id}`);return position?{...e,position,navigation:e.navigation?.status==='blocked'?e.navigation:undefined}:e;})};}
+  if(separated.size){updated.gathering={...updated.gathering,units:updated.gathering.units.map(u=>{const position=separated.get(`player:${u.id}`);return position?{...u,position,navigation:correctedNavigation(updated.map,position,(u.kind==='worker'?unitStats:combatUnitStats(u)).size/2,u.navigation)}:u;})};updated.combat={...updated.combat,enemies:updated.combat.enemies.map(e=>{const position=separated.get(`enemy:${e.id}`);return position?{...e,position,navigation:correctedNavigation(updated.map,position,combatConfig.enemySize/2,e.navigation)}:e;})};}
   updated.fog=matchFog(updated);return resolveOutcome(updated);
 }
 

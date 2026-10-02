@@ -36,13 +36,17 @@ export function approachRoute(map: WorldMap, position: Position, target: Footpri
       const point=tileCenter(map,{column,row});if(point)points.push(point);
     }
   }
-  let best: {waypoints:Position[];point:Position;length:number}|undefined;
-  for(const point of points) {
-    if(!canInteract(map,point,target,range))continue;
+  let best: {waypoints:Position[];point:Position;length:number;index:number}|undefined;
+  // Straight distance is a lower bound for any route. Search the most promising
+  // contact first, then skip BFSs that cannot improve it. Keep original tie order.
+  const candidates=points.map((point,index)=>({point,index,bound:Math.hypot(point.x-position.x,point.y-position.y)}))
+    .filter(c=>canInteract(map,c.point,target,range)).sort((a,b)=>a.bound-b.bound||a.index-b.index);
+  for(const {point,index,bound} of candidates) {
+    if(best&&bound>best.length+1e-9)break;
     const result=findRoute(map,position,point);if(!result.ok)continue;
     let previous=position,length=0;
     for(const p of result.waypoints){length+=Math.hypot(p.x-previous.x,p.y-previous.y);previous=p;}
-    if(!best || length<best.length-1e-9)best={waypoints:result.waypoints,point,length};
+    if(!best || length<best.length-1e-9 || Math.abs(length-best.length)<=1e-9&&index<best.index)best={waypoints:result.waypoints,point,length,index};
   }
   return {commandNumber,destination:best?{...best.point}:{...position},waypoints:best?.waypoints??[],
     revision:map.revision,status:best?(best.waypoints.length?'moving':'arrived'):'blocked',

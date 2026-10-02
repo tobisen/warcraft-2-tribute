@@ -2,13 +2,13 @@
 
 ## Current Focus
 
-**RTS-065 – Uppmätt prestandapass med större arméer** — **Todo**.
+**RTS-066 – Fraktionsdata för units, buildings och upgrades** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
 Denna fil styr arbetet. En task åt gången. RTS-001–015 är historiskt färdiga;
 RTS-016–060 är en ny, användarbeställd roadmap efter MVP. Ingen gammal backlog
-har återuppstått. RTS-016–059 är nu implementerade; RTS-060 återstår. Rollfiler innebär inte automatisk agentstart.
+har återuppstått. RTS-001–065 är nu implementerade; RTS-066–090 är fortsatt planerade. Rollfiler innebär inte automatisk agentstart.
 
 ## Planeringskonventioner
 
@@ -2112,7 +2112,7 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-065 – Uppmätt prestandapass med större arméer
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Verifiera beräkningsbudget för större matcher.
 

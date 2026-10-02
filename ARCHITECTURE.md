@@ -866,3 +866,7 @@ RTS-062: QA-granskningen gav ingen bekräftad P0/P1-fixlista; gameplay/save-form
 `gameplay/traffic.ts` härleder smala, sammanhängande passager från kroppsgiltiga tilecentra med högst två fria grannar. En aktiv kropp i passagen får företräde; annars väljs en väntande entrant med roterande prioritet. `MovementGate` begränsar den del av delta som navigation får använda. Gather, build, move, attack-move och enemy movement delar samma gate. Väntan bevarar orders och waypoints; RTS-063:s mjuka separation gäller fortsatt.
 
 Köer/reservationer sparas inte som nya refs: de återskapas från positioner, orders och tid. Idle/döda/borttagna kroppar behåller inga lås. Maprevision och obstacle-geometri invaliderar härledd passagecache. `updateMatch` delar även större delta vid resursrotation; ingen fixed timestep eller generell trafik/pathfinding-ombyggnad.
+
+## RTS-065: profileringsmotiverad navigation
+
+`approachRoute` använder rak avståndsgräns för att undvika BFS-kandidater som inte kan slå den funna rutten, med tidigare tie-ordning. Efter separation behålls moving-navigation när nästa segment har kroppsgiltig clearance; revisionsfel, blockerad sträcka och flyttad arrived-position ogiltigförklarar den. Det minskar upprepade combat-routesökningar utan nya system eller persistent state. Navigation är fortsatt cache och Load räknar om från sparade positioner. `testHelpers/loadFixture.ts` och `scripts/profile-browser.mjs` hör endast till verifiering, inte app-bootstrap/dist. Metod/budget/resultat finns i [PERFORMANCE.md](PERFORMANCE.md).
