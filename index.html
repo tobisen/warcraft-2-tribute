@@ -6,16 +6,26 @@
     <title>warcraft-2-tribute</title>
   </head>
   <body>
-    <div id="production-controls">
-      <button id="train-worker" type="button" disabled>Träna arbetare – 20 wood</button>
-      <span id="production-status" role="status">Bas ledig</span>
-      <button id="build-barracks" type="button">Bygg barracks – 40 wood</button>
-      <span id="placement-status" role="status"></span>
-      <button id="train-soldier" type="button" hidden disabled>Träna soldier – 20 wood</button>
-      <span id="soldier-production-status" role="status" hidden></span>
-    </div>
-    <p id="match-status" role="status">Försvara basen</p>
-    <button id="restart-match" type="button" hidden>Starta om</button>
+    <section id="hud" aria-label="Matchstatus och kommandon">
+      <div id="match-overview">
+        <span id="resource-status"></span><span id="health-status"></span><span id="wave-status"></span><span id="population-status"></span>
+      </div>
+      <div id="production-controls">
+        <div class="control"><button id="train-worker" type="button" disabled>Träna arbetare – 20 wood</button>
+          <span id="production-status"></span></div>
+        <div class="control"><button id="build-barracks" type="button">Bygg barracks – 40 wood</button>
+          <span id="placement-status"></span></div>
+        <div class="control"><button id="train-soldier" type="button" disabled>Träna soldier – 20 wood + 5 gold</button>
+          <span id="soldier-production-status"></span></div>
+        <div class="control"><button id="build-farm" type="button" disabled>Bygg farm – 20 wood</button><span id="farm-status"></span></div>
+      </div>
+      <div id="production-queue" aria-label="Produktionskö"></div>
+      <button id="attack-move" type="button" disabled>Attack-move</button>
+      <button id="stop-units" type="button" disabled>Stop</button>
+      <p id="selection-status"></p>
+      <p id="match-status" role="status">Försvara basen</p>
+      <div id="restart-slot"><button id="restart-match" type="button" hidden>Starta om</button></div>
+    </section>
     <div id="game"></div>
     <script type="module" src="/src/main.ts"></script>
   </body>

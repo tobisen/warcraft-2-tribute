@@ -1,3 +1,4 @@
+import { createMap } from './map';
 import { describe, expect, it } from 'vitest';
 import { orderAttack } from './combat';
 import { placeBarracks, placementObstacles } from './placement';
@@ -6,20 +7,21 @@ import { createMatch, updateMatch, type MatchState } from './match';
 import { startProduction } from './production';
 
 const initial = (): MatchState => ({
-  outcome:'playing', placement:{active:false,barracks:null},
+  map:createMap(), outcome:'playing', placement:{active:false,barracks:null},
   production:{remainingSeconds:null,nextUnitNumber:2},soldierProduction:{remainingSeconds:null,nextUnitNumber:2},
   waves:{elapsedSeconds:0,nextWave:0,nextEnemyNumber:1},
   combat:{baseHP:combatConfig.baseHP,enemies:[]},
-  gathering:{wood:40,base:{x:400,y:450},node:{id:'wood',position:{x:650,y:180},remaining:400},
-    units:[{kind:'worker',id:'unit-1',position:{x:650,y:180},target:{x:650,y:180},selected:true,cargo:0,order:{kind:'gather',nodeId:'wood'}}]},
+  gathering:{goldBalance:100,wood:40,base:{x:400,y:450},node:{id:'wood',position:{x:650,y:180},remaining:400},
+    units:[{kind:'worker',id:'unit-1',position:{x:690,y:180},target:{x:690,y:180},selected:true,cargo:0,order:{kind:'gather',nodeId:'wood'}}]},
 });
 
 describe('match defeat and freeze', () => {
-  it('base HP zero triggers defeat, clearing placement without changing orders', () => {
+  it('base HP zero triggers defeat, clearing placement and work orders against the destroyed base', () => {
     const state=initial();state.combat.baseHP=0;state.placement.active=true;
     const result=updateMatch(state,10);
     expect(result.outcome).toBe('defeat');expect(result.placement.active).toBe(false);
-    expect(result.gathering).toEqual(state.gathering);
+    expect(result.gathering.units.every(u=>u.order.kind==='idle')).toBe(true);
+    expect(result.gathering.wood).toBe(state.gathering.wood);
     expect(result.waves).toEqual(state.waves);
   });
   it('damage to the base triggers defeat and freezes every gameplay system thereafter', () => {
@@ -31,7 +33,8 @@ describe('match defeat and freeze', () => {
     expect(defeated.outcome).toBe('defeat');
     expect(defeated.combat.baseHP).toBe(0);
     expect(updateMatch(defeated,500)).toBe(defeated);
-    expect(defeated.production.remainingSeconds).toBe(4);
+    expect(defeated.production.remainingSeconds).toBeNull();
+    expect(defeated.production.queue).toEqual([]);
     expect(defeated.waves.nextWave).toBe(0);
   });
   it('positive base HP keeps play going, and zero/negative delta advances nothing', () => {
@@ -97,20 +100,22 @@ describe('victory and outcome precedence', () => {
 });
 
 it('plays economy → barracks → soldiers → all waves to victory with conserved wood', () => {
-  let state=initial();state.gathering.wood=0;
-  state.gathering.units=[280,400,520].map((x,i)=>({kind:'worker',id:`unit-${i+1}`,
-    position:{x,y:300},target:{x:650,y:180},selected:false,cargo:0,order:{kind:'gather',nodeId:'wood'}}));
+  let state=createMatch();
+  state.gathering.units=state.gathering.units.map((u,i)=>u.kind==='worker'?{...u,
+    target:{x:650,y:180},selected:false,cargo:0,order:{kind:'gather',nodeId:i===2?state.gathering.gold!.id:state.gathering.node.id}}:u);
   state.production.nextUnitNumber=4;state.soldierProduction.nextUnitNumber=4;
-  let spent=0;
+  let spent=0,spentGold=0;
   for(let step=0;step<150*30 && state.outcome==='playing';step++){
     if(!state.placement.barracks && state.gathering.wood>=40){
-      const placed=placeBarracks({...state.placement,active:true},{x:520,y:390},state.gathering.wood,placementObstacles(state.gathering));
+      state.gathering.units=state.gathering.units.map(u=>({...u,selected:u.id==='unit-3'}));
+      const placed=placeBarracks({...state.placement,active:true},{x:520,y:390},state.gathering.wood,placementObstacles(state.gathering),{map:state.map,gathering:state.gathering,enemies:state.combat.enemies});
       expect(placed.placement.barracks).not.toBeNull();
-      state={...state,placement:placed.placement,gathering:{...state.gathering,wood:placed.wood}};spent+=40;
+      state={...state,map:placed.map!,placement:placed.placement,gathering:placed.gathering!};spent+=40;
     }
-    if(state.placement.barracks && state.gathering.units.filter(u=>u.kind==='soldier').length<4){
+    state.gathering.units=state.gathering.units.map(u=>u.kind==='worker' && u.order.kind==='idle' ? {...u,order:{kind:'gather',nodeId:u.id==='unit-3'?state.gathering.gold!.id:state.gathering.node.id}}:u);
+    if(state.placement.barracks && (!state.placement.construction||state.placement.construction.remainingSeconds===0) && state.gathering.units.filter(u=>u.kind==='soldier').length<4){
       const result=startProduction(state.gathering,state.soldierProduction,{kind:'barracks',footprint:state.placement.barracks});
-      spent+=state.gathering.wood-result.gathering.wood;
+      spent+=state.gathering.wood-result.gathering.wood;spentGold+=(state.gathering.goldBalance??0)-(result.gathering.goldBalance??0);
       state={...state,gathering:result.gathering,soldierProduction:result.production};
     }
     state.gathering.units=state.gathering.units.map(u=>({...u,selected:u.kind==='soldier'}));
@@ -120,7 +125,8 @@ it('plays economy → barracks → soldiers → all waves to victory with conser
   expect(state.outcome).toBe('victory');
   expect(state.waves.nextWave).toBe(3);
   expect(state.combat.baseHP).toBeGreaterThan(0);
-  expect(state.gathering.wood+state.gathering.node.remaining+state.gathering.units.reduce((sum,u)=>sum+u.cargo,0)+spent).toBeCloseTo(400);
+  expect(state.gathering.wood+state.gathering.node.remaining+state.gathering.units.reduce((sum,u)=>sum+(u.kind==='worker'&&(u.cargoType??'wood')==='wood'?u.cargo:0),0)+spent+(state.gathering.lostCargo?.wood??0)).toBeCloseTo(400);
+  expect((state.gathering.goldBalance??0)+state.gathering.gold!.remaining+state.gathering.units.reduce((sum,u)=>sum+(u.kind==='worker'&&u.cargoType==='gold'?u.cargo:0),0)+spentGold+(state.gathering.lostCargo?.gold??0)).toBeCloseTo(300);
 });
 
 describe('fresh match and restart state', () => {
@@ -131,9 +137,9 @@ describe('fresh match and restart state', () => {
     expect(state.gathering.node.remaining).toBe(400);
     expect(state.gathering.units.map(u=>u.id)).toEqual(['unit-1','unit-2','unit-3']);
     expect(state.gathering.units.every(u=>u.kind==='worker' && u.order.kind==='idle' && !u.selected && u.cargo===0)).toBe(true);
-    expect(state.combat).toEqual({baseHP:240,enemies:[]});
+    expect(state.combat).toEqual({baseOwner:'player',baseHP:240,enemies:[]});
     expect(state.waves).toEqual({elapsedSeconds:0,nextWave:0,nextEnemyNumber:1});
-    expect(state.placement).toEqual({active:false,barracks:null});
+    expect(state.placement).toEqual({active:false,barracks:null,farms:[],nextFarmNumber:1});
     expect(state.production).toEqual({remainingSeconds:null,nextUnitNumber:4});
     expect(state.soldierProduction).toEqual(state.production);
     expect(state.soldierProduction).not.toBe(state.production);

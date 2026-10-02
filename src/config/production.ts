@@ -1,11 +1,14 @@
+import { costs } from './economy';
 export const productionConfig = {
-  workerCost: 20,
+  workerCost: costs.worker.wood,
   durationSeconds: 5,
   spawnOffset: { x: 60, y: 0 },
 };
 
 export const soldierProductionConfig = {
-  cost: 20,
+  cost: costs.soldier.wood,
   durationSeconds: 5,
   spawnGap: 8,
 };
+
+export const queueConfig = {maxJobs:3,activeRefund:0.5,queuedRefund:1};

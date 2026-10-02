@@ -1,57 +1,76 @@
 # warcraft-2-tribute
 
-Browserbaserat singleplayer-RTS inspirerat av Warcraft 2, Age of Empires 2
-och Command & Conquer. Projektet är local-first och prioriterar gameplay före
-grafik. Placeholders är tillåtna.
+Browserbaserat singleplayer-RTS inspirerat av Warcraft 2, Age of Empires 2 och
+Command & Conquer. Phaser, strict TypeScript och Vite; local-first, gameplay
+före grafik. Implementerat genom RTS-036 med placeholder-grafik.
 
-Teknik: Phaser, strict TypeScript och Vite. En spelbar singleplayer-match
-med ekonomi, produktion, manuell melee och tre enemy-waves använder placeholders.
+## Installation och lokal start
 
-## Installation och lokal utveckling
-
-Använd Node.js 20.19+ inom version 20, eller 22.12+ och npm. Kravet följer
-[Vites Node-stöd](https://vite.dev/guide/). Kör från repots rot:
+Använd Node.js 20.19+ inom version 20, eller 22.12+ och npm:
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Öppna adressen Vite skriver ut (normalt http://localhost:5173/). Startsidan
-visar en mörk Phaser-canvas på 800 × 600 pixlar med tre gröna enheter.
-Vänsterklicka på en enhet eller vänsterdra en rektangel för att ersätta
-markeringen. Markerade enheter får gula ringar. Högerklicka sedan på canvas
-för att flytta alla markerade enheter till samma mål med 160 px/s.
-Ett nytt högerklick ersätter tidigare mål, även under rörelse. Vänsterklick på
-tom mark avmarkerar utan att stoppa rörelsen. Omarkerade enheter ignorerar nya
-move-commands. Kontextmenyn är förhindrad över canvas.
-Markera arbetare och högerklicka på den bruna noden vid (650, 180) för att samla
-wood (400 initialt, 1 per sekund och arbetare inom 24 px). Arbetarna bär högst 5 wood,
-levererar automatiskt inom 24 px från den blå basen vid (400, 450) och återgår
-till noden. Saldo ökar först vid leverans; last visas vid arbetarna. Move-order
-avbryter loopen men bevarar last, avmarkering påverkar inte loopen. Vid uttömning
-levereras partiallast innan idle.
-Efter leverans av minst 20 wood: klicka ”Träna arbetare – 20 wood”. Kostnaden
-dras direkt och en arbetare skapas nära basen efter 5 gameplay-sekunder.
-Endast en produktion per byggnad pågår åt gången. Markera den nya arbetaren för nya order;
-produktionsknappen ändrar inte selection. Återstående tid visas vid knappen.
-”Bygg barracks – 40 wood” öppnar placeringsläge. Flytta musen för grön/röd
-preview och klicka på en giltig plats för att bygga direkt. Escape eller
-högerklick avbryter gratis. 64 × 64 px footprint snappar till 32 px-grid;
-placera inom världen utan överlapp med bas/nod. Högst en barracks.
-Efter placering: ”Träna soldier – 20 wood” producerar en orange soldier på
-5 gameplay-sekunder. Bas och barracks kan producera samtidigt. Markera den
-nya soldaten och högerklicka för movement. Soldiers kan inte samla wood;
-resursklick med blandad selection ger bara workers gather-order.
-Markera soldier och högerklicka på en röd enemy för manuell melee-attack.
-HP visas och fiender försvinner vid 0 HP. Move ersätter attack.
-Arenan är 800 × 600 utan hinder. Tre enemy-waves med 1, 2 och 3 fiender
-kommer efter 60, 90 och 120 gameplay-sekunder; countdown visas. Samla och
-producera försvar innan första vågen. Basens HP 0 ger Defeat och stoppar
-simulation samt gameplay-input. Besegra alla enemies efter sista vågen för
-Victory; defeat har företräde vid samtidig utgång. Ge soldiers ett nytt
-attackmål efter varje död. ”Starta om” visas efter vinst/förlust och
-återställer hela matchen utan sidomladdning. Inget movement-grid finns.
+Öppna adressen Vite skriver ut, normalt http://localhost:5173/.
+Världen är 1280 × 960 px, viewport 800 × 600. Dra med mittenmusknappen för
+begränsad pan; zoom är 1. HUD ligger ovanför canvas och följer inte kameran.
+Små fönster kan scrollas.
+
+## Spela matchen
+
+1. Välj två gröna workers och högerklicka på wood-noden vid (650,180).
+   Välj den tredje, pan åt höger och högerklicka på guldgruvan vid (850,220).
+   Workers samlar och levererar automatiskt till den blå basen vid (400,450).
+2. Vid 40 levererade wood: välj en worker och ”Bygg barracks – 40 wood”. Placera grön
+   preview, exempelvis vid (512,384) om platsen är fri. Escape/högerklick avbryter.
+3. Efter 5 s byggarbete: ge builder ny gather-order. Välj barracks och träna orange soldiers för 20 wood + 5 gold och 5 gameplay-
+   sekunder vardera. Välj basen för workers för 20 wood och 5 s. Tre FIFO-jobb per
+   byggnad inklusive aktivt; bas och barracks kan producera samtidigt.
+4. Välj soldiers och högerklicka på röda enemies för manuell attack. Ge nästa
+   mål efter varje fiendedöd. Tre waves med 1/2/3 enemies anländer vid
+   60/90/120 gameplay-sekunder. Träna förstärkningar vid förluster.
+5. Alla enemies döda efter sista wave ger Victory; basens HP 0 ger Defeat.
+   Defeat har företräde vid samtidig utgång. Simulation och gameplay-input
+   stoppas; ”Starta om” återställer hela matchen, inklusive kamera och rally.
+
+Vänsterklick väljer en unit eller bas/barracks. Units har företräde vid
+överlapp; byggnadsval och unit-selection är exklusiva. Tom mark avmarkerar.
+Drag ersätter selection med units vars centrum ligger i rektangeln, inklusive
+kanten. Gester under 5 screen pixels är klick. Ringar/byggnadsram visar val.
+
+Högerklick på mark med valda units ger separata nåbara slutpositioner kring
+klickmålet med 160 px/s. Ny order ersätter föregående; avmarkering stoppar inte
+rörelse/arbete. Stop avbryter valda units men bevarar last. Gul målring visar
+aktiv order, röd ring blockerad route; HUD visar fas och felorsak.
+
+Högerklick med vald bas/barracks sätter dess rally för framtida units. Grön
+markör visar målet. Ogiltigt mål behåller föregående rally. Spawnade units
+börjar omarkerade; utan rally är de idle, annars får de move. Worker-rally
+innebär ingen automatisk gathering.
+
+Wood-noden innehåller 400 wood, gruvan 300 gold. Rate är 1/s, lastkapacitet 5;
+leverans/gathering sker inom 24 px från footprintens kant. Full last går till
+basen; depletion levererar även partiallast. Saldo ökar först vid leverans.
+Last innehåller en enda resurstyp. Byte typ med last levererar gammal last
+först och går sedan till nya noden. Move/Stop bevarar last och typ. Soldiers
+samlar inte; resource-klick i blandad selection ändrar endast workers-orders.
+
+32-px-tiles visar grön mark, grå sten och blått vatten. Move, arbete och melee
+använder kroppssäkra rutter runt terräng/byggnader. Attackrange mäts till
+målfootprintens kant; skada går inte genom terrängväggar. Barracks är 64 × 64,
+grid-snappad och får inte överlappa footprints/levande units eller skära av
+tidigare nåbara arbets-/spawn-/wave-vägar. Ogiltig placering drar inga resurser.
+Alla kostnader kontrolleras atomiskt; preview/cancel är gratis. Högst en barracks.
+Om spawn-utgångar är upptagna väntar färdigt jobb på fri plats utan ny kostnad.
+
+Workers, bas, barracks, farms och projekt kan angripas. Worker-cargo förloras
+vid död; byggnadsdöd ger ingen refund och tar bort kö/rally/footprint. Soldiers angriper endast på kommando.
+Units kan överlappa under gång; ingen full collision avoidance, avancerad AI,
+ljud eller save/load finns. Balansen är preliminär; verifierade flöden finns i DEV_LOG.
+
+## Checks
 
 ```sh
 npm test
@@ -59,46 +78,49 @@ npm run typecheck
 npm run build
 ```
 
-`test` kör movement-, selection-, gathering-, delivery-, production-, placement-, combat-, wave- och match-tester en gång med Vitest i Node, utan browser.
-`typecheck` kontrollerar projektkoden och testerna med strict TypeScript utan att skriva
-filer. `build` kör först typkontroll och skapar sedan byggoutput i `dist/`.
-`node_modules/` och `dist/` ignoreras av Git. Paketversioner låses med
-`package-lock.json`. Builden kan ge en varning om stor bundle eftersom Phaser
-ingår; varningen är dokumenterad och builden passerar.
-
-MVP omfattar en karta, drag selection, move commands, gathering, en bas, en
-produktionsbyggnad, en stridsenhet, enkla fiendevågor samt win/loss.
-Utvecklingsordningen är movement → selection → resources → buildings → combat → AI.
-
-## Spela matchen
-
-1. Dragmarkera startarbetarna och högerklicka på wood-noden för automatisk
-   insamling/leverans. Låt dem fortsätta arbeta när du avmarkerar.
-2. Bygg barracks för 40 wood, exempelvis vid (512, 384), och träna flera
-   soldiers för 20 wood och 5 sekunder vardera. Första vågen kommer efter 60 s.
-3. Markera soldiers och högerklicka på enemies. Ge nästa attackmål efter varje
-   fiendedöd. Waves innehåller 1/2/3 enemies efter 60/90/120 s.
-4. Besegra alla sex enemies för victory; bas-HP 0 ger defeat. Klicka ”Starta om”
-   efter game over för en ny match.
-
-Workers och barracks angrips inte. Soldiers angriper endast på kommando.
-Rak movement tillåter överlapp; ingen pathfinding, collision avoidance,
-formation eller avancerad AI finns. Bundle-varningen kvarstår.
+Vitest testar rena gameplay-/presentationregler i Node. Typecheck kör strict
+TypeScript; build kontrollerar typer och skriver till `dist/`. Dependencies
+låses i package-lock; `node_modules/` och `dist/` ignoreras. Den befintliga
+varningen om stor Phaser-bundle kvarstår. Ingen deployment.
 
 ## Dokumentation
 
 - [AGENTS.md](AGENTS.md): arbetsregler och Definition of Done.
-- [GAME_DESIGN.md](GAME_DESIGN.md): spelidé, MVP och avgränsningar.
-- [ARCHITECTURE.md](ARCHITECTURE.md): faktisk struktur och tekniska principer.
-- [BACKLOG.md](BACKLOG.md): styrande tasks och Current Focus.
+- [BACKLOG.md](BACKLOG.md): tasks till RTS-060 och Current Focus.
+- [GAME_DESIGN.md](GAME_DESIGN.md): regler och framtida mål.
+- [ARCHITECTURE.md](ARCHITECTURE.md): faktisk struktur.
 - [DECISIONS.md](DECISIONS.md): beslut och öppna frågor.
-- [DEV_LOG.md](DEV_LOG.md): genomfört arbete och verifiering.
+- [DEV_LOG.md](DEV_LOG.md): checks, speltester och märkta fixtures.
 - [Implementer](.agents/implementer.md), [Reviewer](.agents/reviewer.md) och
-  [Finisher](.agents/finisher.md): rollinstruktioner.
+  [Finisher](.agents/finisher.md): rollinstruktioner, inte automatiska agenter.
 
-RTS-001–015 är Done. MVP-matchen omfattar ekonomi/produktion, combat, enemy AI,
-ändliga waves, win/loss och restart; verifiering följs i BACKLOG.
-Rollfilerna är instruktioner och konfigurerar inte automatiskt några agenter.
+Nästa task är RTS-037, archer och projektiler. Multiplayer, backend,
+konton, procedural generation, modding och deployment ingår inte.
 
-Multiplayer, backend, konton, procedural generation, modding och deployment
-ingår inte. Save/load planeras efter MVP.
+RTS-031: välj worker innan placering. Barracks reserveras direkt och kräver
+5 s arbete efter approach. Stop/ny order pausar utan refund. Högerklicka
+ofärdigt bygge med vald worker för att återuppta; produktion kräver completion.
+Builder blir idle när färdig – ge ny gather-order.
+
+Population börjar på 3/8. Varje unit använder 1 och ett pågående jobb
+reserverar 1. Vid full cap: välj worker och ”Bygg farm – 20 wood”; färdig farm
+ger +5 efter 5 s arbete, högst tre farms. Stop/orderbyte pausar; högerklick
+ofärdig farm återupptar. Godkända jobb och levande units behålls vid over-cap.
+
+Produktionspanelen avbryter ett specifikt jobb: köat får 100 % återbetalning,
+aktivt 50 %. Kostnad/population reserveras vid enqueue. Blockerad spawn
+håller head och senare timers; cancel frigör plats. Game over låser cancel.
+
+Idle soldiers försvarar automatiskt inom 140 px och fortsätter mot nästa
+nåbara enemy. Högerklick på enemy ger prioriterad manuell attack. Stop håller
+utan automatisk attack tills nytt Move/attack; vanlig Move avbryter striden.
+
+## RTS-036 – Attack-move
+
+Välj soldiers, tryck Attack-move och vänsterklicka destination. Enheter får
+separata gruppmål, söker samma giltiga enemies som automatisk attack och
+återupptar sina ursprungliga mål efter strid. Workers behåller arbete.
+Stop, vanlig Move och manuell attack ersätter hela ordern. Escape/högerklick
+avbryter väntande destination utan att ändra selection/orders. Blockerad
+destination avslutar ordern med befintligt route-fel; game over spärrar input
+och restart rensar både gameplay-state och kommandoläge.

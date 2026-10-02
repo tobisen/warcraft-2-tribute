@@ -481,3 +481,383 @@
 - Commitmeddelande: `feat: complete playable MVP with combat waves and restart`.
 - `git diff --check` passerade inför commit. 137 tester, typecheck, build och
   browserkontroller är redovisade i implementationsposterna ovan.
+
+## 2026-10-01 – Planering av tribute-roadmap RTS-016–060
+
+- Läste instruktioner, backlog, design, faktisk arkitektur, beslut och logg samt
+  kontrollerade match/config/kodstruktur. Arbetsytan var ren; enbart RTS-001–015
+  fanns, samtliga Done. Inga task-ID-konflikter eller tidigare planer att förena.
+- Lade till 45 Todo-tasks i sex etapper, med detaljerade RTS-016–024, prioritet,
+  relativ storlek, beroenden, krav/non-goals, acceptance, tester/browserflöden,
+  docs och Primary Chat-etikett. Stora tasks delas under samma ID. Historiska
+  tasktexter/statusar bevarades; tillagd metadata är märkt historisk/retrospektiv.
+- Current Focus är RTS-016, Todo. Skilde framtida tribute-mål från dagens MVP,
+  dokumenterade navigation/footprints, lifecycle/reset, budget-AI, separat
+  survival/skirmish, fog utan läckor och assetkontrakt. Öppna val har beslutgrindar.
+- Baseline kördes om: 137 tester, typecheck och build passerade. Bundle-varningen
+  kvarstår. Tidigare browserkontroller återges som historiska; ingen ny browser-
+  session eller manuellt speltest gjordes i denna dokumentationskörning.
+- Kontrollerade 60 unika ID:n, 15 bevarade historiska tasktexter, 45 kompletta
+  Todo-tasks, topologiska/acykliska beroenden och giltiga lokala filreferenser.
+  `git diff --check` passerade. Ingen spelkod, dependencies, commit eller push.
+
+## 2026-10-02 – RTS-016, reproducerbar MVP-baseline
+
+- Påbörjade implementation enligt användarens uppföljning. Bevarade roadmap-
+  ändringarna och alla färdiga RTS-001–015; ingen spelkod eller dependency ändrad.
+- Miljö: macOS 15.7.4, Node 20.20.0, Chromium 147.0.7727.15 headless via
+  tillfällig Playwright i /tmp, lokal Vite på 127.0.0.1:5174. Ingen browser-
+  testdependency eller debug-API lades i repot. Tester styrde riktiga mus-/DOM-
+  händelser; scene-reference användes endast för observation, utom märkta fixtures.
+- Normal victory: dragmarkera tre workers, högerklicka noden (650,180), samla
+  till barracks-kostnaden 40, placera vid (512,384), träna högst fyra soldiers
+  och ge manuella attackmål vid alla tre waves. Riktiga resurser/timers, ingen
+  tidsskalning: victory vid 124,56 gameplay-sekunder, bas 240 HP, waves 3/3,
+  alla sex enemies döda. Canvas-/knappinput efteråt ändrade inte fryst state.
+- Restart från denna naturliga victory: bas 240 HP, nod 400 wood, saldo 0,
+  tre idle/omarkerade workers, inga gamla byggnader/enemies/last/timers/IDs.
+  Därefter tre märkta outcome-fixtures för upprepning från båda outcomes.
+  Samla 80 wood i nya matchen, avbryt arbetet med move, bygg barracks, starta
+  worker/soldier samtidigt: exakt 40 wood debiterat, spawn unit-4/unit-5 efter
+  fem sekunder. Välj och flytta ny soldier till (600,500). Alla asserts passerade.
+- Normal defeat: samla från start men bygg inget försvar. Basen förstördes
+  vid 100,67 sekunder under andra vågen. Öppnad placeringspreview rensades.
+  Enheter, ekonomi, timers och waves förblev oförändrade efter canvas-klick,
+  högerklick, Escape och även direkt dispatch av blockerade produktionsknappar.
+- Layout-/cleanup-kontroll: sex uttryckligen märkta victory/defeat-fixtures
+  följda av restart. Exakt en lyssnare per DOM-knapp, pointer-event och Escape,
+  16 initiala displayobjekt, inga kvarlämnade enemy/soldier/barracks-objekt.
+  Separat layout-fixture visar soldier-knappen för att faktiskt radbryta UI.
+  1280 × 720, 520 × 420 och 900 × 500 testades; kontrollraden ändrades från
+  21 till 42 px på smal viewport. Scroll upp till x=250/y=120, klickselection
+  och move med exakt slutposition fungerade i samtliga fall.
+- Tillfälliga layout-scriptet jämförde först page-bounds med viewport-bounds
+  utan scroll-offset. Källkontroll av Phaser och korrigerad jämförelse visade
+  att detta var ett fel i verifieringsscriptet, ingen regression i spelet.
+- Skärmbilder av defeat, victory, omstartad produktion och scrollad canvas
+  granskades visuellt. Inga fångade runtime-, konsol- eller nätverksfel.
+- 137 tester i 11 filer, npm run typecheck och npm run build passerade.
+  Befintliga beteendetester täcker wood-bevarande, ID:n, outcome-prioritet
+  och reset. Inga nya regressionstester behövdes: ingen blockerande regression
+  hittades i verifierade flöden. Bundle-varningen kvarstår (1 394,29 kB,
+  363,35 kB gzip); ingen optimering ingår.
+- Avsiktliga begränsningar: fast 800 × 600-canvas kräver scroll i små fönster;
+  överlapp ger överlagrade etiketter, manuell targetväxling och rak movement;
+  workers/barracks angrips inte. Safari/Firefox och fysisk touch ej verifierade.
+  Balansens begriplighet och HUD-förbättringar hör till RTS-017/018.
+- Ytterligare naturlig defeat vid 100,65 s följdes av faktisk restart,
+  ny insamling av minst 20 wood och worker-produktion till unit-4. Ingen
+  fixture eller tidsskalning i denna match; alla asserts passerade utan fel.
+- Granskade scope/diff: endast docs uppdaterade; inga ändringar av spelregler,
+  dependencies eller tidigare färdig kod. Markeras Done efter godkända checks.
+  Nästa task RTS-017, Todo. Ingen commit eller push.
+
+## 2026-10-02 – RTS-017 balans
+
+- Två naturliga Chromium 147-matcher, inga fixtures/tidsskalning. Tidigt försvar:
+  barracks 27,03 s, soldier 42,03 s, victory 124,26 s, bas 240 HP. Extra worker:
+  worker-start 17,50 s, barracks 36,06 s, soldier 50,28 s, victory 124,08 s,
+  bas 240 HP. Alla waves, fryst game-over och input kontrollerade; inga browserfel.
+- Tre workers ger första levererade 20 wood runt 17,5 s och 40 runt 27 s;
+  leveransflödet är ändligt och last ingår inte i spenderbart saldo. Passiv
+  strategi verifierad i RTS-016 samma körning: defeat 100,65 s utan försvar.
+- Behöll configkandidaten: båda strategierna hinner före första vågen;
+  hypotetiskt senare wave avfärdat som onödig ändring. 400 wood räcker till
+  160 wood för barracks/fem soldiers/worker med reserv; slutbalans fortsatt öppen.
+- Lade två meningsfulla config-budget/invariant-tester. 139 tester, typecheck,
+  build passerade; bundle-varningen kvarstår. Diff/scope granskade, inga fynd.
+  RTS-017 Done. Fortsätter direkt med RTS-018, ingen commit/push.
+
+## 2026-10-02 – RTS-018 HUD
+
+- Samlade ekonomi/nod, bas-HP, waves, selection och separata produktionsstatusar
+  i DOM-HUD med configbaserade spärrskäl. Reserverade status-/restart-ytor;
+  flex/grid radbryter kontroller och canvas-bounds synkas efter layout.
+- Rena presentationstester verifierar spärrprioritet, timers, saldo kontra last
+  och reset. 142 tester, typecheck och build passerade; bundle-varning kvarstår.
+- Chromium: keyboard-Space startar worker, UI behåller selection/orders,
+  preview/cancel fungerar, båda timers syns samtidigt, fixture-defeat/restart
+  rensar status. Sex fixture-restarts och 1280×720/520×420/900×500 med scroll
+  och radbrytning passerade. Skärmbild /tmp/w2t-hud.png granskad visuellt.
+- Naturlig victory 124,07 s med bas 240 HP; fryst input/state, restart från
+  båda outcomes, ny 80-wood-ekonomi, samtidiga jobb och ny soldier-movement
+  passerade. Inga runtime-/konsol-/nätverksfel. Första långa browserförsöket
+  avbröts av Vite-reload under sista källjusteringen; hela flödet kördes om
+  mot oförändrad slutkod och passerade. Diff/381 referenser granskade utan fynd.
+- RTS-018 Done. Fortsätter RTS-019. Ingen commit/push.
+
+## 2026-10-02 – RTS-019 karta
+
+- Handgjord 32-px-arena, sten/vatten till vänster, gemensamma start-/spawn-data,
+  klippt nederkant, pure tile/world/body/footprint queries och hinderrevision.
+  createMatch äger ny karta. Rendering ligger bakom enheter; ingen pathfinder.
+- Fem map-tester verifierar roundtrip/ogiltiga koordinater, partial bottom,
+  footprint-rasterisering, kroppskanter, nuvarande fria rutter och reset/revision.
+  147 tester, typecheck och build passerade. En initial TS-inferens i testets
+  readonly-position-lista korrigerades till Position[][]; alla checks kördes om.
+- Chromium naturlig victory 124,75 s, bas 240 HP, alla waves; outcome/restart
+  och ny insamling/samtidig produktion/movement passerade utan browserfel.
+  Sex fixture-restarts samt resize/scroll-klick/move passerade med nya tiles.
+- Granskade map/state/config-diff: inga ändrade balansvärden, starts eller
+  tidsregler; inga blockerande fynd. Terrain-placering och påtvingad navigation
+  är explicit senare tasks. Bundle-varning kvar. RTS-019 Done, fortsätter RTS-020.
+
+## 2026-10-02 – RTS-020 move-navigation
+
+- Synkron deterministisk bounded BFS, fyra grannar, svept 24-px-kropp,
+  säkra exact-point connectors och restdelta över waypoints. Route/intention/
+  destination/revision är separata. Ny order ersätter; avvisning stoppar säkert
+  och ger svensk feedback. Last/avmarkering bevaras. Global revision återplanerar
+  och blockerade routes försöker bara vid ny order/revision.
+- Sex beteendetester för detour/otillgänglighet/kanter/corner-cut, tidssteg,
+  mid-route revision, orderbyte/last/reset. 153 tester, typecheck/build passerade.
+- Chromium: gå runt synlig sten, avvisa mål i sten, märkt helvägg-fixture
+  ger unreachable och stillastående; borttagen vägg/revision återupptar korrekt
+  destination. Målbyte/avmarkering och fixture-defeat/restart rensar route/map.
+  Inga browserfel. Första scriptets HUD-assert väntade inte på frame; korrigerad
+  väntan passerade hela kontrollen. Inga produktfel dolda med fixture.
+- Diff/scope granskade; inga blockers. Gather/attack ännu raka, explicit nästa
+  tasks. Bundle-varning kvar. RTS-020 Done; fortsätter RTS-021 utan commit/push.
+
+## 2026-10-02 – RTS-021 arbetsnavigation
+
+- Workers använder nåbara footprint-approaches och samma routes/restdelta för
+  nod/bas/återgång. Kantbaserad 24-px-interaktion kräver kroppssäker position
+  och fri linje till kanten. Full/partial last, ny order och avmarkering bevaras.
+- Fem nya tester: ingen tidig extraction, utanför-footprint, tidssteg/turer,
+  depletion, alternativa sidor/inringad nod, blockerad bas, last/orderbyte och
+  conservation. 158 tester, typecheck/build passerade, inklusive full wave-
+  integration. Diff granskad utan blockerande fynd; bundle-varning kvarstår.
+- Chromium med märkta fixtures: synlig vägg mellan workers/nod, 18-wood-nod,
+  två turer och full depletion, inringad bas som stoppar deposition utan
+  lastförlust, move/gather efter öppnad väg. Hela slutkontrollen passerade utan
+  runtime-/konsol-/nätverksfel. Första scriptet jämförde wood exakt trots
+  flyttal, och en senare fixture placerade en kropp 4 px in i testväggen;
+  tolerans/kroppssäker fixture korrigerades, inte produktens säkerhetskontroller.
+- Bas/nod ingår nu i matchens nav-hinder. Legacy-center-model utan map används
+  bara av äldre isolerade tester; faktiskt gameplay har footprint-routes.
+  RTS-021 Done, fortsätter RTS-022. Ingen commit/push.
+
+## 2026-10-02 – RTS-022 combat-navigation
+
+- Gemensamma footprint-approaches för soldier/AI/bas med kant-range, target-ID,
+  position-trigger/cooldown 0,25 s och omedelbar revisionskontroll. Ingen skada
+  genom walls; båda sidors HP-skada appliceras samtidigt, workers-orders bevaras.
+- Granskning/tester hittade tile-center pendling i mutual pursuit efter strikt
+  segmentvalidering. Rättade safe direct-segment när det är fritt, BFS annars,
+  och testar varje passerat segment mot aktuellt target. Regression runt sten
+  först reproducerade pendlingen och passerar nu; inget hinderkringgående bypass.
+- Åtta nya behavior/regressioner (7 combat, 1 segment) inklusive faktisk
+  footprint-match med samtidig bas/last-enemy death. 166 tester, typecheck/build
+  passerade. Initial scope/TS-regressioner rättades; checks körda efter fixar.
+- Chromium fixture: sealed/open attackväg, mål dödas/routes rensas och fiende
+  når/skadar bas. Naturlig full victory 122,12 s med bas 240 HP; fryst state/input,
+  restart båda outcomes och ny insamling/samtidig worker/soldier/movement passerade.
+  Inga runtime-/konsol-/nätverksfel. Tidiga långtester avbröts under säkerhetsfix;
+  resultaten ovan är den kompletta slutkodskörningen. 387 docsreferenser och
+  diffcheck passerade. Bundle-varning kvar. RTS-022 Done, fortsätter RTS-023.
+
+## 2026-10-02 – RTS-023 gruppmål
+
+- Stabil numerisk ID-tilldelning från 81 bounded kandidater, 32-px-spacing.
+  Kropp/map och individuell reachability testas; ingen duplikat-fallback.
+  Ogiltigt centralt klick avvisas. no-space stannar tills nytt gruppkommando;
+  revision ger inte central fallback. Gather/attack och omarkerade orders bevaras.
+- Fyra tester: unik/stabil tilldelning, edge/invalid click, exhaustion inklusive
+  revision, olika reachability/orderbyte. 170 tester, typecheck/build passerade.
+- Chromium: två workers producerades via verkliga DOM-knappar/5-s-timers med
+  märkt saldo-fixture; fem workers dragmarkerades, fick separata slutpositioner,
+  flyttades vid världskant, nytt mål under detour och avmarkering. Fixture-defeat/
+  restart rensade allocation/routes. Inga browserfel. Diffcheck passerade,
+  inga scope/regression-fynd. RTS-023 Done, fortsätter RTS-024. Ingen commit/push.
+
+## 2026-10-02 – RTS-024 säker placering/spawn
+
+- Preview/slutklick använder samma live-context: saldo, terräng, levande kroppar,
+  footprints och hypotetisk connectivity. Skyddar tidigare nåbara workers bas/
+  aktiva nod, produktionsutgång och alla konfigurerade wave-entrys basväg.
+  Kräver inte reparation av redan avskuren yta. Kostnad/map/footprint är atomiska.
+- Gemensamma bounded spawn-kandidater är kroppssäkra och fria från levande
+  units/enemies. Färdigt blockerad produktion väntar på timer 0; cache-signatur
+  ändras av maprevision eller enheters ID/position. Frigjord plats ger en spawn,
+  ingen ny kostnad eller ID innan faktiskt spawn. HUD visar väntans skäl.
+- Fem nya placement/spawn-tester plus HUD väntan/game-over-test. Full wave-
+  integration uppdaterades att använda faktisk placement-context och maprevision.
+  176 tester, typecheck/build passerade. Bundle-varning kvar (~1,41 MB/368 kB gzip).
+- Chromium: terräng/worker-overlap avvisas gratis utan selection/orderändring;
+  märkt gateway-fixture skyddar resursväg; giltig byggnad debiteras en gång och
+  höjer revision. Spawn-occupancy-fixture med riktiga knappar/5-s-timer väntar,
+  frigjord plats ger exakt en worker och oförändrat saldo. Restart återställer
+  maprevision 0, fyra ursprungliga hinder och rensad väntesignatur. Inga browserfel.
+- Naturlig match med actual placement/map/spawn gav victory 122,14 s, bas 240 HP;
+  båda outcomes/restarts samt ny ekonomi/samtidig produktion/movement passerade.
+  Vid slutreview togs onödig sökning av dold preview bort; hela tests/checks och
+  aktiva placement/spawn/browserflödet kördes om efter denna adapterändring och
+  passerade. Gameplay-modellen ändrades inte av den sista preview-justeringen.
+- Samlad etappdiff granskad för ekonomi/ID/reset/target/revision/bounds/input och
+  scope; inga kvarstående blockers. README beskriver faktisk etapp-1-match,
+  öppna senare produktbeslut kvarstår i DECISIONS. RTS-024 Done; etapp 1 klar.
+  Current Focus RTS-025, Todo. Ingen commit eller push.
+
+## 2026-10-02 – RTS-025
+
+Världen utökad till 1280 × 960; viewport 800 × 600, fast zoom 1 och bounded
+mittenmuspan med isolerad selection/placement. Gamla testgränser/väggar
+uppdaterades efter att första körningen visat 10 fel från ändrade bounds.
+Slutkontroll: 180 tester/20 filer, typecheck och build passerar. Chromium
+verifierade faktisk pan till motsatt hörn, movement, klick/reverse drag,
+placement i förskjuten kamera, återpan och leverans, fast HUD samt frozen
+game over/restart. Saldo och defeat använde tydligt avgränsade fixtures.
+Diff granskad för inputkonflikter, listener-cleanup och world-gränser; inga
+blockerande fynd kvar. Bundle-varningen kvarstår enligt scope.
+
+## 2026-10-02 – RTS-026
+
+Ren footprint-selection och produktionsbehörighet införda. Unit-träff får
+företräde; building/unit-selection är exklusiv och orders fortsätter. Panel
+reserverar sina slots och visar endast vald byggnads produktion. 183 tester,
+typecheck/build och Chromium passerar. Browser verifierade samtidiga jobb,
+blockerad programmatisk aktivering av dold knapp, kameraförskjutet klick,
+fortsatt rörelse efter avmarkering samt reset av val/ram. Saldo/defeat fixtures
+användes; övrig input var faktisk. Diff granskad utan blockerande fynd.
+
+## 2026-10-02 – RTS-027
+
+Byggnadsvisa rallymål valideras från säker statisk spawn-utgång och ger endast
+nyfödda units move-order. Ogiltigt mål behåller tidigare rally med feltext;
+senare blockerad route påverkar inte säker spawn eller kostnad. Rally-test
+fångade floating-point-rest i advanceRoute; tillräcklig tid snappar nu exakt
+till waypoint. 188 tester, typecheck/build passerar. Chromium verifierade
+målbyte/avvisning, soldier runt sten, omarkerad spawn, separat worker-rally
+utan gathering och reset. Browser-saldofixture rättades från 60 till 80 wood
+efter första körningen; inga spelkodsfel i det flödet. Diff granskad utan
+blockerande fynd.
+
+## 2026-10-02 – RTS-028
+
+Stop för markerade units, orderfas i HUD och aktiva/blockerade målringar.
+Last/saldo bevaras; routes rensas helt och kan inte återstarta på revision.
+194 tester passerar; typecheck/build passerar efter explicit markörtyp som
+rättade TS-inferens. Chromium verifierade Stop/resume under full-last-leverans,
+blockerad route, attack samt completion/game-over/reset. Combat/defeat var
+fixtures; leverans kördes naturligt. Återupptagen browserattack rättades att
+använda fiendens aktuella position. Diff granskad utan blockerande fynd.
+
+## 2026-10-02 – RTS-029
+
+Gold-gruva och separata saldon, typad last samt byte av resurs med leverans
+av tidigare last. Båda footprints ingår i navigation/placement. 203 tester,
+typecheck/build passerar. Chromium verifierade naturlig samtidig wood/gold,
+partial gold→wood-byte, leverans till korrekt saldo, bevarande per typ och
+reset. Defeat var fixture; ekonomin använde faktisk input/tid. Diff granskad
+för delade nodmängder, typbyte och navigation utan blockerande fynd.
+
+## 2026-10-02 – RTS-030
+
+Gemensam atomisk kostnadsmodell: worker 20 wood, barracks 40 wood, soldier
+20 wood + 5 gold. Knapptexter/spärrskäl följer config. 207 tester,
+typecheck/build och diff-check passerar. Chromium separat saldofixture
+verifierade wood-/gold-brist, oförändrade båda saldon, exakt debitering,
+dubbelstart och en spawn. Naturlig full match med två wood-workers/en gold:
+Victory 123,12 s, bas 240 HP, första soldier 59,92 s, fyra producerade/levande,
+120 wood och 20 gold spenderat, bevarande per typ och reset utan browserfel.
+Första browserrun vann också men dess hårda antagande om fyra överlevande
+rättades till spårning av producerade IDs och faktiska kostnader.
+
+## 2026-10-02 – RTS-031
+
+Barracks reserveras med vald worker, kostnad och footprint; 5 s effektivt
+arbete efter approach. Stop/orderbyte pausar utan refund, högerklick återupptar
+och completion gör builder idle. Produktion kräver färdig byggnad i både UI
+och gameplay. 213 tester, typecheck/build och diff-check passerar. Chromium
+med saldofixture verifierade workerkrav, tid/progress, spärrad tidig produktion
+även via programmatisk knapp, Stop/resume, soldier efter completion och reset.
+Matchtestet går genom workerbygge och båda resurser till Victory. Diff granskad
+för ghost-progress, reservation, last och listener-cleanup utan blockerande fynd.
+
+## 2026-10-02 – RTS-032
+
+Farms återanvänder workerbygge: 20 wood, 64 × 64, 5 s, max tre med monotona
+IDs. Bas-cap 8, farm +5 först vid completion, unit/job 1. Used/reserved härleds
+och båda produktionshandlers spärras atomiskt vid full cap. Godkända jobb
+slutförs även om cap senare minskar. Builder-ID/order skyddar mot ghost-progress
+vid site-byte; ny placering skyddar även tidigare nåbar byggväg.
+
+Slutchecks: 220 tester/27 filer, typecheck/build och diff-check passerar;
+ytterligare riktad population-suite (7 tester) passerar efter specificerad
+assert för byggväg. Chromium med sjunits-/saldofixture verifierade sista slot,
+full-cap no-debit, ogiltig/cancel gratis, farm Stop/resume, cap först efter
+completion, ny produktion och reset av model/render/HUD. Diff granskad utan
+blockerande fynd efter byggvägsskyddets rättning.
+
+Naturlig full survival med slutlig bygg-/populationmodell: två wood-workers,
+en gold-worker som byggde barracks och sedan återupptog resursarbete. Victory
+123,63 s, bas 240 HP, första soldier 60,01 s, fyra godkända och spawnade jobs,
+tre överlevande soldiers. Spenderat 120 wood/20 gold; bevarande per typ,
+restart och inga browserfel verifierade. Tidigare extra slutkontroll räknade
+för hårt fyra spawnade före Victory; den rättades att bokföra godkända starter
+även om ett jobb skulle vara kvar vid matchslut. Bundle-varningen kvarstår.
+
+Denna fortsättning färdigställde RTS-025–032 i ordning, utan commit/push eller
+nya dependencies. Current Focus är RTS-033: produktionskö/cancel/refund.
+
+## 2026-10-02 – RTS-033
+
+Byggnadsvisa FIFO-köer, tre jobb inklusive aktivt, lagrade kostnader och
+monotona job-ID:n. Enqueue debiterar/reserverar en gång; cancel head ger 50 %,
+köat 100 %, och frigör plats utan dubbelrefund. Kösteget återanvänder säker
+spawn/rally och väntar bakom blockerad head. 229 tester, typecheck/build
+passerar. Chromium med färdiga byggnader/saldon som fixtures verifierade
+samtidiga köer, full kö, head/middle cancel, timer/status, isolerad selection,
+reservations, blockerad spawn/cancel/fri utgång och reset utan browserfel.
+Diff granskad för FIFO, tidssteg, ID:n/refund och DOM-listener-cleanup utan
+blockerande fynd. Bundle-varningen kvarstår.
+
+## 2026-10-02 – RTS-034
+
+Workers och byggnader/projekt har HP och stabila targetreferenser. Död rensar
+köer, rally, supply och hinder utan refund; worker-last bokförs som lostCargo.
+Builder-död pausar projekt. Cleanup före produktion förhindrar spawn från
+byggnad som dör under samma steg. Diff granskad för dubblerad cleanup,
+resursbevarande och target-/route-referenser utan blockerande fynd.
+
+237 tester/29 filer, typecheck/build och diff-check passerar. Chromium med
+tydligt avgränsade HP-/placeringsfixtures verifierade faktisk enemy-skada mot
+lastad worker, byggprojekt, barracks med kö och bas; borttagning, ingen refund,
+selection/HUD, reservations och restart utan browserfel. Naturlig hel match
+med faktisk insamling, workerbygge, produktion och manuella attacker vann vid
+123,24 s med bas 240 HP, tre producerade/överlevande soldiers och tre workers.
+100 wood/15 gold spenderat; bevarande per typ inklusive lostCargo och reset
+verifierade. Bundle-varningen kvarstår. Ingen commit/push.
+
+## 2026-10-02 – RTS-035
+
+Automatisk acquisition med 140 px leash, stabila ties, reachability och
+EnemyVisibility-kontrakt; manuell attack prioriteras, Move avbryter och Stop
+håller utan auto. Efter kill väljs nästa mål eller navigation tillbaka.
+248 tester/30 filer, typecheck/build passerar. Chromium med combat-fixtures
+verifierade verklig melee mot två enemies utan klick, omarkerad soldier,
+Move/Stop/manuell målprioritet och restart utan browserfel. Granskning av
+orderbyte, target-cleanup, delta 0 och visibilité utan blockerande fynd.
+Bundle-varningen kvarstår.
+
+## 2026-10-02 – RTS-036
+
+Attack-move med separata gruppdestinationer, tillfälliga strider och återgång;
+workers påverkas inte. Move/Stop/manuell attack ersätter hela ordern. UI-läge
+kan avbrytas och rensas vid game over/restart. Granskningen fångade att
+gatherings tidiga mapped-move-branch kunde förbruka delta före combat;
+attack-move lämnas nu direkt till combat, med regressionstest. Ett testmål
+som hann springa bort mot basen flyttades till en faktisk encounter-fixture;
+ingen AI-policy ändrades för testet.
+
+258 tester/31 filer, typecheck/build passerar. Chromium combat-fixtures
+verifierade faktisk melee mot två enemies och ankomst till originalmål,
+selection, Escape, Stop/ny Move, game over och restart utan browserfel.
+Diff granskad för orderreferenser, timing och input/listeners. Bundle-varning
+kvarstår; ingen commit/push.
+
+Slutgranskning av fortsättningen RTS-033–036: 60 unika task-ID:n,
+36 Done/24 Todo, acykliska beroenden, 415 giltiga lokala filreferenser och
+bevarade ursprungliga RTS-001–015-texter. git diff --check passerar.
+Current Focus är RTS-037 (archer/projektiler). Ingen commit eller push.

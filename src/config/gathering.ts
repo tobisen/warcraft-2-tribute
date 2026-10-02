@@ -1,11 +1,14 @@
+import { arenaConfig } from './arena';
 export const gatheringConfig = {
   initialWood: 400,
   range: 24,
   woodPerSecond: 1,
   nodeRadius: 20,
-  nodePosition: { x: 650, y: 180 },
+  nodePosition: arenaConfig.node,
   capacity: 5,
   deliveryRange: 24,
-  basePosition: { x: 400, y: 450 },
+  basePosition: arenaConfig.base,
   baseSize: 48,
 };
+
+export const goldConfig = { initialAmount:300, position:{x:850,y:220}, resource:'gold' as const };

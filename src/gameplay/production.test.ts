@@ -65,7 +65,7 @@ describe('worker production', () => {
     const done = updateProduction(started.gathering, started.production, 6);
     const worker = done.gathering.units.at(-1)!;
     expect(worker).toEqual({
-      kind: 'worker', id: 'unit-4', position: { x: 160, y: 100 }, target: { x: 160, y: 100 },
+      kind: 'worker', owner:'player',hp:30, id: 'unit-4', position: { x: 160, y: 100 }, target: { x: 160, y: 100 },
       selected: false, cargo: 0, order: { kind: 'idle' },
     });
   });

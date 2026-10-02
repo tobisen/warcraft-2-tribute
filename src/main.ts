@@ -1,12 +1,13 @@
+import './style.css';
 import Phaser from 'phaser';
 import { BootScene } from './scenes/BootScene';
-import { worldConfig } from './config/buildings';
+import { viewportConfig } from './config/camera';
 
 new Phaser.Game({
   type: Phaser.AUTO,
   parent: 'game',
-  width: worldConfig.width,
-  height: worldConfig.height,
+  width: viewportConfig.width,
+  height: viewportConfig.height,
   backgroundColor: '#182028',
   scene: [BootScene],
 });

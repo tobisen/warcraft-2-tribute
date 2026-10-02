@@ -1,0 +1,53 @@
+import { barracksConfig, farmConfig } from '../config/buildings';
+import { approachRoute, canInteract } from './approach';
+import { advanceRoute } from './navigation';
+import { unitStats } from '../config/unit';
+import type { GatheringState, Unit } from './gathering';
+import type { PlacementState, ConstructionJob, Footprint } from './placement';
+import type { WorldMap } from './map';
+type SiteId = 'barracks'|`farm-${number}`;
+export function barracksReady(placement:PlacementState):boolean {
+  return placement.barracks!==null && (!placement.construction || placement.construction.remainingSeconds===0);
+}
+export function resumeConstruction(gathering:GatheringState,placement:PlacementState,map:WorldMap,id:SiteId='barracks') {
+  const farm=placement.farms?.find(f=>f.id===id);
+  const rect=id==='barracks'?placement.barracks:farm?.footprint;
+  const job=id==='barracks'?placement.construction:farm?.construction;
+  if (!rect || !job || job.remainingSeconds<=0) return {gathering,placement};
+  const builder=gathering.units.filter(u=>u.kind==='worker'&&u.selected)
+    .sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}))[0];
+  if (!builder || approachRoute(map,builder.position,rect,barracksConfig.constructionRange).status==='blocked') return {gathering,placement};
+  const updated={...job,builderId:builder.id};
+  return {placement:id==='barracks'?{...placement,construction:updated}
+      :{...placement,farms:placement.farms!.map(f=>f.id===id?{...f,construction:updated}:f)},
+    gathering:{...gathering,units:gathering.units.map((u):Unit=>u.id===builder.id&&u.kind==='worker'
+      ? {...u,navigation:undefined,order:{kind:'build',buildingId:id}}
+      : u.order.kind==='build'&&u.order.buildingId===id?{...u,navigation:undefined,target:{...u.position},order:{kind:'idle'}}:u)}};
+}
+function updateSite(gathering:GatheringState,job:ConstructionJob,rect:Footprint,id:SiteId,map:WorldMap,delta:number) {
+  if (job.remainingSeconds<=0) return {gathering,job};
+  const builder=gathering.units.find(u=>u.id===job.builderId && u.kind==='worker' && u.order.kind==='build'&&u.order.buildingId===id);
+  if (!builder) return {gathering,job};
+  const range=id==='barracks'?barracksConfig.constructionRange:farmConfig.constructionRange;
+  const goalKey=`build:${id}`,cached=builder.navigation;
+  const route=cached?.goalKey===goalKey&&cached.revision===map.revision?cached
+    : {...approachRoute(map,builder.position,rect,range),goalKey};
+  const step=advanceRoute(map,builder.position,route,unitStats.speed,Math.max(0,delta));
+  const remainingSeconds=step.route.status==='arrived'&&canInteract(map,step.position,rect,range)
+    ? Math.max(0,job.remainingSeconds-step.remaining):job.remainingSeconds;
+  const done=remainingSeconds<=1e-10;
+  return {job:{...job,remainingSeconds:done?0:remainingSeconds,builderId:done?null:job.builderId},
+    gathering:{...gathering,units:gathering.units.map((u):Unit=>u.id!==builder.id || u.kind!=='worker'?u:
+      {...u,position:step.position,target:{...step.position},navigation:done?undefined:{...step.route,goalKey},order:done?{kind:'idle'}:u.order})}};
+}
+export function updateConstruction(gathering:GatheringState,placement:PlacementState,map:WorldMap,delta:number) {
+  let next=gathering,construction=placement.construction;
+  if (construction && placement.barracks) {
+    const result=updateSite(next,construction,placement.barracks,'barracks',map,delta);next=result.gathering;construction=result.job;
+  }
+  const farms=placement.farms?.map(f=>{
+    const result=updateSite(next,f.construction,f.footprint,f.id,map,delta);next=result.gathering;
+    return {...f,construction:result.job};
+  });
+  return {gathering:next,placement:{...placement,...(construction?{construction}:{}),...(farms?{farms}:{})}};
+}

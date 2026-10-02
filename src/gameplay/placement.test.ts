@@ -22,7 +22,7 @@ describe('barracks placement', () => {
     expect(placementError(beginPlacement(idle()), point, 40, obstacles)).toBeNull();
   });
 
-  it.each([{x:-1,y:0}, {x:0,y:-1}, {x:768,y:0}, {x:0,y:544}, {x:800,y:600}])
+  it.each([{x:-1,y:0}, {x:0,y:-1}, {x:1248,y:0}, {x:0,y:928}, {x:1280,y:960}])
     ('rejects crossing a world edge: %j', point => {
       expect(placementError(beginPlacement(idle()), point, 100, obstacles)).toBe('Utanför världen');
     });
@@ -49,7 +49,7 @@ describe('barracks placement', () => {
     const active = beginPlacement(idle());
     const placed = placeBarracks(active, {x:100,y:100}, 100, obstacles);
     expect(placed.wood).toBe(60);
-    expect(placed.placement).toEqual({active:false,barracks:{x:96,y:96,width:64,height:64}});
+    expect(placed.placement).toEqual({active:false,barracks:{x:96,y:96,width:64,height:64},barracksOwner:'player',barracksHP:120});
     expect(placeBarracks(placed.placement, {x:200,y:200}, placed.wood, obstacles)).toEqual(placed);
     expect(beginPlacement(placed.placement)).toEqual(placed.placement);
     expect(placeBarracks({...placed.placement,active:true}, {x:200,y:200}, 100, obstacles).wood).toBe(100);
@@ -63,7 +63,7 @@ describe('barracks placement', () => {
 
   it('checks current balance at placement, including balance spent after entering mode', () => {
     const active = beginPlacement(idle());
-    expect(placementError(active,{x:100,y:100},39.99,obstacles)).toBe('Otillräckligt wood');
+    expect(placementError(active,{x:100,y:100},39.99,obstacles)).toBe('Otillräckligt wood/gold');
     expect(placeBarracks(active,{x:100,y:100},39.99,obstacles)).toEqual({placement:active,wood:39.99});
     expect(placeBarracks(active,{x:100,y:100},40,obstacles).wood).toBe(0);
   });

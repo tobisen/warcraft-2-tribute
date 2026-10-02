@@ -1,0 +1,19 @@
+:root { font-family: system-ui, sans-serif; color: #e8edf2; background: #10171e; }
+body { margin: 0; padding: 16px; }
+#hud { box-sizing: border-box; width: min(800px, 100%); padding: 12px; background: #23303c; border: 1px solid #506273; }
+#match-overview { display: flex; flex-wrap: wrap; gap: 8px 24px; font-variant-numeric: tabular-nums; }
+#production-controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; margin-top: 12px; }
+.control { display: flex; flex-direction: column; gap: 4px; min-height: 66px; }
+button { cursor: pointer; padding: 8px; font: inherit; color: #10171e; }
+button:disabled { cursor: default; opacity: .55; }
+[hidden] { display: none !important; }
+#selection-status, #match-status { margin: 8px 0; overflow-wrap: anywhere; }
+#match-status { font-weight: bold; }
+#game { width: 800px; margin-top: 12px; }
+canvas { display: block; }
+#match-overview { min-height: 42px; }
+#selection-status { height: 44px; overflow: auto; }
+#restart-slot { height: 42px; }
+
+#production-queue { height: 116px; overflow: auto; margin: 8px 0; }
+#production-queue button { display: block; width: 100%; margin-bottom: 4px; }

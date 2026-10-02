@@ -1,4 +1,8 @@
 export const combatConfig = {
+  workerHP:30,
+  barracksHP:120,
+  farmHP:80,
+  soldierAggroRange: 140,
   soldierHP: 60,
   soldierDamagePerSecond: 18,
   soldierRange: 32,

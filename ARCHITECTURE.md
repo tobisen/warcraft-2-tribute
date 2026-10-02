@@ -2,6 +2,14 @@
 
 ## Status och teknik
 
+Implementerat genom RTS-036: FIFO/refund, target-HP/destruktion, workerbygge, farms, population, kamera,
+byggnadsselection, rally, Stop, gold och
+atomiska kostnader ovanpå etapp 1:s HUD, handgjorda karta och navigation för
+move/work/combat, separata gruppmål och säkra placement/spawn-regler.
+De ursprungliga MVP-avsnitten nedan är historik; RTS-018–036-avsnitten längst
+ned beskriver gällande ändringar av presentation, ranges och navigation.
+
+
 RTS-001 har implementerat en minimal bootstrap med Phaser 4.2.1, strict
 TypeScript 7.0.2 och Vite 8.3.2. Appen körs i webbläsaren utan backend eller
 konton. RTS-002 inför movement, RTS-003 klickselection, RTS-004 dragselection
@@ -25,7 +33,7 @@ både nuvarande och kommande arbete.
 - [index.html](index.html) är Vites startpunkt med containern `#game` och
   separata DOM-kontroller för worker-/soldier-produktion och barracks-placering utanför canvasen.
 - [src/main.ts](src/main.ts) skapar Phaser.Game med automatisk renderer, en
-  mörk bakgrund och en canvas på 800 × 600 pixlar från worldConfig.
+  mörk bakgrund och en canvas på 800 × 600 pixlar från viewportConfig.
 - [src/scenes/BootScene.ts](src/scenes/BootScene.ts) presenterar tre gröna placeholders från createMatch
   (24 × 24 px) med ID unit-1, unit-2 och unit-3 vid (280, 300), (400, 300) och
   (520, 300). Varje arbetare har position, mål, order och selected-state separat från
@@ -87,7 +95,7 @@ både nuvarande och kommande arbete.
 
 Vite använder standardinställningarna och behöver ingen separat configfil.
 Ingen framtida systemstruktur har skapats. Movement ligger separat från
-bootstrap och scene. World-config definierar MVP:s öppna arena; inget terrängsystem har införts.
+bootstrap och scene. World-config definierar 800 × 600-arenan; RTS-019 tillför terräng enligt avsnittet nedan.
 
 ## Koordinater och tid
 
@@ -293,3 +301,280 @@ DOM-kontroller kan flytta canvasen när restart-knappen visas/döljs eller raden
 radbryts. syncVisuals uppdaterar därför Phasers canvasBounds efter DOM-synk,
 så world-input fortsätter träffa rätt efter restart, layoutändring och scroll.
 Detta verifieras i browser, utan mocktester som bara speglar Phaser-anropet.
+
+## Framtida riktning – roadmap RTS-016–060 (ej implementerad)
+
+Avsnitten ovan beskriver MVP-koden; kompletteringar RTS-016–019 beskrivs nedan.
+Phaser-adaptern ligger i BootScene och rena funktioner i gameplay/config.
+Navigation implementeras i RTS-020–024 nedan. Ingen gold-modell, större karta, fog, enemy-produktion, archer,
+catapult, queue, save-format eller nya assets har skapats i planeringskörningen.
+
+[BACKLOG.md](BACKLOG.md) anger leveranser och beroenden. Inför struktur endast
+när aktuell task behöver den; inga tomma framtida system eller generell ECS-
+refaktorering. Riktningen är att bygga vidare på följande faktiska gränser:
+
+| Befintlig gräns | Planerad utökning, inte aktuell implementation |
+| --- | --- |
+| movement.ts och world-pixel-positioner | Tile/walkability-data, route/waypoint-följning, nåbara footprint-positioner och hinderrevision i RTS-019–024. Rendering av karta separat från rena sök-/route-regler. |
+| gathering.ts med order/last | Gold/wood-typad ekonomi och arbetsrutter, därefter builder-orders i RTS-029–031. Ingen migration av dagens state i planeringskörningen. |
+| placement.ts och footprints | Gemensamma terräng-/byggnadshinder, unit-kroppar, connectivity-validering och säker spawn. Hypotetisk placering valideras före atomisk kostnad/stateändring. |
+| production.ts och per-building timers | Rally, supply/reservation och jobb/kö/cancel-policy i RTS-027/032/033; lifecycle vid byggnadsdöd i RTS-034. Budgetstyrd enemy-produktion återanvänder reglerna där praktiskt. |
+| combat.ts med enemy-ID/HP | Giltiga targetreferenser och död-cleanup för alla mål, autoattack, attack-move, ranged-projectiles och splash i RTS-034–039. Damage förblir fristående från sprites/animation. |
+| match.ts med outcome/restart | Explicit scenario-policy för survival/skirmish/uppdrag, senare pause och full reset. Separata mode-regler får inte skriva över MVP:s wave-victory eller defeat-prioritet. |
+| BootScene/input och DOM-kontroller | Kamera, kontextpanel/minimap/hotkeys som adapters. Ett visibility-kontrakt filtrerar alla informationsytor innan spelarens fog aktiveras i RTS-049. |
+| createMatch och config | Versionerad lokal snapshot/reconstruction i RTS-059; serialisera gameplay/config-referenser, inte Phaser-objekt, DOM, lyssnare eller sökcaches. |
+
+Gemensamma invariants i planen: ID:n/targets kan inte leva vidare efter död,
+ny order ersätter gammal route, ändrad hinderrevision validerar aktiv route,
+last/ekonomi följer explicit policy och alla systems state ingår i restart,
+game-over-stopp samt senare pause/save. Tests läggs vid rena regler; browser
+verifierar koordinater, UI/input, visibility och presentation. Gruppmål löser
+inte full unit-collision. Assetdimensioner/ankare ska passa spelmodellens
+footprints och får inte tyst ändra navigation eller targeting.
+
+Exakt dataschema/pathfinder/lagring ska väljas vid respektive task, se öppna
+beslut i [DECISIONS.md](DECISIONS.md). Planerade system har därför inga
+påhittade filreferenser. Wave-survival och skirmish ska finnas parallellt;
+AI samlar armégrupper ur ändlig budget utan ny full worker-ekonomi.
+
+## MVP-baseline inför utökning (RTS-016)
+
+Browserverifiering använder riktiga gameplay-tider och canvas-/DOM-input i
+Chromium. En tillfällig scene-referens i browserns Vite-response möjliggör
+state-asserts utan debug-API i projektet. Separata markerade fixtures används
+för upprepade omstarter och kontrollradens radbrytning. Viewport-koordinater
+från getBoundingClientRect jämförs med Phasers page-bounds efter scroll-offset;
+båda beskriver samma canvas. Daterat protokoll finns i [DEV_LOG.md](DEV_LOG.md).
+
+[src/config/balance.test.ts](src/config/balance.test.ts) verifierar finite waves,
+positiva rates/tider/HP och survival-budget utan att låsa exakta configvärden.
+RTS-017 behåller befintlig config efter jämförande naturliga speltester.
+
+## HUD – RTS-018
+
+[src/presentation/hud.ts](src/presentation/hud.ts) formar status och spärrskäl
+från gameplay-state/config utan att ändra state. Produktionens startvalidering
+ligger kvar i production.ts. [src/style.css](src/style.css) reserverar ytor för
+status/selection/restart och radbryter DOM-kontroller. Canvasens dubbla ekonomi-/
+wave-texter har ersatts av DOM-status; world-input synkar fortfarande page-bounds.
+Pointerrelease över hela HUD avbryter draggesten utan nytt urval eller order.
+
+## Handgjord karta – RTS-019
+
+[src/config/arena.ts](src/config/arena.ts) anger handgjord terräng och fasta
+starts/base/node/enemy-entry. [src/gameplay/map.ts](src/gameplay/map.ts) håller
+WorldMap med bounds, tileSize, obstacles och revision; createMatch äger ny
+kartstate vid restart. Konvertering, klippta tiles, footprint-rasterisering och
+kroppskontroller är Phaser-fria. BootScene renderar samma config som tiles
+bakom enheter. Ingen pathfinder eller hindertvingad movement finns ännu.
+
+## Move-navigation – RTS-020
+
+[src/gameplay/navigation.ts](src/gameplay/navigation.ts) gör bounded BFS,
+kroppssäkra connectors/sweeps, strukturerade route-errors och waypoint-steg
+med restdelta. [src/config/navigation.ts](src/config/navigation.ts) anger
+kropp-clearance och sökbudget. Unit.navigation är route-state; order behåller
+move-intention. Match skickar kartstate till gathering-uppdateringen för move;
+scenen adapterar bara kommandot. Gather/attack är ännu raka och hanteras i
+RTS-021/022. Svensk route-feedback finns i HUD för markerade enheter.
+
+## Arbetsnavigation – RTS-021
+
+[src/gameplay/approach.ts](src/gameplay/approach.ts) väljer nåbar position
+utanför footprint och verifierar kantavstånd/interaktion utan Phaser.
+createMatch lägger fasta bas/nod-footprints i map.obstacles; gathering använder
+samma navigation och förbrukar restdelta över approach/gather/delivery/return.
+Legacy-centerrange utan map behålls för de äldre isolerade regressionstesterna;
+spelmatchen skickar alltid map och använder den nya footprintmodellen.
+[src/gameplay/workNavigation.test.ts](src/gameplay/workNavigation.test.ts)
+verifierar faktisk map-loop, blockerade sidor, cargo/conservation/depletion
+och tidssteg. Attack/AI integreras i RTS-022.
+
+## Combat-navigation – RTS-022
+
+combat.ts använder approach.ts/navigation.ts för target-ID-bunden soldier-
+pursuit och enemy/bas. Enemy.navigation och Unit.navigation äger route/retry;
+position/range/revision triggar bounded replanning. Attack uppdaterar inga
+workers-orders. Target-death rensar route/attack och enemy-cache mot död soldier.
+Pure combatNavigation-tester täcker walls, range, moved target, death, base-
+reachability och simultaneous defeat i faktisk footprint-match. Legacy no-map
+combat används bara av äldre isolerade regressioner; match skickar alltid map.
+
+## Gruppförflyttning – RTS-023
+
+[src/gameplay/groupMovement.ts](src/gameplay/groupMovement.ts) genererar bounded
+kandidater och tilldelar nåbara, unika route-destinationer per markerat ID.
+Scenens markklick använder commandGroupMove; resource/enemy-input behåller
+befintliga regler. Navigationstate återanvänds; ingen ny generell formation/
+unit-collision. no-space visas i HUD och försöker inte fallback vid revision.
+
+## Placering/spawn – RTS-024
+
+placement.ts tar optional PlacementContext för world-map, aktuell ekonomi/
+units och levande enemies. Hypotetiska connectivity-kontroller är rena;
+placeBarracks returnerar placement/wood/map atomiskt. Scenen använder samma
+validering för aktiv preview och slutklick, och gör ingen dold preview-sökning.
+[src/gameplay/spawning.ts](src/gameplay/spawning.ts) delar bounded spawn-
+kandidater, kroppsyta och utgångsquery med placerings-/produktionslogik.
+Match skickar map/enemies till båda produktionsjobb i ordning; andra jobbet
+ser första spawnen. ProductionState.blockedSpawnKey cacherar relevant state
+vid väntan. [src/gameplay/safePlacement.test.ts](src/gameplay/safePlacement.test.ts)
+täcker hypotetiska gateway/wave-vägar, atomicitet och blockerad/frigjord spawn.
+
+## RTS-025 – Kamera och större värld
+
+[src/config/camera.ts](src/config/camera.ts) skiljer viewport 800 × 600 från
+worldConfig 1280 × 960. [src/presentation/camera.ts](src/presentation/camera.ts)
+beräknar bounded pan och koordinatkonvertering utan Phaser; dess
+[tester](src/presentation/camera.test.ts) verifierar gränser och selection/placement.
+BootScene adapterar mittenmusdrag till kamerans scroll, använder aktuell kamera
+för pointer-world och rensar gest/scroll vid restart. DOM-HUD ligger utanför
+kameran. Befintliga gräns-/väggtester använder explicit fixturestorlek eller
+aktuell world-storlek, så testväggarna fortfarande förseglar hela kartan.
+
+## RTS-026 – Byggnadsselection
+
+[src/gameplay/buildingSelection.ts](src/gameplay/buildingSelection.ts) innehåller
+ren footprint-hit och exklusiv target-selection samt produktionsbehörighet.
+BootScene äger det kortlivade byggnadsvalet och gul footprint-ram; create/reset
+rensar båda. Unit-träff har företräde, byggnadsval avmarkerar units och drag
+rensar byggnadsval. DOM-panelen visar endast vald byggnads produktion med
+visibility:hidden för övriga reserverade slots. Click-handler kontrollerar
+behörighet även för programmatisk aktivering; global build-knapp behålls.
+[Tester](src/gameplay/buildingSelection.test.ts) täcker footprintkanter,
+prioritet, orders, otillåtna targets och game-over-behörighet.
+
+## RTS-027 – Rally
+
+ProductionState äger optional rally/rallyError per byggnad.
+[src/gameplay/rally.ts](src/gameplay/rally.ts) validerar destinationens statiska
+nåbarhet från en säker möjlig spawn-utgång. Produktionssteget tilldelar endast
+nyfödd unit mapped move utan att markera den. Giltig spawn är oberoende av
+rally; en senare blockerad route väntar säkert. [Tester](src/gameplay/rally.test.ts)
+täcker avvisat mål, separata samtidiga jobb, säker spawn och reset.
+Navigation snappar exakt till waypoint när kvarvarande tid räcker; detta
+rättar floating-point-rest vid ankomst som rally-regressionen upptäckte.
+
+## RTS-028 – Stop och feedback
+
+[src/gameplay/orders.ts](src/gameplay/orders.ts) gör enbart markerade units idle
+och rensar target/route utan att ändra last/HP/saldo; game over är no-op.
+[src/presentation/orders.ts](src/presentation/orders.ts) härleder målmarkörer
+från aktuella orders och levande targets. Scenen diffar renderobjekt efter ID,
+visar gula aktiva/röda blockerade ringar och städar completion/död/reset.
+Stop-knappen är DOM-isolerad och dess listener tas bort vid shutdown.
+[Tester](src/gameplay/orders.test.ts) täcker alla arbetsfaser och attack,
+resource preservation, revisions-regression och marker lifecycle.
+
+## RTS-029 – Två resurstypers arbetsloop
+
+GatheringState behåller wood-noden och lägger till gold-nod/goldBalance.
+ResourceType är wood/gold; order refererar nod-ID och last anger cargoType.
+Legacy wood-only fixtures använder default wood. UpdateGathering arbetar på
+lokala kopior av båda nodernas remaining och bokför per typ vid leverans.
+Orderbyte med annan lasttyp går till bas först och minns den nya nodens ID.
+Placement/navigation tar hänsyn till båda resursfootprints och bevarar
+arbetarnas tidigare nåbarhet till båda. Gruvan renderas gul; HUD och lasttext
+visar separata typer. [Tester](src/gameplay/gold.test.ts) täcker tidssteg,
+partial/full switch, Stop/move, delad depletion, bevarande och blockerad gruva.
+
+## RTS-030 – Gemensamma kostnader
+
+[src/config/economy.ts](src/config/economy.ts) anger ResourceCost-objekt för
+worker, soldier och barracks. [src/gameplay/economy.ts](src/gameplay/economy.ts)
+validerar båda saldon och debiterar atomiskt; samma config ger knapptexter
+och HUD-spärrorsaker. Produktionen debiterar en gång vid start och placering
+vid giltigt slutklick. [Tester](src/gameplay/economy.test.ts) täcker ena
+resursens brist, exakta gränser, dubbelstart och reset. Match-regressionen
+samlar två resurser från fresh state och räknar bevarande per typ inklusive
+spenderade kostnader genom alla waves.
+
+## RTS-031 – Worker bygger barracks
+
+PlacementState äger optional construction med återstående arbetstid och
+builder-ID; den reserverade footprinten är omedelbart blockerande. Faktisk
+placeBarracks-context kräver vald nåbar worker och returnerar atomiskt
+gathering/map/placement. Legacy geometry-only fixtures utan context behåller
+den tidigare direkta placeringsmodellen. WorkerOrder har build, som inte
+bearbetas av gathering. [src/gameplay/construction.ts](src/gameplay/construction.ts)
+uppdaterar approach, progress och completion innan produktion i matchsteget.
+Endast aktiv build-order i räckvidd ger progress. Stop/orderbyte pausar;
+högerklick med worker återupptar/tilldelar en builder. Barracks production
+får ready=false tills färdig, både i UI och start/updateProduction.
+[Tester](src/gameplay/construction.test.ts) täcker reservation, approaches,
+tidssteg, paus/resume, builderbyte och blockerad plats.
+
+## RTS-032 – Farms och härledd population
+
+PlacementState lagrar farms med monotona ID:n, footprint och ConstructionJob.
+placeBuilding/beginPlacement tar barracks/farm-typ, återanvänder giltighets-
+och reservationsregler och skyddar även befintlig barracks spawn-utgång
+och tilldelade builders tidigare nåbara vägar till ofärdiga sites.
+Worker build-order refererar konkret site-ID; construction uppdaterar varje
+site separat, så byte order pausar tidigare site och olika builders kan arbeta
+samtidigt. [src/gameplay/population.ts](src/gameplay/population.ts) härleder
+cap/used/reserved från färdiga farms, levande units och pågående produktionsjobb
+inklusive färdig blockerad spawn. Start får explicit populationscontext i
+scenens båda produktionshandlers; reservplats konverteras naturligt vid spawn.
+Godkända jobb fullföljs även om cap senare minskar. Farm-knapp/status, render-
+objekt och population-HUD följer samma lifecycle/reset som befintliga kontroller.
+[Tester](src/gameplay/population.test.ts) täcker reservation, race mellan
+byggnader, paus/completion, separata sites, maxantal, over-cap och reset.
+
+## RTS-033 – FIFO-produktionskö
+
+[src/gameplay/productionQueue.ts](src/gameplay/productionQueue.ts) äger enqueue,
+canEnqueue, cancel och kösteget. ProductionJob lagrar byggnadsvis monotont ID,
+unit-typ, kostnad och tid. ProductionState.queue har högst tre jobb; befintligt
+remainingSeconds speglar head för befintliga timer-/spawnadaptrar. Kösteget
+återanvänder säker updateProduction/spawn och förbrukar delta över FIFO-jobb;
+blockerad head håller senare timers. Legacy single-job fixtures fortsätter
+använda startProduction; scenen använder enqueue och matchen kösteget.
+Population summerar samtliga jobb. Panelen har stabilt reserverat utrymme och
+en delegerad cancel-listener, renderar endast vid ID/selection/outcome-ändring
+så knappar inte byts varje frame. [Tester](src/gameplay/productionQueue.test.ts)
+täcker cost/reservation, FIFO, tidssteg, head/middle refunds, samtidighet,
+blockerad spawn, game-over och reset.
+
+## RTS-034 – Target-snapshot och destruktion
+
+[src/gameplay/targets.ts](src/gameplay/targets.ts) beskriver levande spelar-
+targets med ID, ägare, HP och footprint. Enemy prioriterar närmaste target
+i aggro, med soldier/worker/building/ID tie-break; bas är fallback.
+Workers och producerade units har explicit player/HP, wave-enemies enemy.
+Legacy worker-fixtures utan HP behåller sina tidigare isolerade regler.
+
+[src/gameplay/destruction.ts](src/gameplay/destruction.ts) tar bort döda units,
+bokför worker-cargo som lostCargo, pausar föräldralösa byggjobb och tar bort
+byggnader/footprints. Döda byggnaders queue/rally töms utan refund; räknare
+bevaras. Borttagna hinder ger en revision per transaktion. Targetrefs rensas
+även vid delta=0. Matchordning: pre-cleanup → arbete/bygge → combat → cleanup
+→ köproduktion → waves/outcome. Därmed kan ett döende producer inte spawna
+samma frame. Basdöd stoppar båda producers och ger defeat med företräde.
+Scenen rensar byggnadsval/ram, body/HP/cargo/rally/queue och farm-render efter
+modellens levande IDs. [Tester](src/gameplay/destruction.test.ts) täcker
+lastförlust, worker-/projekt-/byggnads-/basdöd, ghost-spawn, supply, pauser,
+monotona räknare och öppnade rutter; ekonomi-regressionen använder HP-workers
+och räknar lostCargo i totalbevarande.
+
+## RTS-035 – Acquisition och orderprioritet
+
+[acquisition.ts](src/gameplay/acquisition.ts) väljer mål före combat från
+samma snapshot. EnemyVisibility-predicate är kontraktet för framtida fog;
+default är fullt synligt. Reachability använder befintlig approachRoute.
+Soldier autoOrigin begränsar jakt och möjliggör återgång; autoDisabled används
+av Stop. Explicit Move/attack rensar origin och spärr. Aktuellt automål behålls
+så länge det är giltigt; manuell attack ersätts inte av närhetsval.
+[acquisition.test.ts](src/gameplay/acquisition.test.ts) täcker prioritet,
+stabila ties, synlighet, otillgänglighet, återgång och flera kills.
+
+## RTS-036 – Fortsatt grupporder
+
+[attackMove.ts](src/gameplay/attackMove.ts) återanvänder gruppnavigation för
+valda soldiers och lagrar attackMoveTarget separat från tillfälligt enemy-mål.
+Gathering lämnar dessa soldiers till combat så samma delta inte flyttar dem
+två gånger. Acquisition avbryter deras färd för giltiga enemies; combat rör
+dem mot kvarvarande destination när striden är slut. Scene hanterar enbart
+knapp/destination/cancel, med shutdown-cleanup och game-over-spärr.
+[attackMove.test.ts](src/gameplay/attackMove.test.ts) täcker resa/strid/återgång,
+orders, gruppmål, workers, dolt mål, blockering och enkel deltaförbrukning.

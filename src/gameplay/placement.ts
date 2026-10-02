@@ -1,4 +1,14 @@
-import { barracksConfig, worldConfig } from '../config/buildings';
+import { combatConfig } from '../config/combat';
+import { costs } from '../config/economy';
+import { canAfford, payCost } from './economy';
+import { arenaConfig } from '../config/arena';
+import { waveSchedule } from '../config/waves';
+import { approachRoute } from './approach';
+import { bodyFits, overlaps, replaceObstacles, type WorldMap } from './map';
+import { spawnCandidates, hasSpawnExit, unitBody } from './spawning';
+import type { Unit } from './gathering';
+import { soldierStats, unitStats } from '../config/unit';
+import { barracksConfig, farmConfig, worldConfig } from '../config/buildings';
 import { gatheringConfig } from '../config/gathering';
 import type { GatheringState } from './gathering';
 import type { Position } from './movement';
@@ -7,19 +17,33 @@ export interface Footprint extends Position {
   width: number;
   height: number;
 }
+export interface PlacementContext {
+  map: WorldMap; gathering: GatheringState; enemies: readonly {position:Position}[];
+}
+export interface ConstructionJob {remainingSeconds:number;builderId:string|null}
+export interface Farm {owner?:'player';hp?:number;id:`farm-${number}`;footprint:Footprint;construction:ConstructionJob}
 export interface PlacementState {
+  kind?:'barracks'|'farm';
+  farms?:Farm[];
+  nextFarmNumber?:number;
+  construction?: ConstructionJob;
   active: boolean;
   barracks: Footprint | null;
+  barracksOwner?:'player';
+  barracksHP?:number;
 }
 
-export function barracksFootprint(point: Position): Footprint {
-  const size = barracksConfig.tileSize * barracksConfig.footprintTiles;
+export function buildingFootprint(point: Position,kind:'barracks'|'farm'='barracks'): Footprint {
+  const config=kind==='farm'?farmConfig:barracksConfig;
+  const size = config.tileSize * config.footprintTiles;
   return {
-    x: Math.floor(point.x / barracksConfig.tileSize) * barracksConfig.tileSize,
-    y: Math.floor(point.y / barracksConfig.tileSize) * barracksConfig.tileSize,
+    x: Math.floor(point.x / config.tileSize) * config.tileSize,
+    y: Math.floor(point.y / config.tileSize) * config.tileSize,
     width: size, height: size,
   };
 }
+
+export const barracksFootprint = (point:Position):Footprint=>buildingFootprint(point);
 
 export function placementObstacles(state: GatheringState): Footprint[] {
   return [
@@ -27,20 +51,25 @@ export function placementObstacles(state: GatheringState): Footprint[] {
       width: gatheringConfig.baseSize, height: gatheringConfig.baseSize },
     { x: state.node.position.x - gatheringConfig.nodeRadius, y: state.node.position.y - gatheringConfig.nodeRadius,
       width: gatheringConfig.nodeRadius * 2, height: gatheringConfig.nodeRadius * 2 },
+    ...(state.gold ? [{x:state.gold.position.x-gatheringConfig.nodeRadius,
+      y:state.gold.position.y-gatheringConfig.nodeRadius,width:gatheringConfig.nodeRadius*2,height:gatheringConfig.nodeRadius*2}] : []),
   ];
 }
 
-export function beginPlacement(state: PlacementState): PlacementState {
-  return state.barracks ? state : { ...state, active: true };
+export function beginPlacement(state: PlacementState,kind:'barracks'|'farm'='barracks'): PlacementState {
+  return kind==='barracks'&&state.barracks || kind==='farm'&&(state.farms?.length??0)>=farmConfig.maxCount
+    ? state : { ...state, active:true,...(kind==='farm'?{kind}: {kind:undefined}) };
 }
 
 export function cancelPlacement(state: PlacementState): PlacementState {
   return { ...state, active: false };
 }
 
-export function placementError(state: PlacementState, point: Position, wood: number, obstacles: Footprint[]): string | null {
-  if (state.barracks) return 'En barracks finns redan';
-  const rect = barracksFootprint(point);
+export function placementError(state: PlacementState, point: Position, wood: number, obstacles: Footprint[], context?: PlacementContext): string | null {
+  const kind=state.kind??'barracks';
+  if (kind==='barracks'&&state.barracks) return 'En barracks finns redan';
+  if (kind==='farm'&&(state.farms?.length??0)>=farmConfig.maxCount) return 'Max antal farms';
+  const rect = buildingFootprint(point,kind);
   if (rect.x < 0 || rect.y < 0 || rect.x + rect.width > worldConfig.width || rect.y + rect.height > worldConfig.height) {
     return 'Utanför världen';
   }
@@ -48,14 +77,66 @@ export function placementError(state: PlacementState, point: Position, wood: num
     && rect.y < other.y + other.height && rect.y + rect.height > other.y)) {
     return 'Överlappar bas eller resursnod';
   }
-  if (wood < barracksConfig.cost) return 'Otillräckligt wood';
+  if (!canAfford({wood,goldBalance:context?.gathering.goldBalance},costs[kind])) return 'Otillräckligt wood/gold';
+  if (context) {
+    if(context.map.obstacles.some(o=>overlaps(rect,o)))return 'Överlappar terräng eller byggnad';
+    if(context.gathering.units.some(u=>overlaps(rect,unitBody(u.position,u.kind==='worker'?unitStats.size:soldierStats.size)))
+      || context.enemies.some(e=>overlaps(rect,unitBody(e.position,soldierStats.size))))return 'Överlappar en enhet';
+    const after=replaceObstacles(context.map,[...context.map.obstacles,rect]);
+    const [base,...nodes]=placementObstacles(context.gathering);
+    for(const worker of context.gathering.units.filter((u):u is Extract<Unit,{kind:'worker'}>=>u.kind==='worker')) {
+      for(const [target,range] of [[base,gatheringConfig.deliveryRange],
+        ...nodes.flatMap((node,i)=>[context.gathering.node,context.gathering.gold][i]!.remaining>0?[[node,gatheringConfig.range] as const]:[])] as const) {
+        if(approachRoute(context.map,worker.position,target,range).status!=='blocked'
+          && approachRoute(after,worker.position,target,range).status==='blocked')return 'Blockerar arbetarens bas- eller resursväg';
+      }
+    }
+    const sites=[...(state.barracks&&state.construction&&state.construction.remainingSeconds>0
+      ? [{footprint:state.barracks,job:state.construction}]:[]),
+      ...(state.farms??[]).filter(f=>f.construction.remainingSeconds>0).map(f=>({footprint:f.footprint,job:f.construction}))];
+    for(const site of sites) {
+      const builder=context.gathering.units.find(u=>u.id===site.job.builderId&&u.kind==='worker');
+      if(builder && approachRoute(context.map,builder.position,site.footprint,barracksConfig.constructionRange).status!=='blocked'
+        && approachRoute(after,builder.position,site.footprint,barracksConfig.constructionRange).status==='blocked')return 'Blockerar byggarbetarens väg';
+    }
+    const exit=(map:WorldMap,foot:Footprint,kind:'base'|'barracks')=>spawnCandidates(map,foot,kind).some(p=>hasSpawnExit(map,p));
+    if(exit(context.map,base,'base') && !exit(after,base,'base') || kind==='barracks' && !exit(after,rect,'barracks')
+      || state.barracks && exit(context.map,state.barracks,'barracks') && !exit(after,state.barracks,'barracks'))return 'Blockerar produktionsutgång';
+    for(let i=0;i<Math.max(...waveSchedule.map(w=>w.count));i++) {
+      const entry={x:arenaConfig.enemyEntry.x,y:arenaConfig.enemyEntry.y+i*arenaConfig.enemyEntry.spacing};
+      if(bodyFits(context.map,entry,12) && approachRoute(context.map,entry,base,32).status!=='blocked'
+        && (!bodyFits(after,entry,12) || approachRoute(after,entry,base,32).status==='blocked'))return 'Blockerar fiendevågornas basväg';
+    }
+  }
+  if (context) {
+    const builder=context.gathering.units.filter(u=>u.kind==='worker' && u.selected)
+      .sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}))[0];
+    if (!builder) return 'Välj en worker för att bygga';
+    const after=replaceObstacles(context.map,[...context.map.obstacles,rect]);
+    if (approachRoute(after,builder.position,rect,barracksConfig.constructionRange).status==='blocked') return 'Byggplatsen kan inte nås';
+  }
   return null;
 }
 
-export function placeBarracks(state: PlacementState, point: Position, wood: number, obstacles: Footprint[]) {
-  if (!state.active || placementError(state, point, wood, obstacles)) return { placement: state, wood };
+export function placeBuilding(state: PlacementState, point: Position, wood: number, obstacles: Footprint[], context?: PlacementContext):
+  {placement:PlacementState;wood:number;map?:WorldMap;gathering?:GatheringState} {
+  if (!state.active || placementError(state, point, wood, obstacles, context)) return { placement: state, wood, ...(context?{map:context.map}:{}) };
+  const kind=state.kind??'barracks';
+  const rect=buildingFootprint(point,kind);
+  const id: 'barracks'|`farm-${number}` = kind==='barracks'?'barracks':`farm-${state.nextFarmNumber??1}`;
+  const builder=context?.gathering.units.filter(u=>u.kind==='worker'&&u.selected)
+    .sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}))[0];
+  const paid=payCost({...context?.gathering,wood},costs[kind]);
   return {
-    placement: { active: false, barracks: barracksFootprint(point) },
-    wood: wood - barracksConfig.cost,
+    placement: kind==='barracks'
+      ? {...state,active:false,kind:undefined,barracks:rect,barracksOwner:'player',barracksHP:combatConfig.barracksHP,...(builder?{construction:{remainingSeconds:barracksConfig.constructionSeconds,builderId:builder.id}}:{})}
+      : {...state,active:false,kind:undefined,nextFarmNumber:(state.nextFarmNumber??1)+1,
+        farms:[...(state.farms??[]),{owner:'player',hp:combatConfig.farmHP,id:id as `farm-${number}`,footprint:rect,construction:{remainingSeconds:farmConfig.constructionSeconds,builderId:builder?.id??null}}]},
+    wood:paid.wood,
+    ...(context && builder ? {map:replaceObstacles(context.map,[...context.map.obstacles,rect]),
+      gathering:{...payCost({...context.gathering,wood},costs[kind]),units:context.gathering.units.map((u):Unit=>
+        u.id===builder.id&&u.kind==='worker'?{...u,navigation:undefined,order:{kind:'build',buildingId:id}}:u)}}:{}),
   };
 }
+
+export const placeBarracks = placeBuilding;

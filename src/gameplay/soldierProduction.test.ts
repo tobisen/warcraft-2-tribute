@@ -8,7 +8,7 @@ import { selectUnitAt, selectUnitsInRectangle } from './selection';
 const state = (wood = 60): GatheringState => ({
   units: [{ kind: 'worker', id: 'unit-1', position: { x: 100, y: 100 }, target: { x: 100, y: 100 }, selected: true, cargo: 0, order: { kind: 'idle' } }],
   node: { id: 'wood', position: { x: 300, y: 100 }, remaining: 100 },
-  base: { x: 400, y: 450 }, wood,
+  base: { x: 400, y: 450 }, wood, goldBalance:100,
 });
 const idle = (): ProductionState => ({ remainingSeconds: null, nextUnitNumber: 2 });
 const barracks: ProductionBuilding = { kind: 'barracks', footprint: { x: 96, y: 96, width: 64, height: 64 } };

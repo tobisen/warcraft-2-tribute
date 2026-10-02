@@ -1,23 +1,39 @@
+import { approachRoute, canInteract } from './approach';
+import { advanceRoute } from './navigation';
+import { placementObstacles } from './placement';
+import { updateMappedMove, type RouteState } from './navigation';
+import type { WorldMap } from './map';
 import { gatheringConfig } from '../config/gathering';
 import { soldierStats, unitStats } from '../config/unit';
 import { moveTowards, type Position } from './movement';
 import type { SelectableUnit } from './selection';
 
+export type ResourceType = 'wood' | 'gold';
 export type WorkerOrder = { kind: 'idle' } | { kind: 'move' }
-  | { kind: 'gather' | 'deliver'; nodeId: string };
+  | { kind: 'gather' | 'deliver'; nodeId: string } | {kind:'build';buildingId:'barracks'|`farm-${number}`};
 export interface Worker extends SelectableUnit {
+  navigation?: RouteState;
   kind: 'worker';
+  owner?:'player';
+  hp?:number;
   order: WorkerOrder;
   cargo: number;
+  cargoType?: ResourceType;
 }
 export interface Soldier extends SelectableUnit {
+  autoOrigin?: Position;
+  attackMoveTarget?: Position;
+  autoDisabled?: boolean;
+  navigation?: RouteState;
   kind: 'soldier';
+  owner?:'player';
   order: { kind: 'idle' } | { kind: 'move' } | { kind: 'attack'; enemyId: string };
   hp: number;
   cargo: 0;
 }
 export type Unit = Worker | Soldier;
 export interface ResourceNode {
+  resource?: ResourceType;
   id: string;
   position: Position;
   remaining: number;
@@ -25,8 +41,11 @@ export interface ResourceNode {
 export interface GatheringState {
   units: Unit[];
   node: ResourceNode;
+  gold?: ResourceNode;
+  goldBalance?: number;
   base: Position;
   wood: number;
+  lostCargo?:{wood:number;gold:number};
 }
 
 export function isNodeHit(point: Position, node: ResourceNode): boolean {
@@ -36,12 +55,13 @@ export function isNodeHit(point: Position, node: ResourceNode): boolean {
 export function orderUnits(units: Unit[], target: Position, node?: ResourceNode): Unit[] {
   return units.map(unit => {
     if (!unit.selected || (node && unit.kind === 'soldier')) return unit;
-    if (unit.kind === 'soldier') return { ...unit, target: { ...target }, order: { kind: 'move' } };
+    if (unit.kind === 'soldier') return { ...unit, attackMoveTarget: undefined, autoOrigin: undefined, autoDisabled: false, navigation: undefined, target: { ...target }, order: { kind: 'move' } };
     return {
       ...unit,
+      navigation: undefined,
       target: { ...(node ? node.position : target) },
       order: !node ? { kind: 'move' }
-        : unit.cargo >= gatheringConfig.capacity || (node.remaining <= 0 && unit.cargo > 0)
+        : unit.cargo >= gatheringConfig.capacity || (unit.cargo > 0 && (unit.cargoType ?? 'wood') !== (node.resource ?? 'wood')) || (node.remaining <= 0 && unit.cargo > 0)
           ? { kind: 'deliver', nodeId: node.id }
           : node.remaining > 0 ? { kind: 'gather', nodeId: node.id } : { kind: 'idle' },
     };
@@ -49,11 +69,17 @@ export function orderUnits(units: Unit[], target: Position, node?: ResourceNode)
 }
 
 /** Spend delta across approach, gathering, delivery and return without losing time. */
-export function updateGathering(state: GatheringState, deltaSeconds: number): GatheringState {
-  let remaining = state.node.remaining;
+export function updateGathering(state: GatheringState, deltaSeconds: number, map?: WorldMap): GatheringState {
+  const nodes = [state.node, ...(state.gold ? [state.gold] : [])].map(node=>({...node}));
+  let goldBalance = state.goldBalance ?? 0;
   let wood = state.wood;
   const units = state.units.map(original => {
+    if(original.kind==='soldier'&&original.attackMoveTarget)return original;
+    if (map && (original.order.kind === 'move' || original.order.kind === 'idle' && original.navigation?.status === 'blocked'
+      && original.navigation.error !== 'no-space' && original.navigation.revision !== map.revision)) return updateMappedMove(original, map, deltaSeconds);
+    if (original.order.kind === 'build') return original;
     if (original.kind === 'soldier') {
+      if (original.attackMoveTarget) return original;
       if (original.order.kind !== 'move') return original;
       const position = moveTowards(original.position, original.target, soldierStats.speed, Math.max(0, deltaSeconds));
       return { ...original, position, order: position.x === original.target.x && position.y === original.target.y
@@ -61,7 +87,7 @@ export function updateGathering(state: GatheringState, deltaSeconds: number): Ga
     }
     let worker: Worker = { ...original, position: { ...original.position } };
     let time = Math.max(0, deltaSeconds);
-    while (worker.order.kind !== 'idle') {
+    while (worker.order.kind !== 'idle' && worker.order.kind !== 'build') {
       if (worker.order.kind === 'move') {
         worker.position = moveTowards(worker.position, worker.target, unitStats.speed, time);
         if (worker.position.x === worker.target.x && worker.position.y === worker.target.y) {
@@ -70,28 +96,52 @@ export function updateGathering(state: GatheringState, deltaSeconds: number): Ga
         break;
       }
       const nodeId = worker.order.nodeId;
+      const node = nodes.find(n=>n.id===nodeId);
+      if (!node) { worker.order={kind:'idle'};worker.navigation=undefined;break; }
+      const resource = node.resource ?? 'wood';
+      let remaining = node.remaining;
       if (worker.order.kind === 'gather' && (remaining <= 0 || worker.cargo >= gatheringConfig.capacity)) {
         worker.order = worker.cargo > 0 ? { kind: 'deliver', nodeId } : { kind: 'idle' };
         continue;
       }
       const delivering = worker.order.kind === 'deliver';
-      const destination = delivering ? state.base : state.node.position;
+      const destination = delivering ? state.base : node.position;
       const range = delivering ? gatheringConfig.deliveryRange : gatheringConfig.range;
-      const distance = Math.hypot(worker.position.x - destination.x, worker.position.y - destination.y);
-      const travel = Math.max(0, distance - range) / unitStats.speed;
-      worker.position = moveTowards(worker.position, destination, unitStats.speed, Math.min(time, travel));
-      if (travel > time) break;
-      time = Math.max(0, time - travel);
+      if (map) {
+        const workMap = { ...map, obstacles: [...map.obstacles, ...placementObstacles(state)] };
+        const rect = delivering ? placementObstacles(state)[0] : {
+          x:node.position.x-gatheringConfig.nodeRadius, y:node.position.y-gatheringConfig.nodeRadius,
+          width:gatheringConfig.nodeRadius*2, height:gatheringConfig.nodeRadius*2 };
+        const goalKey = `${worker.order.kind}:${nodeId}:${rect.x}:${rect.y}`;
+        const cached = worker.navigation;
+        const route = cached?.goalKey === goalKey && cached.revision === map.revision ? cached
+          : { ...approachRoute(workMap, worker.position, rect, range, cached?.commandNumber ?? 1), goalKey };
+        const step = advanceRoute(workMap, worker.position, route, unitStats.speed, time);
+        worker.position = step.position;
+        worker.navigation = { ...step.route, goalKey };
+        time = step.remaining;
+        if (step.route.status !== 'arrived' || !canInteract(workMap, worker.position, rect, range)) break;
+      } else {
+        const distance = Math.hypot(worker.position.x - destination.x, worker.position.y - destination.y);
+        const travel = Math.max(0, distance - range) / unitStats.speed;
+        worker.position = moveTowards(worker.position, destination, unitStats.speed, Math.min(time, travel));
+        if (travel > time) break;
+        time = Math.max(0, time - travel);
+      }
       if (delivering) {
-        wood += worker.cargo;
+        if ((worker.cargoType ?? 'wood') === 'gold') goldBalance += worker.cargo;
+        else wood += worker.cargo;
+        worker.cargoType = undefined;
         worker.cargo = 0;
         worker.order = remaining > 0 ? { kind: 'gather', nodeId } : { kind: 'idle' };
         continue;
       }
       const amount = Math.min(remaining, gatheringConfig.capacity - worker.cargo,
         gatheringConfig.woodPerSecond * time);
+      worker.cargoType = resource;
       worker.cargo += amount;
       remaining -= amount;
+      node.remaining = remaining;
       time = Math.max(0, time - amount / gatheringConfig.woodPerSecond);
       if (remaining <= 0 || worker.cargo >= gatheringConfig.capacity) {
         worker.order = { kind: 'deliver', nodeId };
@@ -104,9 +154,11 @@ export function updateGathering(state: GatheringState, deltaSeconds: number): Ga
   // Depletion also redirects units already processed in this step.
   return {
     ...state,
-    units: remaining === 0 ? units.map(worker => worker.kind === 'worker' && worker.order.kind === 'gather'
+    units: units.map(worker => worker.kind === 'worker' && worker.order.kind === 'gather'
+      && nodes.find(n=>worker.order.kind==='gather' && n.id===worker.order.nodeId)?.remaining === 0
       ? { ...worker, order: worker.cargo > 0
-        ? { kind: 'deliver', nodeId: worker.order.nodeId } : { kind: 'idle' } } : worker) : units,
-    node: { ...state.node, remaining }, wood,
+        ? { kind: 'deliver', nodeId: worker.order.nodeId } : { kind: 'idle' } } : worker),
+    node: nodes[0], wood,
+    ...(state.gold ? {gold:nodes[1],goldBalance} : {}),
   };
 }
