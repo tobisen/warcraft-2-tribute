@@ -1271,3 +1271,44 @@ Fraktions-/förmågeregression och speltest dokumenterade i FACTION_BALANCE.md. 
 Checks: `npm test -- --silent=false` **535 tester/71 filer**, `npm run typecheck`, `npm run build`, `git diff --check` passerar. Runtime-JS är samma index-CikpuOlK som verifierad RTS-069; bundle-varning kvar. Natural Chromium Utposten/Normal: crown Victory90/bas240, första soldier23,81 s, kostnad120 wood/35 gold; clans Victory90/bas240, första yxkrigare24,72 s, kostnad118/36. Båda producerade/behöll soldier/archer/catapult och tre workers, tre waves, tre ability-knappaktiveringar, ledger440/310, lostCargo0 och fresh restart. Separat accelerated-clock browser: actual enemy-attacker ger defeat ~91,55/~91,60 s, terminal högerklick/E/simulation ändrar inget, restart/ny motsatt fraktion isoleras. Screenshots granskade; inga browserfel. Naturliga Easy/Hard matcher, andra engines/mobil och akustisk lyssning ej verifierade; ingen statistisk jämviktsgaranti.
 
 Granskning: testhelper använder known resources/synliga mål och riktiga commands; sparning/ledger/outcome/fresh-state går genom runtimefunktioner. Helpern ingår inte i appbundle. Inga blockerande fynd kvar. Föregående 7a34610 verifierad Actions success. Nästa RTS-071: riktig enemy gathering/last/leverans, enligt detaljerad nästa task; äldre enemy-stridsprofil/ingen enemy-förmåga och initialt ändlig budget är kända förenklingar.
+
+## 2026-10-03 – RTS-071: verklig fiendeinsamling
+
+Två angripbara 30HP-workers delar arena-noder, last5/rate1 och verklig
+leverans till fiendebasens 96px-footprint. Enemy-bank betalar produktion;
+extracted/spent/lostCargo bokför faktisk ekonomi. Work-state finns enbart
+i enemy-entiteter och gathering återanvänds genom tillfällig vy. Gemensam
+servicekö, gates, separation, fog och fraktionsgrafik används. Worker-död
+bokför last en gång; basdöd stoppar arbete. Workers attackerar inte,
+tar ingen army-cap och rekryteras inte till grupper.
+
+Save schema2/config5 validerar ekonomi/work-order/last/ledger och militära
+referenser. Config4/äldre migreras utan gratis workers eller income; tidigare
+attack-timing bevaras. Nya ekonomimatcher får +20s attack-grace: den delade
+konkurrensen gav Hard-förluster i tidigare strategier. Kostnader, HP och
+startbudget är oförändrade. Leveransworkers reserverar inga aktiva
+serviceplatser; återvändande lastbärare kan inte passera admission inom
+ett stort delta. Ingen ändring av release-botens spelarstrategi.
+
+Checks: slutlig npm test 549 tester/72 filer PASS (90,32s); typecheck/build
+PASS; git diff --check PASS. Riktad ekonomi/kö/difficulty/load 27 PASS,
+Hard Skirmish båda fraktioner + release-baslinje PASS. Fullmatris omfattar
+fem scenarios/tre difficulties/båda fraktioner med victory, resursledger och
+pause/save. Tidiga röda tester för gamla kroppantal/fog/startbudget och
+syntetiska legacy-saves uppdaterades till faktiska nya regler; ledger inkluderar
+fiendens extraktion. Granskad diff: inga kvarstående blockerande fynd inom
+taskens scope.
+
+Chromium 147 mot slutlig production-preview: faktisk scout-klick/move,
+synlig röd worker med rätt fraktionsgrafik, flera wood/gold-turer, begränsad
+last, betald enemy-produktion, pause/save/load/restart för båda fraktioner
+PASS utan page/console/request-fel. Klockan accelererades; inga extra
+resurser/enheter eller gameplay-skador injicerades. Screenshots granskade.
+En första browser-jämförelse tog felaktigt med den avsiktligt osparade
+blockedSpawnKey-cachen; sparbart gameplay jämförs efter korrigering och
+bevaras exakt. Ingen naturlig fullmatch-balansgaranti från denna kontroll.
+
+Begränsningar: fasta nodval, inga ersättningsworkers/bygganden i denna
+slice. AI-upptäckt väntar till RTS-075. Befintlig bundle-varning kvarstår
+avsiktligt; build index-aO1Cgnqp.js 1527,77KB/gzip401,45KB. RTS-070:s
+GitHub Actions/Pages verifierades success för 86b252e. Nästa task RTS-072.

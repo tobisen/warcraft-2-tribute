@@ -733,3 +733,19 @@ Egna valda enheters status visar effekt/cooldown. Paus fryser timern, game over 
 ## RTS-070 – Speltestad preliminär balans
 
 Båda fraktionerna kan vinna samtliga befintliga scenarios på Easy/Normal/Hard med legal ekonomi och kommandostrategi, och kan förlora genom verkliga enemy-attacker när basen lämnas oskyddad. Naturlig Utposten/Normal verifierades för båda: 90 s Victory, bas240 och betald soldier/archer/catapult med förmågeaktivering. Järnklanen behöver planera gold tidigt för 6-gold-receptet; låt gärna en annan worker bygga. Skydda/retirera workers och fortsätt med överlevande armé efter störd ekonomi. Inga numeriska balansändringar i denna task; resultaten är vinstvägar på en arena, inte statistiskt jämn fraktionsstyrka. Se FACTION_BALANCE.md för metod och begränsningar.
+
+## RTS-071: angripbar fiendeekonomi
+
+Skirmish och Belägringen börjar med två fiendearbetare, en wood och en gold.
+De delar spelarens noder, arbetar 1/s, bär högst 5 och levererar inom 24 px
+från fiendebasens footprint. De har 30 HP, syns enligt fog och kan angripas,
+men attackerar inte. Ingen worker-produktion eller ersättning i denna slice.
+Fiendens verkliga saldo finansierar fler stridsenheter upp till army-cap.
+Död förlorar last; basdöd stoppar arbetet. Startbudget behålls och inget
+wood/gold skapas automatiskt. Leveransturer upptar inte nodens arbetsplatser.
+
+Den delade resurskonkurrensen gav Hard-regression i tidigare vinststrategi.
+Nya ekonomimatcher får därför +20 s före första gruppanfall (95/80/70 s),
+med tidigare lokal attack/försvar kvar. Inga HP-/kostnads-/startbudgetändringar.
+Äldre saves får varken arbetare, income eller ny attack-timing gratis.
+AI känner fortfarande resurspositionerna; begränsad upptäckt kommer i RTS-075.

@@ -2,7 +2,7 @@
 
 Browserbaserat singleplayer-RTS inspirerat av Warcraft 2, Age of Empires 2 och
 Command & Conquer. Phaser, strict TypeScript och Vite; local-first, gameplay
-före grafik. Implementerat genom RTS-066 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
+före grafik. Implementerat genom RTS-071 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
 
 ## Installation och lokal start
 
@@ -22,8 +22,9 @@ Små fönster kan scrollas.
 
 I startmenyn: välj Wave-survival, Skirmish eller något av de tre uppdragen och Easy/Normal/Hard, sedan
 ”Starta match”. Byt val via ”Ny match / meny” och starta där en ny match. Survival har tre ändliga waves; i Skirmish finns inga waves och målet
-är att förstöra fiendebasen vid (1008,144). Fienden producerar från sin
-ändliga budget, samlar grupper och håller ett lokalt försvar. Restart behåller
+är att förstöra fiendebasen vid (1008,144). Fienden delar wood- och gold-noderna med spelaren: två arbetare levererar till
+sin bas och finansierar produktion utöver startbudgeten. Fienden samlar grupper och
+håller ett lokalt försvar. Restart behåller
 valt läge. Förlust vid spelarbasens död har alltid företräde.
 
 1. Fog är aktiv. Välj två blå workers och flytta mot (600,220) för att
@@ -388,3 +389,14 @@ RTS-068: Kronförbundets soldat kostar **20 wood + 5 gold**, tar **5 s** och har
 RTS-069: markera stridsenheter och tryck **E** eller fraktionsknappen. **Försvarshållning** (Kronförbundet) minskar inkommande skada 25 %; **Raseri** (Järnklanen) ökar utgående skada 25 %. Effekt 5 s, cooldown 20 s från aktivering, ingen resurskostnad. Status visar valda units timers; paus/Save/load bevarar dem och restart återställer. Save-config är nu 4 med migration från tidigare configversioner.
 
 RTS-070: [fraktionsspeltest](FACTION_BALANCE.md) verifierar båda val i alla fem scenarios/tre svårigheter, verklig defeat, fraktionsbyte och två naturliga Utposten/Normal-vinster. Järnklanens gold-behov gör tidig insamling och worker-skydd viktiga. Balansen är preliminär inför enemy-ekonomi; inga spelvärden ändrades i speltesttasken.
+
+## RTS-071: delade resurser
+
+I Skirmish och Belägringen har fienden två arbetare (30 HP), en per resurs.
+De bär högst 5, samlar 1/s och levererar vid sin bas. Du kan angripa synliga
+arbetare för att minska fiendens inkomster. Noderna är samma ändliga noder
+som dina arbetare använder. Arbetare på leveranstur upptar ingen arbetsplats
+vid noden. AI:ns första gruppanfall väntar 20 s extra i dessa nya ekonomimatcher
+(Easy 95, Normal 80, Hard 70); försvar och lokal attack kan ske tidigare.
+Save config5 bevarar fiendelast, orders, bank och bokföring. Äldre saves
+laddas utan extra arbetare eller income; restart använder den nya starten.

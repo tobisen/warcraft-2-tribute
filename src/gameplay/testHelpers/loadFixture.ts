@@ -6,6 +6,7 @@ import type {Soldier,Worker} from '../gathering';
 /** Explicit load fixture: extra units/HP, beyond supply; never a paid playthrough. */
 export function createLoadFixture(total:64|128):MatchState {
   const match=createMatch('skirmish','easy');
+  match.combat.enemies=match.combat.enemies.filter(e=>e.kind!=='worker');
   match.enemyProduction!.wood=0;
   match.enemyProduction!.gold=0;
   const workers:Worker[]=Array.from({length:8},(_,i)=>({

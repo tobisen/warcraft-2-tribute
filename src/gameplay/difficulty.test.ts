@@ -1,3 +1,4 @@
+import {enemyEconomyConfig} from '../config/enemyEconomy';
 import { describe,expect,it } from 'vitest';
 import { difficultyProfiles,initialDifficulty,type Difficulty } from '../config/difficulty';
 import { createMatch,updateMatch } from './match';
@@ -14,14 +15,14 @@ describe('bounded difficulty profiles',()=>{
   s=updateMatch(s,.001);expect(s.combat.enemies).toHaveLength(p.waves[0].count);expect(s.enemyProduction).toBeUndefined();expect(s.gathering.wood).toBe(0);expect(s.gathering.node.remaining).toBe(400);expect(s.combat.baseHP).toBe(240);expect(matchLabels(s).wave).toContain('Våg 1 / 3');
  });
  it.each(choices)('%s skirmish spends finite budget once, honors time/cap and dispatch grace',difficulty=>{
-  let s=createMatch('skirmish',difficulty,{player:'crown',enemy:'crown'});const p=difficultyProfiles[difficulty];s=updateMatch(s,p.durationSeconds-.001);expect(s.combat.enemies.filter(e=>e.kind!=='base')).toHaveLength(0);
-  s=updateMatch(s,.001);expect(s.combat.enemies.filter(e=>e.kind!=='base')).toHaveLength(1);expect(s.gathering.wood).toBe(0);expect(s.gathering.goldBalance).toBe(0);expect(s.enemyAI!.lastDispatchSeconds).toBeNull();
+  let s=createMatch('skirmish',difficulty,{player:'crown',enemy:'crown'});const p=difficultyProfiles[difficulty],firstAttack=p.ai.firstAttackSeconds+enemyEconomyConfig.attackGraceSeconds;s=updateMatch(s,p.durationSeconds-.001);expect(s.combat.enemies.filter(e=>e.kind!=='base'&&e.kind!=='worker')).toHaveLength(0);
+  s=updateMatch(s,.001);expect(s.combat.enemies.filter(e=>e.kind!=='base'&&e.kind!=='worker')).toHaveLength(1);expect(s.gathering.wood).toBe(0);expect(s.gathering.goldBalance).toBe(0);expect(s.enemyAI!.lastDispatchSeconds).toBeNull();
   for(let n=0;n<350;n++)s=updateMatch(s,.1);
-  const e=s.enemyProduction!,units=s.combat.enemies.filter(e=>e.kind!=='base'),jobs=e.production.queue??[];
-  expect(units.length+jobs.length).toBeLessThanOrEqual(p.cap);expect(e.wood+e.acceptedJobs*20).toBe(p.budget.wood);expect(e.gold+e.acceptedJobs*5).toBe(p.budget.gold);expect(e.acceptedJobs).toBe(p.budget.wood/20);expect(s.waves.nextWave).toBe(0);
+  const e=s.enemyProduction!,units=s.combat.enemies.filter(e=>e.kind!=='base'&&e.kind!=='worker'),jobs=e.production.queue??[];
+  expect(units.length+jobs.length).toBeLessThanOrEqual(p.cap);expect(e.spent!.wood).toBe(e.acceptedJobs*20);expect(e.spent!.gold).toBe(e.acceptedJobs*5);expect(e.acceptedJobs).toBeGreaterThanOrEqual(p.budget.wood/20);expect(s.waves.nextWave).toBe(0);
   expect(s.enemyAI!.lastDispatchSeconds).toBeNull();
-  while(s.waves.elapsedSeconds<p.ai.firstAttackSeconds-.001)s=updateMatch(s,Math.min(.1,p.ai.firstAttackSeconds-.001-s.waves.elapsedSeconds));
-  expect(s.enemyAI!.lastDispatchSeconds).toBeNull();s=updateMatch(s,.002);expect(s.enemyAI!.lastDispatchSeconds).toBeCloseTo(p.ai.firstAttackSeconds,2);
+  while(s.waves.elapsedSeconds<firstAttack-.001)s=updateMatch(s,Math.min(.1,firstAttack-.001-s.waves.elapsedSeconds));
+  expect(s.enemyAI!.lastDispatchSeconds).toBeNull();s=updateMatch(s,.002);expect(s.enemyAI!.lastDispatchSeconds).toBeCloseTo(firstAttack,2);
   expect(s.enemyAI!.groups.filter(g=>g.status==='attack')).toHaveLength(1);
   const restart=createMatch(s.scenario,s.difficulty);expect(restart.difficulty).toBe(difficulty);expect(restart.enemyProduction!.wood).toBe(p.budget.wood);expect(restart.enemyProduction!.gold).toBe(p.budget.gold);expect(restart.enemyProduction!.acceptedJobs).toBe(0);
  });

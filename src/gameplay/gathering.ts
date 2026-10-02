@@ -1,3 +1,4 @@
+import type {ResourceService} from './resourceQueue';
 import type {AbilityState} from './abilities';
 import type {FactionId} from '../config/factions';
 import { approachRoute, canInteract } from './approach';
@@ -48,6 +49,7 @@ export interface ResourceNode {
 export interface GatheringState {
   /** Derived from match ownership; reconstructed on Load rather than serialized. */
   faction?:FactionId;
+  baseSize?:number;
   units: Unit[];
   node: ResourceNode;
   gold?: ResourceNode;
@@ -78,15 +80,15 @@ export function orderUnits(units: Unit[], target: Position, node?: ResourceNode)
 }
 
 /** Spend delta across approach, gathering, delivery and return without losing time. */
-export function updateGathering(state: GatheringState, deltaSeconds: number, map?: WorldMap,queue?:{elapsedSeconds:number;gateFor?:GateFor}): GatheringState {
-  const services=map&&queue?resourceServices(state,map,queue.elapsedSeconds):undefined;
+export function updateGathering(state: GatheringState, deltaSeconds: number, map?: WorldMap,queue?:{elapsedSeconds:number;gateFor?:GateFor;team?:'player'|'enemy';services?:Map<string,ResourceService>}): GatheringState {
+  const services=queue?.services??(map&&queue?resourceServices(state,map,queue.elapsedSeconds):undefined);
   const nodes = [state.node, ...(state.gold ? [state.gold] : [])].map(node=>({...node}));
   let goldBalance = state.goldBalance ?? 0;
   let wood = state.wood;
   const units = state.units.map(original => {
     if(original.kind==='soldier'&&original.attackMoveTarget)return original;
     if (map && (original.order.kind === 'move' || original.order.kind === 'idle' && original.navigation?.status === 'blocked'
-      && original.navigation.error !== 'no-space' && original.navigation.revision !== map.revision)) return updateMappedMove(original, map, deltaSeconds,queue?.gateFor?.(`player:${original.id}`));
+      && original.navigation.error !== 'no-space' && original.navigation.revision !== map.revision)) return updateMappedMove(original, map, deltaSeconds,queue?.gateFor?.(`${queue?.team??'player'}:${original.id}`));
     if (original.order.kind === 'build') return original;
     if (original.kind === 'soldier') {
       if (original.attackMoveTarget) return original;
@@ -127,7 +129,7 @@ export function updateGathering(state: GatheringState, deltaSeconds: number, map
         const cached = worker.navigation;
         const route = cached?.goalKey === goalKey && cached.revision === map.revision ? cached
           : { ...(service?planRoute(workMap,worker.position,service.point,cached?.commandNumber??1):approachRoute(workMap, worker.position, rect, range, cached?.commandNumber ?? 1)), goalKey };
-        const step = advanceRoute(workMap, worker.position, route, unitStats.speed, time,queue?.gateFor?.(`player:${worker.id}`));
+        const step = advanceRoute(workMap, worker.position, route, unitStats.speed, time,queue?.gateFor?.(`${queue?.team??'player'}:${worker.id}`));
         worker.position = step.position;
         worker.navigation = { ...step.route, goalKey };
         time = step.remaining;

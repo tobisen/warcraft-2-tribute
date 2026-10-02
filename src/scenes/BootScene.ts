@@ -656,14 +656,14 @@ export class BootScene extends Phaser.Scene {
       this.projectileVisuals.get(shot.id)!.setPosition(shot.position.x,shot.position.y);}
     for (const enemy of visibleEnemies) {
       if (!this.enemyVisuals.has(enemy.id)) this.enemyVisuals.set(enemy.id, {
-        body: enemy.kind==='base'?this.add.image(enemy.position.x,enemy.position.y,'buildings',buildingFrame('base','enemy',0,5,this.factions.enemy)).setOrigin(.5,.75):this.add.image(enemy.position.x,enemy.position.y,'units',`${this.factions.enemy==='clans'?'clans-':''}soldier-enemy-s-idle-0`).setOrigin(.5,22/32),
+        body: enemy.kind==='base'?this.add.image(enemy.position.x,enemy.position.y,'buildings',buildingFrame('base','enemy',0,5,this.factions.enemy)).setOrigin(.5,.75):this.add.image(enemy.position.x,enemy.position.y,'units',`${this.factions.enemy==='clans'?'clans-':''}${enemy.kind==='worker'?'worker':'soldier'}-enemy-s-idle-0`).setOrigin(.5,22/32),
         label: this.add.text(0, 0, '', { fontSize: '14px', color: '#ffffff' }).setOrigin(0.5, 0),
       });
       const visual = this.enemyVisuals.get(enemy.id)!;
       visual.body.setPosition(enemy.position.x, enemy.position.y);
-      if(enemy.kind!=='base'){const target=enemy.order?.kind==='defend'?this.gathering.units.find(u=>enemy.order?.kind==='defend'&&u.id===enemy.order.targetId)?.position:enemy.navigation?.targetId==='base'?this.gathering.base:undefined;const action:Action=enemy.navigation?.targetId&&enemy.navigation.targetId!=='explore-goal'&&enemy.navigation.status==='arrived'?'attack':'idle';this.animateUnit(enemy.id,visual.body,enemy.position,action,'soldier','enemy',target);}
+      if(enemy.kind!=='base'){const target=enemy.order?.kind==='defend'?this.gathering.units.find(u=>enemy.order?.kind==='defend'&&u.id===enemy.order.targetId)?.position:enemy.navigation?.targetId==='base'?this.gathering.base:undefined;const action:Action=enemy.navigation?.targetId&&enemy.navigation.targetId!=='explore-goal'&&enemy.navigation.status==='arrived'?'attack':enemy.work?.order.kind==='gather'?'gather':'idle';this.animateUnit(enemy.id,visual.body,enemy.position,action,enemy.kind==='worker'?'worker':'soldier','enemy',target);}
       visual.label.setPosition(enemy.position.x,enemy.position.y-90).setVisible(enemy.kind==='base').setText(`${factions[this.factions.enemy].buildingNames.base} ${Math.ceil(enemy.hp)} HP`);
-      this.drawHP(enemy.position,enemy.hp,enemy.kind==='base'?combatConfig.baseHP:combatConfig.enemyHP,enemy.kind==='base'?64:24,enemy.kind==='base'?70:29,0xcf7770);
+      this.drawHP(enemy.position,enemy.hp,enemy.kind==='base'?combatConfig.baseHP:enemy.kind==='worker'?combatConfig.workerHP:combatConfig.enemyHP,enemy.kind==='base'?64:24,enemy.kind==='base'?70:29,0xcf7770);
     }
     for (const unit of this.gathering.units) {
       if (!this.visuals.has(unit.id)) {

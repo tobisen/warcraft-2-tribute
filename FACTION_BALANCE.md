@@ -42,3 +42,14 @@ Separat browserkontroll accelererade endast klockan i två nya orörda Survival/
 Båda fraktioner har verifierade legala vinstvägar och kan förlora om basen lämnas oskyddad. Ingen blockerande balansändring behövdes för denna arena. Det är en deterministisk spelbarhetskontroll och två naturliga Normal-matcher, inte statistiskt bevis på jämn styrka. Järnklanens +HP/wood-avvägning kräver mer gold och tar längre tid; försvarshållning/raseri, attackerade workers och resursskötsel påverkar utfallet. Enemy-units har fortfarande den äldre svagare stridsprofilen och aktiverar inga förmågor; enemy-production använder en ändlig startbudget. Verklig enemy gathering kommer i RTS-071.
 
 Mjuk separation är inte full collision avoidance, andra browsermotorer/mobil och akustisk lyssning är ej verifierade, och befintlig bundle-varning kvarstår. [Tidigare releasekontroller](RELEASE_CHECKLIST.md) och [performanceprofil](PERFORMANCE.md) gäller sina dokumenterade byggen; ingen ny FPS-garanti påstås här.
+
+## Uppföljning RTS-071
+
+Rapportens tidigare RTS-070-resultat avser budgetmodellen innan verkliga
+fiendearbetare. Efter RTS-071 delar två enemy-workers noderna och betalar
+produktion genom levererad income. Efter dokumenterat +20s till första
+gruppanfall passerar samma 30 fraktions/scenario/difficulty-vinstfall och
+15 release-basfall med oförändrad spelarstrategi. Ledger inkluderar nu
+fiendens verkliga extraktion. Ingen ny naturlig fullmatch eller statistisk
+fraktionsbalansstudie genomförd; browser verifierade ekonomi/save/restart
+med accelererad klocka och riktiga starter.

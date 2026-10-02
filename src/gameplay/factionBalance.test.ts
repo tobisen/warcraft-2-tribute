@@ -10,8 +10,8 @@ for(const faction of ['crown','clans'] as const)for(const scenario of playableSc
   console.info(JSON.stringify({faction,scenario,difficulty,outcome:m.outcome,time:m.waves.elapsedSeconds,baseHP:m.combat.baseHP,wood:r.spentWood,gold:r.spentGold,abilities:r.abilitiesUsed}));
   expect(m.outcome).toBe('victory');expect(r.saved).toBe(true);expect(m.factions).toEqual(factionsForPlayer(faction));expect(m.gathering.faction).toBe(faction);expect(updateMatch(m,999)).toBe(m);
   const cargo=(type:string)=>m.gathering.units.reduce((n,u)=>n+(u.kind==='worker'&&(u.cargoType??'wood')===type?u.cargo:0),0);
-  expect(m.gathering.wood+m.gathering.node.remaining+cargo('wood')+r.spentWood+(m.gathering.lostCargo?.wood??0)).toBeCloseTo(400+scenarioConfig[scenario].initial.wood);
-  expect((m.gathering.goldBalance??0)+m.gathering.gold!.remaining+cargo('gold')+r.spentGold+(m.gathering.lostCargo?.gold??0)).toBeCloseTo(300+scenarioConfig[scenario].initial.gold);
+  expect(m.gathering.wood+m.gathering.node.remaining+cargo('wood')+(m.enemyProduction?.extracted?.wood??0)+r.spentWood+(m.gathering.lostCargo?.wood??0)).toBeCloseTo(400+scenarioConfig[scenario].initial.wood);
+  expect((m.gathering.goldBalance??0)+m.gathering.gold!.remaining+cargo('gold')+(m.enemyProduction?.extracted?.gold??0)+r.spentGold+(m.gathering.lostCargo?.gold??0)).toBeCloseTo(300+scenarioConfig[scenario].initial.gold);
   expect(decodeSave(encodeSave(m,{camera:{x:0,y:0},building:'base'})).ok).toBe(true);
  },30_000);
 }

@@ -48,9 +48,10 @@ export function buildingFootprint(point: Position,kind:'barracks'|'farm'|'forge'
 export const barracksFootprint = (point:Position):Footprint=>buildingFootprint(point);
 
 export function placementObstacles(state: GatheringState): Footprint[] {
+  const baseSize=state.baseSize??gatheringConfig.baseSize;
   return [
-    { x: state.base.x - gatheringConfig.baseSize / 2, y: state.base.y - gatheringConfig.baseSize / 2,
-      width: gatheringConfig.baseSize, height: gatheringConfig.baseSize },
+    { x: state.base.x - baseSize / 2, y: state.base.y - baseSize / 2,
+      width: baseSize, height: baseSize },
     { x: state.node.position.x - gatheringConfig.nodeRadius, y: state.node.position.y - gatheringConfig.nodeRadius,
       width: gatheringConfig.nodeRadius * 2, height: gatheringConfig.nodeRadius * 2 },
     ...(state.gold ? [{x:state.gold.position.x-gatheringConfig.nodeRadius,

@@ -13,7 +13,11 @@ export function resourceServices(state:GatheringState,map:WorldMap,elapsed:numbe
  const result=new Map<string,ResourceService>();
  map={...map,obstacles:[...map.obstacles,...placementObstacles(state)]};
  for(const node of [state.node,...(state.gold?[state.gold]:[])]){
-  const workers=state.units.filter(u=>u.kind==='worker'&&(u.hp===undefined||u.hp>0)&&(u.order.kind==='gather'||u.order.kind==='deliver')&&u.order.nodeId===node.id).sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}));
+  const cohort=state.units.filter(u=>u.kind==='worker'&&(u.hp===undefined||u.hp>0)&&(u.order.kind==='gather'||u.order.kind==='deliver')&&u.order.nodeId===node.id);
+  const workers=cohort.filter(u=>u.order.kind==='gather').sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}));
+  // Delivery takes no active slot. A returning carrier waits for the next snapshot
+  // rather than bypassing admission inside a large gathering delta.
+  if(cohort.length>config.resourceSlots)for(const u of cohort.filter(u=>u.order.kind==='deliver'))result.set(u.id,{point:{...u.position},working:false});
   // Preserve the existing approach for nodes with no excess demand.
   if(workers.length<=config.resourceSlots)continue;
   const half=unitStats.size/2,rect={x:node.position.x-gatheringConfig.nodeRadius,y:node.position.y-gatheringConfig.nodeRadius,width:gatheringConfig.nodeRadius*2,height:gatheringConfig.nodeRadius*2};

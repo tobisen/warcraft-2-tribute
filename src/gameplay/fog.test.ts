@@ -21,7 +21,7 @@ describe('team visibility and explored memory',()=>{
   const f=updateFog(createFog({width:100,height:64}),[{id:'base',owner:'player',position:{x:32,y:32},footprint:{x:16,y:16,width:32,height:32},radius:32}]);expect(isVisible(f,'player',{x:80,y:32})).toBe(true);expect(isVisible(f,'player',{x:98,y:32})).toBe(false);
  });
  it('uses only living observers and completed buildings, and recomputes after death even at delta zero',()=>{
-  let s=createMatch('skirmish');expect(visionObservers(s).filter(o=>o.owner==='player')).toHaveLength(4);expect(visionObservers(s).filter(o=>o.owner==='enemy')).toHaveLength(1);
+  let s=createMatch('skirmish');s.combat.enemies=s.combat.enemies.filter(e=>e.kind!=='worker');expect(visionObservers(s).filter(o=>o.owner==='player')).toHaveLength(4);expect(visionObservers(s).filter(o=>o.owner==='enemy')).toHaveLength(1);
   const enemy=s.combat.enemies[0];expect(isVisible(s.fog!,'enemy',enemy.position)).toBe(true);enemy.hp=0;s=updateMatch(s,0);expect(s.fog!.teams.enemy.visible.some(Boolean)).toBe(false);expect(s.fog!.teams.enemy.explored.some(Boolean)).toBe(true);expect(s.outcome).toBe('victory');
   const b=createMatch();b.placement.barracks={x:800,y:600,width:64,height:64};b.placement.barracksHP=120;b.placement.construction={remainingSeconds:5,builderId:null};expect(visionObservers(b).some(o=>o.id==='barracks')).toBe(false);b.placement.construction!.remainingSeconds=0;expect(visionObservers(b).some(o=>o.id==='barracks')).toBe(true);b.placement.barracksHP=0;expect(visionObservers(b).some(o=>o.id==='barracks')).toBe(false);
  });

@@ -714,3 +714,15 @@ Effekt/cooldown är unit-state och följer gameplay-delta, paus, terminal freeze
 ## RTS-070 – Spelbarhetskontroll före balansändring
 
 Båda fraktioner kontrolleras på samma arena i fem scenarios/tre difficulties, med egna recept och aktiverade förmågor. Naturliga Utposten/Normal-matcher och verkliga oskyddade defeat-körningar kompletterar den accelererade kommandomatrisen. En förlust hos första Hard Skirmish-strategin motiverade förbättrad gold-/worker-/anfallsplan i testhelpern; slutliga 30 kombinationer vann utan ändrade spelvärden. Behåll därför RTS-068/069:s preliminära balans inför AI-ekonomietappen. Detta bevisar vinstvägar, inte statistisk fraktionsjämvikt. Rapport/metod/begränsningar i FACTION_BALANCE.md.
+
+## RTS-071 – Enemy-ekonomi före implementation
+
+Två initiala enemy-workers i spelbara matcher med fiendebas: en wood, en gold. Båda använder befintliga gemensamma world-noder, last5, rate1/s och leverans24 från basens faktiska footprint (enemy96). Startbudget från difficulty behålls; all ytterligare income kommer från lastleverans. Enemy-workers är angripbara/fog-filtrerade, har worker30HP och attackerar inte eller rekryteras till army. Ingen worker-produktion eller ny nod i denna task. Global servicekö härleds över båda lagens arbetare. Lastförlust, extraherade resurser och betalda produktionskostnader bokförs för bevarande. Siege-test är en äldre utvecklarfixture för isolerade ändliga budgetregressioner, inte spelbart scenario. Äldre saves bevarar befintliga enheter/ekonomi och får inga nya workers vid Load; fresh restart följer nya starter. Resursupptäckt för AI är fortfarande den tidigare förenklingen och hanteras i RTS-075.
+
+RTS-071:s regression gav ett avgränsat balansbeslut: +20 s till första
+gruppanfall endast i den nya enemy-ekonomimodellen. Difficulty-startbudget,
+HP, kostnader och army-cap behålls. Äldre saves och siege-test behåller tidigare
+timing. Leveransworkers frigör globala serviceplatser; annars höll fjärran
+leveransturer nodens begränsade platser utan att samla. Save schema2/config5
+validerar verkligt fiendearbete och bankledger; config4 migreras utan nya
+arbetare/inkomster och utan att acceptera spoofade nya economy-fält.

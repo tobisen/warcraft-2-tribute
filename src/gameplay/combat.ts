@@ -16,10 +16,11 @@ import type { WorldMap } from './map';
 import type { Footprint, PlacementState } from './placement';
 import { combatConfig } from '../config/combat';
 import { soldierStats, combatUnitStats, rangedStats } from '../config/unit';
-import type { GatheringState, Unit } from './gathering';
+import type { GatheringState, Unit,WorkerOrder,ResourceType } from './gathering';
 import { moveTowards, type Position } from './movement';
 
-export interface Enemy { owner?:'enemy'; kind?:'unit'|'base'; order?:{kind:'idle'}|{kind:'defend';targetId:string}|{kind:'muster'|'attack-move';destination:Position}; id: string; position: Position; hp: number; footprint?:Footprint; navigation?: RouteState }
+export interface EnemyWork {cargo:number;cargoType?:ResourceType;target:Position;order:Exclude<WorkerOrder,{kind:'build'}>}
+export interface Enemy { owner?:'enemy'; kind?:'unit'|'base'|'worker';work?:EnemyWork; order?:{kind:'idle'}|{kind:'defend';targetId:string}|{kind:'muster'|'attack-move';destination:Position}; id: string; position: Position; hp: number; footprint?:Footprint; navigation?: RouteState }
 export interface CombatState { baseOwner?:'player'; enemies: Enemy[]; baseHP: number; projectiles?:Projectile[]; nextProjectileNumber?:number; destroyedEnemyFootprints?:Footprint[]; upgrades?:{attack:number;defense:number} }
 
 export function enemyAt(enemies: Enemy[], point: Position): Enemy | undefined {
@@ -116,7 +117,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
   const originalTargets=playerTargets(gathering,combat,placement);
   const priority={soldier:0,worker:1,barracks:2,farm:2,forge:2,base:3};
   const movingEnemies = combat.enemies.filter(e => e.hp > 0).map(enemy => {
-    if(enemy.footprint||enemy.order?.kind==='idle')return enemy;
+    if(enemy.kind==='worker'||enemy.footprint||enemy.order?.kind==='idle')return enemy;
     if(enemy.order?.kind==='muster'){
       const route=enemy.navigation??(map?planRoute(map,enemy.position,enemy.order.destination):undefined);
       const step=map&&route?advanceRoute(map,enemy.position,route,combatConfig.enemySpeed,delta,gateFor?.(`enemy:${enemy.id}`)):{position:moveTowards(enemy.position,enemy.order.destination,combatConfig.enemySpeed,delta),route:undefined};
@@ -159,10 +160,10 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
   const nextCombat={...combat,baseHP:Math.max(0,combat.baseHP-(playerDamage.get('base')??0))};
   const aliveTargets=new Set(playerTargets(surviving,nextCombat,nextPlacement).map(t=>t.id));
   const enemies = movingEnemies.map(enemy => ({ ...enemy, hp: Math.max(0, enemy.hp - (damage.get(enemy.id) ?? 0)) }))
-    .filter(e => e.hp > 0).map(enemy => enemy.navigation?.targetId && enemy.navigation.targetId!=='explore-goal' && !aliveTargets.has(enemy.navigation.targetId) ? {...enemy,navigation:undefined} : enemy);
+    .filter(e => e.hp > 0 || e.kind==='worker').map(enemy => enemy.navigation?.targetId && enemy.navigation.targetId!=='explore-goal' && !aliveTargets.has(enemy.navigation.targetId) ? {...enemy,navigation:undefined} : enemy);
   const destroyedEnemyFootprints=movingEnemies.filter(e=>e.footprint&&e.hp-(damage.get(e.id)??0)<=0).map(e=>e.footprint!);
   units = units.map(unit => unit.kind === 'soldier' && unit.order.kind === 'attack'
     && !enemies.some(e => e.id === (unit.order.kind === 'attack' ? unit.order.enemyId : ''))
     ? { ...unit, navigation: undefined, order: { kind: 'idle' as const } } : unit);
-  return { gathering: { ...surviving, units }, combat: {...nextCombat,enemies,...(destroyedEnemyFootprints.length?{destroyedEnemyFootprints}:{}),...(combat.projectiles||shots.length?{projectiles:projectiles.filter(p=>p.splashRadius||enemies.some(e=>e.id===p.targetId)),nextProjectileNumber}:{})},...(nextPlacement?{placement:nextPlacement}:{}) };
+  return { gathering: { ...surviving, units }, combat: {...nextCombat,enemies,...(destroyedEnemyFootprints.length?{destroyedEnemyFootprints}:{}),...(combat.projectiles||shots.length?{projectiles:projectiles.filter(p=>p.splashRadius||enemies.some(e=>e.hp>0&&e.id===p.targetId)),nextProjectileNumber}:{})},...(nextPlacement?{placement:nextPlacement}:{}) };
 }

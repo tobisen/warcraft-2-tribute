@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-071 – Fiendearbetare samlar guld och trä** — **Todo**.
+**RTS-072 – AI bygger farms och produktionsbyggnader** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
@@ -2220,13 +2220,21 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-071 – Fiendearbetare samlar guld och trä
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Fiendearbetare samlar guld och trä.
+**Goal:** Riktig fiendeekonomi genom delade ändliga noder, last och leverans.
+
+**Requirements:** Två initiala synliga/angripbara enemy-workers i Skirmish/Belägringen, en för wood och en för gold. Återanvänd samma movement/gathering/capacity/rate/delivery-regler med enemy-basens faktiska footprint. Noderna är gemensamma; workers och båda saldon kan inte skapa resurser eller gå negativa. Enemy-production betalar sin kostnad ur banksaldo inklusive verkliga leveranser. Ingen ny automatisk income. Global servicekö/separation/fog gäller båda sidor; enemy-workers attackerar inte eller tas i stridsgrupper. Död bokför förlorad last; basdöd stoppar arbetet. Save/load/pause/game-over/reset fungerar; äldre snapshots får inga gratis nya workers vid Load. Developer-fixturen siege-test behåller den äldre isolerade budgetprofilen.
+
+**Non-goals:** Worker-produktion, nya noder, byggande, expansion, retreat, ekonomiprioriteringar och vision-begränsad resursupptäckt (senare tasks).
 
 **Dependencies:** RTS-070.
 
-**Acceptance criteria:** Fienden använder verkliga noder/last/leverans utan dold gratis ekonomi.
+**Acceptance criteria:** Enemy-workers går till riktiga noder, samlar högst 5 och levererar inom 24 px från bas-footprint. Saldot ökar först vid leverans; delade resurser och alla laster/saldon/kostnader/lostCargo bevaras. Nyproduktion betalas av faktisk enemy-ekonomi. Workers är synliga med rätt fraktionssprite endast enligt fog och kan dö av spelarattacker. Load bevarar last/orders/bank utan extra income/units.
+
+**Tester:** Delad nod/range/capacity/delivery/ledger, depletion/base death/worker death, betald produktion efter leverans, save/migration/freeze/reset/fog och båda fraktioner; tidigare regressioner/typecheck/build/browser/diff.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, DECISIONS.md, GAME_DESIGN.md, ARCHITECTURE.md och README.md.
 
 ## RTS-072 – AI bygger farms och produktionsbyggnader
 

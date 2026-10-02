@@ -32,6 +32,7 @@ export function cleanDestroyed(state:MatchState):MatchState {
     placement={...placement,...(forgeDead?{forge:undefined}:placement.forge?{forge:{...placement.forge,construction:paused(placement.forge.construction)!}}:{}),...(barDead?{barracks:null,barracksHP:undefined,barracksOwner:undefined,construction:undefined}:{construction:paused(placement.construction)}),
       ...(placement.farms?{farms:placement.farms.filter(f=>!deadFarms.includes(f)).map(f=>({...f,construction:paused(f.construction)!}))}:{})};
   }
+  if(state.enemyProduction){const dead=state.combat.enemies.filter(e=>e.hp<=0&&e.work);if(dead.length){const lost={wood:state.enemyProduction.lostCargo?.wood??0,gold:state.enemyProduction.lostCargo?.gold??0};for(const e of dead)lost[e.work!.cargoType??'wood']+=e.work!.cargo;state={...state,enemyProduction:{...state.enemyProduction,lostCargo:lost}};}}
   const liveEnemies=state.combat.enemies.filter(e=>e.hp>0);
   const units=gathering.units.map((u):Unit=>u.kind==='soldier'&&u.order.kind==='attack'&&!liveEnemies.some(e=>u.order.kind==='attack'&&e.id===u.order.enemyId)?{...u,navigation:undefined,target:{...u.position},order:{kind:'idle'}}:
     u.order.kind==='build'&&deadSites.has(u.order.buildingId)
@@ -39,7 +40,8 @@ export function cleanDestroyed(state:MatchState):MatchState {
   if(units.some((u,i)=>u!==gathering.units[i]))gathering={...gathering,units};
   if(placement.active&&!gathering.units.some(u=>u.kind==='worker'&&u.selected))placement={...placement,active:false};
   const targets=new Set(playerTargets(gathering,state.combat,placement).map(t=>t.id));
-  const enemies=liveEnemies.map(e=>e.order?.kind==='defend'&&!targets.has(e.order.targetId)?{...e,navigation:undefined,order:{kind:'idle' as const}}:e.navigation?.targetId&&e.navigation.targetId!=='explore-goal'&&!targets.has(e.navigation.targetId)?{...e,navigation:undefined}:e);
+  const enemyBaseAlive=liveEnemies.some(e=>e.kind==='base');
+  const enemies=liveEnemies.map(e=>e.work&&!enemyBaseAlive?{...e,navigation:undefined,work:{...e.work,order:{kind:'idle' as const}}}:e.order?.kind==='defend'&&!targets.has(e.order.targetId)?{...e,navigation:undefined,order:{kind:'idle' as const}}:e.navigation?.targetId&&e.navigation.targetId!=='explore-goal'&&!targets.has(e.navigation.targetId)?{...e,navigation:undefined}:e);
   const production=baseDead?clearProduction(state.production):state.production;
   const soldierProduction=baseDead||barDead?clearProduction(state.soldierProduction):state.soldierProduction;
   const enemyAlive=new Set(enemies.map(e=>e.id));

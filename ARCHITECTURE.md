@@ -2,7 +2,7 @@
 
 ## Status och teknik
 
-Implementerat genom RTS-066: archer/projectiles, catapult/splash och Forge/research, FIFO/refund, target-HP/destruktion, workerbygge, farms, population, kamera,
+Implementerat genom RTS-071: archer/projectiles, catapult/splash och Forge/research, FIFO/refund, target-HP/destruktion, workerbygge, farms, population, kamera,
 byggnadsselection, rally, Stop, gold och
 atomiska kostnader ovanpå etapp 1:s HUD, handgjorda karta och navigation för
 move/work/combat, separata gruppmål och säkra placement/spawn-regler.
@@ -335,7 +335,7 @@ footprints och får inte tyst ändra navigation eller targeting.
 Exakt dataschema/pathfinder/lagring ska väljas vid respektive task, se öppna
 beslut i [DECISIONS.md](DECISIONS.md). Planerade system har därför inga
 påhittade filreferenser. Wave-survival och skirmish ska finnas parallellt;
-AI samlar armégrupper ur ändlig budget utan ny full worker-ekonomi.
+AI samlar armégrupper ur en verklig bank med startbudget och levererad income (RTS-071).
 
 ## MVP-baseline inför utökning (RTS-016)
 
@@ -896,3 +896,30 @@ Matchupdate delar delta vid aktiv effektgräns och tickar unit-timers efter steg
 ## RTS-070 – Fraktionsregression och speltest
 
 `testHelpers/releaseBot.ts` kan välja faction och aktivera förmågor genom samma gameplay-command. Explicit fraktionsspeltest använder gold under byggtid, worker-skydd och fortsatt anfall efter störd ekonomi; ursprungliga release-kontrollen behåller tidigare strategi. `factionBalance.test.ts` kontrollerar 30 scenarios/difficulties/factions samt två legala defeat-/new-match-isoleringar med save/ledger/terminal freeze. Teststrategin importeras inte av appen; runtime-bundle är byte-identisk med RTS-069. Metod och naturliga browserresultat i [FACTION_BALANCE.md](FACTION_BALANCE.md).
+
+## RTS-071: enemy gathering och delad ekonomi
+
+[enemyGathering.ts](src/gameplay/enemyGathering.ts) adapterar enemy-worker-entiteter
+till befintlig gathering för en simulationstick. Position/HP/work är auktoritativa
+i combat.enemies; tillfälliga worker-vyer sparas inte i spelarens unit-array.
+Basens 96 px-footprint skickas som härledd baseSize till samma approach/delivery.
+prepareEnemyGathering ger idle-workers deras fasta resursorder före gemensam
+servicekö och passageplanering. Matchupdate samlar först spelarens och sedan
+fiendens last ur samma uppdaterade noder, aldrig separata kopior av resurserna.
+Serviceplatser reserveras bara av gather-orders; leverans frigör arbetsplatser.
+
+Enemy-production betalar verkliga banksaldot och bokför spent; extracted och
+lostCargo bevarar resursbalansen inklusive levande laster. Arbetare ingår i
+fog, fysisk separation, spawn-occupancy och passagekö, men inte army-cap,
+attack eller AI-grupper. Dödade arbetare finns kvar till cleanDestroyeds
+lastbokföring i samma tick. Basdöd tar bort arbetsorder innan terminal freeze.
+[enemyEconomy.ts](src/config/enemyEconomy.ts) anger två arbetare, nodval och
+20 s extra attack-grace för nya ekonomimatcher. Ingen passiv income.
+
+Save config5 validerar worker-ID/HP/last/nodorder, militära referenser,
+bank/extracted/spent/lostCargo och resursbalans mot noderna. Migration från
+config4 bevarar tidigare modell utan nya entiteter/inkomster; spoofade nya
+fält i gamla versioner avvisas. Derived baseSize och navigation lagras inte.
+[enemyGathering.test.ts](src/gameplay/enemyGathering.test.ts) verifierar dessa
+beteenden. Release-matrisens globala ledger inkluderar fiendens extraktion.
+Kontrollerade load-fixtures behåller exakt 64/128 kroppar utan extra ekonomi.
