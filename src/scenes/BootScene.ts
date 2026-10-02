@@ -1,3 +1,4 @@
+import {storeSave,readSave,type SavedView} from '../gameplay/save';
 import {landedEffects,impactFrame,impactAlive,type Impact} from '../presentation/effects';
 import {effectConfig} from '../config/effects';
 import {gameAudio} from '../presentation/audio';
@@ -118,6 +119,7 @@ export class BootScene extends Phaser.Scene {
   private nodeVisual!: Phaser.GameObjects.Image;
 
   private visuals = new Map<string, { body: Phaser.GameObjects.Image; ring: Phaser.GameObjects.Arc; cargo: Phaser.GameObjects.Text }>();
+  private pendingLoad?:{match:MatchState;view:SavedView};
   private hpBars?:Phaser.GameObjects.Graphics;
   private impacts=new Map<number,{impact:Impact;visual:Phaser.GameObjects.Image}>();
   private nextImpact=1;
@@ -138,7 +140,8 @@ export class BootScene extends Phaser.Scene {
     this.audioSnapshot=undefined;gameAudio.setPhase('menu');gameAudio.reset();
     this.visualTime=0;this.motions.clear();this.deaths.clear();this.impacts.clear();this.nextImpact=1;
     this.hpBars=this.add.graphics().setDepth(7);
-    this.applyMatch(createMatch(this.scenario,this.difficulty));
+    const loaded=this.pendingLoad;this.pendingLoad=undefined;
+    this.applyMatch(loaded?.match??createMatch(this.scenario,this.difficulty));
     this.game.canvas.tabIndex=0;this.game.canvas.setAttribute('aria-label','Spelvärld');
     const groupKey=(event:KeyboardEvent)=>{
       if(!gameplayKeyAllowed(keyboardContext(event,this.gameplayActive()))||!validGroup(event.key))return;
@@ -194,10 +197,10 @@ export class BootScene extends Phaser.Scene {
     const stop = () => { this.attackMoveMode=false; this.gathering.units = stopSelected(this.gathering.units, this.gameplayActive()); this.syncVisuals(); };
     this.stopButton.addEventListener('click', stop);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.stopButton.removeEventListener('click', stop));
-    this.selectedBuilding = null;
+    this.selectedBuilding = loaded?.view.building??null;
     this.rallyMarker = this.add.circle(0, 0, 8).setStrokeStyle(2, 0x7bd389).setDepth(6).setVisible(false);
     this.buildingRing = this.add.rectangle(0, 0, 0, 0).setOrigin(0).setStrokeStyle(2, 0xffdc73).setDepth(5).setVisible(false);
-    this.cameras.main.setBounds(0, 0, this.map.width, this.map.height).setZoom(1).setScroll(0, 0);
+    this.cameras.main.setBounds(0, 0, this.map.width, this.map.height).setZoom(1).setScroll(loaded?.view.camera.x??0,loaded?.view.camera.y??0);
     this.cameraDrag = undefined;
     const preventMiddle = (event: MouseEvent) => { if (event.button === 1) event.preventDefault(); };
     this.game.canvas.addEventListener('mousedown', preventMiddle);
@@ -329,6 +332,11 @@ export class BootScene extends Phaser.Scene {
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       this.soldierButton.removeEventListener('click', trainSoldier);
     });
+    const saveButton=document.getElementById('save-match') as HTMLButtonElement;
+    const loadButton=document.getElementById('load-match') as HTMLButtonElement;
+    const save=()=>{if(this.session.phase==='menu'||this.restartPending)return;const result=storeSave(()=>window.localStorage,this.currentMatch(),{camera:{x:this.cameras.main.scrollX,y:this.cameras.main.scrollY},building:this.selectedBuilding});document.getElementById('save-status')!.textContent=result.ok?'Sparad lokalt i slot 1':'Kunde inte spara lokalt. Kontrollera webbläsarens lagringsutrymme.';};
+    const load=()=>{if(this.restartPending)return;const result=readSave(()=>window.localStorage);if(!result.ok){document.getElementById('save-status')!.textContent=result.error==='Ingen lokal sparning finns'?result.error:result.error.includes('version')?'Sparningen använder ett format eller en spelversion som inte stöds. Aktiv match är oförändrad.':'Sparningen kunde inte läsas. Aktiv match är oförändrad.';return;}this.pendingLoad={match:{...result.match,paused:true},view:result.view};this.scenario=result.match.scenario!;this.difficulty=result.match.difficulty!;this.session={options:{scenario:this.scenario,difficulty:this.difficulty,map:'arena'},phase:result.match.outcome==='playing'?'paused':'ended'};this.skipGameplayFrame=true;this.restartPending=true;this.restartButton.disabled=true;gameAudio.setPhase(this.session.phase);document.getElementById('save-status')!.textContent=result.match.outcome==='playing'?'Laddad – pausad, ingen tid passerar förrän Återuppta':'Laddad – avslutad match';this.scene.restart();};
+    saveButton.addEventListener('click',save);loadButton.addEventListener('click',load);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{saveButton.removeEventListener('click',save);loadButton.removeEventListener('click',load);});
     for(const [id,action] of [['start-match','start'],['pause-match','pause'],['resume-match','resume'],['new-match','new-match']] as const){const button=document.getElementById(id)!;const handler=()=>this.sessionAction(action);button.addEventListener('click',handler);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>button.removeEventListener('click',handler));}
     document.getElementById('command-guide-text')!.textContent=commandGuide;
     const actionKey=(event:KeyboardEvent)=>{
@@ -365,6 +373,8 @@ export class BootScene extends Phaser.Scene {
   private syncSession():void {
     gameAudio.setPhase(this.session.phase);
     if(gameAudio.status.loaded)document.getElementById('audio-status')!.textContent=`${gameAudio.status.loaded}/6 ljud laddade · ${gameAudio.settings.muted?'tyst':this.session.phase==='paused'?'pausat':'redo'}`;
+    (document.getElementById('save-match') as HTMLButtonElement).disabled=this.session.phase==='menu'||this.restartPending;
+    (document.getElementById('load-match') as HTMLButtonElement).disabled=this.restartPending;
     const phase=this.session.phase,menu=phase==='menu';
     this.scenarioSelect.disabled=!menu;this.scenarioSelect.value=this.session.options.scenario==='siege-test'?'survival':this.session.options.scenario;
     const difficulty=document.querySelector<HTMLSelectElement>('#difficulty-select')!;difficulty.disabled=!menu;difficulty.value=this.session.options.difficulty;
@@ -676,17 +686,15 @@ export class BootScene extends Phaser.Scene {
     if(this.restartPending)return;
     const previousShots=this.combat.projectiles??[];
     const dt=gameplayDelta(this.session.phase,delta/1000,this.skipGameplayFrame);this.visualTime+=dt;
-    const match = updateMatch({
-      map: this.map, gathering: this.gathering, combat: this.combat, waves: this.waves,
-      production: this.production, soldierProduction: this.soldierProduction,
-      placement: this.placement, outcome: this.outcome,paused:!this.gameplayActive(),controlGroups:this.controlGroups,fog:this.fog,research:this.research,scenario:this.scenario,difficulty:this.difficulty,enemyProduction:this.enemyProduction,enemyAI:this.enemyAI,
-    }, dt);
+    const match = updateMatch(this.currentMatch(),dt);
     this.skipGameplayFrame=false;
     this.applyMatch(match);
     for(const impact of landedEffects(previousShots,this.combat.projectiles??[],dt,this.visualTime,p=>isVisible(this.fog,'player',p))){if(this.impacts.size>=effectConfig.maxCount)break;this.impacts.set(this.nextImpact++,{impact,visual:this.add.image(impact.position.x,impact.position.y,'ui',impactFrame(impact,this.visualTime)).setOrigin(.5).setDepth(8)});}
     if(this.outcome!=='playing')this.session=sessionTransition(this.session,'end');
     this.syncVisuals();
   }
+
+  private currentMatch():MatchState {return {map:this.map,gathering:this.gathering,combat:this.combat,waves:this.waves,production:this.production,soldierProduction:this.soldierProduction,placement:this.placement,outcome:this.outcome,paused:!this.gameplayActive(),controlGroups:this.controlGroups,fog:this.fog,research:this.research,scenario:this.scenario,difficulty:this.difficulty,enemyProduction:this.enemyProduction,enemyAI:this.enemyAI};}
 
   private drawHP(position:Position,hp:number,max:number,width:number,offset:number,color:number):void {this.hpBars?.fillStyle(0x172422).fillRect(position.x-width/2-1,position.y-offset-1,width+2,5).fillStyle(color).fillRect(position.x-width/2,position.y-offset,width*Math.max(0,Math.min(1,hp/max)),3);}
 

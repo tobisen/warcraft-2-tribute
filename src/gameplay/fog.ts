@@ -9,7 +9,7 @@ export interface FogTeam {visible:boolean[];explored:boolean[]}
 export interface FogState {width:number;height:number;tileSize:number;columns:number;rows:number;teams:Record<Team,FogTeam>}
 export function createFog(world:{width:number;height:number},tileSize:number=fogConfig.tileSize):FogState {
  const columns=Math.ceil(world.width/tileSize),rows=Math.ceil(world.height/tileSize),team=()=>({visible:Array<boolean>(columns*rows).fill(false),explored:Array<boolean>(columns*rows).fill(false)});
- return {...world,tileSize,columns,rows,teams:{player:team(),enemy:team()}};
+ return {width:world.width,height:world.height,tileSize,columns,rows,teams:{player:team(),enemy:team()}};
 }
 export function fogIndex(fog:FogState,point:Position):number|null {
  if(!Number.isFinite(point.x)||!Number.isFinite(point.y)||point.x<0||point.y<0||point.x>=fog.width||point.y>=fog.height)return null;
