@@ -670,3 +670,7 @@ RTS-060 release: inga stats/AI/waves/startresurser ändrades efter full matris. 
 
 
 RTS-062: QA-granskningen gav ingen bekräftad P0/P1-fixlista; gameplay/save-format är oförändrade. Överlappning och köer hanteras taskvis i RTS-063/064 enligt QA_REVIEW.md.
+
+## RTS-063 – Separation före browserverifiering
+
+Lokala kvadratiska kroppar enligt navigationens befintliga storlekar, inte ny fysikmotor. Deterministisk ID-sortering, spatiala 64-px-celler, högst12 närmaste neighbors och två pass. Korrektionsbudget48 px/s per kropp och delta, även sammanlagt över pass; inga slumpvärden eller sparade separationstimers. Static swept clearance/world bounds godkänner varje correction. Primärt minsta penetration, alternativ fri axel vid trängsel; kvarvarande överlappning tillåts om terräng/budget gör packning omöjlig. Orders/HP/cargo/selection bevaras, ändrad position ogiltigförklarar navigation så worker/combat approach planeras om. Player/enemy-units deltar; byggnader är fasta footprints. Fog räknas om efter correction. Pause/terminal states får inga corrections. Save schema/config1 är kompatibelt eftersom ingen ny persistent state införs. Smala passager och serviceslots får egen policy i RTS-064.

@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-063 – Förbättrad unit-separation och trängselhantering** — **Todo**.
+**RTS-064 – Köbildning vid resurser och smala passager** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
@@ -2076,7 +2076,7 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-063 – Förbättrad unit-separation och trängselhantering
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Minska överlappning utan att blockera orders.
 

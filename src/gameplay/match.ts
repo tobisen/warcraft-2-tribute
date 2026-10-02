@@ -1,4 +1,6 @@
 import type { ControlGroups } from './controlGroups';
+import { separateBodies } from './separation';
+import { combatUnitStats, unitStats } from '../config/unit';
 import { entityVisible } from './visibility';
 import { matchFog } from './matchFog';
 import type { FogState } from './fog';
@@ -97,6 +99,8 @@ function advance(state: MatchState, delta: number): MatchState {
   const incoming=scenarioConfig[cleaned.scenario??'survival'].waves?updateWaves(cleaned.waves,ai.combat,delta,scenarioWaves(cleaned.scenario??'survival',cleaned.difficulty??'normal')):{combat:ai.combat,waves:{...cleaned.waves,elapsedSeconds:cleaned.waves.elapsedSeconds+delta}};
   const updated:MatchState={...cleaned,...(vision?{fog:vision}:{}),research,...(enemy.state?{enemyProduction:enemy.state}:{}),...(ai.state?{enemyAI:ai.state}:{}),gathering:soldier.gathering,combat:incoming.combat,waves:incoming.waves,
     production:{...worker.production,nextUnitNumber},soldierProduction:{...soldier.production,nextUnitNumber}};
+  const separated=separateBodies(updated.map,[...updated.gathering.units.map(u=>({id:`player:${u.id}`,position:u.position,half:(u.kind==='worker'?unitStats:combatUnitStats(u)).size/2})),...updated.combat.enemies.filter(e=>e.kind!=='base').map(e=>({id:`enemy:${e.id}`,position:e.position,half:combatConfig.enemySize/2}))],delta);
+  if(separated.size){updated.gathering={...updated.gathering,units:updated.gathering.units.map(u=>{const position=separated.get(`player:${u.id}`);return position?{...u,position,navigation:u.navigation?.status==='blocked'?u.navigation:undefined}:u;})};updated.combat={...updated.combat,enemies:updated.combat.enemies.map(e=>{const position=separated.get(`enemy:${e.id}`);return position?{...e,position,navigation:e.navigation?.status==='blocked'?e.navigation:undefined}:e;})};}
   updated.fog=matchFog(updated);return resolveOutcome(updated);
 }
 

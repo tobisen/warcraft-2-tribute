@@ -32,7 +32,9 @@ describe('separate group destinations', () => {
     expect(ordered.filter(u=>u.navigation?.error==='no-space')).toHaveLength(2);
     const blocked=ordered.filter(u=>u.navigation?.error==='no-space');
     const next=updateMatch({...s,map:replaceObstacles(s.map,[]),gathering:{...s.gathering,units:blocked}},1);
-    expect(next.gathering.units.map(u=>u.position)).toEqual(blocked.map(u=>u.position));
+    // Local separation may settle coincident bodies, but must never allocate/retry the failed move.
+    expect(next.gathering.units.map(u=>u.target)).toEqual(blocked.map(u=>u.target));
+    expect(next.gathering.units.every(u=>u.order.kind==='idle')).toBe(true);
     expect(next.gathering.units.every(u=>u.navigation?.error==='no-space')).toBe(true);
   });
   it('tests individual reachability and leaves unselected units unchanged', () => {

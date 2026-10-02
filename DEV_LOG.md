@@ -1204,3 +1204,10 @@ Pages verifierad först enligt användarens nya godkännande av RTS-061–065; A
 ## 2026-10-02: RTS-062
 
 RTS-061 26aff93 pushad. Inga bekräftade blockerande/P1-fynd, därför tom fixlista och ingen onödig kodändring. QA-001/002 prioriterade till sina avgränsade RTS-063/064, P3-minimap kvar. 457 tester/60 filer, typecheck/build/diff-check passerade; ingen save/config-migration eller nya spegeltester. Runtime identisk med verifierad Pages.
+
+
+## 2026-10-02: RTS-063
+
+RTS-062 b3317dd pushad. Pure body-separation + numerisk config integrerad efter gameplayadvance och före final fog. 463 tester/61 filer, typecheck/build/diff-check passerade; alla15 scenario/profile-vinster bevarade. Sex nya tester: budget/delta0, coincident/mixed bodies, ID/permutation, stora/små steg, world/terräng/smal passage,20-unit-trängsel och pause/save/reset/order/cargo. Regression hittade att cacheinvalidation tog bort no-space-fel; blockerade commandresults bevaras nu. Grupp-testets gamla positionsfrysning uppdaterad till rätt kontrakt: separation får flytta kroppar men inga nya goals/auto-retries/continuing orders.
+
+Browser med betald12-combat/3-worker-armé: idle-arméns mincentrumavstånd24,24px (tidigare0,322px), wood340/gold80, time277,20s. Workers i rörelse hade23,24px kortvarigt; initial all-unit-assert var för strikt för soft correction och verifierar nu stillastående armé separat. Save/load/resume och riktig drag/gruppmove nådde idle i öppet fält; inga browserfel, screenshots granskade. Ingen ny save-data eller ekonomi/balansändring. Bundle-varning kvar.
