@@ -1,3 +1,5 @@
+import {landedEffects,impactFrame,impactAlive,type Impact} from '../presentation/effects';
+import {effectConfig} from '../config/effects';
 import {gameAudio} from '../presentation/audio';
 import {audioEvents,type AudioSnapshot} from '../presentation/audioPolicy';
 import {archerConfig} from '../config/archer';
@@ -116,6 +118,9 @@ export class BootScene extends Phaser.Scene {
   private nodeVisual!: Phaser.GameObjects.Image;
 
   private visuals = new Map<string, { body: Phaser.GameObjects.Image; ring: Phaser.GameObjects.Arc; cargo: Phaser.GameObjects.Text }>();
+  private hpBars?:Phaser.GameObjects.Graphics;
+  private impacts=new Map<number,{impact:Impact;visual:Phaser.GameObjects.Image}>();
+  private nextImpact=1;
   private audioSnapshot?:AudioSnapshot;
   private visualTime=0;
   private motions=new Map<string,Motion>();
@@ -127,11 +132,12 @@ export class BootScene extends Phaser.Scene {
     super('BootScene');
   }
 
-  preload():void {for(const key of ['world','buildings','units'])if(!this.textures.exists(key))this.load.atlas(key,`/assets/${key}-atlas.png`,`/assets/${key}-atlas.json`);}
+  preload():void {for(const key of ['world','buildings','units','ui'])if(!this.textures.exists(key))this.load.atlas(key,`/assets/${key}-atlas.png`,`/assets/${key}-atlas.json`);}
 
   create(): void {
     this.audioSnapshot=undefined;gameAudio.setPhase('menu');gameAudio.reset();
-    this.visualTime=0;this.motions.clear();this.deaths.clear();
+    this.visualTime=0;this.motions.clear();this.deaths.clear();this.impacts.clear();this.nextImpact=1;
+    this.hpBars=this.add.graphics().setDepth(7);
     this.applyMatch(createMatch(this.scenario,this.difficulty));
     this.game.canvas.tabIndex=0;this.game.canvas.setAttribute('aria-label','Spelvärld');
     const groupKey=(event:KeyboardEvent)=>{
@@ -514,6 +520,8 @@ export class BootScene extends Phaser.Scene {
       {map:this.map,gathering:this.gathering,enemies:this.combat.enemies}) : null;
     this.placementPreview.setPosition(rect.x, rect.y)
       .setFillStyle(error ? 0xe05b5b : 0x7bd389, 0.4).setVisible(this.placement.active);
+    this.buildButton.setAttribute('aria-pressed',String(this.placement.active&&(!this.placement.kind||this.placement.kind==='barracks')));
+    this.farmButton?.setAttribute('aria-pressed',String(this.placement.active&&this.placement.kind==='farm'));this.forgeButton.setAttribute('aria-pressed',String(this.placement.active&&this.placement.kind==='forge'));
     this.buildButton.disabled = !this.gameplayActive() || this.placement.active || this.placement.barracks !== null || !this.gathering.units.some(u=>u.kind==='worker'&&u.selected);
     this.placementStatus.textContent = this.placement.active
       ? `${error ?? 'Giltig plats'} – klicka för placering, Esc/högerklick avbryter`
@@ -543,8 +551,10 @@ export class BootScene extends Phaser.Scene {
       this.dragBox.setVisible(false);
     }
     this.attackMoveButton.disabled=!this.gameplayActive()||!this.gathering.units.some(u=>u.kind==='soldier'&&u.selected);
+    this.attackMoveButton.setAttribute('aria-pressed',String(this.attackMoveMode));
     this.attackMoveButton.textContent=this.attackMoveMode?'Attack-move: klicka mål (Esc avbryter)':'Attack-move';
     this.stopButton.disabled = !this.gameplayActive() || !this.gathering.units.some(u=>u.selected);
+    this.hpBars?.clear();
     const visibleEnemies=this.combat.enemies.filter(e=>entityVisible(this.fog,'player',e));
     const markers = orderMarkers(this.gathering, {...this.combat,enemies:visibleEnemies}, this.outcome==='playing',this.placement.barracks,this.placement.farms,this.placement.forge?.footprint);
     for (const [id, visual] of this.orderVisuals) {
@@ -623,7 +633,8 @@ export class BootScene extends Phaser.Scene {
       const visual = this.enemyVisuals.get(enemy.id)!;
       visual.body.setPosition(enemy.position.x, enemy.position.y);
       if(enemy.kind!=='base'){const target=enemy.order?.kind==='defend'?this.gathering.units.find(u=>enemy.order?.kind==='defend'&&u.id===enemy.order.targetId)?.position:enemy.navigation?.targetId==='base'?this.gathering.base:undefined;const action:Action=enemy.navigation?.targetId&&enemy.navigation.targetId!=='explore-goal'&&enemy.navigation.status==='arrived'?'attack':'idle';this.animateUnit(enemy.id,visual.body,enemy.position,action,'soldier','enemy',target);}
-      visual.label.setPosition(enemy.position.x, enemy.position.y - (enemy.kind==='base'?90:32)).setText(`${enemy.kind==='base'?'Enemy base':'Enemy'} ${Math.ceil(enemy.hp)} HP`);
+      visual.label.setPosition(enemy.position.x,enemy.position.y-90).setVisible(enemy.kind==='base').setText(`Fiendebas ${Math.ceil(enemy.hp)} HP`);
+      this.drawHP(enemy.position,enemy.hp,enemy.kind==='base'?combatConfig.baseHP:combatConfig.enemyHP,enemy.kind==='base'?64:24,enemy.kind==='base'?70:29,0xcf7770);
     }
     for (const unit of this.gathering.units) {
       if (!this.visuals.has(unit.id)) {
@@ -643,9 +654,11 @@ export class BootScene extends Phaser.Scene {
       const action:Action=unit.order.kind==='attack'&&enemy&&canInteract(this.map,unit.position,enemy.footprint??{x:enemy.position.x-combatConfig.enemySize/2,y:enemy.position.y-combatConfig.enemySize/2,width:combatConfig.enemySize,height:combatConfig.enemySize},attackRange)?'attack':unit.order.kind==='gather'&&marker&&Math.hypot(marker.position.x-unit.position.x,marker.position.y-unit.position.y)<=gatheringConfig.nodeRadius+gatheringConfig.range?'gather':unit.order.kind==='build'&&unit.navigation?.status==='arrived'?'build':'idle';
       this.animateUnit(unit.id,visual.body,unit.position,action,unit.kind==='worker'?'worker':unit.archetype??'soldier','player',enemy?.position??marker?.position);
       visual.ring.setPosition(unit.position.x, unit.position.y).setVisible(unit.selected);
-      visual.cargo.setPosition(unit.position.x, unit.position.y - 32)
-        .setText(unit.kind === 'worker' ? `${unit.cargo.toFixed(1)}/${gatheringConfig.capacity} ${unit.cargoType ?? 'wood'} · ${Math.ceil(unit.hp??combatConfig.workerHP)} HP` : `${unit.archetype==='catapult'?'Catapult':unit.archetype==='archer'?'Archer':'Soldier'} ${Math.ceil(unit.hp)} HP`);
+      visual.cargo.setPosition(unit.position.x, unit.position.y - 48)
+        .setVisible(unit.kind==='worker'&&unit.selected).setText(unit.kind==='worker'?`${unit.cargo.toFixed(1)}/${gatheringConfig.capacity} ${unit.cargoType??'wood'}`:'');
+      this.drawHP(unit.position,unit.hp??combatConfig.workerHP,unit.kind==='worker'?combatConfig.workerHP:unit.archetype==='archer'?archerConfig.hp:unit.archetype==='catapult'?catapultConfig.hp:combatConfig.soldierHP,unit.kind==='soldier'&&unit.archetype==='catapult'?40:24,unit.kind==='soldier'&&unit.archetype==='catapult'?39:29,0x7398c1);
     }
+    for(const [id,e] of this.impacts){if(!impactAlive(e.impact,this.visualTime,p=>isVisible(this.fog,'player',p))){e.visual.destroy();this.impacts.delete(id);}else e.visual.setFrame(impactFrame(e.impact,this.visualTime));}
     for(const [id,d] of this.deaths){if(!effectAlive(d.effect,this.visualTime,isVisible(this.fog,'player',d.effect.motion.position))){d.visual.destroy();this.deaths.delete(id);}else d.visual.setFrame(unitFrame(d.effect.motion,this.visualTime));}
     if(this.fogOverlay)drawFog(this.fogOverlay,this.fog,this.fogPreview??'player');
     for(const shortcut of hotkeys){const button=document.getElementById(shortcut.button)!;button.textContent=`${button.textContent?.replace(/\s+\[[A-Z]\]$/,'')} [${shortcut.key}]`;button.title=shortcut.label;}
@@ -659,6 +672,7 @@ export class BootScene extends Phaser.Scene {
 
   update(_time: number, delta: number): void {
     if(this.restartPending)return;
+    const previousShots=this.combat.projectiles??[];
     const dt=gameplayDelta(this.session.phase,delta/1000,this.skipGameplayFrame);this.visualTime+=dt;
     const match = updateMatch({
       map: this.map, gathering: this.gathering, combat: this.combat, waves: this.waves,
@@ -667,9 +681,12 @@ export class BootScene extends Phaser.Scene {
     }, dt);
     this.skipGameplayFrame=false;
     this.applyMatch(match);
+    for(const impact of landedEffects(previousShots,this.combat.projectiles??[],dt,this.visualTime,p=>isVisible(this.fog,'player',p))){if(this.impacts.size>=effectConfig.maxCount)break;this.impacts.set(this.nextImpact++,{impact,visual:this.add.image(impact.position.x,impact.position.y,'ui',impactFrame(impact,this.visualTime)).setOrigin(.5).setDepth(8)});}
     if(this.outcome!=='playing')this.session=sessionTransition(this.session,'end');
     this.syncVisuals();
   }
+
+  private drawHP(position:Position,hp:number,max:number,width:number,offset:number,color:number):void {this.hpBars?.fillStyle(0x172422).fillRect(position.x-width/2-1,position.y-offset-1,width+2,5).fillStyle(color).fillRect(position.x-width/2,position.y-offset,width*Math.max(0,Math.min(1,hp/max)),3);}
 
   private syncAudio(visibleEnemies:typeof this.combat.enemies):void {
     const next:AudioSnapshot={baseHP:this.combat.baseHP,own:Object.fromEntries(this.gathering.units.map(u=>[u.id,u.hp??combatConfig.workerHP])),visibleEnemies:Object.fromEntries(visibleEnemies.map(e=>[e.id,e.hp])),completed:[...(barracksReady(this.placement)?['barracks']:[]),...(this.placement.farms??[]).filter(f=>f.construction.remainingSeconds===0).map(f=>f.id),...(this.placement.forge?.construction.remainingSeconds===0?['forge']:[])],outcome:this.outcome};
