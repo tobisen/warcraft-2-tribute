@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-070 – Fraktionsval och balans** — **Todo**.
+**RTS-071 – Fiendearbetare samlar guld och trä** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
@@ -2202,13 +2202,21 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-070 – Fraktionsval och balans
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Fraktionsval och balans.
+**Goal:** Verifiera att båda fraktionerna kan spelas till vinst/förlust med riktiga resurser och isolerade matchval.
+
+**Requirements:** Speltestmatris över befintliga fem scenarios/tre svårigheter med båda fraktionerna; egna kostnader och förmågor, fog-begränsade kommandon, paus/save/load, bevarade resursledger och fresh restart. Inaktivt försvar ska kunna förlora utan injicerad skada. Browser: naturlig Utposten/Normal med economy/build/produktion/attack/förmåga för båda val; fraktionsbyte/reset och terminal input/freeze kontrolleras. Dokumentera faktiska tider, kostnader, HP, begränsningar och eventuella balansändringar. Ändra bara verifierade blockerande balansvärden om testen kräver det.
+
+**Non-goals:** Nya regler, enheter, AI-ekonomi, nya kartor, skillnivågaranti och grafikpolish.
 
 **Dependencies:** RTS-069.
 
-**Acceptance criteria:** Båda fraktioner kan vinna och förlora med dokumenterade speltest; val isoleras mellan matcher.
+**Acceptance criteria:** Båda fraktioner har dokumenterade legala vinster och verklig defeat från enemy-attacker; val/state isoleras mellan nya matcher. Befintlig regressionssvit, typecheck/build och browser passerar. Preliminär balans redovisas utan påstående om statistiskt bevisad jämnhet.
+
+**Tester:** Båda fraktioners beteendematris, naturlig defeat, förmågeanvändning, resursledger, Save/pause/terminal freeze och faction/state-isolering. Browser och diffgranskning.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, DECISIONS.md, GAME_DESIGN.md, ARCHITECTURE.md, README.md och RELEASE_CHECKLIST.md.
 
 ## RTS-071 – Fiendearbetare samlar guld och trä
 
