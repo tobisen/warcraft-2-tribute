@@ -9,6 +9,13 @@
       "data": "/assets/world-atlas.json",
       "width": 256,
       "height": 160
+    },
+    "buildings": {
+      "image": "/assets/buildings-atlas.png",
+      "data": "/assets/buildings-atlas.json",
+      "width": 1024,
+      "height": 384,
+      "source": "assets/sources/buildings.mjs"
     }
   },
   "frames": {
@@ -195,6 +202,414 @@
         "width": 40,
         "height": 40
       }
+    },
+    "base-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "foundation"
+    },
+    "base-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "building"
+    },
+    "base-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "complete"
+    },
+    "barracks-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "owner": "player",
+      "buildingType": "barracks",
+      "stage": "foundation"
+    },
+    "barracks-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "owner": "player",
+      "buildingType": "barracks",
+      "stage": "building"
+    },
+    "barracks-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "owner": "player",
+      "buildingType": "barracks",
+      "stage": "complete"
+    },
+    "farm-player-foundation": {
+      "atlas": "buildings",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "owner": "player",
+      "buildingType": "farm",
+      "stage": "foundation"
+    },
+    "farm-player-building": {
+      "atlas": "buildings",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "owner": "player",
+      "buildingType": "farm",
+      "stage": "building"
+    },
+    "farm-player-complete": {
+      "atlas": "buildings",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "owner": "player",
+      "buildingType": "farm",
+      "stage": "complete"
+    },
+    "forge-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "owner": "player",
+      "buildingType": "forge",
+      "stage": "foundation"
+    },
+    "forge-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "owner": "player",
+      "buildingType": "forge",
+      "stage": "building"
+    },
+    "forge-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "owner": "player",
+      "buildingType": "forge",
+      "stage": "complete"
+    },
+    "base-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "foundation"
+    },
+    "base-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "building"
+    },
+    "base-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "complete"
+    },
+    "barracks-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "owner": "enemy",
+      "buildingType": "barracks",
+      "stage": "foundation"
+    },
+    "barracks-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "owner": "enemy",
+      "buildingType": "barracks",
+      "stage": "building"
+    },
+    "barracks-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "owner": "enemy",
+      "buildingType": "barracks",
+      "stage": "complete"
+    },
+    "farm-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "owner": "enemy",
+      "buildingType": "farm",
+      "stage": "foundation"
+    },
+    "farm-enemy-building": {
+      "atlas": "buildings",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "owner": "enemy",
+      "buildingType": "farm",
+      "stage": "building"
+    },
+    "farm-enemy-complete": {
+      "atlas": "buildings",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "owner": "enemy",
+      "buildingType": "farm",
+      "stage": "complete"
+    },
+    "forge-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "owner": "enemy",
+      "buildingType": "forge",
+      "stage": "foundation"
+    },
+    "forge-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "owner": "enemy",
+      "buildingType": "forge",
+      "stage": "building"
+    },
+    "forge-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "owner": "enemy",
+      "buildingType": "forge",
+      "stage": "complete"
     }
   }
 }

@@ -9,7 +9,7 @@ const manifest=JSON.parse(file('public/assets/manifest.json').toString()),atlas=
 const png=file('public/assets/world-atlas.png');
 describe('native pixel exports and logical anchors',()=>{
  it('exports a real 8-bit RGBA PNG with matching atlas dimensions and stable IDs',()=>{
-  expect([...png.subarray(0,8)]).toEqual([137,80,78,71,13,10,26,10]);expect(png.readUInt32BE(16)).toBe(256);expect(png.readUInt32BE(20)).toBe(160);expect(png[24]).toBe(8);expect(png[25]).toBe(6);expect(Object.keys(manifest.frames).sort()).toEqual(Object.keys(atlas.frames).sort());expect(Object.keys(manifest.frames)).toHaveLength(16);
+  expect([...png.subarray(0,8)]).toEqual([137,80,78,71,13,10,26,10]);expect(png.readUInt32BE(16)).toBe(256);expect(png.readUInt32BE(20)).toBe(160);expect(png[24]).toBe(8);expect(png[25]).toBe(6);expect(Object.keys(manifest.frames).filter(id=>manifest.frames[id].atlas==='world').sort()).toEqual(Object.keys(atlas.frames).sort());expect(Object.keys(manifest.frames).filter(id=>manifest.frames[id].atlas==='world')).toHaveLength(16);
  });
  it('bounds every frame, avoids overlap and validates source/manifest files',()=>{
   const frames=Object.entries(atlas.frames);

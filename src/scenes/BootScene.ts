@@ -1,4 +1,4 @@
-import { terrainFrame,terrainEdges,resourceFrame,resourceOrigin } from '../presentation/assets';
+import { buildingFrame,buildingOrigin,terrainFrame,terrainEdges,resourceFrame,resourceOrigin } from '../presentation/assets';
 import { createSession,sessionTransition,changeOptions,gameplayDelta,type MatchSession,type SessionAction } from '../gameplay/session';
 import { hotkeys,hotkeyButton,dispatchHotkey,commandGuide } from '../presentation/hotkeys';
 import { bindGroup,recallGroup,combineSelection,validGroup,type ControlGroups } from '../gameplay/controlGroups';
@@ -64,10 +64,10 @@ export class BootScene extends Phaser.Scene {
   private scenarioSelect!:HTMLSelectElement;
   private research:ResearchState=createResearch();
   private forgeButton!:HTMLButtonElement;
-  private forgeVisual?:Phaser.GameObjects.Rectangle;
+  private forgeVisual?:Phaser.GameObjects.Image;
   private researchButtons=new Map<ResearchKind,HTMLButtonElement>();
   private map!: WorldMap;
-  private baseVisual!:Phaser.GameObjects.Rectangle;
+  private baseVisual!:Phaser.GameObjects.Image;
   private baseLabel!:Phaser.GameObjects.Text;
   private queueSignature = '';
   private queuePanel!:HTMLElement;
@@ -85,15 +85,15 @@ export class BootScene extends Phaser.Scene {
   private matchStatus!: HTMLElement;
   private waves!: WaveState;
   private combat!: CombatState;
-  private enemyVisuals = new Map<string, { body: Phaser.GameObjects.Rectangle; label: Phaser.GameObjects.Text }>();
+  private enemyVisuals = new Map<string, { body: Phaser.GameObjects.Rectangle|Phaser.GameObjects.Image; label: Phaser.GameObjects.Text }>();
 
   private gathering!: GatheringState;
   private placement: PlacementState = { active: false, barracks: null };
   private previewPoint: Position = { x: 0, y: 0 };
   private placementClick = false;
   private placementPreview!: Phaser.GameObjects.Rectangle;
-  private barracksVisual?: Phaser.GameObjects.Rectangle;
-  private farmVisuals = new Map<string, Phaser.GameObjects.Rectangle>();
+  private barracksVisual?: Phaser.GameObjects.Image;
+  private farmVisuals = new Map<string, Phaser.GameObjects.Image>();
   private farmButton!:HTMLButtonElement;
   private buildButton!: HTMLButtonElement;
   private placementStatus!: HTMLElement;
@@ -117,7 +117,7 @@ export class BootScene extends Phaser.Scene {
     super('BootScene');
   }
 
-  preload():void {if(!this.textures.exists('world'))this.load.atlas('world','/assets/world-atlas.png','/assets/world-atlas.json');}
+  preload():void {for(const key of ['world','buildings'])if(!this.textures.exists(key))this.load.atlas(key,`/assets/${key}-atlas.png`,`/assets/${key}-atlas.json`);}
 
   create(): void {
     this.applyMatch(createMatch(this.scenario,this.difficulty));
@@ -200,8 +200,7 @@ export class BootScene extends Phaser.Scene {
         for(const edge of terrainEdges(column,row))this.add.image(rect.x,rect.y,'world',edge).setOrigin(0).setDepth(-9);
       }
     }
-    this.baseVisual=this.add.rectangle(this.gathering.base.x, this.gathering.base.y,
-      gatheringConfig.baseSize, gatheringConfig.baseSize, 0x537eb5);
+    this.baseVisual=this.add.image(this.gathering.base.x,this.gathering.base.y,'buildings',buildingFrame('base','player')).setOrigin(.5,.75);
     this.baseLabel=this.add.text(this.gathering.base.x, this.gathering.base.y + 30, 'Base',
       { fontSize: '16px', color: '#ffffff' }).setOrigin(0.5, 0);
     this.nodeVisual=this.add.image(this.gathering.node.position.x,this.gathering.node.position.y,'world','wood-available').setOrigin(resourceOrigin.x,resourceOrigin.y);
@@ -488,7 +487,8 @@ export class BootScene extends Phaser.Scene {
   private syncPlacement(): void {
     const forge=this.placement.forge;
     if(!forge&&this.forgeVisual){this.forgeVisual.destroy();this.forgeVisual=undefined;}
-    if(forge&&!this.forgeVisual)this.forgeVisual=this.add.rectangle(forge.footprint.x,forge.footprint.y,forge.footprint.width,forge.footprint.height,0x787d87).setOrigin(0);
+    if(forge&&!this.forgeVisual)this.forgeVisual=this.add.image(forge.footprint.x+forge.footprint.width/2,forge.footprint.y+forge.footprint.height/2,'buildings',buildingFrame('forge','player',forge.construction.remainingSeconds)).setOrigin(.5,.75);
+    if(forge)this.forgeVisual!.setFrame(buildingFrame('forge','player',forge.construction.remainingSeconds));
     this.forgeButton.disabled=!this.gameplayActive()||this.placement.active||!!forge||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected);
     document.getElementById('research-status')!.textContent=forge?`Forge ${Math.ceil(forge.hp)} HP · bygge ${forge.construction.remainingSeconds.toFixed(1)} s · Attack ${this.research.attack} / Defense ${this.research.defense}${this.research.job?` · ${this.research.job.kind} ${this.research.job.remainingSeconds.toFixed(1)} s`:''}`:'Bygg Forge för uppgraderingar';
     for(const [kind,button] of this.researchButtons){button.disabled=!canResearch(this.gathering,this.research,this.placement,kind,this.gameplayActive());button.textContent=`${kind==='attack'?'Attack +25 %':'Defense −25 %'} – ${costLabel(upgradeConfig.cost)}`;}
@@ -505,22 +505,22 @@ export class BootScene extends Phaser.Scene {
       : !this.gameplayActive() ? 'Matchen är avslutad' : this.placement.barracks ? barracksReady(this.placement) ? 'Barracks färdig' : `Bygge: ${this.placement.construction!.remainingSeconds.toFixed(1)} s arbete kvar – högerklick med worker återupptar` : !this.gathering.units.some(u=>u.kind==='worker'&&u.selected) ? 'Välj en worker för att bygga' : `Kostar ${costLabel(costs.barracks)} – välj plats`;
     if (this.placement.barracks && !this.barracksVisual) {
       const building = this.placement.barracks;
-      this.barracksVisual = this.add.rectangle(building.x, building.y, building.width, building.height, 0x9474b5).setOrigin(0);
+      this.barracksVisual = this.add.image(building.x+building.width/2,building.y+building.height/2,'buildings',buildingFrame('barracks','player',this.placement.construction?.remainingSeconds)).setOrigin(.5,.75);
     }
     this.farmButton.disabled=!this.gameplayActive()||this.placement.active
       ||(this.placement.farms?.length??0)>=farmConfig.maxCount||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected);
     document.getElementById('farm-status')!.textContent=(this.placement.farms??[]).map(f=>`${f.id}: ${Math.ceil(f.hp??combatConfig.farmHP)} HP · ${f.construction.remainingSeconds===0?'färdig (+5)':f.construction.remainingSeconds.toFixed(1)+' s kvar'}`).join(' · ') || 'Välj worker – färdig farm ger +5 population';
     for(const [id,visual] of this.farmVisuals)if(!this.placement.farms?.some(f=>f.id===id)){visual.destroy();this.farmVisuals.delete(id);}
     for(const farm of this.placement.farms??[]) {
-      if(!this.farmVisuals.has(farm.id))this.farmVisuals.set(farm.id,this.add.rectangle(farm.footprint.x,farm.footprint.y,farm.footprint.width,farm.footprint.height).setOrigin(0));
-      this.farmVisuals.get(farm.id)!.setFillStyle(farm.construction.remainingSeconds===0?0x798d50:0x6a606c);
+      if(!this.farmVisuals.has(farm.id))this.farmVisuals.set(farm.id,this.add.image(farm.footprint.x+farm.footprint.width/2,farm.footprint.y+farm.footprint.height/2,'buildings',buildingFrame('farm','player',farm.construction.remainingSeconds)).setOrigin(buildingOrigin('farm').x,buildingOrigin('farm').y));
+      this.farmVisuals.get(farm.id)!.setFrame(buildingFrame('farm','player',farm.construction.remainingSeconds));
     }
-    this.barracksVisual?.setFillStyle(barracksReady(this.placement)?0x9474b5:0x6a606c);
+    this.barracksVisual?.setFrame(buildingFrame('barracks','player',this.placement.construction?.remainingSeconds));
   }
 
   private syncVisuals(): void {
     if(this.selectedBuilding==='barracks'&&!this.placement.barracks||this.selectedBuilding==='base'&&this.combat.baseHP<=0)this.selectedBuilding=null;
-    this.baseVisual.setVisible(this.combat.baseHP>0);this.baseLabel.setVisible(this.combat.baseHP>0);
+    this.baseVisual.setVisible(this.combat.baseHP>0);this.baseLabel.setVisible(this.combat.baseHP>0).setText(`Bas ${Math.ceil(this.combat.baseHP)} HP`);
     if (!this.gameplayActive()) {
       this.attackMoveMode=false;
       this.cameraDrag = undefined;
@@ -602,12 +602,12 @@ export class BootScene extends Phaser.Scene {
       this.projectileVisuals.get(shot.id)!.setPosition(shot.position.x,shot.position.y);}
     for (const enemy of visibleEnemies) {
       if (!this.enemyVisuals.has(enemy.id)) this.enemyVisuals.set(enemy.id, {
-        body: this.add.rectangle(enemy.position.x, enemy.position.y, enemy.footprint?.width??combatConfig.enemySize, enemy.footprint?.height??combatConfig.enemySize, combatConfig.enemyColor),
+        body: enemy.kind==='base'?this.add.image(enemy.position.x,enemy.position.y,'buildings',buildingFrame('base','enemy')).setOrigin(.5,.75):this.add.rectangle(enemy.position.x,enemy.position.y,combatConfig.enemySize,combatConfig.enemySize,combatConfig.enemyColor),
         label: this.add.text(0, 0, '', { fontSize: '14px', color: '#ffffff' }).setOrigin(0.5, 0),
       });
       const visual = this.enemyVisuals.get(enemy.id)!;
       visual.body.setPosition(enemy.position.x, enemy.position.y);
-      visual.label.setPosition(enemy.position.x, enemy.position.y - 32).setText(`${enemy.kind==='base'?'Enemy base':'Enemy'} ${Math.ceil(enemy.hp)} HP`);
+      visual.label.setPosition(enemy.position.x, enemy.position.y - (enemy.kind==='base'?90:32)).setText(`${enemy.kind==='base'?'Enemy base':'Enemy'} ${Math.ceil(enemy.hp)} HP`);
     }
     for (const unit of this.gathering.units) {
       if (!this.visuals.has(unit.id)) {
