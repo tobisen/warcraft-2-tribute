@@ -1,5 +1,6 @@
 import { gameplayKeyAllowed,type KeyContext } from './keyboard';
 export const hotkeys=[
+ {key:'E',button:'unit-ability',label:'Fraktionsförmåga – valda redo stridsenheter'},
  {key:'S',button:'stop-units',label:'Stop – valda units'},
  {key:'A',button:'attack-move',label:'Attack-move – välj combat-unit, klicka mål'},
  {key:'B',button:'build-barracks',label:'Bygg barracks – välj worker'},

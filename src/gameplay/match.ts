@@ -1,3 +1,4 @@
+import {advanceAbilities} from './abilities';
 import {trafficGates} from './traffic';
 import {trafficConfig} from '../config/traffic';
 import {defaultFactions,isFactionId,type MatchFactions} from '../config/factions';
@@ -119,7 +120,7 @@ function advance(state: MatchState, delta: number): MatchState {
     production:{...worker.production,nextUnitNumber},soldierProduction:{...soldier.production,nextUnitNumber}};
   const separated=separateBodies(updated.map,[...updated.gathering.units.map(u=>({id:`player:${u.id}`,position:u.position,half:(u.kind==='worker'?unitStats:combatUnitStats(u)).size/2})),...updated.combat.enemies.filter(e=>e.kind!=='base').map(e=>({id:`enemy:${e.id}`,position:e.position,half:combatConfig.enemySize/2}))],delta);
   if(separated.size){updated.gathering={...updated.gathering,units:updated.gathering.units.map(u=>{const position=separated.get(`player:${u.id}`);return position?{...u,position,navigation:correctedNavigation(updated.map,position,(u.kind==='worker'?unitStats:combatUnitStats(u)).size/2,u.navigation)}:u;})};updated.combat={...updated.combat,enemies:updated.combat.enemies.map(e=>{const position=separated.get(`enemy:${e.id}`);return position?{...e,position,navigation:correctedNavigation(updated.map,position,combatConfig.enemySize/2,e.navigation)}:e;})};}
-  updated.fog=matchFog(updated);return resolveOutcome(updated);
+  updated.gathering=advanceAbilities(updated.gathering,delta);updated.fog=matchFog(updated);return resolveOutcome(updated);
 }
 
 /** Split only at wave boundaries, retaining delta-based gameplay rather than a fixed timestep. */
@@ -140,7 +141,8 @@ export function updateMatch(state: MatchState, deltaSeconds: number): MatchState
     const definition=scenarioConfig[current.scenario??'survival'];
     const untilObjective=definition.victory==='timer'?Math.max(0,definition.holdSeconds!-current.waves.elapsedSeconds):Infinity;
     const untilService=(Math.floor((current.waves.elapsedSeconds+1e-9)/trafficConfig.resourceWindowSeconds)+1)*trafficConfig.resourceWindowSeconds-current.waves.elapsedSeconds;
-    const step = Math.min(remaining, untilWave,untilObjective,untilService,current.research?.job?.remainingSeconds??Infinity);
+    const untilAbility=Math.min(Infinity,...current.gathering.units.flatMap(u=>u.kind==='soldier'&&(u.ability?.activeSeconds??0)>1e-9?[u.ability!.activeSeconds]:[]));
+    const step = Math.min(untilAbility,remaining, untilWave,untilObjective,untilService,current.research?.job?.remainingSeconds??Infinity);
     current = advance(current, step);
     remaining = Math.max(0, remaining - step);
   }

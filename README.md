@@ -384,3 +384,5 @@ Sparformat v2 stöder migration av tidigare v1-sparningar i samma lokala slot. L
 RTS-067: startmenyn erbjuder **Kronförbundet** och **Järnklanen**, med egna originalsprites och namn. Nya matcher väljer motsatt fiendefraktion; sparning och omstart behåller sidval. Båda använder ännu samma spelvärden. `npm run assets:export` exporterar båda fraktionernas atlasvarianter; `npm test` kontrollerar samtliga frames och befintlig gameplay.
 
 RTS-068: Kronförbundets soldat kostar **20 wood + 5 gold**, tar **5 s** och har **60 HP**. Järnklanens yxkrigare kostar **18 wood + 6 gold**, tar **6 s** och har **66 HP**. Övriga enhetsrecept är oförändrade. Save använder config3 och migrerar tidigare config1/config2 med redan betalda köjobb bevarade; sloten och kommandona är samma.
+
+RTS-069: markera stridsenheter och tryck **E** eller fraktionsknappen. **Försvarshållning** (Kronförbundet) minskar inkommande skada 25 %; **Raseri** (Järnklanen) ökar utgående skada 25 %. Effekt 5 s, cooldown 20 s från aktivering, ingen resurskostnad. Status visar valda units timers; paus/Save/load bevarar dem och restart återställer. Save-config är nu 4 med migration från tidigare configversioner.

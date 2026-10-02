@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-069 – En särskild enhet eller förmåga per fraktion** — **Todo**.
+**RTS-070 – Fraktionsval och balans** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
@@ -2184,13 +2184,21 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-069 – En särskild enhet eller förmåga per fraktion
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** En särskild enhet eller förmåga per fraktion.
+**Goal:** Aktiverbara försvarshållning/raseri för markerade stridsenheter.
+
+**Requirements:** Kronförbundet: 25 % mindre inkommande skada. Järnklanen: 25 % mer utgående skada, även ranged/siege vid skott. Effekt 5 gameplay-s, cooldown 20 s från aktivering, inga resurser. Knapp och E-hotkey använder samma guarded command; bara markerade levande combat-units utan cooldown aktiveras. Blandad selection påverkar inte workers. Selection/orders bevaras; UI visar namn och valda units effekt/cooldown. Inga dolda mål behövs; befintlig fog-filtered combat kvarstår. Timers fryser vid paus/game over, save/load bevarar dem och restart återställer. Stora delta delas vid effektslut och använder rätt damage per tidsdel. Config innehåller balansvärden.
+
+**Non-goals:** Nya unittyper/assets, mana, AI-aktivering, AoE-buffs, nya målregler och generell combatrefaktorering.
 
 **Dependencies:** RTS-068.
 
-**Acceptance criteria:** Förmågebeslut dokumenteras före kod; två verifierade förmågor följer fog och save/reset.
+**Acceptance criteria:** Båda förmågor ger rätt skademultiplikator under exakt effektfönster, återaktivering blockeras tills cooldown slut, workers/andra units/orders påverkas inte. Ranged skada bevaras på avfyrad projektil. Pause/terminal och fog ger ingen extra effekt eller dold information; Save/load/restart fungerar.
+
+**Tester:** Aktivering/mixed selection/repeat/cooldown, melee/ranged/defense och upgrades, tidssteg/expiry, fog, paus/outcome/save/reset och ogiltiga timers. Alla tidigare tester, typecheck/build, browserinput/diffgranskning.
+
+**Docs:** BACKLOG.md, DECISIONS.md, GAME_DESIGN.md, ARCHITECTURE.md, README.md och DEV_LOG.md.
 
 ## RTS-070 – Fraktionsval och balans
 

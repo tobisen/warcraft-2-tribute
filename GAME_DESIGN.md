@@ -723,3 +723,9 @@ Välj Kronförbundet eller Järnklanen i startmenyn. Motståndaren får den andr
 Kronförbundets soldat: 20 wood + 5 gold, 5 s, 60 HP. Järnklanens yxkrigare: 18 wood + 6 gold, 6 s, 66 HP. Båda tar en supply och har samma rörelse och skada. Övriga enhetsrecept och byggnader är oförändrade. Knappen/kötiden och HP-stapeln följer fraktionen. Den ändliga enemy-budgeten betalar sin fraktionskostnad; Järnklanens enemy-produktion tar en sekund längre än difficulty-grunden. Waves och enemy-stridsprofil är fortfarande tidigare förenklingar. Slutlig balans verifieras i RTS-070.
 
 Äldre redan betalda köjobb bevarar sin originalkostnad och tid vid Load; en avbrytning återbetalar andelen av den faktiskt betalda kostnaden. Nyproduktion efter laddning följer nya recept. Restart börjar en helt ny match med vald fraktion.
+
+## RTS-069 – Försvarshållning och raseri
+
+Markera stridsenheter och använd fraktionsknappen eller **E**. Kronförbundets försvarshållning ger 25 % mindre inkommande damage; Järnklanens raseri ger 25 % mer utgående damage, även bågskyttar/katapulter. Effekten varar 5 gameplay-sekunder och enheten kan aktiveras igen efter 20 sekunder från aktivering. Ingen wood/gold-kostnad. I blandad selection aktiveras endast redo stridsenheter; workers fortsätter sina order. Avmarkering eller nya rörelseorder avbryter inte förmågetimern. Forge-bonus kombineras multiplicativt. Redan avfyrade skott behåller skadan de fick vid avfyrning.
+
+Egna valda enheters status visar effekt/cooldown. Paus fryser timern, game over fryser hela simulationen, Save/load behåller timern och restart rensar den. Självförmågan ändrar ingen vision och befintliga fog-regler för strid kvarstår. Fienden aktiverar inga förmågor i denna slice; värdena ska speltestas i RTS-070.

@@ -1,3 +1,4 @@
+import {abilityEffects} from './abilities';
 import type { MovementGate, GateFor } from './traffic';
 import { upgradeConfig } from '../config/upgrades';
 import { archerConfig } from '../config/archer';
@@ -99,7 +100,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
         time=Math.max(0,time-cooldown);
         shots.push({projectile:{id:`arrow-${nextProjectileNumber++}`,shooterId:unit.id,targetId:enemy.id,
           position:{...step.position},destination:{...enemy.position},speed:ranged.projectileSpeed,
-          remainingLife:ranged.projectileLifetime,damage:ranged.damage*attackMultiplier,hitRadius:unit.archetype==='archer'?archerConfig.hitRadius:0,
+          remainingLife:ranged.projectileLifetime,damage:ranged.damage*attackMultiplier*abilityEffects(gathering,unit,delta-time).attackMultiplier,hitRadius:unit.archetype==='archer'?archerConfig.hitRadius:0,
           ...(enemy.footprint?{targetFootprint:{...enemy.footprint}}:{}),
           ...('splashRadius' in ranged?{splashRadius:ranged.splashRadius}:{})},time});
         cooldown=ranged.attackInterval;
@@ -107,7 +108,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
       cooldown=Math.max(0,cooldown-time);
       return {...unit,position:step.position,attackCooldown:cooldown,...(step.navigation?{navigation:step.navigation}:{})};
     }
-    damage.set(enemy.id, (damage.get(enemy.id) ?? 0) + step.attackSeconds * combatConfig.soldierDamagePerSecond*attackMultiplier);
+    damage.set(enemy.id, (damage.get(enemy.id) ?? 0) + step.attackSeconds * combatConfig.soldierDamagePerSecond*attackMultiplier*abilityEffects(gathering,unit).attackMultiplier);
     return { ...unit, position: step.position, ...(step.navigation ? {navigation:step.navigation}: {}) };
   });
   // Both sides attack from the same live snapshot, so lethal blows are simultaneous.
@@ -149,7 +150,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
   for(const [id,amount] of existing.damage)damage.set(id,(damage.get(id)??0)+amount);
   for(const shot of shots){const advanced=advanceProjectiles([shot.projectile],movingEnemies,shot.time,map,visibleProjectile);
     projectiles.push(...advanced.projectiles);for(const [id,amount] of advanced.damage)damage.set(id,(damage.get(id)??0)+amount);}
-  units=units.map(unit=>unit.hp!==undefined?{...unit,hp:Math.max(0,unit.hp-(playerDamage.get(unit.id)??0)*(unit.kind==='soldier'?defenseMultiplier:1))}:unit);
+  units=units.map(unit=>unit.hp!==undefined?{...unit,hp:Math.max(0,unit.hp-(playerDamage.get(unit.id)??0)*(unit.kind==='soldier'?defenseMultiplier*abilityEffects(gathering,unit).defenseMultiplier:1))}:unit);
   const surviving=removeDeadUnits({...gathering,units});units=surviving.units;
   const nextPlacement=placement?{...placement,
     ...(placement.forge?{forge:{...placement.forge,hp:Math.max(0,placement.forge.hp-(playerDamage.get('forge')??0))}}:{}),

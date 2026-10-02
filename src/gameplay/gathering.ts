@@ -1,3 +1,4 @@
+import type {AbilityState} from './abilities';
 import type {FactionId} from '../config/factions';
 import { approachRoute, canInteract } from './approach';
 import { resourceServices } from './resourceQueue';
@@ -24,6 +25,7 @@ export interface Worker extends SelectableUnit {
   cargoType?: ResourceType;
 }
 export interface Soldier extends SelectableUnit {
+  ability?:AbilityState;
   archetype?: 'archer'|'catapult';
   attackCooldown?: number;
   autoOrigin?: Position;
