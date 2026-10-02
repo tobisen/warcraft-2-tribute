@@ -690,3 +690,8 @@ Korrupt/okänd äldre/framtida schema eller annan config-version avvisas; ingen 
 Alla fem modes och Easy/Normal/Hard kan vinnas utan extra resurser/HP/units. Accelererad legal kommandostrategi bygger barracks med wood först, samlar därefter gold, tränar upp till fyra soldiers och ger synliga attackmål. Gruppanfall, förstärkningar och skydd av gold-workers behövs särskilt i Hard Skirmish. Tidiga testförluster berodde på oskyddad gold-ekonomi och för tidiga enskilda anfall; inga stats, startresurser, vågor eller difficulty-värden ändrades för att få matrisen att passera. Aktiva order gör denna lilla RTS enklare än passivt försvar; resultaten är spelbarhetsbevis, inte en slutlig balansgaranti.
 
 Fem naturliga Normal-UI-flöden och 15 accelererade scenario/profile-flöden redovisas separat i [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md). Utposten tillåter kvarvarande enemies vid deadline, Skirmish vinner på basdöd trots kvarvarande enemies, och defeat har fortsatt företräde. RTS-061–090 är framtida planering; nya fraktioner/förmågor är inte del av releasen.
+
+
+## RTS-061: kvalitetsgranskning
+
+[QA_REVIEW.md](QA_REVIEW.md) beskriver verifierad Pages, betald större blandad armé, prioriterade fynd och browser-/tillgänglighetsgränser. Inga blockerande/P1-regressioner; överlappning och resurs-trängsel hanteras i RTS-063/064. Ny godkänd etapp fortsätter till RTS-065; RTS-066–090 är endast planerade.

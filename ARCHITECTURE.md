@@ -845,3 +845,8 @@ Korrupt/okänd äldre/framtida schema eller annan config-version avvisas; ingen 
 Save-status rensas vid ny match/restart och ändras från pausad till fortsätter vid resume, så gamla DOM-meddelanden inte beskriver ny simulation felaktigt. Ingen gameplaybalans eller bundle-split ändrades i denna task. Browsermätning använder scene pre/post-update (inklusive HUD-synk), RAF-intervall och CDP-GC/heap, inte uppskattad FPS från gameplay-delta.
 
 [Pages-workflow](.github/workflows/pages.yml) har separat build/deploy och pinade officiella actions: build-token contents/pages read, deploy-token pages/id-token write. Push main och workflow_dispatch delar concurrency pages utan avbruten pågående publicering. CI använder Node 22 och låst npm ci; deploy kör enbart godkänd dist.
+
+
+## RTS-061: kvalitetsgranskning
+
+[QA_REVIEW.md](QA_REVIEW.md) beskriver verifierad Pages, betald större blandad armé, prioriterade fynd och browser-/tillgänglighetsgränser. Inga blockerande/P1-regressioner; överlappning och resurs-trängsel hanteras i RTS-063/064. Ny godkänd etapp fortsätter till RTS-065; RTS-066–090 är endast planerade.

@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-061 – Speltest och kvalitetsgranskning av första versionen** — **Todo**.
+**RTS-062 – Prioriterade buggar och regressioner från granskningen** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
@@ -2040,7 +2040,7 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-061 – Speltest och kvalitetsgranskning av första versionen
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Dokumentera reproducerbara fynd från publicerad och lokal release.
 

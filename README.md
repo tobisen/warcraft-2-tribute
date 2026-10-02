@@ -102,7 +102,7 @@ varningen om stor Phaser-bundle kvarstår inom releasebudgeten. Godkänd Pages-w
 - [Implementer](.agents/implementer.md), [Reviewer](.agents/reviewer.md) och
   [Finisher](.agents/finisher.md): rollinstruktioner, inte automatiska agenter.
 
-Nästa task är RTS-061, speltest och kvalitetsgranskning av releasen. RTS-061–090 implementeras inte i denna körning. Multiplayer, backend,
+Nästa task är RTS-061, speltest och kvalitetsgranskning av releasen. Ny godkänd etapp omfattar RTS-061–065. Multiplayer, backend,
 konton, procedural generation och modding ingår inte. Pages-publicering ingår enligt användarens godkända tillägg.
 
 RTS-031: välj worker innan placering. Barracks reserveras direkt och kräver
@@ -340,7 +340,7 @@ Korrupt/okänd äldre/framtida schema eller annan config-version avvisas; ingen 
 
 ## Release och GitHub Pages – RTS-060
 
-[Releasekontroller och mätningar](RELEASE_CHECKLIST.md) beskriver stödd desktopprofil, full scenariomatris, budget och begränsningar. RTS-001–060 är implementerade; RTS-061–090 är planerade och ligger utanför denna körning.
+[Releasekontroller och mätningar](RELEASE_CHECKLIST.md) beskriver stödd desktopprofil, full scenariomatris, budget och begränsningar. RTS-001–060 är implementerade; Ny godkänd etapp arbetar med RTS-061–065; RTS-066–090 förblir planerade.
 
 Lokal produktionskontroll:
 
@@ -357,3 +357,8 @@ npm run preview
 Spelet är publicerat och browserkontrollerat på [warcraft-2-tribute på Pages](https://tobisen.github.io/warcraft-2-tribute/). Efter godkända lokala releasechecks kör [Pages-workflowen](.github/workflows/pages.yml) på push till main eller manuellt workflow_dispatch: låst npm ci, alla tester, typecheck och build före uppladdning/deploy. GitHub Pages använder GitHub Actions som källa. Inga konton/backend krävs för att spela; publicerad origin har en egen lokal sparslot och tar inte över localhost-saves. Faktiskt publiceringsresultat anges i DEV_LOG.
 
 Hard kräver tidig ekonomi/armé och aktiva order; samla gärna wood med alla tre först, bygg barracks och flytta sedan en till gold. Gold nära fiendebasen i Skirmish behöver skydd. Ingen balansändring behövdes för release-matrisens segrar; ett vunnet skriptflöde är inte generell garanti om svårighetsgrad. Andra browsermotorer/mobil och akustisk lyssning är ännu inte verifierade. Bundle-varningen är kvar inom fastställd storleksbudget.
+
+
+## RTS-061: kvalitetsgranskning
+
+[QA_REVIEW.md](QA_REVIEW.md) beskriver verifierad Pages, betald större blandad armé, prioriterade fynd och browser-/tillgänglighetsgränser. Inga blockerande/P1-regressioner; överlappning och resurs-trängsel hanteras i RTS-063/064. Ny godkänd etapp fortsätter till RTS-065; RTS-066–090 är endast planerade.

@@ -662,3 +662,8 @@ Verifierad primärprofil är installerad desktop Chromium/Chrome på denna macOS
 Budget: gameplay CPU p95 ≤16,7 ms, observerat frame-intervall p95 ≤33,4 ms under målbelastning; JS heap efter GC ≤128 MiB och ≤16 MiB tillväxt över tio resetcykler. JS build ≤1,7 MB/minified, ≤450 KB/gzip; total dist ≤5 MB. Initial assets hämtas lokalt/basrelativt, inga 404/runtimefel. Bundle-varningen accepteras endast om dessa budgetar håller; ingen split/refaktor för varningen i denna körning. Dokumentera headless/clock/GC-metod och skilj naturliga UI-playthroughs från accelererad gameplay-matris. Alla fem modes × tre profiler, save/load/pause/outcome/restart, assets/ljud och clean-install ska kontrolleras. Pages-workflow aktiveras först efter att dessa lokala releasekontroller passerat.
 
 RTS-060 release: inga stats/AI/waves/startresurser ändrades efter full matris. Vite dev behåller `/`, build/preview använder `/warcraft-2-tribute/`; alla atlaspaths och manifest är basrelativa. Officiella Pages-actions pinas till verifierade commit-SHA, Node 22 i CI, npm ci/test/typecheck/build före artifact. Build har contents/pages read, deploy endast pages/id-token write; ingen PAT eller ny credential behövs. Concurrency pages/cancel-in-progress false låter pågående deploy slutföras utan kollision. Pages-källan måste vara GitHub Actions; faktiskt resultat redovisas efter push.
+
+
+## RTS-061: kvalitetsgranskning
+
+[QA_REVIEW.md](QA_REVIEW.md) beskriver verifierad Pages, betald större blandad armé, prioriterade fynd och browser-/tillgänglighetsgränser. Inga blockerande/P1-regressioner; överlappning och resurs-trängsel hanteras i RTS-063/064. Ny godkänd etapp fortsätter till RTS-065; RTS-066–090 är endast planerade.
