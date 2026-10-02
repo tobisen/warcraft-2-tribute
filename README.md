@@ -37,7 +37,7 @@ valt läge. Förlust vid spelarbasens död har alltid företräde.
    sekunder vardera. Välj basen för workers för 20 wood och 5 s. Tre FIFO-jobb per
    byggnad inklusive aktivt; bas och barracks kan producera samtidigt.
 4. Välj soldiers och högerklicka på röda enemies för manuell attack. Ge nästa
-   mål efter varje fiendedöd. Tre waves med 1/2/3 enemies anländer vid
+   mål efter varje fiendedöd. På Normal anländer tre waves med 1/2/3 enemies vid
    60/90/120 gameplay-sekunder. Träna förstärkningar vid förluster.
 5. Alla enemies döda efter sista wave ger Victory; basens HP 0 ger Defeat.
    Defeat har företräde vid samtidig utgång. Simulation och gameplay-input
@@ -49,7 +49,7 @@ Drag ersätter selection med units vars centrum ligger i rektangeln, inklusive
 kanten. Gester under 5 screen pixels är klick. Ringar/byggnadsram visar val.
 
 Högerklick på mark med valda units ger separata nåbara slutpositioner kring
-klickmålet med 160 px/s. Ny order ersätter föregående; avmarkering stoppar inte
+klickmålet med enhetens config-hastighet (worker/soldier 160, archer 140 och catapult 80 px/s). Ny order ersätter föregående; avmarkering stoppar inte
 rörelse/arbete. Stop avbryter valda units men bevarar last. Gul målring visar
 aktiv order, röd ring blockerad route; HUD visar fas och felorsak.
 
@@ -354,6 +354,6 @@ npm run preview
 
 Öppna preview-adressen med `/warcraft-2-tribute/`, normalt http://localhost:4173/warcraft-2-tribute/. Dev fortsätter använda rotadressen som Vite skriver ut. [vite.config.ts](vite.config.ts) sätter projektets subpath för build/preview; sprites/ljud/CSS hämtas från samma bas.
 
-Godkänd publiceringsadress är [warcraft-2-tribute på Pages](https://tobisen.github.io/warcraft-2-tribute/). Efter godkända lokala releasechecks kör Pages-workflowen på push till main eller manuellt workflow_dispatch: låst npm ci, alla tester, typecheck och build före uppladdning/deploy. GitHub Pages måste använda GitHub Actions som källa. Inga konton/backend krävs för att spela; publicerad origin har en egen lokal sparslot och tar inte över localhost-saves. Faktiskt publiceringsresultat anges i DEV_LOG.
+Spelet är publicerat och browserkontrollerat på [warcraft-2-tribute på Pages](https://tobisen.github.io/warcraft-2-tribute/). Efter godkända lokala releasechecks kör [Pages-workflowen](.github/workflows/pages.yml) på push till main eller manuellt workflow_dispatch: låst npm ci, alla tester, typecheck och build före uppladdning/deploy. GitHub Pages använder GitHub Actions som källa. Inga konton/backend krävs för att spela; publicerad origin har en egen lokal sparslot och tar inte över localhost-saves. Faktiskt publiceringsresultat anges i DEV_LOG.
 
 Hard kräver tidig ekonomi/armé och aktiva order; samla gärna wood med alla tre först, bygg barracks och flytta sedan en till gold. Gold nära fiendebasen i Skirmish behöver skydd. Ingen balansändring behövdes för release-matrisens segrar; ett vunnet skriptflöde är inte generell garanti om svårighetsgrad. Andra browsermotorer/mobil och akustisk lyssning är ännu inte verifierade. Bundle-varningen är kvar inom fastställd storleksbudget.
