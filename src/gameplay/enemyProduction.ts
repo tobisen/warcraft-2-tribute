@@ -13,7 +13,7 @@ export function createEnemyProduction(profile:{budget:{wood:number;gold:number};
  production:{remainingSeconds:null,nextUnitNumber:1},acceptedJobs:0};
 }
 /** Adapter to shared atomic queue/time/spawn rules; temporary units never enter player state. */
-export function updateEnemyProduction(state:EnemyProductionState,combat:CombatState,player:GatheringState,map:WorldMap,delta:number,faction?:FactionId,buildings?:{site?:Enemy;population:Population;reserveForFarm?:number}) {
+export function updateEnemyProduction(state:EnemyProductionState,combat:CombatState,player:GatheringState,map:WorldMap,delta:number,faction?:FactionId,buildings?:{site?:Enemy;population:Population;reserveForFarm?:number;startAllowed?:boolean}) {
  const base=combat.enemies.find(e=>e.kind==='base'&&e.hp>0);
  if(!base?.footprint)return {combat,state:{...state,production:{...state.production,queue:[],remainingSeconds:null,blockedSpawnKey:undefined}}};
  if(buildings&&(!buildings.site?.footprint||buildings.site.construction?.remainingSeconds!==0))return {combat,state};
@@ -25,7 +25,7 @@ export function updateEnemyProduction(state:EnemyProductionState,combat:CombatSt
   let p=next.production,acceptedJobs=next.acceptedJobs,spent=next.spent?{...next.spent}:undefined;
   const population=()=>({cap:Math.min(next.cap,buildings?buildings.population.cap-c.enemies.filter(e=>e.kind==='worker').length:Infinity),used:c.enemies.filter(e=>!e.footprint&&e.kind!=='worker').length,reserved:p.queue?.reduce((n,j)=>n+(j.supply??1),0)??0});
   const savingForFarm=()=>buildings?.reserveForFarm!==undefined&&population().used+population().reserved+c.enemies.filter(e=>e.kind==='worker').length>=buildings.population.cap-buildings.reserveForFarm;
-  while(!savingForFarm()&&canEnqueue(g,p,building,population())){const started=enqueueProduction(g,p,building,population());if(spent){spent.wood+=g.wood-started.gathering.wood;spent.gold+=(g.goldBalance??0)-(started.gathering.goldBalance??0);}g=started.gathering;p=started.production;acceptedJobs++;}
+  while(buildings?.startAllowed!==false&&!savingForFarm()&&canEnqueue(g,p,building,population())){const started=enqueueProduction(g,p,building,population());if(spent){spent.wood+=g.wood-started.gathering.wood;spent.gold+=(g.goldBalance??0)-(started.gathering.goldBalance??0);}g=started.gathering;p=started.production;acceptedJobs++;}
   if(p.remainingSeconds===null)return {combat:c,state:{...next,wood:g.wood,gold:g.goldBalance??0,production:p,acceptedJobs,...(spent?{spent}:{})}};
   const step=Math.min(time,p.remainingSeconds);
   const result=updateQueuedProduction(g,p,step,building,{map,enemies:player.units});

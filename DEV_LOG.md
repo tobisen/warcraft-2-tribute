@@ -1351,3 +1351,34 @@ Befintlig bundle-varning kvar: index-BxjPPEiZ.js1535,32KB/gzip403,34KB.
 RTS-071 Pages/Actions verifierat success för be602f5. Begränsningar: en
 barracks/en farm, fasta kandidatplatser och inga nya econ/upgrade/expansion-
 system. Nästa task RTS-073.
+
+## 2026-10-03 – RTS-073: ekonomi, armé och betald forskning
+
+Härledd begränsad prioritet: barracks/supply, tre levande army-units,
+Forge, attack1, defense1. Verklig bank betalar bygge/research exakt en gång.
+Army-förlust öppnar ersättning; betalda jobb fortsätter, och efter
+betald research-start kan nya army-jobb också köras. Wood-bias byter
+bara idle/tom gather-order och bevarar last. Shared konstruktion/research,
+enemy-only combatbuffs och strikt save config7; gamla saves får ingen
+policy eller gratis nivå. Forge-död avbryter jobb utan refund,
+lärda nivåer bevaras. Ingen ny dependency/grafik eller scope-utökning.
+
+Checks: slutlig npm test571 tester/74 filer PASS (91,36s), typecheck/build
+PASS. 11 nya policytester, inklusive prioritet/paid queue/cargo/effekter/
+migration. Tidiga fixturefel saknade retry-tid eller placerade tre betalda
+jobb vid supply-gränsen; korrigerade till uttryckliga testförutsättningar.
+Diffgranskning fann inga kvarstående blockerande fel.
+
+Chromium147 production-preview, båda fraktioner: synlig Forge-betalning/
+byggtid, attack/defense-research, pause/save/load mitt i forskning och
+restart PASS utan page/console/request-fel. Kontrollen använde en tydlig
+kontrollerad fixture med färdig barracks, tre army-units och avstämd
+bank/nod-ledger samt accelererad klocka; den visar flödet, inte naturlig
+fullmatch-balans. Båda nivåer färdiga ungefär55,16s i fixturen.
+En tidig browserassert missade samtidig betald army-start; slutkontrollen
+bokför faktiska separata kostnader. Forge-screenshot granskad.
+
+Befintlig bundle-varning kvar: index-BiRYLRwx.js1540,22KB/gzip404,49KB.
+RTS-072 GitHub Actions/Pages verifierat success för4c88dea.
+Begränsningar: inga ersättningsworkers/expansion eller begränsad AI-
+upptäckt ännu. Nästa task RTS-074.

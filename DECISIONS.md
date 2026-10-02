@@ -747,3 +747,23 @@ förlust. Save schema2/config6 introducerar site/retry-state utan gratis
 byggnader i migration. Enemy-barracks får endast produktionstid efter den
 faktiska byggsluttiden inom delta; samma tid kan inte bli både bygge och
 träning. Vid basdöd bibehålls terminal freeze och betalda kostnaders ledger.
+
+## RTS-073 – avgränsad policy före kod
+
+Ordning: barracks/supply, minst tre levande army-units, Forge, attack1,
+defense1, sedan fortsatt armé. Arméförlust under tre öppnar ersättning
+före nya research-starter; redan betalda research/job fortsätter. Samma
+40wood/10gold Forge och researchkostnad, 5s bygge/8s forskning, en nivå
+och samma multiplikatorer som spelarens config. Inga gratis stats.
+De två befintliga workers kan prioritera wood när gold-riktvärdet redan
+är fyllt, enbart mellan idle/tomma gather-orders för att bevara lasten.
+Nya matcher aktiverar policyn; äldre snapshots fortsätter sin modell
+utan gratis Forge/uppgraderingar. Expansion/replacement-workers väntar
+till RTS-074.
+
+RTS-073: när research redan betalats tillåts också nya army-jobb;
+bankbesparing avser obetalda mål. Enemy-bonus använder samma 1,25/0,75
+som spelaren men svag enemy-grundprofil bevaras. Ingen gratis HP.
+Forge-död avbryter aktiv forskning utan refund och bevarar lärda nivåer.
+Auktoritativ enemy-research sparas i config7; combat-cache härleds och
+serialiseras aldrig. Äldre config6/under får ingen ny policy vid Load.

@@ -411,3 +411,15 @@ Du kan angripa synliga byggen och färdiga byggnader. AI kan återuppta
 blockerade byggen eller byta builder utan att betala samma site igen.
 Save config6 bevarar byggen/last/timing. Äldre saves behåller sin tidigare
 base-production och får inga gratis byggnader; restart använder nya regler.
+
+## RTS-073: AI prioriterar och forskar
+
+AI prioriterar barracks/supply, minst tre levande stridsenheter, Forge,
+attack1 och defense1. Forge kostar 40 wood/10 gold och 5s worker-arbete;
+varje research kostar 40/10 och tar 8s. Nya army-jobb pausas medan banken
+sparar till ett obetalt bygge/research; betalda jobb fortsätter. Efter
+betald research-start kan army-produktion fortsätta samtidigt. Under tre
+levande stridsenheter prioriteras ersättning före ny forskning.
+Enemy-attack ger +25% skada, defense minskar inkommande skada 25%, enbart
+för stridsenheter. Workers/byggnader får ingen bonus. Save config7
+bevarar forskningen; gamla snapshots får inga gratis uppgraderingar.

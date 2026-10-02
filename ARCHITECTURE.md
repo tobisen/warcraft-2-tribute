@@ -953,3 +953,25 @@ fortsätter tidigare base-production; spoofade nya fält avvisas. Röda
 byggnadsframes, HP och visionradius härleds efter fog.
 [enemyConstruction.test.ts](src/gameplay/enemyConstruction.test.ts) täcker
 betalning, blockering, ersättningsbuilder, tid, supply, save och destruktion.
+
+## RTS-073: härledd enemy-budgetpolicy
+
+[enemyPolicy.ts](src/gameplay/enemyPolicy.ts) härleder prioritet ur egen
+levande armé, supply, sites och betald research.
+[enemyPolicy.ts](src/config/enemyPolicy.ts) anger minimum tre stridsenheter.
+MatchState.enemyPolicy innehåller endast auktoritativ ResearchState.
+Forge använder samma enemy-building-vy/placement/construction som barracks;
+research återanvänder spelarens kostnad/tid/krav och bokför spent.
+EnemyProduction.startAllowed stoppar nya betalningar under besparing men
+bevarar progression av betalda jobb. Aktiv betald research tillåter nya
+army-jobb; armé under tre prioriteras före nästa uppgradering.
+Idle/tomma gather-orders kan byta resurs efter budgetbehov, aldrig lastade
+leverans-/byggorders. Workers och byggnader får inga combat-bonusar.
+
+Combat.enemyUpgrades är en transient härledd cache; endast research sparas.
+Match splittrar delta vid enemy-research-slut så buffs gäller efter
+färdig forskning. Forge-/basdöd avbryter jobbet utan refund; lärda
+nivåer består. Save schema2/config7 validerar research/site/referenser
+och återskapar cache. Config6/äldre migreras utan policy, Forge eller
+gratis nivåer. [enemyPolicy.test.ts](src/gameplay/enemyPolicy.test.ts)
+täcker prioritet, betalning, tid, last, effekter och migration.

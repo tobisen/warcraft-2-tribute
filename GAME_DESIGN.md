@@ -767,3 +767,22 @@ Byggen och färdiga byggnader kan angripas, syns enligt fog och blockerar
 rörelse. Farm-supply tillkommer först vid färdigt bygge. Ingen Forge,
 workerproduktion eller expansion i denna slice. Äldre saves behåller
 sin tidigare produktionsmodell; fresh restart aktiverar nya byggregler.
+
+## RTS-073: betald AI-forskning
+
+I nya ekonomimatcher följer AI barracks/supply, tre levande army-units,
+Forge, attack1 och defense1. Förlust under tre öppnar ersättningsarmé
+före nya research-starter. Forge kostar40/10 och 5s arbete; forskning
+kostar40/10 och 8s per nivå. Obetalda mål reserverar banken genom att
+pausa nya army-jobb; redan betalda jobb fortsätter. Betald research kan
+köras samtidigt med ny army-produktion. Två workers kan prioritera wood
+när gold-behovet är fyllt, utan att slänga last eller avbryta leverans.
+Fiendens svagare grundprofil36HP/65speed/6DPS behålls; attack1 ger7,5DPS
+och defense1 inkommande multiplikator0,75 för stridsenheter. Workers,
+byggnader och spelarens stats ändras inte. Forge kan angripas enligt fog;
+förstörelse avbryter aktiv research
+utan refund av dess redan betalda kostnad. Redan lärda nivåer består.
+
+Save config7 bevarar tids-/kostnadsmodell. Gamla snapshots behåller sin
+tidigare policy; restart aktiverar aktuell modell. Expansion och
+ersättningsworkers tillhör nästa slice, upptäckt RTS-075.

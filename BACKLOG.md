@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-073 – AI prioriterar ekonomi, armé och uppgraderingar** — **Todo**.
+**RTS-074 – AI expanderar och återhämtar sig efter förluster** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
@@ -2256,13 +2256,21 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-073 – AI prioriterar ekonomi, armé och uppgraderingar
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** AI prioriterar ekonomi, armé och uppgraderingar.
+**Goal:** En verifierbar begränsad budgetpolicy för AI-ekonomi, armé och Forge.
+
+**Requirements:** Barracks och nödvändig supply behåller prioritet. Bygg en betald Forge (40 wood/10 gold, 5s arbete) efter minst tre levande army-units; en site åt gången. Spara resurser för Forge, sedan attack1 och defense1 (40/10, 8s vardera), medan redan betalda köjobb fortsätter. Om levande armé sjunker under tre prioriteras ersättningsarmé före nya uppgraderingar. Två befintliga workers prioriterar wood när gold-riktvärdet är fyllt och wood saknas; byt bara idle/tomma gather-orders och bevara last. Återanvänd kostnad, bygge, research och configmultiplikatorer. Enemy-upgrades påverkar endast enemy-stridsenheter, aldrig workers/byggnader/spelaren. Fog-filter och begränsade retries kvarstår. Save/load/pause/terminal/reset och betald ledger; gamla saves får ingen ny policy eller gratis Forge/levels.
+
+**Non-goals:** Nya units, worker-produktion, expansion, ny fraktionsbalans, obegränsad planering, debug-HUD och spelarens research-policy.
 
 **Dependencies:** RTS-072.
 
-**Acceptance criteria:** Dokumenterad begränsad policy hanterar budget och samtidiga behov utan oändliga loops.
+**Acceptance criteria:** Dokumenterad prioritet växlar utan oändliga loops. Cost dras en gång, Forge/research kräver verkligt bank/builder/tid, buff först efter research. Betalda jobs fortsätter under budget-reservation. Arméförlust öppnar nyrekrytering. Last/wood/gold bevaras under resursbyte och alla betalningar. Båda fraktioner och äldre saves fungerar.
+
+**Tester:** Prioritetsgränser/supply/army-loss, budget/cost/time, Forge-required och cancellation vid död, korrekt enemy-only attack/defense, workers resursbyte/last/ledger, save/migration/freeze/reset samt tidigare tester/typecheck/build/browser/diff.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, DECISIONS.md, GAME_DESIGN.md, ARCHITECTURE.md och README.md.
 
 ## RTS-074 – AI expanderar och återhämtar sig efter förluster
 

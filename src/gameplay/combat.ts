@@ -20,8 +20,8 @@ import type { GatheringState, Unit,WorkerOrder,ResourceType } from './gathering'
 import { moveTowards, type Position } from './movement';
 
 export interface EnemyWork {cargo:number;cargoType?:ResourceType;target:Position;order:WorkerOrder}
-export interface Enemy { owner?:'enemy'; kind?:'unit'|'base'|'worker'|'building';buildingType?:'barracks'|'farm';construction?:import('./placement').ConstructionJob;work?:EnemyWork; order?:{kind:'idle'}|{kind:'defend';targetId:string}|{kind:'muster'|'attack-move';destination:Position}; id: string; position: Position; hp: number; footprint?:Footprint; navigation?: RouteState }
-export interface CombatState { baseOwner?:'player'; enemies: Enemy[]; baseHP: number; projectiles?:Projectile[]; nextProjectileNumber?:number; destroyedEnemyFootprints?:Footprint[]; upgrades?:{attack:number;defense:number} }
+export interface Enemy { owner?:'enemy'; kind?:'unit'|'base'|'worker'|'building';buildingType?:'barracks'|'farm'|'forge';construction?:import('./placement').ConstructionJob;work?:EnemyWork; order?:{kind:'idle'}|{kind:'defend';targetId:string}|{kind:'muster'|'attack-move';destination:Position}; id: string; position: Position; hp: number; footprint?:Footprint; navigation?: RouteState }
+export interface CombatState { baseOwner?:'player'; enemies: Enemy[]; baseHP: number; projectiles?:Projectile[]; nextProjectileNumber?:number; destroyedEnemyFootprints?:Footprint[]; enemyUpgrades?:{attack:number;defense:number};upgrades?:{attack:number;defense:number} }
 
 export function enemyAt(enemies: Enemy[], point: Position): Enemy | undefined {
   return [...enemies].reverse().find(e=>e.footprint?point.x>=e.footprint.x&&point.x<=e.footprint.x+e.footprint.width&&point.y>=e.footprint.y&&point.y<=e.footprint.y+e.footprint.height:Math.abs(e.position.x-point.x)<=combatConfig.enemySize/2&&Math.abs(e.position.y-point.y)<=combatConfig.enemySize/2);
@@ -142,7 +142,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
     const center={x:footprint.x+footprint.width/2,y:footprint.y+footprint.height/2};
     const step=map?combatApproach(map,enemy.position,footprint,target.id,combatConfig.enemySpeed,combatConfig.enemyRange,delta,enemy.navigation,gateFor?.(`enemy:${enemy.id}`))
       :approach(enemy.position,center,combatConfig.enemySpeed,combatConfig.enemyRange,delta);
-    playerDamage.set(target.id,(playerDamage.get(target.id)??0)+step.attackSeconds*combatConfig.enemyDamagePerSecond);
+    playerDamage.set(target.id,(playerDamage.get(target.id)??0)+step.attackSeconds*combatConfig.enemyDamagePerSecond*(combat.enemyUpgrades?.attack?upgradeConfig.attackMultiplier:1));
     return {...enemy,position:step.position,...(step.navigation?{navigation:step.navigation}:{})};
   });
   const visibleProjectile=(enemy:Enemy,p:Projectile)=>projectileVisible?projectileVisible(enemy,p):!visible||units.some(u=>u.id===p.shooterId&&u.kind==='soldier'&&visible(enemy,u));
@@ -159,7 +159,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
     ...(placement.farms?{farms:placement.farms.map(f=>({...f,hp:Math.max(0,(f.hp??combatConfig.farmHP)-(playerDamage.get(f.id)??0))}))}:{})}:undefined;
   const nextCombat={...combat,baseHP:Math.max(0,combat.baseHP-(playerDamage.get('base')??0))};
   const aliveTargets=new Set(playerTargets(surviving,nextCombat,nextPlacement).map(t=>t.id));
-  const enemies = movingEnemies.map(enemy => ({ ...enemy, hp: Math.max(0, enemy.hp - (damage.get(enemy.id) ?? 0)) }))
+  const enemies = movingEnemies.map(enemy => ({ ...enemy, hp: Math.max(0, enemy.hp - (damage.get(enemy.id) ?? 0)*(!enemy.footprint&&enemy.kind!=='worker'&&combat.enemyUpgrades?.defense?upgradeConfig.defenseMultiplier:1)) }))
     .filter(e => e.hp > 0 || e.kind==='worker').map(enemy => enemy.navigation?.targetId && enemy.navigation.targetId!=='explore-goal' && !aliveTargets.has(enemy.navigation.targetId) ? {...enemy,navigation:undefined} : enemy);
   const destroyedEnemyFootprints=movingEnemies.filter(e=>e.footprint&&e.hp-(damage.get(e.id)??0)<=0).map(e=>e.footprint!);
   units = units.map(unit => unit.kind === 'soldier' && unit.order.kind === 'attack'
