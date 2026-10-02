@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-062 – Prioriterade buggar och regressioner från granskningen** — **Todo**.
+**RTS-063 – Förbättrad unit-separation och trängselhantering** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
@@ -2058,7 +2058,7 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-062 – Prioriterade buggar och regressioner från granskningen
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Rätta bekräftade blockerande/högt prioriterade fynd.
 

@@ -1199,3 +1199,8 @@ Publicerad naturlig Utposten/Normal: verkliga klick/drag, wood/gold-gather/deliv
 ## 2026-10-02: RTS-061
 
 Pages verifierad först enligt användarens nya godkännande av RTS-061–065; AGENTS/roller uppdaterade. 457 tester/60 filer, typecheck/build/diff-check passerade. Publicerad canvas/assets/ljud/save/reload/load/tio restarts och viewportar omkörda. Ny legal accelererad armé: 12 combat-units blandat soldier/archer/catapult +3 workers, betalda340 wood/80 gold, 279,20s; save/load bevarade15 units. Bekräftade P2: centrumavstånd0,322px och samtidiga workers utan servicekö. P3: minimap ej keyboardfokus. Inga blockerande/P1-fynd; QA_REVIEW.md innehåller steg/miljö/förväntat/faktiskt/prioritet. Ingen gameplaykod eller test för enbart dokumentation.
+
+
+## 2026-10-02: RTS-062
+
+RTS-061 26aff93 pushad. Inga bekräftade blockerande/P1-fynd, därför tom fixlista och ingen onödig kodändring. QA-001/002 prioriterade till sina avgränsade RTS-063/064, P3-minimap kvar. 457 tester/60 filer, typecheck/build/diff-check passerade; ingen save/config-migration eller nya spegeltester. Runtime identisk med verifierad Pages.

@@ -23,3 +23,8 @@ Egna blå/röda sprites, HP-staplar, ringar, byggsteg och DOM-status är läsbar
 ## Granskning och begränsningar
 
 Granskade input/session/save-livscykel, betalning/produktion/supply, navigation/interaction, array/ID-cleanup och publicerade assetvägar. Browserfixtures är tydligt separerade från naturliga flöden; inga spekulativa buggar, balansändringar eller fraktions-/sjöfeatures infördes. Bundle-varningen kvar inom releasebudget. Ingen garanti utanför verifierad miljö/flöden.
+
+
+## RTS-062: prioriteringsbeslut
+
+Ingen P0/P1-fixlista valdes eftersom inga sådana fel reproducerades. QA-001/002 behålls för RTS-063/064, QA-003 kvar som P3. Inga spelkodändringar, ingen påhittad regression och ingen save-versionändring. Befintliga 457 tester/typecheck/build/diff-check omkörda; aktuella browserrepro och releaseevidens från RTS-061 gäller oförändrad runtime.
