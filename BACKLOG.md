@@ -2,13 +2,13 @@
 
 ## Current Focus
 
-**RTS-055 – Enhetssprites och animationer** — **Todo**.
+**RTS-056 – Ljudeffekter, musik och volymkontroller** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
 Denna fil styr arbetet. En task åt gången. RTS-001–015 är historiskt färdiga;
 RTS-016–060 är en ny, användarbeställd roadmap efter MVP. Ingen gammal backlog
-har återuppstått. RTS-016–054 är nu implementerade; RTS-055–060 återstår. Rollfiler innebär inte automatisk agentstart.
+har återuppstått. RTS-016–055 är nu implementerade; RTS-056–060 återstår. Rollfiler innebär inte automatisk agentstart.
 
 ## Planeringskonventioner
 
@@ -1870,7 +1870,7 @@ Inga blockerande regressioner hittades; protokoll i [DEV_LOG.md](DEV_LOG.md).
 
 ## RTS-055 – Enhetssprites och animationer
 
-**Status:** Todo.
+**Status:** Done.
 
 **Priority:** P2.
 

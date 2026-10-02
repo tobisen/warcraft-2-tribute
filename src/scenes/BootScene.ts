@@ -1,3 +1,7 @@
+import {archerConfig} from '../config/archer';
+import {catapultConfig} from '../config/catapult';
+import {canInteract} from '../gameplay/approach';
+import {motion,unitFrame,unitOrigin,deathEffect,effectAlive,type Motion,type DeathEffect,type Action,type UnitArt} from '../presentation/animation';
 import { buildingFrame,buildingOrigin,terrainFrame,terrainEdges,resourceFrame,resourceOrigin } from '../presentation/assets';
 import { createSession,sessionTransition,changeOptions,gameplayDelta,type MatchSession,type SessionAction } from '../gameplay/session';
 import { hotkeys,hotkeyButton,dispatchHotkey,commandGuide } from '../presentation/hotkeys';
@@ -85,7 +89,7 @@ export class BootScene extends Phaser.Scene {
   private matchStatus!: HTMLElement;
   private waves!: WaveState;
   private combat!: CombatState;
-  private enemyVisuals = new Map<string, { body: Phaser.GameObjects.Rectangle|Phaser.GameObjects.Image; label: Phaser.GameObjects.Text }>();
+  private enemyVisuals = new Map<string, { body: Phaser.GameObjects.Image; label: Phaser.GameObjects.Text }>();
 
   private gathering!: GatheringState;
   private placement: PlacementState = { active: false, barracks: null };
@@ -109,7 +113,10 @@ export class BootScene extends Phaser.Scene {
   private goldVisual!: Phaser.GameObjects.Image;
   private nodeVisual!: Phaser.GameObjects.Image;
 
-  private visuals = new Map<string, { body: Phaser.GameObjects.Rectangle; ring: Phaser.GameObjects.Arc; cargo: Phaser.GameObjects.Text }>();
+  private visuals = new Map<string, { body: Phaser.GameObjects.Image; ring: Phaser.GameObjects.Arc; cargo: Phaser.GameObjects.Text }>();
+  private visualTime=0;
+  private motions=new Map<string,Motion>();
+  private deaths=new Map<string,{effect:DeathEffect;visual:Phaser.GameObjects.Image}>();
   private drag?: { world: Position; screen: Position; active: boolean;shift:boolean };
   private dragBox!: Phaser.GameObjects.Rectangle;
 
@@ -117,9 +124,10 @@ export class BootScene extends Phaser.Scene {
     super('BootScene');
   }
 
-  preload():void {for(const key of ['world','buildings'])if(!this.textures.exists(key))this.load.atlas(key,`/assets/${key}-atlas.png`,`/assets/${key}-atlas.json`);}
+  preload():void {for(const key of ['world','buildings','units'])if(!this.textures.exists(key))this.load.atlas(key,`/assets/${key}-atlas.png`,`/assets/${key}-atlas.json`);}
 
   create(): void {
+    this.visualTime=0;this.motions.clear();this.deaths.clear();
     this.applyMatch(createMatch(this.scenario,this.difficulty));
     this.game.canvas.tabIndex=0;this.game.canvas.setAttribute('aria-label','Spelvärld');
     const groupKey=(event:KeyboardEvent)=>{
@@ -588,12 +596,12 @@ export class BootScene extends Phaser.Scene {
 
     for (const [id, visual] of this.visuals) {
       if (!this.gathering.units.some(u => u.id === id)) {
-        visual.body.destroy(); visual.ring.destroy(); visual.cargo.destroy(); this.visuals.delete(id);
+        this.removedVisual(id,true);visual.body.destroy(); visual.ring.destroy(); visual.cargo.destroy(); this.visuals.delete(id);
       }
     }
     for (const [id, visual] of this.enemyVisuals) {
       if (!visibleEnemies.some(e => e.id === id)) {
-        visual.body.destroy(); visual.label.destroy(); this.enemyVisuals.delete(id);
+        this.removedVisual(id,!this.combat.enemies.some(e=>e.id===id));visual.body.destroy(); visual.label.destroy(); this.enemyVisuals.delete(id);
       }
     }
     const visibleShots=this.outcome==='playing'?(this.combat.projectiles??[]).filter(p=>isVisible(this.fog,'player',p.position)):[];
@@ -602,29 +610,36 @@ export class BootScene extends Phaser.Scene {
       this.projectileVisuals.get(shot.id)!.setPosition(shot.position.x,shot.position.y);}
     for (const enemy of visibleEnemies) {
       if (!this.enemyVisuals.has(enemy.id)) this.enemyVisuals.set(enemy.id, {
-        body: enemy.kind==='base'?this.add.image(enemy.position.x,enemy.position.y,'buildings',buildingFrame('base','enemy')).setOrigin(.5,.75):this.add.rectangle(enemy.position.x,enemy.position.y,combatConfig.enemySize,combatConfig.enemySize,combatConfig.enemyColor),
+        body: enemy.kind==='base'?this.add.image(enemy.position.x,enemy.position.y,'buildings',buildingFrame('base','enemy')).setOrigin(.5,.75):this.add.image(enemy.position.x,enemy.position.y,'units','soldier-enemy-s-idle-0').setOrigin(.5,22/32),
         label: this.add.text(0, 0, '', { fontSize: '14px', color: '#ffffff' }).setOrigin(0.5, 0),
       });
       const visual = this.enemyVisuals.get(enemy.id)!;
       visual.body.setPosition(enemy.position.x, enemy.position.y);
+      if(enemy.kind!=='base'){const target=enemy.order?.kind==='defend'?this.gathering.units.find(u=>enemy.order?.kind==='defend'&&u.id===enemy.order.targetId)?.position:enemy.navigation?.targetId==='base'?this.gathering.base:undefined;const action:Action=enemy.navigation?.targetId&&enemy.navigation.targetId!=='explore-goal'&&enemy.navigation.status==='arrived'?'attack':'idle';this.animateUnit(enemy.id,visual.body,enemy.position,action,'soldier','enemy',target);}
       visual.label.setPosition(enemy.position.x, enemy.position.y - (enemy.kind==='base'?90:32)).setText(`${enemy.kind==='base'?'Enemy base':'Enemy'} ${Math.ceil(enemy.hp)} HP`);
     }
     for (const unit of this.gathering.units) {
       if (!this.visuals.has(unit.id)) {
         const ring = this.add.circle(unit.position.x, unit.position.y, unit.kind==='soldier'?Math.max(20,combatUnitStats(unit).size*.75):20)
           .setStrokeStyle(2, 0xffdc73).setVisible(false);
-        const stats = unit.kind === 'worker' ? unitStats : combatUnitStats(unit);
-        const body = this.add.rectangle(unit.position.x, unit.position.y, stats.size, stats.size, stats.color);
+        const art:UnitArt=unit.kind==='worker'?'worker':unit.archetype??'soldier';const origin=unitOrigin(art);
+        const body=this.add.image(unit.position.x,unit.position.y,'units',`${art}-player-s-idle-0`).setOrigin(origin.x,origin.y);
         const cargo = this.add.text(unit.position.x, unit.position.y - 32, '',
           { fontSize: '14px', color: '#ffffff' }).setOrigin(0.5, 0);
         this.visuals.set(unit.id, { body, ring, cargo });
       }
       const visual = this.visuals.get(unit.id)!;
       visual.body.setPosition(unit.position.x, unit.position.y);
+      const marker=orderMarkers({ ...this.gathering,units:[{...unit,selected:true}] },{...this.combat,enemies:visibleEnemies},true,this.placement.barracks,this.placement.farms,this.placement.forge?.footprint)[0];
+      const enemy=unit.order.kind==='attack'?visibleEnemies.find(e=>unit.order.kind==='attack'&&e.id===unit.order.enemyId):undefined;
+      const attackRange=unit.kind==='soldier'?(unit.archetype==='archer'?archerConfig.range:unit.archetype==='catapult'?catapultConfig.range:combatConfig.soldierRange):0;
+      const action:Action=unit.order.kind==='attack'&&enemy&&canInteract(this.map,unit.position,enemy.footprint??{x:enemy.position.x-combatConfig.enemySize/2,y:enemy.position.y-combatConfig.enemySize/2,width:combatConfig.enemySize,height:combatConfig.enemySize},attackRange)?'attack':unit.order.kind==='gather'&&marker&&Math.hypot(marker.position.x-unit.position.x,marker.position.y-unit.position.y)<=gatheringConfig.nodeRadius+gatheringConfig.range?'gather':unit.order.kind==='build'&&unit.navigation?.status==='arrived'?'build':'idle';
+      this.animateUnit(unit.id,visual.body,unit.position,action,unit.kind==='worker'?'worker':unit.archetype??'soldier','player',enemy?.position??marker?.position);
       visual.ring.setPosition(unit.position.x, unit.position.y).setVisible(unit.selected);
       visual.cargo.setPosition(unit.position.x, unit.position.y - 32)
         .setText(unit.kind === 'worker' ? `${unit.cargo.toFixed(1)}/${gatheringConfig.capacity} ${unit.cargoType ?? 'wood'} · ${Math.ceil(unit.hp??combatConfig.workerHP)} HP` : `${unit.archetype==='catapult'?'Catapult':unit.archetype==='archer'?'Archer':'Soldier'} ${Math.ceil(unit.hp)} HP`);
     }
+    for(const [id,d] of this.deaths){if(!effectAlive(d.effect,this.visualTime,isVisible(this.fog,'player',d.effect.motion.position))){d.visual.destroy();this.deaths.delete(id);}else d.visual.setFrame(unitFrame(d.effect.motion,this.visualTime));}
     if(this.fogOverlay)drawFog(this.fogOverlay,this.fog,this.fogPreview??'player');
     for(const shortcut of hotkeys){const button=document.getElementById(shortcut.button)!;button.textContent=`${button.textContent?.replace(/\s+\[[A-Z]\]$/,'')} [${shortcut.key}]`;button.title=shortcut.label;}
     document.getElementById('group-status')!.textContent=Object.entries(this.controlGroups).map(([slot,ids])=>`${slot}: ${ids.length}`).join(' · ')||'Grupper: Ctrl+1–9 bind, 1–9 återkalla';
@@ -636,15 +651,29 @@ export class BootScene extends Phaser.Scene {
 
   update(_time: number, delta: number): void {
     if(this.restartPending)return;
+    const dt=gameplayDelta(this.session.phase,delta/1000,this.skipGameplayFrame);this.visualTime+=dt;
     const match = updateMatch({
       map: this.map, gathering: this.gathering, combat: this.combat, waves: this.waves,
       production: this.production, soldierProduction: this.soldierProduction,
       placement: this.placement, outcome: this.outcome,paused:!this.gameplayActive(),controlGroups:this.controlGroups,fog:this.fog,research:this.research,scenario:this.scenario,difficulty:this.difficulty,enemyProduction:this.enemyProduction,enemyAI:this.enemyAI,
-    }, gameplayDelta(this.session.phase,delta/1000,this.skipGameplayFrame));
+    }, dt);
     this.skipGameplayFrame=false;
     this.applyMatch(match);
     if(this.outcome!=='playing')this.session=sessionTransition(this.session,'end');
     this.syncVisuals();
+  }
+
+  private animateUnit(id:string,body:Phaser.GameObjects.Image,position:Position,action:Action,type:UnitArt,owner:'player'|'enemy',aim?:Position):void {
+    const previous=this.motions.get(id);
+    if(previous&&!this.gameplayActive()){body.setFrame(unitFrame(previous,this.visualTime));return;}
+    // syncVisuals also runs on DOM input; preserve walk pose until the next simulation frame.
+    const m=motion(previous,position,action,this.visualTime,type,owner,aim);
+    this.motions.set(id,m);body.setFrame(unitFrame(m,this.visualTime));
+  }
+  private removedVisual(id:string,removed:boolean):void {
+    const previous=this.motions.get(id);this.motions.delete(id);if(!previous)return;
+    const effect=deathEffect(previous,this.visualTime,isVisible(this.fog,'player',previous.position),removed);
+    if(effect){const origin=unitOrigin(previous.type);this.deaths.set(id,{effect,visual:this.add.image(previous.position.x,previous.position.y,'units',unitFrame(effect.motion,this.visualTime)).setOrigin(origin.x,origin.y).setDepth(1)});}
   }
 
   private applyMatch(match: MatchState): void {
