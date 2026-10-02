@@ -19,8 +19,8 @@ import { soldierStats, combatUnitStats, rangedStats } from '../config/unit';
 import type { GatheringState, Unit,WorkerOrder,ResourceType } from './gathering';
 import { moveTowards, type Position } from './movement';
 
-export interface EnemyWork {cargo:number;cargoType?:ResourceType;target:Position;order:Exclude<WorkerOrder,{kind:'build'}>}
-export interface Enemy { owner?:'enemy'; kind?:'unit'|'base'|'worker';work?:EnemyWork; order?:{kind:'idle'}|{kind:'defend';targetId:string}|{kind:'muster'|'attack-move';destination:Position}; id: string; position: Position; hp: number; footprint?:Footprint; navigation?: RouteState }
+export interface EnemyWork {cargo:number;cargoType?:ResourceType;target:Position;order:WorkerOrder}
+export interface Enemy { owner?:'enemy'; kind?:'unit'|'base'|'worker'|'building';buildingType?:'barracks'|'farm';construction?:import('./placement').ConstructionJob;work?:EnemyWork; order?:{kind:'idle'}|{kind:'defend';targetId:string}|{kind:'muster'|'attack-move';destination:Position}; id: string; position: Position; hp: number; footprint?:Footprint; navigation?: RouteState }
 export interface CombatState { baseOwner?:'player'; enemies: Enemy[]; baseHP: number; projectiles?:Projectile[]; nextProjectileNumber?:number; destroyedEnemyFootprints?:Footprint[]; upgrades?:{attack:number;defense:number} }
 
 export function enemyAt(enemies: Enemy[], point: Position): Enemy | undefined {

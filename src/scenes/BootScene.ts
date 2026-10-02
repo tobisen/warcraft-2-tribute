@@ -1,3 +1,4 @@
+import type {EnemyConstructionState} from '../gameplay/enemyConstruction';
 import {useAbility,abilityFor,abilityReady,abilityStatus} from '../gameplay/abilities';
 import {storeSave,readSave,type SavedView} from '../gameplay/save';
 import {landedEffects,impactFrame,impactAlive,type Impact} from '../presentation/effects';
@@ -97,6 +98,7 @@ export class BootScene extends Phaser.Scene {
   private matchStatus!: HTMLElement;
   private waves!: WaveState;
   private combat!: CombatState;
+  private enemyConstruction?:EnemyConstructionState;
   private enemyVisuals = new Map<string, { body: Phaser.GameObjects.Image; label: Phaser.GameObjects.Text }>();
 
   private gathering!: GatheringState;
@@ -656,14 +658,15 @@ export class BootScene extends Phaser.Scene {
       this.projectileVisuals.get(shot.id)!.setPosition(shot.position.x,shot.position.y);}
     for (const enemy of visibleEnemies) {
       if (!this.enemyVisuals.has(enemy.id)) this.enemyVisuals.set(enemy.id, {
-        body: enemy.kind==='base'?this.add.image(enemy.position.x,enemy.position.y,'buildings',buildingFrame('base','enemy',0,5,this.factions.enemy)).setOrigin(.5,.75):this.add.image(enemy.position.x,enemy.position.y,'units',`${this.factions.enemy==='clans'?'clans-':''}${enemy.kind==='worker'?'worker':'soldier'}-enemy-s-idle-0`).setOrigin(.5,22/32),
+        body: enemy.footprint?this.add.image(enemy.position.x,enemy.position.y,'buildings',buildingFrame(enemy.buildingType??'base','enemy',enemy.construction?.remainingSeconds??0,5,this.factions.enemy)).setOrigin(buildingOrigin(enemy.buildingType??'base').x,buildingOrigin(enemy.buildingType??'base').y):this.add.image(enemy.position.x,enemy.position.y,'units',`${this.factions.enemy==='clans'?'clans-':''}${enemy.kind==='worker'?'worker':'soldier'}-enemy-s-idle-0`).setOrigin(.5,22/32),
         label: this.add.text(0, 0, '', { fontSize: '14px', color: '#ffffff' }).setOrigin(0.5, 0),
       });
       const visual = this.enemyVisuals.get(enemy.id)!;
       visual.body.setPosition(enemy.position.x, enemy.position.y);
-      if(enemy.kind!=='base'){const target=enemy.order?.kind==='defend'?this.gathering.units.find(u=>enemy.order?.kind==='defend'&&u.id===enemy.order.targetId)?.position:enemy.navigation?.targetId==='base'?this.gathering.base:undefined;const action:Action=enemy.navigation?.targetId&&enemy.navigation.targetId!=='explore-goal'&&enemy.navigation.status==='arrived'?'attack':enemy.work?.order.kind==='gather'?'gather':'idle';this.animateUnit(enemy.id,visual.body,enemy.position,action,enemy.kind==='worker'?'worker':'soldier','enemy',target);}
-      visual.label.setPosition(enemy.position.x,enemy.position.y-90).setVisible(enemy.kind==='base').setText(`${factions[this.factions.enemy].buildingNames.base} ${Math.ceil(enemy.hp)} HP`);
-      this.drawHP(enemy.position,enemy.hp,enemy.kind==='base'?combatConfig.baseHP:enemy.kind==='worker'?combatConfig.workerHP:combatConfig.enemyHP,enemy.kind==='base'?64:24,enemy.kind==='base'?70:29,0xcf7770);
+      if(enemy.buildingType)visual.body.setFrame(buildingFrame(enemy.buildingType,'enemy',enemy.construction?.remainingSeconds??0,5,this.factions.enemy));
+      if(!enemy.footprint){const target=enemy.order?.kind==='defend'?this.gathering.units.find(u=>enemy.order?.kind==='defend'&&u.id===enemy.order.targetId)?.position:enemy.navigation?.targetId==='base'?this.gathering.base:undefined;const action:Action=enemy.navigation?.targetId&&enemy.navigation.targetId!=='explore-goal'&&enemy.navigation.status==='arrived'?'attack':enemy.work?.order.kind==='gather'?'gather':'idle';this.animateUnit(enemy.id,visual.body,enemy.position,action,enemy.kind==='worker'?'worker':'soldier','enemy',target);}
+      visual.label.setPosition(enemy.position.x,enemy.position.y-90).setVisible(!!enemy.footprint).setText(`${factions[this.factions.enemy].buildingNames[enemy.buildingType??'base']} ${Math.ceil(enemy.hp)} HP`);
+      this.drawHP(enemy.position,enemy.hp,enemy.kind==='base'?combatConfig.baseHP:enemy.buildingType==='barracks'?combatConfig.barracksHP:enemy.buildingType==='farm'?combatConfig.farmHP:enemy.kind==='worker'?combatConfig.workerHP:combatConfig.enemyHP,enemy.footprint?64:24,enemy.footprint?70:29,0xcf7770);
     }
     for (const unit of this.gathering.units) {
       if (!this.visuals.has(unit.id)) {
@@ -711,7 +714,7 @@ export class BootScene extends Phaser.Scene {
     this.syncVisuals();
   }
 
-  private currentMatch():MatchState {return {factions:{...this.factions},map:this.map,gathering:this.gathering,combat:this.combat,waves:this.waves,production:this.production,soldierProduction:this.soldierProduction,placement:this.placement,outcome:this.outcome,paused:!this.gameplayActive(),controlGroups:this.controlGroups,fog:this.fog,research:this.research,scenario:this.scenario,difficulty:this.difficulty,enemyProduction:this.enemyProduction,enemyAI:this.enemyAI};}
+  private currentMatch():MatchState {return {factions:{...this.factions},map:this.map,gathering:this.gathering,combat:this.combat,waves:this.waves,production:this.production,soldierProduction:this.soldierProduction,placement:this.placement,outcome:this.outcome,paused:!this.gameplayActive(),controlGroups:this.controlGroups,fog:this.fog,research:this.research,scenario:this.scenario,difficulty:this.difficulty,enemyProduction:this.enemyProduction,enemyAI:this.enemyAI,enemyConstruction:this.enemyConstruction};}
 
   private drawHP(position:Position,hp:number,max:number,width:number,offset:number,color:number):void {this.hpBars?.fillStyle(0x172422).fillRect(position.x-width/2-1,position.y-offset-1,width+2,5).fillStyle(color).fillRect(position.x-width/2,position.y-offset,width*Math.max(0,Math.min(1,hp/max)),3);}
 
@@ -739,6 +742,7 @@ export class BootScene extends Phaser.Scene {
     this.factions={...(match.factions??defaultFactions)};
     this.controlGroups=match.controlGroups??{};
     this.enemyAI=match.enemyAI;
+    this.enemyConstruction=match.enemyConstruction;
     this.enemyProduction=match.enemyProduction;
     if(this.session.phase!=='menu'){this.scenario=match.scenario??'survival';this.difficulty=match.difficulty??'normal';}
     this.research=match.research??createResearch();

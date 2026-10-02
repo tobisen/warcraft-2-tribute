@@ -5,6 +5,7 @@ import { canEnqueue,enqueueProduction,updateQueuedProduction } from './productio
 import type { ProductionState } from './production';
 import type { CombatState,Enemy } from './combat';
 import type { GatheringState,Unit } from './gathering';
+import type {Population} from './population';
 import type { WorldMap } from './map';
 export interface EnemyProductionState {wood:number;gold:number;cap:number;production:ProductionState;acceptedJobs:number;durationSeconds?:number;extracted?:{wood:number;gold:number};spent?:{wood:number;gold:number};lostCargo?:{wood:number;gold:number}}
 export function createEnemyProduction(profile:{budget:{wood:number;gold:number};cap:number;durationSeconds:number}=enemyProductionConfig):EnemyProductionState {
@@ -12,17 +13,19 @@ export function createEnemyProduction(profile:{budget:{wood:number;gold:number};
  production:{remainingSeconds:null,nextUnitNumber:1},acceptedJobs:0};
 }
 /** Adapter to shared atomic queue/time/spawn rules; temporary units never enter player state. */
-export function updateEnemyProduction(state:EnemyProductionState,combat:CombatState,player:GatheringState,map:WorldMap,delta:number,faction?:FactionId) {
+export function updateEnemyProduction(state:EnemyProductionState,combat:CombatState,player:GatheringState,map:WorldMap,delta:number,faction?:FactionId,buildings?:{site?:Enemy;population:Population;reserveForFarm?:number}) {
  const base=combat.enemies.find(e=>e.kind==='base'&&e.hp>0);
  if(!base?.footprint)return {combat,state:{...state,production:{...state.production,queue:[],remainingSeconds:null,blockedSpawnKey:undefined}}};
+ if(buildings&&(!buildings.site?.footprint||buildings.site.construction?.remainingSeconds!==0))return {combat,state};
  let next=state,c=combat,time=Math.max(0,delta);
- const building={kind:'barracks' as const,unitType:enemyProductionConfig.unitType,footprint:base.footprint,jobCost:faction?factions[faction].units.soldier.cost:enemyProductionConfig.cost,durationSeconds:(state.durationSeconds??enemyProductionConfig.durationSeconds)+(faction?factions[faction].units.soldier.durationSeconds-5:0)};
+ const building={kind:'barracks' as const,unitType:enemyProductionConfig.unitType,footprint:buildings?.site?.footprint??base.footprint,jobCost:faction?factions[faction].units.soldier.cost:enemyProductionConfig.cost,durationSeconds:(state.durationSeconds??enemyProductionConfig.durationSeconds)+(faction?factions[faction].units.soldier.durationSeconds-5:0)};
  for(;;){
-  const units:Unit[]=c.enemies.filter(e=>e.kind!=='base').map(e=>({kind:'soldier',id:e.id,hp:e.hp,cargo:0,selected:false,position:{...e.position},target:{...e.position},order:{kind:'idle'}}));
+  const units:Unit[]=c.enemies.filter(e=>!e.footprint).map(e=>({kind:'soldier',id:e.id,hp:e.hp,cargo:0,selected:false,position:{...e.position},target:{...e.position},order:{kind:'idle'}}));
   let g:GatheringState={faction,units,wood:next.wood,goldBalance:next.gold,base:base.position,node:{id:'unused',position:base.position,remaining:0}};
   let p=next.production,acceptedJobs=next.acceptedJobs,spent=next.spent?{...next.spent}:undefined;
-  const population=()=>({cap:next.cap,used:c.enemies.filter(e=>e.kind!=='base'&&e.kind!=='worker').length,reserved:p.queue?.reduce((n,j)=>n+(j.supply??1),0)??0});
-  while(canEnqueue(g,p,building,population())){const started=enqueueProduction(g,p,building,population());if(spent){spent.wood+=g.wood-started.gathering.wood;spent.gold+=(g.goldBalance??0)-(started.gathering.goldBalance??0);}g=started.gathering;p=started.production;acceptedJobs++;}
+  const population=()=>({cap:Math.min(next.cap,buildings?buildings.population.cap-c.enemies.filter(e=>e.kind==='worker').length:Infinity),used:c.enemies.filter(e=>!e.footprint&&e.kind!=='worker').length,reserved:p.queue?.reduce((n,j)=>n+(j.supply??1),0)??0});
+  const savingForFarm=()=>buildings?.reserveForFarm!==undefined&&population().used+population().reserved+c.enemies.filter(e=>e.kind==='worker').length>=buildings.population.cap-buildings.reserveForFarm;
+  while(!savingForFarm()&&canEnqueue(g,p,building,population())){const started=enqueueProduction(g,p,building,population());if(spent){spent.wood+=g.wood-started.gathering.wood;spent.gold+=(g.goldBalance??0)-(started.gathering.goldBalance??0);}g=started.gathering;p=started.production;acceptedJobs++;}
   if(p.remainingSeconds===null)return {combat:c,state:{...next,wood:g.wood,gold:g.goldBalance??0,production:p,acceptedJobs,...(spent?{spent}:{})}};
   const step=Math.min(time,p.remainingSeconds);
   const result=updateQueuedProduction(g,p,step,building,{map,enemies:player.units});

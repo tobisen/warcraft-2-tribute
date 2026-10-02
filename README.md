@@ -2,7 +2,7 @@
 
 Browserbaserat singleplayer-RTS inspirerat av Warcraft 2, Age of Empires 2 och
 Command & Conquer. Phaser, strict TypeScript och Vite; local-first, gameplay
-före grafik. Implementerat genom RTS-071 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
+före grafik. Implementerat genom RTS-072 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
 
 ## Installation och lokal start
 
@@ -400,3 +400,14 @@ vid noden. AI:ns första gruppanfall väntar 20 s extra i dessa nya ekonomimatch
 (Easy 95, Normal 80, Hard 70); försvar och lokal attack kan ske tidigare.
 Save config5 bevarar fiendelast, orders, bank och bokföring. Äldre saves
 laddas utan extra arbetare eller income; restart använder den nya starten.
+
+## RTS-072: AI bygger sin produktion
+
+I nya Skirmish/Belägringen bygger fienden en barracks för 40 wood med
+5s worker-arbete innan den kan producera. En farm för 20 wood och 5s
+byggarbete ger +5 supply när populationen närmar sig basens cap8.
+Fiendearbetare räknas i supply; difficulty-army-cap gäller samtidigt.
+Du kan angripa synliga byggen och färdiga byggnader. AI kan återuppta
+blockerade byggen eller byta builder utan att betala samma site igen.
+Save config6 bevarar byggen/last/timing. Äldre saves behåller sin tidigare
+base-production och får inga gratis byggnader; restart använder nya regler.

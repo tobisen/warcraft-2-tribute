@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-072 – AI bygger farms och produktionsbyggnader** — **Todo**.
+**RTS-073 – AI prioriterar ekonomi, armé och uppgraderingar** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
@@ -2238,13 +2238,21 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-072 – AI bygger farms och produktionsbyggnader
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** AI bygger farms och produktionsbyggnader.
+**Goal:** Betald AI-barracks och supply-farm med verkligt worker-bygge.
+
+**Requirements:** Nya Skirmish/Belägringen-matcher bygger en barracks först (40 wood, 64px, 5s arbete); production kräver färdig barracks och spawn sker där. AI bygger högst en farm (20 wood, 64px, 5s, +5 supply) när used+reserved närmar sig bas-cap8. Workers räknas i fysisk population; difficulty army-cap kvarstår som ytterligare gräns. Återanvänd placement/cost/construction/supply. Bounded kandidatlista och retry; ogiltig plats drar inget. Builder byter till bygge och bevarar last; efteråt gathering. Död/blocked builder kan ersättas av levande worker; en site byggs i taget. Byggnader är enemy-owned, fog-filtrerade, angripbara och riktiga hinder. Save/load/pause/terminal/restart; gamla saves får inga gratis byggnader och behåller base-production tills restart. Siege-test behåller isolerad legacy-modell.
+
+**Non-goals:** Forge/upgrades, flera produktionsbyggnader/farms, nya units/worker-produktion, expansion, ekonomiprioritering utöver barracks/supply och nya grafiktillgångar.
 
 **Dependencies:** RTS-071.
 
-**Acceptance criteria:** Giltig placement, kostnad, byggtid och supply används; blockerade byggen återhämtas.
+**Acceptance criteria:** Kostnader betalas exakt en gång; giltiga footprints utan body-överlapp eller blockerad worker-väg. Byggtid tickar bara vid nåbar worker-kontakt. Ingen ny production/spawn före färdig barracks; verklig supply begränsar köstarter och färdig farm ger +5. Blockering/död bevarar site/kostnad och begränsade retries kan återuppta. Load ger inga gratis enheter/byggnader/resurser.
+
+**Tester:** Betalning/ogiltig placement/byggkontakt/tid, blockerad och död builder, lastbevarande, barracks-gated production/spawn, used/reserved/farm-cap, byggnadsdöd/obstacle cleanup, save/migration/reset/freeze och regressioner/typecheck/build/browser/diff.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, DECISIONS.md, GAME_DESIGN.md, ARCHITECTURE.md och README.md.
 
 ## RTS-073 – AI prioriterar ekonomi, armé och uppgraderingar
 

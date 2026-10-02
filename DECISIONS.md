@@ -726,3 +726,24 @@ timing. Leveransworkers frigör globala serviceplatser; annars höll fjärran
 leveransturer nodens begränsade platser utan att samla. Save schema2/config5
 validerar verkligt fiendearbete och bankledger; config4 migreras utan nya
 arbetare/inkomster och utan att acceptera spoofade nya economy-fält.
+
+## RTS-072 – avgränsad AI-byggpolicy före kod
+
+En barracks först, sedan högst en farm vid supply-behov. Samma 40/20 wood,
+64px-footprints, 5s worker-arbete och bas8/farm+5 som spelaren. Difficulty
+army-cap förblir separat övre gräns. En begränsad lista gridplatser och
+1s retry runt enemy-base; inget generellt planeringssystem. Auktoritativa
+byggnadsentiteter/HP/construction finns i combat.enemies; tillfällig
+placement/gathering-vy återanvänder befintliga regler. Gamla snapshots
+fortsätter sin betalda base-production; endast fresh restart aktiverar den
+nya policyn, utan migration som skänker byggnader. RTS-073 hanterar bredare
+prioriteringar och RTS-074 återhämtning/expansion.
+
+RTS-072 implementerar supply-margin1: när used+reserved når cap-1 sparas
+wood till farm i stället för fler nya arméjobb; betalda jobb fortsätter.
+Det undviker att armékostnaden permanent svälter farmbygget. Sex fasta
+kandidater och 1s retry; nya byggnader kostar alltid resurser, även efter
+förlust. Save schema2/config6 introducerar site/retry-state utan gratis
+byggnader i migration. Enemy-barracks får endast produktionstid efter den
+faktiska byggsluttiden inom delta; samma tid kan inte bli både bygge och
+träning. Vid basdöd bibehålls terminal freeze och betalda kostnaders ledger.

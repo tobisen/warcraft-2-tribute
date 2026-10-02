@@ -1312,3 +1312,42 @@ Begränsningar: fasta nodval, inga ersättningsworkers/bygganden i denna
 slice. AI-upptäckt väntar till RTS-075. Befintlig bundle-varning kvarstår
 avsiktligt; build index-aO1Cgnqp.js 1527,77KB/gzip401,45KB. RTS-070:s
 GitHub Actions/Pages verifierades success för 86b252e. Nästa task RTS-072.
+
+## 2026-10-03 – RTS-072: AI-barracks och supply-farm
+
+Verklig betald barracks/farm genom befintliga placement/construction/supply.
+Enemy-building-entiteter har fraktionsgrafik, HP, fog och hinder. Worker
+bygger/återupptar och bevarar last. Begränsade sex kandidater/1s retry;
+ogiltiga försök betalar inget. Barracks kostar40/5s; farm20/5s/+5.
+Base-cap8 omfattar workers/reserved samtidigt som difficulty army-cap
+bevaras. Margin1 pausar nya köstarter för att spara till farm; betalda
+jobb fortsätter. Production/spawn kräver färdig barracks och tid efter
+byggslut; shared construction rapporterar transient ready-after.
+
+Save config6 lagrar/verifierar site/retry/builder/order/HP/footprint.
+Config5/äldre fortsätter base-production utan gratis sites. Nya matcher
+får byggpolicy via factory; gamla snapshots enbart efter fresh restart.
+
+Checks: npm test 560 tester/73 filer PASS (82,03s); typecheck/build och
+git diff --check PASS. Riktade byggtester11 PASS; Hard-vinstfall6 och
+bygg/supply-regressioner PASS. Tidiga fel identifierade äldre tests
+antaganden om omedelbar base-production/revision, ett borttaget enemy-base
+under population-beräkning och fel i testfixturens wall-removal/contact.
+Korrigerat: population kräver inte levande bas; isolerade legacy-tests
+behåller tidigare fixture, actual nya byggregler testas separat.
+Granskad diff för krav, refs, budget, tid och scope: inga kvarstående
+blockerande fynd. Ingen ny dependency eller grafiktillgång.
+
+Chromium147 production-preview: båda fraktioner scoutar ett synligt bygge,
+40wood betalt utan early spawn, save/load mitt i byggtid, färdig barracks
+och giltiga spawns, betald/färdig farm (64,09s/79,12s) och restart PASS.
+Inga page/console/request-fel. Screenshots granskade. Klockan accelererades
+och kameran ställdes genom vy-hook; inga resurser/enheter/byggnader injicerades.
+Första browser-scouten klickade intill vatten på ogiltig mark och gav ingen
+vision; en giltig faktisk canvas-order slutförde kontrollen. Ingen naturlig
+fullmatch-balansgaranti här.
+
+Befintlig bundle-varning kvar: index-BxjPPEiZ.js1535,32KB/gzip403,34KB.
+RTS-071 Pages/Actions verifierat success för be602f5. Begränsningar: en
+barracks/en farm, fasta kandidatplatser och inga nya econ/upgrade/expansion-
+system. Nästa task RTS-073.

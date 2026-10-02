@@ -37,14 +37,15 @@ function updateSite(gathering:GatheringState,job:ConstructionJob,rect:Footprint,
   const remainingSeconds=step.route.status==='arrived'&&canInteract(map,step.position,rect,range)
     ? Math.max(0,job.remainingSeconds-step.remaining):job.remainingSeconds;
   const done=remainingSeconds<=1e-10;
-  return {job:{...job,remainingSeconds:done?0:remainingSeconds,builderId:done?null:job.builderId},
+  return {completedAfterSeconds:done?Math.max(0,delta-step.remaining+job.remainingSeconds):undefined,job:{...job,remainingSeconds:done?0:remainingSeconds,builderId:done?null:job.builderId},
     gathering:{...gathering,units:gathering.units.map((u):Unit=>u.id!==builder.id || u.kind!=='worker'?u:
       {...u,position:step.position,target:{...step.position},navigation:done?undefined:{...step.route,goalKey},order:done?{kind:'idle'}:u.order})}};
 }
 export function updateConstruction(gathering:GatheringState,placement:PlacementState,map:WorldMap,delta:number,gateFor?:GateFor) {
   let next=gathering,construction=placement.construction;
+  let barracksReadyAfter:number|undefined;
   if (construction && placement.barracks) {
-    const result=updateSite(next,construction,placement.barracks,'barracks',map,delta,gateFor);next=result.gathering;construction=result.job;
+    const result=updateSite(next,construction,placement.barracks,'barracks',map,delta,gateFor);next=result.gathering;construction=result.job;barracksReadyAfter='completedAfterSeconds' in result?result.completedAfterSeconds:undefined;
   }
   let forge=placement.forge;
   if(forge){const result=updateSite(next,forge.construction,forge.footprint,'forge',map,delta,gateFor);next=result.gathering;forge={...forge,construction:result.job};}
@@ -52,5 +53,5 @@ export function updateConstruction(gathering:GatheringState,placement:PlacementS
     const result=updateSite(next,f.construction,f.footprint,f.id,map,delta,gateFor);next=result.gathering;
     return {...f,construction:result.job};
   });
-  return {gathering:next,placement:{...placement,...(construction?{construction}:{}),...(farms?{farms}:{}),...(forge?{forge}:{})}};
+  return {barracksReadyAfter,gathering:next,placement:{...placement,...(construction?{construction}:{}),...(farms?{farms}:{}),...(forge?{forge}:{})}};
 }

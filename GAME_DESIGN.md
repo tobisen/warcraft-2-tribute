@@ -749,3 +749,21 @@ Nya ekonomimatcher får därför +20 s före första gruppanfall (95/80/70 s),
 med tidigare lokal attack/försvar kvar. Inga HP-/kostnads-/startbudgetändringar.
 Äldre saves får varken arbetare, income eller ny attack-timing gratis.
 AI känner fortfarande resurspositionerna; begränsad upptäckt kommer i RTS-075.
+
+## RTS-072: betalade AI-byggen
+
+Nya ekonomimatcher börjar utan enemy-barracks. En worker bygger den för
+40 wood, 64px-footprint och 5s arbete vid kontakt. Enemy-army produceras
+först därefter, med spawn vid barracks. AI bygger högst en farm för
+20 wood/5s och +5 supply vid base-cap8:s marginal1. Workers, stridsenheter
+och betalda reservationer använder verklig supply; difficulty army-cap
+begränsar fortfarande armén. Vid farm-behov sparar AI banken i stället
+för att starta nya jobb; redan betalda jobb fortsätter.
+
+Platser väljs ur sex gridpunkter med 1s retry och full placement-validation.
+Ogiltig plats kostar inget. Builder-död/blockering pausar bygget; kvarvarande
+worker kan återuppta utan ytterligare site-kostnad. Last bevaras.
+Byggen och färdiga byggnader kan angripas, syns enligt fog och blockerar
+rörelse. Farm-supply tillkommer först vid färdigt bygge. Ingen Forge,
+workerproduktion eller expansion i denna slice. Äldre saves behåller
+sin tidigare produktionsmodell; fresh restart aktiverar nya byggregler.

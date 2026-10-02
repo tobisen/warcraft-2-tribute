@@ -2,7 +2,7 @@
 
 ## Status och teknik
 
-Implementerat genom RTS-071: archer/projectiles, catapult/splash och Forge/research, FIFO/refund, target-HP/destruktion, workerbygge, farms, population, kamera,
+Implementerat genom RTS-072: archer/projectiles, catapult/splash och Forge/research, FIFO/refund, target-HP/destruktion, workerbygge, farms, population, kamera,
 byggnadsselection, rally, Stop, gold och
 atomiska kostnader ovanpå etapp 1:s HUD, handgjorda karta och navigation för
 move/work/combat, separata gruppmål och säkra placement/spawn-regler.
@@ -923,3 +923,33 @@ fält i gamla versioner avvisas. Derived baseSize och navigation lagras inte.
 [enemyGathering.test.ts](src/gameplay/enemyGathering.test.ts) verifierar dessa
 beteenden. Release-matrisens globala ledger inkluderar fiendens extraktion.
 Kontrollerade load-fixtures behåller exakt 64/128 kroppar utan extra ekonomi.
+
+## RTS-072: begränsad enemy-construction
+
+[enemyConstruction.ts](src/gameplay/enemyConstruction.ts) härleder tillfällig
+PlacementState/GatheringState ur enemy-entiteter och återanvänder placement,
+resumeConstruction, workerbyggtid och populationState. Auktoritativa
+Enemy-building-entiteter har footprint, HP, buildingType och construction.
+MatchState.enemyConstruction lagrar endast retry-tid och markerar den nya
+policyn; ingen dubbel persistent placement-modell.
+[enemyConstruction.ts](src/config/enemyConstruction.ts) anger sex kandidater,
+1s retry, en farm och supply-margin1. Placering betalar bank exakt en gång
+och bokför spent. Shared regler validerar grid/world/obstacles/body/nåbar
+worker och produktionsutgång; spelarens varierande body-storlekar kontrolleras
+också innan placement. Död builder frigör site-reference; en levande worker
+kan återuppta. Last bevaras under bygge och efteråt återgår worker till
+resursordern. Bas-/byggnadsdöd rensar orders och fysiska hinder.
+
+Enemy-production behöver färdig barracks i nya matcher och spawnar vid dess
+footprint. Population är shared base8/farm+5, med workers/reservationer,
+samt separat difficulty-army-cap. Vid supply-margin sparas bank till farm;
+befintliga betalda jobb fortsätter. Construction rapporterar barracksReadyAfter
+som transient resultat, så produktionen bara använder delta efter färdigt
+bygge och aldrig samma tid två gånger. Ingen ändring av spelarens byggpolicy.
+
+Save config6 validerar enemy-site/grid/HP/builder/order/obstacle och retry.
+Config5/äldre migreras utan enemyConstruction eller gratis sites, och
+fortsätter tidigare base-production; spoofade nya fält avvisas. Röda
+byggnadsframes, HP och visionradius härleds efter fog.
+[enemyConstruction.test.ts](src/gameplay/enemyConstruction.test.ts) täcker
+betalning, blockering, ersättningsbuilder, tid, supply, save och destruktion.

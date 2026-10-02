@@ -10,7 +10,7 @@ export function visionObservers(state:MatchState):VisionObserver[]{
  if(state.placement.barracks&&(state.placement.barracksHP??1)>0&&state.placement.construction?.remainingSeconds===0)building('barracks',state.placement.barracks,fogConfig.barracksRadius);
  const forge=state.placement.forge;if(forge&&forge.hp>0&&forge.construction.remainingSeconds===0)building('forge',forge.footprint,fogConfig.forgeRadius);
  for(const farm of state.placement.farms??[])if((farm.hp??1)>0&&farm.construction.remainingSeconds===0)building(farm.id,farm.footprint,fogConfig.farmRadius);
- for(const enemy of state.combat.enemies)if(enemy.hp>0)observers.push({id:enemy.id,owner:'enemy',position:{...enemy.position},footprint:enemy.footprint,radius:enemy.kind==='base'?fogConfig.baseRadius:enemy.kind==='worker'?fogConfig.workerRadius:fogConfig.combatRadius});
+ for(const enemy of state.combat.enemies)if(enemy.hp>0)observers.push({id:enemy.id,owner:'enemy',position:{...enemy.position},footprint:enemy.footprint,radius:enemy.kind==='base'?fogConfig.baseRadius:enemy.kind==='worker'?fogConfig.workerRadius:enemy.buildingType==='barracks'?fogConfig.barracksRadius:enemy.buildingType==='farm'?fogConfig.farmRadius:fogConfig.combatRadius});
  return observers;
 }
 export function matchFog(state:MatchState){
