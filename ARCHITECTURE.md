@@ -1172,3 +1172,18 @@ unika ID/counters, kapacitet, inactive-state, carrier/recipe och refs.
 Passagerare har ingen fysisk markposition; land clearance krävs efter
 landsättning. Config12 migrerar utan att införa transport. Se
 [transport.test.ts](src/gameplay/transport.test.ts).
+
+
+## RTS-085: handgjorda Öarna
+
+MapDefinition har valfri goldPosition/instruction och enemy-scout-waypoints.
+Öarna använder samma1280x960/32px/render/fog/minimap, men vattenrects runt
+världens kant och mellan x704–896 skiljer två landmassor. Profilens gold
+ligger600300 på västra ön, wood650180;800wood/400gold. CreateMatch och
+Save validerar profilens positioner. Ursprungsprofilerna är oförändrade.
+EnemyKnowledge använder profilens offentliga terrain-waypoints på östra
+ön, utan dold kunskap om spelarbasen. Ingen ny AI byggs i denna task.
+Save config14 migrerar13 för äldre kartor; föregående format kan inte
+utge sig för att redan stödja Öarna. Landkartornas gamla balansmatris
+är fortsatt oförändrad, medan [islands.test.ts](src/gameplay/islands.test.ts)
+verifierar verkligt betald transport+armé+landcombat till victory.

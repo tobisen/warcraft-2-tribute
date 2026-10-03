@@ -493,3 +493,11 @@ fri landpunkt inom64px. Alla får giltiga platser eller ingen lämnar båten.
 Esc/högerklick avbryter landsättningsläget. ID/HP/resurslast bevaras,
 supply kvarstår ombord; en sänkt transport förlorar även passagerarna.
 Save config13 bevarar lasten; ingen automatisk boarding eller transport-AI.
+
+
+RTS-085: Skirmish → Öarna kräver sjötransport. Samla wood på650180 och
+gold på600300, bygg kasern/armé och hamn på östkusten (t.ex.672320).
+Lastkontakt: armé688432/transport720432. Segla till880432, landsätt
+på912432 och angrip fiendebasen i nordöst.800wood/400gold är ändliga;
+ingen markväg går över havet. Save config14/restart bevarar Öarna.
+Befintlig fiende-land-AI stannar på sin ö fram till sjö-AI i086.

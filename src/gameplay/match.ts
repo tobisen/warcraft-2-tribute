@@ -79,7 +79,7 @@ export function createMatch(scenario:MatchScenario='survival',difficulty:Difficu
         kind: 'worker',owner:'player',hp:combatConfig.workerHP, id: `unit-${index + 1}`, position: { ...position }, target: { ...position },
         selected: false, order: { kind: 'idle' }, cargo: 0,
       })),
-      gold: {id:'gold-1',resource:goldConfig.resource,position:{...goldConfig.position},remaining:maps[mapId].gold},
+      gold: {id:'gold-1',resource:goldConfig.resource,position:{...(maps[mapId].goldPosition??goldConfig.position)},remaining:maps[mapId].gold},
       goldBalance:scenarioConfig[scenario].initial.gold,
       node: { resource:'wood', id: 'wood-1', position: { ...gatheringConfig.nodePosition }, remaining: maps[mapId].wood },
       lostCargo:{wood:0,gold:0},wood: scenarioConfig[scenario].initial.wood, base: { ...gatheringConfig.basePosition },

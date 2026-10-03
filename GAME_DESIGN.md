@@ -908,3 +908,16 @@ klicket; annars sker ingen landsättning. Ogiltig punkt behåller läget,
 Escape/högerklick avbryter utan order. Efter landning är units idle och
 omarkerade och kan väljas igen. Vid sänkning dör alla passagerare och deras
 wood/gold-last förloras. Save/load omfattar lasten; restart tömmer matchen.
+
+
+RTS-085: välj Skirmish → Öarna. Två landmassor skiljs av havet x704–896,
+med vatten även runt ytterkanterna. På västra ön finns800wood vid650180
+och400gold vid600300; spelaren börjar med vanliga tre workers och0/0 bank.
+Samla, bygg kasern/tre stridsenheter och hamn vid synlig östkust, till
+exempel672320. Flytta transporten till720432, markarmén till688432,
+markera armén och högerklicka transporten. Segla till880432 och landsätt
+vid912432 på östra ön; utforska/strid mot fiendebasen i nordöst.
+Markunits kan inte gå över havet. Grundvillkoren victory/defeat gäller.
+Fienden använder befintligt ändligt startkapital och lokal land-AI;
+produktion/landstigning via sjö-AI följer i086. Resursnoderna och banken
+är aldrig gratis/påfyllda under matchen. Save/restart behåller kartprofilen.

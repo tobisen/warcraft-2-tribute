@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-085 – Ökarta med land- och sjöstrid** — **Todo**.
+**RTS-086 – Sjö-AI och landstigningsanfall** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
@@ -2472,13 +2472,21 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-085 – Ökarta med land- och sjöstrid
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Ökarta med land- och sjöstrid.
+**Goal:** Handgjord skirmish-karta där vatten skiljer baserna och en betald transport kan föra armén till fiendeön.
+
+**Requirements:** Ny karta Öarna i menyn,1280x960/32px, två åtskilda landmassor och sammanhängande vatten runt/mellan dem. Befintliga bas-/worker-spawns, wood650180; gold flyttas på denna profil till600300. Ändliga800wood/400gold på spelarön gör hamn/transport/armé möjliga utan gratis resurser. Egna giltiga kustplatser, vattenrutter och enemy-öns landningsplatser. Inga markrutter över vattnet. Terräng/fog/minimap/Save/restart använder samma profil. Enemy land-scout-waypoints hålls på fiendeön utan dold basinformation. Verifiera faktiskt betald produktion/lastning/landstigning/landstrid till victory för båda fraktioner; befintliga landkartor bevaras.
+
+**Non-goals:** Procedural generation, fler resursnoder, transport-/sjö-AI (RTS-086), nya balanssystem eller assets. Enemy använder befintligt ändligt startkapital och kan inte ta sig över före086.
 
 **Dependencies:** RTS-084.
 
-**Acceptance criteria:** Handgjord ökarta kan slutföras med transport och strid utan fastlåst progression.
+**Acceptance criteria:** Öarna kan slutföras med transport och landstrid utan fastlåst resurs-/supply-progression; vatten hindrar markväg men tillåter flotta, synlig giltig landning och full Save/restart.
+
+**Tester:** Land/vatten-connectivity/coast/spawns/finite stock/profile positions, betald transport+armé+strid för båda fraktioner, Save/migration/minimap/fog/settings; tidigare landmatrix/typecheck/build och verkligt browserflöde.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md.
 
 ## RTS-086 – Sjö-AI och landstigningsanfall
 

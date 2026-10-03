@@ -1757,3 +1757,39 @@ inte gratis matchstate. Stats/capacity/archer/death-tester har märkta
 kontrollerade fixtures där relevant. Begränsningar: manuell kustapproach,
 frysande passagerartimers, inga nya transportassets/AI. RTS-084 Done;
 nästa085 ökarta.
+
+
+## RTS-085 – Öarna, betald transport till victory
+
+Handgjord två-ö-profil: sammanhängande hav runt/mellan landmassor,
+mapgold600300 och ändliga800wood/400gold på spelarön. Gamla profiler/
+bas-/worker-spawns bevarade. Menu/render/fog/minimap använder profilen;
+kartspecifik instruktion och offentliga enemy-scout-waypoints på östra ön.
+Save config14 kopplar identitet/stock/position, migrerar13 för äldre kartor.
+Ingen ny AI/ekonomi/balans/assets. Enemy kan inte korsa havet före086.
+
+Nya4 tester med två faktiskt betalda Normal-matcher samlar, bygger kasern,
+producerar tre soldater/hamn/transport, lastar, sparar ombord, landsätter
+på fiendeön och vinner via landcombat. Verifierar ingen markförbindelse,
+sammanhängande sea/coast, global supply, attackerande Enemy-army från
+verkligt accepterade jobs, finite resursledger, slutfreeze och Save.
+Första testhelpern spred production-resultatet till basens kö i stället
+för soldierProduction och producerade en worker; rättad testhelper,
+inget runtimefel. Därefter4 PASS6,55s; ytterligare ledger/freeze-assertions
+körda separat:4 PASS6,62s. Gamla landmatrix fortsätter sina
+18 betalda +6 passiva matcher; den nya ökartan har separat naval-flow.
+Inställningar/terrain/knowledge45 PASS859ms. Full713/86 PASS110,18s,
+före sista UI-instruktionssträngen och extra ledger-assertions, samma
+spel-logik. Typecheck/build/diff/docs590refs PASS. Bundle1587,37KB/
+gzip416,30KB, storvarning avsiktligt kvar. Granskning profilens resurser/
+vägar/scouting, Save, befintlig matrix och scope utan blockerande fynd.
+
+Chromium båda fraktioner verklig Skirmish/Easy/Öarna: insamling till
+180wood/110gold, betald kasern+tre units+hamn+transport, flytt/drag/lastning,
+Save/load/Resume, överfart/landsättning, synbaserade manuella mål och
+landcombat victory vid cirka224 gameplay-sekunder, restart samma karta.
+Inga page/console/request-fel, screenshot granskad. Klocka/kamera vy
+accelererad/panorerad; inga injicerade units/resurser/HP. Tidig helper
+väntade bara150s på180wood (fick170) och16s på klanens18s-kö; väntade
+korrekta faktiska tider och verifierade igen. Pages för083/084 success.
+RTS-085 Done, nästa086 sjö-AI/landstigning.

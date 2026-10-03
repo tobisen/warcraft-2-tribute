@@ -19,7 +19,7 @@ function conserved(m:MatchState){
   expect(remaining).toBeGreaterThanOrEqual(0);expect(bank[type]).toBeGreaterThanOrEqual(0);
  }
 }
-for(const map of Object.keys(maps) as MapId[])for(const faction of ['crown','clans'] as const)for(const difficulty of Object.keys(difficultyProfiles) as Difficulty[]){
+for(const map of ['arena','forest','river'] as MapId[])for(const faction of ['crown','clans'] as const)for(const difficulty of Object.keys(difficultyProfiles) as Difficulty[]){
  it(`paid ${map}/${faction}/${difficulty} completes with conserved finite economy`,()=>{
   const r=releasePlaythrough('skirmish',difficulty,conserved,{map,faction,abilities:true});
   expect(r.match.outcome).toBe('victory');expect(r.saved).toBe(true);
@@ -29,7 +29,7 @@ for(const map of Object.keys(maps) as MapId[])for(const faction of ['crown','cla
   console.info(JSON.stringify({map,faction,difficulty,seconds:stats.seconds,spentWood:r.spentWood,spentGold:r.spentGold,kills:stats.player.killed}));
  },30_000);
 }
-for(const map of Object.keys(maps) as MapId[])for(const faction of ['crown','clans'] as const){
+for(const map of ['arena','forest','river'] as MapId[])for(const faction of ['crown','clans'] as const){
  it(`passive ${map}/${faction} reaches defeat without free income`,()=>{
   let m=createMatch('skirmish','normal',factionsForPlayer(faction),map);
   for(let i=0;i<1500&&m.outcome==='playing';i++){m=updateMatch(m,.2);if(i%25===0)conserved(m);}
@@ -40,5 +40,5 @@ for(const map of Object.keys(maps) as MapId[])for(const faction of ['crown','cla
 }
 
 it('search waypoints remain land positions on every handcrafted map',()=>{
- for(const id of Object.keys(maps) as MapId[])for(const point of enemyKnowledgeConfig.attackWaypoints)expect(bodyFits(createMap(id),point,12)).toBe(true);
+ for(const id of Object.keys(maps) as MapId[])for(const point of maps[id].enemyAttackWaypoints??enemyKnowledgeConfig.attackWaypoints)expect(bodyFits(createMap(id),point,12)).toBe(true);
 });

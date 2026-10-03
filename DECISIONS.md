@@ -895,3 +895,16 @@ Landsättning är atomisk: giltig synlig landpunkt inom64px, fri kontakt,
 och separata kroppsplatser runt klicket (kandidater inom48px).
 Config13 återanvänder strict unit-validation för ground och passengers,
 inklusive global ID-unikhet/counters. Inga nya kartor/transport-AI/assets.
+
+
+## RTS-085: profilbestämd ökarta utan resursdeadlock
+
+Öarna är två handritade landmassor i oförändrad värld, med sammanhängande
+hav via fem icke överlappande vattenrects. Två stenpartier kvarstår på land.
+Bas-/worker-/enemy-spawns och wood-position bevaras; gold600300 på
+spelarön gör det möjligt att betala hamn/transport före första överfarten.
+Ändliga800wood/400gold finansierar slice-flödet, utan ändrade priser eller
+passiv inkomst. Enemy terräng-scouting hålls på östra ön; inga dolda
+resurs-/baspositioner lämnas ut. Enemy har ännu inget sätt att korsa havet:
+naval AI tillkommer086. Gamla landkartor behåller ekonomi och slutflöde.
+Save schema2/config14 kopplar map-id till faktisk profilposition/stock.
