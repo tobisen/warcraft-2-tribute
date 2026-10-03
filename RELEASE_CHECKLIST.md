@@ -108,3 +108,51 @@ Smoke:selection/move,save/reload/load/resume,tio restarts,1280x900/
 Separat injicerad35-body-profil CPU5,30ms/RAF17,60/heap10,08MiB;
 64-soldier-stress CPU12,10ms/RAF17,60/heap10,68MiB. Ingen full
 realtidsmatris eller akustisk lyssning påstås.
+
+## RTS-090 – Verifierad sjörelease, 2026-10-03
+
+Aktuell fullsuite748 tester/90 filer PASS146,91s; strict typecheck/build/
+diff och docs/refs PASS. Inga checks utelämnade för aktuell task. Bundle-
+varningen är kvar enligt mandat och verifierade budgetar i
+[PERFORMANCE.md](PERFORMANCE.md). Ren temporär checkout-kopia:
+`npm ci --offline`49packages/audit0, typecheck/build PASS, samma runtime.
+Alla12 pixelatlas-/manifest-/panel-filer från ny `assets:export` är identiska.
+Nya originalassets832naval/60building frames och8 OGG/WAV-par har
+källor/bruk i [assets/README.md](assets/README.md) och
+[assets/ASSET_LICENSE.md](assets/ASSET_LICENSE.md).
+
+Matrisen omfattar gamla fem landscenarier × båda fraktioner × tre
+svårigheter; tre land-Skirmishkartor × två fraktioner × tre svårigheter
+(18 betalda matcher och6 passiva förluster). Öarna-Skirmish och Överfarten
+× två fraktioner × tre svårigheter ger12 betalda överfartssegrar;6 passiva
+sjömatcher förlorar,6 tidiga betalda kanonmotmedel stoppar transporten.
+24 Skirmish-menyval kontrollerar fresh model/Save/restart; fixed mission
+normaliserar till Öarna. Transportlast/ID/supply, loaded own/enemy Save,
+flygande skott, fog/minimap/ljud, death cleanup, defeat priority och
+terminalfreeze omfattas av beteende-/regressionstester. Ingen gratis
+produktion eller dold målinformation används i de betalda flödena.
+
+[Actions37120604107](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37120604107)
+success för4ef5895. Public runtime index-Cz0Vv2w4.js SHA256
+3f088392c27fc399d9a05c9aed4bce8fe42fd6097b8a632c44cf60fd0ba56cfb
+är byte-identisk med lokal/cleanbuild. Public naval-atlas PNG/JSON,
+byggatlas PNG och cannon/splash OGG/WAV jämförda byte för byte.
+
+Faktisk [Pages-sida](https://tobisen.github.io/warcraft-2-tribute/) i Chromium:
+selection/move,local Save→page reload→Load/Resume,10restart,desktop/
+staplad vy och16 OGG/WAV-avkodningar utan request/console/runtimefel.
+Båda fraktioner Easy/Överfarten: verklig betald gathering→kasern/armé→hamn/
+transport→Save/load→överkorsning/landning→landstrid/victory214,39/214,00s,
+restart. Normal/Öarna: faktisk AI-passagerarlast2, Save mittöverfart,
+landstigning/defeat256,30s. Betalt eget kanonfartyg sänker synlig tom
+AI-transport; verkligt skott sparat i flykt, Load/Resume, synlig deathEffect,
+cannon/splash BufferSources, mute/unmute, restart; bas240HP vid335,52s.
+Gameplayklockan accelererad; inga injicerade resurser/HP/units i dessa
+matchflöden. Särskilda loadfixtures används enbart för prestanda.
+
+Verifierat: headless Chromium147 på macOS, inga subjektiva ljudlyssningar,
+Firefox/WebKit/mobil eller full naturlig realtidsmatris. Balansen är
+progressionstest, ingen50/50-garanti. AI har en betald obeväpnad transport,
+ingen återbyggnad/kanonflotta. Fartyg får överlappa; lastning är omedelbar
+inom64px, ingen boarding-kö. Lokal sparning är originbunden; localhost-
+saves flyttas inte automatiskt till Pages. Inga blockerande fel kvar.

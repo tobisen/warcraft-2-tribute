@@ -1227,3 +1227,13 @@ AudioSnapshot inkluderar ownShipHP, hamncompletion och marine-shot-ID:n;
 ny synlig avfyrning ger cannon, tidigare dold/reloaded shot är tyst.
 Endast verklig synlig shipDeath skapar splash genom deathEffect. Befintlig
 appägda AudioContext laddar8 original ljud; inga separata musikloopar.
+
+## RTS-090: verifieringsverktyg för land/sjö
+
+scripts/profile-browser.mjs väljer med W2T_NAVAL_PROFILE=1 Öarna före
+Start och den separata createNavalLoadFixture i gameplay/testHelpers.
+Explicit extra HP/fartyg över supply är endast benchmarkdata och importeras
+inte i appbygget; samma riktiga renderer, fog, vattenkontakt och kanonskott
+mäts. Counts separerar land/fartyg/enemies. Befintlig landfixture är
+oförändrad. Release och prestanda dokumenteras i
+[RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md) och [PERFORMANCE.md](PERFORMANCE.md).

@@ -31,3 +31,16 @@ export function createLoadFixture(total:64|128):MatchState {
   })));
   return match;
 }
+
+/** Explicit naval stress fixture: injected hulls/HP above supply, never a paid-match claim. */
+export function createNavalLoadFixture(total:64|128):MatchState {
+ const match=createMatch('skirmish','easy',undefined,'islands');
+ delete match.enemyNaval;delete match.enemyProduction;delete match.enemyAI;delete match.enemyConstruction;delete match.enemyPolicy;delete match.enemyRecovery;delete match.enemyKnowledge;
+ const fleet=total/2,land=total-fleet-12;
+ match.gathering.units=Array.from({length:land},(_,i)=>({kind:'soldier' as const,owner:'player' as const,id:`unit-${i+4}`,hp:10000,cargo:0,selected:false,position:{x:96+i%10*48,y:560+Math.floor(i/10)*40},target:{x:96+i%10*48,y:560+Math.floor(i/10)*40},order:{kind:'idle' as const}}));
+ match.production.nextUnitNumber=match.soldierProduction.nextUnitNumber=land+4;
+ match.combat.enemies=match.combat.enemies.filter(e=>e.kind==='base');
+ match.combat.enemies.push(...Array.from({length:12},(_,i)=>({id:`load-naval-enemy-${i}`,kind:'ship' as const,owner:'enemy' as const,hp:10000,position:{x:880,y:112+i*64},order:{kind:'idle' as const}})));
+ match.navy={harbor:null,production:{remainingSeconds:null,nextUnitNumber:fleet+1},ships:Array.from({length:fleet},(_,i)=>{const position={x:720+i%4*40,y:112+Math.floor(i/4)*44};return {id:`ship-${i+1}`,kind:'ship' as const,owner:'player' as const,role:i%4===0?'transport' as const:'warship' as const,hp:10000,selected:false,position,target:{...position},order:i%4===0?{kind:'idle' as const}:{kind:'attack' as const,enemyId:`load-naval-enemy-${Math.floor(i/4)%12}`}};})};
+ return match;
+}

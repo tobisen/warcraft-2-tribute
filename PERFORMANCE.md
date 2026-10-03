@@ -116,3 +116,46 @@ Budget PASS:128-stress har CPU-budget33,4ms, ingen separat RAF/60FPS-
 garanti. Tio restarts10,07 till10,41MiB (+0,34), ingen browser-error.
 Bundle1559,52KB/gzip409,25KB och dist4088KiB ryms i befintlig budget.
 Ingen prestandaoptimering eller bundle-split införd i denna release.
+
+## RTS-090 – Sjörelease, isolerad mätning 2026-10-03
+
+Node20.20.0/npm10.8.2, macOS arm64, headless Chromium147.0.7727.15,
+1280x900/native800x600. Samma tidigare beslutade budgetar. Befintlig land-
+fixture och separat explicit naval-fixture, injicerade HP/units över supply:
+naval64=20mark+32egna fartyg+12stationära enemy-hulls;128=52mark+64egna
+fartyg+12hulls. En fjärdedel egna fartyg obeväpnade transporter, övriga
+riktiga kanonanfall/projektiler. Baser räknas inte som enheter. Inga
+betalda matcher eller balanserat normalspel påstås för dessa loadfixtures.
+`W2T_NAVAL_PROFILE=1` väljer navalfixture i scripts/profile-browser.mjs;
+Playwright/Chromium ligger utanför projektets dependencies. Naval-kameran
+panoreras mot den renderade flottan. Minst300frames efter60warmup,
+separat30s långkörning och10restart med faktisk GC via CDP.
+
+| Mått | Land64 | Land128 | Naval64 | Naval128 |
+| --- | ---: | ---: | ---: | ---: |
+| Update CPU p95,ms |8,70|23,80|5,20|11,00|
+| Render CPU p95,ms |0,70|0,80|0,80|0,90|
+| RAF p95,ms |18,40|34,70|17,60|17,70|
+| Observerad FPS |59,40|38,73|60,00|59,24|
+| CPU max,ms |19,80|44,00|12,80|19,40|
+| GC JS heap,MiB |11,76|12,54|12,04|13,05|
+
+PASS befintliga budgetar:64CPU/render16,7ms/RAF33,4;128CPU33,4ms
+utan60FPS-garanti.30s heap land11,86→12,58MiB, naval12,14→11,89;
+10restart slut-baseline +0,28/−0,69MiB, inga browserfel. En första
+mätning under samtidig fullsuite/annan browser gav RAF66,2/83,4ms och
+128CPU35ms; den avbröts och redovisas som konkurrerande maskinlast,
+inte normalprofil. Ingen gameplay-/prestandaoptimering infördes.
+
+Bundle1600,25kB/gzip419,19kB; dist4 920 343bytes (4,69MiB, du4872KiB
+med blockallokering). Under1,7MB/450kB/5MiB-budget; storvarningen
+avsiktligt kvar. Ren offlineinstallation49packages/audit0 och ny build
+byte-identisk; alla12 re-exporterade pixel-filer identiska. Public smoke
+på faktisk Pages:35-body CPU5,30/RAF18,30ms,64-soldier CPU12,00/
+RAF18,60ms; dessa andra fixtures jämförs inte direkt med navalmatrisen.
+Chromium på denna maskin är verifierad profil, ingen generell FPS-garanti.
+
+Vid screenshotgranskning upptäcktes att den första navalfixture bytte
+modellkartan men inte scenens redan skapade Arena-tiles. Scriptet väljer
+nu Öarna i menyn före Start, så terräng och modell överensstämmer; ny
+isolerad full navalprofil ligger i tabellen ovan. Inga runtimeändringar.

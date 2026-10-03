@@ -2,7 +2,7 @@
 
 ## Inriktning
 
-RTS-001–089 är implementerade. RTS-090 är planerad för fortsatt taskvis implementation. Slicebeskrivningarna visar utvecklingen;
+RTS-001–090 är implementerade. Den beställda roadmappen är slutförd. Slicebeskrivningarna visar utvecklingen;
 avsnitten RTS-018–060 längst ned anger dagens HUD, terrain/navigation,
 kantbaserade ranges, gruppmål och säkra placering/spawn.
 
@@ -969,3 +969,14 @@ befintlig simulation. Brygga, kran och hamnmagasin har synliga byggstadier.
 Ringar, HP och transportens0–4 lasttext kvarstår. Skarpa native pixelassets
 utan importerad spelgrafik. Kanon/sjunkljud följer faktisk syn och gesture/
 mute/volym/paus; dolda dödsfall, boarding och Save-load reveal är tysta.
+
+## RTS-090: publicerad sjörelease
+
+Befintliga landscenarier/kartor och två fraktioner bevaras. Öarna och
+Överfarten använder betald flotta/transport/landarmé, ändliga resurser,
+fog-säkert AI-landstigningsanfall, Save och restart. Tidigt kanonmotmedel
+stoppar transporten; förstörd fiendebas krävs fortfarande för victory.
+Verifierad progression på Easy/Normal/Hard; ingen generell jämn balans
+eller avancerad naval AI-ekonomi påstås. Original sjöart/ljud följer samma
+syn/pause/reset som gameplay. Releaseprofil och begränsningar finns i
+[RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md).

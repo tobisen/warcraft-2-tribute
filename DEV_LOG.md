@@ -1899,3 +1899,44 @@ subjektiv lyssning eller andra browsermotorer verifierade. Helper skilde
 Phasers egna gain från appgrafen, väntade på schemalagd gain/async resume
 och stängde ljudpanelen före världsklick; inga inputkodändringar krävdes.
 Klockan accelererad; gameplaystate ej injicerat. Nästa090 release.
+
+## 2026-10-03 – RTS-090 Done: verifierad sjörelease
+
+Slutlig full748/90 PASS146,91s, typecheck/build/diff/docs PASS. Landmatrix
+30 fraktions/scenario/profilmatcher,18 utökade skirmishmatcher,6 passiva;
+12 betalda naval Skirmish/mission victories,6 passiva förluster och6
+betalda kanonmotmedel.24 map/faction/difficulty-options bevarar Save/reset.
+Ingen ny gameplaykod; explicit navalbenchmark och liten profilscript-
+option tillagd. Gamla landfixture bevarad. Granskning verificeringsscope,
+regressioner, fixture/prod-separation, origassets och docs utan blockers.
+
+Isolerad land64/128CPU p95 8,70/23,80ms, naval5,20/11,00ms, övriga
+budgetar PASS;30s run+10restart, inga errors. Första konkurrerande
+fullsuite/browser-mätningen avbröts när CPU/RAF påverkades. Första
+navalscreenshot hade modell Öarna men Arena-bakgrund efter applyMatch;
+profilscriptet väljer nu Öarna i menyn före Start, ny full isolerad
+navalprofil/screenshot verifierad. Benchmark är injicerade HP/units över
+supply, inte betalt matchspel. Resultat/budgetar i PERFORMANCE.md.
+
+Ren temporär kopia: npm ci --offline49packages/audit0, typecheck/build
+PASS; alla12 pixel-filer från assets:export identiska. Runtime JS1600,25KB/
+gzip419,19KB, totaldist4 920 343bytes; bundlevarning avsiktligt kvar.
+Local/clean/public index-Cz0Vv2w4.js byte-identisk, SHA256
+3f088392c27fc399d9a05c9aed4bce8fe42fd6097b8a632c44cf60fd0ba56cfb;
+public naval PNG/JSON, building PNG och cannon/splash OGG/WAV identiska.
+Actions37120604107 success för4ef5895, nya runtime faktiskt publicerad.
+
+Faktisk Pages Chromium147: movement/selection,local Save/reload/Load/
+Resume,10restart, desktop/stapladvy,16 OGG/WAV-decodes, inga errors.
+Två betalda sjöuppdragsflöden till victory214,39/214,00s, Save mittlast/
+överfart, landstrid/restart. Normal AI-landstigning/Save till defeat256,30s;
+betald hamn/kanonbåt, Save verkligt skott i flykt/Load/Resume/sänkning,
+synlig DeathEffect, cannon/splash-källor, mute/unmute, restart; bas240HP
+vid335,52s. Accelererad clock, ingen injicerad gameplaystate i betalda
+flöden. Screenshot/mätning granskade. Akustisk lyssning/andra browsermotorer/
+mobil/50-50balans inte verifierade. AI en obeväpnad transport utan
+återbyggnad; navalöverlapp/omedelbar boarding kvar enligt scope.
+
+RTS-001–090 är Done, inga öppna backlogtasks eller blockerande fynd.
+Releasecommit pushas enligt mandat; dess Actions-resultat kontrolleras
+innan slutrapport. Det redan verifierade produktionsbygget är oförändrat.

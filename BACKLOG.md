@@ -2,13 +2,13 @@
 
 ## Current Focus
 
-**RTS-090 – Verifierad release med sjöstrid** — **Todo**.
+**RTS-090 – Verifierad release med sjöstrid** — **Done**.
 
-Arbeta med Current Focus i ordning; en task åt gången.
+Roadmap RTS-001–090 är klar. Ingen ny task är påbörjad.
 
 Denna fil styr arbetet. En task åt gången. RTS-001–015 är historiskt färdiga;
 RTS-016–060 är en ny, användarbeställd roadmap efter MVP. Ingen gammal backlog
-har återuppstått. RTS-001–065 är nu implementerade; RTS-066–090 är fortsatt planerade. Rollfiler innebär inte automatisk agentstart.
+har återuppstått. RTS-001–090 är nu implementerade och verifierade. Rollfiler innebär inte automatisk agentstart.
 
 ## Planeringskonventioner
 
@@ -2562,10 +2562,18 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-090 – Verifierad release med sjöstrid
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Verifierad release med sjöstrid.
+**Goal:** Publicerad och verifierad sjörelease, med bevarad landversion.
+
+**Requirements:** Slutlig fullsuite med land/sjö/fraktion/map/uppdrag/save/fog/restart-matriser; strict typecheck/build. Produktionsbrowser under Pages-subpath med korrekta assets/ljud, betalda navalflöden och lokal save/reload. Mät64/128 arméer samt naval render/combat med uttryckliga loadfixtures, JSheap och10restart. Behåll befintliga budgetar och bundlevarning. Granska diff/docs/refs och publicerad runtime/Actions. Dokumentera faktisk browserprofil, resultat och begränsningar.
+
+**Non-goals:** Nytt gameplay, balanssystem, grafikpolish, fler browsermotorer och bundle-splitting.
 
 **Dependencies:** RTS-089.
 
-**Acceptance criteria:** Full matris för land/sjö/fraktioner/maps/save, prestanda och publicering verifieras.
+**Acceptance criteria:** Checks gröna; land- och navalmatris samt betald browsermatch/save fungerar. Uppmätt CPU/render/frame/heap och reset ligger inom befintliga budgetar. Pages-deploy lyckas och publicerade assets/runtime motsvarar verifierat bygge; dokumentation beskriver korrekt spel/release.
+
+**Tester:** Fullsuite/typecheck/build/diff/docs, produktions-subpath/browser/saveload/audio och betalade sjömatcher,64/128 land/navalprofil och10restart, Actions/publicruntime-kontroll.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, README.md, GAME_DESIGN.md, ARCHITECTURE.md, RELEASE_CHECKLIST.md och PERFORMANCE.md.

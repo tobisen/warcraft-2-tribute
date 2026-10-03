@@ -34,6 +34,7 @@ try {
   await page.addScriptTag({path:join(fixtureDir,'fixture.iife.js')});
   await page.locator('#scenario-select').selectOption('skirmish');
   await page.locator('#difficulty-select').selectOption('easy');
+  if(process.env.W2T_NAVAL_PROFILE)await page.locator('#map-select').selectOption('islands');
   await page.locator('#start-match').click();
   await page.waitForFunction(()=>!window.__checkedScene.restartPending&&window.__checkedScene.session.phase==='playing');
   const cdp=await page.context().newCDPSession(page);
@@ -44,9 +45,9 @@ try {
   const baseline=await heap(),profiles=[];
   for(const total of (process.env.W2T_CPU_PROFILE?[64]:[64,128])) {
     if(process.env.W2T_CPU_PROFILE){await cdp.send('Profiler.enable');await cdp.send('Profiler.start');}
-    await page.evaluate(total=>{
+    await page.evaluate(({total,naval})=>{
       const s=window.__checkedScene;if(window.__cleanup)window.__cleanup();
-      s.applyMatch(LoadCheck.createLoadFixture(total));s.syncVisuals();
+      s.applyMatch(naval?LoadCheck.createNavalLoadFixture(total):LoadCheck.createLoadFixture(total));if(naval)s.cameras.main.setScroll(480,80);s.syncVisuals();
       window.__samples={cpu:[],render:[],raf:[]};let updateStart=0,renderStart=0,previous=0;
       const before=()=>updateStart=performance.now();
       const after=()=>window.__samples.cpu.push(performance.now()-updateStart);
@@ -59,7 +60,7 @@ try {
         s.sys.events.off('preupdate',before);s.sys.events.off('postupdate',after);
         s.game.events.off('prerender',preRender);s.game.events.off('postrender',postRender);s.game.events.off('step',frame);
       };
-    },total);
+    },{total,naval:!!process.env.W2T_NAVAL_PROFILE});
     await page.waitForFunction(()=>window.__samples.cpu.length>=360,null,{timeout:180000,polling:500});
     if(process.env.W2T_CPU_PROFILE){
       const {profile}=await cdp.send('Profiler.stop');
@@ -71,12 +72,12 @@ try {
       return {samples:xs.cpu.length-60,cpuP95:p(xs.cpu.slice(60),.95),cpuMedian:p(xs.cpu.slice(60),.5),
         cpuMax:Math.max(...xs.cpu),renderP95:p(xs.render.slice(60),.95),frameP95:p(frames,.95),
         fps:1000/(frames.reduce((a,b)=>a+b,0)/frames.length),elapsed:s.waves.elapsedSeconds,
-        own:s.gathering.units.length,enemies:s.combat.enemies.filter(e=>e.kind!=='base').length,
+        own:s.gathering.units.length,ships:s.navy?.ships.length??0,enemies:s.combat.enemies.filter(e=>e.kind!=='base').length,
         projectiles:s.combat.projectiles?.length??0,outcome:s.outcome};
     });
     result.total=total;result.heapMiB=await heap();profiles.push(result);
     console.log(JSON.stringify(result));assert.equal(result.outcome,'playing');
-    assert.equal(result.own+result.enemies,total);
+    assert.equal(result.own+result.ships+result.enemies,total);
     await page.screenshot({path:join(tmpdir(),`w2t-065-load-${total}-${process.env.W2T_PROFILE_STAGE??'after'}.png`)});
   }
   // A longer real-time run catches frame/heap growth after the initial profile.

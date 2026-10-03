@@ -2,7 +2,7 @@
 
 Browserbaserat singleplayer-RTS inspirerat av Warcraft 2, Age of Empires 2 och
 Command & Conquer. Phaser, strict TypeScript och Vite; local-first, gameplay
-före grafik. Implementerat genom RTS-089 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
+före grafik. Implementerat genom RTS-090 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
 
 ## Installation och lokal start
 
@@ -538,3 +538,19 @@ fraktionsfärger, åtta riktningar och synliga rörelse-/attack-/sjunkframes.
 Kanon- och sjunkljud använder samma Ljud-panel, mute och volym som övrigt
 spel. Assets/källor/export beskrivs i [assets/README.md](assets/README.md)
 och [assets/ASSET_LICENSE.md](assets/ASSET_LICENSE.md).
+
+## Aktuell sjörelease
+
+RTS-001–090 är klara. Spela på
+[GitHub Pages](https://tobisen.github.io/warcraft-2-tribute/), eller starta
+lokalt enligt ovan. Välj Överfarten för ett fast sjöuppdrag eller Skirmish/
+Öarna. Samla wood/gold, bygg kasern och soldater samt hamn/transport,
+flytta armén till synlig kust, lasta och landsätt på fiendeön. Skydda basen
+mot AI-landstigning; kanonbåt kan sänka fiendens transport. Förstör
+fiendebasen för victory. Save/load ligger lokalt per browserorigin.
+
+Senaste verifiering:748 tester, typecheck/build, betalda land-/sjömatriser,
+public browser/save/ljud och64/128-belastning. Detaljer och faktisk
+verifieringsprofil: [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md),
+[PERFORMANCE.md](PERFORMANCE.md). Bundlevarningen kvarstår avsiktligt.
+Chromium desktop är verifierad; andra browsermotorer och mobil är ej testade.
