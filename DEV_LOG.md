@@ -1940,3 +1940,7 @@ mobil/50-50balans inte verifierade. AI en obeväpnad transport utan
 RTS-001–090 är Done, inga öppna backlogtasks eller blockerande fynd.
 Releasecommit pushas enligt mandat; dess Actions-resultat kontrolleras
 innan slutrapport. Det redan verifierade produktionsbygget är oförändrat.
+
+## 2026-10-03 – RTS-091 Done: presentation och roadmap091–120
+
+Beställd roadmap till120 tillagd,091–096 detaljerade och enda implementation i denna körning. Inventering i PRESENTATION_AUDIT.md visar återanvändbara system och brister. Chromium1280×720/1920×1080: startsida/match/paus/resume/mittendrag utan errors; screenshots granskade. Canvas800×600 börjar y299 och klipps under720pxfönstret. Relevant69tester/11filer PASS, typecheck/build/diff PASS; oförändrad bundlevarning. Ingen runtime ändrad eller doc-onlytester. Diff granskad för historik/task-ID/scope, inga blockerande fynd. Nästa092 referensdesign.

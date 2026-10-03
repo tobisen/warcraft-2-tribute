@@ -2,9 +2,9 @@
 
 ## Current Focus
 
-**RTS-090 – Verifierad release med sjöstrid** — **Done**.
+**RTS-092 – Bestäm visuell riktning** — **Todo**.
 
-Roadmap RTS-001–090 är klar. Ingen ny task är påbörjad.
+RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. Denna körning genomför endast091–096;097–120 är Todo och implementeras inte här.
 
 Denna fil styr arbetet. En task åt gången. RTS-001–015 är historiskt färdiga;
 RTS-016–060 är en ny, användarbeställd roadmap efter MVP. Ingen gammal backlog
@@ -2577,3 +2577,355 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 **Tester:** Fullsuite/typecheck/build/diff/docs, produktions-subpath/browser/saveload/audio och betalade sjömatcher,64/128 land/navalprofil och10restart, Actions/publicruntime-kontroll.
 
 **Docs:** BACKLOG.md, DEV_LOG.md, README.md, GAME_DESIGN.md, ARCHITECTURE.md, RELEASE_CHECKLIST.md och PERFORMANCE.md.
+
+## Milstolpe RTS-091–120 – Spelkänsla, design och användbarhet
+
+Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. Layout verifieras1280×720 och1920×1080, paus stoppar simulation, nya gameplay-inställningar bevaras av Save/restart. Skarp pixelgrafik och dokumenterat assetursprung/licens. Visuella tasks kräver granskade screenshots, ljudtasks faktisk lyssning. Saknade assets eller ej utförda checks får inte markeras klara. Taskvis checks, docs, granskning, commit/push utan force. Endast091–096 genomförs i denna körning.
+
+## RTS-091 – Inventera befintlig presentation och kontroller
+
+**Status:** Done.
+
+**Goal:** Dokumentera brister och återanvändbara funktioner i UI, grafik, ljud, kamera och input.
+
+**Requirements:** Dokumentera nuvarande UI/grafik/ljud/kamera/input med konkreta filreferenser, återanvändning, brister och prioritering.
+
+**Non-goals:** Ingen runtimeändring, nya kontroller eller balans.
+
+**Dependencies:** RTS-090
+
+**Acceptance criteria:** Inventeringen skiljer faktiskt fungerande från planerat; täcker meny, HUD, assets, ljud, kamera, input, två upplösningar och tidigare verifieringsbegränsningar.
+
+**Tester:** Dokumentgranskning, befintliga presentation/sessiontester, typecheck/build/diff; browserinventering med screenshots.
+
+**Docs:** PRESENTATION_AUDIT.md, BACKLOG.md, DEV_LOG.md
+
+## RTS-092 – Bestäm visuell riktning
+
+**Status:** Todo.
+
+**Goal:** Skapa två referensvyer: startsida och spelvy. Definiera färgpalett, typografi och HUD-layout. Stil: klassiskt fantasy-RTS inspirerat av Warcraft 2, med egen identitet och egna eller licensierade assets.
+
+**Requirements:** Skapa två granskningsbara referensvyer för startsida/spelvy. Definiera färgpalett, font-stack, HUD-layout och egen fantasyidentitet med befintliga originalassets.
+
+**Non-goals:** Ingen spelimplementation, nya gameplayregler, kopierade originalassets eller extern fontdependency.
+
+**Dependencies:** RTS-091
+
+**Acceptance criteria:** Båda referensvyerna går att öppna, visar konsekvent typografi/palett/layout i båda målupplösningar och är granskade som screenshots. Framtida HUD-delar märks som planerade.
+
+**Tester:** Visuell browsergranskning1280×720/1920×1080, inga doc-onlytester; relevanta befintliga tester/typecheck/build/diff.
+
+**Docs:** VISUAL_DIRECTION.md, design/references.html, DECISIONS.md, BACKLOG.md, DEV_LOG.md
+
+## RTS-093 – Skapa fantasy-startsida
+
+**Status:** Todo.
+
+**Goal:** Sammanhängande design med titel och huvudmeny: Campaign, Skirmish, Load Game och Settings.
+
+**Requirements:** Sammanhängande fantasy-startsida med Campaign, Skirmish, Load Game och Settings. Återanvänd fyra fristående uppdrag utan påhittad kampanjprogression, befintlig Save och ljudkontroller. Tangentåtkomst/back återställer menyn.
+
+**Non-goals:** Nya uppdrag, kampanjprogression, HUD-ombyggnad, nya ljud eller persistens.
+
+**Dependencies:** RTS-092
+
+**Acceptance criteria:** Alla fyra ingångar fungerar; Campaign visar befintliga uppdrag, Skirmish befintliga lägen; Load använder validerad Save; Settings använder befintligt ljud. Menyinput ger inga orders och matchens paus/resultat förblir nåbara.
+
+**Tester:** Menynavigationsbeteenden och sessionregressioner; browser fyra ingångar, load-fel, start/paus/återgång, screenshots i båda upplösningar; typecheck/build/diff.
+
+**Docs:** README.md, GAME_DESIGN.md, ARCHITECTURE.md, BACKLOG.md, DEV_LOG.md
+
+## RTS-094 – Matchinställningar
+
+**Status:** Todo.
+
+**Goal:** Låt spelaren välja karta, fraktion, svårighet och spelhastighet. Visa kort beskrivning av karta och svårighetsgrad.
+
+**Requirements:** Matchformulär med karta/fraktion/svårighet och separat spelhastighetsval. Visa karta/svårighetsbeskrivningar, bevara låsta uppdragskartor och validerade startval. I denna task är endast1× tillgängligt;0.75× införs funktionellt i108.
+
+**Non-goals:** Beginner/balans107, tidskalning108, settingspersistens119, nya kartor.
+
+**Dependencies:** RTS-093
+
+**Acceptance criteria:** Startval motsvarar verklig match; kartlås och beskrivningar korrekta. Speed visar1× och förklarar framtida0.75× utan fungerande låtsasval. Save/restart behåller existerande options.
+
+**Tester:** Options/sessiontester, beskrivningar/invalid/fixed map; browser fraktion/map/difficulty/start/restart, båda upplösningar; typecheck/build/diff.
+
+**Docs:** README.md, GAME_DESIGN.md, ARCHITECTURE.md, DECISIONS.md, BACKLOG.md, DEV_LOG.md
+
+## RTS-095 – Spelvy som fyller webbläsarfönstret
+
+**Status:** Todo.
+
+**Goal:** Dölj startsidan helt när matchen börjar. Anpassa canvas och HUD vid resize. Verifiera korrekta input-koordinater efter storleksändring.
+
+**Requirements:** Separat start- och spelvy; spelområdet använder fönstrets tillgängliga yta med responsiv canvas och nuvarande HUD. Resize uppdaterar Phaser-kamera/skalning utan att ändra world pixels/32pxgrid eller matchstate. Sessionknappar får egen spelverktygsrad.
+
+**Non-goals:** Slutlig top/bottom HUD097–101, zoom, nya kameragester102–103 och fullscreen104.
+
+**Dependencies:** RTS-094
+
+**Acceptance criteria:** Startsida helt dold under match, canvas/HUD inom viewport i båda målupplösningar och efter resize; korrekta klick/drag/move/worldcoords med pan. Ingen gameplayinput genom HUD och paus/gameover bevaras.
+
+**Tester:** Layoutmått/camerabounds och befintlig inputregression; browser resize medan playing/paused, klick/drag/move, HUD-isolering och Save/restart; screenshots; typecheck/build/diff.
+
+**Docs:** README.md, ARCHITECTURE.md, DECISIONS.md, BACKLOG.md, DEV_LOG.md
+
+## RTS-096 – Engelska i hela spelet
+
+**Status:** Todo.
+
+**Goal:** Översätt menyer, HUD, tooltips, felmeddelanden, uppdrag, tutorial och resultat. Samla UI-texter på ett enkelt, konsekvent sätt.
+
+**Requirements:** Engelska i all synlig meny/HUD/tooltips/feedback/uppdrag/tutorialguide/resultat samt dynamisk gameplayfeedback. Samla texter enkelt i konsekvent TypeScript-textmodul; stabila IDs och Saveformat bevaras. Docs kan vara svenska.
+
+**Non-goals:** Nytt tutorialsyst109, i18nframework, nya språkval eller gameplayförändring.
+
+**Dependencies:** RTS-095
+
+**Acceptance criteria:** Synlig UI och användarvända fel är engelska; båda fraktioner/alla befintliga uppdrag/queue/resultat/Savefel omfattas. Inga språkberoende villkor eller bruten Save/ID.
+
+**Tester:** Presentation/config/feedback/Save-sessionregressioner och textinventering; browser menu/match/paus/Savefel/resultat/uppdragsguide/screenshot; typecheck/build/diff.
+
+**Docs:** README.md, GAME_DESIGN.md, ARCHITECTURE.md, DECISIONS.md, BACKLOG.md, DEV_LOG.md
+
+## RTS-097 – Top bar
+
+**Status:** Todo.
+
+**Goal:** Visa menyknapp, gold, wood och använd/max population. Håll informationen läsbar utan att dominera spelvyn.
+
+**Dependencies:** RTS-096.
+
+**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+
+## RTS-098 – Bottom bar: selection-information
+
+**Status:** Todo.
+
+**Goal:** Visa vald enhets eller byggnads namn, porträtt, HP och relevant statistik. Hantera tom selection.
+
+**Dependencies:** RTS-097.
+
+**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+
+## RTS-099 – Kontextuell action panel
+
+**Status:** Todo.
+
+**Goal:** Visa rätt actions för aktuell selection: bygga, träna, uppgradera och ge orders. Visa kostnader, hotkeys och orsaker till disabled actions.
+
+**Dependencies:** RTS-098.
+
+**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+
+## RTS-100 – Gruppselection och produktionskö
+
+**Status:** Todo.
+
+**Goal:** Visa enhetsikoner för grupper samt produktionskö, progress och möjlighet att avbryta. Definiera hur blandad selection presenteras.
+
+**Dependencies:** RTS-099.
+
+**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+
+## RTS-101 – Minimap ovanpå spelvyn
+
+**Status:** Todo.
+
+**Goal:** Placera minimap som overlay i nedre vänstra hörnet. Bevara kameraindikator, fog of war och klicknavigation. Undvik överlapp med actions och inputläckage till spelvärlden.
+
+**Dependencies:** RTS-100.
+
+**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+
+## RTS-102 – Kamerapanorering
+
+**Status:** Todo.
+
+**Goal:** Inför kantpanorering, tangentbord och mittenknappsdrag. Behåll vänsterdrag för enhetsselection. Begränsa kameran till kartans gränser. Panorera inte när menyer eller HUD fångar input.
+
+**Dependencies:** RTS-101.
+
+**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+
+## RTS-103 – Kameragenvägar och inställningar
+
+**Status:** Todo.
+
+**Goal:** Space centrerar på selection. Home centrerar på spelarens bas. Låt spelaren justera panoreringshastighet och kantpanorering. Undvik konflikter med befintliga hotkeys.
+
+**Dependencies:** RTS-102.
+
+**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+
+## RTS-104 – Pausmeny och fullscreen
+
+**Status:** Todo.
+
+**Goal:** Esc öppnar pausmenyn: Resume, Save, Load, Settings och Quit to Main Menu. Erbjud separat fullscreen-val. Avbruten återgång till huvudmenyn ska bevara matchen.
+
+**Dependencies:** RTS-103.
+
+**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+
+## RTS-105 – Order- och actionfeedback
+
+**Status:** Todo.
+
+**Goal:** Visa tydliga move- och attack-markeringar. Ge begripliga besked, exempelvis: “Not enough gold”, “Population limit reached” och “Cannot build here”.
+
+**Dependencies:** RTS-104.
+
+**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+
+## RTS-106 – Attackvarningar
+
+**Status:** Todo.
+
+**Goal:** Signalera hot mot bas och enheter visuellt och med ljud. Begränsa upprepning så varningar inte spammar.
+
+**Dependencies:** RTS-105.
+
+**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+
+## RTS-107 – Svårighetsgrader
+
+**Status:** Todo.
+
+**Goal:** Definiera Beginner, Easy, Normal och Hard i config. Beginner ska ge längre förberedelsetid, mindre anfall och långsammare AI-utveckling. Dokumentera skillnaderna.
+
+**Dependencies:** RTS-106.
+
+**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+
+## RTS-108 – Separat spelhastighet
+
+**Status:** Todo.
+
+**Goal:** Inför 0.75× och 1× som separata val från svårighetsgrad. Använd en gemensam skalning av gameplay-tid. Movement, combat, gathering, production och AI-timers ska påverkas konsekvent. UI och ljuduppspelning förblir normala.
+
+**Dependencies:** RTS-107.
+
+**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+
+## RTS-109 – Tutorial-uppdrag
+
+**Status:** Todo.
+
+**Goal:** Lär ut selection, movement, gathering, byggande, produktion och strid i små steg. Ingen tidig anfallspress. Visa tydligt aktuellt mål och när det är uppfyllt.
+
+**Dependencies:** RTS-108.
+
+**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+
+## RTS-110 – Speltest av Beginner
+
+**Status:** Todo.
+
+**Goal:** Verifiera att en ny spelare hinner förstå kontrollerna, bygga ekonomi och producera ett försvar. Dokumentera speltest och justera balans utifrån resultatet. Automatiserade tester ersätter inte användarens speltest.
+
+**Dependencies:** RTS-109.
+
+**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+
+## RTS-111 – Förbättrad pixelterräng
+
+**Status:** Todo.
+
+**Goal:** Förbättra gräs, skog, vatten, kust och resurser. Skapa sammanhängande övergångar och lagom variation. Dekorationer ska inte förväxlas med blockerande terräng.
+
+**Dependencies:** RTS-110.
+
+**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+
+## RTS-112 – Förbättrade byggnadssprites
+
+**Status:** Todo.
+
+**Goal:** Gör byggnadstyper, byggstadier och skador tydliga. Behåll konsekvent skala, ljusriktning och lagfärger.
+
+**Dependencies:** RTS-111.
+
+**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+
+## RTS-113 – Förbättrade enhetssprites
+
+**Status:** Todo.
+
+**Goal:** Förtydliga typer, riktningar, rörelse, attack och död. Enheter ska kunna särskiljas utan selection. Inkludera befintliga fartyg och båda fraktionerna.
+
+**Dependencies:** RTS-112.
+
+**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+
+## RTS-114 – Förbättrade stridseffekter
+
+**Status:** Todo.
+
+**Goal:** Förtydliga projektiler, träffar och död. Effekter får inte skymma units, HP eller selection.
+
+**Dependencies:** RTS-113.
+
+**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+
+## RTS-115 – En större referenskarta
+
+**Status:** Todo.
+
+**Goal:** Skapa en handgjord karta med: basområden, expansionsresurser, alternativa vägar, strategiska passager och genomtänkta avstånd. Verifiera navigation, AI och kamerakontroller.
+
+**Dependencies:** RTS-114.
+
+**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+
+## RTS-116 – Förbättra övriga kartor
+
+**Status:** Todo.
+
+**Goal:** Använd referenskartans kvalitetsnivå. Verifiera startpositioner, resurser, navigation, AI och land-/sjövägar på relevanta kartor.
+
+**Dependencies:** RTS-115.
+
+**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+
+## RTS-117 – Nya ljudeffekter och ljudmix
+
+**Status:** Todo.
+
+**Goal:** Förbättra ljud för gathering, byggande, produktion och combat. Balansera volymer och begränsa samtidiga upprepningar. Lyssna igenom resultatet i en faktisk match.
+
+**Dependencies:** RTS-116.
+
+**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+
+## RTS-118 – Humoristiska engelska enhetsröster
+
+**Status:** Todo.
+
+**Goal:** Inför korta selection- och order-repliker med personlighet. Använd variation, cooldown och begränsad upprepning. Återanvänd inte originalspelets inspelningar. Om röstassets saknas ska det rapporteras tydligt.
+
+**Dependencies:** RTS-117.
+
+**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+
+## RTS-119 – Inställningar och persistens
+
+**Status:** Todo.
+
+**Goal:** Spara volymer, kameraval och spelpreferenser lokalt. Separata volymer för musik, effekter och röster. Hantera saknade eller ogiltiga sparade inställningar.
+
+**Dependencies:** RTS-118.
+
+**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+
+## RTS-120 – Samlat speltest och publicering
+
+**Status:** Todo.
+
+**Goal:** Verifiera startsida → matchval → spel → paus → resultat → ny match samt save/load. Granska grafik och lyssna igenom ljud. Verifiera GitHub Pages-versionen och publicera när checks passerar.
+
+**Dependencies:** RTS-119.
+
+**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
