@@ -1,3 +1,4 @@
+import {syncResultScreen} from '../presentation/resultScreen';
 import {getPreferences,updatePreferences} from '../presentation/preferences';
 import {voiceSpeaker,voiceOrders,orderedSpeaker} from '../presentation/voicePolicy';
 import {audioFiles} from '../config/audio';
@@ -473,11 +474,11 @@ export class BootScene extends Phaser.Scene {
     const difficulty=document.querySelector<HTMLSelectElement>('#difficulty-select')!;difficulty.disabled=!menu;difficulty.value=this.session.options.difficulty;
     for(const [id,show] of [['start-match',menu],['pause-match',phase==='playing'],['resume-match',phase==='paused'],['new-match',!menu],['restart-match',phase==='paused'||phase==='ended']] as const)(document.getElementById(id) as HTMLButtonElement).hidden=!show;
     (document.getElementById('gameplay-controls') as HTMLFieldSetElement).disabled=!this.gameplayActive();
-    document.getElementById('hud')!.hidden=menu;const game=document.getElementById('game')!,wasHidden=game.hidden;game.hidden=menu;
+    document.getElementById('hud')!.hidden=menu||phase==='ended';const game=document.getElementById('game')!,wasHidden=game.hidden;game.hidden=menu||phase==='ended';
     if(wasHidden&&!menu)this.scale.refresh();
     document.getElementById('mission-instruction')!.textContent=this.session.options.scenario==='skirmish'?(maps[this.session.options.map??'arena'].instruction??scenarioConfig.skirmish.instruction):scenarioConfig[this.session.options.scenario].instruction;
     document.getElementById('session-status')!.textContent=menu?uiText.chooseAScenarioAndDifficultyThenStartMatch:phase==='paused'?uiText.pausedSimulationIsFrozen:phase==='ended'?uiText.theMatchHasEndedRestartOrChooseA:`${scenarioConfig[this.session.options.scenario].label} · ${this.session.options.difficulty} · ${maps[this.session.options.map].label}`;
-    syncHomeMenu(phase);
+    syncHomeMenu(phase);syncResultScreen(phase);
   }
 
   private worldPoint(pointer: Phaser.Input.Pointer): Position {

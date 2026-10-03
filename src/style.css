@@ -150,3 +150,12 @@ body[data-phase='ended'] #game-toolbar{width:min(760px,calc(100vw - 32px));}
 #attack-warning { color: #ffaba0; border: 1px solid #eb786e; padding: 8px; font-weight: bold; }
 
 #tutorial-objective { font: 13px/1.5 system-ui,sans-serif; color: #ffe0a0; border: 1px solid #b7975b; padding: 8px; }
+
+/* RTS-122 replaces the ended match with a separate, scrollable result page. */
+body[data-phase='ended']{display:block;overflow:auto;background:#111b18;}
+#result-screen{min-height:100vh;display:grid;place-items:center;padding:24px;}
+#result-card{width:min(900px,100%);padding:24px;background:#1a2d28;border:2px solid #a08443;box-shadow:0 12px 40px #0008;}
+#result-card nav{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0;}
+#result-card h2{font-size:clamp(24px,4vw,38px);}
+#result-card #save-controls{margin-top:20px;}
+#result-card #match-results table{max-width:none;}

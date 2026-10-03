@@ -1500,3 +1500,12 @@ SpeechSynthesis är befintlig fallback/capability och ingen inspelning hävdas.
 är fortsatt endast Crown/Clans; Elves/Dwarves/Goblins får presenteras som
 motiv men inte erbjudas som spelbara. Audio använder befintlig musik/gains,
 reduced-motion måste stödjas. Användaren har skjutit upp perceptuella ljudtester.
+
+## RTS-122 – Separat resultatpresentation
+
+[resultScreen](src/presentation/resultScreen.ts) äger endast DOM/resultatnavigation:
+summary/statistics, fokus och Play Again/Main Menu via befintliga sessionknappar.
+BootScene synkar efter homeMenu och döljer avslutad canvas/HUD; inga nya
+gameplay-/Savefält. matchResults ger summary med utfall/tid/karta/difficulty/
+faction samt separat statistics-del. Terminal load använder samma presentation.
+Save/load är fortsatt tillgängliga på resultatsidan; pauspanel gäller endast paused.

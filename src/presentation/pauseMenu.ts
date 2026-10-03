@@ -5,7 +5,7 @@ export function pauseNavigation(page:PausePage,action:'settings'|'quit'|'back'|'
 let page:PausePage='main',phase:SessionPhase='menu';
 const el=(id:string)=>document.getElementById(id)!;
 export function syncPauseMenu(nextPhase:SessionPhase):void{
- const changed=phase!==nextPhase;if(changed)page='main';phase=nextPhase;const open=phase==='paused'||phase==='ended',settings=open&&page==='settings',quit=open&&page==='quit';
+ const changed=phase!==nextPhase;if(changed)page='main';phase=nextPhase;const open=phase==='paused',settings=open&&page==='settings',quit=open&&page==='quit';
  el('pause-backdrop').hidden=!open;el('game-toolbar').dataset.pausePage=page;
  el('pause-heading').textContent=settings?uiText.settings:quit?uiText.quitToMainMenu:phase==='ended'?uiText.matchComplete:uiText.paused;
  el('pause-settings-button').hidden=!open||page!=='main';el('quit-request').hidden=!open||page!=='main';el('pause-back-button').hidden=!settings;el('quit-confirm').hidden=!quit;
@@ -16,9 +16,9 @@ export function syncPauseMenu(nextPhase:SessionPhase):void{
  if(changed){for(const id of ['pause-heading','resume-match','save-controls','pause-settings-button','quit-request','restart-match','match-results','session-status','audio-controls','camera-controls','display-controls','pause-back-button','quit-confirm'])el('game-toolbar').append(el(id));(phase==='paused'?el('resume-match'):el('restart-match')).focus();}
 }
 export function bindPauseMenu():void{
- const navigate=(action:'settings'|'quit'|'back')=>{if(phase!=='paused'&&phase!=='ended')return;page=pauseNavigation(page,action).page;syncPauseMenu(phase);(page==='settings'?el('pause-back-button'):page==='quit'?el('quit-cancel'):phase==='paused'?el('resume-match'):el('restart-match')).focus();};
+ const navigate=(action:'settings'|'quit'|'back')=>{if(phase!=='paused')return;page=pauseNavigation(page,action).page;syncPauseMenu(phase);(page==='settings'?el('pause-back-button'):page==='quit'?el('quit-cancel'):phase==='paused'?el('resume-match'):el('restart-match')).focus();};
  el('pause-settings-button').addEventListener('click',()=>navigate('settings'));el('quit-request').addEventListener('click',()=>navigate('quit'));el('pause-back-button').addEventListener('click',()=>navigate('back'));el('quit-cancel').addEventListener('click',()=>navigate('back'));
- window.addEventListener('keydown',event=>{if(phase!=='paused'&&phase!=='ended')return;if(event.ctrlKey||event.metaKey||event.altKey||event.repeat)return;if(event.key.toLowerCase()==='p'&&event.target instanceof HTMLElement&&(['INPUT','SELECT','TEXTAREA'].includes(event.target.tagName)||event.target.isContentEditable))return;
+ window.addEventListener('keydown',event=>{if(phase!=='paused')return;if(event.ctrlKey||event.metaKey||event.altKey||event.repeat)return;if(event.key.toLowerCase()==='p'&&event.target instanceof HTMLElement&&(['INPUT','SELECT','TEXTAREA'].includes(event.target.tagName)||event.target.isContentEditable))return;
   if(event.key==='Escape'||event.key.toLowerCase()==='p'&&phase==='paused'){event.preventDefault();event.stopImmediatePropagation();const next=pauseNavigation(page,'escape');page=next.page;if(next.resume&&phase==='paused'){el('resume-match').click();document.querySelector<HTMLCanvasElement>('#game canvas')?.focus();}else navigate('back');return;}
   if(event.key!=='Tab')return;const controls=[...el('game-toolbar').querySelectorAll<HTMLElement>('button,input,select,summary,a,[tabindex]')].filter(e=>e.getClientRects().length&&e.tabIndex>=0&&!('disabled' in e&&(e as HTMLButtonElement).disabled));if(!controls.length)return;const first=controls[0]!,last=controls.at(-1)!;if(event.shiftKey&&(document.activeElement===first||!el('game-toolbar').contains(document.activeElement))){event.preventDefault();last.focus();}else if(!event.shiftKey&&(document.activeElement===last||!el('game-toolbar').contains(document.activeElement))){event.preventDefault();first.focus();}
  });

@@ -1086,3 +1086,11 @@ men skapar ny match; Main Menu går till startsidan. Version/changelog och
 valbar renderingsupplösning följer utan gameplayändring. Fem fantasyfolk
 visas som startsidemotiv; endast Crown/Clans är spelbara. Lyssningsbedömning
 av ljud/repliker är uppskjuten enligt användaren, inte utförd.
+
+## RTS-122 – Avslutad match
+
+Victory/Defeat ersätter spelvärlden med en separat resultatsida. Sammanfattning
+visar utfall, karta, fraktion, svårighet, hastighet och matchtid. Play Again
+skapar en ny match med samma val; Main Menu går direkt till startsidan.
+View Statistics och Back/Escape växlar presentation medan matchen förblir
+stoppad. Save/load av avslutad match återöppnar resultatsidan.

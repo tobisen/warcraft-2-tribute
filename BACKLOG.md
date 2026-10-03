@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-122 – Separat resultatvy** — **Todo**.
+**RTS-123 – Utökad matchstatistik** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -3162,7 +3162,7 @@ Dokumentera saknade assets och öppna beslut.
 
 ## RTS-122 – Separat resultatvy
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Efter victory/defeat ersätts spelvyn helt av en resultatvy.
 

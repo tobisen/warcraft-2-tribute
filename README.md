@@ -649,3 +649,8 @@ Användaren har skjutit upp ljudtest och matchlyssning till senare. RTS-120
 är avslutad med tekniska kontroller; nästa godkända etapp är121–126.
 Inventeringen i ARCHITECTURE beskriver faktisk kod, assetluckor och
 verifieringsplan. RTS-127–150 är endast planerade i denna körning.
+
+Efter Victory/Defeat visas nu en separat resultatsida. Play Again startar om
+med samma matchval, Main Menu går till startsidan och View Statistics visar
+matchstatistiken med Back/Escape tillbaka. Avslutad match kan sparas/laddas;
+spelvärld och gameplay-input är avstängda i resultatläget.

@@ -13,7 +13,7 @@ export function syncHomeMenu(nextPhase:SessionPhase):void{
  const menu=phase==='menu',setup=current==='campaign'||current==='skirmish';
  document.body.dataset.phase=phase;document.body.dataset.homePage=current;
  element('match-menu').hidden=!menu;element('game-toolbar').hidden=menu||phase==='playing';element('top-bar').hidden=menu;element('bottom-bar').hidden=menu;element('minimap-overlay').hidden=menu;element('match-menu-button').setAttribute('aria-expanded',String(phase==='paused'||phase==='ended'));
- for(const id of ['pause-match','resume-match','new-match','restart-match','save-controls','audio-controls','camera-controls','display-controls','mission-instruction','session-status','match-results']){const target=element(menu?'home-content':id==='new-match'?'quit-confirm':'game-toolbar');if(element(id).parentElement!==target)target.append(element(id));}
+ for(const id of ['pause-match','resume-match','new-match','restart-match','save-controls','audio-controls','camera-controls','display-controls','mission-instruction','session-status','match-results']){const target=element(nextPhase==='ended'&&id==='match-results'?'result-content':nextPhase==='ended'&&id==='save-controls'?'result-save':menu?'home-content':id==='new-match'?'quit-confirm':'game-toolbar');if(element(id).parentElement!==target)target.append(element(id));}
  element('home-brand').hidden=!menu;element('home-navigation').hidden=!menu||current!=='home';
  element('home-content').hidden=menu&&current==='home';element('menu-back').hidden=!menu||current==='home';
  element('home-heading').hidden=!menu;element('home-heading').textContent=current==='campaign'?uiText.campaignChooseAMission:current==='skirmish'?uiText.skirmishChooseYourBattle:current==='load'?uiText.loadGame:uiText.settings;

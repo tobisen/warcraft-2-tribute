@@ -2278,3 +2278,18 @@ voices saknas;126 hero planeras, native lokal speech förblir redovisad.
 Docs-only: inga nya tester eller upprepad fullsvit. Befintliga878tester,
 typecheck/build och CI a8c42c1 gröna; dokumentreferenser/unik-ID/diff kontrolleras
 före commit.121 Done, nästa122 separat resultatvy.
+
+## 2026-10-03 – RTS-122: Separat resultatvy
+
+Ended ersätter värld/HUD/top/bottom/minimap med egen DOM-resultatsida.
+Utfall/tid/karta/faction/difficulty/speed, Play Again/Main Menu/View Statistics
+och Back/Escape, fokus/Tab-loop. Befintlig session och Save/load återanvänds;
+pauspanelen gäller endast paused. Ingen Save-/gameplayändring.
+Checks:879tester/115filer PASS141.31s,16riktade tester PASS, typecheck/build/
+diff PASS. Native Tutorial verklig Victory båda faction/viewports och
+kontrollerad baseHP0 Defeat-fixture: dold canvas/HUD, statistics/back/Escape,
+terminal Save/load, fryst state, Play Again/full reset och Main Menu PASS.
+Screenshots visuellt granskade; ingen spelvärld synlig bakom resultat.
+Granskning korrigerade upprepad flytt av DOM-kontroller för att bevara fokus
+över frames; inga kvarstående fynd. Bundlevarning kvar, perceptuell lyssning
+uppskjuten enligt användaren.122 Done; nästa123 kompletterar matchstats.
