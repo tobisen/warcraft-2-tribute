@@ -992,3 +992,7 @@ Befintliga kart-/fraktions-/svårighetsval presenteras med separata beskrivninga
 ## RTS-096 – Engelska och bevarat spelkontrakt
 
 All synlig speltext är engelska: meny/matchval/uppdrag/guide, fraktioner, ekonomi, selection, routes/placement, produktion, fartyg, förmågor, ljudstatus, Save och resultat. Interna IDs, stats, kontroller, objectives och Saveformat bevaras. Crown Alliance/Iron Clan ersätter svenska visningsnamn. Save-load-status styrs av state/felkoder, inte textinnehåll; legacy rally-feedback visas med aktuell engelsk copy. Pausfeedback anger frozen, inte match ended. Ingen stegvis tutorial, nya svårigheter/hastigheter eller HUD-system097–120 införda.
+
+## RTS-097 – Matchöversikt
+
+Toppraden visar Menu [P], levererat Gold/Wood samt använd/max Population och köreservationer. Last räknas först efter leverans; saldo visas avrundat nedåt. Menu pausar och visar befintliga Resume/Save/restartkontroller. Under spel är sessionpanelen dold.

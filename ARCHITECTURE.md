@@ -1255,3 +1255,7 @@ Startsida och `#game-toolbar` har exklusiv visibility; befintliga session/audio/
 [src/text.ts](src/text.ts) är en beroendefri TypeScript-tabell för statisk UI-copy, guide, fraktions-/kart-/uppdragsnamn och återanvändbara feedbacksträngar. Config/presentation/gameplay-feedback importerar samma text utan i18nframework. `data-ui-text` ger statiska HTML-kontroller fallbacktext och gemensam bootstrapcopy; dynamiska tal/state formateras där de redan presenterades. Resultattal använder en-US.
 
 Save-schema/configversion och alla machine-ID:n bevaras. `LoadResult.code` skiljer missing/storage/version/invalid från visningsprosa; scenen använder en explicit awaitingLoadedResume-flagga. Gammal sparad rallyError används bara som error-state; den engelska UI-texten visas oavsett historiskt språk. Ingen balans eller gameplaytid ändrad.
+
+## RTS-097 – Kompakt topprad
+
+presentation/topBar.ts härleder levererat saldo och matchPopulation utan Phaser eller enemy/node-data. BootScene uppdaterar DOM; appägd Menu-listener öppnar befintlig pauspanel. Toppraden är48px, sessionpanelen visas endast paused/ended; gamla dubbla saldo/supplyrader döljs. Saveformat och gameplay är oförändrade.

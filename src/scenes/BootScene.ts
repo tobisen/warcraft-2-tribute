@@ -1,3 +1,4 @@
+import {renderTopBar} from '../presentation/topBar';
 import {text as uiText} from '../text';
 import {viewportGeometry} from '../presentation/viewport';
 import {syncHomeMenu} from '../presentation/homeMenu';
@@ -681,6 +682,7 @@ export class BootScene extends Phaser.Scene {
     this.buildingRing.setVisible(selectedFootprint !== null);
     if (selectedFootprint) this.buildingRing.setPosition(selectedFootprint.x, selectedFootprint.y)
       .setSize(selectedFootprint.width, selectedFootprint.height);
+    renderTopBar(this.currentMatch());
     const population=matchPopulation(this.currentMatch());
     this.trainButton.disabled = !allowsProduction(this.selectedBuilding, 'base', true, this.gameplayActive()) || !this.gameplayActive() || !canEnqueue(this.gathering, this.production,{kind:'base'},population);
     this.productionStatus.textContent = productionLabel(this.gathering, this.production, this.outcome,{kind:'base'},population);

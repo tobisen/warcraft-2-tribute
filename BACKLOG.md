@@ -2,9 +2,9 @@
 
 ## Current Focus
 
-**RTS-097 – Top bar** — **Todo**.
+**RTS-098 – Bottom bar: selection-information** — **Todo**.
 
-RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. Denna körning genomför endast091–096;097–120 är Todo och implementeras inte här.
+RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
 Denna fil styr arbetet. En task åt gången. RTS-001–015 är historiskt färdiga;
 RTS-016–060 är en ny, användarbeställd roadmap efter MVP. Ingen gammal backlog
@@ -2692,13 +2692,21 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-097 – Top bar
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Visa menyknapp, gold, wood och använd/max population. Håll informationen läsbar utan att dominera spelvyn.
+**Goal:** Visa menyknapp, gold, wood och använd/max population utan att dominera världen.
+
+**Requirements:**48px topprad med Menu, levererat gold/wood och population. Visa reserverad supply separat; inkludera fartyg/passagerare enligt befintlig matchPopulation, aldrig enemy/dolda resurser. Menu öppnar befintlig pausad sessionkontroll; playing visar bara kompakt rad. HUD-input får inte påverka selection/orders; pause/Save/restart/resize bevaras. Engelska texter och originalpalett.
+
+**Non-goals:** Ny pausmeny104, bottom/action/grupp/minimap098–101, balans eller nya ekonomiregler.
 
 **Dependencies:** RTS-096.
 
-**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+**Acceptance criteria:** Raden är läsbar och ryms1280×720/1920×1080, verklig insamling/produktion uppdaterar saldo/supply; Menu pausar och ger åtkomst till befintliga controls utan gameplayläckage. Inga dubbla fullstora ekonomirader i sidopanelen; detaljstatus kan vara kvar.
+
+**Tester:** Bank vs cargo/fog, reserverad supply/ships, paus/Save/reset; relevanta presentation/session/economytester, typecheck/build/diff. Browser två upplösningar, gather/train/Menu/pause/Save/restart och granskade screenshots.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, README.md, GAME_DESIGN.md, ARCHITECTURE.md.
 
 ## RTS-098 – Bottom bar: selection-information
 

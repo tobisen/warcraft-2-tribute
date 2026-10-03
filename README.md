@@ -567,4 +567,4 @@ Spelets menyer, HUD, tooltips, fel, guide, fraktionsnamn, uppdrag och resultat �
 
 Välj Campaign för Mission1–4 eller Skirmish för Skirmish/Wave-survival. Start Match startar, Pause/Resume [P] stoppar/återupptar simulation; Save locally/Load save använder befintlig slot. Load återkommer pausad, Restart återställer matchen, New match / menu öppnar startsidan. Settings har befintligt ljud. Keys and commands visar den engelska kontrollguiden. Ingen ny stegvis tutorial är implementerad (109).
 
-RTS-091–096 är klara. RTS-097–120 är planerade; denna körning stannar här enligt arbetslistan. Nästa task är top bar097.
+RTS-091–097 är klara. Fortsatt arbete följer roadmapen taskvis; nästa är selection-information098. Matchens48px topprad visar levererat Gold/Wood och population inklusive köreservationer. Menu [P] öppnar pausade sessionkontroller för Resume/Save/restart.

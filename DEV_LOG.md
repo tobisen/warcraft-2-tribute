@@ -1970,3 +1970,7 @@ Slutlig full755tester/94filer PASS129,43s;154riktade PASS6,20s och sista118/19 P
 Chromium dev och faktisk production Pages-subpath1280×720/1920×1080: alla fyra huvudmenyingångar, ljud-UI, missing Save, verklig start/pause/Save/load/resume/menu/restart, resize+mittendrag+world click/move/drag, fixed sea mission och engelsk instruktion. Survival simulerad med accelererad gameplayklocka utan injicerad matchstate till faktisk defeat/resultattabell/restart. Granskade screenshots home/game/result; inga page errors. Productionpreview behövde godkänd localhost-bind utanför sandbox, därefter flödet grönt. Ingen akustisk lyssning krävs för texttasken och ingen sådan påstås. Diff granskad för språk/ID/Save/UI-isolering/scope; inga blockerande fynd.
 
 091–096 är Done.097–120 förblir Todo och implementeras inte i denna körning. Task096 pushas enligt mandat; slutlig Actions/Pages-resultat kontrolleras innan slutrapport.
+
+## 2026-10-03 – RTS-097 Done: kompakt topprad
+
+48px Menu/gold/wood/population inklusive köreservationer.56relevanta tester/16filer PASS; typecheck/build/diff PASS, bundlevarning kvar. Chromium1280×720/1920×1080: faktisk betald workerproduktion, utforskning av nod följd av gather/leverans, Menu/pause/state freeze/Save/resume/restart. Screenshots granskade, inga errors. Browser hittade33px verklig radhöjd trots48px gridrad; explicit höjd rättad och båda flöden omkörda gröna. Diff granskad UI-isolering, ekonomisanning, fog och session; inga blockerande fynd. Nästa098 selection-information.
