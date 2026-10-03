@@ -30,14 +30,16 @@
         <span id="audio-status" role="status">Audio starts after your first click or key press</span>
       </details>
       <details id="camera-controls"><summary data-ui-text="camera">Camera</summary><label><span data-ui-text="panSpeed">Pan speed</span> <select id="camera-speed"><option value="240">240 px/s · Slow</option><option value="480" selected>480 px/s · Standard</option><option value="720">720 px/s · Fast</option></select></label><label><input id="camera-edge" type="checkbox" checked><span data-ui-text="edgePanning">Edge panning</span></label><p class="home-note">Space: focus selection · Home: focus base</p></details>
+      <details id="display-controls"><summary data-ui-text="display">Display</summary><button id="fullscreen-settings-button" data-ui-text="fullscreen" type="button">Fullscreen</button><p id="fullscreen-status" role="status"></p></details>
       <p id="match-options-summary" aria-live="polite"></p>
       <p id="mission-instruction"></p>
       <p id="session-status" role="status"></p>
       <section id="match-results" hidden aria-label="Match results"></section>
       </div>
     </section>
-    <section id="top-bar" hidden aria-label="Match overview"><button id="match-menu-button" type="button" aria-controls="game-toolbar" aria-expanded="false">Menu [P]</button><span id="top-gold"></span><span id="top-wood"></span><span id="top-population"></span></section>
-    <section id="game-toolbar" hidden aria-label="Match controls"></section>
+    <section id="top-bar" hidden aria-label="Match overview"><button id="match-menu-button" type="button" aria-controls="game-toolbar" aria-expanded="false">Menu [P]</button><button id="fullscreen-button" data-ui-text="fullscreen" type="button">Fullscreen</button><span id="fullscreen-notice" role="status" hidden></span><span id="top-gold"></span><span id="top-wood"></span><span id="top-population"></span></section>
+    <div id="pause-backdrop" hidden></div>
+    <section id="game-toolbar" hidden role="dialog" aria-modal="true" aria-labelledby="pause-heading"><h2 id="pause-heading" data-ui-text="paused">Paused</h2><button id="pause-settings-button" data-ui-text="settings" type="button">Settings</button><button id="quit-request" data-ui-text="quitToMainMenu" type="button">Quit to Main Menu</button><button id="pause-back-button" data-ui-text="backPlain" type="button" hidden>Back</button><div id="quit-confirm" hidden><p data-ui-text="quitWarning">Quit this match and return to the main menu? Unsaved progress will be lost.</p><button id="quit-cancel" data-ui-text="cancel" type="button">Cancel</button></div></section>
     <section id="hud" aria-label="Match status and commands">
       <p id="fog-fixture" hidden></p>
       <div id="match-overview">

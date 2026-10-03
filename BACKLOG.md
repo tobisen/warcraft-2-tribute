@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-104 – Pausmeny och fullscreen** — **Todo**.
+**RTS-105 – Order- och actionfeedback** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -2818,13 +2818,21 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-104 – Pausmeny och fullscreen
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Esc öppnar pausmenyn: Resume, Save, Load, Settings och Quit to Main Menu. Erbjud separat fullscreen-val. Avbruten återgång till huvudmenyn ska bevara matchen.
+**Goal:** Esc öppnar pausmeny med Resume, Save, Load, Settings och Quit to Main Menu; separat fullscreen-val. Avbruten återgång bevarar matchen.
+
+**Requirements:** Befintlig sessionpanel blir centrerad modal/backdrop med fokusfälla; callbacks/Save/result/restart återanvänds. Menu/P/Escape öppnar paus, tidigare Escape-previewcancel bevaras. Settings visar befintliga audio/camera/display-controls och Back. Quit öppnar confirm/cancel; endast Confirm anropar befintlig new-match. Escape/P backar subpage/confirmation utan quit, main resume. Paus fryser gameplay/kamera/input; resultat efter ended behålls. Separat fullscreen via browser-API från playing topbar och Settings, med ärlig unsupported/error-status, utan matchreset eller gameplay-speedpåverkan.
+
+**Non-goals:** Saveformat/persistence119, nya ljud/gameplaysystem, browserdeployment/bundlefix.
 
 **Dependencies:** RTS-103.
 
-**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+**Acceptance criteria:** Alla menyvägar och keyboardfocus fungerar i båda målupplösningar. Quit cancel lämnar match/order/selection/bank/queue/kamera bevarade och pausade; confirm går till home. Save/load återkommer pausad. Fullscreen enter/exit bevarar state och ResizeObserver/camera bounds. Inga dubbla listeners vid restart.
+
+**Tester:** Pausnavigation/back/escape/quit-cancel utan resume; fullscreen request/exit/failure via adapter. Relevanta presentation/session/Savetester; typecheck/build/diff. Browser båda upplösningar: Escape/Menu, tabtrap, Settings/Back, Save/load, Quit cancel/confirm, fullscreen enter/exit, restart och screenshot.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md, README.md.
 
 ## RTS-105 – Order- och actionfeedback
 
