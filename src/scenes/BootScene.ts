@@ -1,3 +1,4 @@
+import {selectedIcons,selectedQueue,renderSelectedIcons,renderSelectedQueue} from '../presentation/selectionCollection';
 import {actionPanel,renderActionPanel} from '../presentation/actionPanel';
 import {selectionInfo,renderSelectionInfo} from '../presentation/selectionInfo';
 import {renderTopBar} from '../presentation/topBar';
@@ -45,7 +46,6 @@ import { forgeConfig,upgradeConfig } from '../config/upgrades';
 import { createResearch,startResearch,canResearch,type ResearchState,type ResearchKind } from '../gameplay/research';
 import { commandAttackMove } from '../gameplay/attackMove';
 import { enqueueProduction, cancelProduction, canEnqueue } from '../gameplay/productionQueue';
-import { queueConfig } from '../config/production';
 import { populationState } from '../gameplay/population';
 import { barracksReady, resumeConstruction } from '../gameplay/construction';
 import { costs } from '../config/economy';
@@ -99,7 +99,6 @@ export class BootScene extends Phaser.Scene {
   private map!: WorldMap;
   private baseVisual!:Phaser.GameObjects.Image;
   private baseLabel!:Phaser.GameObjects.Text;
-  private queueSignature = '';
   private queuePanel!:HTMLElement;
   private orderVisuals = new Map<string, Phaser.GameObjects.Arc>();
   private enemyNaval?:EnemyNavalState;
@@ -221,7 +220,6 @@ export class BootScene extends Phaser.Scene {
     };
     this.attackMoveButton.addEventListener('click',beginAttackMove);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.attackMoveButton.removeEventListener('click',beginAttackMove));
-    this.queueSignature = '';
     this.queuePanel=document.getElementById('production-queue')!;
     const cancelJob=(event:MouseEvent)=>{
       if(!this.gameplayActive()||!this.selectedBuilding)return;
@@ -628,6 +626,13 @@ export class BootScene extends Phaser.Scene {
     this.barracksVisual?.setFrame(buildingFrame('barracks','player',this.placement.construction?.remainingSeconds,5,this.factions.player));
   }
 
+  private paintPortrait(canvas:HTMLCanvasElement,asset:{atlas:string;frame:string}|null):void {
+    const ctx=canvas.getContext('2d')!;ctx.clearRect(0,0,canvas.width,canvas.height);if(!asset)return;
+    const frame=this.textures.get(asset.atlas).get(asset.frame);ctx.imageSmoothingEnabled=false;
+    const scale=Math.min(3,canvas.width/frame.cutWidth,canvas.height/frame.cutHeight),w=frame.cutWidth*scale,h=frame.cutHeight*scale;
+    ctx.drawImage(frame.source.image as HTMLImageElement,frame.cutX,frame.cutY,frame.cutWidth,frame.cutHeight,(canvas.width-w)/2,(canvas.height-h)/2,w,h);
+  }
+
   private syncVisuals(): void {
     if(this.selectedBuilding==='harbor'&&!this.navy?.harbor||this.selectedBuilding==='barracks'&&!this.placement.barracks||this.selectedBuilding==='base'&&this.combat.baseHP<=0)this.selectedBuilding=null;
     this.baseVisual.setVisible(this.combat.baseHP>0);this.baseLabel.setVisible(this.combat.baseHP>0).setText(`${factions[this.factions.player].buildingNames.base} ${Math.ceil(this.combat.baseHP)} HP`);
@@ -665,18 +670,7 @@ export class BootScene extends Phaser.Scene {
     this.soldierButton.parentElement!.style.visibility = this.selectedBuilding === 'barracks' ? 'visible' : 'hidden';
     const selectedProduction = this.selectedBuilding === 'base' ? this.production
       : this.selectedBuilding === 'barracks' ? this.soldierProduction : this.selectedBuilding==='harbor'?this.navy!.production:null;
-    const queue=selectedProduction?.queue??[];
-    const signature=`${this.selectedBuilding}:${this.outcome}:${queue.map(j=>j.id).join(',')}`;
-    if(signature!==this.queueSignature){
-      this.queueSignature=signature;this.queuePanel.replaceChildren();
-      if(!queue.length)this.queuePanel.textContent=this.selectedBuilding?uiText.theProductionQueueIsEmpty:uiText.selectABuildingToTrainUnitsOrCancel;
-      queue.forEach((job,index)=>{
-        const button=document.createElement('button');button.type='button';button.dataset.jobId=job.id;
-        button.disabled=!this.gameplayActive();
-        button.textContent=`${index===0?uiText.active:uiText.queued} ${(job.kind==='transport'?'Transport':job.kind==='warship'?uiText.warship:factions[this.factions.player].unitNames[job.kind])} (${job.id}) – cancel, ${Math.round((index===0?queueConfig.activeRefund:queueConfig.queuedRefund)*100)}% refund`;
-        this.queuePanel.append(button);
-      });
-    }
+    renderSelectedQueue(selectedQueue(this.currentMatch(),this.selectedBuilding,this.gameplayActive()),(canvas,asset)=>this.paintPortrait(canvas,asset));
     this.rallyMarker.setVisible(selectedProduction?.rally !== undefined);
     if (selectedProduction?.rally) this.rallyMarker.setPosition(selectedProduction.rally.x, selectedProduction.rally.y);
     const selectedFootprint = this.selectedBuilding === 'base' ? baseFootprint(this.gathering.base)
@@ -685,9 +679,8 @@ export class BootScene extends Phaser.Scene {
     if (selectedFootprint) this.buildingRing.setPosition(selectedFootprint.x, selectedFootprint.y)
       .setSize(selectedFootprint.width, selectedFootprint.height);
     const info=selectionInfo(this.currentMatch(),this.selectedBuilding);renderSelectionInfo(info);
-    const portrait=document.getElementById('selection-portrait') as HTMLCanvasElement,ctx=portrait.getContext('2d')!;
-    ctx.clearRect(0,0,128,128);portrait.hidden=!info.portrait;
-    if(info.portrait){const frame=this.textures.get(info.portrait.atlas).get(info.portrait.frame);ctx.imageSmoothingEnabled=false;const scale=Math.min(3,120/frame.cutWidth,120/frame.cutHeight),w=frame.cutWidth*scale,h=frame.cutHeight*scale;ctx.drawImage(frame.source.image as HTMLImageElement,frame.cutX,frame.cutY,frame.cutWidth,frame.cutHeight,(128-w)/2,(128-h)/2,w,h);}
+    const portrait=document.getElementById('selection-portrait') as HTMLCanvasElement;portrait.hidden=!info.portrait;this.paintPortrait(portrait,info.portrait);
+    renderSelectedIcons(selectedIcons(this.currentMatch()),(canvas,asset)=>this.paintPortrait(canvas,asset));
     renderTopBar(this.currentMatch());
     const population=matchPopulation(this.currentMatch());
     this.trainButton.disabled = !allowsProduction(this.selectedBuilding, 'base', true, this.gameplayActive()) || !this.gameplayActive() || !canEnqueue(this.gathering, this.production,{kind:'base'},population);

@@ -1267,3 +1267,7 @@ presentation/selectionInfo.ts är Phaserfri panelmodell för befintliga valbara 
 ## RTS-099 – Kontextuella actions
 
 presentation/actionPanel.ts härleder synliga actions och blockeringsskäl från befintliga recept/bank/supply/bygg-/research-/abilitystate. bindActionPanel reparentar samma DOM-controls en gång; BootScenes callbacks och shutdown är kvar. renderActionPanel körs efter befintlig disabled-sync och hotkeyetiketter; irrelevanta knappar blockeras även för hotkeys. Base ger researchåtkomst till forge utan att ändra BuildingSelection/Saveformat. Previewstart kräver bank, placering är fortfarande betalningstransaktionen.
+
+## RTS-100 – Gruppikoner och queue-modell
+
+presentation/selectionCollection.ts härleder egna markerade ikoner och aktuell selected-building FIFO med progress/refund/state utan Phaser. DOM återbyggs bara vid ID-byte, medan HP/etiketter/progress/disabled uppdateras varje sync. BootScene har en gemensam atlas-portrait-adapter för selection/grupp/kö; köcancellation använder samma delegerade callback och gameplayfunktion som tidigare. Timer/refund/Saveformat ändras inte.

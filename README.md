@@ -567,8 +567,10 @@ Spelets menyer, HUD, tooltips, fel, guide, fraktionsnamn, uppdrag och resultat �
 
 Välj Campaign för Mission1–4 eller Skirmish för Skirmish/Wave-survival. Start Match startar, Pause/Resume [P] stoppar/återupptar simulation; Save locally/Load save använder befintlig slot. Load återkommer pausad, Restart återställer matchen, New match / menu öppnar startsidan. Settings har befintligt ljud. Keys and commands visar den engelska kontrollguiden. Ingen ny stegvis tutorial är implementerad (109).
 
-RTS-091–099 är klara. Fortsatt arbete följer roadmapen taskvis; nästa är gruppikoner och produktionsprogress100. Matchens48px topprad visar levererat Gold/Wood och population inklusive köreservationer. Menu [P] öppnar pausade sessionkontroller för Resume/Save/restart.
+RTS-091–100 är klara. Fortsatt arbete följer roadmapen taskvis; nästa är minimapoverlay101. Matchens48px topprad visar levererat Gold/Wood och population inklusive köreservationer. Menu [P] öppnar pausade sessionkontroller för Resume/Save/restart.
 
 Bottenpanelen visar markerad enhet/byggnads porträtt, HP och grundstatistik. Grupper visar total HP, tom selection ger instruktion. Stats är baseline; uppgraderingar/förmågemodifierare ingår inte i dessa etiketter.
 
 Actions visas till höger om selectioninformationen: välj worker för byggande, base/barracks/harbor för produktion och landcombat för attack-move/ability. Research finns vid vald base och kräver färdig forge. Blockerade actions visar orsaken.
+
+Grupper har rollikoner med namn/HP via hover. Vald produktionsbyggnad visar köikoner, progress och Cancel. Avbruten active produktion ger50% refund, queued100%; paus blockerar cancellation.

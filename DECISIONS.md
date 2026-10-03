@@ -967,3 +967,7 @@ Spelarvänd copy och visningsnamn är engelska. En enkel beroendefri texttabell 
 ## RTS-099 – Researchåtkomst i contextual HUD
 
 Behåll befintlig BuildingSelection (base/barracks/harbor). Attack/defense research visas vid vald base och kräver fortfarande den befintliga färdiga forgen. Ingen ny forge-selection eller Save-migration i denna presentationstask. Blandad unitselection visar union av rollernas actions; varje callback filtrerar enligt tidigare gameplay. Previewknappar blockeras vid otillräcklig bank; saldo dras först vid giltig placering.
+
+## RTS-100 – Grupp- och köpresentation
+
+Gruppikoner är read-only; inga nya selection/subgruppgester. Blandad land/navyselection visar alla markerade ikoner med summerad HP och union av tidigare actions. Active head har gameplaybaserad progress; queued jobb har0%, färdig blockerad head100%. Befintliga refunds50%/100% och callbacks återanvänds.

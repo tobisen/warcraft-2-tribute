@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-100 – Gruppselection och produktionskö** — **Todo**.
+**RTS-101 – Minimap ovanpå spelvyn** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -2746,13 +2746,21 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-100 – Gruppselection och produktionskö
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Visa enhetsikoner för grupper samt produktionskö, progress och möjlighet att avbryta. Definiera hur blandad selection presenteras.
 
+**Requirements:** Grupper visar en originalikon per markerad egen land-/sjöenhet i befintlig unitordning, med namn/ID/HP som tooltip/accessibel etikett; inga nya selectiongester. Blandad selection behåller total HP och union-actions från099. Vald base/barracks/harbor visar befintlig FIFO-kö med rollikon, active/queued, återstående tid och progress. Färdig blockerad spawn visas waiting for free exit. Klick avbryter samma jobb via befintlig callback/refund (active50%, queued100%). Paus/ended blockerar cancellation; timer/progress fryser. Rensa vid selectionbyte/död/restart.
+
+**Non-goals:** Ny kö-/refundmekanik, portraitsassets, selection-subgrupper, nya orders/balans.
+
 **Dependencies:** RTS-099.
 
-**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+**Acceptance criteria:** Blandad land/navygrupp och befintliga treköplatser visas korrekt. Exakt rätt jobb avbryts utan order/selectionläckage; refund/supply återanvänds. Progress följer gameplaytid, queued0%, färdig blockerad100%; pause/load/restart uppdateras. Panelen ryms1280×720/1920×1080, större grupper får intern scroll.
+
+**Tester:** Group IDs/faction/role/HP och empty; selected queue/FIFO/progress/blocked/refund/pause. Befintliga queue/population/navy/selection/Save/sessiontester. Typecheck/build/diff. Browser verklig grupp, betald queue/progress/cancel/refund/pause/restart och screenshots båda målupplösningar.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md, README.md.
 
 ## RTS-101 – Minimap ovanpå spelvyn
 

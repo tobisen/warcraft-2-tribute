@@ -104,3 +104,14 @@ body:not([data-phase='menu']){grid-template-rows:48px auto minmax(0,1fr) 170px;}
 #action-panel .action-reason{font:11px/1.2 system-ui,sans-serif;color:#e4b28a;}
 #action-hint{font:11px/1.3 system-ui,sans-serif;color:#aebcaf;margin:0 0 5px;}
 #action-panel #production-queue{grid-column:1 / -1;}
+
+/* RTS-100 group icons and the existing FIFO cancellation controls. */
+#selection-icons{display:flex;flex-wrap:wrap;gap:4px;max-height:54px;overflow:auto;}
+#selection-icons canvas{width:48px;height:48px;background:#101917;border:1px solid #795d32;flex:none;}
+#selection-info:has(#selection-icons:not([hidden])) #selection-detail,#selection-info:has(#selection-icons:not([hidden])) #selection-stats{display:none;}
+#selection-info:has(#selection-icons:not([hidden])) h2{margin-bottom:4px;}
+#action-panel #production-queue{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;max-height:none;margin-top:2px;font-size:11px;}
+#production-queue button{display:flex;gap:4px;align-items:center;min-width:0;}
+#production-queue canvas{width:32px;height:32px;flex:none;}
+#production-queue button>span{min-width:0;display:grid;gap:3px;font-size:10px;}
+#production-queue progress{width:100%;height:6px;accent-color:#c6a659;}

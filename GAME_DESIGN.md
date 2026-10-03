@@ -1004,3 +1004,7 @@ Bottenpanelen visar namn, originalporträtt, aktuell/max HP och grundstatistik. 
 ## RTS-099 – Actions vid selection
 
 Bottom bars högra panel visar worker build/Stop, landcombat attack-move/ability/Stop och transport Unload/Stop. Blandade grupper får unionen. Base tränar worker och visar research via färdig forge; barracks/harbor visar sina recept. Kostnader/hotkeys och blockeringsskäl är synliga. Tom selection visar inga actions. Right-click behåller befintliga move/gather/attack/landbyggnadsrallyregler; harbor har ingen rally. Previewstart kräver tillräckligt saldo, Escape/right-click avbryter utan kostnad.
+
+## RTS-100 – Blandade grupper och produktionskö
+
+Grupper visar en ikon per vald land-/sjöenhet, i befintlig landföljd följd av fartyg; hover/accessibel etikett visar namn, ID och HP. Total HP och union-actions bevaras, större grupper scrollar internt. Produktionsbyggnaden visar upp till tre befintliga FIFO-jobb med ikon, Active/Queued, tid och progress. Cancel ger50% refund för active och100% för queued. Färdig men blockerad spawn visar Waiting for free exit; paus fryser progress och blockerar cancellation.
