@@ -2,7 +2,7 @@
 
 ## Status och teknik
 
-Implementerat genom RTS-096 (historiska systembeskrivningar följer): archer/projectiles, catapult/splash och Forge/research, FIFO/refund, target-HP/destruktion, workerbygge, farms, population, kamera,
+Implementerat genom RTS-106 (historiska systembeskrivningar följer): archer/projectiles, catapult/splash och Forge/research, FIFO/refund, target-HP/destruktion, workerbygge, farms, population, kamera,
 byggnadsselection, rally, Stop, gold och
 atomiska kostnader ovanpå etapp 1:s HUD, handgjorda karta och navigation för
 move/work/combat, separata gruppmål och säkra placement/spawn-regler.
@@ -1291,3 +1291,7 @@ presentation/pauseMenu.ts har appägd main/settings/quit-navigation, backdrop oc
 ## Orderfeedback (RTS-105)
 
 `presentation/orders.ts` härleder typade move/attack/work/blocked-markörer från verkliga orders, med redan fogfiltrerade enemies för land och navy. `config/feedback.ts` innehåller färger/storlek; scenen ritar ring, crosshair eller X. `presentation/commandFeedback.ts` ger ändringsstyrd aria-status för placement, modes, route/rallyfel. Actionpanelens resursbrist skiljer wood/gold/båda och supplygräns utan gameplaymutation.
+
+## Attackvarningar (RTS-106)
+
+`presentation/attackWarnings.ts` härleder skadevarningar från egna HP-snapshots, inklusive borttagna objekt och transportpassagerare. Snapshot innehåller inga enemies. Global3s gameplay-cooldown,4s transientvisning och ringconfig i `config/feedback.ts`. Scene adapterar status/ring och warningcue genom appägd GameAudio; befintligt original-command-buffer återanvänds med0.65 playbackRate och effects/mute. State återställs vid create/load/restart och sparas inte. Paus/end ger ingen cue/visning.

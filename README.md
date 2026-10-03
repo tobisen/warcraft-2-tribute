@@ -584,3 +584,5 @@ Space centrerar selection, Home basen. Settings har camera speed240/480/720px/s 
 Menu/P/Escape öppnar pausmenyn med Resume, Save, Load, Settings och Quit to Main Menu. Quit kräver confirmation; Cancel bevarar matchen. Fullscreen finns separat i top bar och Settings. Escape avbryter först aktiv placement/orderpreview.
 
 Orderfeedback: green = move, red = attack, gold = work; blocked orders show a red X. The status panel explains placement/routing errors and action buttons explain missing resources or population capacity.
+
+Own damage triggers a red attack warning and short effects cue (at most once per3gameplayseconds). Pause/end are silent; restart/load clears alerts. Audio dispatch/decode/mute has been checked in Chromium; acoustic listening remains for RTS-117.

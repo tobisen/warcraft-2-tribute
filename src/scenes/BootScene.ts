@@ -1,5 +1,6 @@
 import {commandFeedback,renderCommandFeedback} from '../presentation/commandFeedback';
-import {orderFeedbackConfig} from '../config/feedback';
+import {createWarningState,warningSnapshot,updateAttackWarnings,renderAttackWarning} from '../presentation/attackWarnings';
+import {orderFeedbackConfig,attackWarningConfig} from '../config/feedback';
 import {cameraShortcut,cameraFocus,selectionFocusPoints} from '../presentation/cameraFocus';
 import {bindCameraInput} from '../presentation/cameraInput';
 import {selectedIcons,selectedQueue,renderSelectedIcons,renderSelectedQueue} from '../presentation/selectionCollection';
@@ -105,6 +106,8 @@ export class BootScene extends Phaser.Scene {
   private baseLabel!:Phaser.GameObjects.Text;
   private queuePanel!:HTMLElement;
   private orderVisuals = new Map<string, Phaser.GameObjects.Graphics>();
+  private warningState=createWarningState();
+  private warningVisual?:Phaser.GameObjects.Graphics;
   private enemyNaval?:EnemyNavalState;
   private unloadMode:string|null=null;
   private attackMoveMode=false;
@@ -179,6 +182,7 @@ export class BootScene extends Phaser.Scene {
 
   create(): void {
     this.audioSnapshot=undefined;gameAudio.setPhase('menu');gameAudio.reset();
+    this.warningState=createWarningState();this.warningVisual=this.add.graphics().setDepth(9);
     this.visualTime=0;this.motions.clear();this.deaths.clear();this.impacts.clear();this.nextImpact=1;
     this.hpBars=this.add.graphics().setDepth(7);
     const loaded=this.pendingLoad;this.pendingLoad=undefined;
@@ -768,6 +772,10 @@ export class BootScene extends Phaser.Scene {
     for(const shortcut of hotkeys){const button=document.getElementById(shortcut.button)!;button.textContent=`${button.textContent?.replace(/\s+\[[A-Z]\]$/,'')} [${shortcut.key}]`;button.title=shortcut.label;}
     renderActionPanel(actionPanel(this.currentMatch(),this.selectedBuilding,this.gameplayActive()));
     renderCommandFeedback(commandFeedback(this.currentMatch(),this.selectedBuilding,{placementError:this.placementFeedbackError,attackMove:this.attackMoveMode,unload:!!this.unloadMode}));
+    const feedback=updateAttackWarnings(this.warningState,warningSnapshot(this.currentMatch()),this.visualTime,this.gameplayActive());
+    this.warningState=feedback.state;renderAttackWarning(feedback.state.warning);if(feedback.sound)gameAudio.play('warning');
+    this.warningVisual?.clear();const warning=feedback.state.warning;
+    if(warning)this.warningVisual?.lineStyle(3,attackWarningConfig.color).strokeCircle(warning.position.x,warning.position.y,attackWarningConfig.radius);
     document.getElementById('group-status')!.textContent=Object.entries(this.controlGroups).map(([slot,ids])=>`${slot}: ${ids.length}`).join(' · ')||uiText.groupsCtrl19Assign19Recall;
     this.syncAudio(visibleEnemies);
     this.minimap?.render();

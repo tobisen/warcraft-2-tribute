@@ -2,7 +2,7 @@
 
 ## Inriktning
 
-RTS-001–096 är implementerade. Roadmap097–120 är planerad;091–096 är den färdiga presentationsetappen. Slicebeskrivningarna visar utvecklingen;
+RTS-001–106 är implementerade. Roadmap107–120 återstår;091–106 omfattar den färdiga presentationsetappen. Slicebeskrivningarna visar utvecklingen;
 avsnitten RTS-018–060 längst ned anger dagens HUD, terrain/navigation,
 kantbaserade ranges, gruppmål och säkra placering/spawn.
 
@@ -1028,3 +1028,7 @@ Menu/P/Escape öppnar pausdialog med Resume/Save/Load/Settings/Quit; Restart och
 ## Order- och actionfeedback (RTS-105)
 
 Markerade egna enheter visar grön move-ring, rött attack/attack-move-crosshair, gul arbetsring och rött X för blockerad order. Attackmarkörer kräver synliga mål. Statusraden visar placeringsskäl, route/rallyproblem och modeinstruktioner. Actions visar Not enough wood/gold, båda resurser eller Population limit reached; ogiltiga actions ändrar varken saldo eller orders.
+
+## Attackvarningar (RTS-106)
+
+Skada mot egna objekt visar Your base/building/units are under attack! och en röd ring vid senaste skadepositionen. Basen prioriteras; ingen automatisk kameraflytt eller fiendeinformation. Kort originalcue, högst en varning per3gameplaysekunder,4sekunders visning. Mute/effects gäller; pause/end döljer varningen och restart/load börjar utan gamla alerts.

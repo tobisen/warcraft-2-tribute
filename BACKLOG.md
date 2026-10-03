@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-106 – Attackvarningar** — **Todo**.
+**RTS-107 – Svårighetsgrader** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -2854,13 +2854,21 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-106 – Attackvarningar
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Signalera hot mot bas och enheter visuellt och med ljud. Begränsa upprepning så varningar inte spammar.
+**Goal:** Signalera faktisk skada mot egna basen, byggnader och enheter visuellt och med ljud utan spam.
+
+**Requirements:** Phaserfri presentationpolicy jämför egna HP-snapshots, inklusive ships/passengers och förstörda objekt. Bas prioriteras framför andra byggnader/enheter. Synlig English status samt world-ring på senaste egna skadepositionen. Global varningscooldown3gameplaysekunder och visning4sekunder i config; inga attacker eller fiendepositioner röjs. Kort befintligt original-commandljud med lägre pitch används som varningscue via effects/mute. Paus/end/start/load/restart får inte skapa falska eller gamla varningar; presentationstate sparas inte. Ingen ändring av HP/orders/selection/kamera.
+
+**Non-goals:** Nya gameplayregler, automatisk kameraflytt, ljudmix117, tal118, nya artwork eller balansändringar.
 
 **Dependencies:** RTS-105.
 
-**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+**Acceptance criteria:** Verklig bas-/unit-skada signaleras även utan selection. Kontinuerlig skada utlöser högst en varningscue per3s. Friendly spawn/boarding/load/selection orsakar ingen varning. Paus/end tyst och restart rensad; mute/effects respekteras. Feedback ryms1280×720/1920×1080 och döljer inga controls.
+
+**Tester:** HPminskning/destruction/prioritet/cooldown/expiry, nya objekt/boarding utan false positives, pause/end/reset och read-only. Relevanta presentation/audio/session/combat/navytester; typecheck/build/diff. Browser riktiga enemywaves som skadar workers/base, cooldown/paus/restart, audio decode/dispatch (ingen akustisk lyssningsclaim).
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, README.md.
 
 ## RTS-107 – Svårighetsgrader
 

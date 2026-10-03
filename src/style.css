@@ -147,3 +147,4 @@ body[data-phase='ended'] #game-toolbar{width:min(760px,calc(100vw - 32px));}
 
 #command-feedback{font:13px/1.5 system-ui,sans-serif;color:#bed0a1;overflow-wrap:anywhere;}
 #command-feedback[data-error='true']{color:#ef9b8b;}
+#attack-warning { color: #ffaba0; border: 1px solid #eb786e; padding: 8px; font-weight: bold; }

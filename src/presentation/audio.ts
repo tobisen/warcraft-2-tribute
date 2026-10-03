@@ -1,4 +1,5 @@
 import {text as uiText} from '../text';
+import {attackWarningConfig} from '../config/feedback';
 import {audioConfig} from '../config/audio';
 import {audioGain,defaultAudio,volume,type AudioSettings,type Sound} from './audioPolicy';
 import type {SessionPhase} from '../gameplay/session';
@@ -36,7 +37,7 @@ export class GameAudio {
  }
  private startMusic():void {if(this.music||!this.context||!this.musicGain||this.phase!=='playing')return;const buffer=this.buffers.get('music');if(!buffer)return;const source=this.context.createBufferSource();source.buffer=buffer;source.loop=true;source.loopStart=0;source.loopEnd=audioConfig.musicLoopSeconds;source.connect(this.musicGain);source.start();this.music=source;}
  play(name:Sound,terminal=false):void{
-  if(!this.context||!this.effectGain||this.context.state!=='running'||this.phase!=='playing'&&!terminal)return;const now=this.context.currentTime;if(now-(this.lastEffect.get(name)??-Infinity)<audioConfig.effectThrottleSeconds)return;const buffer=this.buffers.get(name);if(!buffer)return;this.lastEffect.set(name,now);const source=this.context.createBufferSource();source.buffer=buffer;source.connect(this.effectGain);const generation=this.generation;this.effects.add(source);source.onended=()=>{if(generation===this.generation)this.effects.delete(source);source.disconnect();};source.start();
+  if(!this.context||!this.effectGain||this.context.state!=='running'||this.phase!=='playing'&&!terminal)return;const now=this.context.currentTime;if(now-(this.lastEffect.get(name)??-Infinity)<audioConfig.effectThrottleSeconds)return;const buffer=this.buffers.get(name==='warning'?'command':name);if(!buffer)return;this.lastEffect.set(name,now);const source=this.context.createBufferSource();source.buffer=buffer;if(name==='warning')source.playbackRate.value=attackWarningConfig.soundPlaybackRate;source.connect(this.effectGain);const generation=this.generation;this.effects.add(source);source.onended=()=>{if(generation===this.generation)this.effects.delete(source);source.disconnect();};source.start();
  }
  reset():void {this.generation++;this.music?.stop();this.music?.disconnect();this.music=undefined;for(const effect of this.effects){effect.stop();effect.disconnect();}this.effects.clear();this.lastEffect.clear();}
 }
