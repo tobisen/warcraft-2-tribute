@@ -567,7 +567,7 @@ Spelets menyer, HUD, tooltips, fel, guide, fraktionsnamn, uppdrag och resultat �
 
 Välj Campaign för Mission1–4 eller Skirmish för Skirmish/Wave-survival. Start Match startar, Pause/Resume [P] stoppar/återupptar simulation; Save locally/Load save använder befintlig slot. Load återkommer pausad, Restart återställer matchen, New match / menu öppnar startsidan. Settings har befintligt ljud. Keys and commands visar den engelska kontrollguiden. Ingen ny stegvis tutorial är implementerad (109).
 
-RTS-091–103 är klara. Fortsatt arbete följer roadmapen taskvis; nästa är pausmeny/fullscreen104. Matchens48px topprad visar levererat Gold/Wood och population inklusive köreservationer. Menu [P] öppnar pausade sessionkontroller för Resume/Save/restart.
+RTS-091–104 är klara. Fortsatt arbete följer roadmapen taskvis; nästa är order/actionfeedback105. Matchens48px topprad visar levererat Gold/Wood och population inklusive köreservationer. Menu [P] öppnar pausade sessionkontroller för Resume/Save/restart.
 
 Bottenpanelen visar markerad enhet/byggnads porträtt, HP och grundstatistik. Grupper visar total HP, tom selection ger instruktion. Stats är baseline; uppgraderingar/förmågemodifierare ingår inte i dessa etiketter.
 
@@ -580,3 +580,5 @@ Minimappen ligger i spelvyns nedre vänstra hörn. Vänsterklick flyttar kameran
 Kamera: piltangenter, mittenknappsdrag eller hover vid världsvyns kant. Klicka världen för keyboardfocus; HUD/paus blockerar panorering. A/S/W/D behåller actionhotkeys.
 
 Space centrerar selection, Home basen. Settings har camera speed240/480/720px/s och Edge panning; valen gäller appsessionen och bevaras vid restart, men lagras ännu inte över sidreload.
+
+Menu/P/Escape öppnar pausmenyn med Resume, Save, Load, Settings och Quit to Main Menu. Quit kräver confirmation; Cancel bevarar matchen. Fullscreen finns separat i top bar och Settings. Escape avbryter först aktiv placement/orderpreview.

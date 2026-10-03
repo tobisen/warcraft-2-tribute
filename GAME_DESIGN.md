@@ -1020,3 +1020,7 @@ Piltangenter och worldviewens inre16pxkant panorerar480px/s; diagonal har samma 
 ## RTS-103 – Space/Home och camera settings
 
 Space centrerar aktuell egen selection (gruppens boundingcenter eller vald base/barracks/harbor); tom selection ändrar inget. Home centrerar egen bas, utan ändring av orders/selection. Settings erbjuder240/480/720px/s och edge-pan on/off; defaults480/on. Samma kontroller nås under paus, bevaras över restart/menynavigation inom appen och återgår till defaults vid sidreload tills119. Keyboard/middle fungerar när edge är off; fält/buttonfocus/paus blockerar focus-hotkeys.
+
+## RTS-104 – Pause, Quit och fullscreen
+
+Menu/P/Escape öppnar pausdialog med Resume/Save/Load/Settings/Quit; Restart och slutresultat bevaras. Escape behåller tidigare previewcancel-prioritet. Settings har audio/camera/display och Back; Escape/P backar subpage/confirmation, main resume. Quit kräver Confirm quit; Cancel/Escape bevarar pausad match, bank/queue/orders/selection/kamera. Fullscreen är separat i top bar och Settings, ändrar inte matchstate; unavailable/failure visas. Ended har läsbar resultatdialog med intern scroll vid behov.

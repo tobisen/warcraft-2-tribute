@@ -979,3 +979,7 @@ Piltangenter används för camera pan; WASD införs inte eftersom A/S/W/D redan 
 ## RTS-103 – Camera preferences före persistence
 
 Pan speed valideras mot240/480/720 och edge-pan mot boolean. Standard480/on enligt102; lämplig enkel appsessionstate, ingen match-Save-schemaändring eller prematurelocalstorage.119 hanterar persistence. Space använder selected-player boundingcenter; Home egen bas. Ctrl/Meta/Alt/repeat/focused UI avvisas och A/S/W/D är fortsatt actions.
+
+## RTS-104 – Modal UI återanvänder session
+
+Pausens subpages är appägd UI-state, inte match/Save. Quit-confirm använder befintlig new-match först efter uttrycklig Confirm; Cancel/Back/Escape gör ingen sessiontransition. Native browser fullscreen med faktisk state/felkvitto, separat från gameplay. Befintlig Escape-previewcancel prioriteras före paus. Modal har backdrop/fokusfälla och håller worldviewport stabil.

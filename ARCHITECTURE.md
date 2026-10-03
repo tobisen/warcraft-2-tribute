@@ -1283,3 +1283,7 @@ camera.ts ger Phaserfri riktning/normaliserad diagonal/clamped pan. cameraInput.
 ## RTS-103 – Focus-genvägar och appägd camera-preference
 
 cameraFocus.ts är Phaserfri modell för selected-own boundingcenter/base/building och clamped scroll; keyboardguard återanvänds utan actionkeykonflikter. cameraSettings.ts validerar config-hastigheter och edgeboolean, appägda listeners initieras en gång. cameraInput läser aktuell preference varje frame; Scene.registerShortcut äger endast adapter och shutdown. Preferences lever inom appsessionen, separat från matchstate/Save och119-localstorage.
+
+## RTS-104 – Pausdialog och fullscreen
+
+presentation/pauseMenu.ts har appägd main/settings/quit-navigation, backdrop och fokusfälla. syncHomeMenu reparentar befintliga controls utan listenerdubbling; new-match ligger stabilt i confirmation och samma Scene-session/Savecallbacks används. Phase-dialogen är fixed och ändrar inte worldviewport. Settings återanvänder audio/camera/display. fullscreen.ts anropar native enter/exit, synkar från faktisk fullscreenElement och visar failures/unsupported utan fabricerat state.
