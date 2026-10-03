@@ -1410,3 +1410,20 @@ mapQuality.test.ts verifierar resursapproach, två lediga64×64-startplatser,
 Islands, och oförändrat kart-/resursstate efter config18→19-migration för
 båda fraktionerna. Befintliga ekonomiska maps/islands/navalBalance-tester
 fortsätter täcka betald Victory, landstigning och verkligt AI-angrepp.
+
+## RTS-117 – Aktivitetsljud och begränsad mix
+
+presentation/audioSnapshot.ts skapar en ren publik snapshot: egna gather-workers
+med last, egna constructiontider, produktionscounters och caller-filtrerade
+fiender. audioEvents jämför två snapshots; lastökning ger gather, minskad
+positiv byggtid ger build och faktisk spawn-counterökning ger train. Leverans,
+orderbyte, ny byggplats, paus och initial/load-snapshot ger ingen sådan cue.
+Navy-counterns initiala1 normaliseras till0 så att harborplacering inte låter
+som färdig produktion. Boarding/landstigning ändrar inte produktionscounter.
+
+config/audio.ts har per-cue gain/cooldown: work-cues0.4gain/0.8s, train0.65/0.4s.
+GameAudio har separata käll-gainnoder under befintlig effects-kanal. Vanliga
+ljud får högst fyra samtidiga sources; två ytterligare slots reserveras för
+warning/resultat, totalt högst sex. Musik är separat. End/reset stoppar sources
+omedelbart och kopplar bort både source och gain; paus suspenderar grafen.
+Alla11 lokala ljud har OGG/WAV-fallback; saknade ljud påverkar inte simulationen.

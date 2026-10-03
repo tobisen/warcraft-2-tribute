@@ -1,3 +1,5 @@
+import {audioFiles} from '../config/audio';
+import {matchAudioSnapshot} from '../presentation/audioSnapshot';
 import {renderTutorial} from '../presentation/tutorial';
 import type {TutorialState} from '../gameplay/tutorial';
 import {isGameSpeed} from '../config/gameSpeed';
@@ -453,7 +455,7 @@ export class BootScene extends Phaser.Scene {
   }
   private syncSession():void {
     gameAudio.setPhase(this.session.phase);
-    if(gameAudio.status.loaded)document.getElementById('audio-status')!.textContent=`${gameAudio.status.loaded}/8 sounds loaded · ${gameAudio.settings.muted?uiText.muted:this.session.phase==='paused'?'paused':'ready'}`;
+    if(gameAudio.status.loaded)document.getElementById('audio-status')!.textContent=`${gameAudio.status.loaded}/${audioFiles.length} sounds loaded · ${gameAudio.settings.muted?uiText.muted:this.session.phase==='paused'?'paused':'ready'}`;
     (document.getElementById('save-match') as HTMLButtonElement).disabled=this.session.phase==='menu'||this.restartPending;
     (document.getElementById('load-match') as HTMLButtonElement).disabled=this.restartPending;
     const phase=this.session.phase,menu=phase==='menu';
@@ -822,7 +824,7 @@ export class BootScene extends Phaser.Scene {
   private drawHP(position:Position,hp:number,max:number,width:number,offset:number,color:number):void {this.hpBars?.fillStyle(0x172422).fillRect(position.x-width/2-1,position.y-offset-1,width+2,5).fillStyle(color).fillRect(position.x-width/2,position.y-offset,width*Math.max(0,Math.min(1,hp/max)),3);}
 
   private syncAudio(visibleEnemies:typeof this.combat.enemies):void {
-    const next:AudioSnapshot={baseHP:this.combat.baseHP,navalShots:(this.combat.projectiles??[]).filter(p=>p.marine).map(p=>({id:p.id,audible:isVisible(this.fog,'player',p.position)})),own:Object.fromEntries([...this.gathering.units.map(u=>[u.id,u.hp??combatConfig.workerHP]),...(this.navy?.ships??[]).map(s=>[s.id,s.hp])]),visibleEnemies:Object.fromEntries(visibleEnemies.map(e=>[e.id,e.hp])),completed:[...(this.navy?.harbor?.construction.remainingSeconds===0?['harbor']:[]),...(barracksReady(this.placement)?['barracks']:[]),...(this.placement.farms??[]).filter(f=>f.construction.remainingSeconds===0).map(f=>f.id),...(this.placement.forge?.construction.remainingSeconds===0?['forge']:[])],outcome:this.outcome};
+    const next=matchAudioSnapshot(this.currentMatch(),visibleEnemies);
     const wasPlaying=this.session.phase==='playing'||this.audioSnapshot?.outcome==='playing'&&this.outcome!=='playing';
     for(const event of audioEvents(this.audioSnapshot,next,!!wasPlaying)){if(event==='victory'||event==='defeat'){gameAudio.setPhase('ended');gameAudio.play(event,true);}else gameAudio.play(event);}
     this.audioSnapshot=next;

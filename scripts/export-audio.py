@@ -22,13 +22,16 @@ def sample(kind,t,duration):
  env=math.sin(math.pi*t/duration)*math.exp(-t*4)
  if kind=='cannon':return (noise.uniform(-1,1)*.25+math.sin(2*math.pi*(95-70*t)*t)*.45)*env
  if kind=='splash':return noise.uniform(-1,1)*.28*env+math.sin(2*math.pi*(220-180*t)*t)*.09*env
+ if kind=='gather':return (math.sin(2*math.pi*680*t)*.12+noise.uniform(-1,1)*.08)*env
+ if kind=='build':return (math.sin(2*math.pi*260*t)*.2+noise.uniform(-1,1)*.12)*env
+ if kind=='train':return sum(math.sin(2*math.pi*hz(n)*t) for n in [69,74])*env*.09
  if kind=='command':return math.sin(2*math.pi*(480+900*t)*t)*env*.16
  if kind=='impact':return (noise.uniform(-1,1)*.3+math.sin(2*math.pi*170*t)*.2)*env
  if kind=='complete':return sum(math.sin(2*math.pi*hz(n)*t) for n in [74,77,81])*.09*env
  if kind=='victory':return sum(math.sin(2*math.pi*hz(n)*t) for n in [62,66,69,74])*.075*env
  return sum(math.sin(2*math.pi*hz(n)*t) for n in [38,41,44])*.085*env
 entries={}
-for kind,duration in [('music',16),('command',.14),('impact',.18),('complete',.5),('victory',1),('defeat',1),('cannon',.4),('splash',.5)]:
+for kind,duration in [('music',16),('command',.14),('impact',.18),('complete',.5),('victory',1),('defeat',1),('cannon',.4),('splash',.5),('gather',.12),('build',.16),('train',.35)]:
  samples=[max(-.85,min(.85,music(n/rate) if kind=='music' else sample(kind,n/rate,duration))) for n in range(round(duration*rate))]
  data=b''.join(struct.pack('<h',round(v*32767)) for v in samples)
  for path in [master/f'{kind}.wav',out/f'{kind}.wav']:
@@ -36,4 +39,4 @@ for kind,duration in [('music',16),('command',.14),('impact',.18),('complete',.5
  sf.write(str(out/f'{kind}.ogg'),samples,rate,format='OGG',subtype='VORBIS')
  entries[kind]={'ogg':f'audio/{kind}.ogg','fallback':f'audio/{kind}.wav','master':f'assets/audio/{kind}.wav','duration':duration,'loop':kind=='music','volume':1}
 (out/'manifest.json').write_text(json.dumps({'version':1,'origin':'Original deterministic composition/synthesis in scripts/export-audio.py; no external recordings','sampleRate':rate,'entries':entries},indent=2)+'\n')
-print('Exported eight original PCM WAV masters + Vorbis OGG/WAV runtime alternatives.')
+print('Exported eleven original PCM WAV masters + Vorbis OGG/WAV runtime alternatives.')

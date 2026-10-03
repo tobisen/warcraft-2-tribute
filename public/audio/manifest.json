@@ -66,6 +66,30 @@
       "duration": 0.5,
       "loop": false,
       "volume": 1
+    },
+    "gather": {
+      "ogg": "audio/gather.ogg",
+      "fallback": "audio/gather.wav",
+      "master": "assets/audio/gather.wav",
+      "duration": 0.12,
+      "loop": false,
+      "volume": 1
+    },
+    "build": {
+      "ogg": "audio/build.ogg",
+      "fallback": "audio/build.wav",
+      "master": "assets/audio/build.wav",
+      "duration": 0.16,
+      "loop": false,
+      "volume": 1
+    },
+    "train": {
+      "ogg": "audio/train.ogg",
+      "fallback": "audio/train.wav",
+      "master": "assets/audio/train.wav",
+      "duration": 0.35,
+      "loop": false,
+      "volume": 1
     }
   }
 }

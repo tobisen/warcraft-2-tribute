@@ -143,3 +143,13 @@ Ground-effects/dead sprites på depth−1 underunits0; projectile5, selection6,
 HP7 och fog40. Alpha0.8 och glesa sprites bevarar läsbarheten. UI-atlas512×160
 med21frames. Save lagrar fortfarande inte temporära effekter: load/restart
 rensar dem, paus fryser bildtid och terminal match stoppar simulationen.
+
+## RTS-117 – Original arbets- och produktionsljud
+
+Tre ytterligare cues från scripts/export-audio.py: gather0.12s, build0.16s och
+train0.35s. Totalt11 originalkompositioner/effekter, mono24kHz/16-bit WAV-masters
+med lokala OGG och identisk WAV-fallback. Peak för nya cues0.156/0.227/0.098;
+alla filer är icke-tysta och utan sample-clipping. Befintliga OGG-filer bevaras
+för att undvika encoder-serialbrus vid ny export. Effektmix ligger i config,
+inte i assetmanifestets grundvolym. Ingen extern röst/ljudinspelning tillkommer.
+Faktisk mänsklig matchlyssning krävs innan RTS-117 markeras Done.

@@ -19,3 +19,7 @@ RTS-112: byggnadsdetaljer och damaged-varianter är originalkompositioner i asse
 RTS-113: utrustningsdetaljer, riktade poser, kanonrekyl, bog och gångvak i assets/sources/units.mjs och naval.mjs är egna originalpixelkompositioner. Samma villkor för ändring/distribution, ingen extern attribution.
 
 RTS-114: sparse impact/splash/dust i assets/sources/ui.mjs och riktade pixelprimitiver i presentation/effects.ts är originalgrafik i projektpaletten. Samma tillåtna användning/ändring/distribution; inga externa bilder eller ljud.
+
+RTS-117: gather/build/train är egna deterministiskt syntetiserade ljud från
+scripts/export-audio.py; WAV-masters och OGG/WAV-runtimeassets följer samma
+projektvillkor. Inga externa inspelningar, enhetsröster eller attributioner.

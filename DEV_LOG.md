@@ -2135,3 +2135,51 @@ Granskning: inga blockerande kod-/scopefynd. Ingen onödig topologi- eller
 Saveversionsändring. RTS-116 Done; RTS-117 nästa. Pages för RTS-115 var vid
 senaste kontroll fortfarande in_progress; publicerad startsida hade ännu inte
 Frontier. Deploy är inte påstådd klar före faktiskt success/verifierad sida.
+
+## 2026-10-03 – RTS-117: Tekniskt verifierad, matchlyssning återstår
+
+Tre nya originalcues gather/build/train, elva lokala OGG/WAV-ljud totalt.
+Ren matchAudioSnapshot skiljer faktisk lastökning, byggprogress och spawn
+från leverans/orderbyte/ny site/load. Per-cue gain/cooldown och fyra vanliga
++två reserverade sources; reset kopplar bort både källor och gains. Ingen
+ändring av gameplay, Save-version eller dependencies. Gamla OGG-filer
+bevarades efter export för att slippa orelaterat encoder-serialbrus.
+
+Granskning hittade att första harbor initierar naval counter1; detta gav
+falsk train-cue i en summerad counter. Normaliserat till0 och regressionstest
+infört. Assettestets tidigare8-ljudkontrakt uppdaterat till11. Browserverktyget
+kopplades till appens verkliga singleton via tillfällig responseinstrumentering
+i stället för separat dynamisk Vite-import; ingen debugglobal i projektet.
+
+Checks efter granskning: npm test870tester/112filer PASS172.15s;11 riktade
+ljud-/assettester PASS; typecheck/build/diff PASS. PCM mono24kHz/16bit,
+manifest/master/fallback/duration/peak/RMS validerade för alla11ljud. Nya
+peak0.156/0.227/0.098, ingen sample-clipping. Bundlevarningen lämnas kvar.
+
+Browser Chromium1280/Crown0.75× och1920/Clans1× PASS actual tutorial
+gather→bygge→betald produktion→manualcombat→Victory→restart; accepterade
+gather/build/train/impact/victory-cues, högst sex aktiva effects, forced
+missing gather.ogg→WAV-fallback, paus/context suspend, två Save/load, mute
+och reset, inga pageerrors. Detta verifierar ljudgrafens aktivitet/lifecycle;
+är inte ett påstående om mänsklig akustisk bedömning.
+
+RTS-117 kvar In Progress: användaren har fått frågan om faktisk matchlyssning
+på http://127.0.0.1:5176/. Ingen bekräftelse ännu, därför ingen Done/commit/push
+för RTS-117 och ingen beroende implementation118–126. Kod/docs/assets finns
+kvar reviewbara lokalt.121–150 är planerade,121–126 detaljerade och samtliga Todo.
+
+Deploy: både6fa7d2d/RTS-115 och4dbbd68/RTS-116 har Actions build/deploy success.
+Publicerad browser verifierar Frontier-val→start→canvas→paus→Save utan
+pageerrors; faktiskt publikt bundle index-ClEg8V7I.js. Published Pages
+https://tobisen.github.io/warcraft-2-tribute/ innehåller alltså116, inte117.
+
+## 2026-10-03 – RTS-117 teknisk leverans efter fortsätt-instruktion
+
+Användaren säger ”Vi kör vidare”. Lyssning är fortfarande oredovisad och
+flyttas till samlad releasekontroll120;117 är Implemented, inte slutligt Done.
+Nästa implementation får fortsätta utan att upprepa den tekniska verifieringen.
+Statusradens kvarvarande /8 korrigerad till gemensamma audioFiles.length (11),
+samma lista används av loader. Efter denna justering:11 riktade tester,
+typecheck/build/diff PASS och faktisk tutorialbrowser båda storlekar/fraktioner
+inklusive11/11status PASS. Tidigare fullsvit870 PASS bevaras; inga gameplayändringar.
+Inga röstassets finns i public/assets/audio; detta redovisas inför118.

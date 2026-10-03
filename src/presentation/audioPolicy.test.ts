@@ -10,3 +10,11 @@ describe('audio volume and information policy',()=>{
 it('cannon audio requires a newly fired visible shot; hidden flight/reveal/pause/load is silent',()=>{
  const shot={id:'arrow-1',audible:true};expect(audioEvents(snapshot,{...snapshot,navalShots:[shot]},true)).toEqual(['cannon']);expect(audioEvents({...snapshot,navalShots:[shot]},{...snapshot,navalShots:[shot]},true)).toEqual([]);expect(audioEvents(snapshot,{...snapshot,navalShots:[{...shot,audible:false}]},true)).toEqual([]);expect(audioEvents({...snapshot,navalShots:[{...shot,audible:false}]},{...snapshot,navalShots:[shot]},true)).toEqual([]);expect(audioEvents(snapshot,{...snapshot,navalShots:[shot]},false)).toEqual([]);expect(audioEvents(undefined,{...snapshot,navalShots:[shot]},true)).toEqual([]);
 });
+
+it('work/build/train cues use actual changes, aggregate multiple workers and silence initial/order/delivery/pauses',()=>{
+ const before={...snapshot,work:{a:1,b:2},construction:{farm:4},production:8};
+ expect(audioEvents(before,{...before,work:{a:2,b:3},construction:{farm:3},production:9},true)).toEqual(['gather','build','train']);
+ expect(audioEvents(before,{...before,work:{a:0,b:2,c:1},construction:{farm:4,newSite:5}},true)).toEqual([]);
+ expect(audioEvents(undefined,before,true)).toEqual([]);expect(audioEvents(before,{...before,production:9},false)).toEqual([]);
+ expect(audioEvents(before,{...before,work:{},construction:{farm:0},completed:['farm']},true)).toEqual(['complete']);
+});

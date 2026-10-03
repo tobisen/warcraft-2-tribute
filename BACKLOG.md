@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-117 – Nya ljudeffekter och ljudmix** — **Todo**.
+**RTS-118 – Humoristiska engelska enhetsröster** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -3052,13 +3052,23 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-117 – Nya ljudeffekter och ljudmix
 
-**Status:** Todo.
+**Status:** Implemented — slutlig lyssning återstår i RTS-120.
 
-**Goal:** Förbättra ljud för gathering, byggande, produktion och combat. Balansera volymer och begränsa samtidiga upprepningar. Lyssna igenom resultatet i en faktisk match.
+**Goal:** Läsbara, måttliga egna ljud för gathering, byggarbete, produktion och combat.
+
+**Requirements:** Tre nya egna syntetiserade cues: gather, build, train; reuse befintlig musik/combat/complete/resultat. Cue från observerbar egen faktisk lastökning, minskad byggtid respektive färdig produktion, inte från order/spawn-reveal/load. Presentationssnapshot fristående från Phaser. Per-cue gain/cooldown i config; högst sex samtidiga vanliga effekter med reserverat utrymme för varning/resultat. Befintliga master/effects/music/mute och pause/menu/reset-lifecycle bevaras. Lokala PCM-masters + OGG/WAV fallback och licensdocs. Lyssna faktiskt genom gathering→bygg→produktion→combat i en match; redovisa teknisk kontroll separat från lyssningsbedömning.
+
+**Non-goals:** Röster118, persistens119, nya gameplayevent/statvärden, ny musikkomposition, externa inspelningar eller ljudmiddleware.
 
 **Dependencies:** RTS-116.
 
-**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+**Acceptance criteria:** Alla nya cues avfyras från rätt verklig aktivitet; idle/delivery/load/reveal/paus är tysta. Samtidiga workers/builders ger begränsad cuefrekvens och aktiv source-count hålls inom budget. Varning/resultat blockeras inte av lågprioriterade effekter. Volymer/mute/reset fungerar i browser och saknat OGG använder WAV utan att stoppa gameplay. Tester/typecheck/build/diff och assetvalidering PASS. Faktisk matchlyssning redovisas innan slutlig Done, samlat i RTS-120.
+
+**Tester:** Cargo/build/production-snapshotdiff, initial/paus/orderbyte/leverans, throttling/channelgain/concurrency/priority och engine-lifecycle med fake AudioContext; assetduration/peak/fallback. Browser faktisk tutorial gathering→building→production→combat/resultat, observerade cues och sourcebudget, pause/Save/load/restart och mute. Separat mänsklig lyssning i samma flöde.
+
+**Docs:** BACKLOG, DEV_LOG, ARCHITECTURE, DECISIONS, README, assets/README och assets/ASSET_LICENSE.
+
+**Verifieringsstatus:** Teknisk implementation,870tester/112filer, typecheck/build/diff, elva assetkontroller och browserflöde båda fraktionerna PASS. Användaren säger fortsätt; implementation levereras och återstående faktiska lyssning hålls öppen i RTS-120, utan påstående att den utförts. Statusraden visar korrekt11/11 från gemensam audioFiles-konfiguration.
 
 ## RTS-118 – Humoristiska engelska enhetsröster
 

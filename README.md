@@ -604,3 +604,12 @@ Totalt600wood/450gold är ändliga och delas med fienden.
 Arena, Forest Pass och River Bend visar nu korta starttips om basutrymme,
 workerleder och anfallsvägar. Islands kräver fortfarande harbor och transport
 över havet. Alla fyra äldre kartor behåller sin terräng, resursmängd och regler.
+
+## Ljudflöde (RTS-117)
+
+Gathering, byggarbete och färdig enhetsproduktion har egna korta ljud.
+Aktivera ljud efter ett klick; master, effects, music och mute finns i menyn.
+Arbetsljud upprepas högst var0.8s, vanliga effekter har fyra samtidiga slots
+med två reserverade för varning/resultat. Paus fryser ljudgrafen; load/restart
+rensar gamla sources. Musik och ljudpitch påverkas inte av spelhastigheten.
+RTS-117:s tekniska kontroller är separata från återstående mänsklig lyssning.

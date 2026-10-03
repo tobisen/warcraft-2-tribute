@@ -1065,3 +1065,14 @@ Save config19 validerar lager och koordinater mot den identifierade kartan.
 Config18/äldre migreras endast med deras tidigare karta/nodmodell. En sparad
 camera behöver inte passa en historisk viewport; scene clampas mot den
 aktuella viewporten, vilket också tillåter gamla kartors giltiga bottom-pan.
+
+## RTS-117 – Ljudmix är presentation
+
+Gather/build/train är tre nya egna syntetiserade cues, utan gameplaytimrar,
+externa inspelningar eller nya Savefält. Aktivitetsdiff följer faktiskt egen
+last/byggtid/spawn-counter; mängder från dolda fiender läses inte för ljud.
+Per-cue repetition/gain och sourcebudget ligger i config. Fyra vanliga sources
+plus två reserverade alerts/resultat minskar överlapp; game over städar gamla
+sources innan resultatcue. Musik/pitch använder verklig Web Audio-tid, inte
+ändrad gameplayhastighet. Arbetets ljudbudget valideras tekniskt i browser;
+mänsklig bedömning av mixen redovisas separat före taskens Done-status.
