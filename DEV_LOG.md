@@ -1974,3 +1974,7 @@ Chromium dev och faktisk production Pages-subpath1280×720/1920×1080: alla fyra
 ## 2026-10-03 – RTS-097 Done: kompakt topprad
 
 48px Menu/gold/wood/population inklusive köreservationer.56relevanta tester/16filer PASS; typecheck/build/diff PASS, bundlevarning kvar. Chromium1280×720/1920×1080: faktisk betald workerproduktion, utforskning av nod följd av gather/leverans, Menu/pause/state freeze/Save/resume/restart. Screenshots granskade, inga errors. Browser hittade33px verklig radhöjd trots48px gridrad; explicit höjd rättad och båda flöden omkörda gröna. Diff granskad UI-isolering, ekonomisanning, fog och session; inga blockerande fynd. Nästa098 selection-information.
+
+## 2026-10-03 – RTS-098 Done: selection-panel
+
+170px bottenpanel med live namn/HP/order/last och konfigurerad grundstatistik, atlasporträtt, gruppsummering/tom state.73relevanta tester/18filer PASS; typecheck/build/diff PASS; bundlevarning kvar. En felaktig enemy kind i nytt test fångades av typecheck och rättades till befintliga unit-ID:t. Chromium1280×720/1920×1080: verkliga worker/base/group/empty/move, paus och panelklick utan stateändring, Save/restart, canvas inom fönstret. Browserhelper behövde nästa render-frame och klick/drag inom nya viewporten/riktiga workerpositioner; korrigerat, båda flöden gröna utan errors. Worker/base/gruppscreenshots visuellt granskade. Diff granskad selection/fog/UI/Save/scope, inga blockerande fynd. Nästa099 contextual actions.

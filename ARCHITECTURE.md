@@ -1259,3 +1259,7 @@ Save-schema/configversion och alla machine-ID:n bevaras. `LoadResult.code` skilj
 ## RTS-097 – Kompakt topprad
 
 presentation/topBar.ts härleder levererat saldo och matchPopulation utan Phaser eller enemy/node-data. BootScene uppdaterar DOM; appägd Menu-listener öppnar befintlig pauspanel. Toppraden är48px, sessionpanelen visas endast paused/ended; gamla dubbla saldo/supplyrader döljs. Saveformat och gameplay är oförändrade.
+
+## RTS-098 – Selection-information
+
+presentation/selectionInfo.ts är Phaserfri panelmodell för befintliga valbara egna land-/sjöenheter och base/barracks/harbor. Den läser live HP/order/cargo och fraktionsrecept; stats märks Baseline stats eftersom tillfälliga förmågor/uppgraderingar inte ingår. Grupp har summerad HP, inga enemy/node-data. BootScene klipper befintlig atlasframe till DOM-canvas med pixelated rendering.170px bottenrad, ResizeObserver återanvänds; Save/selectionregler är oförändrade.

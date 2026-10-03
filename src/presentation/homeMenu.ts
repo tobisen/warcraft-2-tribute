@@ -8,7 +8,7 @@ export function syncHomeMenu(nextPhase:SessionPhase):void{
  if(nextPhase==='menu'&&phase!=='menu')current='home';phase=nextPhase;
  const menu=phase==='menu',setup=current==='campaign'||current==='skirmish';
  document.body.dataset.phase=phase;document.body.dataset.homePage=current;
- element('match-menu').hidden=!menu;element('game-toolbar').hidden=menu||phase==='playing';element('top-bar').hidden=menu;element('match-menu-button').setAttribute('aria-expanded',String(phase==='paused'||phase==='ended'));
+ element('match-menu').hidden=!menu;element('game-toolbar').hidden=menu||phase==='playing';element('top-bar').hidden=menu;element('bottom-bar').hidden=menu;element('match-menu-button').setAttribute('aria-expanded',String(phase==='paused'||phase==='ended'));
  for(const id of ['pause-match','resume-match','new-match','restart-match','save-controls','audio-controls','mission-instruction','session-status','match-results']){const target=element(menu?'home-content':'game-toolbar');if(element(id).parentElement!==target)target.append(element(id));}
  element('home-brand').hidden=!menu;element('home-navigation').hidden=!menu||current!=='home';
  element('home-content').hidden=menu&&current==='home';element('menu-back').hidden=!menu||current==='home';

@@ -996,3 +996,7 @@ All synlig speltext är engelska: meny/matchval/uppdrag/guide, fraktioner, ekono
 ## RTS-097 – Matchöversikt
 
 Toppraden visar Menu [P], levererat Gold/Wood samt använd/max Population och köreservationer. Last räknas först efter leverans; saldo visas avrundat nedåt. Menu pausar och visar befintliga Resume/Save/restartkontroller. Under spel är sessionpanelen dold.
+
+## RTS-098 – Markerad enhet eller byggnad
+
+Bottenpanelen visar namn, originalporträtt, aktuell/max HP och grundstatistik. Worker visar last, stridsroller speed/supply/range/damage; transport visar passagerare. Base/barracks/harbor visar HP och byggstatus. Grupper visar antal och total HP; tom selection ger instruktion och rensar porträtt/stats. Panelen är endast information, utan worldorders. Farm/forge är fortfarande inte klickvalbara enligt tidigare selectionmodell.

@@ -80,3 +80,13 @@ body:not([data-phase='menu']) #game-toolbar{grid-row:2;}
 body:not([data-phase='menu']) #hud,body:not([data-phase='menu']) #game{grid-row:3;}
 #pause-match,#resource-status,#population-status{display:none;}
 #top-bar{height:48px;}
+
+/* RTS-098 read-only selection panel, using original atlas portraits. */
+body:not([data-phase='menu']){grid-template-rows:48px auto minmax(0,1fr) 170px;}
+#bottom-bar{grid-column:1 / -1;grid-row:4;display:flex;align-items:center;gap:20px;height:170px;padding:12px 20px;background:#192b28;border-top:2px solid #977a40;font:14px system-ui,sans-serif;overflow:auto;}
+#selection-portrait{flex:none;width:128px;height:128px;background:#101917;border:2px solid #795d32;}
+#selection-info h2{font:22px Georgia;color:#f4d87a;margin:0 0 8px;}
+#selection-info p{margin:6px 0;}
+#selection-health-bar{width:220px;height:10px;accent-color:#7bd389;}
+#selection-stats{color:#bed0a1;}
+#selection-status{display:none;}

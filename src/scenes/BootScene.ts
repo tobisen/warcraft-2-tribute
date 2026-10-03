@@ -1,3 +1,4 @@
+import {selectionInfo,renderSelectionInfo} from '../presentation/selectionInfo';
 import {renderTopBar} from '../presentation/topBar';
 import {text as uiText} from '../text';
 import {viewportGeometry} from '../presentation/viewport';
@@ -682,6 +683,10 @@ export class BootScene extends Phaser.Scene {
     this.buildingRing.setVisible(selectedFootprint !== null);
     if (selectedFootprint) this.buildingRing.setPosition(selectedFootprint.x, selectedFootprint.y)
       .setSize(selectedFootprint.width, selectedFootprint.height);
+    const info=selectionInfo(this.currentMatch(),this.selectedBuilding);renderSelectionInfo(info);
+    const portrait=document.getElementById('selection-portrait') as HTMLCanvasElement,ctx=portrait.getContext('2d')!;
+    ctx.clearRect(0,0,128,128);portrait.hidden=!info.portrait;
+    if(info.portrait){const frame=this.textures.get(info.portrait.atlas).get(info.portrait.frame);ctx.imageSmoothingEnabled=false;const scale=Math.min(3,120/frame.cutWidth,120/frame.cutHeight),w=frame.cutWidth*scale,h=frame.cutHeight*scale;ctx.drawImage(frame.source.image as HTMLImageElement,frame.cutX,frame.cutY,frame.cutWidth,frame.cutHeight,(128-w)/2,(128-h)/2,w,h);}
     renderTopBar(this.currentMatch());
     const population=matchPopulation(this.currentMatch());
     this.trainButton.disabled = !allowsProduction(this.selectedBuilding, 'base', true, this.gameplayActive()) || !this.gameplayActive() || !canEnqueue(this.gathering, this.production,{kind:'base'},population);

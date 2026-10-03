@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-098 – Bottom bar: selection-information** — **Todo**.
+**RTS-099 – Kontextuell action panel** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -2710,13 +2710,21 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-098 – Bottom bar: selection-information
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Visa vald enhets eller byggnads namn, porträtt, HP och relevant statistik. Hantera tom selection.
 
+**Requirements:**170px bottom bar med befintligt originalporträtt/frame, engelskt fraktionsnamn, aktuell/max HP och konfigurerad speed/supply/range/damage eller last/byggstatus. Befintliga valbara base/barracks/harbor och alla land-/sjöroller omfattas. Grupper visar antal och gemensam HP; inga nya selectionregler. Tom selection visar tydlig instruktion utan gammal data. Uppdateras vid damage/order/selection/restart; panelen får inte ge worldinput.
+
+**Non-goals:** Gruppikoner/kö100, actions099, ny byggnadsselection, nya assets/stats/balans, enemyinspektion.
+
 **Dependencies:** RTS-097.
 
-**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+**Acceptance criteria:** Läsbar170pxpanel1280×720/1920×1080 med canvas inom fönstret. Rätt fraktions-/rollnamn, porträtt och HP/stats för befintliga typer. Klick/drag/tom selection och buildingselection uppdaterar utan orders eller selectionläckage. Paus/Save/restart bevaras.
+
+**Tester:** Pure panelmodel: empty/group, faction/roles, live HP/cargo, ships/buildings/missing selection, no hidden enemy data. Relevanta presentation/selection/Save/sessiontester; typecheck/build/diff. Browser två upplösningar, worker/base/group/empty/order/restart och granskade screenshots.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, README.md.
 
 ## RTS-099 – Kontextuell action panel
 
