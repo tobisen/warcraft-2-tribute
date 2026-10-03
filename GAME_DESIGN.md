@@ -837,3 +837,14 @@ tills Ny match. Pause/Load/restart bevarar samma faktiska inställningar.
 Byt från Skirmish till missions/Survival så blir kartan arena; explicita
 ogiltiga kombinationer ignoreras utan att ändra matchen. Inga nya
 spelvärden eller menypreferenser sparas separat.
+
+## RTS-078: resultat efter match
+
+Efter game over visas Victory/Defeat, gameplay-tid, karta/scenario/
+svårighet och båda fraktionernas statistik. Insamlat, levererat och
+netto spenderat wood/gold skiljs åt. Last och förlorad last är inte
+leverans. Netto spenderat inkluderar betalda ofärdiga jobb och drar av
+refunds. Tillkomna enheter exkluderar startenheter; förlorade/besegrade
+enheter exkluderar byggnader. Resultatvyn visas inte under match så
+fiendens dolda ekonomi förblir dold. Ingen damage/APM/byggnadshistorik.
+Game-over freeze/Save bevarar resultat, restart/Ny match rensar vyn.

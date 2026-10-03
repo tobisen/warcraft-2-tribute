@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-078 – Matchresultat med ekonomi- och stridsstatistik** — **Todo**.
+**RTS-079 – Balans för längre skirmish-matcher** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
@@ -2346,13 +2346,21 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-078 – Matchresultat med ekonomi- och stridsstatistik
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Matchresultat med ekonomi- och stridsstatistik.
+**Goal:** Visa matchresultat och verifierbar ekonomi/strid efter game over.
+
+**Requirements:** Ren härledd statistik från befintlig finite stock/banker/last/loss-ledger och monotona spawn-counter; ingen separat eventhistorik eller dubbel persistent state. Visa outcome, gameplay-tid, scenario/map/fraktion/difficulty och båda teams insamlat, levererat och netto spenderat wood/gold, tillkomna enheter, enhetsförluster och besegrade enheter. Netto spenderat inkluderar avdrag minus refunds, även betalda ofärdiga jobb; enhetsstatistik utesluter byggnader och initiala units i tillkomna. Resultatvyn syns endast efter terminal outcome, aldrig dold enemy-ekonomi under match. Game-over freeze bevarar resultat; Save/load återskapar samma vy och restart/Ny match döljer/resetter den. Legacy-saves visar enbart data som kan härledas utan hittad historik. Bas/våg/producer/dead-worker-counters och ledger används enligt verkligt state. Tydlig decimalavrundning i resultatvyn.
+
+**Non-goals:** Gross spend/refund-eventhistorik, damage/APM, byggnads-killhistorik, konto/highscore, export, match-arkiv, ombalansering och generell HUD-polish.
 
 **Dependencies:** RTS-077.
 
-**Acceptance criteria:** Resultat summerar faktiska events utan dubbelräkning och respekterar fog under spel.
+**Acceptance criteria:** Verklig insamling/leverans/spending/refund och produktion/död ger korrekta totals; enemy-metrics duplicerar inte shared stock. UIresultat stämmer med model efter victory/defeat och bevaras under freeze/Save/load. Start/restart har noll nya units/insamling/spend/förluster och korrekt profil. Legacy utan ekonomi-ledger ges inga gratis incomesiffror.
+
+**Tester:** Last vs leverans, betald/refunderad queue/site, verklig spawn/death/waves/recovery, finite resource-ledger, terminal/Save/restart, UI-presenter och tidigare tester/typecheck/build/browser/diff.
+
+**Docs:** BACKLOG.md, DECISIONS.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md och README.md.
 
 ## RTS-079 – Balans för längre skirmish-matcher
 

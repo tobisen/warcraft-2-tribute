@@ -1065,3 +1065,25 @@ sessionsval vid Start/restart.
 atomiska fel, mode-lock och18 verkliga factory/save/restart-kombinationer.
 Ingen ny sparbar options-kopia eller schemaändring: Save config10 lagrar
 fortsatt matchens faktiska scenario/map/factions/difficulty.
+
+## RTS-078: härledda matchresultat
+
+[matchStats.ts](src/gameplay/matchStats.ts) beräknar ren MatchStats från
+profilstock, faktisk kvarvarande node, bankers/båda teams laster/loss,
+enemy-extracted/spent och monotona spawn-counters. Spelarens insamlat =
+initial node minus remaining minus enemy-extraction. Levererat = gathered
+minus last/lostCargo. Netto spenderat = initial bank plus gathered minus
+balance/cargo/lost; refunds reducerar detta, betalda jobb ingår direkt.
+Enemy-ledger används direkt; legacy-budget utan income ger endast faktisk
+initial budget minus balance som spenderat, ingen uppfunnen gathering.
+
+Tillkomna units kommer från gemensam player-nextUnitNumber och enemy
+wave/producer/recovery-counters, exklusive initiala workers. Unit-loss
+= initial + spawned minus live bodies, exklusive byggnader; varje teams
+loss motsvarar motståndarens besegrade enheter i nuvarande stridsmodell.
+Ingen andra persistent score/event-modell och ingen Save-schemaändring.
+[matchResults.ts](src/presentation/matchResults.ts) renderar outcome/tid
+och9 avrundade rows endast vid ended. Oförändrat resultat renderas en
+gång; restart/menu döljer och rensar DOM.
+[matchStats.test.ts](src/gameplay/matchStats.test.ts) verifierar verklig
+insamling/refund/produktion/död, paid victory och Save/freeze.

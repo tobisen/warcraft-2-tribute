@@ -1536,3 +1536,38 @@ Granskning av validator, session/UI, options-vs-saved-state, regressioner
 och scope fann inga blockerande fynd.
 Slutbundle index-CzF9iKdH.js1555,93KB/gzip408,03KB; befintlig varning kvar.
 RTS-077 Done. Nästa RTS-078 – matchresultat och statistik.
+
+## 2026-10-03 – RTS-078: ekonomi- och stridsresultat
+
+Ren härledd MatchStats från befintlig stock/ledger/last/spawn-counter;
+ingen eventhistorik eller schemaändring. Resultatbord9 rows/båda lag
+med outcome/tid/profil. Insamlat vs levererat vs net-spend efter refunds,
+unit-added/lost/killed utan byggnader/startunits i added. Enemy-dolda
+data visas endast efter match. Freeze/Save bevarar, restart/menu rensar
+DOM och resultat-cache. Resursrows har max1 decimal.
+
+8 nya tester: faktisk gather/contact/deposit, betald queue/refunds,
+produktion och enemy-worker-attack med faktisk död, enemy-extraction-
+separation, paid forest/clans-victory/Saves, legacy-budget och formatting.
+Riktad stats8 PASS (5,09s); typecheck/build PASS. Tidigt strikt 40-spend-
+assert fick39,999999999999986 efter floating point-gathering; ekonomitest
+använder numerisk tolerans, inte ändrade gameplayvärden. Den första
+fullkörningen hade cachat gamla assertionen; slutkörning rapporteras separat.
+
+Chromium147 production-preview: faktisk betald Outpost/Easy-victory
+(90s,60wood/5gold,1 added,2 kills) och faktisk oskyddad Survival/Hard-
+defeat (~91,6s,3 unit-loss) PASS. Alla resultatrader jämförda med model,
+freeze/Save/load/restart och tom dolt resultat efter restart PASS utan
+page/console/request-fel. Accelererad klocka och verkliga UIcommands;
+inga resurser/enheter/skador injicerade. Victory-screenshot granskad.
+
+Granskning av formler, counters, last/refunds/legacy, enemy-reveal,
+terminalfreeze, cache och scope fann inga kvarstående blockerande fynd.
+Begränsningar: net-spend, unit-metrics utan damage/APM/buildinghistory;
+ingen generell HUD-polish (tidigare shortage-decimalhint kvar).
+RTS-077 Pages/Actions success36e3c2a/37086410298.
+
+Slutkontroller: npm test636 tester/80 filer PASS (89,00s); typecheck/build,
+git diff --check och577 dokumentreferenser PASS.
+Bundle index-wfpgUoUZ.js1559,30KB/gzip409,20KB; befintlig varning kvar.
+RTS-078 Done. Nästa RTS-079: längre skirmish-balans.

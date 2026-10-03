@@ -449,3 +449,9 @@ RTS-077: menyn sammanfattar karta/resursstock, fraktion/förmåga och
 svårighetsgrad före Start. Alla18 skirmish-kombinationer stöds.
 Valen är låsta under match och bevaras vid pause/Load/restart; Ny match
 öppnar valen igen. Byte till mission/Survival använder originalarenan.
+
+RTS-078: efter Victory/Defeat visas gameplay-tid och ekonomi-/enhetsstatistik
+för båda lag. Insamlat skiljs från levererat; netto spenderat betyder
+betalning minus refunds och inkluderar ofärdiga jobb. Enhetsstatistiken
+räknar tillkomna/förlorade/besegrade enheter, utan byggnader och
+startenheter i tillkomna. Save/load bevarar resultat; restart rensar det.

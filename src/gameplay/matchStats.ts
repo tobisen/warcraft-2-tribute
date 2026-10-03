@@ -1,0 +1,30 @@
+import {maps} from '../config/maps';
+import {scenarioConfig} from '../config/scenarios';
+import {difficultyProfiles} from '../config/difficulty';
+import {enemyEconomyConfig} from '../config/enemyEconomy';
+import type {ResourceType} from './gathering';
+import type {MatchState} from './match';
+export interface ResourceStats {gathered:number;delivered:number;spent:number}
+export interface TeamStats {wood:ResourceStats;gold:ResourceStats;added:number;lost:number;killed:number}
+export interface MatchStats {seconds:number;player:TeamStats;enemy:TeamStats}
+const nonnegative=(n:number)=>Math.max(0,Math.abs(n)<1e-8?0:n);
+/** All totals derive from existing authoritative counters/finite resource accounting. */
+export function matchStats(m:MatchState):MatchStats {
+ const definition=maps[m.map.id??'arena'],initial=scenarioConfig[m.scenario??'survival'].initial,profile=difficultyProfiles[m.difficulty??'normal'],bank=m.enemyProduction;
+ const playerResource=(type:ResourceType):ResourceStats=>{
+  const enemyGathered=bank?.extracted?.[type]??0,remaining=type==='wood'?m.gathering.node.remaining:m.gathering.gold?.remaining??definition.gold;
+  const gathered=nonnegative(definition[type]-remaining-enemyGathered),balance=type==='wood'?m.gathering.wood:m.gathering.goldBalance??0;
+  const carried=m.gathering.units.reduce((n,u)=>n+(u.kind==='worker'&&(u.cargoType??'wood')===type?u.cargo:0),0),lost=m.gathering.lostCargo?.[type]??0;
+  const spent=nonnegative(initial[type]+gathered-balance-carried-lost);
+  return {gathered,delivered:nonnegative(gathered-carried-lost),spent};
+ };
+ const enemyResource=(type:ResourceType):ResourceStats=>{
+  const gathered=bank?.extracted?.[type]??0,carried=m.combat.enemies.reduce((n,e)=>n+(e.work&&(e.work.cargoType??'wood')===type?e.work.cargo:0),0),lost=bank?.lostCargo?.[type]??0;
+  return {gathered,delivered:nonnegative(gathered-carried-lost),spent:bank?.spent?.[type]??(bank?nonnegative(profile.budget[type]-bank[type]):0)};
+ };
+ const playerAdded=nonnegative(Math.max(m.production.nextUnitNumber,m.soldierProduction.nextUnitNumber)-4),playerLost=nonnegative(3+playerAdded-m.gathering.units.filter(u=>(u.hp??1)>0).length);
+ const initialEnemyWorkers=bank?.extracted?enemyEconomyConfig.workerCount:0;
+ const enemyAdded=(m.waves.nextEnemyNumber-1)+(bank?.production.nextUnitNumber??1)-1+(m.enemyRecovery?m.enemyRecovery.production.nextUnitNumber-enemyEconomyConfig.workerCount-1:0);
+ const enemyLost=nonnegative(initialEnemyWorkers+enemyAdded-m.combat.enemies.filter(e=>!e.footprint&&e.hp>0).length);
+ return {seconds:m.waves.elapsedSeconds,player:{wood:playerResource('wood'),gold:playerResource('gold'),added:playerAdded,lost:playerLost,killed:enemyLost},enemy:{wood:enemyResource('wood'),gold:enemyResource('gold'),added:nonnegative(enemyAdded),lost:enemyLost,killed:playerLost}};
+}

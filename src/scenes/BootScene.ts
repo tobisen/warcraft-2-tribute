@@ -1,3 +1,4 @@
+import {renderMatchResults} from '../presentation/matchResults';
 import {matchSettingsSummary} from '../presentation/matchSettings';
 import {maps,isMapId} from '../config/maps';
 import type {EnemyKnowledgeState} from '../gameplay/enemyKnowledge';
@@ -402,6 +403,7 @@ export class BootScene extends Phaser.Scene {
     (document.getElementById('save-match') as HTMLButtonElement).disabled=this.session.phase==='menu'||this.restartPending;
     (document.getElementById('load-match') as HTMLButtonElement).disabled=this.restartPending;
     const phase=this.session.phase,menu=phase==='menu';
+    renderMatchResults(document.getElementById('match-results')!,this.currentMatch(),phase==='ended');
     const summary=document.getElementById('match-options-summary')!;summary.textContent=matchSettingsSummary(this.session.options);summary.hidden=!menu;
     const mapSelect=document.querySelector<HTMLSelectElement>('#map-select')!;mapSelect.disabled=!menu||this.session.options.scenario!=='skirmish';mapSelect.value=this.session.options.map;
     const factionSelect=document.querySelector<HTMLSelectElement>('#faction-select')!;factionSelect.disabled=!menu;factionSelect.value=this.session.options.faction??defaultFactions.player;

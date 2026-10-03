@@ -36,3 +36,8 @@ summary {cursor:pointer;color:#f4d87a;}
 #hud span {font-family:system-ui,sans-serif;font-size:12px;line-height:1.35;}
 @media(max-width:1120px){body{grid-template-columns:800px;max-width:824px;}#match-menu{grid-column:1;}#game{grid-column:1;grid-row:2;}#hud{grid-column:1;grid-row:3;width:800px;max-height:none;display:grid;grid-template-columns:1fr 1fr;gap:8px 20px;}#match-overview{grid-column:1 / -1;}#gameplay-controls{grid-row:2 / span 8;} }
 @media(prefers-reduced-motion:reduce){button{transition:none;}}
+
+#match-results table {border-collapse:collapse; width:100%; max-width:46rem; margin:.8rem 0;}
+#match-results th, #match-results td {padding:.35rem .6rem; border-bottom:1px solid #795d32; text-align:right;}
+#match-results th:first-child {text-align:left;}
+#match-results h2 {color:#e7c96b;}

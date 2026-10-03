@@ -820,3 +820,13 @@ Options ändras bara i menu, och faktisk sparad match styr Load/restart.
 Ingen separat persistent menupreferens/options-snapshot eller ny schema-
 version. Alla18 fraktion/map/difficulty-kombinationer är giltiga men
 full balans utvärderas i RTS-079.
+
+## RTS-078: statistik utan dubbel bokföring
+
+Statistik härleds från befintliga finite stocks, bank/last/loss-ledgers
+och spawn-counters. Visa net spend efter refunds snarare än att införa
+gross-spend/eventhistorik. Enhetssiffror räknar kroppar, inte supply
+eller byggnader; wave-fiender räknas som tillkomna. Resultat endast
+efter terminal outcome, båda lag, maximalt en decimal i resursrows.
+Save config10 räcker; Load återskapar samma statistik ur faktisk match.
+Legacy utan enemy-income-ledger ges inga påhittade inkomster.
