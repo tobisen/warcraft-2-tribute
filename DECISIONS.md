@@ -955,3 +955,7 @@ Egen skogsgrön/mässingsfantasy, Georgia/system-ui utan fontdependency, origina
 ## RTS-094 – Separat matchform och speed-scope
 
 Karta/fraktion/svårighet återanvänder validerade options och låsta scenariokartor. Korta karta/svårighetsbeskrivningar separeras från hela sammanfattningen. Game speed är separat och visar enda fungerande1×.0.75× införs i108, inte i094, eftersom körningen uttryckligen inte får implementera097–120. Ingen ny Save-property behövs för konstant1×.
+
+## RTS-095 – Resize utan worldscale
+
+Canvas använder återstående fönsteryta efter befintlig280px HUD och sessionrad. Kartstorlek/grid/gameplay ändras inte vid resize. Kamera maximeras till kartans mått och centreras vid större fönster, utan zoom eller utsträckta pixlar; ramklick ignoreras. Resize avbryter bara oavslutad musdraggest, inte orders/selection. Nya top/bottom-HUD ingår först097–101.

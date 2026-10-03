@@ -7,10 +7,12 @@ export function syncHomeMenu(nextPhase:SessionPhase):void{
  if(nextPhase==='menu'&&phase!=='menu')current='home';phase=nextPhase;
  const menu=phase==='menu',setup=current==='campaign'||current==='skirmish';
  document.body.dataset.phase=phase;document.body.dataset.homePage=current;
+ element('match-menu').hidden=!menu;element('game-toolbar').hidden=menu;
+ for(const id of ['pause-match','resume-match','new-match','restart-match','save-controls','audio-controls','mission-instruction','session-status','match-results']){const target=element(menu?'home-content':'game-toolbar');if(element(id).parentElement!==target)target.append(element(id));}
  element('home-brand').hidden=!menu;element('home-navigation').hidden=!menu||current!=='home';
  element('home-content').hidden=menu&&current==='home';element('menu-back').hidden=!menu||current==='home';
  element('home-heading').hidden=!menu;element('home-heading').textContent=current==='campaign'?'Campaign · Choose a mission':current==='skirmish'?'Skirmish · Choose your battle':current==='load'?'Load Game':'Settings';
- element('match-setup').hidden=menu&&!setup;element('audio-controls').hidden=menu&&current!=='settings';
+ element('match-setup').hidden=!menu||!setup;element('audio-controls').hidden=menu&&current!=='settings';
  if(menu&&current==='settings')(element('audio-controls') as HTMLDetailsElement).open=true;
  element('save-controls').hidden=menu&&current!=='load';element('save-match').hidden=menu;
  for(const id of ['match-options-summary','mission-instruction','session-status'])element(id).hidden=menu&&!setup;

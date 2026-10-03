@@ -1956,3 +1956,7 @@ Original CSS-sköld/palett och fyra huvudmenyingångar. Befintliga uppdrag/Skirm
 ## 2026-10-03 – RTS-094 Done: tydliga matchinställningar
 
 Form med befintliga karta/fraktion/svårighet och separat standard1×. Alla kartor/svårigheter har beskrivningar och fasta kartor förklaras.73relevanta tester/13filer PASS, typecheck/build/diff PASS. Chromium båda upplösningar: hela menyn/load/session, välj Forest/Clans/Hard och se korrekt summary/beskrivningar, start/Save/load/resume. Screenshots setup granskade; inga page errors.0.75× avsiktligt inte implementerad (108 ligger utanför körning). Diff granskad options/Save/scope, inga blockerande fynd. Nästa095 resize/separat spelvy.
+
+## 2026-10-03 – RTS-095 Done: fönsterfyllande spelvy
+
+Startsida dold under match, separat sessionrad; sidopanel bevarad. ResizeObserver uppdaterar heltalscanvas, kamera/bounds/scroll1:1 och stabilt worldinput.74relevanta tester/14filer PASS; typecheck/build/diff PASS. Chromium1280×720→1920×1080→1280×720: canvas1000×671 respektive1640×1031 inom fönstret; mittendrag, verkliga klick/move/drag, HUD-save under paus utan stateändring, Load/resume/restart/huvudmeny. Screenshots båda upplösningar granskade, pixelgrafik skarp, inga errors. Första helpern matchade inte Vites main.ts-query och kunde inte se scene; korrigerad extern URL-glob, sedan kontrollerna gröna. Ingen runtimebug dold. Diff granskat resize-listenerlifecycle, coords/raminput/Save/scope utan blockerande fynd. Nästa096 engelska.

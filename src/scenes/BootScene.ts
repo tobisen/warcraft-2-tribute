@@ -1,3 +1,4 @@
+import {viewportGeometry} from '../presentation/viewport';
 import {syncHomeMenu} from '../presentation/homeMenu';
 import {enemyBody} from '../gameplay/enemyBody';
 import type {EnemyNavalState} from '../gameplay/enemyNaval';
@@ -241,6 +242,8 @@ export class BootScene extends Phaser.Scene {
     this.rallyMarker = this.add.circle(0, 0, 8).setStrokeStyle(2, 0x7bd389).setDepth(6).setVisible(false);
     this.buildingRing = this.add.rectangle(0, 0, 0, 0).setOrigin(0).setStrokeStyle(2, 0xffdc73).setDepth(5).setVisible(false);
     this.cameras.main.setBounds(0, 0, this.map.width, this.map.height).setZoom(1).setScroll(loaded?.view.camera.x??0,loaded?.view.camera.y??0);
+    const resizeCamera=()=>{const v=viewportGeometry(this.scale.width,this.scale.height,this.map);const camera=this.cameras.main;camera.setViewport(v.camera.x,v.camera.y,v.camera.width,v.camera.height);camera.setBounds(0,0,this.map.width,this.map.height);camera.setScroll(Math.max(0,Math.min(camera.scrollX,this.map.width-camera.width)),Math.max(0,Math.min(camera.scrollY,this.map.height-camera.height)));this.drag=undefined;this.cameraDrag=undefined;this.dragBox?.setVisible(false);};
+    resizeCamera();this.scale.on(Phaser.Scale.Events.RESIZE,resizeCamera);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.scale.off(Phaser.Scale.Events.RESIZE,resizeCamera));
     this.cameraDrag = undefined;
     const preventMiddle = (event: MouseEvent) => { if (event.button === 1) event.preventDefault(); };
     this.game.canvas.addEventListener('mousedown', preventMiddle);
@@ -458,6 +461,7 @@ export class BootScene extends Phaser.Scene {
 
   private handleDown(pointer: Phaser.Input.Pointer): void {
     if (!this.gameplayActive()) return;
+    const camera=this.cameras.main;if(pointer.x<camera.x||pointer.y<camera.y||pointer.x>=camera.x+camera.width||pointer.y>=camera.y+camera.height)return;
     this.game.canvas.focus({preventScroll:true});
     if (pointer.button === 1) {
       if (this.drag) return;
@@ -559,7 +563,7 @@ export class BootScene extends Phaser.Scene {
       return;
     }
     if (this.placement.active || pointer.button !== 0 || !this.drag) return;
-    if (pointer.event.target instanceof Element && pointer.event.target.closest('#hud, #match-menu')) {
+    if (pointer.event.target instanceof Element && pointer.event.target.closest('#hud, #match-menu, #game-toolbar')) {
       this.drag = undefined;
       this.dragBox.setVisible(false);
       return;

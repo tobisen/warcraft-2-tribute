@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-095 – Spelvy som fyller webbläsarfönstret** — **Todo**.
+**RTS-096 – Engelska i hela spelet** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. Denna körning genomför endast091–096;097–120 är Todo och implementeras inte här.
 
@@ -2656,7 +2656,7 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-095 – Spelvy som fyller webbläsarfönstret
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Dölj startsidan helt när matchen börjar. Anpassa canvas och HUD vid resize. Verifiera korrekta input-koordinater efter storleksändring.
 

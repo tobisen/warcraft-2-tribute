@@ -8,7 +8,7 @@ import { viewportConfig } from './config/camera';
 
 bindAudioControls();applySkin();bindHomeMenu();
 
-new Phaser.Game({
+const game=new Phaser.Game({
   type: Phaser.AUTO,
   pixelArt: true,
   roundPixels: true,
@@ -18,3 +18,8 @@ new Phaser.Game({
   backgroundColor: '#182028',
   scene: [BootScene],
 });
+
+const gameContainer=document.getElementById('game')!;
+const resizeGame=()=>{const {width,height}=gameContainer.getBoundingClientRect();if(width>0&&height>0&&(game.scale.width!==Math.floor(width)||game.scale.height!==Math.floor(height)))game.scale.resize(Math.floor(width),Math.floor(height));};
+new ResizeObserver(resizeGame).observe(gameContainer);
+window.addEventListener('resize',resizeGame);

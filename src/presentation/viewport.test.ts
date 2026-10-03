@@ -1,0 +1,2 @@
+import {it,expect} from 'vitest';import {viewportGeometry} from './viewport';
+it('uses available smaller viewport and centers finite maps in larger windows without zoom',()=>{expect(viewportGeometry(1000.8,660.4,{width:1280,height:960})).toEqual({canvas:{width:1000,height:660},camera:{width:1000,height:660,x:0,y:0}});expect(viewportGeometry(1640,1020,{width:1280,height:960}).camera).toEqual({width:1280,height:960,x:180,y:30});});

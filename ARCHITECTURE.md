@@ -1245,3 +1245,7 @@ oförändrad. Release och prestanda dokumenteras i
 ## RTS-094 – Beskrivna matchval
 
 `presentation/matchSettings.ts` exporterar karta-/svårighetsbeskrivningar och härleder detaljer från samma MatchOptions som start/Save/restart. Formuläret återanvänder gameplay/matchSettings-validation; konstant1× innebär ingen ny gameplay/Save-data. Nya värden får inte införas bara som UI utan faktisk tidsmodell108.
+
+## RTS-095 – Responsiv spelvy
+
+Startsida och `#game-toolbar` har exklusiv visibility; befintliga session/audio/save DOM-element flyttas mellan containrar utan nya handlers. `main.ts` observerar faktisk `#game`-yta och anropar Scale.resize med heltal, bara vid ändring och positiv storlek. `presentation/viewport.ts` håller kamera i1:1 world pixels och centrerar en ändlig karta när canvas är större. Scenens Scale-resize uppdaterar viewport/bounds/scroll, rensar pågående drag och avregistreras på shutdown. Input använder camera.updateWorldPoint; canvasram utanför kartkameran tar inga nya orders. Sidopanelen behålls till097–101, nya kameragester till102–103.

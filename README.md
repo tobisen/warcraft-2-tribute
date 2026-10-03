@@ -560,3 +560,5 @@ Chromium desktop är verifierad; andra browsermotorer och mobil är ej testade.
 Huvudmenyn erbjuder Campaign (fyra befintliga fristående uppdrag), Skirmish (Skirmish eller Wave-survival), Load Game (lokal validerad slot) och Settings (befintliga ljudnivåer/mute). Back eller Escape återgår till huvudmenyn före matchstart. Matchens paus/save/load/restart fungerar som tidigare. Campaign har ingen kampanjprogression.
 
 RTS-094: Campaign/Skirmish visar karta, fraktion, svårighet och separat Game speed. Kartan är låst för uppdrag/survival och valbar för Skirmish. Korta beskrivningar förklarar kartan och fiendetrycket. Endast1× stöds nu;0.75× införs i planerade RTS-108.
+
+RTS-095: startsidan är helt dold under match. Den separata spelvyn fyller fönstret med en responsiv canvas, scrollande befintlig sidopanel och sessionrad. World pixels/grid/zoom1 bevaras; om fönstret är större än hela kartan centreras kartan med ramyta. Resize och mittendrag bevarar korrekta klick-/drag-/orderkoordinater.

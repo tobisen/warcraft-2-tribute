@@ -61,3 +61,13 @@ body[data-phase='menu'] #match-results{grid-column:1 / -1;}
 body[data-phase='menu']{grid-template-columns:1fr;}
 #map-description,#difficulty-description{font:13px/1.5 system-ui,sans-serif;color:#aebcaf;margin:8px 0;}
 body[data-phase='menu'] #home-content{max-height:calc(100vh - 64px);overflow:auto;}
+/* RTS-095: a separate, window-sized match workspace. */
+body:not([data-phase='menu']){width:100%;max-width:none;height:100vh;margin:0;padding:0;display:grid;grid-template-columns:280px minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);gap:0;overflow:hidden;}
+body:not([data-phase='menu']) #game-toolbar{grid-column:1 / -1;grid-row:1;display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;padding:8px 12px;background:#192b28;border-bottom:1px solid #977a40;max-height:170px;overflow:auto;font:13px system-ui,sans-serif;}
+body:not([data-phase='menu']) #game-toolbar button{padding:6px 10px;min-height:32px;font:13px system-ui,sans-serif;}
+body:not([data-phase='menu']) #mission-instruction{display:none;}
+body:not([data-phase='menu']) #session-status{margin:0;color:#aebcaf;}
+body:not([data-phase='menu']) #audio-controls{margin:0;}
+body:not([data-phase='menu']) #game{grid-column:2;grid-row:2;width:100%;height:100%;min-width:0;min-height:0;box-shadow:none;overflow:hidden;background:#101917;}
+body:not([data-phase='menu']) #hud{grid-column:1;grid-row:2;width:280px;height:100%;max-height:none;display:block;overflow:auto;border-width:12px;}
+body:not([data-phase='menu']) #match-results{flex-basis:100%;}
