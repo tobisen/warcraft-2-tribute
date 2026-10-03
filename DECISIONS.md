@@ -1135,3 +1135,17 @@ Changelog beskriver samlade användarsynliga funktioner och inte varje task
 som en egen release. Build-ID är separat HEAD commit-hash vid build, local
 i dev, unknown om git saknas. Release, build-ID och Saveconfig är olika
 värden med olika syfte; inga commits/amend eller match-Saveändringar.
+
+## RTS-125 – Renderingsupplösning
+
+Preset anger hela logiska spelytan inklusive DOM-HUD, inte bara världscanvas.
+800×600,1024×768,1280×720,1600×900,1920×1080,2048×1332 stöds. Gemensam
+CSS-scale är min(1,windowWidth/logicalWidth,windowHeight/logicalHeight),
+centrerad letterbox och ingen sträckning. Fönsteranpassning är separat och
+default; under800×600 behålls minsta logiska HUD och skalas ned. Presetval
+bevaras när adaptation slås på, och fullscreen är separat/on-demand.
+
+Kartan påverkas inte; större logisk canvas visar mer world via befintlig
+kamera, små fönster skalar ned samma vy. Settings sparas i preferences-slot,
+inte i match-Save. Mycket högt preset på liten skärm ger förväntat liten
+text/grafik; välj fönsteranpassning eller lägre preset för större visning.

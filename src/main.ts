@@ -1,3 +1,4 @@
+import {bindDisplayControls} from './presentation/displaySettings';
 import {bindReleaseInfo} from './presentation/releaseInfo';
 import {bindResultScreen} from './presentation/resultScreen';
 import {initializePreferences} from './presentation/preferences';
@@ -10,7 +11,7 @@ import Phaser from 'phaser';
 import { BootScene } from './scenes/BootScene';
 import { viewportConfig } from './config/camera';
 
-applyEnglishText();initializePreferences();bindAudioControls();applySkin();bindHomeMenu();bindResultScreen();bindReleaseInfo();
+applyEnglishText();initializePreferences();bindAudioControls();applySkin();bindHomeMenu();bindResultScreen();bindReleaseInfo();bindDisplayControls();
 
 const game=new Phaser.Game({
   type: Phaser.AUTO,
@@ -24,6 +25,8 @@ const game=new Phaser.Game({
 });
 
 const gameContainer=document.getElementById('game')!;
-const resizeGame=()=>{const {width,height}=gameContainer.getBoundingClientRect();if(width>0&&height>0&&(game.scale.width!==Math.floor(width)||game.scale.height!==Math.floor(height)))game.scale.resize(Math.floor(width),Math.floor(height));};
+const resizeGame=()=>{const width=gameContainer.clientWidth,height=gameContainer.clientHeight;if(width>0&&height>0&&(game.scale.width!==Math.floor(width)||game.scale.height!==Math.floor(height)))game.scale.resize(Math.floor(width),Math.floor(height));game.scale.refresh();};
 new ResizeObserver(resizeGame).observe(gameContainer);
 window.addEventListener('resize',resizeGame);
+
+window.addEventListener('displaychange',resizeGame);

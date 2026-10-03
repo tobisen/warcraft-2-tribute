@@ -2330,3 +2330,23 @@ match-top-release→paus/Save PASS utan pageerrors. Byggt bundle innehåller
 separat release0.1.0 och dåvarande HEAD b279572. Browser hittade initialt
 changelog inuti dold match-setup; DOM-placeringen korrigerad och verifierad.
 Ingen kvarstående regression/scopefynd, bundlevarningen kvar.124 Done, nästa125.
+
+## 2026-10-03 – RTS-125: Upplösning och gemensam skalning
+
+Sex presets + separat/default window adaptation i preferences. #app logical
+workspace och gemensam aspect-bevarande CSS-scale/letterbox för canvas/HUD.
+Minimum800×600 i små fönster; större presets uppskalats inte. Fullscreen
+separat. Phaser resize använder logisk clientyta och refreshar bounds;
+edge-pan/minimap physical→logical, rawscreen5px dragtröskel bevarad.
+
+Checks:888tester/118filer PASS156.90s;8 riktade display/preferences/minimap
+tester PASS; typecheck/build/diff och filreferenser PASS. Native browser
+alla6presets×1280/640fönster PASS geometry/aspect/letterbox/reload, klick/
+dragselection/group move/minimap/HUD-bounds, Save/load och upplösningsbyte
+under paus med exakt oförändrat matchstate. Native fullscreen enter/exit,
+resize och window adaptation PASS. Komplett verklig Tutorial/resultat/
+statistik/save/restart båda fraktioner/viewports PASS efter ny container.
+Screenshots granskade; inget klippt HUD eller browserfel. Ingen match-Save/
+world/tile/gameplayändring. Hög preset i liten skärm ger mindre text som
+förväntat; lägre preset/adaptation dokumenteras. Bundlevarningen kvar.
+125 Done, nästa126 original startsideskomposition och diskret ambience.

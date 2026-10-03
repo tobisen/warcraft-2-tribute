@@ -1536,3 +1536,21 @@ changelog använder befintlig Back/Escape-navigation. Vite injicerar separat
 __BUILD_ID__: HEAD short hash vid build, unknown utan git och local i dev.
 UI validerar build-label och skriver textContent. package.json:s privata
 verktygsversion0.0.0 är inte produktversion eller matchconfig.
+
+## RTS-125 – Logisk viewport och gemensam skalning
+
+[displayPolicy](src/presentation/displayPolicy.ts) definierar sex presets,
+validering och aspect-bevarande fit. [displaySettings](src/presentation/displaySettings.ts)
+ger #app en logisk storlek och gemensam CSS-transform med centrerad letterbox;
+canvas, HUD och DOM-kontroller skalas tillsammans. Ingen uppskalning i preset-
+läge. Adapt-to-window är separat/default och har minimum800×600 för HUD,
+vilket skalas ned i mindre fönster. Fullscreen är fortfarande separat native
+user gesture. CSS-layoutens viewportmått kommer från logiska dimensioner.
+
+main resize använder game-containerns clientWidth/clientHeight, inte skalad
+bounding rect. Phaser bounds refreshas efter display/resize, kamerageometri
+förblir world pixels/zoom1 och mapstorlek oförändrad. Phaser pointermapping
+används för selection/commands; edge-pan/minimap använder gemensam clientPoint
+för physical→logical. Dragtröskeln är fortsatt5 verkliga screen pixels.
+Preferences schema1 får validerat display-fält med defaults för äldre prefs;
+match-Save/schema/config20 ändras inte och load bevarar aktuell display.

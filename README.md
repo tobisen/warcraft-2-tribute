@@ -664,3 +664,11 @@ Releaseversion visas i startsida och top bar; Changelog finns i huvudmenyn.
 Produktversionen kommer från src/config/release.ts. Separat build-ID visas
 i changelog och versionsetikettens tooltip: local i dev, HEAD-hash vid build
 eller unknown om git saknas. Saveconfig är oberoende av releaseversion.
+
+Settings → Display: välj800×600,1024×768,1280×720,1600×900,1920×1080 eller
+2048×1332. Avmarkera Adapt resolution to window för att använda preset.
+Canvas och HUD skalas tillsammans utan sträckning, med centrerad letterbox;
+fullscreen är separat. Fönsteranpassning är default och skalar minimum800×600
+ned i mindre fönster. Valet sparas lokalt och ändrar inte kartstorlek eller
+match-Save. Ett högt preset på liten skärm ger mindre text; välj lägre preset
+eller fönsteranpassning vid behov.

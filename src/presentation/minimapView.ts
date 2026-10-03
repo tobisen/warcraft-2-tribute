@@ -1,3 +1,4 @@
+import {clientPoint} from './displayPolicy';
 import { cameraIndicator,minimapCamera,minimapSize,worldToMinimap,type MinimapData,type MapSize } from './minimap';
 import type { Position } from '../gameplay/movement';
 /** DOM canvas owns only camera navigation. Scene shutdown removes its sole listener. */
@@ -5,7 +6,7 @@ export function bindMinimap(canvas:HTMLCanvasElement,getView:()=>{data:MinimapDa
  canvas.width=minimapSize.width;canvas.height=minimapSize.height;
  const context=canvas.getContext('2d')!;
  const click=(event:MouseEvent)=>{if(event.button!==0||!canNavigate())return;event.stopPropagation();const box=canvas.getBoundingClientRect(),v=getView();
-  const point={x:(event.clientX-box.left-canvas.clientLeft)*canvas.width/canvas.clientWidth,y:(event.clientY-box.top-canvas.clientTop)*canvas.height/canvas.clientHeight};
+  const point=clientPoint({x:event.clientX,y:event.clientY},box,{width:canvas.width,height:canvas.height});
   setScroll(minimapCamera(point,v.data.world,v.viewport));render();
  };
  const contextMenu=(event:Event)=>{event.preventDefault();event.stopPropagation();};

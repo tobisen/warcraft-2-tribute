@@ -11,7 +11,7 @@ const element=(id:string)=>document.getElementById(id)!;
 export function syncHomeMenu(nextPhase:SessionPhase):void{
  if(nextPhase==='menu'&&phase!=='menu')current='home';phase=nextPhase;
  const menu=phase==='menu',setup=current==='campaign'||current==='skirmish';
- document.body.dataset.phase=phase;document.body.dataset.homePage=current;
+ document.body.dataset.phase=phase;document.getElementById('app')!.dataset.phase=phase;document.body.dataset.homePage=current;
  element('match-menu').hidden=!menu;element('game-toolbar').hidden=menu||phase==='playing';element('top-bar').hidden=menu;element('bottom-bar').hidden=menu;element('minimap-overlay').hidden=menu;element('match-menu-button').setAttribute('aria-expanded',String(phase==='paused'||phase==='ended'));
  for(const id of ['pause-match','resume-match','new-match','restart-match','save-controls','audio-controls','camera-controls','display-controls','mission-instruction','session-status','match-results']){const target=element(nextPhase==='ended'&&id==='match-results'?'result-content':nextPhase==='ended'&&id==='save-controls'?'result-save':menu?'home-content':id==='new-match'?'quit-confirm':'game-toolbar');if(element(id).parentElement!==target)target.append(element(id));}
  element('home-brand').hidden=!menu;element('home-navigation').hidden=!menu||current!=='home';

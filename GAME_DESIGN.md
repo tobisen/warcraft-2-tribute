@@ -1109,3 +1109,11 @@ färdigställning. Egen borttagning är ännu ingen tillgänglig action.
 Startsida och matchens top bar visar samma releaseversion. Menyn Changelog
 visar större användarsynliga förändringar per release, plus separat build-ID.
 Back/Escape återgår till startsidan. Versionsinformationen påverkar inte matchen.
+
+## RTS-125 – Displayval
+
+Settings → Display erbjuder sex renderingsupplösningar samt separat Adapt
+resolution to window och Fullscreen. Hela spelytan skalar med bibehållet
+bildförhållande; letterbox visar outnyttjad yta. Kamera/world och gameplay
+påverkas inte av fysisk skalning. Inställningarna bevaras efter reload,
+Save/load och restart. Välj lägre preset för större text på liten skärm.

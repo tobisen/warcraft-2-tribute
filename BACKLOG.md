@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-125 – Upplösning och skalning** — **Todo**.
+**RTS-126 – Flashigare startsida** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -3244,7 +3244,7 @@ Skilj releaseversion från senaste commit/build-ID.
 
 ## RTS-125 – Upplösning och skalning
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Erbjud renderingsupplösningar:
 

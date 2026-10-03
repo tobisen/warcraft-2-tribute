@@ -1,6 +1,6 @@
 :root {color-scheme:dark;font-family:Georgia,'Times New Roman',serif;color:#efe4c2;background:#111b18;font-size:14px;--gold:#c6a659;--wood:#49352a;--blue:#7398c1;}
 * {box-sizing:border-box;}
-body {margin:16px auto;padding:0 12px;max-width:1130px;display:grid;grid-template-columns:280px 800px;gap:12px;align-items:start;}
+#app {margin:16px auto;padding:0 12px;max-width:1130px;display:grid;grid-template-columns:280px 800px;gap:12px;align-items:start;}
 [hidden] {display:none!important;}
 #match-menu,#hud {border:16px solid transparent;border-image:url('/assets/panel.png') 16 fill stretch;background:#172422;box-shadow:0 4px 12px #0007;}
 #match-menu {grid-column:1 / -1;padding:0 8px 8px;}
@@ -34,7 +34,7 @@ input[type='range'] {accent-color:#c6a659;width:100px;}
 summary {cursor:pointer;color:#f4d87a;}
 #command-guide-text {white-space:pre-line;line-height:1.5;font-family:system-ui,sans-serif;font-size:13px;}
 #hud span {font-family:system-ui,sans-serif;font-size:12px;line-height:1.35;}
-@media(max-width:1120px){body{grid-template-columns:800px;max-width:824px;}#match-menu{grid-column:1;}#game{grid-column:1;grid-row:2;}#hud{grid-column:1;grid-row:3;width:800px;max-height:none;display:grid;grid-template-columns:1fr 1fr;gap:8px 20px;}#match-overview{grid-column:1 / -1;}#gameplay-controls{grid-row:2 / span 8;} }
+@media(max-width:1120px){#app{grid-template-columns:800px;max-width:824px;}#match-menu{grid-column:1;}#game{grid-column:1;grid-row:2;}#hud{grid-column:1;grid-row:3;width:800px;max-height:none;display:grid;grid-template-columns:1fr 1fr;gap:8px 20px;}#match-overview{grid-column:1 / -1;}#gameplay-controls{grid-row:2 / span 8;} }
 @media(prefers-reduced-motion:reduce){button{transition:none;}}
 
 #match-results table {border-collapse:collapse; width:100%; max-width:46rem; margin:.8rem 0;}
@@ -42,47 +42,47 @@ summary {cursor:pointer;color:#f4d87a;}
 #match-results th:first-child {text-align:left;}
 #match-results h2 {color:#e7c96b;}
 /* RTS-093: home composition; existing match HUD retained until095/097–101. */
-body[data-phase='menu']{max-width:none;min-height:100vh;margin:0;padding:32px;display:grid;place-items:center;background:radial-gradient(ellipse at 65% 30%,#31534955,transparent 60%),linear-gradient(145deg,#101917,#22352b,#101917);}
-body[data-phase='menu'] #match-menu{width:min(1050px,94vw);border:0;box-shadow:none;background:none;display:grid;grid-template-columns:1.2fr 1fr;gap:60px;align-items:center;padding:0;}
-#home-brand h1{font-size:clamp(40px,5vw,66px);line-height:1.05;color:#eee5cf;overflow-wrap:anywhere;margin:24px 0;letter-spacing:0;}
+#app[data-phase='menu']{max-width:none;min-height:calc(var(--display-height) * 1);margin:0;padding:32px;display:grid;place-items:center;background:radial-gradient(ellipse at 65% 30%,#31534955,transparent 60%),linear-gradient(145deg,#101917,#22352b,#101917);}
+#app[data-phase='menu'] #match-menu{width:min(1050px,calc(var(--display-width) * 0.94));border:0;box-shadow:none;background:none;display:grid;grid-template-columns:1.2fr 1fr;gap:60px;align-items:center;padding:0;}
+#home-brand h1{font-size:clamp(40px,calc(var(--display-width) * 0.05),66px);line-height:1.05;color:#eee5cf;overflow-wrap:anywhere;margin:24px 0;letter-spacing:0;}
 .home-crest{width:80px;height:90px;background:#2b4c68;clip-path:polygon(0 0,100% 0,100% 70%,50% 100%,0 70%);border-top:7px solid #d5b66b;display:grid;place-items:center;font:38px Georgia;color:#d5b66b;}
 .eyebrow{font:12px system-ui,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#d5b66b;margin-top:24px;}
 .home-subtitle,.home-note{font:14px/1.7 system-ui,sans-serif;color:#aebcaf;}
-#home-navigation,body[data-phase='menu'] #home-content{background:#192b28;border:1px solid #977a40;box-shadow:0 12px 50px #0006,inset 0 0 0 5px #101917;padding:26px;}
+#home-navigation,#app[data-phase='menu'] #home-content{background:#192b28;border:1px solid #977a40;box-shadow:0 12px 50px #0006,inset 0 0 0 5px #101917;padding:26px;}
 #home-navigation button{display:block;width:100%;margin:12px 0;padding:14px;font-size:20px;text-align:left;background:linear-gradient(#4e4030,#332b23);}
 #home-navigation h2,#home-heading{color:#eee5cf;margin:4px 0 20px;font:24px Georgia;}
-body[data-phase='menu'] #match-setup label{display:flex;justify-content:space-between;margin:12px 0;font-family:system-ui,sans-serif;}
-body[data-phase='menu'] #match-setup select{max-width:250px;}
-body[data-phase='menu'] #audio-controls{display:block;}
-body[data-phase='menu'] #audio-controls summary{display:none;}
-body[data-phase='menu'] #audio-controls label{display:flex;justify-content:space-between;}
-body[data-phase='menu'] #match-results{grid-column:1 / -1;}
-@media(max-width:900px){body[data-phase='menu'] #match-menu{grid-template-columns:1fr;gap:24px;width:min(600px,94vw);}#home-brand h1{font-size:38px}.home-crest{display:none}.home-subtitle{display:none;}}
-body[data-phase='menu']{grid-template-columns:1fr;}
+#app[data-phase='menu'] #match-setup label{display:flex;justify-content:space-between;margin:12px 0;font-family:system-ui,sans-serif;}
+#app[data-phase='menu'] #match-setup select{max-width:250px;}
+#app[data-phase='menu'] #audio-controls{display:block;}
+#app[data-phase='menu'] #audio-controls summary{display:none;}
+#app[data-phase='menu'] #audio-controls label{display:flex;justify-content:space-between;}
+#app[data-phase='menu'] #match-results{grid-column:1 / -1;}
+@media(max-width:900px){#app[data-phase='menu'] #match-menu{grid-template-columns:1fr;gap:24px;width:min(600px,calc(var(--display-width) * 0.94));}#home-brand h1{font-size:38px}.home-crest{display:none}.home-subtitle{display:none;}}
+#app[data-phase='menu']{grid-template-columns:1fr;}
 #map-description,#difficulty-description{font:13px/1.5 system-ui,sans-serif;color:#aebcaf;margin:8px 0;}
-body[data-phase='menu'] #home-content{max-height:calc(100vh - 64px);overflow:auto;}
+#app[data-phase='menu'] #home-content{max-height:calc(calc(var(--display-height) * 1) - 64px);overflow:auto;}
 /* RTS-095: a separate, window-sized match workspace. */
-body:not([data-phase='menu']){width:100%;max-width:none;height:100vh;margin:0;padding:0;display:grid;grid-template-columns:280px minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);gap:0;overflow:hidden;}
-body:not([data-phase='menu']) #game-toolbar{grid-column:1 / -1;grid-row:1;display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;padding:8px 12px;background:#192b28;border-bottom:1px solid #977a40;max-height:170px;overflow:auto;font:13px system-ui,sans-serif;}
-body:not([data-phase='menu']) #game-toolbar button{padding:6px 10px;min-height:32px;font:13px system-ui,sans-serif;}
-body:not([data-phase='menu']) #mission-instruction{display:none;}
-body:not([data-phase='menu']) #session-status{margin:0;color:#aebcaf;}
-body:not([data-phase='menu']) #audio-controls{margin:0;}
-body:not([data-phase='menu']) #game{grid-column:2;grid-row:2;width:100%;height:100%;min-width:0;min-height:0;box-shadow:none;overflow:hidden;background:#101917;}
-body:not([data-phase='menu']) #hud{grid-column:1;grid-row:2;width:280px;height:100%;max-height:none;display:block;overflow:auto;border-width:12px;}
-body:not([data-phase='menu']) #match-results{flex-basis:100%;}
+#app:not([data-phase='menu']){width:100%;max-width:none;height:calc(var(--display-height) * 1);margin:0;padding:0;display:grid;grid-template-columns:280px minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);gap:0;overflow:hidden;}
+#app:not([data-phase='menu']) #game-toolbar{grid-column:1 / -1;grid-row:1;display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;padding:8px 12px;background:#192b28;border-bottom:1px solid #977a40;max-height:170px;overflow:auto;font:13px system-ui,sans-serif;}
+#app:not([data-phase='menu']) #game-toolbar button{padding:6px 10px;min-height:32px;font:13px system-ui,sans-serif;}
+#app:not([data-phase='menu']) #mission-instruction{display:none;}
+#app:not([data-phase='menu']) #session-status{margin:0;color:#aebcaf;}
+#app:not([data-phase='menu']) #audio-controls{margin:0;}
+#app:not([data-phase='menu']) #game{grid-column:2;grid-row:2;width:100%;height:100%;min-width:0;min-height:0;box-shadow:none;overflow:hidden;background:#101917;}
+#app:not([data-phase='menu']) #hud{grid-column:1;grid-row:2;width:280px;height:100%;max-height:none;display:block;overflow:auto;border-width:12px;}
+#app:not([data-phase='menu']) #match-results{flex-basis:100%;}
 /* RTS-097 compact overview; existing session controls open while paused/ended. */
-body:not([data-phase='menu']){grid-template-rows:48px auto minmax(0,1fr);}
+#app:not([data-phase='menu']){grid-template-rows:48px auto minmax(0,1fr);}
 #top-bar{grid-column:1 / -1;grid-row:1;display:flex;align-items:center;gap:32px;padding:0 16px;background:#192b28;border-bottom:1px solid #977a40;font:14px system-ui,sans-serif;font-variant-numeric:tabular-nums;}
 #top-bar button{font:14px system-ui,sans-serif;padding:6px 14px;min-height:32px;}
 #top-gold{color:#f4d87a;}#top-wood{color:#bed0a1;}#top-population{margin-left:auto;}
-body:not([data-phase='menu']) #game-toolbar{grid-row:2;}
-body:not([data-phase='menu']) #hud,body:not([data-phase='menu']) #game{grid-row:3;}
+#app:not([data-phase='menu']) #game-toolbar{grid-row:2;}
+#app:not([data-phase='menu']) #hud,#app:not([data-phase='menu']) #game{grid-row:3;}
 #pause-match,#resource-status,#population-status{display:none;}
 #top-bar{height:48px;}
 
 /* RTS-098 read-only selection panel, using original atlas portraits. */
-body:not([data-phase='menu']){grid-template-rows:48px auto minmax(0,1fr) 170px;}
+#app:not([data-phase='menu']){grid-template-rows:48px auto minmax(0,1fr) 170px;}
 #bottom-bar{grid-column:1 / -1;grid-row:4;display:flex;align-items:center;gap:20px;height:170px;padding:12px 20px;background:#192b28;border-top:2px solid #977a40;font:14px system-ui,sans-serif;overflow:auto;}
 #selection-portrait{flex:none;width:128px;height:128px;background:#101917;border:2px solid #795d32;}
 #selection-info h2{font:22px Georgia;color:#f4d87a;margin:0 0 8px;}
@@ -123,12 +123,12 @@ body:not([data-phase='menu']){grid-template-rows:48px auto minmax(0,1fr) 170px;}
 /* RTS-103 camera preferences live for the app session; persistence comes in119. */
 #camera-controls{font:13px system-ui,sans-serif;}
 #camera-controls label{display:flex;align-items:center;gap:8px;margin:8px 0;}
-body[data-phase='menu'] #camera-controls{margin-top:20px;border-top:1px solid #795d32;padding-top:12px;}
-body[data-phase='menu'] #camera-controls summary{display:none;}
+#app[data-phase='menu'] #camera-controls{margin-top:20px;border-top:1px solid #795d32;padding-top:12px;}
+#app[data-phase='menu'] #camera-controls summary{display:none;}
 
 /* RTS-104 modal pause controls; the frozen world keeps its playing viewport. */
 #pause-backdrop{position:fixed;inset:0;background:#0009;z-index:90;}
-body:not([data-phase='menu']) #game-toolbar{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(460px,calc(100vw - 32px));max-height:calc(100vh - 32px);z-index:100;display:flex;flex-direction:column;align-items:stretch;gap:10px;padding:24px;border:2px solid #977a40;box-shadow:0 12px 50px #0009;}
+#app:not([data-phase='menu']) #game-toolbar{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(460px,calc(calc(var(--display-width) * 1) - 32px));max-height:calc(calc(var(--display-height) * 1) - 32px);z-index:100;display:flex;flex-direction:column;align-items:stretch;gap:10px;padding:24px;border:2px solid #977a40;box-shadow:0 12px 50px #0009;}
 #pause-heading{font:26px Georgia;color:#f4d87a;margin:0 0 8px;}
 #game-toolbar #save-controls{display:flex;flex-wrap:wrap;gap:10px;}
 #game-toolbar #save-status{flex-basis:100%;}
@@ -137,13 +137,13 @@ body:not([data-phase='menu']) #game-toolbar{position:fixed;left:50%;top:50%;tran
 #game-toolbar #audio-controls label{display:flex;justify-content:space-between;margin:8px 0;}
 #quit-confirm{font:14px/1.6 system-ui,sans-serif;}
 #quit-confirm button{margin-right:10px;}
-body[data-phase='menu'] #display-controls{margin-top:16px;font:13px system-ui,sans-serif;}
-body[data-phase='menu'] #display-controls summary{display:none;}
+#app[data-phase='menu'] #display-controls{margin-top:16px;font:13px system-ui,sans-serif;}
+#app[data-phase='menu'] #display-controls summary{display:none;}
 #fullscreen-notice{font:11px system-ui,sans-serif;color:#e4b28a;max-width:150px;}
-body:not([data-phase='menu']) #game-toolbar{flex-wrap:nowrap;}
+#app:not([data-phase='menu']) #game-toolbar{flex-wrap:nowrap;}
 #game-toolbar>*{flex-shrink:0;}
 #game-toolbar #match-results{flex-basis:auto;min-width:0;}
-body[data-phase='ended'] #game-toolbar{width:min(760px,calc(100vw - 32px));}
+#app[data-phase='ended'] #game-toolbar{width:min(760px,calc(calc(var(--display-width) * 1) - 32px));}
 
 #command-feedback{font:13px/1.5 system-ui,sans-serif;color:#bed0a1;overflow-wrap:anywhere;}
 #command-feedback[data-error='true']{color:#ef9b8b;}
@@ -152,11 +152,11 @@ body[data-phase='ended'] #game-toolbar{width:min(760px,calc(100vw - 32px));}
 #tutorial-objective { font: 13px/1.5 system-ui,sans-serif; color: #ffe0a0; border: 1px solid #b7975b; padding: 8px; }
 
 /* RTS-122 replaces the ended match with a separate, scrollable result page. */
-body[data-phase='ended']{display:block;overflow:auto;background:#111b18;}
-#result-screen{min-height:100vh;display:grid;place-items:center;padding:24px;}
+#app[data-phase='ended']{display:block;overflow:auto;background:#111b18;}
+#result-screen{min-height:calc(var(--display-height) * 1);display:grid;place-items:center;padding:24px;}
 #result-card{width:min(900px,100%);padding:24px;background:#1a2d28;border:2px solid #a08443;box-shadow:0 12px 40px #0008;}
 #result-card nav{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0;}
-#result-card h2{font-size:clamp(24px,4vw,38px);}
+#result-card h2{font-size:clamp(24px,calc(var(--display-width) * 0.04),38px);}
 #result-card #save-controls{margin-top:20px;}
 #result-card #match-results table{max-width:none;}
 
@@ -164,3 +164,10 @@ body[data-phase='ended']{display:block;overflow:auto;background:#111b18;}
 #home-release{font:13px system-ui,sans-serif;color:#c6a659;grid-column:1;margin:0;}
 #top-release{font:12px system-ui,sans-serif;color:#c6a659;white-space:nowrap;}
 #changelog{font:14px/1.6 system-ui,sans-serif;}#changelog h3{color:#f4d87a;}
+
+/* RTS-125 one logical workspace scales canvas and DOM together, with letterbox. */
+html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#080f0d;}
+#app{position:absolute;transform-origin:top left;max-width:none!important;}
+#app[data-phase='menu'],#app[data-phase='ended']{overflow:auto;}
+#display-controls label{display:flex;gap:8px;align-items:center;margin:12px 0;}
+#display-status{font:12px/1.5 system-ui,sans-serif;color:#aebcaf;}
