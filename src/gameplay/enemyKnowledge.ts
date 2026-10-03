@@ -29,6 +29,8 @@ export function updateEnemyExploration(m:MatchState):MatchState {
  const goal=enemyAttackDestination(m);const reached=m.combat.enemies.some(e=>e.order?.kind==='attack-move'&&Math.hypot(e.position.x-goal.x,e.position.y-goal.y)<=config.attackArrivalRange);
  const attackScoutIndex=m.enemyKnowledge.playerBase?m.enemyKnowledge.attackScoutIndex:reached?Math.min(m.enemyKnowledge.attackScoutIndex+1,config.attackWaypoints.length-1):m.enemyKnowledge.attackScoutIndex;
  const destination=m.enemyKnowledge.playerBase??config.attackWaypoints[attackScoutIndex];
- if(attackScoutIndex===m.enemyKnowledge.attackScoutIndex&&!m.enemyKnowledge.playerBase)return m;
- return {...m,enemyKnowledge:{...m.enemyKnowledge,attackScoutIndex},combat:{...m.combat,enemies:m.combat.enemies.map(e=>e.order?.kind==='attack-move'&&(e.order.destination.x!==destination.x||e.order.destination.y!==destination.y)?{...e,navigation:undefined,order:{kind:'attack-move',destination:{...destination}}}:e)}};
+ const oldDestination=[{x:704,y:400},{x:448,y:528},{x:208,y:320}][m.enemyKnowledge.attackScoutIndex];
+ const needsRetarget=(e:typeof m.combat.enemies[number])=>e.order?.kind==='attack-move'&&(e.order.destination.x!==destination.x||e.order.destination.y!==destination.y)&&(!!m.enemyKnowledge!.playerBase||attackScoutIndex!==m.enemyKnowledge!.attackScoutIndex||e.order.destination.x===oldDestination.x&&e.order.destination.y===oldDestination.y);
+ if(attackScoutIndex===m.enemyKnowledge.attackScoutIndex&&!m.combat.enemies.some(needsRetarget))return m;
+ return {...m,enemyKnowledge:{...m.enemyKnowledge,attackScoutIndex},combat:{...m.combat,enemies:m.combat.enemies.map(e=>needsRetarget(e)?{...e,navigation:undefined,order:{kind:'attack-move',destination:{...destination}}}:e)}};
 }

@@ -1571,3 +1571,35 @@ Slutkontroller: npm test636 tester/80 filer PASS (89,00s); typecheck/build,
 git diff --check och577 dokumentreferenser PASS.
 Bundle index-wfpgUoUZ.js1559,30KB/gzip409,20KB; befintlig varning kvar.
 RTS-078 Done. Nästa RTS-079: längre skirmish-balans.
+
+## 2026-10-03 – RTS-079: längre skirmish-matris
+
+18 betalda playthroughs passerade först, men sex nya passiva matcher
+exponerade2 fel på Skogspasset: attack-sökpunkten var sten och fienden
+fastnade vid blocked route i300s. Browser reproducerade samma fel.
+Flodkrökens andra punkt var dessutom vatten. Flyttade tre punkter till
+gemensamt giltig mark, normaliserar äldre order och regressionsprovar
+landpositioner samt orderuppdatering utan gratis synkunskap.
+Första fullsuite:658 PASS/2 fail, inte slutresultat. Ingen ombalansering
+av priser, HP, fraktioner eller AI-budget; ingen ny dependency/schema.
+
+Granskning hittade en route-cache-regression: generell normalisering
+retargetade en legitim godtycklig exploration-order. Begränsade ändringen
+till historiska sökpunkter/indexbyte eller observerad bas. Visibility/
+knowledge22 PASS (1,15s). Föregående fullsuite hade detta1 failure;
+slutlig fullsuite körs separat. Riktad matrix/knowledge34 PASS (113,06s).
+RTS-078 Pages/Actions success7190aef/37087587320.
+
+Slutlig browser: sex faktiska Normal-skirmish-starts PASS utan
+page/console/request-fel, ingen injicerad state. Accelererad gameplay:
+arena crown113,27s/clans119,24s; forest108,95/119,93s; river113,23/119,23s.
+Alla defeat, observerad bas, finite budget/extraction, resultatfrysning
+och Save/load. Begränsning: inga naturliga femminuters realtidsspel eller
+50/50-balans påstås; den betalda strategin testar bara en spelares policy.
+Slutdiff granskad för fog-läckor, route-cache, historiska order,
+config-vs-save och taskscope; inga kvarstående blockerande fynd.
+
+Slutkontroller:662 tester/81 filer PASS (126,03s); typecheck/build,
+git diff --check och578 dokumentreferenser PASS. Bundle
+index-DSc0qhVd.js1559,52KB/gzip409,25KB; avsiktlig varning kvar.
+RTS-079 Done. Nästa RTS-080: verifierad tvåfraktionsrelease.

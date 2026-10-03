@@ -830,3 +830,12 @@ eller byggnader; wave-fiender räknas som tillkomna. Resultat endast
 efter terminal outcome, båda lag, maximalt en decimal i resursrows.
 Save config10 räcker; Load återskapar samma statistik ur faktisk match.
 Legacy utan enemy-income-ledger ges inga påhittade inkomster.
+
+## RTS-079: gemensam giltig sökrutt
+
+Sökpunkterna704/480,448/480 och208/384 är terrängpositioner som
+passar alla tre befintliga kartor. Tidigare704/400 låg i Skogspassets
+sten och448/528 i Flodkrökens vatten. Ingen dold basposition läses;
+observerad bas fortsätter vara målet först efter synkontakt.
+Tidigare sparade attack-move-order normaliseras vid nästa simulation.
+Inga kostnads-/HP-/tryckändringar utan påvisat behov; Save config10 kvar.

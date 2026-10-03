@@ -848,3 +848,12 @@ refunds. Tillkomna enheter exkluderar startenheter; förlorade/besegrade
 enheter exkluderar byggnader. Resultatvyn visas inte under match så
 fiendens dolda ekonomi förblir dold. Ingen damage/APM/byggnadshistorik.
 Game-over freeze/Save bevarar resultat, restart/Ny match rensar vyn.
+
+## RTS-079: preliminär skirmish-balans
+
+Balans verifieras med begränsade betalda strategier, utan injicerad
+ekonomi eller HP. Alla18 karta/fraktion/difficulty-par ska kunna
+vinnas inom fem gameplay-minuter. Oskyddat passivt Normal-spel ska
+förlora inom samma observationsfönster. Detta bevisar spelbara flöden,
+inte optimal strategi, jämn vinstchans eller att alla uppgraderingar och
+expansioner hinner användas i varje match.

@@ -17,7 +17,7 @@ it('scouting is bounded, preserves loaded/building workers and reuses a single m
  let m=createMatch('skirmish');const first=m.combat.enemies.find(e=>e.id==='enemy-worker-1')!;first.work!.cargo=4;let result=prepareEnemyScout(m);expect(result.combat.enemies.find(e=>e.id===first.id)!.work!.cargo).toBe(4);expect(result.combat.enemies.filter(e=>e.work?.order.kind==='move')).toHaveLength(1);first.work!.order={kind:'build',buildingId:'barracks'};result=prepareEnemyScout(result);expect(result.combat.enemies.filter(e=>e.work?.order.kind==='move')).toHaveLength(1);
 });
 it('unknown base uses search route; only observation records and retargets last known base',()=>{
- let m=createMatch('skirmish');m.fog!.teams.enemy.visible.fill(false);expect(enemyAttackDestination(m)).toEqual({x:704,y:400});m.combat.enemies.push({id:'searcher',owner:'enemy',hp:36,position:{x:704,y:400},order:{kind:'attack-move',destination:{x:704,y:400}}});m=updateEnemyExploration(m);expect(enemyAttackDestination(m)).toEqual({x:448,y:528});reveal(m,m.gathering.base);m=updateEnemyExploration(observeEnemyKnowledge(m));expect(m.combat.enemies.find(e=>e.id==='searcher')!.order).toEqual({kind:'attack-move',destination:{x:400,y:450}});m.fog!.teams.enemy.visible.fill(false);m.gathering.base={x:200,y:700};m=observeEnemyKnowledge(m);expect(enemyAttackDestination(m)).toEqual({x:400,y:450});
+ let m=createMatch('skirmish');m.fog!.teams.enemy.visible.fill(false);expect(enemyAttackDestination(m)).toEqual({x:704,y:480});m.combat.enemies.push({id:'searcher',owner:'enemy',hp:36,position:{x:704,y:480},order:{kind:'attack-move',destination:{x:704,y:480}}});m=updateEnemyExploration(m);expect(enemyAttackDestination(m)).toEqual({x:448,y:480});reveal(m,m.gathering.base);m=updateEnemyExploration(observeEnemyKnowledge(m));expect(m.combat.enemies.find(e=>e.id==='searcher')!.order).toEqual({kind:'attack-move',destination:{x:400,y:450}});m.fog!.teams.enemy.visible.fill(false);m.gathering.base={x:200,y:700};m=observeEnemyKnowledge(m);expect(enemyAttackDestination(m)).toEqual({x:400,y:450});
 });
 it('unseen depletion does not cancel a distant gather order before observation/contact',()=>{
  let m=createMatch('skirmish');m.enemyKnowledge!.nodes=[{...m.gathering.node,position:{...m.gathering.node.position}}];m.fog!.teams.enemy.visible.fill(false);m.gathering.node.remaining=0;const w=m.combat.enemies.find(e=>e.id==='enemy-worker-1')!;w.work!.order={kind:'gather',nodeId:'wood-1'};const result=updateEnemyGathering(m,0);expect(result.combat.enemies.find(e=>e.id===w.id)!.work!.order.kind).toBe('gather');expect(result.enemyProduction!.wood).toBe(m.enemyProduction!.wood);
@@ -34,5 +34,9 @@ it('delivery resumes from remembered availability instead of reading unseen depl
 });
 
 it('military search advances from a valid combat approach contact outside center-radius 56',()=>{
- const m=createMatch('skirmish');m.combat.enemies.push({id:'searcher',owner:'enemy',hp:36,position:{x:760,y:424},order:{kind:'attack-move',destination:{x:704,y:400}}});expect(updateEnemyExploration(m).enemyKnowledge!.attackScoutIndex).toBe(1);
+ const m=createMatch('skirmish');m.combat.enemies.push({id:'searcher',owner:'enemy',hp:36,position:{x:760,y:504},order:{kind:'attack-move',destination:{x:704,y:480}}});expect(updateEnemyExploration(m).enemyKnowledge!.attackScoutIndex).toBe(1);
+});
+it('normalizes an old saved search destination without changing observed knowledge',()=>{
+ const m=createMatch('skirmish');m.combat.enemies.push({id:'searcher',owner:'enemy',hp:36,position:{x:896,y:320},order:{kind:'attack-move',destination:{x:704,y:400}}});
+ const updated=updateEnemyExploration(m);expect(updated.enemyKnowledge).toEqual(m.enemyKnowledge);expect(updated.combat.enemies.at(-1)!.order).toEqual({kind:'attack-move',destination:{x:704,y:480}});
 });

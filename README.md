@@ -455,3 +455,10 @@ för båda lag. Insamlat skiljs från levererat; netto spenderat betyder
 betalning minus refunds och inkluderar ofärdiga jobb. Enhetsstatistiken
 räknar tillkomna/förlorade/besegrade enheter, utan byggnader och
 startenheter i tillkomna. Save/load bevarar resultat; restart rensar det.
+
+## Längre skirmish-kontroller
+
+RTS-079 provar betalda spelarorder på alla tre kartor, båda fraktionerna
+och alla difficulties. Det är en avgränsad strategi, inte ett mått på lika
+vinstchans. Passivt spel kontrollerar fiendens kostnader/insamling och
+terminalfreeze. Sökrutten använder giltig mark på samtliga kartor.

@@ -1087,3 +1087,14 @@ och9 avrundade rows endast vid ended. Oförändrat resultat renderas en
 gång; restart/menu döljer och rensar DOM.
 [matchStats.test.ts](src/gameplay/matchStats.test.ts) verifierar verklig
 insamling/refund/produktion/död, paid victory och Save/freeze.
+
+## RTS-079: skirmish-regressioner
+
+[skirmishBalance.test.ts](src/gameplay/skirmishBalance.test.ts) kör18
+betalda playthroughs med samma command-bot och verklig Save/load.
+Enemy-bank + spent + last + lostCargo = initial budget + extraction
+kontrolleras under matchen; shared finite stock och spelarens totala
+kostnad verifieras. Sex passiva Normal-matcher verifierar terminal
+defeat och freeze. Sökpunkter måste passa land på alla kartor.
+EnemyExploration normaliserar gamla attack-move-destinationer till den
+aktuella indexerade rutten utan ny kunskap eller Save-schemaändring.

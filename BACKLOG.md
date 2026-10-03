@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-079 – Balans för längre skirmish-matcher** — **Todo**.
+**RTS-080 – Verifierad release av tvåfraktionsversionen** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
@@ -2364,13 +2364,21 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-079 – Balans för längre skirmish-matcher
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Balans för längre skirmish-matcher.
+**Goal:** Verifiera spelbar och ändlig skirmish-ekonomi över längre matcher på alla tre kartor.
+
+**Requirements:** Kör betalda spelarstrategier för tre kartor, två fraktioner och tre svårighetsgrader. Följ faktisk insamling, leverans, kostnader, laster och förluster genom hela matchen; ingen injicerad ekonomi eller HP. Kontrollera långvarigt passivt spel och att terminal simulation fryser. Dokumentera matchtider och utfall samt begränsningen till testade strategier. Justera endast config om konkreta balansfel påvisas. Behåll budget-/fog-/kostnadsregler, ingen gratis AI-inkomst. Save/load mitt i match och resultat vid slut ingår.
+
+**Non-goals:** Nya enheter eller system, optimal AI, multiplayerbalans, garanterad lika vinstchans, schemaändring, grafik/HUD-polish och bundle-varningen.
 
 **Dependencies:** RTS-078.
 
-**Acceptance criteria:** Dokumenterade längre matcher och budget begränsar gratis ekonomifördelar.
+**Acceptance criteria:** Alla 18 konfigurationer har en betald vinnande strategi inom fem gameplay-minuter; ekonomin bevaras vid observationer och matchslut. Passivt spel ger dokumenterat terminalt utfall utan gratis resurser eller oändlig simulation. Faktiska längre browserflöden verifieras om möjligt. Balansvärden ändras endast med reproducerbar grund.
+
+**Tester:** 18 hela command-baserade matcher med kontinuerlig resource-ledger och Save/load, passiva matcher och terminalfreeze; tidigare tester, typecheck/build, browser och diffgranskning.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, GAME_DESIGN.md, DECISIONS.md, ARCHITECTURE.md och README.md.
 
 ## RTS-080 – Verifierad release av tvåfraktionsversionen
 
