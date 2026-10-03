@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-080 – Verifierad release av tvåfraktionsversionen** — **Todo**.
+**RTS-081 – Vattennavigation och kustregler** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
@@ -2382,13 +2382,21 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-080 – Verifierad release av tvåfraktionsversionen
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Verifierad release av tvåfraktionsversionen.
+**Goal:** Verifiera och publicera den befintliga tvåfraktionsversionen.
+
+**Requirements:** Sammanställ aktuell scenario/fraktion/difficulty- och skirmish/karta-matris. Kör befintliga tester/typecheck/build i ren kopia. Verifiera originalassets, manifester och licens/proveniens samt Save-migrationstester. Kontrollera publicerad Pages-version mot lokal dist och browser-menu/selection/orders/save/restart/assets/ljud. Mät befintliga belastningsfixtures och budget; dokumentera faktisk metod och begränsningar. Återanvänd tidigare kontroller utan påståenden om ännu ej testade browsers eller naturlig fullmatris.
+
+**Non-goals:** Nya gameplay-system, nya assets, extern licensiering, andra browsermotorer/mobil, deploymentplattform-byte och bundle-varningsfix.
 
 **Dependencies:** RTS-079.
 
-**Acceptance criteria:** Komplett testmatris, assets/licenser/save-kompatibilitet och publicerad version verifieras.
+**Acceptance criteria:** Ren installation och alla checks passerar; publicerad runtime motsvarar verifierad build; tvåfraktionsflöden, save-kompatibilitet, assets och prestandabudget redovisas korrekt utan blockerande fynd.
+
+**Tester:** Befintlig fullsuite och Save/asset-regressioner, clean install/typecheck/build, lokal/public browser och befintlig profile-browser. Dokumentation-only kräver inga nya spegeltester.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, RELEASE_CHECKLIST.md, PERFORMANCE.md, README.md och assets/README.md vid behov.
 
 ## RTS-081 – Vattennavigation och kustregler
 

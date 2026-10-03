@@ -97,3 +97,22 @@ CI-uppföljning: workflows för RTS-063/064 stoppade på ett 10 s timeout i den
 nu 30 s för denna integration och nya load-integrationer. Det är körmarginal
 på delad CI, inte sänkt gameplay/prestandakrav; profileringsskriptets CPU-budgetar
 är oförändrade och testerna kräver fortfarande victory/conservation/fog/reset.
+
+## RTS-080: aktuell tvåfraktionsbuild
+
+Samma Chromium147-miljö, script och64/128-fixtures,301 samples efter
+warmup. Det är injicerad belastning och inte betald matchbalans.
+
+| Mått | 64 bodies | 128 bodies |
+| --- | ---: | ---: |
+| Update CPU p95 |9,00ms|24,30ms|
+| Render CPU p95 |0,70ms|0,80ms|
+| RAF p95 |17,50ms|33,80ms|
+| Observerad FPS |59,43|38,13|
+| CPU max |20,80ms|46,80ms|
+| GC JS heap |11,89MiB|12,00MiB|
+
+Budget PASS:128-stress har CPU-budget33,4ms, ingen separat RAF/60FPS-
+garanti. Tio restarts10,07 till10,41MiB (+0,34), ingen browser-error.
+Bundle1559,52KB/gzip409,25KB och dist4088KiB ryms i befintlig budget.
+Ingen prestandaoptimering eller bundle-split införd i denna release.

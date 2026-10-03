@@ -1603,3 +1603,30 @@ Slutkontroller:662 tester/81 filer PASS (126,03s); typecheck/build,
 git diff --check och578 dokumentreferenser PASS. Bundle
 index-DSc0qhVd.js1559,52KB/gzip409,25KB; avsiktlig varning kvar.
 RTS-079 Done. Nästa RTS-080: verifierad tvåfraktionsrelease.
+
+## 2026-10-03 – RTS-080: verifierad tvåfraktionsrelease
+
+Ren temporär kopia utan .git/node_modules/dist; npm ci --offline49
+packages/audit0 vulnerabilities PASS. Fullsuite/build körs separat.
+Assetmanifest/file/bounds-audit PASS:16/48/1920/17 frames, egna källor
+och dokumenterad proveniens. Inga gameplayändringar eller nya tester
+för dokumentationen. Lokal profile-browser PASS:64CPU9ms/render0,7/
+RAF17,5;128CPU24,3/render0,8/RAF33,8, observerat59,43/38,13FPS; GC11,89/
+12MiB, tio restarts+0,34MiB. Fullbudget och metod i PERFORMANCE.
+Publicerad smoke före senaste Actions-deploy passerade, men avsåg078-
+bundle; räknas inte som verifiering av079. Inväntar verifierad deploy.
+
+Ren fullsuite662/81 PASS119,04s, typecheck/build PASS. Originalasset-
+export10 filer identiska; clean/local/public JS identisktSHA256fe24b21c
+(fullhash i RELEASE_CHECKLIST). Actions37109756850/31dd4db success.
+Publicerad Chromium:18 menu/start/save/restartkombinationer och faktisk
+betald victory90s/defeat91,62s/resultatfreeze PASS. Inga injicerade
+resurser/units/HP. Separat smoke med12 ljudavkodningar,save/reload/resume,
+10 restarts och2 viewportar PASS utan errors. Separat35-body CPU5,3/
+RAF17,6/heap10,08;64-soldier CPU12,1/RAF17,6/heap10,68. Screenshots
+verifierade; akustisk lyssning och andra engines ej utförda.
+Granskning av checks/metod/proveniens/save/CI/hash/budget/docs fann inga
+blockerande fynd. Ingen ny runtimeändring i080.
+
+git diff --check och581 dokumentreferenser PASS. RTS-080 Done.
+Nästa RTS-081: vattennavigation och explicita kustregler.

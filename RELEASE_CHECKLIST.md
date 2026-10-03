@@ -64,3 +64,47 @@ RTS-065 `d85b754` publicerad: [Actions 37021939019](https://github.com/tobisen/w
 ## Uppföljning RTS-066–070
 
 Fraktionsval, egna sprites, fraktionsproduktion och försvarshållning/raseri är införda. [FACTION_BALANCE.md](FACTION_BALANCE.md) dokumenterar 30 betalda gameplaykombinationer med förmågor, båda fraktioners naturliga Utposten/Normal-vinster och accelererade verkliga defeat-/terminal-input-/fraktionsbytekontroller. 535 tester/71 filer, typecheck och build passerar. Inga runtime-balansvärden ändrades i RTS-070; teststrategin hanterar tidigare gold och störd ekonomi. Save schema2/config4 migrerar tidigare configversioner. Föregående RTS-069-push verifierad Actions success; denna tasks Pages-publicering redovisas efter push.
+
+## RTS-080: tvåfraktionsrelease 2026-10-03
+
+Denna uppföljning ersätter tidigare releasebeskrivningars aktuella
+status: två fraktioner och tre skirmish-kartor finns nu; Save schema2/
+config10 migrerar tidigare konfigurationer utan gratis ekonomi. Äldre
+texter ovan är historiska kontroller, inte dagens funktionsbegränsningar.
+
+Aktuell fullsuite inkluderar30 scenario/fraktion/difficulty-matcher och
+18 skirmish/karta/fraktion/difficulty-matcher via betalda command-policy.
+De använder0,05s delta, faktisk fog/insamling/leverans/kostnader, Save/load
+och terminalfreeze. Ingen naturlig browser-fullmatris eller lika
+vinstchans påstås. RTS-079 verifierade dessutom sex faktiska passiva
+Normal-browsermatcher (109–120 gameplay-sekunder med accelererad klocka),
+defeat/resultat/Save/load och att AI-banker bevarar finite ekonomin.
+
+Assetmanifest audit:16 world-,48 byggnads-,1920 enhets- och17 UI-frames;
+alla atlasfiler och frame-gränser giltiga. Originalkällor/proveniens i
+[assets/README.md](assets/README.md); egna kompositioner, inget importerat
+spelart eller externa typsnitt. Ingen ny övergripande licens antas eller
+införs. Ljud finns som sex OGG/WAV-par med dokumenterad originalkälla.
+
+Lokal prestanda/heap/bundlesize PASS enligt [PERFORMANCE.md](PERFORMANCE.md).
+Desktop Chromium är verifierad engine; andra engines/mobil, akustisk
+lyssning, 50/50-balans och optimal AI är fortsatt obevisade. Bundlevarning
+kvarstår avsiktligt.
+
+Ren offlineinstallation49 packages/audit0;662 tester/81 filer PASS
+(119,04s), typecheck/build PASS. Deterministisk assetexport i kopian
+matchar10 originalfiler exakt. Ren/local/public runtime byte-identisk:
+index-DSc0qhVd.js, SHA256
+fe24b21ca9993cd56b1059977b376fe397e5b393250bb9e6eb330324c7e21af9.
+
+[Actions37109756850](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37109756850)
+success för31dd4db. [Publicerad version](https://tobisen.github.io/warcraft-2-tribute/)
+verifierad efter deploy:18 faktiska menu/Start/pause/save/load/restart-
+kombinationer, faktisk betald Utposten/Easy-victory90s och oskyddad
+Survival/Hard-defeat91,62s, resultatrader/freeze/save/reset PASS.
+Accelererad clock men ingen injicerad matchstate i dessa flöden.
+Smoke:selection/move,save/reload/load/resume,tio restarts,1280x900/
+1024x768 och12 OGG/WAV-avkodningar PASS utan request/runtimefel.
+Separat injicerad35-body-profil CPU5,30ms/RAF17,60/heap10,08MiB;
+64-soldier-stress CPU12,10ms/RAF17,60/heap10,68MiB. Ingen full
+realtidsmatris eller akustisk lyssning påstås.

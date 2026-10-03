@@ -462,3 +462,8 @@ RTS-079 provar betalda spelarorder på alla tre kartor, båda fraktionerna
 och alla difficulties. Det är en avgränsad strategi, inte ett mått på lika
 vinstchans. Passivt spel kontrollerar fiendens kostnader/insamling och
 terminalfreeze. Sökrutten använder giltig mark på samtliga kartor.
+
+RTS-080-release: [spela på GitHub Pages](https://tobisen.github.io/warcraft-2-tribute/).
+Två fraktioner, tre skirmish-kartor, betald AI-ekonomi och matchresultat
+är publicerade. Aktuella releasekontroller och begränsningar finns i
+[RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md). Sjösystem kommer i nästa etapp.
