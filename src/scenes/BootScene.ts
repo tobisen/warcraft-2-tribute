@@ -1,3 +1,4 @@
+import {bindCameraInput} from '../presentation/cameraInput';
 import {selectedIcons,selectedQueue,renderSelectedIcons,renderSelectedQueue} from '../presentation/selectionCollection';
 import {actionPanel,renderActionPanel} from '../presentation/actionPanel';
 import {selectionInfo,renderSelectionInfo} from '../presentation/selectionInfo';
@@ -110,6 +111,7 @@ export class BootScene extends Phaser.Scene {
   private rallyMarker!: Phaser.GameObjects.Arc;
   private buildingRing!: Phaser.GameObjects.Rectangle;
   private cameraDrag?: CameraDrag;
+  private cameraInput?:ReturnType<typeof bindCameraInput>;
   private outcome: MatchOutcome = 'playing';
   private restartButton!: HTMLButtonElement;
   private restartPending = false;
@@ -248,6 +250,9 @@ export class BootScene extends Phaser.Scene {
     const resizeCamera=()=>{const v=viewportGeometry(this.scale.width,this.scale.height,this.map);const camera=this.cameras.main;camera.setViewport(v.camera.x,v.camera.y,v.camera.width,v.camera.height);camera.setBounds(0,0,this.map.width,this.map.height);camera.setScroll(Math.max(0,Math.min(camera.scrollX,this.map.width-camera.width)),Math.max(0,Math.min(camera.scrollY,this.map.height-camera.height)));this.drag=undefined;this.cameraDrag=undefined;this.dragBox?.setVisible(false);};
     resizeCamera();this.scale.on(Phaser.Scale.Events.RESIZE,resizeCamera);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.scale.off(Phaser.Scale.Events.RESIZE,resizeCamera));
     this.cameraDrag = undefined;
+    this.cameraInput=bindCameraInput(this.game.canvas,()=>{const c=this.cameras.main;return {scroll:{x:c.scrollX,y:c.scrollY},world:this.map,camera:{x:c.x,y:c.y,width:c.width,height:c.height}};},()=>this.gameplayActive()&&!this.cameraDrag&&!this.drag,p=>{this.cameras.main.setScroll(p.x,p.y);if(this.placement.active)this.previewPoint=this.worldPoint(this.input.activePointer);});
+    const clearCameraGestures=()=>{this.cameraDrag=undefined;this.drag=undefined;this.dragBox?.setVisible(false);};window.addEventListener('blur',clearCameraGestures);
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{this.cameraInput?.destroy();window.removeEventListener('blur',clearCameraGestures);});
     const preventMiddle = (event: MouseEvent) => { if (event.button === 1) event.preventDefault(); };
     this.game.canvas.addEventListener('mousedown', preventMiddle);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.game.canvas.removeEventListener('mousedown', preventMiddle));
@@ -535,6 +540,7 @@ export class BootScene extends Phaser.Scene {
 
   private handleMove(pointer: Phaser.Input.Pointer): void {
     if (!this.gameplayActive()) return;
+    if(pointer.event.target instanceof Element&&pointer.event.target.closest('#hud, #match-menu, #game-toolbar, #minimap-overlay, #top-bar, #bottom-bar'))return;
     if (this.cameraDrag) {
       const scroll = dragCamera(this.cameraDrag, { x: pointer.x, y: pointer.y }, this.map,
         { width: this.cameras.main.width, height: this.cameras.main.height });
@@ -764,6 +770,7 @@ export class BootScene extends Phaser.Scene {
 
   update(_time: number, delta: number): void {
     if(this.restartPending)return;
+    this.cameraInput?.update(delta/1000);
     const previousShots=this.combat.projectiles??[];
     const dt=gameplayDelta(this.session.phase,delta/1000,this.skipGameplayFrame);this.visualTime+=dt;
     const match = updateMatch(this.currentMatch(),dt);

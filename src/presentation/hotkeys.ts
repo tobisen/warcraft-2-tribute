@@ -18,7 +18,7 @@ export function hotkeyButton(key:string,context:KeyContext&{ctrlKey?:boolean;met
  if(!gameplayKeyAllowed(context)||context.ctrlKey||context.metaKey)return null;
  return hotkeys.find(h=>h.key===key.toUpperCase())?.button??null;
 }
-export const commandGuide=[uiText.shiftClickToggleShiftDragAdd,uiText.ctrlCmd19AssignGroup19,uiText.pPauseResumeEscapeCancelPreviewOtherwisePause,...hotkeys.map(h=>`${h.key}: ${h.label}`),uiText.aDisabledButtonMeansTheActionIsUnavailable,uiText.clickTheWorldForKeyboardFocusUiFields].join('\n');
+export const commandGuide=[uiText.cameraControls,uiText.shiftClickToggleShiftDragAdd,uiText.ctrlCmd19AssignGroup19,uiText.pPauseResumeEscapeCancelPreviewOtherwisePause,...hotkeys.map(h=>`${h.key}: ${h.label}`),uiText.aDisabledButtonMeansTheActionIsUnavailable,uiText.clickTheWorldForKeyboardFocusUiFields].join('\n');
 /** Same disabled button and same click handler: costs/order rules have one implementation. */
 export function dispatchHotkey(key:string,context:KeyContext&{ctrlKey?:boolean;metaKey?:boolean},button:(id:string)=>{disabled:boolean;click:()=>void}|null):boolean {
  const id=hotkeyButton(key,context),control=id?button(id):null;if(!control||control.disabled)return false;control.click();return true;

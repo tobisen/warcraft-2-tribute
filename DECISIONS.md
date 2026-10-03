@@ -971,3 +971,7 @@ Behåll befintlig BuildingSelection (base/barracks/harbor). Attack/defense resea
 ## RTS-100 – Grupp- och köpresentation
 
 Gruppikoner är read-only; inga nya selection/subgruppgester. Blandad land/navyselection visar alla markerade ikoner med summerad HP och union av tidigare actions. Active head har gameplaybaserad progress; queued jobb har0%, färdig blockerad head100%. Befintliga refunds50%/100% och callbacks återanvänds.
+
+## RTS-102 – Kamera är UI-tid
+
+Piltangenter används för camera pan; WASD införs inte eftersom A/S/W/D redan är actions.480px/s,16pxedge och max100ms frame-delta ligger i camera-config. Kamera använder realdelta, inte gameplay-speed. Diagonal normaliseras; keyboard prioriterar edge, HUD/drag/phase/focus blockerar. Space/Home/preferences följer103.

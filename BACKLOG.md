@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-102 – Kamerapanorering** — **Todo**.
+**RTS-103 – Kameragenvägar och inställningar** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -2782,13 +2782,21 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-102 – Kamerapanorering
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Inför kantpanorering, tangentbord och mittenknappsdrag. Behåll vänsterdrag för enhetsselection. Begränsa kameran till kartans gränser. Panorera inte när menyer eller HUD fångar input.
 
+**Requirements:** Piltangenter och16px edge-zon innanför faktisk kameraviewport panorerar480worldpx/s (config), normaliserad diagonal. Keyboard tar företräde framför edge. Befintlig mittendrag bevaras; ingen automatisk pan under vänster-/mittendrag. Endast playing, aktivt fönster och worldinput; HUD/minimap/menu/fields/buttonfocus blockerar. Blur rensar held keys/gestures. Clampa världen vid varje pan och resize. Kameratid är riktig UI-delta (max100ms per frame), oberoende av framtida gameplay-speed. A/S/W/D behåller befintliga hotkeys.
+
+**Non-goals:** Space/Home/preferences103, zoom/follow, minimapförändringar, order/selection/balans.
+
 **Dependencies:** RTS-101.
 
-**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+**Acceptance criteria:** Fyra riktningar/diagonal och gränser fungerar, motsvarande realtid ger samma pan; viewport större än karta låses. Worlddrag selection och moveinput efter pan använder worldcoordinates. HUD/pause/blur ger ingen pan eller stale held key efter återkomst. Mittendrag förblir fungerande.
+
+**Tester:** Pure direction/pan för keyboard/edge, motsatt input, diagonalhastighet, timestep/clamp. Relevanta camera/viewport/keyboard/selection/sessiontester, typecheck/build/diff. Browser båda målupplösningar: arrows/edge/middle, HUD/pause/blur/focus, worldclick/drag efter pan, restart/resize och screenshots.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md, README.md.
 
 ## RTS-103 – Kameragenvägar och inställningar
 

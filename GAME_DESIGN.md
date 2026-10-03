@@ -1012,3 +1012,7 @@ Grupper visar en ikon per vald land-/sjöenhet, i befintlig landföljd följd av
 ## RTS-101 – Minimap i spelvyn
 
 Minimappen ligger ovanpå worldytans nedre vänstra hörn. Vänsterklick centrerar/clampas kamera under playing; paus/ended/menu blockerar navigation. Höger-/mittklick ger inga orders/selection; context menu förhindras. Befintlig fog, kameraindikator och egna land-/navymarkers används, dolda fiender/resurser läcker inte.
+
+## RTS-102 – Panorera kameran
+
+Piltangenter och worldviewens inre16pxkant panorerar480px/s; diagonal har samma totalhastighet. Klicka världen för keyboardfocus. HUD/minimap/menu/buttonfocus/paus blockerar pan, vänster-/mittendrag har företräde. Mittendrag flyttar kameran som tidigare; alla gränser clampas. A/S/W/D behåller sina actions. Kameran använder realtid oberoende av framtida gameplay-speed.

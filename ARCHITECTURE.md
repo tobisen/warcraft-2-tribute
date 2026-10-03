@@ -1275,3 +1275,7 @@ presentation/selectionCollection.ts härleder egna markerade ikoner och aktuell 
 ## RTS-101 – Camera-only minimapoverlay
 
 DOM-minimappen är en grid-overlay i worldytans nedre vänstra hörn, separat från Phaser-canvas och bottom actions. bindMinimap får explicit playingpredicate och tar bort click/contextmenu-listeners på shutdown. BootScene skickar currentMatch inklusive navy till befintlig fogfiltrerad datamodell; tidigare manuell snapshot saknade navy. Worlddrag-release på top/bottom/minimap/HUD avbryter drag utan selection.
+
+## RTS-102 – Kamerainput och realtids-pan
+
+camera.ts ger Phaserfri riktning/normaliserad diagonal/clamped pan. cameraInput.ts äger DOM held arrows/pointer/focus/blur och tar scene-adaptrar för geometry/phase/scroll. Camera update körs före gameplay med realdelta, max100ms; keys prioriterar edge. HUD/fokus/paus och aktiv drag blockerar automatisk pan, blur rensar input/gestures; alla listeners avregistreras på shutdown. Mittendrag och worldcoordinate-input bevaras.
