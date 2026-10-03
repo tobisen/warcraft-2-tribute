@@ -19,7 +19,7 @@ import {audioEvents,type AudioSnapshot} from '../presentation/audioPolicy';
 import {archerConfig} from '../config/archer';
 import {catapultConfig} from '../config/catapult';
 import {canInteract} from '../gameplay/approach';
-import {motion,unitFrame,unitOrigin,deathEffect,effectAlive,type Motion,type DeathEffect,type Action,type UnitArt} from '../presentation/animation';
+import {motion,unitFrame,unitOrigin,artAtlas,deathEffect,effectAlive,type Motion,type DeathEffect,type Action,type UnitArt} from '../presentation/animation';
 import { buildingFrame,buildingOrigin,terrainFrame,terrainEdges,resourceFrame,resourceOrigin } from '../presentation/assets';
 import { createSession,sessionTransition,changeOptions,gameplayDelta,type MatchSession,type SessionAction } from '../gameplay/session';
 import { hotkeys,hotkeyButton,dispatchHotkey,commandGuide } from '../presentation/hotkeys';
@@ -120,6 +120,8 @@ export class BootScene extends Phaser.Scene {
   private navy?:NavyState;
   private navyGraphics!:Phaser.GameObjects.Graphics;
   private harborLabel?:Phaser.GameObjects.Text;
+  private shipVisuals=new Map<string,Phaser.GameObjects.Image>();
+  private harborVisual?:Phaser.GameObjects.Image;
   private shipLabels=new Map<string,Phaser.GameObjects.Text>();
   private harborButton!:HTMLButtonElement;
   private shipButton!:HTMLButtonElement;
@@ -161,7 +163,7 @@ export class BootScene extends Phaser.Scene {
     super('BootScene');
   }
 
-  preload():void {for(const key of ['world','buildings','units','ui'])if(!this.textures.exists(key))this.load.atlas(key,`${import.meta.env.BASE_URL}assets/${key}-atlas.png`,`${import.meta.env.BASE_URL}assets/${key}-atlas.json`);}
+  preload():void {for(const key of ['world','buildings','units','ui','naval'])if(!this.textures.exists(key))this.load.atlas(key,`${import.meta.env.BASE_URL}assets/${key}-atlas.png`,`${import.meta.env.BASE_URL}assets/${key}-atlas.json`);}
 
   create(): void {
     this.audioSnapshot=undefined;gameAudio.setPhase('menu');gameAudio.reset();
@@ -226,7 +228,7 @@ export class BootScene extends Phaser.Scene {
     };
     this.queuePanel.addEventListener('click',cancelJob);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.queuePanel.removeEventListener('click',cancelJob));
-    this.shipLabels.clear();this.harborLabel=undefined;this.navyGraphics=this.add.graphics().setDepth(2);
+    this.shipLabels.clear();this.shipVisuals.clear();this.harborVisual=undefined;this.harborLabel=undefined;this.navyGraphics=this.add.graphics().setDepth(2);
     this.projectileVisuals.clear();
     this.orderVisuals.clear();
     this.farmVisuals.clear();
@@ -252,7 +254,6 @@ export class BootScene extends Phaser.Scene {
       this.restartButton.removeEventListener('click', restart);
     });
     this.enemyVisuals.clear();
-    if(!this.textures.exists('enemy-transport')){const g=this.make.graphics({x:0,y:0});g.fillStyle(0x9d4135).fillEllipse(16,16,32,22).lineStyle(2,0xe6d6a5).lineBetween(16,2,16,21);g.generateTexture('enemy-transport',32,32);g.destroy();}
     for (let row = 0; row < Math.ceil(this.map.height / this.map.tileSize); row++) {
       for (let column = 0; column < Math.ceil(this.map.width / this.map.tileSize); column++) {
         const rect = tileFootprint(this.map, { column, row })!;
@@ -423,7 +424,7 @@ export class BootScene extends Phaser.Scene {
   }
   private syncSession():void {
     gameAudio.setPhase(this.session.phase);
-    if(gameAudio.status.loaded)document.getElementById('audio-status')!.textContent=`${gameAudio.status.loaded}/6 ljud laddade · ${gameAudio.settings.muted?'tyst':this.session.phase==='paused'?'pausat':'redo'}`;
+    if(gameAudio.status.loaded)document.getElementById('audio-status')!.textContent=`${gameAudio.status.loaded}/8 ljud laddade · ${gameAudio.settings.muted?'tyst':this.session.phase==='paused'?'pausat':'redo'}`;
     (document.getElementById('save-match') as HTMLButtonElement).disabled=this.session.phase==='menu'||this.restartPending;
     (document.getElementById('load-match') as HTMLButtonElement).disabled=this.restartPending;
     const phase=this.session.phase,menu=phase==='menu';
@@ -696,7 +697,7 @@ export class BootScene extends Phaser.Scene {
     }
     for (const [id, visual] of this.enemyVisuals) {
       if (!visibleEnemies.some(e => e.id === id)) {
-        this.removedVisual(id,!this.combat.enemies.some(e=>e.id===id));visual.body.destroy(); visual.label.destroy(); this.enemyVisuals.delete(id);
+        this.removedVisual(id,!this.combat.enemies.some(e=>e.id===id)&&!this.enemyNaval?.passengers.some(e=>e.id===id));visual.body.destroy(); visual.label.destroy(); this.enemyVisuals.delete(id);
       }
     }
     const visibleShots=this.outcome==='playing'?(this.combat.projectiles??[]).filter(p=>isVisible(this.fog,'player',p.position)):[];
@@ -705,14 +706,15 @@ export class BootScene extends Phaser.Scene {
       this.projectileVisuals.get(shot.id)!.setPosition(shot.position.x,shot.position.y);}
     for (const enemy of visibleEnemies) {
       if (!this.enemyVisuals.has(enemy.id)) this.enemyVisuals.set(enemy.id, {
-        body: enemy.footprint?this.add.image(enemy.position.x,enemy.position.y,'buildings',buildingFrame((enemy.buildingType==='harbor'?'barracks':enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base','enemy',enemy.construction?.remainingSeconds??0,enemy.buildingType==='outpost'?10:5,this.factions.enemy)).setOrigin(buildingOrigin((enemy.buildingType==='harbor'?'barracks':enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').x,buildingOrigin((enemy.buildingType==='harbor'?'barracks':enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').y):enemy.kind==='ship'?this.add.image(enemy.position.x,enemy.position.y,'enemy-transport').setOrigin(.5):this.add.image(enemy.position.x,enemy.position.y,'units',`${this.factions.enemy==='clans'?'clans-':''}${enemy.kind==='worker'?'worker':'soldier'}-enemy-s-idle-0`).setOrigin(.5,22/32),
+        body: enemy.footprint?this.add.image(enemy.position.x,enemy.position.y,'buildings',buildingFrame((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base','enemy',enemy.construction?.remainingSeconds??0,enemy.buildingType==='outpost'?10:5,this.factions.enemy)).setOrigin(buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').x,buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').y):enemy.kind==='ship'?this.add.image(enemy.position.x,enemy.position.y,'naval',`${this.factions.enemy==='clans'?'clans-':''}transport-enemy-s-idle-0`).setOrigin(.5,40/64):this.add.image(enemy.position.x,enemy.position.y,'units',`${this.factions.enemy==='clans'?'clans-':''}${enemy.kind==='worker'?'worker':'soldier'}-enemy-s-idle-0`).setOrigin(.5,22/32),
         label: this.add.text(0, 0, '', { fontSize: '14px', color: '#ffffff' }).setOrigin(0.5, 0),
       });
       const visual = this.enemyVisuals.get(enemy.id)!;
       visual.body.setPosition(enemy.position.x, enemy.position.y);
-      if(enemy.buildingType)visual.body.setFrame(buildingFrame(enemy.buildingType==='harbor'?'barracks':enemy.buildingType==='outpost'?'base':enemy.buildingType,'enemy',enemy.construction?.remainingSeconds??0,enemy.buildingType==='outpost'?10:5,this.factions.enemy));
+      if(enemy.buildingType)visual.body.setFrame(buildingFrame(enemy.buildingType==='outpost'?'base':enemy.buildingType,'enemy',enemy.construction?.remainingSeconds??0,enemy.buildingType==='outpost'?10:5,this.factions.enemy));
+      if(enemy.kind==='ship')this.animateUnit(enemy.id,visual.body,enemy.position,'idle','transport','enemy');
       if(!enemy.footprint&&enemy.kind!=='ship'){const target=enemy.order?.kind==='defend'?this.gathering.units.find(u=>enemy.order?.kind==='defend'&&u.id===enemy.order.targetId)?.position:enemy.navigation?.targetId==='base'?this.gathering.base:undefined;const action:Action=enemy.navigation?.targetId&&enemy.navigation.targetId!=='explore-goal'&&enemy.navigation.status==='arrived'?'attack':enemy.work?.order.kind==='gather'?'gather':'idle';this.animateUnit(enemy.id,visual.body,enemy.position,action,enemy.kind==='worker'?'worker':'soldier','enemy',target);}
-      visual.label.setPosition(enemy.position.x,enemy.position.y-90).setVisible(!!enemy.footprint||enemy.kind==='ship').setText(`${enemy.buildingType==='outpost'?'Resursbas · ':''}${enemy.kind==='ship'?'Transport':enemy.buildingType==='harbor'?'Hamn':factions[this.factions.enemy].buildingNames[(enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base']} ${Math.ceil(enemy.hp)} HP`);
+      visual.label.setPosition(enemy.position.x,enemy.position.y-(enemy.kind==='ship'?48:90)).setVisible(!!enemy.footprint||enemy.kind==='ship').setText(`${enemy.buildingType==='outpost'?'Resursbas · ':''}${enemy.kind==='ship'?'Transport':enemy.buildingType==='harbor'?'Hamn':factions[this.factions.enemy].buildingNames[(enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base']} ${Math.ceil(enemy.hp)} HP`);
       this.drawHP(enemy.position,enemy.hp,enemy.kind==='ship'?navyConfig.ship.hp:enemy.buildingType==='harbor'?navyConfig.harbor.hp:enemy.kind==='base'||enemy.buildingType==='outpost'?combatConfig.baseHP:enemy.buildingType==='barracks'?combatConfig.barracksHP:enemy.buildingType==='forge'?forgeConfig.hp:enemy.buildingType==='farm'?combatConfig.farmHP:enemy.kind==='worker'?combatConfig.workerHP:combatConfig.enemyHP,enemy.footprint?64:24,enemy.footprint?70:29,0xcf7770);
     }
     for (const unit of this.gathering.units) {
@@ -766,7 +768,7 @@ export class BootScene extends Phaser.Scene {
   private drawHP(position:Position,hp:number,max:number,width:number,offset:number,color:number):void {this.hpBars?.fillStyle(0x172422).fillRect(position.x-width/2-1,position.y-offset-1,width+2,5).fillStyle(color).fillRect(position.x-width/2,position.y-offset,width*Math.max(0,Math.min(1,hp/max)),3);}
 
   private syncAudio(visibleEnemies:typeof this.combat.enemies):void {
-    const next:AudioSnapshot={baseHP:this.combat.baseHP,own:Object.fromEntries(this.gathering.units.map(u=>[u.id,u.hp??combatConfig.workerHP])),visibleEnemies:Object.fromEntries(visibleEnemies.map(e=>[e.id,e.hp])),completed:[...(barracksReady(this.placement)?['barracks']:[]),...(this.placement.farms??[]).filter(f=>f.construction.remainingSeconds===0).map(f=>f.id),...(this.placement.forge?.construction.remainingSeconds===0?['forge']:[])],outcome:this.outcome};
+    const next:AudioSnapshot={baseHP:this.combat.baseHP,navalShots:(this.combat.projectiles??[]).filter(p=>p.marine).map(p=>({id:p.id,audible:isVisible(this.fog,'player',p.position)})),own:Object.fromEntries([...this.gathering.units.map(u=>[u.id,u.hp??combatConfig.workerHP]),...(this.navy?.ships??[]).map(s=>[s.id,s.hp])]),visibleEnemies:Object.fromEntries(visibleEnemies.map(e=>[e.id,e.hp])),completed:[...(this.navy?.harbor?.construction.remainingSeconds===0?['harbor']:[]),...(barracksReady(this.placement)?['barracks']:[]),...(this.placement.farms??[]).filter(f=>f.construction.remainingSeconds===0).map(f=>f.id),...(this.placement.forge?.construction.remainingSeconds===0?['forge']:[])],outcome:this.outcome};
     const wasPlaying=this.session.phase==='playing'||this.audioSnapshot?.outcome==='playing'&&this.outcome!=='playing';
     for(const event of audioEvents(this.audioSnapshot,next,!!wasPlaying)){if(event==='victory'||event==='defeat'){gameAudio.setPhase('ended');gameAudio.play(event,true);}else gameAudio.play(event);}
     this.audioSnapshot=next;
@@ -782,7 +784,7 @@ export class BootScene extends Phaser.Scene {
   private removedVisual(id:string,removed:boolean):void {
     const previous=this.motions.get(id);this.motions.delete(id);if(!previous)return;
     const effect=deathEffect(previous,this.visualTime,isVisible(this.fog,'player',previous.position),removed);
-    if(effect){const origin=unitOrigin(previous.type);this.deaths.set(id,{effect,visual:this.add.image(previous.position.x,previous.position.y,'units',unitFrame(effect.motion,this.visualTime)).setOrigin(origin.x,origin.y).setDepth(1)});}
+    if(effect){if(artAtlas(previous.type)==='naval')gameAudio.play('splash');const origin=unitOrigin(previous.type);this.deaths.set(id,{effect,visual:this.add.image(previous.position.x,previous.position.y,artAtlas(previous.type),unitFrame(effect.motion,this.visualTime)).setOrigin(origin.x,origin.y).setDepth(1)});}
   }
 
   private allSelectable():(Unit|Ship)[]{return [...this.gathering.units,...(this.navy?.ships??[])];}
@@ -795,10 +797,14 @@ export class BootScene extends Phaser.Scene {
     this.shipButton.parentElement!.style.visibility=this.selectedBuilding==='harbor'?'visible':'hidden';this.shipButton.disabled=this.selectedBuilding!=='harbor'||!canTrainShip(this.currentMatch());
     document.getElementById('harbor-status')!.textContent=harbor?`Hamn ${Math.ceil(harbor.hp)} HP · ${harbor.construction.remainingSeconds>0?'bygge '+harbor.construction.remainingSeconds.toFixed(1)+' s':this.navy!.production.remainingSeconds!==null?this.navy!.production.remainingSeconds===0?'väntar på fri vattenutgång':'produktion '+this.navy!.production.remainingSeconds.toFixed(1)+' s':'färdig'} · fartyg2 supply`:'Välj worker – placera på synlig kust';
     if(!harbor&&this.harborLabel){this.harborLabel.destroy();this.harborLabel=undefined;}
-    if(harbor){const r=harbor.footprint;if(!this.harborLabel)this.harborLabel=this.add.text(r.x+32,r.y-14,'Hamn',{fontSize:'12px',color:'#d6eef1'}).setOrigin(.5).setDepth(7);this.navyGraphics.fillStyle(harbor.construction.remainingSeconds>0?0x6c5b46:0x986b42,.9).fillRect(r.x,r.y,r.width,r.height).lineStyle(2,0x77c4cf).strokeRect(r.x,r.y,r.width,r.height);}
+    if(!harbor&&this.harborVisual){this.harborVisual.destroy();this.harborVisual=undefined;}
+    if(harbor){const r=harbor.footprint;if(!this.harborLabel)this.harborLabel=this.add.text(r.x+32,r.y-30,'Hamn',{fontSize:'12px',color:'#d6eef1'}).setOrigin(.5).setDepth(7);
+      if(!this.harborVisual)this.harborVisual=this.add.image(r.x+32,r.y+32,'buildings',buildingFrame('harbor','player',harbor.construction.remainingSeconds,5,this.factions.player)).setOrigin(.5,.75).setDepth(1);this.harborVisual.setFrame(buildingFrame('harbor','player',harbor.construction.remainingSeconds,5,this.factions.player));}
+    for(const [id,body] of this.shipVisuals)if(!this.navy?.ships.some(s=>s.id===id)){this.removedVisual(id,true);body.destroy();this.shipVisuals.delete(id);}
     for(const [id,label] of this.shipLabels)if(!this.navy?.ships.some(s=>s.id===id)){label.destroy();this.shipLabels.delete(id);}
-    for(const ship of this.navy?.ships??[]){const p=ship.position;this.navyGraphics.fillStyle(0x754a2b).fillEllipse(p.x,p.y,32,22).lineStyle(2,0xe6d6a5).lineBetween(p.x,p.y-13,p.x,p.y+5);if(ship.selected)this.navyGraphics.lineStyle(2,0xffdf73).strokeCircle(p.x,p.y,22);
-      if(!this.shipLabels.has(ship.id))this.shipLabels.set(ship.id,this.add.text(p.x,p.y-32,'Fartyg',{fontSize:'10px',color:'#d6eef1'}).setOrigin(.5).setDepth(7));this.shipLabels.get(ship.id)!.setPosition(p.x,p.y-32).setText(`${ship.role==='transport'?'Transport '+(ship.passengers?.length??0)+'/4':'Fartyg'} ${Math.ceil(ship.hp)} HP`);
+    for(const ship of this.navy?.ships??[]){const p=ship.position,type=ship.role==='transport'?'transport':'warship';this.drawHP(p,ship.hp,navyConfig.ship.hp,32,40,0x77c4cf);if(ship.selected)this.navyGraphics.lineStyle(2,0xffdf73).strokeCircle(p.x,p.y,22);
+      if(!this.shipVisuals.has(ship.id))this.shipVisuals.set(ship.id,this.add.image(p.x,p.y,'naval',`${this.factions.player==='clans'?'clans-':''}${type}-player-s-idle-0`).setOrigin(.5,40/64).setDepth(1));const body=this.shipVisuals.get(ship.id)!;body.setPosition(p.x,p.y);const target=ship.order.kind==='attack'?this.combat.enemies.find(e=>ship.order.kind==='attack'&&e.id===ship.order.enemyId&&entityVisible(this.fog,'player',e))?.position:undefined;this.animateUnit(ship.id,body,p,target?'attack':'idle',type,'player',target);
+      if(!this.shipLabels.has(ship.id))this.shipLabels.set(ship.id,this.add.text(p.x,p.y-48,'Fartyg',{fontSize:'10px',color:'#d6eef1'}).setOrigin(.5).setDepth(7));this.shipLabels.get(ship.id)!.setPosition(p.x,p.y-48).setText(`${ship.role==='transport'?'Transport '+(ship.passengers?.length??0)+'/4':'Fartyg'} ${Math.ceil(ship.hp)} HP`);
     }
   }
   private applyMatch(match: MatchState): void {

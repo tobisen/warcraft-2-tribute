@@ -55,3 +55,22 @@ Impact 32 px och splash 64 px har fyra egna frames i 8 FPS, 0,5 s bounded lifeti
 ## RTS-067 – Originalfraktioner
 
 Kronförbundets människosprites behåller ursprungliga frame-ID:n. Järnklanens orcher har `clans-`-prefix: grönt skinn, betar/öron, axelpartier, yxkrigare och benprydda stenmaskiner; byggnader har träpalisader, hudtak och benheraldik. Samma native ankare och footprints gäller för båda blå/röda lagvarianterna. Exporten innehåller 1 920 unit-frames i 2048×4096 RGBA och 48 byggframes i 1024×768 RGBA. Manifestet anger varje frames fraktion. Alla bilder är egna repo-lokala pixelkompositioner och får ändras/distribueras med projektet enligt samma villkor som tidigare assets; ingen spelgrafik importerades. Befintliga world/UI/ljudassets är oförändrade.
+
+## RTS-089 – Sjöpresentation
+
+[assets/sources/naval.mjs](sources/naval.mjs) ger832 original64px RGBA-frames:
+stridsfartyg med bogkanon och transport med lådor/lastdäck, båda fraktioner,
+båda lag och åtta riktningar. Idle1, rörelse/attack/sjunk4,8FPS; ankare32,40.
+Timber, heraldiska segel, vaken och synlig sjunkning använder samma palett.
+Hamnens egna brygga/kran/magasin/lyktor har tre byggstadier och lagvarianter
+från befintlig building-source (60frames,1024x1024). Navalatlas1024x3328.
+Fysiska32px-fartyg/64px-hamn, HP/supply/navigation och timrar är oförändrade.
+
+Två originalsynteser cannon0,4s och splash0,5s i samma exporter/PCM24kHz
+med OGG/WAV-alternativ. Sjunkljud kräver verklig synlig death; hide/reveal/
+boarding är tyst. Nya synliga kanonskott hörs, sparad redan flygande
+projektil/reveal ger ingen ny avfyrningssignal. Befintlig gesture, mute,
+volym och pause/reset-graf används. Originalkällor/bruk finns i
+[ASSET_LICENSE.md](ASSET_LICENSE.md). `npm run assets:export` och optional
+`PYTHONPATH=/tmp/w2t-audio-tools npm run audio:export` återskapar exporter;
+tmp-path är verifieringsmiljön, ingen projektdependency.

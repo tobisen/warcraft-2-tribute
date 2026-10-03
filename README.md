@@ -2,7 +2,7 @@
 
 Browserbaserat singleplayer-RTS inspirerat av Warcraft 2, Age of Empires 2 och
 Command & Conquer. Phaser, strict TypeScript och Vite; local-first, gameplay
-före grafik. Implementerat genom RTS-088 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
+före grafik. Implementerat genom RTS-089 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
 
 ## Installation och lokal start
 
@@ -530,3 +530,11 @@ startkapital. Samla, bygg hamn/transport och landsätt en betald armé på
 fiendeön. Förstör fiendebasen och håll din egen vid liv. Båda fraktioner
 har samma sjömål; fraktionspriser och svårighetsgrad gäller. Save/load
 bevarar även transportlast och pågående kanonskott.
+
+## Sjöassets och ljud
+
+Hamnar, stridsfartyg och transporter använder egna pixelassets med lag- och
+fraktionsfärger, åtta riktningar och synliga rörelse-/attack-/sjunkframes.
+Kanon- och sjunkljud använder samma Ljud-panel, mute och volym som övrigt
+spel. Assets/källor/export beskrivs i [assets/README.md](assets/README.md)
+och [assets/ASSET_LICENSE.md](assets/ASSET_LICENSE.md).

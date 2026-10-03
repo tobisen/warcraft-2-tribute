@@ -1214,3 +1214,16 @@ Save schema2/config16 migrerar15 och nekar förfalskat nytt uppdrag i äldre
 format. Presentation visar uppdragets instruktion framför kartans generella
 Skirmishtext. Tester fortsätter både verklig betald produktion och sparad
 överfart/projektilflykt; kanoncombat och fog-regler är oförändrade.
+
+## RTS-089: naval art genom befintlig presentationsmodell
+
+Motion/frames/deathEffect stödjer warship/transport med naval-atlas och64px
+ankare, oförändrad kropp32px. Scene håller egna fartygsbilder och hamnsprite,
+använder befintlig fog-filterlista för enemy-sprites, städar vid death/hide/
+restart och visar ring/HP/last utan geometry-placeholder. Enemy boarding
+är inte death. Hamn blir egen BuildingKind i frame-registry, inte ny
+byggnadslogik. Fartygens animationer kan aldrig orsaka gameplay-events.
+AudioSnapshot inkluderar ownShipHP, hamncompletion och marine-shot-ID:n;
+ny synlig avfyrning ger cannon, tidigare dold/reloaded shot är tyst.
+Endast verklig synlig shipDeath skapar splash genom deathEffect. Befintlig
+appägda AudioContext laddar8 original ljud; inga separata musikloopar.

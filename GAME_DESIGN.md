@@ -2,7 +2,7 @@
 
 ## Inriktning
 
-RTS-001–088 är implementerade. RTS-089–090 är planerade för fortsatt taskvis implementation. Slicebeskrivningarna visar utvecklingen;
+RTS-001–089 är implementerade. RTS-090 är planerad för fortsatt taskvis implementation. Slicebeskrivningarna visar utvecklingen;
 avsnitten RTS-018–060 längst ned anger dagens HUD, terrain/navigation,
 kantbaserade ranges, gruppmål och säkra placering/spawn.
 
@@ -960,3 +960,12 @@ Samma betalda armé/transport och ändliga enemy-landstigning används.
 Inga gratis fartyg eller kampanjsystem. Meny/restart/Save behåller scenario,
 fraktion, svårighet och fast map. Egna lastade units och enemy-passagerare
 saknar separata minimap-/synmarkörer; kanonskott kräver fortsatt målsyn.
+
+## RTS-089: läsbar flotta och kust
+
+Stridsfartyg har kanon, transport lastdäck/lådor; blått/rött lagsegel och
+fraktionens heraldik. Åtta riktningar och gångvake/attack/sjunkframes visar
+befintlig simulation. Brygga, kran och hamnmagasin har synliga byggstadier.
+Ringar, HP och transportens0–4 lasttext kvarstår. Skarpa native pixelassets
+utan importerad spelgrafik. Kanon/sjunkljud följer faktisk syn och gesture/
+mute/volym/paus; dolda dödsfall, boarding och Save-load reveal är tysta.

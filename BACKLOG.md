@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-089 – Presentation och ljud för fartyg och kust** — **Todo**.
+**RTS-090 – Verifierad release med sjöstrid** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
@@ -2544,13 +2544,21 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-089 – Presentation och ljud för fartyg och kust
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Presentation och ljud för fartyg och kust.
+**Goal:** Sammanhängande original pixelpresentation för befintlig sjöstrid.
+
+**Requirements:** Ersätt geometriska own/Enemy-fartyg och hamnplaceholder med repoegna assets i befintlig palett. Strids-/transportfartyg har skilda silhuetter, åtta riktningar, idle/rörelse/attack/sjunkframes, lag- och fraktionsvarianter. Hamn har tre byggstadier. HP/selection/last/projektiler förblir läsbara. Befintlig kustterräng bevaras. Lägg original kanon-/sjunkljud genom befintliga gesture/mute/volym/paus-regler; dolda händelser/reveal/hide är tysta. Reset/fog städar sprites/effects utan simulationsevents från animationer. Dokumentera källor/licens/export.
+
+**Non-goals:** Nya gameplayregler, AI-kanonfartyg, fraktionsbalans, vattenfysik och ny renderpipeline.
 
 **Dependencies:** RTS-088.
 
-**Acceptance criteria:** Egna/licensierade riktade animations- och ljudassets är läsbara och fog-säkra.
+**Acceptance criteria:** Betalda fartyg/hamn visas med läsbara original sprites/byggstadier och riktad rörelse/attack/sjunkning, korrekt lag/fog/reset. Sjöljud fungerar i browser efter gesture och följer mute/paus utan dold informationsläcka.
+
+**Tester:** Frames/riktning/freeze/death, naval audio-eventvisibility/throttle och assetexport; fullsuite/typecheck/build, screenshots och browseranimation/ljudkontroll.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, README.md, assets/README.md och assets/licensdokument.
 
 ## RTS-090 – Verifierad release med sjöstrid
 

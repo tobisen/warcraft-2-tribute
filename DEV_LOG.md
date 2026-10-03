@@ -1867,3 +1867,35 @@ requestfel. Helper behövde frysa vid riktigt skott (flygtid kortare än
 browseranrop), optional initial projectile-array och återuppta Phaser-
 klockan medan matchen pausad före scene-restart; runtime oförändrad.
 RTS-088 Done, nästa089 presentation/ljud för sjö.
+
+## 2026-10-03 – RTS-089 Done: original sjöart och sjöljud
+
+832 egna64px navalframes (två roller/fraktioner/lag,8riktningar,
+idle1/rörelse4/attack4/sjunk4,8FPS) i befintlig palett. Hamnens brygga/
+kran/magasin har3stadier; byggatlas60frames/1024x1024. Placeholdergeometri
+ersatt med sprite registry och befintlig fog/DeathEffect/reset. Ringar,
+HP och last bevarade; enemy-boarding utlöser inte falsk död. Original
+cannon0,4s/splash0,5s,8 ljud totalt i samma appgraf; initial/hidden/reveal/
+paus/load tysta, synlig death och ny synlig avfyrning hörs. Källor/export/
+bruk dokumenterade, ingen extern art eller nya gameplayregler.
+
+Riktat asset/presentation15/5 PASS999ms. Slutlig full748/90 PASS182,39s
+under samtidiga browsers; typecheck/build/diff/602refs PASS. Bundle1600,25KB/
+gzip419,19KB, storvarning kvar. Atlascounts/PNGdimensioner/frames bounds
+verifierade. Tidiga checks hittade gammal48frames/6ljud-testförväntan och
+byggatlasens gamla metadatahöjd768; uppdaterade exporter och relevanta
+assettester till60/8/1024. Ett exakt floatframe-boundary i nytt test
+flyttades från0,35 till0,36. Oförändrade gamla OGG-filer bevarades för att
+undvika exportmetadata-churn. Diff granskad mot fog/boarding/death/audio/
+reset/originalkällor, inga blockerande fynd.
+
+Chromium båda fraktioner betalt sjöuppdrag till victory med nya transport/
+hamnsprites och Save/restart, inga fel. Separat Normal actual insamling/
+hamn/kanonbåt/synlig enemytransport, Save i flygande skott, verklig sänkning,
+0,5s deathEffect och restart. Fleet-/sinking-screenshots granskade. Gesture
+laddar8/8; mute gör appens båda gainkanaler0, unmute återställer, riktiga
+cannon/splash BufferSource-start med originalasset-URL verifierade. Ingen
+subjektiv lyssning eller andra browsermotorer verifierade. Helper skilde
+Phasers egna gain från appgrafen, väntade på schemalagd gain/async resume
+och stängde ljudpanelen före världsklick; inga inputkodändringar krävdes.
+Klockan accelererad; gameplaystate ej injicerat. Nästa090 release.

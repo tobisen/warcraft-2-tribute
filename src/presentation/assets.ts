@@ -11,6 +11,6 @@ export const resourceOrigin={x:.5,y:.625};
 /** Only exposed edges of a contiguous patch receive shoreline/rock blending. */
 export function terrainEdges(column:number,row:number,mapId:MapId='arena'):string[]{const kind=terrainFrame(column,row,mapId);if(kind!=='water'&&kind!=='rock')return [];return ([[0,-1,'n'],[1,0,'e'],[0,1,'s'],[-1,0,'w']] as const).filter(([dx,dy])=>terrainFrame(column+dx,row+dy,mapId)!==kind).map(([, ,side])=>`edge-${kind}-${side}`);}
 
-export type BuildingKind='base'|'barracks'|'farm'|'forge';
+export type BuildingKind='base'|'barracks'|'farm'|'forge'|'harbor';
 export function buildingFrame(kind:BuildingKind,owner:'player'|'enemy',remaining=0,total=5,faction:FactionId='crown'):string{return `${faction==='clans'?'clans-':''}${kind}-${owner}-${remaining<=0?'complete':remaining>total/2?'foundation':'building'}`;}
 export function buildingOrigin(kind:BuildingKind){return kind==='farm'?{x:.5,y:.75}:{x:.5,y:.75};}

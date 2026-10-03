@@ -24,7 +24,7 @@ export class GameAudio {
    if(this.phase==='playing')this.startMusic();else if(this.phase==='paused')await this.context.suspend();
   }catch{document.getElementById('audio-status')!.textContent='Ljud ej tillgängligt – spelet fungerar ändå';}
  }
- private async load():Promise<void>{for(const name of ['music','command','impact','complete','victory','defeat'] as const){for(const ext of ['ogg','wav'])try{const response=await fetch(`${import.meta.env.BASE_URL}audio/${name}.${ext}`);if(!response.ok)throw new Error('missing audio');this.buffers.set(name,await this.context!.decodeAudioData(await response.arrayBuffer()));break;}catch{/* Validated PCM fallback; missing sound never blocks gameplay. */}}}
+ private async load():Promise<void>{for(const name of ['music','command','impact','complete','victory','defeat','cannon','splash'] as const){for(const ext of ['ogg','wav'])try{const response=await fetch(`${import.meta.env.BASE_URL}audio/${name}.${ext}`);if(!response.ok)throw new Error('missing audio');this.buffers.set(name,await this.context!.decodeAudioData(await response.arrayBuffer()));break;}catch{/* Validated PCM fallback; missing sound never blocks gameplay. */}}}
  setSettings(change:Partial<AudioSettings>):void {this.settings={...this.settings,...change};this.settings.master=volume(this.settings.master);this.settings.music=volume(this.settings.music);this.settings.effects=volume(this.settings.effects);this.applyVolume();}
  private applyVolume():void {if(this.context&&this.effectGain&&this.musicGain){this.effectGain.gain.setValueAtTime(audioGain(this.settings,'effects'),this.context.currentTime);this.musicGain.gain.setValueAtTime(audioGain(this.settings,'music'),this.context.currentTime);}}
  setPhase(phase:SessionPhase):void{

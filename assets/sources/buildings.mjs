@@ -1,7 +1,7 @@
 /** Original masonry, timber and heraldry; native pixels, shared team variants. */
 export function buildingFrames(Surface,p){
  const frames=[];
- for(const faction of ['crown','clans'])for(const owner of ['player','enemy'])for(const kind of ['base','barracks','farm','forge'])for(const stage of ['foundation','building','complete']){
+ for(const faction of ['crown','clans'])for(const owner of ['player','enemy'])for(const kind of ['base','barracks','farm','forge','harbor'])for(const stage of ['foundation','building','complete']){
   const size=kind==='farm'?64:128,s=new Surface(size,size),cx=size/2,ground=kind==='farm'?48:96,team=owner==='player'?p.teamBlue:p.teamRed,light=owner==='player'?p.teamBlueLight:p.teamRedLight;
   const width=kind==='farm'?48:kind==='base'?56:64,left=cx-width/2,top=ground-24;
   s.ellipse(cx,ground+14,width/2+4,7,p.earth);s.rect(left,top,width,38,p.rockDark);
@@ -29,6 +29,18 @@ export function buildingFrames(Surface,p){
      if(kind==='farm'){s.rect(left-3,ground+8,width+6,3,p.barkLight);for(let x=left;x<left+width;x+=8)s.rect(x,ground+3,2,14,p.bark);s.ellipse(cx+10,ground+5,6,3,p.rockLight);}
     }
    }
+  }
+  if(kind==='harbor'){
+   s.data.fill(0);s.rect(32,75,64,44,p.barkDark);for(let x=34;x<95;x+=6)s.rect(x,77,4,40,p.barkLight);
+   for(const x of [34,90]){s.rect(x,72,4,52,p.barkDark);s.rect(x,72,4,4,p.rockHighlight);}
+   s.rect(39,74,50,3,p.rock);s.rect(39,92,50,2,p.bark);
+   if(stage!=='foundation'){s.rect(42,54,35,24,p.bark);s.rect(45,57,29,18,p.barkDark);s.rect(48,62,11,14,p.ink);
+    if(stage==='complete'){s.polygon([[38,55],[57,39],[80,55]],team);s.line(41,53,75,53,light);s.rect(66,61,7,10,p.goldDark);s.rect(68,63,3,6,p.goldLight);}
+    else{s.rect(40,39,2,44,p.barkLight);s.rect(79,39,2,44,p.barkLight);s.rect(40,44,41,2,p.barkLight);}
+   }
+   s.rect(83,47,3,49,p.barkDark);s.line(65,47,90,47,p.barkLight);s.line(65,47,84,67,p.barkLight);s.line(67,49,67,88,p.rockHighlight);s.rect(63,87,8,6,p.rockDark);
+   s.rect(41,102,10,9,p.goldDark);s.rect(43,104,6,5,p.gold);s.ellipse(83,105,5,4,p.barkDark);s.line(79,104,87,104,p.rockHighlight);
+   if(stage==='complete'){s.rect(60,37,2,20,p.barkLight);s.polygon([[62,37],[76,40],[62,47]],team);if(faction==='clans')s.rect(66,40,4,3,p.rockHighlight);else s.rect(66,41,5,1,p.gold);}
   }
   frames.push({id:`${faction==='clans'?'clans-':''}${kind}-${owner}-${stage}`,image:s,x:(frames.length%8)*128,y:Math.floor(frames.length/8)*128,anchor:{x:cx,y:ground},kind:'building',faction,owner,buildingType:kind,stage,logicalFootprint:{width:kind==='base'?(owner==='player'?48:96):64,height:kind==='base'?(owner==='player'?48:96):64}});
  }
