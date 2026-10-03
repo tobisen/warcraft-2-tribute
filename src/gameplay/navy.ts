@@ -1,5 +1,5 @@
 import {text as uiText} from '../text';
-import type {Unit} from './gathering';
+import {resourceNodes,type Unit} from './gathering';
 import {placementVisible} from './visibility';
 import {navyConfig} from '../config/navy';
 import {queueConfig} from '../config/production';
@@ -42,7 +42,7 @@ export function harborPlacementError(m:MatchState,point:Position):string|null {
  const after={...m,map:replaceObstacles(m.map,[...m.map.obstacles,rect])};
  if(approachRoute(after.map,builder.position,rect,navyConfig.harbor.constructionRange).status==='blocked')return uiText.theBuildingSiteCannotBeReached;
  for(const worker of m.gathering.units.filter(u=>u.kind==='worker'))for(const [i,target] of placementObstacles(m.gathering).entries()){
-  if(i>0&&[m.gathering.node,m.gathering.gold][i-1]?.remaining===0)continue;
+  if(i>0&&resourceNodes(m.gathering)[i-1]?.remaining===0)continue;
   if(approachRoute(m.map,worker.position,target,24).status!=='blocked'&&approachRoute(after.map,worker.position,target,24).status==='blocked')return uiText.blocksAWorkerRouteToTheBaseOr;
  }
  const base=placementObstacles(m.gathering)[0];

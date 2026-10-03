@@ -13,7 +13,7 @@ import type { Unit } from './gathering';
 import { soldierStats, combatUnitStats, unitStats } from '../config/unit';
 import { barracksConfig, farmConfig, worldConfig } from '../config/buildings';
 import { gatheringConfig } from '../config/gathering';
-import type { GatheringState } from './gathering';
+import {resourceNodes,type GatheringState} from './gathering';
 import type { Position } from './movement';
 
 export interface Footprint extends Position {
@@ -54,10 +54,7 @@ export function placementObstacles(state: GatheringState): Footprint[] {
   return [
     { x: state.base.x - baseSize / 2, y: state.base.y - baseSize / 2,
       width: baseSize, height: baseSize },
-    { x: state.node.position.x - gatheringConfig.nodeRadius, y: state.node.position.y - gatheringConfig.nodeRadius,
-      width: gatheringConfig.nodeRadius * 2, height: gatheringConfig.nodeRadius * 2 },
-    ...(state.gold ? [{x:state.gold.position.x-gatheringConfig.nodeRadius,
-      y:state.gold.position.y-gatheringConfig.nodeRadius,width:gatheringConfig.nodeRadius*2,height:gatheringConfig.nodeRadius*2}] : []),
+    ...resourceNodes(state).map(node=>({x:node.position.x-gatheringConfig.nodeRadius,y:node.position.y-gatheringConfig.nodeRadius,width:gatheringConfig.nodeRadius*2,height:gatheringConfig.nodeRadius*2})),
   ];
 }
 
@@ -77,7 +74,7 @@ export function placementError(state: PlacementState, point: Position, wood: num
   if (kind==='barracks'&&state.barracks) return uiText.barracksExists;
   if (kind==='farm'&&(state.farms?.length??0)>=farmConfig.maxCount) return uiText.farmLimit;
   const rect = buildingFootprint(point,kind);
-  if (rect.x < 0 || rect.y < 0 || rect.x + rect.width > worldConfig.width || rect.y + rect.height > worldConfig.height) {
+  if (rect.x < 0 || rect.y < 0 || rect.x + rect.width > (context?.map.width??worldConfig.width) || rect.y + rect.height > (context?.map.height??worldConfig.height)) {
     return uiText.outsideTheWorld;
   }
   if (obstacles.some(other => rect.x < other.x + other.width && rect.x + rect.width > other.x
@@ -93,7 +90,7 @@ export function placementError(state: PlacementState, point: Position, wood: num
     const [base,...nodes]=placementObstacles(context.gathering);
     for(const worker of context.gathering.units.filter((u):u is Extract<Unit,{kind:'worker'}>=>u.kind==='worker')) {
       for(const [target,range] of [[base,gatheringConfig.deliveryRange],
-        ...nodes.flatMap((node,i)=>[context.gathering.node,context.gathering.gold][i]!.remaining>0?[[node,gatheringConfig.range] as const]:[])] as const) {
+        ...nodes.flatMap((node,i)=>resourceNodes(context.gathering)[i].remaining>0?[[node,gatheringConfig.range] as const]:[])] as const) {
         if(approachRoute(context.map,worker.position,target,range).status!=='blocked'
           && approachRoute(after,worker.position,target,range).status==='blocked')return uiText.blocksAWorkerRouteToTheBaseOr;
       }

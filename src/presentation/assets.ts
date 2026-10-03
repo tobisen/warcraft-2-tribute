@@ -24,7 +24,7 @@ export const resourceOrigin={x:.5,y:.625};
 /** Neighbors outside the world continue the tile: never invent a shoreline there. */
 export function terrainEdges(column:number,row:number,mapId:MapId='arena'):string[]{
  const kind=terrainFrame(column,row,mapId);if(kind!=='water'&&kind!=='rock')return [];
- const same=(dx:number,dy:number)=>{const x=column+dx,y=row+dy;return x<0||y<0||x>=worldConfig.width/arenaConfig.tileSize||y>=worldConfig.height/arenaConfig.tileSize||terrainFrame(x,y,mapId)===kind;};
+ const same=(dx:number,dy:number)=>{const x=column+dx,y=row+dy;return x<0||y<0||x>=(maps[mapId].world??worldConfig).width/arenaConfig.tileSize||y>=(maps[mapId].world??worldConfig).height/arenaConfig.tileSize||terrainFrame(x,y,mapId)===kind;};
  const edges=([[0,-1,'n'],[1,0,'e'],[0,1,'s'],[-1,0,'w']] as const).filter(([dx,dy])=>!same(dx,dy)).map(([, ,side])=>`edge-${kind}-${side}`);
  // Fill concave corners even when both cardinal neighbors are water.
  if(kind==='water')for(const [dx,dy,corner] of [[-1,-1,'nw'],[1,-1,'ne'],[1,1,'se'],[-1,1,'sw']] as const)

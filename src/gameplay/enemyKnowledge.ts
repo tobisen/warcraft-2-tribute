@@ -3,7 +3,7 @@ import {enemyKnowledgeConfig as config} from '../config/enemyKnowledge';
 import {isVisible} from './fog';
 import {commandMappedMove} from './navigation';
 import {enemyWorker} from './enemyGathering';
-import type {ResourceNode,Worker} from './gathering';
+import {resourceNodes,type ResourceNode,type Worker} from './gathering';
 import type {Position} from './movement';
 import type {MatchState} from './match';
 export interface EnemyKnowledgeState {nodes:ResourceNode[];playerBase:Position|null;resourceScoutIndex:number;attackScoutIndex:number}
@@ -11,14 +11,14 @@ export const createEnemyKnowledge=():EnemyKnowledgeState=>({nodes:[],playerBase:
 export function knownEnemyNode(m:MatchState,node:ResourceNode|undefined):ResourceNode|undefined {return node?(m.enemyKnowledge?m.enemyKnowledge.nodes.find(n=>n.id===node.id):node):undefined;}
 export function observeEnemyKnowledge(m:MatchState):MatchState {
  if(!m.enemyKnowledge||!m.fog)return m;
- const byId=new Map(m.enemyKnowledge.nodes.map(n=>[n.id,n]));for(const node of [m.gathering.node,m.gathering.gold])if(node&&isVisible(m.fog,'enemy',node.position))byId.set(node.id,{...node,position:{...node.position}});
+ const byId=new Map(m.enemyKnowledge.nodes.map(n=>[n.id,n]));for(const node of resourceNodes(m.gathering))if(node&&isVisible(m.fog,'enemy',node.position))byId.set(node.id,{...node,position:{...node.position}});
  const playerBase=m.combat.baseHP>0&&isVisible(m.fog,'enemy',m.gathering.base)?{...m.gathering.base}:m.enemyKnowledge.playerBase;
  return {...m,enemyKnowledge:{...m.enemyKnowledge,nodes:[...byId.values()],playerBase}};
 }
 export function enemyAttackDestination(m:MatchState):Position {return m.enemyKnowledge?.playerBase??(maps[m.map.id??'arena'].enemyAttackWaypoints??config.attackWaypoints)[m.enemyKnowledge?.attackScoutIndex??0];}
 /** At most one empty non-builder worker searches; loaded work is never discarded. */
 export function prepareEnemyScout(m:MatchState):MatchState {
- if(!m.enemyKnowledge||[m.gathering.node,m.gathering.gold].filter(Boolean).every(node=>knownEnemyNode(m,node)))return m;
+ if(!m.enemyKnowledge||resourceNodes(m.gathering).filter(Boolean).every(node=>knownEnemyNode(m,node)))return m;
  const workers=m.combat.enemies.filter(e=>e.kind==='worker'&&e.hp>0&&e.work!.cargo===0&&['idle','move','gather'].includes(e.work!.order.kind)).sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}));const scout=workers.find(e=>e.work!.order.kind==='move')??workers[0];if(!scout)return m;
  const waypoints=maps[m.map.id??'arena'].enemyResourceWaypoints??config.resourceWaypoints;let index=m.enemyKnowledge.resourceScoutIndex;const goal=waypoints[index];if(Math.hypot(scout.position.x-goal.x,scout.position.y-goal.y)<=config.arrivalRange||scout.navigation?.status==='blocked')index=Math.min(index+1,waypoints.length-1);
  const target=waypoints[index];if(scout.work!.order.kind==='move'&&scout.work!.target.x===target.x&&scout.work!.target.y===target.y)return {...m,enemyKnowledge:{...m.enemyKnowledge,resourceScoutIndex:index}};

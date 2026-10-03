@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-115 – En större referenskarta** — **Todo**.
+**RTS-116 – Förbättra övriga kartor** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -3016,13 +3016,21 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-115 – En större referenskarta
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Skapa en handgjord karta med: basområden, expansionsresurser, alternativa vägar, strategiska passager och genomtänkta avstånd. Verifiera navigation, AI och kamerakontroller.
+**Goal:** En handgjord större Skirmishkarta med basområden, expansionsresurser, alternativa vägar och strategiska passager.
+
+**Requirements:** Frontier Valley1600×1152 (50×36 tiles) som nytt kartval; befintliga kartor oförändrade. Playerstart kvar, enemybase i nordöstra regionen. Norra flank,96px central torr passage och södra flank runt handritad vatten/ridge-terräng. Befintliga primaryresources plus två ändliga expansionsnoder (200wood/150gold) med unikaID:n. Återanvänd gathering/delivery, footprints, serviceköer och resourcefog/minimap/rendering för dessa noder; inget nytt resursslag eller automatiskt saldo. Mapstorlek används av placement, Save, camera/fog/minimap och terrainedges. Enemyknowledge/economy använder upptäckta noder och handskrivna scoutingvägar. Save19 validerar mapstorlek/nodkonfiguration/ledger och migrerar18/äldre kartor. Inga automatiska nya gameplayorders från UI.
+
+**Non-goals:** Procedural generation, nya resurstyper, nya dropoffbyggnader, nyAIekonomi, ändrade enhetsstats, nya scenarios, ombyggnad av tidigare kartor116.
 
 **Dependencies:** RTS-114.
 
-**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+**Acceptance criteria:** Spawns/noder/basefootprints/gatherapproaches nåbara; minst två oberoende bas-till-bas-vägar för40pxcatapult. Expansionsnoder kan upptäckas/samlas/levereras, blockerar placement och läcker inte dold mängd. Actual enemy economy bygger/producerar/anfaller; betald player-match till victory/defeat. Korrekt större camera/fog/minimap/placement och Save/load/restart. Relevant/fulltester/typecheck/build/diff PASS; browser1280/1920 och granskade kart-screenshots.
+
+**Tester:** Kartgeometry/spawns/routes/strategisk passage, nodleverans och totalwood/gold, gemensam begränsadstock, resourcefog/minimap/placement, Save19/legacy18/tampering/nya världens gränser, paidmatch ochAI. Browsermenu→Frontier→exploration/expansionsgather→bygge/produktion, kamera/minimap/pause/Save/load/restart; actualgenomspelning ochscreenshots.
+
+**Docs:** BACKLOG, DEV_LOG, ARCHITECTURE, DECISIONS, GAME_DESIGN och README.
 
 ## RTS-116 – Förbättra övriga kartor
 
@@ -3073,3 +3081,776 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 **Dependencies:** RTS-119.
 
 **Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+
+## Nästa godkända etapp – RTS-121–150
+
+Användarens arbetslista: slutför RTS-115–120 först. Därefter inventering och implementation av RTS-121–126, en task åt gången, med taskvisa checks, browserverifiering, docs, commit med task-ID och push utan force. Kontrollera Pages-deploy där åtkomst finns. RTS-127–150 är planerade och ska **inte implementeras i denna körning**. Fortsätt från Current Focus; denna etapp startar först efter RTS-120. Stora tasks delas i subtasks under samma ID. Saves bevaras via migration eller tydlig kontrollerad inkompatibilitetshantering. Ingen backend eller multiplayer.
+
+Kartreferenser inför RTS-132–133 (ännu inte lästa eller använda för kartinnehåll): [HoMM-kartor](http://modhomm3.free.fr/maps/map_english01.htm), [Warcraft II BNE](http://classic.battle.net/war2/lp/bne.shtml), [VGMaps](https://vgmaps.de/maps/pc/warcraft-ii-tides-of-darkness.php), [Fall of Lordaeron](https://www.blizzplanet.com/blog/comments/warcraft_ii_tides_of_darkness___orc_campaign_the_fall_of_lordaeron/warcraft-ii-the-fall-of-lordaeron-map). Använd geografi/expansioner/passager/tempo som referens, skapa egna kartor/assets och redovisa otillgängliga källor utan att hitta på innehåll.
+
+## RTS-121 – Inventering och detaljplan
+
+**Status:** Todo.
+
+**Goal:** Stäm av användarens feedback mot implementationen.
+
+**Requirements:**
+
+Stäm av användarens feedback mot implementationen.
+Detaljera nästa etapp med acceptance criteria och tester.
+Dokumentera saknade assets och öppna beslut.
+
+**Non-goals:** Ingen ny gameplaykod eller markering av ofärdiga prerequisites som Done.
+
+**Dependencies:** RTS-120.
+
+**Acceptance criteria:** Stäm av användarens feedback mot implementationen. Detaljera nästa etapp med acceptance criteria och tester. Dokumentera saknade assets och öppna beslut. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** Inventering mot faktisk kod och befintliga task-ID:n; dokumentlänkar och unik backlog; inga tester för enbart dokumentation. Dokumentera verkliga checks och tillgängliga assets. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
+
+**Subtasks:** Inventera berörda befintliga system → implementera avgränsad vertikal slice → beteende/regressionstester → browser/granskning → docs/checks/commit/push.
+
+## RTS-122 – Separat resultatvy
+
+**Status:** Todo.
+
+**Goal:** Efter victory/defeat ersätts spelvyn helt av en resultatvy.
+
+**Requirements:**
+
+Efter victory/defeat ersätts spelvyn helt av en resultatvy.
+Visa utfall, karta, fraktion, svårighet och matchtid.
+Actions: Play Again, Main Menu och View Statistics.
+Simulationen stoppas och matchens input avaktiveras.
+
+**Non-goals:** Ingen ny scoringmodell, campaignprogression eller gameplaybalans.
+
+**Dependencies:** RTS-121.
+
+**Acceptance criteria:** Efter victory/defeat ersätts spelvyn helt av en resultatvy. Visa utfall, karta, fraktion, svårighet och matchtid. Actions: Play Again, Main Menu och View Statistics. Simulationen stoppas och matchens input avaktiveras. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** Victory/defeat, stoppad simulation/input, Play Again/full reset, Main Menu och View Statistics; browser med båda utfallen, resize och Save/load. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
+
+**Subtasks:** Inventera berörda befintliga system → implementera avgränsad vertikal slice → beteende/regressionstester → browser/granskning → docs/checks/commit/push.
+
+## RTS-123 – Utökad matchstatistik
+
+**Status:** Todo.
+
+**Goal:** Visa insamlade/spenderade resurser, producerade/förlorade units,
+
+**Requirements:**
+
+Visa insamlade/spenderade resurser, producerade/förlorade units,
+dödade fiender och byggda/förstörda byggnader.
+Skilj egna borttagna units från förluster i combat.
+Statistik fungerar med save/load och restart.
+
+**Non-goals:** Ingen highscore/back-end eller egen borttagningsaction före RTS-147.
+
+**Dependencies:** RTS-122.
+
+**Acceptance criteria:** Visa insamlade/spenderade resurser, producerade/förlorade units, dödade fiender och byggda/förstörda byggnader. Skilj egna borttagna units från förluster i combat. Statistik fungerar med save/load och restart. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** Kända resurs-/produktions-/combat-/byggtransaktioner räknas exakt en gång, egen borttagning skild från combatförlust; Save/load och restart; browserstatistik jämförs med genomförda handlingar. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
+
+**Subtasks:** Inventera berörda befintliga system → implementera avgränsad vertikal slice → beteende/regressionstester → browser/granskning → docs/checks/commit/push.
+
+## RTS-124 – Version och changelog
+
+**Status:** Todo.
+
+**Goal:** Visa aktuell releaseversion i top bar och huvudmeny.
+
+**Requirements:**
+
+Visa aktuell releaseversion i top bar och huvudmeny.
+Använd en gemensam versionskälla.
+Lägg till Changelog under menyn med större användarsynliga
+förändringar per version.
+Skilj releaseversion från senaste commit/build-ID.
+
+**Non-goals:** Ingen omskrivning av git-historik; releaseversion är inte commit-hash.
+
+**Dependencies:** RTS-123.
+
+**Acceptance criteria:** Visa aktuell releaseversion i top bar och huvudmeny. Använd en gemensam versionskälla. Lägg till Changelog under menyn med större användarsynliga förändringar per version. Skilj releaseversion från senaste commit/build-ID. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** Gemensam versionskälla används i båda vyerna, releaseversion skiljs från build-ID; changelognavigation och browserkontroll; relevanta regressioner. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras. Versionskälla och Changelog skapas inom tasken.
+
+**Subtasks:** Inventera berörda befintliga system → implementera avgränsad vertikal slice → beteende/regressionstester → browser/granskning → docs/checks/commit/push.
+
+## RTS-125 – Upplösning och skalning
+
+**Status:** Todo.
+
+**Goal:** Erbjud renderingsupplösningar:
+
+**Requirements:**
+
+Erbjud renderingsupplösningar:
+800x600, 1024x768, 1280x720, 1600x900, 1920x1080 och 2048x1332.
+Behåll separat val för fullscreen och fönsteranpassning.
+Bevara bildförhållandet; sträck inte bilden.
+På mindre fönster skalas bilden ned utan klippt HUD.
+Input, selection och minimap fungerar efter byte.
+Inställningen sparas lokalt.
+Kameran visar världen utifrån vald viewport;
+kartstorlek är oberoende av upplösning.
+
+**Non-goals:** Ingen ändrad kartstorlek/tile-storlek, viewportberoende gameplay eller bildsträckning.
+
+**Dependencies:** RTS-124.
+
+**Acceptance criteria:** Erbjud renderingsupplösningar: 800x600, 1024x768, 1280x720, 1600x900, 1920x1080 och 2048x1332. Behåll separat val för fullscreen och fönsteranpassning. Bevara bildförhållandet; sträck inte bilden. På mindre fönster skalas bilden ned utan klippt HUD. Input, selection och minimap fungerar efter byte. Inställningen sparas lokalt. Kameran visar världen utifrån vald viewport; kartstorlek är oberoende av upplösning. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** Alla sex renderingsupplösningar, bildförhållande, skalad pointer→world-konvertering, klick/drag/minimap efter byte, fullscreen/fönsterläge, liten viewport och ogiltig lokal inställning; browserlayout utan klippt HUD. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
+
+**Subtasks:** Inventera berörda befintliga system → implementera avgränsad vertikal slice → beteende/regressionstester → browser/granskning → docs/checks/commit/push.
+
+## RTS-126 – Flashigare startsida
+
+**Status:** Todo.
+
+**Goal:** Skapa egen fantasykomposition med motiv från:
+
+**Requirements:**
+
+Skapa egen fantasykomposition med motiv från:
+Orcs, Humans, Elves, Dwarves och Goblins.
+Tydlig titel och lättläst meny ovanpå illustrationen.
+Diskreta animationer och stämningsljud med mute-stöd.
+Förbered presentation för alla fem fraktioner utan att
+visa ännu ospelbara fraktioner som tillgängliga.
+
+**Non-goals:** Inga ospelbara fraktioner tillgängliga, inga originalspelsassets, inga nya fraktionsrosters före RTS-134.
+
+**Dependencies:** RTS-125.
+
+**Acceptance criteria:** Skapa egen fantasykomposition med motiv från: Orcs, Humans, Elves, Dwarves och Goblins. Tydlig titel och lättläst meny ovanpå illustrationen. Diskreta animationer och stämningsljud med mute-stöd. Förbered presentation för alla fem fraktioner utan att visa ännu ospelbara fraktioner som tillgängliga. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** Originalasset/licensinventering, läsbar meny över kompositionen, endast spelbara fraktioner valbara, mute och paus/meny-lifecycle, reduced motion; browser vid små/stora upplösningar. Visuell granskning och faktisk lyssning redovisas separat. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
+
+**Subtasks:** Inventera berörda befintliga system → implementera avgränsad vertikal slice → beteende/regressionstester → browser/granskning → docs/checks/commit/push.
+
+## RTS-127 – Flera resursfyndigheter
+
+**Status:** Todo.
+
+**Goal:** Kartdata stöder flera gold mines och flera wood-noder/skogsområden.
+
+**Requirements:**
+
+Kartdata stöder flera gold mines och flera wood-noder/skogsområden.
+Varje fyndighet har unikt ID och egen återstående mängd.
+Arbetare behåller rätt mål under gathering och leverans.
+Uttömning av en fyndighet påverkar inte övriga.
+
+**Non-goals:** Nya backend-tjänster, multiplayer eller andra tasks; återimplementera inte färdiga system.
+
+**Dependencies:** RTS-126, RTS-115.
+
+**Acceptance criteria:** Kartdata stöder flera gold mines och flera wood-noder/skogsområden. Varje fyndighet har unikt ID och egen återstående mängd. Arbetare behåller rätt mål under gathering och leverans. Uttömning av en fyndighet påverkar inte övriga. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** Flera noder med unika ID:n, egna ändliga lager, rätt orderreferens över leveransturer, oberoende uttömning och Save/load; återanvänd befintliga expansionstester. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
+
+**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+
+## RTS-128 – Selection av resurser
+
+**Status:** Todo.
+
+**Goal:** Klick på resurs visar namn, typ och återstående mängd i bottom bar.
+
+**Requirements:**
+
+Klick på resurs visar namn, typ och återstående mängd i bottom bar.
+Visa uttömd status.
+Resursselection ersätter annan selection på ett konsekvent sätt.
+Information om dolda resurser följer fog-of-war-reglerna.
+
+**Non-goals:** Nya backend-tjänster, multiplayer eller andra tasks; återimplementera inte färdiga system.
+
+**Dependencies:** RTS-127.
+
+**Acceptance criteria:** Klick på resurs visar namn, typ och återstående mängd i bottom bar. Visa uttömd status. Resursselection ersätter annan selection på ett konsekvent sätt. Information om dolda resurser följer fog-of-war-reglerna. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** Klickselection ersätter unit/building-selection, korrekt typ/lager/uttömning, fog utan dold information; browser bottom bar. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
+
+**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+
+## RTS-129 – Flera arbetare per resurs
+
+**Status:** Todo.
+
+**Goal:** Flera workers kan arbeta på samma fyndighet.
+
+**Requirements:**
+
+Flera workers kan arbeta på samma fyndighet.
+Definiera nåbara arbetsplatser och kö när alla är upptagna.
+Förhindra negativa mängder och dubbel kreditering.
+Workers ska vara visuellt urskiljbara vid resursen.
+
+**Non-goals:** Nya backend-tjänster, multiplayer eller andra tasks; återimplementera inte färdiga system.
+
+**Dependencies:** RTS-128; inventera befintliga serviceköer innan ändring.
+
+**Acceptance criteria:** Flera workers kan arbeta på samma fyndighet. Definiera nåbara arbetsplatser och kö när alla är upptagna. Förhindra negativa mängder och dubbel kreditering. Workers ska vara visuellt urskiljbara vid resursen. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** Nåbara platser, tilldelning/kö, flera workers, begränsad stock utan dubbelt saldo, frigörande vid orderbyte/död och Save/load; browserurskiljbarhet. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
+
+**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+
+## RTS-130 – Visa resursbemanning
+
+**Status:** Todo.
+
+**Goal:** Visa antal tilldelade workers och antal aktivt samlande workers.
+
+**Requirements:**
+
+Visa antal tilldelade workers och antal aktivt samlande workers.
+Visa exempelvis “Workers: 5 assigned / 3 gathering”.
+Uppdatera vid orderbyte, död, leverans och uttömning.
+Vid selection kan arbetsplatser markeras diskret.
+
+**Non-goals:** Nya backend-tjänster, multiplayer eller andra tasks; återimplementera inte färdiga system.
+
+**Dependencies:** RTS-129.
+
+**Acceptance criteria:** Visa antal tilldelade workers och antal aktivt samlande workers. Visa exempelvis “Workers: 5 assigned / 3 gathering”. Uppdatera vid orderbyte, död, leverans och uttömning. Vid selection kan arbetsplatser markeras diskret. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** Assigned/gathering vid resa, kö, gathering, leverans, död, orderbyte och uttömning; diskreta markeringar och fog-regler. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
+
+**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+
+## RTS-131 – Stöd för större kartor
+
+**Status:** Todo.
+
+**Goal:** Inför storlekarna 96x96 och 128x128 tiles i kartdata.
+
+**Requirements:**
+
+Inför storlekarna 96x96 och 128x128 tiles i kartdata.
+Behåll befintlig tile-storlek om inget konkret problem kräver annat.
+Verifiera kamera, minimap, fog of war, AI och save/load.
+Mät pathfinding och rendering innan optimering.
+Dokumentera prestandamål och testmiljö.
+
+**Non-goals:** Nya backend-tjänster, multiplayer eller andra tasks; återimplementera inte färdiga system.
+
+**Dependencies:** RTS-130.
+
+**Acceptance criteria:** Inför storlekarna 96x96 och 128x128 tiles i kartdata. Behåll befintlig tile-storlek om inget konkret problem kräver annat. Verifiera kamera, minimap, fog of war, AI och save/load. Mät pathfinding och rendering innan optimering. Dokumentera prestandamål och testmiljö. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** 96×96/128×128-kartor: gränser, kamera, minimap, fog, AI och Save/load; uppmätt pathfinding/rendering på dokumenterad miljö innan optimering. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
+
+**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+
+## RTS-132 – Stor landkarta
+
+**Status:** Todo.
+
+**Goal:** Handgjord karta med flera expansioner, skogar, gruvor,
+
+**Requirements:**
+
+Handgjord karta med flera expansioner, skogar, gruvor,
+alternativa anfallsvägar och strategiska passager.
+Ge startområden rimliga resurser och byggutrymme.
+Dekorationer och höjdillusion får inte göra walkability otydlig.
+
+**Non-goals:** Nya backend-tjänster, multiplayer eller andra tasks; återimplementera inte färdiga system.
+
+**Dependencies:** RTS-131.
+
+**Acceptance criteria:** Handgjord karta med flera expansioner, skogar, gruvor, alternativa anfallsvägar och strategiska passager. Ge startområden rimliga resurser och byggutrymme. Dekorationer och höjdillusion får inte göra walkability otydlig. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** Startzoner/resurser, alternativa nåbara anfallsvägar, byggutrymme och tydlig walkability; ekonomisk genomspelning, AI och browsergranskning. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
+
+**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+
+## RTS-133 – Stor kust- och ökarta
+
+**Status:** Todo.
+
+**Goal:** Handgjord karta med landvägar, kust, öar och landstigningsplatser.
+
+**Requirements:**
+
+Handgjord karta med landvägar, kust, öar och landstigningsplatser.
+Säkerställ att hamnar och transporter faktiskt kan användas.
+Verifiera AI på kartan och undvik oavsiktliga dödlägen.
+
+**Non-goals:** Nya backend-tjänster, multiplayer eller andra tasks; återimplementera inte färdiga system.
+
+**Dependencies:** RTS-132.
+
+**Acceptance criteria:** Handgjord karta med landvägar, kust, öar och landstigningsplatser. Säkerställ att hamnar och transporter faktiskt kan användas. Verifiera AI på kartan och undvik oavsiktliga dödlägen. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** Coastal placement, transport/boarding/landstigning, land-/sjörutter och AI utan oavsiktliga deadlocks; faktisk ekonomisk sjögenomspelning. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
+
+**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+
+## RTS-134 – Fraktionsdesign och jämförelsematris
+
+**Status:** Todo.
+
+**Goal:** Definiera Orcs, Humans, Elves, Dwarves och Goblins.
+
+**Requirements:**
+
+Definiera Orcs, Humans, Elves, Dwarves och Goblins.
+Varje fraktion ska ha egna units, buildings och research.
+Återanvänd tekniska grundsystem med olika data och beteenden.
+
+Föreslagen identitet:
+- Humans: balanserad armé och flexibel bas.
+- Orcs: stark närstrid och offensiv.
+- Elves: rörlighet och distansstrid.
+- Dwarves: tålighet, försvar och siege.
+- Goblins: snabb produktion, teknik och explosiva vapen.
+
+Första roster per fraktion:
+worker, melee, ranged, siege och en specialist.
+Anpassa befintliga fartyg för alla fraktioner.
+Definiera kostnader, styrkor, svagheter och research
+innan respektive fraktion implementeras.
+
+**Non-goals:** Nya backend-tjänster, multiplayer eller andra tasks; återimplementera inte färdiga system.
+
+**Dependencies:** RTS-133.
+
+**Acceptance criteria:** Definiera Orcs, Humans, Elves, Dwarves och Goblins. Varje fraktion ska ha egna units, buildings och research. Återanvänd tekniska grundsystem med olika data och beteenden.  Föreslagen identitet: - Humans: balanserad armé och flexibel bas. - Orcs: stark närstrid och offensiv. - Elves: rörlighet och distansstrid. - Dwarves: tålighet, försvar och siege. - Goblins: snabb produktion, teknik och explosiva vapen.  Första roster per fraktion: worker, melee, ranged, siege och en specialist. Anpassa befintliga fartyg för alla fraktioner. Definiera kostnader, styrkor, svagheter och research innan respektive fraktion implementeras. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** Jämförelsematris med fem distinkta rosters, specialist, buildings/research/fartyg, kostnader, styrkor och svagheter; docs/granskning utan implementationstester. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
+
+**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+
+## RTS-135 – Fraktionsdata och research prerequisites
+
+**Status:** Todo.
+
+**Goal:** Utöka befintligt fraktionssystem endast där det behövs.
+
+**Requirements:**
+
+Utöka befintligt fraktionssystem endast där det behövs.
+Stöd olika rosters, byggnader, research och prerequisites.
+UI visar korrekta namn, kostnader, ikoner och tillgängliga actions.
+Save/load sparar stabila fraktions- och typ-ID:n.
+
+**Non-goals:** Nya backend-tjänster, multiplayer eller andra tasks; återimplementera inte färdiga system.
+
+**Dependencies:** RTS-134.
+
+**Acceptance criteria:** Utöka befintligt fraktionssystem endast där det behövs. Stöd olika rosters, byggnader, research och prerequisites. UI visar korrekta namn, kostnader, ikoner och tillgängliga actions. Save/load sparar stabila fraktions- och typ-ID:n. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** Datadrivna rosters/prerequisites, UI-kostnad/namn/action/ikon, stabila ID:n, migrations- och Save/load-regressioner. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
+
+**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+
+## RTS-136 – Humans
+
+**Status:** Todo.
+
+**Goal:** Komplettera befintliga Humans till den beslutade rostern.
+
+**Requirements:**
+
+Komplettera befintliga Humans till den beslutade rostern.
+Egna byggnadsutseenden och research.
+Verifiera ekonomi, produktion, combat och AI.
+
+**Non-goals:** Nya backend-tjänster, multiplayer eller andra tasks; återimplementera inte färdiga system.
+
+**Dependencies:** RTS-135.
+
+**Acceptance criteria:** Komplettera befintliga Humans till den beslutade rostern. Egna byggnadsutseenden och research. Verifiera ekonomi, produktion, combat och AI. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** Humans ekonomi, roster/specialist, buildings, research, combat, AI, Save/load och egna assets i browser. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
+
+**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+
+## RTS-137 – Orcs
+
+**Status:** Todo.
+
+**Goal:** Komplettera befintliga Orcs till den beslutade rostern.
+
+**Requirements:**
+
+Komplettera befintliga Orcs till den beslutade rostern.
+Tydlig skillnad i spelstil, units, buildings och research.
+
+**Non-goals:** Nya backend-tjänster, multiplayer eller andra tasks; återimplementera inte färdiga system.
+
+**Dependencies:** RTS-136.
+
+**Acceptance criteria:** Komplettera befintliga Orcs till den beslutade rostern. Tydlig skillnad i spelstil, units, buildings och research. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** Orcs ekonomi, roster/specialist, offensiv identitet, buildings/research, combat och AI; regressioner mot Humans. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
+
+**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+
+## RTS-138 – Elves
+
+**Status:** Todo.
+
+**Goal:** Implementera den beslutade elf-rostern,
+
+**Requirements:**
+
+Implementera den beslutade elf-rostern,
+byggnader, research och assets.
+
+**Non-goals:** Nya backend-tjänster, multiplayer eller andra tasks; återimplementera inte färdiga system.
+
+**Dependencies:** RTS-137.
+
+**Acceptance criteria:** Implementera den beslutade elf-rostern, byggnader, research och assets. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** Elves ekonomi, roster/specialist, rörlighet/distansidentitet, buildings/research, combat/AI och assets; Save/load. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
+
+**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+
+## RTS-139 – Dwarves
+
+**Status:** Todo.
+
+**Goal:** Implementera den beslutade dwarf-rostern,
+
+**Requirements:**
+
+Implementera den beslutade dwarf-rostern,
+byggnader, research och assets.
+
+**Non-goals:** Nya backend-tjänster, multiplayer eller andra tasks; återimplementera inte färdiga system.
+
+**Dependencies:** RTS-138.
+
+**Acceptance criteria:** Implementera den beslutade dwarf-rostern, byggnader, research och assets. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** Dwarves ekonomi, roster/specialist, försvar/siegeidentitet, buildings/research, combat/AI och assets; Save/load. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
+
+**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+
+## RTS-140 – Goblins
+
+**Status:** Todo.
+
+**Goal:** Implementera den beslutade goblin-rostern,
+
+**Requirements:**
+
+Implementera den beslutade goblin-rostern,
+byggnader, research och assets.
+
+**Non-goals:** Nya backend-tjänster, multiplayer eller andra tasks; återimplementera inte färdiga system.
+
+**Dependencies:** RTS-139.
+
+**Acceptance criteria:** Implementera den beslutade goblin-rostern, byggnader, research och assets. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** Goblins ekonomi, roster/specialist, produktion/teknik/explosiva vapen, buildings/research, combat/AI och assets; Save/load. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
+
+**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+
+## RTS-141 – Fraktionsval, AI och balans
+
+**Status:** Todo.
+
+**Goal:** Alla fem fraktioner fungerar som spelare och AI-motståndare.
+
+**Requirements:**
+
+Alla fem fraktioner fungerar som spelare och AI-motståndare.
+Verifiera relevanta matchups och att AI kan använda respektive roster.
+Fraktioner får inte bara vara namn- eller färgbyten.
+Ingen fraktion markeras färdig med saknade gameplay-funktioner
+eller tillfälliga assets utan tydlig redovisning.
+
+**Non-goals:** Nya backend-tjänster, multiplayer eller andra tasks; återimplementera inte färdiga system.
+
+**Dependencies:** RTS-140.
+
+**Acceptance criteria:** Alla fem fraktioner fungerar som spelare och AI-motståndare. Verifiera relevanta matchups och att AI kan använda respektive roster. Fraktioner får inte bara vara namn- eller färgbyten. Ingen fraktion markeras färdig med saknade gameplay-funktioner eller tillfälliga assets utan tydlig redovisning. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** Relevanta spelar-/AI-matchups för fem fraktioner, faktisk rosteranvändning och betald ekonomi; dokumenterade balansresultat och assetluckor. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
+
+**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+
+## RTS-142 – Campaign-struktur och progression
+
+**Status:** Todo.
+
+**Goal:** Återanvänd befintligt scenario-system.
+
+**Requirements:**
+
+Återanvänd befintligt scenario-system.
+Campaign-meny visar uppdrag, upplåsning och genomförda nivåer.
+Stöd briefing, mål och debriefing.
+Spara progression lokalt; replay av avklarade uppdrag är möjligt.
+
+**Non-goals:** Nya backend-tjänster, multiplayer eller andra tasks; återimplementera inte färdiga system.
+
+**Dependencies:** RTS-141.
+
+**Acceptance criteria:** Återanvänd befintligt scenario-system. Campaign-meny visar uppdrag, upplåsning och genomförda nivåer. Stöd briefing, mål och debriefing. Spara progression lokalt; replay av avklarade uppdrag är möjligt. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** Unlock/completion, replay, briefing/mål/debriefing, lokal progression med ogiltiga/saknade värden och Save/load. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
+
+**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+
+## RTS-143 – Utöka campaign till minst åtta uppdrag
+
+**Status:** Todo.
+
+**Goal:** Räkna in fungerande befintliga uppdrag.
+
+**Requirements:**
+
+Räkna in fungerande befintliga uppdrag.
+Planera berättelse, spelbar fraktion, karta och mål för varje nivå.
+Introducera alla fem fraktioner över campaignens gång.
+Variera mål: bygga, försvara, eskortera, rädda,
+erövra och landstiga.
+Implementera nya måltyper först när ett uppdrag behöver dem.
+
+**Non-goals:** Nya backend-tjänster, multiplayer eller andra tasks; återimplementera inte färdiga system.
+
+**Dependencies:** RTS-142.
+
+**Acceptance criteria:** Räkna in fungerande befintliga uppdrag. Planera berättelse, spelbar fraktion, karta och mål för varje nivå. Introducera alla fem fraktioner över campaignens gång. Variera mål: bygga, försvara, eskortera, rädda, erövra och landstiga. Implementera nya måltyper först när ett uppdrag behöver dem. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** Minst åtta planerade uppdrag inklusive fungerande befintliga, alla fraktioner och varierade mål; dependencies och måltyper verifieras mot kod. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
+
+**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+
+## RTS-144 – Campaign, första halvan
+
+**Status:** Todo.
+
+**Goal:** Färdigställ uppdrag 1–4 med kartor, briefings och tydliga mål.
+
+**Requirements:**
+
+Färdigställ uppdrag 1–4 med kartor, briefings och tydliga mål.
+Successiv introduktion av systemen och rimlig svårighetskurva.
+
+**Non-goals:** Nya backend-tjänster, multiplayer eller andra tasks; återimplementera inte färdiga system.
+
+**Dependencies:** RTS-143.
+
+**Acceptance criteria:** Färdigställ uppdrag 1–4 med kartor, briefings och tydliga mål. Successiv introduktion av systemen och rimlig svårighetskurva. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** Uppdrag 1–4 från briefing till success/defeat, rätt måltriggers, rimlig progression och Save/load/replay; browsergenomspelning. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
+
+**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+
+## RTS-145 – Campaign, andra halvan
+
+**Status:** Todo.
+
+**Goal:** Färdigställ uppdrag 5–8 med större operationer,
+
+**Requirements:**
+
+Färdigställ uppdrag 5–8 med större operationer,
+fler fraktioner och land-/sjöstrid.
+
+**Non-goals:** Nya backend-tjänster, multiplayer eller andra tasks; återimplementera inte färdiga system.
+
+**Dependencies:** RTS-144.
+
+**Acceptance criteria:** Färdigställ uppdrag 5–8 med större operationer, fler fraktioner och land-/sjöstrid. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** Uppdrag 5–8 med större land-/sjöoperationer, fraktioner, success/defeat, progression och Save/load/replay; browsergenomspelning. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
+
+**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+
+## RTS-146 – Campaign-verifiering
+
+**Status:** Todo.
+
+**Goal:** Verifiera victory/defeat, måltriggers, progression och replay.
+
+**Requirements:**
+
+Verifiera victory/defeat, måltriggers, progression och replay.
+Save/load får inte tappa målstatus eller utlösa rewards två gånger.
+Speltesta nivåerna för blockerande lägen och svårighet.
+
+**Non-goals:** Nya backend-tjänster, multiplayer eller andra tasks; återimplementera inte färdiga system.
+
+**Dependencies:** RTS-145.
+
+**Acceptance criteria:** Verifiera victory/defeat, måltriggers, progression och replay. Save/load får inte tappa målstatus eller utlösa rewards två gånger. Speltesta nivåerna för blockerande lägen och svårighet. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** Samtliga måltriggers/victory/defeat, progression/replay, Save/load utan dubbla rewards; dokumenterat speltest av blockerande lägen och svårighet. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
+
+**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+
+## RTS-147 – Ta bort egna enheter
+
+**Status:** Todo.
+
+**Goal:** Inför en tydlig “Dismiss Unit”-action för egna units.
+
+**Requirements:**
+
+Inför en tydlig “Dismiss Unit”-action för egna units.
+Delete begär action; bekräftelse anger antal berörda units.
+Stöd gruppselection, men inte byggnader eller fiendeunits.
+Borttagning frigör population och rensar orders, selection,
+resurstilldelning och eventuell transportlast säkert.
+Ingen resursåterbetalning och inga kill-/score-belöningar.
+Egen borttagning räknas separat i statistiken.
+
+**Non-goals:** Nya backend-tjänster, multiplayer eller andra tasks; återimplementera inte färdiga system.
+
+**Dependencies:** RTS-146, RTS-123.
+
+**Acceptance criteria:** Inför en tydlig “Dismiss Unit”-action för egna units. Delete begär action; bekräftelse anger antal berörda units. Stöd gruppselection, men inte byggnader eller fiendeunits. Borttagning frigör population och rensar orders, selection, resurstilldelning och eventuell transportlast säkert. Ingen resursåterbetalning och inga kill-/score-belöningar. Egen borttagning räknas separat i statistiken. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** Delete/bekräftelse/cancel, gruppselection, population/orders/cargo/passagerare/tilldelning städas; egna units endast, ingen refund/kill-score, separat statistik. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
+
+**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+
+## RTS-148 – Tydligare snabbkommandon
+
+**Status:** Todo.
+
+**Goal:** Gruppera actions visuellt:
+
+**Requirements:**
+
+Gruppera actions visuellt:
+Orders, Build, Train och Research.
+Visa hotkey direkt på knappen och full förklaring i tooltip.
+Hjälpvyn visar aktuella tangentbindningar.
+Undvik konflikter med kamera, textinput och browserkommandon.
+Disabled actions visar varför de är blockerade.
+
+**Non-goals:** Nya backend-tjänster, multiplayer eller andra tasks; återimplementera inte färdiga system.
+
+**Dependencies:** RTS-147.
+
+**Acceptance criteria:** Gruppera actions visuellt: Orders, Build, Train och Research. Visa hotkey direkt på knappen och full förklaring i tooltip. Hjälpvyn visar aktuella tangentbindningar. Undvik konflikter med kamera, textinput och browserkommandon. Disabled actions visar varför de är blockerade. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** Aktuella hotkeys/tooltip/help synkade, Orders/Build/Train/Research, disabled reasons, textinput/kamera/browserkonflikter och browserkontroll. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
+
+**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+
+## RTS-149 – Lokala highscores
+
+**Status:** Todo.
+
+**Goal:** Highscores per campaign-uppdrag och skirmish-karta.
+
+**Requirements:**
+
+Highscores per campaign-uppdrag och skirmish-karta.
+Definiera och dokumentera en enkel scoring-modell.
+Separera resultat efter svårighet och relevanta spelregler.
+Spara fraktion, version, utfall, matchtid och statistik.
+Förhindra dubbelregistrering efter load eller upprepad resultatvy.
+Visa listan från huvudmenyn och resultatvyn.
+Ingen backend eller global leaderboard i denna fas.
+
+**Non-goals:** Nya backend-tjänster, multiplayer eller andra tasks; återimplementera inte färdiga system.
+
+**Dependencies:** RTS-148, RTS-123–124.
+
+**Acceptance criteria:** Highscores per campaign-uppdrag och skirmish-karta. Definiera och dokumentera en enkel scoring-modell. Separera resultat efter svårighet och relevanta spelregler. Spara fraktion, version, utfall, matchtid och statistik. Förhindra dubbelregistrering efter load eller upprepad resultatvy. Visa listan från huvudmenyn och resultatvyn. Ingen backend eller global leaderboard i denna fas. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** Scoring och partitionering efter karta/uppdrag/difficulty/regler, lokal persistens/ogiltiga värden, metadata, exakt en registrering över load/resultatvisning; båda listvyerna. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
+
+**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+
+## RTS-150 – Samlat speltest och release
+
+**Status:** Todo.
+
+**Goal:** Verifiera fem fraktioner, stora kartor, campaign,
+
+**Requirements:**
+
+Verifiera fem fraktioner, stora kartor, campaign,
+resultatvy, highscores, upplösningar och save/load.
+Granska grafik och ljud.
+Uppdatera changelog och releaseversion.
+Verifiera GitHub Pages och publicera efter godkända checks.
+
+**Non-goals:** Nya backend-tjänster, multiplayer eller andra tasks; återimplementera inte färdiga system.
+
+**Dependencies:** RTS-149.
+
+**Acceptance criteria:** Verifiera fem fraktioner, stora kartor, campaign, resultatvy, highscores, upplösningar och save/load. Granska grafik och ljud. Uppdatera changelog och releaseversion. Verifiera GitHub Pages och publicera efter godkända checks. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+
+**Tester:** Samlat browser-/gameplaytest av fem fraktioner, stora kartor, campaign/resultat/highscores/upplösningar/Save-load; grafikgranskning, faktisk lyssning, releaseversion/changelog och publicerad Pages-build. För implementation: relevanta tester, typecheck, build och git diff --check.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
+
+**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.

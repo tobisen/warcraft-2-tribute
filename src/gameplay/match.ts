@@ -91,6 +91,7 @@ export function createMatch(scenario:MatchScenario='survival',difficulty:Difficu
       gold: {id:'gold-1',resource:goldConfig.resource,position:{...(maps[mapId].goldPosition??goldConfig.position)},remaining:maps[mapId].gold},
       goldBalance:scenarioConfig[scenario].initial.gold,
       node: { resource:'wood', id: 'wood-1', position: { ...gatheringConfig.nodePosition }, remaining: maps[mapId].wood },
+      ...(maps[mapId].extraResources?{extraNodes:maps[mapId].extraResources!.map(n=>({id:n.id,resource:n.resource,position:{...n.position},remaining:n.amount}))}:{}),
       lostCargo:{wood:0,gold:0},wood: scenarioConfig[scenario].initial.wood, base: { ...gatheringConfig.basePosition },
     },
     combat: {baseOwner:'player', baseHP: combatConfig.baseHP, enemies: [] },
@@ -99,7 +100,7 @@ export function createMatch(scenario:MatchScenario='survival',difficulty:Difficu
     production: { remainingSeconds: null, nextUnitNumber: 4 },
     soldierProduction: { remainingSeconds: null, nextUnitNumber: 4 },
   };
-  if(scenarioConfig[scenario].enemyBase){state.enemyProduction=createEnemyProduction({...difficultyProfiles[difficulty],budget:enemyStartingBudget(difficultyProfiles[difficulty].budget,mapId==='islands')});if(mapId==='islands')state.enemyNaval=createEnemyNaval();state.enemyAI=createEnemyAI();const footprint={...enemyBaseConfig.footprint};state.combat.enemies.push({id:enemyBaseConfig.id,kind:'base',owner:'enemy',hp:enemyBaseConfig.hp,footprint,position:{x:footprint.x+footprint.width/2,y:footprint.y+footprint.height/2}});state.map.obstacles.push(footprint);}
+  if(scenarioConfig[scenario].enemyBase){state.enemyProduction=createEnemyProduction({...difficultyProfiles[difficulty],budget:enemyStartingBudget(difficultyProfiles[difficulty].budget,mapId==='islands')});if(mapId==='islands')state.enemyNaval=createEnemyNaval();state.enemyAI=createEnemyAI();const footprint={...(maps[mapId].enemyBase??enemyBaseConfig.footprint)};state.combat.enemies.push({id:enemyBaseConfig.id,kind:'base',owner:'enemy',hp:enemyBaseConfig.hp,footprint,position:{x:footprint.x+footprint.width/2,y:footprint.y+footprint.height/2}});state.map.obstacles.push(footprint);}
   if(scenario==='tutorial')state.tutorial=createTutorial();
   state.map.obstacles.push(...placementObstacles(state.gathering));
   if(scenarioConfig[scenario].enemyBase&&scenario!=='siege-test'){addEnemyWorkers(state);state.enemyConstruction=createEnemyConstruction();state.enemyPolicy=createEnemyPolicy();state.enemyRecovery=createEnemyRecovery();state.enemyKnowledge=createEnemyKnowledge();}

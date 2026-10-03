@@ -1,4 +1,4 @@
-import type {MapId} from '../../config/maps';
+import {maps,type MapId} from '../../config/maps';
 import {factionsForPlayer,factions,type FactionId} from '../../config/factions';
 import {useAbility} from '../abilities';
 import { createMatch, updateMatch, type MatchState } from '../match';
@@ -70,7 +70,7 @@ export function releasePlaythrough(scenario: MatchScenario, difficulty: Difficul
         const target = [...visible].filter(e => assaultReady || Math.hypot(e.position.x - match.gathering.base.x, e.position.y - match.gathering.base.y) < 240 || options?.faction!==undefined&&match.gathering.units.some(u=>u.kind==='worker'&&Math.hypot(e.position.x-u.position.x,e.position.y-u.position.y)<140)).sort((a,b) => Number(a.kind === 'base') - Number(b.kind === 'base') || Math.hypot(a.position.x - soldier.position.x,a.position.y - soldier.position.y) - Math.hypot(b.position.x - soldier.position.x,b.position.y - soldier.position.y))[0];
         if(options?.abilities&&target&&Math.hypot(target.position.x-soldier.position.x,target.position.y-soldier.position.y)<80){const next=useAbility(match.gathering);if(next!==match.gathering)abilitiesUsed++;match.gathering=next;}
         if (target && (soldier.order.kind !== 'attack' || soldier.order.enemyId !== target.id)) match.gathering.units = orderAttack(match.gathering.units, target.id);
-        else if (!target && assaultReady && scenarioConfig[scenario].victory === 'enemy-base' && soldier.order.kind === 'idle') match.gathering.units = commandAttackMove(match.gathering.units, { x: 896, y: 192 }, match.map);
+        else if (!target && assaultReady && scenarioConfig[scenario].victory === 'enemy-base' && soldier.order.kind === 'idle') match.gathering.units = commandAttackMove(match.gathering.units, maps[match.map.id??'arena'].attackEntry??{ x: 896, y: 192 }, match.map);
       }
     }
     match = updateMatch(match, .05);

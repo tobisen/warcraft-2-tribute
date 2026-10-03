@@ -80,7 +80,7 @@ import { productionConfig, soldierProductionConfig } from '../config/production'
 import { barracksConfig, farmConfig } from '../config/buildings';
 import { buildingFootprint, beginPlacement, cancelPlacement, placementError, placementObstacles, placeBuilding, type PlacementState } from '../gameplay/placement';
 import { canStartProduction, startProduction, type ProductionState } from '../gameplay/production';
-import { isNodeHit, orderUnits, type GatheringState, type Unit } from '../gameplay/gathering';
+import { isNodeHit, orderUnits, resourceNodes, type GatheringState, type Unit } from '../gameplay/gathering';
 import {
   isSelectionDrag, selectionRectangle,
   selectUnitsInRectangle,
@@ -164,6 +164,7 @@ export class BootScene extends Phaser.Scene {
   private productionStatus!: HTMLElement;
   private goldVisual!: Phaser.GameObjects.Image;
   private nodeVisual!: Phaser.GameObjects.Image;
+  private extraResourceVisuals=new Map<string,{body:Phaser.GameObjects.Image;label:Phaser.GameObjects.Text}>();
 
   private visuals = new Map<string, { body: Phaser.GameObjects.Image; ring: Phaser.GameObjects.Arc; cargo: Phaser.GameObjects.Text }>();
   private awaitingLoadedResume=false;
@@ -188,7 +189,7 @@ export class BootScene extends Phaser.Scene {
   create(): void {
     this.audioSnapshot=undefined;gameAudio.setPhase('menu');gameAudio.reset();
     this.warningState=createWarningState();this.warningVisual=this.add.graphics().setDepth(9);
-    this.visualTime=0;this.hitSnapshot=undefined;this.motions.clear();this.deaths.clear();this.impacts.clear();this.nextImpact=1;
+    this.visualTime=0;this.extraResourceVisuals.clear();this.hitSnapshot=undefined;this.motions.clear();this.deaths.clear();this.impacts.clear();this.nextImpact=1;
     this.hpBars=this.add.graphics().setDepth(7);
     const loaded=this.pendingLoad;this.pendingLoad=undefined;
     if(!loaded)document.getElementById('save-status')!.textContent='';
@@ -546,7 +547,7 @@ export class BootScene extends Phaser.Scene {
         this.gathering=result.gathering;this.placement=result.placement;this.syncVisuals();return;
       }
       const enemy = enemyAt(this.combat.enemies.filter(e=>entityVisible(this.fog,'player',e)), world);
-      const resource = [this.gathering.node,this.gathering.gold].find(n=>n && knownResource(this.fog,n.position)&&isNodeHit(world,n));
+      const resource = resourceNodes(this.gathering).find(n=> knownResource(this.fog,n.position)&&isNodeHit(world,n));
       if(enemy)this.navy=attackShips(this.currentMatch(),enemy.id);
       if(!enemy&&!resource)this.navy=commandShips(this.currentMatch(),world);
       this.gathering.units = enemy ? orderAttack(this.gathering.units, enemy.id)
@@ -690,6 +691,11 @@ export class BootScene extends Phaser.Scene {
     this.syncPlacement();this.syncNavy();
     this.goldVisual.setFrame(resourceFrame('gold',this.gathering.gold!.remaining,isVisible(this.fog,'player',this.gathering.gold!.position)));
     this.nodeVisual.setFrame(resourceFrame('wood',this.gathering.node.remaining,isVisible(this.fog,'player',this.gathering.node.position)));
+    for(const node of this.gathering.extraNodes??[]){
+      const type=node.resource??'wood',visible=isVisible(this.fog,'player',node.position),known=knownResource(this.fog,node.position);
+      if(!this.extraResourceVisuals.has(node.id))this.extraResourceVisuals.set(node.id,{body:this.add.image(node.position.x,node.position.y,'world',resourceFrame(type,node.remaining,visible)).setOrigin(resourceOrigin.x,resourceOrigin.y),label:this.add.text(node.position.x,node.position.y-64,'',{fontSize:'12px',color:'#d6eef1'}).setOrigin(.5)});
+      const visual=this.extraResourceVisuals.get(node.id)!;visual.body.setFrame(resourceFrame(type,node.remaining,visible)).setVisible(known);visual.label.setVisible(known).setText(`${type==='wood'?'Wood':'Gold'}${visible?' '+Math.ceil(node.remaining):''}`);
+    }
     this.trainButton.parentElement!.style.visibility = this.selectedBuilding === 'base' ? 'visible' : 'hidden';
     this.soldierButton.parentElement!.style.visibility = this.selectedBuilding === 'barracks' ? 'visible' : 'hidden';
     const selectedProduction = this.selectedBuilding === 'base' ? this.production

@@ -2064,3 +2064,50 @@ Chromium1280×720/Crown och1920×1080/Clans: verklig exploration→wood/gold lev
 PhaserGraphics arrow14px/stone4px/cannonball3px med8pxtrail; public-HPdiff hits, dedup8px/0.15s/max64,0.5s originalimpact/splash/dust. Synlig faktisk landenhetsdeath gerdust, naval behåller sinking. Ground/dead depth−1, projectile5, selection6, HP7, fog40. Snapshot resetas vidload/restart; inga gameplaydata/damage/timrar ändrade.
 
 24riktade effects/projectile/death/warning/assettester PASS; första full839PASS. Review upptäckte ringar underprojectile; alla land/building/navalringar flyttade till6 och regression tillagd. Slutlig full840tester/108filer PASS163,68s, typecheck/build/diff PASS. SparseRGBA/palett/transparent/distinktFXraster verifierat. Chromiumbåda upplösningar/fraktioner/speeds: betald tutorial, verklig förstaHP-hit efter approach, effectlagret underunits/ringar, paus fryserFXtid, Save/load bevararHP men rensarFX, fortsatt attack/Victory med verkligdeath/dust, restart PASS. Browserhelper väntar nu faktisk räckvidd före hitassertion. Separat faktisk Phaser-renderfixture för3projektiltyper/fyraFXfaser/HP/ring/unit överlap granskad1280/1920; fixture ändrar endast displayobjects efter scenpaus, ingen gameplaystate. Inga browsererrors. Diffgranskning hidden-HP/reveal/boarding/death/lifetime/limits/rendering/scope utan blockerande fynd. Bundlevarning kvar. Nästa115referenskarta.
+
+## 2026-10-03 – Nästa godkända etapp: RTS-121–150 (planering)
+
+Användarens nya arbetslista är införd i BACKLOG: 30 nya unika task-ID:n,
+RTS-121–126 detaljerade med krav, non-goals, dependencies, acceptance criteria,
+tester och docs; senare tasks har mål/krav, dependencies, kriterier och tester.
+Current Focus är fortfarande RTS-115. Slutför RTS-115–120 innan implementation
+av RTS-121–126. RTS-127–150 är planering och får inte implementeras i denna
+körning. Kartreferenser är registrerade som ännu inte lästa; inget innehåll
+från dem har påståtts eller kopierats. Återanvänd befintlig multi-node gathering,
+serviceköer, fraktions-/scenario-/Save-system efter faktisk inventering.
+
+Validering: 150 unika huvudtask-ID:n, RTS-121–150 Todo och bibehållet fokus;
+git diff --check passerar. Ingen task i nästa etapp markeras Done av planeringen.
+
+## 2026-10-03 – RTS-115: Frontier Valley
+
+Separat större Skirmishkarta1600×1152 med tre landpassager och två ändliga
+expansioner. Stock600wood/450gold; gamla kartors stock/terräng bibehålls.
+Återanvänd gathering/cargo/delivery, serviceköer, placement och fog/minimap
+för alla noder. Enemyknowledge/economy kan nyttja upptäckta expansioner.
+Save config19 använder vald kartas dimensioner/nodkonfiguration/ledger och
+migrerar18/äldre. Camera valideras inom kartan och clampas av liveviewport.
+
+Granskning: browser upptäckte saknat menyalternativ, åtgärdat i index.html.
+Screenshotgranskning upptäckte resurs-/lasttextöverlapp, nodtext flyttad ovanför.
+Testfixture korrigerad: route börjar vid worker, inte blockerade bascentrum;
+Save jämför serialiserbart state utan avsiktligt härledd navigation/undefined.
+Browserproduktion klickar verklig snappad footprint och använder samlat saldo.
+
+Checks: hela npm test857tester/109filer PASS144.75s; sju Frontier-tester PASS
+11.70s (betald Victory för båda fraktioner, resurskonservation/Save och verklig
+AI-produktion som når/skadar spelarbasen). Typecheck och build PASS; befintlig
+>500kB-bundlevarning kvar enligt mandat. git diff --check PASS.616 lokala
+dokumentlänkar finns,150 unika task-ID:n efter nästa etapps planering.
+
+Browser Chromium1280×720/Crown och1920×1080/Clans PASS: verkliga
+selection/move/gather-inputs, upptäckt av expansion och hemleverans, betald
+barracks→soldierproduktion/rörelse, minimap-pan till kartgräns, paus/Save/load
+med bevarade noder/last/order/kamera, full restart och inga pageerrors.
+Screenshots start/expansion/gräns granskade; ingen stateinjektion av saldo,
+positioner eller fiender i spelarflödet. Ekonomiska fullmatcher till Victory
+verifierade med gameplaybot; browserflödet verifierar ekonomi/produktion/reset.
+
+Begränsningar: expansioner använder befintlig bas som dropoff; långa leveranser
+är avsiktliga. Ingen ny AI-ekonomi, collision avoidance eller procedural map.
+RTS-115 Done; RTS-116 är nästa task. Ny roadmap121–150 planerad, ej implementerad.

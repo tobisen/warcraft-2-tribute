@@ -14,7 +14,7 @@ export interface WorldMap {
 }
 
 export function createMap(id:MapId='arena'): WorldMap {
-  return {id, ...worldConfig, tileSize: arenaConfig.tileSize, revision: 0,
+  return {id, ...(maps[id].world??worldConfig), tileSize: arenaConfig.tileSize, revision: 0,
     obstacles: maps[id].terrain.map(p => ({ x: p.column * arenaConfig.tileSize,
       y: p.row * arenaConfig.tileSize, width: p.columns * arenaConfig.tileSize,
       height: p.rows * arenaConfig.tileSize })) };

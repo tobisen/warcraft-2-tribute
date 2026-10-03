@@ -1378,3 +1378,25 @@ Ground-effects/dead sprites på depth−1 underunits0; projectile5, selection6,
 HP7 och fog40. Alpha0.8 och glesa sprites bevarar läsbarheten. UI-atlas512×160
 med21frames. Save lagrar fortfarande inte temporära effekter: load/restart
 rensar dem, paus fryser bildtid och terminal match stoppar simulationen.
+
+## RTS-115 – Kartstorlek och ytterligare resursnoder
+
+MapDefinition kan ange world, enemyBase och extraResources; createMap använder
+kartans dimensioner och behåller 1280×960 som fallback för äldre kartor.
+mapResources/mapResourceTotals är gemensam fast konfiguration för stock och
+Savevalidering. GatheringState.extraNodes används endast där kartan har
+expansioner; resourceNodes samlar primary wood/gold och extra noder. Gathering,
+serviceköer, placement/navy-routesskydd, enemyknowledge/economy, minimap och
+scenens hit/renderadapter använder samma noder och stabila ID:n.
+
+Frontier Valley är 1600×1152 (50×36 tiles). Playerstart återanvänds, enemybase
+ligger på (1312,96),96×96. Två extra noder: wood-2 (1216,896),200 och
+gold-2 (1184,640),150. Tre landpassager runt floden, varav central96px.
+Scene behåller befintliga order/gathering-regler; extra resourcebilder/text
+följer samma known/visible-policy utan att visa dold återstående mängd.
+
+Save config19 migrerar18/äldre utan att lägga nya noder i gamla matcher.
+Kartkonfiguration styr world/fog-storlek, nod-ID/typ/position/stock, bas och
+resourceledger. Alla koordinater/footprints valideras mot vald karta.
+Camera lagras inom världen och clampas vid load/resize till aktuell viewport,
+i stället för gamla fasta 480/360-gränser. Temporär rendering sparas inte.

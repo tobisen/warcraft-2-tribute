@@ -14,7 +14,7 @@ npm run dev
 ```
 
 Öppna adressen Vite skriver ut, normalt http://localhost:5173/.
-Världen är 1280 × 960 world pixels. Spelvyn fyller fönstret med responsiv canvas, befintlig280px sidopanel och sessionrad. Dra med mittenmusknappen för begränsad pan; zoom är1. Vid större viewport centreras hela kartan utan att sprites förstoras. Sidopanelen scrollas. Verifierade layoutstorlekar är1280×720 och1920×1080.
+De tidigare kartorna är 1280 × 960 world pixels; Frontier Valley är 1600 × 1152. Spelvyn fyller fönstret med responsiv canvas, befintlig280px sidopanel och sessionrad. Dra med mittenmusknappen för begränsad pan; zoom är1. Vid större viewport centreras hela kartan utan att sprites förstoras. Sidopanelen scrollas. Verifierade layoutstorlekar är1280×720 och1920×1080.
 
 ## Spela matchen
 
@@ -592,3 +592,11 @@ Difficulty: Beginner adds longer preparation, smaller enemy armies and slower tr
 Game speed: choose 0.75× or 1× in setup, independently of difficulty. Simulation and animations slow together; camera, UI and audio keep their normal speed. Save/load and restart preserve the choice; older saves migrate to 1×.
 
 Start learning in **Campaign → Tutorial – First Steps**. Follow the six objectives: selection, movement, wood delivery, building barracks, training a soldier and attacking the training target. The target appears after production and never attacks. Use ordinary controls and costs; Save/load preserves your progress and Restart starts fresh. Both factions and game speeds work.
+
+## Frontier Valley
+
+Välj Skirmish och Frontier Valley för den större referenskartan. Utforska
+öster om floden: extra wood finns vid(1216,896) och gold vid(1184,640).
+De levereras till den befintliga basen. Norra, centrala och södra landpassager
+ger alternativa anfallsvägar. Förstör fiendebasen vid(1360,144) för Victory.
+Totalt600wood/450gold är ändliga och delas med fienden.

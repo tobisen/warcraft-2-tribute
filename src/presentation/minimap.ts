@@ -1,3 +1,4 @@
+import {resourceNodes} from '../gameplay/gathering';
 import { createMap } from '../gameplay/map';
 import { entityVisible,knownResource } from '../gameplay/visibility';
 import type { Position } from '../gameplay/movement';
@@ -32,7 +33,7 @@ export function minimapData(state:MatchState,visible:MinimapVisibility=()=>true)
  for(const farm of state.placement.farms??[])rect(farm.id,'player',farm.footprint,'#80b65a');
  if(state.navy?.harbor)rect('harbor','player',state.navy.harbor.footprint,'#77c4cf');
  for(const ship of state.navy?.ships??[])markers.push({id:ship.id,owner:'player',position:{...ship.position},color:'#77c4cf'});
- for(const node of [state.gathering.node,state.gathering.gold])if(node)markers.push({id:node.id,owner:'neutral',position:{...node.position},color:node===state.gathering.node?'#b8894e':'#e0bf4d'});
+ for(const node of resourceNodes(state.gathering))if(node)markers.push({id:node.id,owner:'neutral',position:{...node.position},color:(node.resource??'wood')==='wood'?'#b8894e':'#e0bf4d'});
  for(const unit of state.gathering.units)markers.push({id:unit.id,owner:'player',position:{...unit.position},color:'#9cda8f'});
  for(const enemy of state.combat.enemies)markers.push({id:enemy.id,owner:'enemy',position:{...enemy.position},...(enemy.footprint?{footprint:{...enemy.footprint}}:{}),color:'#f47c70'});
  return {world:{width:state.map.width,height:state.map.height},terrain:createMap(state.map.id).obstacles.map(o=>({...o})),markers:markers.filter(visible)};

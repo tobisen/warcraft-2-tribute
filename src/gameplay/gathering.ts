@@ -55,12 +55,15 @@ export interface GatheringState {
   dropoffs?:Footprint[];
   units: Unit[];
   node: ResourceNode;
+  extraNodes?:ResourceNode[];
   gold?: ResourceNode;
   goldBalance?: number;
   base: Position;
   wood: number;
   lostCargo?:{wood:number;gold:number};
 }
+
+export function resourceNodes(state:GatheringState):ResourceNode[]{return [state.node,...(state.gold?[state.gold]:[]),...(state.extraNodes??[])];}
 
 export function isNodeHit(point: Position, node: ResourceNode): boolean {
   return Math.hypot(point.x - node.position.x, point.y - node.position.y) <= gatheringConfig.nodeRadius;
@@ -85,7 +88,7 @@ export function orderUnits(units: Unit[], target: Position, node?: ResourceNode)
 /** Spend delta across approach, gathering, delivery and return without losing time. */
 export function updateGathering(state: GatheringState, deltaSeconds: number, map?: WorldMap,queue?:{elapsedSeconds:number;gateFor?:GateFor;team?:'player'|'enemy';services?:Map<string,ResourceService>;nodeVisible?:(node:ResourceNode)=>boolean;knownRemaining?:(node:ResourceNode)=>number}): GatheringState {
   const services=queue?.services??(map&&queue?resourceServices(state,map,queue.elapsedSeconds):undefined);
-  const nodes = [state.node, ...(state.gold ? [state.gold] : [])].map(node=>({...node}));
+  const nodes = resourceNodes(state).map(node=>({...node}));
   let goldBalance = state.goldBalance ?? 0;
   let wood = state.wood;
   const units = state.units.map(original => {
@@ -180,6 +183,7 @@ export function updateGathering(state: GatheringState, deltaSeconds: number, map
       ? { ...worker, order: worker.cargo > 0
         ? { kind: 'deliver', nodeId: worker.order.nodeId } : { kind: 'idle' } } : worker),
     node: nodes[0], wood,
+    ...(state.extraNodes?{extraNodes:nodes.slice(state.gold?2:1)}:{}),
     ...(state.gold ? {gold:nodes[1],goldBalance} : {}),
   };
 }

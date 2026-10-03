@@ -1047,3 +1047,21 @@ Ground-effects/dead sprites på depth−1 underunits0; projectile5, selection6,
 HP7 och fog40. Alpha0.8 och glesa sprites bevarar läsbarheten. UI-atlas512×160
 med21frames. Save lagrar fortfarande inte temporära effekter: load/restart
 rensar dem, paus fryser bildtid och terminal match stoppar simulationen.
+
+## RTS-115 – Handgjord referenskarta och ändliga expansioner
+
+Frontier Valley läggs till som separat större Skirmish-kartval,1600×1152,
+med befintliga32px tiles. Äldre kartor behåller dimensioner/terräng/stock.
+Handritade water/rock-footprints ger norra flank, central96px landpassage och
+södra flank. De två expansionsnoderna använder samma40×40-resourcefootprints,
+5-capacity last, gathering/delivery och fog-policy som primarynoder.
+
+Total tillgänglig stock är600wood/450gold; inga automatiska credits och inga
+nya dropoffbyggnader. Arbetare transporterar till befintlig bas. Enemy delar
+samma ändliga noder och får bara välja upptäckta resurser; kartan tillför
+scouting/attack-waypoints men ändrar inte AI-ekonomins grundregler.
+
+Save config19 validerar lager och koordinater mot den identifierade kartan.
+Config18/äldre migreras endast med deras tidigare karta/nodmodell. En sparad
+camera behöver inte passa en historisk viewport; scene clampas mot den
+aktuella viewporten, vilket också tillåter gamla kartors giltiga bottom-pan.

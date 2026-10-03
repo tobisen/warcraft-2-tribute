@@ -1,7 +1,7 @@
 import {unitStats} from '../config/unit';
 import {trafficConfig as config} from '../config/traffic';
 import {gatheringConfig} from '../config/gathering';
-import type {GatheringState} from './gathering';
+import {resourceNodes,type GatheringState} from './gathering';
 import {bodyFits,tileCenter,type WorldMap} from './map';
 import {canInteract,footprintDistance} from './approach';
 import {findRoute,segmentFits} from './navigation';
@@ -12,7 +12,7 @@ export interface ResourceService {point:Position;working:boolean}
 export function resourceServices(state:GatheringState,map:WorldMap,elapsed:number):Map<string,ResourceService>{
  const result=new Map<string,ResourceService>();
  map={...map,obstacles:[...map.obstacles,...placementObstacles(state)]};
- for(const node of [state.node,...(state.gold?[state.gold]:[])]){
+ for(const node of resourceNodes(state)){
   const cohort=state.units.filter(u=>u.kind==='worker'&&(u.hp===undefined||u.hp>0)&&(u.order.kind==='gather'||u.order.kind==='deliver')&&u.order.nodeId===node.id);
   const workers=cohort.filter(u=>u.order.kind==='gather').sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}));
   // Delivery takes no active slot. A returning carrier waits for the next snapshot

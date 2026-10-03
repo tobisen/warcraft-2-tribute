@@ -1055,3 +1055,16 @@ Välj 0.75× eller 1× oberoende av difficulty i setup. 1× är default och vale
 Campaigns första val erbjuder sex mål utan tidspress: välj worker, flytta minst 32 world pixels med en move-order, leverera 20 wood, färdigställ barracks, träna soldier och högerklicka det röda träningsmålet med vald soldier tills det är dött. Startsaldo är 40 wood och 10 gold; ordinarie kostnader, last, leverans och byggtid gäller. Wood i last räknas inte som levererat. Att byta vald worker under movement-steget fungerar.
 
 Inga fiender eller waves finns under förberedelsen. Det enda målet spawnar efter riktig produktion, väntar stilla och anfaller inte. Soldaten väntar på spelarens kommando i stridslektionen. Alla sex mål ger Victory; defeat har fortfarande företräde. UI visar mål, genomförda steg och levererad mängd. Pause/Save/load bevarar progression och en enda target; restart återställer alla mål och matchstate. Vanliga kontroller är tillgängliga, så spelaren får experimentera och bygga i förväg.
+
+## Frontier Valley (RTS-115)
+
+Separat Skirmish-karta på1600×1152 med tre landvägar runt floden: norr, en
+96px central torr passage och söder. Fiendebasen står i nordöst på(1360,144).
+Utforska över floden för extra wood vid(1216,896),200wood och gold vid
+(1184,640),150gold. Primarynoderna innehåller400wood/300gold. Totalt
+600wood/450gold delas med fienden. Alla noder är ändliga och har egna ID:n.
+
+Gather-order behåller sin specifika resursnod över leveransturer; uttömning
+gäller den noden. Samma cap5 och hemleverans gäller expansioner, utan ny
+dropoffbyggnad. Fog döljer okända noder; utforskade men osynliga noder visar
+namn utan aktuell mängd. Pan/minimap/Save/load och restart följer kartstorleken.
