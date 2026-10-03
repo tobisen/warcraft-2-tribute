@@ -7,6 +7,8 @@ import { createFog,updateFog,type VisionObserver } from './fog';
 export function visionObservers(state:MatchState):VisionObserver[]{
  const observers:VisionObserver[]=state.gathering.units.filter(u=>(u.hp??1)>0).map(u=>({id:u.id,owner:'player',position:{...u.position},radius:u.kind==='worker'?fogConfig.workerRadius:fogConfig.combatRadius}));
  const building=(id:string,footprint:{x:number;y:number;width:number;height:number},radius:number)=>observers.push({id,owner:'player',footprint,position:{x:footprint.x+footprint.width/2,y:footprint.y+footprint.height/2},radius});
+ for(const ship of state.navy?.ships??[])if(ship.hp>0)observers.push({id:ship.id,owner:'player',position:{...ship.position},radius:fogConfig.combatRadius});
+ const harbor=state.navy?.harbor;if(harbor&&harbor.hp>0&&harbor.construction.remainingSeconds===0)building('harbor',harbor.footprint,fogConfig.barracksRadius);
  if(state.combat.baseHP>0)building('base',baseFootprint(state.gathering.base),fogConfig.baseRadius);
  if(state.placement.barracks&&(state.placement.barracksHP??1)>0&&state.placement.construction?.remainingSeconds===0)building('barracks',state.placement.barracks,fogConfig.barracksRadius);
  const forge=state.placement.forge;if(forge&&forge.hp>0&&forge.construction.remainingSeconds===0)building('forge',forge.footprint,fogConfig.forgeRadius);

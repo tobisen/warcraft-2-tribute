@@ -1,3 +1,4 @@
+import {navyConfig} from '../config/navy';
 import { forgeConfig } from '../config/upgrades';
 import { combatConfig } from '../config/combat';
 import { costs } from '../config/economy';
@@ -24,7 +25,7 @@ export interface PlacementContext {
 export interface ConstructionJob {remainingSeconds:number;builderId:string|null}
 export interface Farm {owner?:'player';hp?:number;id:`farm-${number}`;footprint:Footprint;construction:ConstructionJob}
 export interface PlacementState {
-  kind?:'barracks'|'farm'|'forge';
+  kind?:'harbor'|'barracks'|'farm'|'forge';
   forge?:{id:'forge';owner:'player';hp:number;footprint:Footprint;construction:ConstructionJob};
   farms?:Farm[];
   nextFarmNumber?:number;
@@ -35,8 +36,8 @@ export interface PlacementState {
   barracksHP?:number;
 }
 
-export function buildingFootprint(point: Position,kind:'barracks'|'farm'|'forge'='barracks'): Footprint {
-  const config=kind==='forge'?forgeConfig:kind==='farm'?farmConfig:barracksConfig;
+export function buildingFootprint(point: Position,kind:'harbor'|'barracks'|'farm'|'forge'='barracks'): Footprint {
+  const config=kind==='harbor'?navyConfig.harbor:kind==='forge'?forgeConfig:kind==='farm'?farmConfig:barracksConfig;
   const size = config.tileSize * config.footprintTiles;
   return {
     x: Math.floor(point.x / config.tileSize) * config.tileSize,
@@ -59,7 +60,7 @@ export function placementObstacles(state: GatheringState): Footprint[] {
   ];
 }
 
-export function beginPlacement(state: PlacementState,kind:'barracks'|'farm'|'forge'='barracks'): PlacementState {
+export function beginPlacement(state: PlacementState,kind:'harbor'|'barracks'|'farm'|'forge'='barracks'): PlacementState {
   return kind==='forge'&&state.forge || kind==='barracks'&&state.barracks || kind==='farm'&&(state.farms?.length??0)>=farmConfig.maxCount
     ? state : { ...state, active:true,...(kind!=='barracks'?{kind}: {kind:undefined}) };
 }
@@ -70,6 +71,7 @@ export function cancelPlacement(state: PlacementState): PlacementState {
 
 export function placementError(state: PlacementState, point: Position, wood: number, obstacles: Footprint[], context?: PlacementContext): string | null {
   const kind=state.kind??'barracks';
+  if(kind==='harbor')return 'Hamn placeras via kustregler';
   if(kind==='forge'&&state.forge)return 'En Forge finns redan';
   if (kind==='barracks'&&state.barracks) return 'En barracks finns redan';
   if (kind==='farm'&&(state.farms?.length??0)>=farmConfig.maxCount) return 'Max antal farms';
@@ -124,7 +126,7 @@ export function placementError(state: PlacementState, point: Position, wood: num
 
 export function placeBuilding(state: PlacementState, point: Position, wood: number, obstacles: Footprint[], context?: PlacementContext):
   {placement:PlacementState;wood:number;map?:WorldMap;gathering?:GatheringState} {
-  if (!state.active || placementError(state, point, wood, obstacles, context)) return { placement: state, wood, ...(context?{map:context.map}:{}) };
+  if (state.kind==='harbor'||!state.active || placementError(state, point, wood, obstacles, context)) return { placement: state, wood, ...(context?{map:context.map}:{}) };
   const kind=state.kind??'barracks';
   const rect=buildingFootprint(point,kind);
   const id: 'barracks'|'forge'|`farm-${number}` = kind==='forge'?'forge':kind==='barracks'?'barracks':`farm-${state.nextFarmNumber??1}`;

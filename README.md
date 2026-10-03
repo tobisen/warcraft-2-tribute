@@ -471,3 +471,10 @@ Två fraktioner, tre skirmish-kartor, betald AI-ekonomi och matchresultat
 Vatten/kust-reglernas grund finns i RTS-081: ruttadapter och kroppsgiltighet
 är testade utan ändrad landrörelse. Spelbara hamnar/fartyg följer i
 RTS-082; inga fartygsknappar är införda i grundslicen.
+
+RTS-082: välj worker → Bygg hamn på synlig kust → låt bygget
+färdigställas → välj hamnen → Bygg fartyg. Hamn40wood/10gold;
+fartyg40wood/15gold,8s och2 supply i gemensam FIFO/population.
+Välj fartyg med klick/drag och högerklicka i sammanhängande vatten.
+Stop/grupper/Save/restart fungerar; sjöstrid och transport är nästa
+slices. Hamn/fartyg är tydligt märkta kodritade placeholders.

@@ -8,7 +8,7 @@ export type MovementDomain='land'|'water';
 const contains=(r:Footprint,p:Position)=>p.x>=r.x&&p.x<r.x+r.width&&p.y>=r.y&&p.y<r.y+r.height;
 const sameRect=(a:Footprint,b:Footprint)=>a.x===b.x&&a.y===b.y&&a.width===b.width&&a.height===b.height;
 function terrain(map:WorldMap){return maps[map.id??'arena'].terrain.map(p=>({kind:p.kind,x:p.column*arenaConfig.tileSize,y:p.row*arenaConfig.tileSize,width:p.columns*arenaConfig.tileSize,height:p.rows*arenaConfig.tileSize}));}
-function dynamicObstacles(map:WorldMap){const patches=terrain(map);return map.obstacles.filter(o=>!patches.some(p=>sameRect(p,o)));}
+function dynamicObstacles(map:WorldMap){const patches=terrain(map);return map.obstacles.filter(o=>{const index=patches.findIndex(p=>sameRect(p,o));if(index<0)return true;patches.splice(index,1);return false;});}
 /** Partition at terrain boundaries: adjacent water rectangles form a union, not separate islands.
  * Derived adapter only; authoritative map and its revision are never modified or persisted twice. */
 export function domainMap(map:WorldMap,domain:MovementDomain):WorldMap {

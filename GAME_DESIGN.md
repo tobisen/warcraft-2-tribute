@@ -865,3 +865,21 @@ vatten där hela kroppen ryms, utan landgenvägar. En hamnfootprint ska
 ha positiv area på både land och vatten och inte överlappa sten eller
 byggnader; att bara nudda stranden räcker inte. RTS-081 introducerar
 regler/ruttadapter, ingen spelbar hamn eller fartygsproduktion ännu.
+
+## RTS-082: spelbar hamnproduktion
+
+Välj worker, Bygg hamn och klicka giltig synlig kust. Hamnen är
+64x64 och straddlar land/vatten med fri arbetarväg och vattenutgång.
+40wood/10gold betalas vid placering;5 sekunders kontaktarbete krävs.
+Esc/högerklick avbryter preview utan kostnad. Avbruten arbetare kan
+återuppta med högerklick på bygget utan andra kostnaden.
+
+Välj färdig hamn, Bygg fartyg:40wood/15gold dras vid enqueue,
+8 sekunder och2 supply per fartyg; max3 FIFO-jobb och befintlig
+refundpolicy. Land och sjö delar population/reservations. En blockerad
+vattenutgång håller färdigt jobb tills en giltig plats finns.
+Fartyg börjar idle/omarkerade och stöder klick, drag, shift, grupper,
+Stop och högerklick i vatten. Ingen gathering/attack eller hamn-rally
+i denna slice. Placeholder-hull/Hamn-text visar modellen; sjöstrid
+och transport tillkommer i083/084, slutlig presentation i089.
+Pause/game over/Save/load/restart omfattar hamn, jobs och fartyg.

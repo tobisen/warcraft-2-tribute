@@ -7,7 +7,7 @@ import type { GatheringState } from './gathering';
 import type { WorldMap } from './map';
 import type { Position } from './movement';
 export interface ProductionJob {
-  id:string; kind:'worker'|'soldier'|'archer'|'catapult'; supply?:number; cost:ResourceCost;
+  id:string; kind:'warship'|'worker'|'soldier'|'archer'|'catapult'; supply?:number; cost:ResourceCost;
   durationSeconds:number; remainingSeconds:number;legacyRecipe?:true;
 }
 const base:ProductionBuilding={kind:'base'};

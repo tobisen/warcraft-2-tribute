@@ -1653,3 +1653,44 @@ slutlig riktad suite8 PASS522ms inkluderar extra seam-testet.
 Typecheck/build,git diff --check och583 dokumentreferenser PASS.
 Oförändrad runtime-bundle1559,52KB/gzip409,25; varning kvar.
 RTS-081 Done. Nästa RTS-082: hamnplacering/fartygsproduktion.
+
+## 2026-10-03 – RTS-082: betald hamn/fartyg
+
+NavyState separerad från landunits; bevarar gamla strid/gatheringtypes.
+Hamnworkerbygge återanvänder updateSite/order-state, foot/coast/fog/
+resursvägs- och spawnexitchecks. Fartygs-FIFO återanvänder cost/
+refund/population/job-shape/spawn/route; blocked head0 väntar.
+Gemensam supply, selection/drag/shift/groups/Stop/fog/minimap/resultat.
+Save config11 med strict naval refs/geometri/recipe/domän och migration
+från10 utan gratis navy. Kodritade hull/Hamn-placeholder tills089;
+ingen sjöstrid/transport/rally. Config alla priser/tider/stats.
+
+Tidiga riktade failures: syntetisk fullvatten-barriär sammanföll med
+terrängrect och filtrerades bort; domänadaptern drar nu av endast en
+ursprunglig terrängkopia. Save view-listan saknade harbor, korrigerad.
+Ett extra FIFO-test försökte lägga farm på en arbetare; riktade
+giltiga kandidater korrigerade, inga gameplayändringar för det felet.
+En fullsuite680/1 fail avsåg detta testfixturefel och rapporteras inte
+som slutpass. Senare683/83 PASS104,73s; riktade13 PASS1,15s.
+
+Första browserhelpern klickade gold utanför canvas och använde bara
+en wood-worker; kunde därför inte finansiera flödet. Med riktig
+kameravy och två wood-workers fick båda fraktioner40wood/15gold vid
+~47,75s. Verklig hamnbyggnad/8s betald spawn/selection/vattenmove/Save/
+restart PASS utan resource/unit-injektion. Klockan accelererades och
+kameran flyttades som vy; inga gameplay-fixtures i browsermatchen.
+Slutlig extra drag/Stop/browser och fullsuite rapporteras separat.
+
+Slutlig Chromium: båda fraktioner funded48,58/47,90s,8s verklig
+produktion, vattenmove/klick/drag/Stop/Save/load/restart PASS utan
+page/console/request-fel. Extra drag/Stop kördes faktiskt; Stop rensar
+route-cache och nästa commandNumber börjar1 enligt befintlig policy.
+Screenshot visar märkt Hamn/hull och ring; granskad.
+Full slut-suite683 tester/83 filer PASS111,68s, riktade13 PASS1,71s,
+typecheck/build/git diff --check och585 dokumentreferenser PASS.
+Slutbundle index-3xzZmNwL.js1574,37KB/gzip412,98KB; varning kvar.
+Granskning: fog/coast/builder access, shared population/ID/resursledger,
+FIFO/delta/refund/spawnblock, cleanup/Save migration, drag/groups/
+Stop/terminalinput och scope. Inga kvarstående blockerande fynd.
+Begränsningar: placeholder, ingen sjöstrid/transport/hamnrally,
+fartyg kan överlappa vid samma move-mål. RTS-082 Done; nästa083.

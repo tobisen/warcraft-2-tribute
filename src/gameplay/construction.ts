@@ -1,3 +1,4 @@
+import {navyConfig} from '../config/navy';
 import { barracksConfig, farmConfig } from '../config/buildings';
 import type { GateFor } from './traffic';
 import { approachRoute, canInteract } from './approach';
@@ -6,7 +7,7 @@ import { unitStats } from '../config/unit';
 import type { GatheringState, Unit } from './gathering';
 import type { PlacementState, ConstructionJob, Footprint } from './placement';
 import type { WorldMap } from './map';
-type SiteId = 'outpost'|'barracks'|'forge'|`farm-${number}`;
+type SiteId = 'harbor'|'outpost'|'barracks'|'forge'|`farm-${number}`;
 export function barracksReady(placement:PlacementState):boolean {
   return placement.barracks!==null && (!placement.construction || placement.construction.remainingSeconds===0);
 }
@@ -29,7 +30,7 @@ export function updateSite(gathering:GatheringState,job:ConstructionJob,rect:Foo
   if (job.remainingSeconds<=0) return {gathering,job};
   const builder=gathering.units.find(u=>u.id===job.builderId && u.kind==='worker' && u.order.kind==='build'&&u.order.buildingId===id);
   if (!builder) return {gathering,job};
-  const range=id==='barracks'?barracksConfig.constructionRange:farmConfig.constructionRange;
+  const range=id==='harbor'?navyConfig.harbor.constructionRange:id==='barracks'?barracksConfig.constructionRange:farmConfig.constructionRange;
   const goalKey=`build:${id}`,cached=builder.navigation;
   const route=cached?.goalKey===goalKey&&cached.revision===map.revision?cached
     : {...approachRoute(map,builder.position,rect,range),goalKey};

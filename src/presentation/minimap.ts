@@ -30,6 +30,8 @@ export function minimapData(state:MatchState,visible:MinimapVisibility=()=>true)
  if(state.placement.barracks)rect('barracks','player',state.placement.barracks,'#d09153');
  if(state.placement.forge)rect('forge','player',state.placement.forge.footprint,'#989ea8');
  for(const farm of state.placement.farms??[])rect(farm.id,'player',farm.footprint,'#80b65a');
+ if(state.navy?.harbor)rect('harbor','player',state.navy.harbor.footprint,'#77c4cf');
+ for(const ship of state.navy?.ships??[])markers.push({id:ship.id,owner:'player',position:{...ship.position},color:'#77c4cf'});
  for(const node of [state.gathering.node,state.gathering.gold])if(node)markers.push({id:node.id,owner:'neutral',position:{...node.position},color:node===state.gathering.node?'#b8894e':'#e0bf4d'});
  for(const unit of state.gathering.units)markers.push({id:unit.id,owner:'player',position:{...unit.position},color:'#9cda8f'});
  for(const enemy of state.combat.enemies)markers.push({id:enemy.id,owner:'enemy',position:{...enemy.position},...(enemy.footprint?{footprint:{...enemy.footprint}}:{}),color:'#f47c70'});

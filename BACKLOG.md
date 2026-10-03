@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-082 – Hamnplacering och fartygsproduktion** — **Todo**.
+**RTS-083 – Stridsfartyg med distansattack** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
@@ -2418,13 +2418,21 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-082 – Hamnplacering och fartygsproduktion
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Hamnplacering och fartygsproduktion.
+**Goal:** Bygg en hamn vid synlig kust och producera ett styrbart fartyg med verklig ekonomi.
+
+**Requirements:** En hamn per spelare,64x64/grid32,40 wood/10 gold,160HP och5s faktiskt workerbygge. Använd befintligt placement-preview/cancel, builder/order-state och kustregler; giltig workeråtkomst samt fri vattenutgång krävs. Fartyg40 wood/15 gold,8s,2 supply,32px kropp/110px/s/90HP; båda fraktioner samma preliminära recipe. Befintlig FIFO max3 och refundpolicy återanvänds, kostnad dras vid enqueue. Blockerad spawn väntar utan extra kostnad. Fartyg har unika ship-ID:n, börjar idle/omarkerat, stöder klick/drag och högerklickmove i vatten; land/gather/attack stöds inte i denna slice. UI bevarar selection/orders. Global supply omfattar land och fartyg inklusive alla reservations. Save/load/pause/game-over/restart omfattar hamn/job/ships utan duplicerad ekonomi. Placeholder-hamn/fartyg tydligt märkta tills RTS-089.
+
+**Non-goals:** Sjöstrid (RTS-083), transport, sjö-AI, nya kartor, fraktionsbalans och färdiga sjöassets.
 
 **Dependencies:** RTS-081.
 
-**Acceptance criteria:** Giltig kustfootprint och utgång, kostnad/kö/supply fungerar i båda fraktioner.
+**Acceptance criteria:** Faktiskt gather→kustbygge→betald produktion→vattenspawn→selection/move fungerar för båda fraktioner. Felaktig placering/start kostar inget, FIFO/refunds/supply och blockerad utgång är konsekventa. Save/load och restart bevarar/resetter hela aktuella state. Befintliga landflöden passerar.
+
+**Tester:** Kust/builder/exit, kostnad och construction, queue/tid/refund/pop/spawn, ID/selection/orders, Save och reset, tidigare fullsuite/typecheck/build samt browser.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, DECISIONS.md, GAME_DESIGN.md och README.md.
 
 ## RTS-083 – Stridsfartyg med distansattack
 

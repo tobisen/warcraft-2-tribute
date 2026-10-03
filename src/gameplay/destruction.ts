@@ -20,10 +20,11 @@ export function cleanDestroyed(state:MatchState):MatchState {
   let gathering=removeDeadUnits(state.gathering);
   const baseDead=state.combat.baseHP<=0;
   const barDead=state.placement.barracks!==null&&state.placement.barracksHP!==undefined&&state.placement.barracksHP<=0;
+  const harborDead=!!state.navy?.harbor&&state.navy.harbor.hp<=0;
   const forgeDead=!!state.placement.forge&&state.placement.forge.hp<=0;
   const deadFarms=(state.placement.farms??[]).filter(f=>f.hp!==undefined&&f.hp<=0);
-  const deadSites=new Set<string>([...(forgeDead?['forge']:[]),...(barDead?['barracks']:[]),...deadFarms.map(f=>f.id)]);
-  const removed:Footprint[]=[...(forgeDead?[state.placement.forge!.footprint]:[]),...(state.combat.destroyedEnemyFootprints??[]),...state.combat.enemies.filter(e=>e.hp<=0&&e.footprint).map(e=>e.footprint!),...(baseDead?[baseFootprint(gathering.base)]:[]),...(barDead?[state.placement.barracks!]:[]),...deadFarms.map(f=>f.footprint)];
+  const deadSites=new Set<string>([...(harborDead?['harbor']:[]),...(forgeDead?['forge']:[]),...(barDead?['barracks']:[]),...deadFarms.map(f=>f.id)]);
+  const removed:Footprint[]=[...(harborDead?[state.navy!.harbor!.footprint]:[]),...(forgeDead?[state.placement.forge!.footprint]:[]),...(state.combat.destroyedEnemyFootprints??[]),...state.combat.enemies.filter(e=>e.hp<=0&&e.footprint).map(e=>e.footprint!),...(baseDead?[baseFootprint(gathering.base)]:[]),...(barDead?[state.placement.barracks!]:[]),...deadFarms.map(f=>f.footprint)];
   const obstacles=state.map.obstacles.filter(o=>!removed.some(f=>equalFoot(o,f)));
   const alive=new Set(gathering.units.map(u=>u.id));
   const paused=(job:ConstructionJob|undefined)=>job?.builderId&&!alive.has(job.builderId)?{...job,builderId:null}:job;
@@ -49,7 +50,7 @@ export function cleanDestroyed(state:MatchState):MatchState {
   const enemyAlive=new Set(enemies.map(e=>e.id));
   const liveGroups=state.enemyAI?.groups.map(g=>({...g,members:g.members.filter(id=>enemyAlive.has(id)),destinations:Object.fromEntries(Object.entries(g.destinations).filter(([id])=>enemyAlive.has(id)))})).filter(g=>g.members.length);
   const enemyAI=state.enemyAI?{...state.enemyAI,reserve:state.enemyAI.reserve.filter(id=>enemyAlive.has(id)),defenders:state.enemyAI.defenders.filter(d=>enemyAlive.has(d.id)).map(d=>d.groupId&&!liveGroups!.some(g=>g.id===d.groupId)?{id:d.id}:d),threatId:gathering.units.some(u=>u.id===state.enemyAI!.threatId)?state.enemyAI.threatId:null,groups:liveGroups!}:undefined;
-  return {...state,...(state.enemyRecovery&&!enemyBaseAlive?{enemyRecovery:{...state.enemyRecovery,production:{...state.enemyRecovery.production,queue:[],remainingSeconds:null,blockedSpawnKey:undefined}}}:{}),...(state.enemyPolicy?.research.job&&(!enemyBaseAlive||!enemies.some(e=>e.buildingType==='forge'))?{enemyPolicy:{research:{...state.enemyPolicy.research,job:null}}}:{}),gathering,placement,production,soldierProduction,...(state.controlGroups?{controlGroups:pruneGroups(state.controlGroups,gathering.units)}:{}),...(enemyAI?{enemyAI}:{}),
+  return {...state,...(state.navy?{navy:{...state.navy,ships:state.navy.ships.filter(s=>s.hp>0),harbor:harborDead?null:state.navy.harbor?{...state.navy.harbor,construction:paused(state.navy.harbor.construction)!}:null,production:baseDead||harborDead?clearProduction(state.navy.production):state.navy.production}}:{}),...(state.enemyRecovery&&!enemyBaseAlive?{enemyRecovery:{...state.enemyRecovery,production:{...state.enemyRecovery.production,queue:[],remainingSeconds:null,blockedSpawnKey:undefined}}}:{}),...(state.enemyPolicy?.research.job&&(!enemyBaseAlive||!enemies.some(e=>e.buildingType==='forge'))?{enemyPolicy:{research:{...state.enemyPolicy.research,job:null}}}:{}),gathering,placement,production,soldierProduction,...(state.controlGroups?{controlGroups:pruneGroups(state.controlGroups,[...gathering.units,...(state.navy?.ships.filter(s=>s.hp>0)??[])])}:{}),...(enemyAI?{enemyAI}:{}),
     ...(state.enemyProduction&&!enemies.some(e=>e.kind==='base')?{enemyProduction:{...state.enemyProduction,production:{...state.enemyProduction.production,queue:[],remainingSeconds:null,blockedSpawnKey:undefined}}}:{}),
     ...(state.research?.job&&(baseDead||forgeDead||!placement.forge)?{research:{...state.research,job:null}}:{}),
     map:obstacles.length===state.map.obstacles.length?state.map:replaceObstacles(state.map,obstacles),combat:{...state.combat,enemies,...(state.combat.destroyedEnemyFootprints?{destroyedEnemyFootprints:undefined}:{})}};

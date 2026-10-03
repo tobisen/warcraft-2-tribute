@@ -1113,3 +1113,26 @@ kopplas in i RTS-082; inga nya entities/scenknappar i denna grundslice.
 [terrainNavigation.test.ts](src/gameplay/terrainNavigation.test.ts) provar
 storlek, vattenunion/separata dammar, swept route/order/revision, kust
 och rekonstruktion efter Save/reset på alla tre kartor.
+
+## RTS-082: hamn och fartyg
+
+[navy.ts](src/gameplay/navy.ts) har separat valfri NavyState med en
+harbor, ship-lista och befintlig ProductionState/FIFO-job-shape.
+Fartyg ligger inte i gathering.units: ingen oavsiktlig landstrid eller
+wood-last. WorkerOrder/updateSite accepterar harbor och bevarar last;
+map.obstacles innehåller den auktoritativa footprintens fysiska hinder.
+Kust/syn/builder-åtkomst/utgång kontrolleras vid betalad placering,
+och arbetarens resursvägar samt befintliga produktionsutgångar bevaras.
+PayCost, Population, spawn-candidates/exit, refundpolicy och route-motor
+återanvänds; fartygsspecifik FIFO-completion använder vattenmap och
+NavyState-spawn. MatchPopulation inkluderar land/fartyg och alla
+reservations. Ships har monotona ship-ID:n, maprevisionstyrd movement,
+vision/minimap och härledda resultat. Selection/drag/groups/Stop delar
+befintliga SelectableUnit-helpers; scenen distribuerar tillbaka listorna.
+
+Save schema2/config11 validerar coast/physical obstacles/builderrefs,
+ship-ID/HP/domain/body, naval cost/time/supply/job IDs och selected harbor.
+Config10 migrerar utan gratis NavyState; config1–9 behåller kedjan.
+Route-cache serialiseras inte: vattenroute återskapas efter Load.
+[navy.test.ts](src/gameplay/navy.test.ts) provar faktiskt betalda
+byggnader, insamling, FIFO/refunds/supply/spawn, orders och Save.

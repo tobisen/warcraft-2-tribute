@@ -850,3 +850,19 @@ handgjord mapprofil bildar en geometrisk union; angränsande patchkanter
 är inte hinder. Kustbyggnad straddlar land/vatten med positiv area i
 båda, utan sten/byggnader. Kustutgång och recipe bestäms i RTS-082.
 Ingen ny sparad terrängkopia, schema eller fartygsstate i RTS-081.
+
+## RTS-082: preliminär hamn-/fartygsrecipe
+
+Gemensamma konfigvärden för båda fraktioner: hamn64x64/grid32,
+40wood/10gold,160HP,5s workerarbete/range24. Fartyg40wood/15gold,
+8s produktion,2 supply,32px square-body,110px/s,90HP. Dessa är
+implementationens preliminära värden, inte en balansgaranti;087
+provar sjöbalansen. Max en hamn; FIFO max3 med befintlig full queued/
+halv aktiv refund. Blockerad spawn väntar vid0 utan ny kostnad.
+
+NavyState är separat från land-unit/gathering och använder egna
+ship-ID:n; supply/ekonomi/selection/fog/resultat är gemensamma.
+Ingen sjöstrid eller lastning i082. Fartyg får överlappa vid samma
+move-mål; spawn beaktar kroppar. Egen kodritad märkt hamn/hull
+är avsiktliga placeholders tills089. Save config11, gammal10 utan
+navy migrerar utan extra byggnader/enheter/resurser.
