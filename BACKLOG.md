@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-099 – Kontextuell action panel** — **Todo**.
+**RTS-100 – Gruppselection och produktionskö** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -2728,13 +2728,21 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-099 – Kontextuell action panel
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Visa rätt actions för aktuell selection: bygga, träna, uppgradera och ge orders. Visa kostnader, hotkeys och orsaker till disabled actions.
 
+**Requirements:** Befintliga knappar/callbacks flyttas till höger i bottom bar. Worker visar build/stop; landcombat attack-move/ability/stop; transport unload/stop; warship stop och befintlig right-click attack. Base visar workertraining samt forge-research (ingen ny forge-selection); barracks/harbor visar sina recept. Blandad selection visar unionen av relevanta actions. Visa faktiska kostnader, befintliga hotkeys och synlig disabled-reason. Ingen ny ordermekanik; instruktion för right-click move/gather/attack. Paus/outcome blockerar allt gameplay. Ny preview kräver tillräcklig bank; kostnaden dras fortfarande bara vid giltig placering.
+
+**Non-goals:** Ny byggnadsselection, kö/grupp100, nya ordertyper/balans/assets, minimap101.
+
 **Dependencies:** RTS-098.
 
-**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+**Acceptance criteria:** Inga irrelevanta actions för tom selection/annan roll. Kostnad/hotkey och blockeringsskäl stämmer med config/produktion/supply/byggstatus/ability. Panelen ryms båda målupplösningar; klick/hotkeys använder samma callbacks utan selection/orderläckage eller dubbel betalning. Research är tillgänglig via vald base och befintlig forge.
+
+**Tester:** Context union och tom state, bank/supply/queue/construction/unique-building/research/cooldown/pause; relevanta action/production/placement/hotkey/sessiontester. Typecheck/build/diff. Browser worker/base/paidtraining/build/cancel/context/pause/restart och screenshot1280×720/1920×1080.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md, README.md.
 
 ## RTS-100 – Gruppselection och produktionskö
 

@@ -1,3 +1,4 @@
+import {actionPanel,renderActionPanel} from '../presentation/actionPanel';
 import {selectionInfo,renderSelectionInfo} from '../presentation/selectionInfo';
 import {renderTopBar} from '../presentation/topBar';
 import {text as uiText} from '../text';
@@ -759,6 +760,7 @@ export class BootScene extends Phaser.Scene {
     for(const [id,d] of this.deaths){if(!effectAlive(d.effect,this.visualTime,isVisible(this.fog,'player',d.effect.motion.position))){d.visual.destroy();this.deaths.delete(id);}else d.visual.setFrame(unitFrame(d.effect.motion,this.visualTime));}
     if(this.fogOverlay)drawFog(this.fogOverlay,this.fog,this.fogPreview??'player');
     for(const shortcut of hotkeys){const button=document.getElementById(shortcut.button)!;button.textContent=`${button.textContent?.replace(/\s+\[[A-Z]\]$/,'')} [${shortcut.key}]`;button.title=shortcut.label;}
+    renderActionPanel(actionPanel(this.currentMatch(),this.selectedBuilding,this.gameplayActive()));
     document.getElementById('group-status')!.textContent=Object.entries(this.controlGroups).map(([slot,ids])=>`${slot}: ${ids.length}`).join(' · ')||uiText.groupsCtrl19Assign19Recall;
     this.syncAudio(visibleEnemies);
     this.minimap?.render();

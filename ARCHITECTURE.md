@@ -1263,3 +1263,7 @@ presentation/topBar.ts härleder levererat saldo och matchPopulation utan Phaser
 ## RTS-098 – Selection-information
 
 presentation/selectionInfo.ts är Phaserfri panelmodell för befintliga valbara egna land-/sjöenheter och base/barracks/harbor. Den läser live HP/order/cargo och fraktionsrecept; stats märks Baseline stats eftersom tillfälliga förmågor/uppgraderingar inte ingår. Grupp har summerad HP, inga enemy/node-data. BootScene klipper befintlig atlasframe till DOM-canvas med pixelated rendering.170px bottenrad, ResizeObserver återanvänds; Save/selectionregler är oförändrade.
+
+## RTS-099 – Kontextuella actions
+
+presentation/actionPanel.ts härleder synliga actions och blockeringsskäl från befintliga recept/bank/supply/bygg-/research-/abilitystate. bindActionPanel reparentar samma DOM-controls en gång; BootScenes callbacks och shutdown är kvar. renderActionPanel körs efter befintlig disabled-sync och hotkeyetiketter; irrelevanta knappar blockeras även för hotkeys. Base ger researchåtkomst till forge utan att ändra BuildingSelection/Saveformat. Previewstart kräver bank, placering är fortfarande betalningstransaktionen.

@@ -1,3 +1,4 @@
+import {bindActionPanel} from './actionPanel';
 import {text as uiText} from '../text';
 import type {SessionPhase} from '../gameplay/session';
 export type HomePage='home'|'campaign'|'skirmish'|'load'|'settings';
@@ -21,6 +22,7 @@ export function syncHomeMenu(nextPhase:SessionPhase):void{
  for(const option of select.options)option.hidden=menu&&setup&&!homeScenarios[current as 'campaign'|'skirmish'].includes(option.value as never);
 }
 export function bindHomeMenu():void{
+ bindActionPanel();
  const open=(page:HomePage)=>{if(phase!=='menu')return;current=page;if(page==='campaign'||page==='skirmish'){const select=element('scenario-select') as HTMLSelectElement;if(!homeScenarios[page].includes(select.value as never)){select.value=homeScenarios[page][0];select.dispatchEvent(new Event('change'));}}syncHomeMenu(phase);(page==='home'?element('menu-campaign'):element('menu-back')).focus();};
  for(const page of ['campaign','skirmish','load','settings'] as const)element(`menu-${page}`).addEventListener('click',()=>open(page));
  element('match-menu-button').addEventListener('click',()=>{if(phase==='playing')element('pause-match').click();else if(phase==='paused')element('resume-match').click();});

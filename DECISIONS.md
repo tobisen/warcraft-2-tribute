@@ -963,3 +963,7 @@ Canvas använder återstående fönsteryta efter befintlig280px HUD och sessionr
 ## RTS-096 – Engelska utan nytt språk-/Save-system
 
 Spelarvänd copy och visningsnamn är engelska. En enkel beroendefri texttabell används av config, feedback och DOM; inga locale-val eller externa dependencies. Machine IDs/orderkinds, stats och Saveversion bevaras. Nya Save-errorcodes och explicit load/resume-state ersätter textbaserade UI-villkor. Befintlig svensk sparad rally-prosa exponeras inte. Resultattal följer en-US. Dokumentation och historiska slice-texter får vara svenska.
+
+## RTS-099 – Researchåtkomst i contextual HUD
+
+Behåll befintlig BuildingSelection (base/barracks/harbor). Attack/defense research visas vid vald base och kräver fortfarande den befintliga färdiga forgen. Ingen ny forge-selection eller Save-migration i denna presentationstask. Blandad unitselection visar union av rollernas actions; varje callback filtrerar enligt tidigare gameplay. Previewknappar blockeras vid otillräcklig bank; saldo dras först vid giltig placering.

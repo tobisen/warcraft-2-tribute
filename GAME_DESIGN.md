@@ -1000,3 +1000,7 @@ Toppraden visar Menu [P], levererat Gold/Wood samt använd/max Population och k�
 ## RTS-098 – Markerad enhet eller byggnad
 
 Bottenpanelen visar namn, originalporträtt, aktuell/max HP och grundstatistik. Worker visar last, stridsroller speed/supply/range/damage; transport visar passagerare. Base/barracks/harbor visar HP och byggstatus. Grupper visar antal och total HP; tom selection ger instruktion och rensar porträtt/stats. Panelen är endast information, utan worldorders. Farm/forge är fortfarande inte klickvalbara enligt tidigare selectionmodell.
+
+## RTS-099 – Actions vid selection
+
+Bottom bars högra panel visar worker build/Stop, landcombat attack-move/ability/Stop och transport Unload/Stop. Blandade grupper får unionen. Base tränar worker och visar research via färdig forge; barracks/harbor visar sina recept. Kostnader/hotkeys och blockeringsskäl är synliga. Tom selection visar inga actions. Right-click behåller befintliga move/gather/attack/landbyggnadsrallyregler; harbor har ingen rally. Previewstart kräver tillräckligt saldo, Escape/right-click avbryter utan kostnad.

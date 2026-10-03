@@ -90,3 +90,17 @@ body:not([data-phase='menu']){grid-template-rows:48px auto minmax(0,1fr) 170px;}
 #selection-health-bar{width:220px;height:10px;accent-color:#7bd389;}
 #selection-stats{color:#bed0a1;}
 #selection-status{display:none;}
+
+/* RTS-099 contextual actions share their existing controls and handlers. */
+#selection-info{flex:1;min-width:0;max-width:640px;}
+#selection-info p{font-size:12px;line-height:1.4;}
+#action-panel{margin-left:auto;width:460px;flex:none;max-height:144px;overflow:auto;}
+#action-panel #gameplay-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px 8px;}
+#action-panel #production-controls{display:contents;}
+#action-panel .control{margin:0;gap:2px;}
+#action-panel button{font:12px system-ui,sans-serif;min-height:32px;padding:4px;text-align:left;}
+#action-panel button[data-icon]::before{display:none;}
+#action-panel .control>span:not(.action-reason),#harbor-status,#transport-status,#research-status,#ability-status{display:none;}
+#action-panel .action-reason{font:11px/1.2 system-ui,sans-serif;color:#e4b28a;}
+#action-hint{font:11px/1.3 system-ui,sans-serif;color:#aebcaf;margin:0 0 5px;}
+#action-panel #production-queue{grid-column:1 / -1;}
