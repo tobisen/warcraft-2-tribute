@@ -1512,3 +1512,27 @@ Screenshot-fynd utanför RTS-076:s kartscope: befintlig shortage-text kan
 visa många decimaler vid fraktionell gathering. Kosmetiskt; inget
 blockerande map/gameplay-fel, inte åtgärdat i denna task.
 571 lokala filreferenser verifierade före commit.
+
+## 2026-10-03 – RTS-077: matchinställningar
+
+Gemensam ren optionsvalidering, atomiska patches och scenario/map-regel
+ovanpå befintlig menu. Felaktiga värden/fält/par bevarar tidigare val,
+aktive sessions låser val. Menusammanfattning med stock, fraktionens
+förmåga och begripligt fiendetryck. Samma faktiskt valda factory-data
+vid Start, pausad Load och restart. Save config10 oförändrad.
+20 nya tester:18 riktiga factory/save/restart-kombinationer samt atomisk
+validering/mode-lock. Riktad settings/session27 PASS, typecheck/build
+PASS. Ingen ny gameplay-balansering, dependency eller ekonomi-HUD-fix.
+
+RTS-076 Pages/Actions verifierat successa56425e/37085916182.
+
+Slutkontroller: npm test628 tester/79 filer PASS (88,39s); typecheck/build,
+git diff --check och574 dokumentreferenser PASS.
+Chromium147 production-preview: alla18 kombinationer genom faktisk menu/
+Start, korrekt modeldata, låsta events i paus, save/load/restart/Ny match
+och mission-normalisering PASS utan page/console/request-fel. Inga
+gameplay-fixtures/injicerade resurser. Menyscreenshot granskad.
+Granskning av validator, session/UI, options-vs-saved-state, regressioner
+och scope fann inga blockerande fynd.
+Slutbundle index-CzF9iKdH.js1555,93KB/gzip408,03KB; befintlig varning kvar.
+RTS-077 Done. Nästa RTS-078 – matchresultat och statistik.

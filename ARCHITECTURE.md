@@ -1047,3 +1047,21 @@ profilens maxstock/ledger/minnesmängd. Config9/äldre migreras enbart som
 arena; spoofad alternativ karta avvisas.
 [maps.test.ts](src/gameplay/maps.test.ts) verifierar spawns, nåbarhet,
 terrain/minimap, sex betalda fraktionsmatcher samt strikt map-save.
+
+## RTS-077: validerade matchinställningar
+
+[matchSettings.ts](src/gameplay/matchSettings.ts) validerar MatchOptions
+och atomiska patches. Okända värden/fält och explicit icke-skirmish-
+altkarta avvisas. Scenario-only byte till mission/Survival normaliserar
+kartan till arena. createSession kräver giltiga options; changeOptions
+använder samma validering och fungerar enbart i menu. Typad intern
+siege-test-fixture bevaras men finns fortsatt inte i spelarens dropdown.
+[matchSettings.ts](src/presentation/matchSettings.ts) sammanfattar vald
+stock/fraktionsförmåga/fiendetryck utan gameplay-mutation. Scenen binder
+befintliga dropdowns, visar sammanfattning i menyn och använder faktiska
+sessionsval vid Start/restart.
+
+[matchSettings.test.ts](src/gameplay/matchSettings.test.ts) verifierar
+atomiska fel, mode-lock och18 verkliga factory/save/restart-kombinationer.
+Ingen ny sparbar options-kopia eller schemaändring: Save config10 lagrar
+fortsatt matchens faktiska scenario/map/factions/difficulty.

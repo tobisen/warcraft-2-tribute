@@ -444,3 +444,8 @@ placerade rock/water-patches men samma1280x960/32px, baser och nodpositioner.
 Båda fraktioner stöds. Andra scenarios använder originalarenan.
 Save config10 bevarar kartvalet; Load och restart använder samma profil.
 Äldre saves migreras som arena utan ny resursstock.
+
+RTS-077: menyn sammanfattar karta/resursstock, fraktion/förmåga och
+svårighetsgrad före Start. Alla18 skirmish-kombinationer stöds.
+Valen är låsta under match och bevaras vid pause/Load/restart; Ny match
+öppnar valen igen. Byte till mission/Survival använder originalarenan.

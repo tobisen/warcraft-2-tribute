@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-077 – Matchinställningar för karta, fraktion och svårighet** — **Todo**.
+**RTS-078 – Matchresultat med ekonomi- och stridsstatistik** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
@@ -2328,13 +2328,21 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-077 – Matchinställningar för karta, fraktion och svårighet
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Matchinställningar för karta, fraktion och svårighet.
+**Goal:** Befintliga val appliceras konsekvent och presenteras tydligt före Start.
+
+**Requirements:** Återanvänd befintliga dropdowns. Ren atomisk validering av scenario/map/faction/difficulty; okända värden/fält och ogiltiga par avvisas utan att ändra session. Bara menu tillåter val. Scenario-byte från skirmish till mission/survival återgår till arena; explicit alternativ karta i icke-skirmish avvisas. Visa menyns aktuella profilstock, fraktionsförmåga och begriplig difficulty-beskrivning. Start använder samma val; aktiva val låses. Pause/load/restart bevarar faktiska val och Ny match kan välja nya. Båda fraktioner x tre kartor x tre difficulties fungerar vid initiering/save/restart; äldre missionflöden bevaras.
+
+**Non-goals:** Nya spelvärden, balans, ekonomi-HUD-polish, fler inställningar, seed/editor, persistence av menypreferenser och implementering av resultatsystemet i RTS-078.
 
 **Dependencies:** RTS-076.
 
-**Acceptance criteria:** Alla kombinationer skapar isolerat korrekt startstate och restart/save/load.
+**Acceptance criteria:** Validerade val motsvarar riktig factory-data; sammanfattning följer menuval, inga dolda inkonsistenta map/scenario-par. Felaktigt event/input eller ändring under match ändrar inte val/state. Save/load/restart bevarar scenario/map/faction/difficulty och Ny match isolerar förra matchens state.
+
+**Tester:** Atomiska invalid-patches, giltiga kombinationer/normalisering, menylåsning,18 factory/save/restart-kombinationer, faktisk browser-menu/Start/pause/load/restart och tidigare tester/typecheck/build/diff.
+
+**Docs:** BACKLOG.md, DECISIONS.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md och README.md.
 
 ## RTS-078 – Matchresultat med ekonomi- och stridsstatistik
 

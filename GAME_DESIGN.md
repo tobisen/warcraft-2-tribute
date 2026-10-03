@@ -827,3 +827,13 @@ Resursmängder är ursprunglig ändlig stock, aldrig en incomebonus.
 Kartval sker i Skirmish-menyn; missions/Survival behåller arena.
 Load och restart bevarar profil. Detta utökar den ursprungliga MVP:ns
 en-karta-krav; tidigare taskbeskrivningar ovan är historiska slices.
+
+## RTS-077: tydliga val före match
+
+Menyn visar vald karta med total finite wood/gold-stock, fraktion och
+aktiv förmåga samt fiendetryck för svårighetsgraden. Sammanfattningen
+följer valen före Start. Matchen använder de valen och låser kontroller
+tills Ny match. Pause/Load/restart bevarar samma faktiska inställningar.
+Byt från Skirmish till missions/Survival så blir kartan arena; explicita
+ogiltiga kombinationer ignoreras utan att ändra matchen. Inga nya
+spelvärden eller menypreferenser sparas separat.

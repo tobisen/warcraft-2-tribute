@@ -1,3 +1,4 @@
+import {matchSettingsSummary} from '../presentation/matchSettings';
 import {maps,isMapId} from '../config/maps';
 import type {EnemyKnowledgeState} from '../gameplay/enemyKnowledge';
 import type {EnemyRecoveryState} from '../gameplay/enemyRecovery';
@@ -24,7 +25,7 @@ import { drawFog } from '../presentation/fogView';
 import { createFog,type FogState,type Team } from '../gameplay/fog';
 import { visibleMinimapData } from '../presentation/minimap';
 import { bindMinimap } from '../presentation/minimapView';
-import { initialDifficulty,type Difficulty } from '../config/difficulty';
+import { initialDifficulty,difficultyProfiles,type Difficulty } from '../config/difficulty';
 import { type EnemyAIState } from '../gameplay/enemyAI';
 import { type EnemyProductionState } from '../gameplay/enemyProduction';
 import { initialScenario,scenarioConfig,playableScenarios,type MatchScenario } from '../config/scenarios';
@@ -168,7 +169,7 @@ export class BootScene extends Phaser.Scene {
     this.scenarioSelect=document.querySelector<HTMLSelectElement>('#scenario-select')!;
     this.scenarioSelect.replaceChildren(...playableScenarios.map(id=>{const option=document.createElement('option');option.value=id;option.textContent=scenarioConfig[id].label;return option;}));
     this.scenarioSelect.value=this.scenario==='siege-test'?'survival':this.scenario;
-    const changeScenario=()=>{this.session=changeOptions(this.session,{scenario:initialScenario(this.scenarioSelect.value),...(initialScenario(this.scenarioSelect.value)!=='skirmish'?{map:'arena' as const}:{})});this.scenario=this.session.options.scenario;this.syncSession();};
+    const changeScenario=()=>{if(!playableScenarios.includes(this.scenarioSelect.value as MatchScenario))return;this.session=changeOptions(this.session,{scenario:this.scenarioSelect.value as MatchScenario});this.scenario=this.session.options.scenario;this.syncSession();};
     const mapSelect=document.querySelector<HTMLSelectElement>('#map-select')!;
     const changeMap=()=>{if(this.session.phase==='menu'&&this.session.options.scenario==='skirmish'&&isMapId(mapSelect.value)){this.session=changeOptions(this.session,{map:mapSelect.value});this.syncSession();}};
     mapSelect.addEventListener('change',changeMap);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>mapSelect.removeEventListener('change',changeMap));
@@ -176,7 +177,7 @@ export class BootScene extends Phaser.Scene {
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.scenarioSelect.removeEventListener('change',changeScenario));
 
     const difficultySelect=document.querySelector<HTMLSelectElement>('#difficulty-select')!;difficultySelect.value=this.difficulty;
-    const changeDifficulty=()=>{this.session=changeOptions(this.session,{difficulty:initialDifficulty(difficultySelect.value)});this.difficulty=this.session.options.difficulty;this.syncSession();};
+    const changeDifficulty=()=>{if(!Object.hasOwn(difficultyProfiles,difficultySelect.value))return;this.session=changeOptions(this.session,{difficulty:difficultySelect.value as Difficulty});this.difficulty=this.session.options.difficulty;this.syncSession();};
     difficultySelect.addEventListener('change',changeDifficulty);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>difficultySelect.removeEventListener('change',changeDifficulty));
 
@@ -401,6 +402,7 @@ export class BootScene extends Phaser.Scene {
     (document.getElementById('save-match') as HTMLButtonElement).disabled=this.session.phase==='menu'||this.restartPending;
     (document.getElementById('load-match') as HTMLButtonElement).disabled=this.restartPending;
     const phase=this.session.phase,menu=phase==='menu';
+    const summary=document.getElementById('match-options-summary')!;summary.textContent=matchSettingsSummary(this.session.options);summary.hidden=!menu;
     const mapSelect=document.querySelector<HTMLSelectElement>('#map-select')!;mapSelect.disabled=!menu||this.session.options.scenario!=='skirmish';mapSelect.value=this.session.options.map;
     const factionSelect=document.querySelector<HTMLSelectElement>('#faction-select')!;factionSelect.disabled=!menu;factionSelect.value=this.session.options.faction??defaultFactions.player;
     this.scenarioSelect.disabled=!menu;this.scenarioSelect.value=this.session.options.scenario==='siege-test'?'survival':this.session.options.scenario;

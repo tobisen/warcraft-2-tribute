@@ -810,3 +810,13 @@ Kartval endast i Skirmish i denna slice; kombinationer och inställnings-
 presentation vidareutvecklas i RTS-077. Save config10 kopplar stock och
 terrain till validerat map-ID; legacy9/under är alltid arena.
 Balansmängder är preliminära inför RTS-079.
+
+## RTS-077: atomiska options
+
+Befintliga matchval kompletteras med en gemensam ren validator och
+menysammanfattning. Scenario-only byte från skirmish till icke-skirmish
+återgår till arena; explicit alternativ karta i det scenariot avvisas.
+Options ändras bara i menu, och faktisk sparad match styr Load/restart.
+Ingen separat persistent menupreferens/options-snapshot eller ny schema-
+version. Alla18 fraktion/map/difficulty-kombinationer är giltiga men
+full balans utvärderas i RTS-079.
