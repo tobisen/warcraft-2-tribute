@@ -1570,3 +1570,7 @@ preferences och home-toggle synkar Settings-checkbox. Menu/playing använder
 en musiksource; pause suspenderar, ended reset stoppar och returnmenu startar
 lågvolymsloopen igen. Ingen ny ljudfil/voice eller gameplay/Saveändring.
 Perceptuell ljudbedömning är fortsatt uppskjuten enligt användaren.
+
+## RTS-127 – Flera fyndigheter
+
+Befintliga `mapResources` och `resourceNodes` från RTS-115 är gemensam källa för alla fyndigheter. Gathering/delivery refererar fyndigheter via `nodeId`; egna ändliga lager och Save-validering återanvänds. `src/gameplay/multipleResources.test.ts` täcker oberoende lager, mål över upprepade turer, uttömning och aktiva expansionorders efter Save/load. Ingen ny runtime-abstraktion behövdes.

@@ -2,7 +2,9 @@
 
 ## Current Focus
 
-**RTS-127 – Flera resursfyndigheter** — **Todo, planerad nästa etapp; utanför denna körning**.
+**RTS-128 – Selection av resurser** — **Todo**.
+
+Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -3305,7 +3307,7 @@ visa ännu ospelbara fraktioner som tillgängliga.
 
 ## RTS-127 – Flera resursfyndigheter
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Kartdata stöder flera gold mines och flera wood-noder/skogsområden.
 
@@ -3326,7 +3328,9 @@ Uttömning av en fyndighet påverkar inte övriga.
 
 **Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
 
-**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+**Detaljplan:** Återanvänd RTS-115:s mapResources/resourceNodes, nodeId-orders och Save-validering. Verifiera alla kartors unika fyndighets-ID:n, separata lager för båda resurstyper, leverans/återgång till samma nod, oberoende uttömning och aktiv order efter Save/load. Inga nya kartor eller omstrukturering av fungerande gathering. Kör fulla checks och befintligt native Frontier-flöde.
+
+**Verifierat:** 893 tester/119 filer PASS (156.20s), typecheck/build/diff PASS. Native Frontier-flöde 1280×720/Crown och1920×1080/Clans: primära/extra fyndigheter, leverans, minimap, Save/load och restart PASS utan browserfel. Äldre bred helper missade senare barracksplacering; den avgränsade resurskontrollen passerade. Diffgranskning utan blockerande fynd.
 
 ## RTS-128 – Selection av resurser
 

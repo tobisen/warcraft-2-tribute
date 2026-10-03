@@ -2379,3 +2379,9 @@ Lyssning/hörbarhet/balans är fortfarande uppskjuten av användaren, inte
 påstått utförd. Bundlevarning kvar.126 Done; godkänd implementation121–126
 avslutad.127–150 endast planerade; inget sådant gameplay påbörjat.
 GitHub122–125 build/deploy success;126 publiceras och verifieras efter push.
+
+## 2026-10-03 – RTS-127: Verifierade flera fyndigheter
+
+Användarens fortsätt efter publicerad126 öppnar återstående roadmap. RTS-115 har redan flera wood/gold-fyndigheter, separata lager, nodeId-orders och strikt Save-validering. Återanvänt dessa utan runtimeändring; fem nya beteenderegressioner verifierar alla kartors unika ID:n/färska lager, fyra noder över upprepade leveranser och olika tidssteg, oberoende uttömning samt aktiva expansion-delivery-orders efter Save/load och avvisning av okänd referens.
+
+893tester/119filer PASS156.20s; typecheck/build/diff PASS. Native1280×720/Crown och1920×1080/Clans: utforskning, primär/extra gathering, leverans, minimap, Save/load/restart PASS utan browserfel. Den äldre breda helpern missade en senare barracksplacering; avgränsad resurshelper passerade. Granskning av test/dokumentdiff och återanvänd kod utan blockerande fynd. Bundlevarning och uppskjuten ljudlyssning kvar.127 Done; nästa128 resursselection.

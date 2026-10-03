@@ -1162,3 +1162,7 @@ Diskreta embers har reduced-motion-fallback. Befintlig musik återanvänds som
 menuambience med0.35gain, efter gesture och med samma master/music/mute.
 Ingen separat autoplay eller dubbla musikloopar. Faktisk hörbarhet/balans
 är inte bedömd; användaren har uttryckligen skjutit upp ljudtest/matchlyssning.
+
+## RTS-127 – Återanvänd flera fyndigheter
+
+Behåll RTS-115:s författade kartdata och ID-baserade gather/deliver-orders. Fyndigheter har separata ändliga lager; ingen automatisk omdirigering vid uttömning. Regressionstäckning kompletteras utan att omstrukturera fungerande resource-state.

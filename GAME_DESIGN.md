@@ -1126,3 +1126,7 @@ Alliance och Iron Clan erbjuds som spelbara. Subtila embers stängs av vid
 reduced-motion. Musik börjar efter interaction på lägre menyvolym; Mute
 ambience på startsidan använder samma mute som Settings och sparas lokalt.
 Paus och resultat följer befintliga ljudgates; artwork syns inte i matchen.
+
+## RTS-127 – Oberoende resursfyndigheter
+
+Frontier har två wood-fyndigheter och två gold mines med egna lager. En arbetare återgår till sin beordrade fyndighet efter leverans; en uttömd fyndighet ändrar inte orders eller lager vid andra fyndigheter. Inga nya resurser eller kartor införs i denna task.
