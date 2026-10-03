@@ -41,3 +41,21 @@ summary {cursor:pointer;color:#f4d87a;}
 #match-results th, #match-results td {padding:.35rem .6rem; border-bottom:1px solid #795d32; text-align:right;}
 #match-results th:first-child {text-align:left;}
 #match-results h2 {color:#e7c96b;}
+/* RTS-093: home composition; existing match HUD retained until095/097–101. */
+body[data-phase='menu']{max-width:none;min-height:100vh;margin:0;padding:32px;display:grid;place-items:center;background:radial-gradient(ellipse at 65% 30%,#31534955,transparent 60%),linear-gradient(145deg,#101917,#22352b,#101917);}
+body[data-phase='menu'] #match-menu{width:min(1050px,94vw);border:0;box-shadow:none;background:none;display:grid;grid-template-columns:1.2fr 1fr;gap:60px;align-items:center;padding:0;}
+#home-brand h1{font-size:clamp(40px,5vw,66px);line-height:1.05;color:#eee5cf;overflow-wrap:anywhere;margin:24px 0;letter-spacing:0;}
+.home-crest{width:80px;height:90px;background:#2b4c68;clip-path:polygon(0 0,100% 0,100% 70%,50% 100%,0 70%);border-top:7px solid #d5b66b;display:grid;place-items:center;font:38px Georgia;color:#d5b66b;}
+.eyebrow{font:12px system-ui,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#d5b66b;margin-top:24px;}
+.home-subtitle,.home-note{font:14px/1.7 system-ui,sans-serif;color:#aebcaf;}
+#home-navigation,body[data-phase='menu'] #home-content{background:#192b28;border:1px solid #977a40;box-shadow:0 12px 50px #0006,inset 0 0 0 5px #101917;padding:26px;}
+#home-navigation button{display:block;width:100%;margin:12px 0;padding:14px;font-size:20px;text-align:left;background:linear-gradient(#4e4030,#332b23);}
+#home-navigation h2,#home-heading{color:#eee5cf;margin:4px 0 20px;font:24px Georgia;}
+body[data-phase='menu'] #match-setup label{display:flex;justify-content:space-between;margin:12px 0;font-family:system-ui,sans-serif;}
+body[data-phase='menu'] #match-setup select{max-width:250px;}
+body[data-phase='menu'] #audio-controls{display:block;}
+body[data-phase='menu'] #audio-controls summary{display:none;}
+body[data-phase='menu'] #audio-controls label{display:flex;justify-content:space-between;}
+body[data-phase='menu'] #match-results{grid-column:1 / -1;}
+@media(max-width:900px){body[data-phase='menu'] #match-menu{grid-template-columns:1fr;gap:24px;width:min(600px,94vw);}#home-brand h1{font-size:38px}.home-crest{display:none}.home-subtitle{display:none;}}
+body[data-phase='menu']{grid-template-columns:1fr;}

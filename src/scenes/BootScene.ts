@@ -1,3 +1,4 @@
+import {syncHomeMenu} from '../presentation/homeMenu';
 import {enemyBody} from '../gameplay/enemyBody';
 import type {EnemyNavalState} from '../gameplay/enemyNaval';
 import {loadTransport,unloadTransport} from '../gameplay/transport';
@@ -440,6 +441,7 @@ export class BootScene extends Phaser.Scene {
     if(wasHidden&&!menu)this.scale.refresh();
     document.getElementById('mission-instruction')!.textContent=this.session.options.scenario==='skirmish'?(maps[this.session.options.map??'arena'].instruction??scenarioConfig.skirmish.instruction):scenarioConfig[this.session.options.scenario].instruction;
     document.getElementById('session-status')!.textContent=menu?'Välj scenario och svårighetsgrad, sedan Starta match':phase==='paused'?'Pausad – matchen är fryst':phase==='ended'?'Matchen är avslutad – starta om eller välj ny match':`${scenarioConfig[this.session.options.scenario].label} · ${this.session.options.difficulty} · ${maps[this.session.options.map].label}`;
+    syncHomeMenu(phase);
   }
 
   private worldPoint(pointer: Phaser.Input.Pointer): Position {

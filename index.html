@@ -7,12 +7,14 @@
   </head>
   <body>
     <section id="match-menu" aria-label="Matchmeny">
-      <h1>warcraft-2-tribute</h1>
+      <header id="home-brand"><div class="home-crest" aria-hidden="true">W</div><p class="eyebrow">An independent fantasy RTS</p><h1>warcraft-2-tribute</h1><p class="home-subtitle">Raise a stronghold. Command your army.<br>Conquer the shores.</p></header>
+      <nav id="home-navigation" aria-label="Main menu"><h2>Choose your battle</h2><button id="menu-campaign" type="button">Campaign</button><button id="menu-skirmish" type="button">Skirmish</button><button id="menu-load" type="button">Load Game</button><button id="menu-settings" type="button">Settings</button><p class="home-note">Local single-player · Your saves stay in this browser</p></nav>
+      <div id="home-content"><button id="menu-back" type="button" hidden>← Back</button><h2 id="home-heading" hidden></h2><div id="match-setup">
       <label>Scenario <select id="scenario-select"><option value="survival">Wave-survival</option><option value="skirmish">Skirmish</option></select></label>
       <label>Fraktion <select id="faction-select"><option value="crown">Kronförbundet</option><option value="clans">Järnklanen</option></select></label>
       <label>Svårighetsgrad <select id="difficulty-select"><option value="easy">Easy</option><option value="normal" selected>Normal</option><option value="hard">Hard</option></select></label>
       <label>Karta <select id="map-select" disabled><option value="arena">Handgjord arena</option><option value="forest">Skogspasset</option><option value="river">Flodkröken</option><option value="islands">Öarna</option></select></label>
-      <button id="start-match" type="button">Starta match</button>
+      <button id="start-match" type="button">Starta match</button></div>
       <button id="pause-match" type="button" hidden>Pausa [P]</button>
       <button id="resume-match" type="button" hidden>Återuppta [P]</button>
       <button id="new-match" type="button" hidden>Ny match / meny</button>
@@ -30,6 +32,7 @@
       <p id="mission-instruction"></p>
       <p id="session-status" role="status"></p>
       <section id="match-results" hidden aria-label="Matchresultat"></section>
+      </div>
     </section>
     <section id="hud" aria-label="Matchstatus och kommandon">
       <p id="fog-fixture" hidden></p>

@@ -1237,3 +1237,7 @@ inte i appbygget; samma riktiga renderer, fog, vattenkontakt och kanonskott
 mäts. Counts separerar land/fartyg/enemies. Befintlig landfixture är
 oförändrad. Release och prestanda dokumenteras i
 [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md) och [PERFORMANCE.md](PERFORMANCE.md).
+
+## RTS-093 – Separat startsidenavigering
+
+`presentation/homeMenu.ts` har en liten DOM-sidmodell och appägda listeners, initierade en gång i main. BootScene synkar sessionfas till sidan men hanterar samma start/load/save/actioncallbacks som tidigare. Scenario-ID:n/Saveformat är oförändrade; navigation filtrerar bara befintliga scenarioalternativ. CSS-riktningen följer VISUAL_DIRECTION.md. Gameplay och match-HUD är inte ombyggda i093.

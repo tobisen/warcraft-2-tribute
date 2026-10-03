@@ -554,3 +554,7 @@ public browser/save/ljud och64/128-belastning. Detaljer och faktisk
 verifieringsprofil: [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md),
 [PERFORMANCE.md](PERFORMANCE.md). Bundlevarningen kvarstår avsiktligt.
 Chromium desktop är verifierad; andra browsermotorer och mobil är ej testade.
+
+## Startsida – RTS-093
+
+Huvudmenyn erbjuder Campaign (fyra befintliga fristående uppdrag), Skirmish (Skirmish eller Wave-survival), Load Game (lokal validerad slot) och Settings (befintliga ljudnivåer/mute). Back eller Escape återgår till huvudmenyn före matchstart. Matchens paus/save/load/restart fungerar som tidigare. Campaign har ingen kampanjprogression.

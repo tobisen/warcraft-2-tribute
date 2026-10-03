@@ -980,3 +980,7 @@ Verifierad progression på Easy/Normal/Hard; ingen generell jämn balans
 eller avancerad naval AI-ekonomi påstås. Original sjöart/ljud följer samma
 syn/pause/reset som gameplay. Releaseprofil och begränsningar finns i
 [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md).
+
+## RTS-093 – Huvudmeny
+
+Fantasy-startsida med titel/sköld och Campaign, Skirmish, Load Game, Settings. Campaign väljer befintliga fyra fristående uppdrag, utan nya objectives/progression. Skirmish erbjuder befintlig skirmish/survival. Inställningar är befintligt ljud; sparning är lokal validerad slot, load återkommer pausad. Menynavigering ändrar inga unit-orders och skapar inga nya matchstate-system.

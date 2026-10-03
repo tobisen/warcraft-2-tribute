@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-093 – Skapa fantasy-startsida** — **Todo**.
+**RTS-094 – Matchinställningar** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. Denna körning genomför endast091–096;097–120 är Todo och implementeras inte här.
 
@@ -2620,7 +2620,7 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-093 – Skapa fantasy-startsida
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Sammanhängande design med titel och huvudmeny: Campaign, Skirmish, Load Game och Settings.
 

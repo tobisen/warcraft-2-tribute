@@ -1948,3 +1948,7 @@ Beställd roadmap till120 tillagd,091–096 detaljerade och enda implementation 
 ## 2026-10-03 – RTS-092 Done: två visuella referenser
 
 Referenser för startsida och fönsterfyllande spelkomposition, palett/font/layout dokumenterade. Egen CSS-sköld, befintliga originaltiles/sprites; mock-HUD märkt097–101. Första kompositionsprovet visade atlas-sheet; ersatt med frameklippta riktiga tiles/byggnader/units för en begriplig scen. Chromium1280×720 och1920×1080, båda vyer screenshotgranskade, inga page errors.36presentationtester PASS, typecheck/build/diff PASS. Referensscriptets sista assetkomposition browserverifierad; produktionsruntime oförändrad. Granskning scope/licens/refs utan blockerande fynd. Screenshots `/tmp/w2t-092-{home,game}-{1280,1920}.png`. Nästa093 huvudmeny.
+
+## 2026-10-03 – RTS-093 Done: fantasy-startsida
+
+Original CSS-sköld/palett och fyra huvudmenyingångar. Befintliga uppdrag/Skirmish/Save/ljud återanvänds, appägd navigation utan scene-listenerduplication.71relevanta tester/12filer PASS, typecheck/build/diff PASS. Chromium båda målupplösningar: alla fyra ingångar, back/Escape, ljudkontroller, saknad Save, start/paus/Save/meny/load/resume/meny; inga page errors. Screenshots granskade, upptäckt ärvd body-grid som vänsterställde huvudmenyn1920; korrigerad till en kolumn och hela browserflödet omkört. Sista CSS-centering påverkar inte typ/logik. Diff granskad för UI-isolering/session/Save/scope utan blockerande fynd. Nästa094 matchform och beskrivningar.
