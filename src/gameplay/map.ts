@@ -1,3 +1,4 @@
+import {maps,type MapId} from '../config/maps';
 import { arenaConfig } from '../config/arena';
 import { worldConfig } from '../config/buildings';
 import type { Position } from './movement';
@@ -6,14 +7,15 @@ import type { Footprint } from './placement';
 export interface Tile { column: number; row: number }
 export interface WorldMap {
   bodyHalf?:number;
+  id?:MapId;
   width: number; height: number; tileSize: number;
   revision: number;
   obstacles: Footprint[];
 }
 
-export function createMap(): WorldMap {
-  return { ...worldConfig, tileSize: arenaConfig.tileSize, revision: 0,
-    obstacles: arenaConfig.terrain.map(p => ({ x: p.column * arenaConfig.tileSize,
+export function createMap(id:MapId='arena'): WorldMap {
+  return {id, ...worldConfig, tileSize: arenaConfig.tileSize, revision: 0,
+    obstacles: maps[id].terrain.map(p => ({ x: p.column * arenaConfig.tileSize,
       y: p.row * arenaConfig.tileSize, width: p.columns * arenaConfig.tileSize,
       height: p.rows * arenaConfig.tileSize })) };
 }

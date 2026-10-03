@@ -435,3 +435,12 @@ RTS-075: fienden söker okända resurser med en tom arbetare och
 utforskar med anfallsgrupper innan spelarbasen setts. Dolda nodmängder
 uppdaterar inte minnet. Save config9 bevarar upptäckt; restart rensar den.
 Äldre saves behåller sin tidigare AI-policy.
+
+## RTS-076: tre skirmish-kartor
+
+Välj Skirmish i menyn och sedan karta: Handgjord arena(400wood/300gold),
+Skogspasset(500/250) eller Flodkröken(350/400). Kartorna har olika hand-
+placerade rock/water-patches men samma1280x960/32px, baser och nodpositioner.
+Båda fraktioner stöds. Andra scenarios använder originalarenan.
+Save config10 bevarar kartvalet; Load och restart använder samma profil.
+Äldre saves migreras som arena utan ny resursstock.

@@ -1,3 +1,4 @@
+import {maps,isMapId,type MapId} from '../config/maps';
 import {createEnemyKnowledge,observeEnemyKnowledge,prepareEnemyScout,updateEnemyExploration,enemyAttackDestination,type EnemyKnowledgeState} from './enemyKnowledge';
 import {prepareEnemyExpansion,updateEnemyExpansion} from './enemyExpansion';
 import {createEnemyRecovery,prepareEnemyRecovery,advanceEnemyRecovery,type EnemyRecoveryState} from './enemyRecovery';
@@ -63,21 +64,22 @@ export interface MatchState {
 }
 
 /** A fresh state owns every mutable position/array; restart never reuses a previous match. */
-export function createMatch(scenario:MatchScenario='survival',difficulty:Difficulty='normal',factions:MatchFactions={...defaultFactions}): MatchState {
+export function createMatch(scenario:MatchScenario='survival',difficulty:Difficulty='normal',factions:MatchFactions={...defaultFactions},mapId:MapId='arena'): MatchState {
+  if(!isMapId(mapId)||scenario!=='skirmish'&&mapId!=='arena')throw Error('Unknown or unsupported map');
   if(!isFactionId(factions.player)||!isFactionId(factions.enemy))throw Error('Unknown faction');
   const state: MatchState = {
     factions:{...factions},
     outcome: 'playing',paused:false,controlGroups:{},scenario,difficulty,research:createResearch(),
-    map: createMap(),
+    map: createMap(mapId),
     gathering: {
       faction:factions.player,
       units: arenaConfig.workers.map((position, index) => ({
         kind: 'worker',owner:'player',hp:combatConfig.workerHP, id: `unit-${index + 1}`, position: { ...position }, target: { ...position },
         selected: false, order: { kind: 'idle' }, cargo: 0,
       })),
-      gold: {id:'gold-1',resource:goldConfig.resource,position:{...goldConfig.position},remaining:goldConfig.initialAmount},
+      gold: {id:'gold-1',resource:goldConfig.resource,position:{...goldConfig.position},remaining:maps[mapId].gold},
       goldBalance:scenarioConfig[scenario].initial.gold,
-      node: { resource:'wood', id: 'wood-1', position: { ...gatheringConfig.nodePosition }, remaining: gatheringConfig.initialWood },
+      node: { resource:'wood', id: 'wood-1', position: { ...gatheringConfig.nodePosition }, remaining: maps[mapId].wood },
       lostCargo:{wood:0,gold:0},wood: scenarioConfig[scenario].initial.wood, base: { ...gatheringConfig.basePosition },
     },
     combat: {baseOwner:'player', baseHP: combatConfig.baseHP, enemies: [] },

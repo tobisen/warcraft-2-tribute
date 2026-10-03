@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-076 – Tre skirmish-kartor med olika terräng och resurser** — **Todo**.
+**RTS-077 – Matchinställningar för karta, fraktion och svårighet** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
@@ -2310,13 +2310,21 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-076 – Tre skirmish-kartor med olika terräng och resurser
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Tre skirmish-kartor med olika terräng och resurser.
+**Goal:** Tre handgjorda skirmish-kartor med olika landterräng och resursfördelning.
+
+**Requirements:** Befintlig arena bevaras; lägg till Skogspasset och Flodkröken som enkla TS-profiler. Samma1280x960/32px, startpositioner och wood/gold-nodpositioner; tydligt olika rock/water-patches och ändliga wood/gold-mängder (arena400/300, skog500/250, flod350/400). Ingen ny stock under match. Giltiga worker/army-spawns och vägar mellan baser/noder. Terränggrafik, minimap, fog-LOS och fysisk map måste använda samma profil. Enkelt kartval i Skirmish-menyn; övriga scenarios behåller arena. Båda fraktioner, befintlig ekonomi/produktion/AI, restart och save/load bevarar kartval/stock. Gamla saves migreras som arena; okända/inconsistent map-ID:n avvisas atomiskt.
+
+**Non-goals:** Större värld, fler noder/resursarter, slumpkartor, editor, sjönavigation, nya missions och inställningspolish i RTS-077.
 
 **Dependencies:** RTS-075.
 
-**Acceptance criteria:** Tre handgjorda spelbara kartor har giltiga spawns/paths och båda fraktioner.
+**Acceptance criteria:** Tre spelbara distinkta profiler; båda fraktioner kan samla/bygga/producera/anfall i varje karta. Body-clearance/nåbarhet och finite ledger verifieras. Rendering/minimap/LOS matchar nav-hinder. Save/load och restart behåller karta utan att någon profilstock blandas med annan.
+
+**Tester:** Profilstock/terrain, spawns/resources/routes/byggplatser, fraktionsekonomi och paid fullmatch-flöde, map-save/strict migration/restart samt tidigare tester/typecheck/build/browser/diff.
+
+**Docs:** BACKLOG.md, DECISIONS.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md och README.md.
 
 ## RTS-077 – Matchinställningar för karta, fraktion och svårighet
 

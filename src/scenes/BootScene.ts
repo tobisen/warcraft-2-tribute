@@ -1,3 +1,4 @@
+import {maps,isMapId} from '../config/maps';
 import type {EnemyKnowledgeState} from '../gameplay/enemyKnowledge';
 import type {EnemyRecoveryState} from '../gameplay/enemyRecovery';
 import type {EnemyPolicyState} from '../gameplay/enemyPolicy';
@@ -153,7 +154,7 @@ export class BootScene extends Phaser.Scene {
     this.hpBars=this.add.graphics().setDepth(7);
     const loaded=this.pendingLoad;this.pendingLoad=undefined;
     if(!loaded)document.getElementById('save-status')!.textContent='';
-    this.applyMatch(loaded?.match??createMatch(this.scenario,this.difficulty,this.factions));
+    this.applyMatch(loaded?.match??createMatch(this.scenario,this.difficulty,this.factions,this.session.options.map));
     this.game.canvas.tabIndex=0;this.game.canvas.setAttribute('aria-label','Spelvärld');
     const groupKey=(event:KeyboardEvent)=>{
       if(!gameplayKeyAllowed(keyboardContext(event,this.gameplayActive()))||!validGroup(event.key))return;
@@ -167,7 +168,10 @@ export class BootScene extends Phaser.Scene {
     this.scenarioSelect=document.querySelector<HTMLSelectElement>('#scenario-select')!;
     this.scenarioSelect.replaceChildren(...playableScenarios.map(id=>{const option=document.createElement('option');option.value=id;option.textContent=scenarioConfig[id].label;return option;}));
     this.scenarioSelect.value=this.scenario==='siege-test'?'survival':this.scenario;
-    const changeScenario=()=>{this.session=changeOptions(this.session,{scenario:initialScenario(this.scenarioSelect.value)});this.scenario=this.session.options.scenario;this.syncSession();};
+    const changeScenario=()=>{this.session=changeOptions(this.session,{scenario:initialScenario(this.scenarioSelect.value),...(initialScenario(this.scenarioSelect.value)!=='skirmish'?{map:'arena' as const}:{})});this.scenario=this.session.options.scenario;this.syncSession();};
+    const mapSelect=document.querySelector<HTMLSelectElement>('#map-select')!;
+    const changeMap=()=>{if(this.session.phase==='menu'&&this.session.options.scenario==='skirmish'&&isMapId(mapSelect.value)){this.session=changeOptions(this.session,{map:mapSelect.value});this.syncSession();}};
+    mapSelect.addEventListener('change',changeMap);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>mapSelect.removeEventListener('change',changeMap));
     this.scenarioSelect.addEventListener('change',changeScenario);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.scenarioSelect.removeEventListener('change',changeScenario));
 
@@ -235,8 +239,8 @@ export class BootScene extends Phaser.Scene {
     for (let row = 0; row < Math.ceil(this.map.height / this.map.tileSize); row++) {
       for (let column = 0; column < Math.ceil(this.map.width / this.map.tileSize); column++) {
         const rect = tileFootprint(this.map, { column, row })!;
-        this.add.image(rect.x,rect.y,'world',terrainFrame(column,row)).setOrigin(0).setDepth(-10);
-        for(const edge of terrainEdges(column,row))this.add.image(rect.x,rect.y,'world',edge).setOrigin(0).setDepth(-9);
+        this.add.image(rect.x,rect.y,'world',terrainFrame(column,row,this.map.id)).setOrigin(0).setDepth(-10);
+        for(const edge of terrainEdges(column,row,this.map.id))this.add.image(rect.x,rect.y,'world',edge).setOrigin(0).setDepth(-9);
       }
     }
     this.baseVisual=this.add.image(this.gathering.base.x,this.gathering.base.y,'buildings',buildingFrame('base','player',0,5,this.factions.player)).setOrigin(.5,.75);
@@ -355,7 +359,7 @@ export class BootScene extends Phaser.Scene {
     const saveButton=document.getElementById('save-match') as HTMLButtonElement;
     const loadButton=document.getElementById('load-match') as HTMLButtonElement;
     const save=()=>{if(this.session.phase==='menu'||this.restartPending)return;const result=storeSave(()=>window.localStorage,this.currentMatch(),{camera:{x:this.cameras.main.scrollX,y:this.cameras.main.scrollY},building:this.selectedBuilding});document.getElementById('save-status')!.textContent=result.ok?'Sparad lokalt i slot 1':'Kunde inte spara lokalt. Kontrollera webbläsarens lagringsutrymme.';};
-    const load=()=>{if(this.restartPending)return;const result=readSave(()=>window.localStorage);if(!result.ok){document.getElementById('save-status')!.textContent=result.error==='Ingen lokal sparning finns'?result.error:result.error.includes('version')?'Sparningen använder ett format eller en spelversion som inte stöds. Aktiv match är oförändrad.':'Sparningen kunde inte läsas. Aktiv match är oförändrad.';return;}this.pendingLoad={match:{...result.match,paused:true},view:result.view};this.scenario=result.match.scenario!;this.difficulty=result.match.difficulty!;this.session={options:{scenario:this.scenario,difficulty:this.difficulty,map:'arena',faction:result.match.factions?.player??defaultFactions.player},phase:result.match.outcome==='playing'?'paused':'ended'};this.skipGameplayFrame=true;this.restartPending=true;this.restartButton.disabled=true;gameAudio.setPhase(this.session.phase);document.getElementById('save-status')!.textContent=result.match.outcome==='playing'?'Laddad – pausad, ingen tid passerar förrän Återuppta':'Laddad – avslutad match';this.scene.restart();};
+    const load=()=>{if(this.restartPending)return;const result=readSave(()=>window.localStorage);if(!result.ok){document.getElementById('save-status')!.textContent=result.error==='Ingen lokal sparning finns'?result.error:result.error.includes('version')?'Sparningen använder ett format eller en spelversion som inte stöds. Aktiv match är oförändrad.':'Sparningen kunde inte läsas. Aktiv match är oförändrad.';return;}this.pendingLoad={match:{...result.match,paused:true},view:result.view};this.scenario=result.match.scenario!;this.difficulty=result.match.difficulty!;this.session={options:{scenario:this.scenario,difficulty:this.difficulty,map:result.match.map.id??'arena',faction:result.match.factions?.player??defaultFactions.player},phase:result.match.outcome==='playing'?'paused':'ended'};this.skipGameplayFrame=true;this.restartPending=true;this.restartButton.disabled=true;gameAudio.setPhase(this.session.phase);document.getElementById('save-status')!.textContent=result.match.outcome==='playing'?'Laddad – pausad, ingen tid passerar förrän Återuppta':'Laddad – avslutad match';this.scene.restart();};
     saveButton.addEventListener('click',save);loadButton.addEventListener('click',load);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{saveButton.removeEventListener('click',save);loadButton.removeEventListener('click',load);});
     for(const [id,action] of [['start-match','start'],['pause-match','pause'],['resume-match','resume'],['new-match','new-match']] as const){const button=document.getElementById(id)!;const handler=()=>this.sessionAction(action);button.addEventListener('click',handler);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>button.removeEventListener('click',handler));}
     document.getElementById('command-guide-text')!.textContent=commandGuide;
@@ -397,6 +401,7 @@ export class BootScene extends Phaser.Scene {
     (document.getElementById('save-match') as HTMLButtonElement).disabled=this.session.phase==='menu'||this.restartPending;
     (document.getElementById('load-match') as HTMLButtonElement).disabled=this.restartPending;
     const phase=this.session.phase,menu=phase==='menu';
+    const mapSelect=document.querySelector<HTMLSelectElement>('#map-select')!;mapSelect.disabled=!menu||this.session.options.scenario!=='skirmish';mapSelect.value=this.session.options.map;
     const factionSelect=document.querySelector<HTMLSelectElement>('#faction-select')!;factionSelect.disabled=!menu;factionSelect.value=this.session.options.faction??defaultFactions.player;
     this.scenarioSelect.disabled=!menu;this.scenarioSelect.value=this.session.options.scenario==='siege-test'?'survival':this.session.options.scenario;
     const difficulty=document.querySelector<HTMLSelectElement>('#difficulty-select')!;difficulty.disabled=!menu;difficulty.value=this.session.options.difficulty;
@@ -405,7 +410,7 @@ export class BootScene extends Phaser.Scene {
     document.getElementById('hud')!.hidden=menu;const game=document.getElementById('game')!,wasHidden=game.hidden;game.hidden=menu;
     if(wasHidden&&!menu)this.scale.refresh();
     document.getElementById('mission-instruction')!.textContent=scenarioConfig[this.session.options.scenario].instruction;
-    document.getElementById('session-status')!.textContent=menu?'Välj scenario och svårighetsgrad, sedan Starta match':phase==='paused'?'Pausad – matchen är fryst':phase==='ended'?'Matchen är avslutad – starta om eller välj ny match':`${scenarioConfig[this.session.options.scenario].label} · ${this.session.options.difficulty} · handgjord arena`;
+    document.getElementById('session-status')!.textContent=menu?'Välj scenario och svårighetsgrad, sedan Starta match':phase==='paused'?'Pausad – matchen är fryst':phase==='ended'?'Matchen är avslutad – starta om eller välj ny match':`${scenarioConfig[this.session.options.scenario].label} · ${this.session.options.difficulty} · ${maps[this.session.options.map].label}`;
   }
 
   private worldPoint(pointer: Phaser.Input.Pointer): Position {

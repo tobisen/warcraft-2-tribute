@@ -1,3 +1,4 @@
+import type {MapId} from '../../config/maps';
 import {factionsForPlayer,factions,type FactionId} from '../../config/factions';
 import {useAbility} from '../abilities';
 import { createMatch, updateMatch, type MatchState } from '../match';
@@ -16,9 +17,9 @@ import { encodeSave, decodeSave } from '../save';
 
 /** Deterministic accelerated release playthrough. Only player commands change state;
  * no injected resources/units/HP, and target decisions use player vision. */
-export function releasePlaythrough(scenario: MatchScenario, difficulty: Difficulty, observe?: (match: MatchState) => void,options?:{faction?:FactionId;abilities?:boolean}) {
+export function releasePlaythrough(scenario: MatchScenario, difficulty: Difficulty, observe?: (match: MatchState) => void,options?:{faction?:FactionId;abilities?:boolean;map?:MapId}) {
   const faction=options?.faction??'crown';
-  let match = createMatch(scenario, difficulty,factionsForPlayer(faction)), spentWood = 0, spentGold = 0, saved = false,abilitiesUsed=0;
+  let match = createMatch(scenario, difficulty,factionsForPlayer(faction),options?.map??'arena'), spentWood = 0, spentGold = 0, saved = false,abilitiesUsed=0;
   const retreatUntil = new Map<string, number>();
   const select = (id: string) => { match.gathering.units = match.gathering.units.map(u => ({ ...u, selected: u.id === id })); };
   for (let frame = 0; frame < 6000 && match.outcome === 'playing'; frame++) {

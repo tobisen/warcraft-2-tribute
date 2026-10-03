@@ -1,3 +1,4 @@
+import {maps} from '../config/maps';
 import { fogConfig } from '../config/fog';
 import { arenaConfig } from '../config/arena';
 import { baseFootprint } from './buildingSelection';
@@ -14,6 +15,6 @@ export function visionObservers(state:MatchState):VisionObserver[]{
  return observers;
 }
 export function matchFog(state:MatchState){
- const blockers=arenaConfig.terrain.filter(t=>t.kind==='rock').map(t=>({x:t.column*arenaConfig.tileSize,y:t.row*arenaConfig.tileSize,width:t.columns*arenaConfig.tileSize,height:t.rows*arenaConfig.tileSize}));
+ const blockers=maps[state.map.id??'arena'].terrain.filter(t=>t.kind==='rock').map(t=>({x:t.column*arenaConfig.tileSize,y:t.row*arenaConfig.tileSize,width:t.columns*arenaConfig.tileSize,height:t.rows*arenaConfig.tileSize}));
  return updateFog(state.fog??createFog(state.map),visionObservers(state),blockers);
 }

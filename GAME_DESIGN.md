@@ -816,3 +816,14 @@ sedan används senaste kända position. Enbart synliga targets kan
 angripas. Minne och sökindex sparas i config9 och rensas vid restart.
 Gamla snapshots får ingen ny policy/kunskap vid Load. Sökrutterna gäller
 befintlig arena; flera kartor anpassas i nästa etapp.
+
+## RTS-076: skirmish-etappens kartor
+
+Skirmish har nu tre handgjorda kartor: arena400wood/300gold, Skogspasset
+500/250 och Flodkröken350/400. Terrängpatcherna ger olika landvägar och
+byggutrymmen. Alla delar1280x960/32px, bas- och nodpositioner samt samma
+units/ekonomi/AI. Vatten är fortfarande hinder för landenheter.
+Resursmängder är ursprunglig ändlig stock, aldrig en incomebonus.
+Kartval sker i Skirmish-menyn; missions/Survival behåller arena.
+Load och restart bevarar profil. Detta utökar den ursprungliga MVP:ns
+en-karta-krav; tidigare taskbeskrivningar ovan är historiska slices.

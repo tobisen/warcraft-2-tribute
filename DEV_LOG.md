@@ -1477,3 +1477,38 @@ Slutlig RTS-075: npm test595 tester/77 filer PASS (91,50s), typecheck/build
 PASS, git diff --check PASS och569 dokumentreferenser giltiga.
 Slutbundle index-C9lyVIbS.js1553,10KB/gzip407,24KB; varningen behålls.
 RTS-075 Done. Nästa task RTS-076: tre handgjorda skirmish-kartor.
+
+## 2026-10-03 – RTS-076: tre handgjorda skirmish-kartor
+
+Arena bevarad; forest/river har olika terrain och500/250 respektive
+350/400 wood/gold. Samma värld/baser/noder, MapId kopplar terrain/stock.
+Navigation, terrain-kanter, minimap och fog-LOS använder samma profil.
+Enkelt menykartval för Skirmish, andra scenarios behåller arena.
+Load/restart bevarar kartan. Save config10 validerar profilstock/ledger/
+minne/hinder/ID/scenario och migrerar legacy som arena.
+
+Checks: npm test608 tester/78 filer PASS (91,77s), typecheck/build PASS.
+13 maptester inkluderar sex betalda normal-skirmish-vinster, finite
+ledger, nåbara noder/baser, giltiga spawns, terrain/minimap och strikt
+save/migration. git diff --check PASS. Diffgranskning av state, UI,
+profiler, gamla snapshots, nav/render och scope: inga blockerande fynd.
+
+Chromium147 production-preview: tre kartor x två fraktioner, faktisk
+scout/drag/rightclick-insamling,60wood, giltig betald barracks, gold-
+leverans och betald soldier, map-save/load och restart med korrekt stock
+PASS utan page/console/request-fel. Accelererad gameplay-klocka, inga
+resurser/enheter injicerade. Screenshots granskade. Tidiga browser-
+försök samlade enbart byggkostnaden och klickade ibland en ockuperad
+byggplats; slutflödet samlar båda kostnader och försöker bounded riktiga
+canvas-platser med full game-validation. Ingen runtime-ändring för att
+kringgå dessa spelregler. Ingen naturlig fullmatch-balansgaranti.
+
+Slutbundle index-OuOj-fEB.js1554,71KB/gzip407,68KB; befintlig varning
+bevarad. RTS-075 Pages/Actions success1d63af8/37085105714.
+Begränsningar: samma start/nodpositioner, en nod per resurs, inga
+sjöenheter/randomkartor. RTS-079 hanterar längre balans. Nästa RTS-077.
+
+Screenshot-fynd utanför RTS-076:s kartscope: befintlig shortage-text kan
+visa många decimaler vid fraktionell gathering. Kosmetiskt; inget
+blockerande map/gameplay-fel, inte åtgärdat i denna task.
+571 lokala filreferenser verifierade före commit.

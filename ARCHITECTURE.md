@@ -1029,3 +1029,21 @@ Save config9 validerar index, unika kända noder/positioner/mängder och
 explored-celler; config8/äldre behåller tidigare AI-policy utan tillagd
 kunskap. [enemyKnowledge.test.ts](src/gameplay/enemyKnowledge.test.ts)
 täcker dolda tillstånd, scouting, lokal upptäckt och migration.
+
+## RTS-076: enkla kartprofiler
+
+[maps.ts](src/config/maps.ts) definierar arena/forest/river med label,
+ändlig wood/gold-stock och handgjorda terrain-patches. WorldMap.id är
+profil-ID (äldre states utan ID betyder arena). createMap(id) bygger
+fysiska hinder, createMatch(...,mapId) skapar profilens ursprungliga noder.
+Bas-/nodpositioner och världsstorlek bevaras; inga genererade system.
+Fog-LOS, tile-sprites/kanter och minimap tar samma profil som navigation.
+
+MatchOptions.map använder MapId. Scenen läser sessionens kartval vid
+Start/restart och laddad match vid Load. Befintligt enkelt menykartval
+aktiveras endast i Skirmish; andra scenarios återgår till arena.
+Save config10 validerar dokument/state-ID, scenario, terrain-refs och
+profilens maxstock/ledger/minnesmängd. Config9/äldre migreras enbart som
+arena; spoofad alternativ karta avvisas.
+[maps.test.ts](src/gameplay/maps.test.ts) verifierar spawns, nåbarhet,
+terrain/minimap, sex betalda fraktionsmatcher samt strikt map-save.

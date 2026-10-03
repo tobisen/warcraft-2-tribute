@@ -799,3 +799,14 @@ auktoritativ validering, inte en information-planner. Kontakt med en
 uttömd nod ger ingen extraction; osedd uttömning avbryter inte fjärran
 gather-order. Save config9 bevarar strikt observerat minne; config8/under
 migreras utan ny knowledge-policy, fresh restart använder nya regler.
+
+## RTS-076: avgränsad map-data
+
+Tre fasta TS-profiler, gemensam värld/spawns/nodpositioner. Olika
+terrain och finite stock: arena400/300, forest500/250, river350/400.
+Det uppfyller kartvariationen utan att införa ny nodmodell, generering
+eller större värld. Rendering/fog/minimap/navigation har samma profil.
+Kartval endast i Skirmish i denna slice; kombinationer och inställnings-
+presentation vidareutvecklas i RTS-077. Save config10 kopplar stock och
+terrain till validerat map-ID; legacy9/under är alltid arena.
+Balansmängder är preliminära inför RTS-079.
