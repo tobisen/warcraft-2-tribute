@@ -1,3 +1,4 @@
+import {cameraShortcut,cameraFocus,selectionFocusPoints} from '../presentation/cameraFocus';
 import {bindCameraInput} from '../presentation/cameraInput';
 import {selectedIcons,selectedQueue,renderSelectedIcons,renderSelectedQueue} from '../presentation/selectionCollection';
 import {actionPanel,renderActionPanel} from '../presentation/actionPanel';
@@ -251,6 +252,8 @@ export class BootScene extends Phaser.Scene {
     resizeCamera();this.scale.on(Phaser.Scale.Events.RESIZE,resizeCamera);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.scale.off(Phaser.Scale.Events.RESIZE,resizeCamera));
     this.cameraDrag = undefined;
     this.cameraInput=bindCameraInput(this.game.canvas,()=>{const c=this.cameras.main;return {scroll:{x:c.scrollX,y:c.scrollY},world:this.map,camera:{x:c.x,y:c.y,width:c.width,height:c.height}};},()=>this.gameplayActive()&&!this.cameraDrag&&!this.drag,p=>{this.cameras.main.setScroll(p.x,p.y);if(this.placement.active)this.previewPoint=this.worldPoint(this.input.activePointer);});
+    const cameraKey=(event:KeyboardEvent)=>{const shortcut=cameraShortcut(event.key,{...keyboardContext(event,this.gameplayActive()),ctrlKey:event.ctrlKey,metaKey:event.metaKey});if(!shortcut||this.drag||this.cameraDrag)return;event.preventDefault();const c=this.cameras.main,target=cameraFocus(shortcut==='base'?[this.gathering.base]:selectionFocusPoints(this.currentMatch(),this.selectedBuilding),this.map,{width:c.width,height:c.height});if(target){c.setScroll(target.x,target.y);if(this.placement.active)this.previewPoint=this.worldPoint(this.input.activePointer);this.syncVisuals();}};
+    window.addEventListener('keydown',cameraKey);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>window.removeEventListener('keydown',cameraKey));
     const clearCameraGestures=()=>{this.cameraDrag=undefined;this.drag=undefined;this.dragBox?.setVisible(false);};window.addEventListener('blur',clearCameraGestures);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{this.cameraInput?.destroy();window.removeEventListener('blur',clearCameraGestures);});
     const preventMiddle = (event: MouseEvent) => { if (event.button === 1) event.preventDefault(); };

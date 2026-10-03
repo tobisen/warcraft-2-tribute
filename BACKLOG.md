@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-103 – Kameragenvägar och inställningar** — **Todo**.
+**RTS-104 – Pausmeny och fullscreen** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -2800,13 +2800,21 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-103 – Kameragenvägar och inställningar
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Space centrerar på selection. Home centrerar på spelarens bas. Låt spelaren justera panoreringshastighet och kantpanorering. Undvik konflikter med befintliga hotkeys.
+**Goal:** Lägg till Space för selection, Home för basen samt inställningar för panhastighet och kantpanorering.
+
+**Requirements:** Space centrerar valda egna enheter/gruppens bounding center eller befintlig vald byggnad; tom selection är no-op. Home centrerar egen bas. Clampa världens gränser. Gameplay-only keyboardfocusguard och ingen Ctrl/Meta/Alt/repeat-konflikt; ändrar inga orders/selection. Settings erbjuder240/480/720px/s och edge-pan on/off; standard480/on. Samma settings tillgängliga via pausade sessioncontrols och överlever restart/menynavigation inom appen. Ingen lokal persistence förrän119. Piltangenter/mittendrag fungerar med edge off.
+
+**Non-goals:** LocalStorage/settings119, follow/zoom, nya order/selectiongester, pausmeny104.
 
 **Dependencies:** RTS-102.
 
-**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+**Acceptance criteria:** Rätt center/clamp för grupp/building/base/empty, hotkeys blockerade i UI och paus. Ändrad speed används faktiskt av arrows/edge; edge off blockerar bara edge. Settings-input ger inga gameplayorders/selection och bevaras vid restart. Läsbart1280×720/1920×1080.
+
+**Tester:** Pure focus/empty/group/building/navy/clamp, shortcutguards och preferencesvalidation/defaults. Relevanta camera/keyboard/hotkey/sessiontester; typecheck/build/diff. Browser båda upplösningar: Space/Home, verklig speed/edge-toggle, UI/pauseblockering, restart/preferences, screenshots.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md, README.md.
 
 ## RTS-104 – Pausmeny och fullscreen
 

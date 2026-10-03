@@ -1016,3 +1016,7 @@ Minimappen ligger ovanpå worldytans nedre vänstra hörn. Vänsterklick centrer
 ## RTS-102 – Panorera kameran
 
 Piltangenter och worldviewens inre16pxkant panorerar480px/s; diagonal har samma totalhastighet. Klicka världen för keyboardfocus. HUD/minimap/menu/buttonfocus/paus blockerar pan, vänster-/mittendrag har företräde. Mittendrag flyttar kameran som tidigare; alla gränser clampas. A/S/W/D behåller sina actions. Kameran använder realtid oberoende av framtida gameplay-speed.
+
+## RTS-103 – Space/Home och camera settings
+
+Space centrerar aktuell egen selection (gruppens boundingcenter eller vald base/barracks/harbor); tom selection ändrar inget. Home centrerar egen bas, utan ändring av orders/selection. Settings erbjuder240/480/720px/s och edge-pan on/off; defaults480/on. Samma kontroller nås under paus, bevaras över restart/menynavigation inom appen och återgår till defaults vid sidreload tills119. Keyboard/middle fungerar när edge är off; fält/buttonfocus/paus blockerar focus-hotkeys.

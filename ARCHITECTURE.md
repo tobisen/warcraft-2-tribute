@@ -1279,3 +1279,7 @@ DOM-minimappen är en grid-overlay i worldytans nedre vänstra hörn, separat fr
 ## RTS-102 – Kamerainput och realtids-pan
 
 camera.ts ger Phaserfri riktning/normaliserad diagonal/clamped pan. cameraInput.ts äger DOM held arrows/pointer/focus/blur och tar scene-adaptrar för geometry/phase/scroll. Camera update körs före gameplay med realdelta, max100ms; keys prioriterar edge. HUD/fokus/paus och aktiv drag blockerar automatisk pan, blur rensar input/gestures; alla listeners avregistreras på shutdown. Mittendrag och worldcoordinate-input bevaras.
+
+## RTS-103 – Focus-genvägar och appägd camera-preference
+
+cameraFocus.ts är Phaserfri modell för selected-own boundingcenter/base/building och clamped scroll; keyboardguard återanvänds utan actionkeykonflikter. cameraSettings.ts validerar config-hastigheter och edgeboolean, appägda listeners initieras en gång. cameraInput läser aktuell preference varje frame; Scene.registerShortcut äger endast adapter och shutdown. Preferences lever inom appsessionen, separat från matchstate/Save och119-localstorage.

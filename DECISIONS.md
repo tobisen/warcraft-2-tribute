@@ -975,3 +975,7 @@ Gruppikoner är read-only; inga nya selection/subgruppgester. Blandad land/navys
 ## RTS-102 – Kamera är UI-tid
 
 Piltangenter används för camera pan; WASD införs inte eftersom A/S/W/D redan är actions.480px/s,16pxedge och max100ms frame-delta ligger i camera-config. Kamera använder realdelta, inte gameplay-speed. Diagonal normaliseras; keyboard prioriterar edge, HUD/drag/phase/focus blockerar. Space/Home/preferences följer103.
+
+## RTS-103 – Camera preferences före persistence
+
+Pan speed valideras mot240/480/720 och edge-pan mot boolean. Standard480/on enligt102; lämplig enkel appsessionstate, ingen match-Save-schemaändring eller prematurelocalstorage.119 hanterar persistence. Space använder selected-player boundingcenter; Home egen bas. Ctrl/Meta/Alt/repeat/focused UI avvisas och A/S/W/D är fortsatt actions.

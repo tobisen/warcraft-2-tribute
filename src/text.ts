@@ -194,7 +194,10 @@ export const text={
   "harborExists": "A harbor already exists",
   "scenario": "Scenario",
   "master": "Master",
-  "cameraControls": "Arrow keys: pan camera. Middle-drag: pan. Hover the world edge to scroll. Click the world for keyboard focus."
+  "camera": "Camera",
+  "panSpeed": "Pan speed",
+  "edgePanning": "Edge panning",
+  "cameraControls": "Arrow keys: pan camera. Middle-drag: pan. Hover the world edge to scroll. Space: focus selection. Home: focus base. Click the world for keyboard focus."
 } as const;
 
 export function applyEnglishText():void{for(const element of document.querySelectorAll<HTMLElement>('[data-ui-text]')){const key=element.dataset.uiText as keyof typeof text;if(Object.hasOwn(text,key))element.textContent=text[key];}}
