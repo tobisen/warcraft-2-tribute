@@ -2,7 +2,7 @@
 
 ## Inriktning
 
-RTS-001–107 är implementerade. Roadmap108–120 återstår;091–106 omfattar den färdiga presentationsetappen. Slicebeskrivningarna visar utvecklingen;
+RTS-001–108 är implementerade. Roadmap109–120 återstår;091–106 omfattar den färdiga presentationsetappen. Slicebeskrivningarna visar utvecklingen;
 avsnitten RTS-018–060 längst ned anger dagens HUD, terrain/navigation,
 kantbaserade ranges, gruppmål och säkra placering/spawn.
 
@@ -1045,3 +1045,7 @@ Svårighet ändrar enemyresurser, armycap, produktion och attacktimers; spelaren
 | Hard | 120/30 | 8 | 4s | 50s | 3 / 12s | 50:2, 80:3, 110:4 |
 
 Ekonomisk skirmish lägger befintliga20s grace till first dispatch; muster/armytilgänglighet kan fördröja ytterligare. Clans soldierproduktion tar1s extra i alla profiler. Beginner reserve0/maxdefenders1; övriga reserve1/maxdefenders2. Custom Outpost waves justeras Beginner+30s/−1unit, Easy+10s/−1, Normal0/0, Hard−5s/+1 (minst1): Beginner60:1,90:1,110:1, men missionen slutar efter90s enligt befintligt timer-win-villkor. Islands får samma separata navalbonus120wood/30gold och två passagerare; transportlaunch tidigast320/260/220/190s. Enemy bygger och samlar enligt befintliga regler; lägre startbudget och längre produktion bromsar utvecklingen utan ändrad gatherhastighet.
+
+## Spelhastighet (RTS-108)
+
+Välj 0.75× eller 1× oberoende av difficulty i setup. 1× är default och valet låses under match. All gameplay, inklusive movement, gathering, construction, production, combat, projectiles, research, abilities, AI, waves, navy och animationer använder gemensamt skalad tid. Vid 0.75× tar 5 gameplaysekunder cirka 6.67 verkliga sekunder; UI, kamera och ljudets pitch/tempo påverkas inte. Paus, end och menu ackumulerar ingen tid. Save/load och restart bevarar speed; äldre saves laddas med 1×.

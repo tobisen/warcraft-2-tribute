@@ -2,7 +2,7 @@
 
 ## Status och teknik
 
-Implementerat genom RTS-107 (historiska systembeskrivningar följer): archer/projectiles, catapult/splash och Forge/research, FIFO/refund, target-HP/destruktion, workerbygge, farms, population, kamera,
+Implementerat genom RTS-108 (historiska systembeskrivningar följer): archer/projectiles, catapult/splash och Forge/research, FIFO/refund, target-HP/destruktion, workerbygge, farms, population, kamera,
 byggnadsselection, rally, Stop, gold och
 atomiska kostnader ovanpå etapp 1:s HUD, handgjorda karta och navigation för
 move/work/combat, separata gruppmål och säkra placement/spawn-regler.
@@ -1299,3 +1299,7 @@ presentation/pauseMenu.ts har appägd main/settings/quit-navigation, backdrop oc
 ## Fyra svårighetsprofiler (RTS-107)
 
 `config/difficulty.ts` är källa för Beginner/Easy/Normal/Hard inklusive custommissionjusteringar; scenarios använder samma config. EnemyNaval har fyra launchgränser. Session/URL/presentation/Save väljer från profilerna och ingen tidsskalning införs här. Saveformat16 bibehålls: enumutökning utan strukturell förändring, befintliga profiler/balansvärden oförändrade.
+
+## Gemensam spelhastighet (RTS-108)
+
+`config/gameSpeed.ts` validerar 0.75 och 1. Options och matchmetadata bevarar speed; scenen multiplicerar delta exakt en gång via gameplayDelta före updateMatch. updateMatch tar redan gameplaysekunder, så fristående callers, bot och tester får inte skala en andra gång. Animationer och varningar följer gameplay; kameran använder ursprunglig UI-delta och WebAudio använder AudioContexttid. Saveconfig 17 kräver speed; 16 och äldre migreras till 1. Saveproduktion validerar headtimer mot faktisk enemyprofilduration, inklusive Beginners 12/13 sekunder.

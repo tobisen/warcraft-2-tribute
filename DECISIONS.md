@@ -987,3 +987,7 @@ Pausens subpages är appägd UI-state, inte match/Save. Quit-confirm använder b
 ## Beginnerprofil – RTS-107, 2026-10-03
 
 Beginner får längre förberedelse, enhetsgrupper om1, lägre initialbudget/armycap och12s soldierproduktion. Reserve0/maxdefenders1 gör att den enda initialt finansierade soldaten faktiskt kan ingå i ett anfall. Player combatstats/gather är lika; svårighet påverkar ingen global gameplayspeed. Outpost hålltid90s och navalbonus/passagerarantal bevaras, men attacker skjuts fram. Detta är en preliminär configprofil inför verkligt nybörjarspeltest110; exakta jämförelser finns i GAME_DESIGN.md.
+
+## Separat gameplayspeed – RTS-108, 2026-10-03
+
+Tidsskalning sker enbart vid scenens gameplay-delta-ingång; updateMatch får gameplaysekunder och skalar inte metadatafältet speed igen. UIcamera använder originaldelta och ljud använder AudioContexttid. Options speed är optional för gamla callers med1×default; nya Save17snaphots kräver validerad speed. Äldre16migreras1× utan walltimecatchup. Ingen live speedändring i denna slice.

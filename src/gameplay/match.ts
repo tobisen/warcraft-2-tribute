@@ -1,4 +1,5 @@
 import {enemyStartingBudget} from '../config/enemyNaval';
+import {isGameSpeed,type GameSpeed} from '../config/gameSpeed';
 import {createEnemyNaval,prepareEnemyNaval,updateEnemyNaval,type EnemyNavalState} from './enemyNaval';
 import {updateNavy,type NavyState} from './navy';
 import {maps,isMapId,type MapId} from '../config/maps';
@@ -43,6 +44,7 @@ import { updateWaves, type WaveState } from './waves';
 
 export type MatchOutcome = 'playing' | 'defeat' | 'victory';
 export interface MatchState {
+  speed?:GameSpeed;
   enemyNaval?:EnemyNavalState;
   navy?:NavyState;
   factions?:MatchFactions;
@@ -69,10 +71,12 @@ export interface MatchState {
 }
 
 /** A fresh state owns every mutable position/array; restart never reuses a previous match. */
-export function createMatch(scenario:MatchScenario='survival',difficulty:Difficulty='normal',factions:MatchFactions={...defaultFactions},mapId:MapId=scenarioConfig[scenario].map): MatchState {
+export function createMatch(scenario:MatchScenario='survival',difficulty:Difficulty='normal',factions:MatchFactions={...defaultFactions},mapId:MapId=scenarioConfig[scenario].map,speed:GameSpeed=1): MatchState {
+  if(!isGameSpeed(speed))throw Error('Invalid game speed');
   if(!isMapId(mapId)||!scenarioMapAllowed(scenario,mapId))throw Error('Unknown or unsupported map');
   if(!isFactionId(factions.player)||!isFactionId(factions.enemy))throw Error('Unknown faction');
   const state: MatchState = {
+    speed,
     factions:{...factions},
     outcome: 'playing',paused:false,controlGroups:{},scenario,difficulty,research:createResearch(),
     map: createMap(mapId),

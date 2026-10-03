@@ -2,7 +2,7 @@
 
 Browserbaserat singleplayer-RTS inspirerat av Warcraft 2, Age of Empires 2 och
 Command & Conquer. Phaser, strict TypeScript och Vite; local-first, gameplay
-före grafik. Implementerat genom RTS-107 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
+före grafik. Implementerat genom RTS-108 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
 
 ## Installation och lokal start
 
@@ -588,3 +588,5 @@ Orderfeedback: green = move, red = attack, gold = work; blocked orders show a re
 Own damage triggers a red attack warning and short effects cue (at most once per3gameplayseconds). Pause/end are silent; restart/load clears alerts. Audio dispatch/decode/mute has been checked in Chromium; acoustic listening remains for RTS-117.
 
 Difficulty: Beginner adds longer preparation, smaller enemy armies and slower training. Easy/Normal/Hard retain their existing pressure. Choose in setup or use `?difficulty=beginner`; the profile survives Save/load and restart. See GAME_DESIGN.md for exact timings and mission/naval exceptions.
+
+Game speed: choose 0.75× or 1× in setup, independently of difficulty. Simulation and animations slow together; camera, UI and audio keep their normal speed. Save/load and restart preserve the choice; older saves migrate to 1×.

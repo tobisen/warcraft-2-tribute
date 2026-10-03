@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-108 – Separat spelhastighet** — **Todo**.
+**RTS-109 – Tutorial-uppdrag** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -2890,13 +2890,21 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-108 – Separat spelhastighet
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Inför 0.75× och 1× som separata val från svårighetsgrad. Använd en gemensam skalning av gameplay-tid. Movement, combat, gathering, production och AI-timers ska påverkas konsekvent. UI och ljuduppspelning förblir normala.
+**Goal:** Spelhastighet0.75×/1× är separat från difficulty och skalar hela gameplay-steget gemensamt.
+
+**Requirements:** Configtyp/validering för två speedvärden,1×default. Val i setup samt English summary. Session/options/Match metadata bevarar valet; låst under pågående match. En gemensam skalning av scene→gameplay-delta för updateMatch/animationer/attackwarningtimers. Movement/combat/gather/production/construction/research/AI/waves/navy får samma gameplaytid; ingen individuell eller dubbel skalning. UI/kamera/nativeAudio uppspelning oförändrad. Paus/menu/end/skipFrame=0tid. Restart och Save/load bevarar speed; äldre config16saves får1×via migration17. Invalidspeed avvisas.
+
+**Non-goals:** Difficultybalansändring, live speedslider, tutorial109, ljudtempoändring, fixed timestep.
 
 **Dependencies:** RTS-107.
 
-**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+**Acceptance criteria:** Samma realtid0.75× ger75% gameplaytid; motsvarande gameplaytid ger samma state över alla befintliga system. Difficulty/speed väljs oberoende. UIcamera reagerar lika; inga walltimehopp efter resume/load. Save/restart och äldre saves fungerar.
+
+**Tester:** Speeddelta/default/invalid/phase/skipFrame, optionlock/isolation, alla systemsamma gameplaytid samt faktisk movement/gather/queue/AI/wave/combatprogress, Save17/16migration/tampering/restart. Relevanta session/Save/settings/timers/regressionstester; typecheck/build/diff. Browser båda speedval med riktigt move/produktion, pause/load/restart och kamera i båda upplösningar.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md, README.md.
 
 ## RTS-109 – Tutorial-uppdrag
 
