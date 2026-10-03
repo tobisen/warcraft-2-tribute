@@ -1590,3 +1590,9 @@ Befintliga `mapResources` och `resourceNodes` från RTS-115 är gemensam källa 
 ## RTS-131 – Stora kartstorlekar
 
 Plains96/Plains128 är enkla konfigurerade storlekslayouter,3072/4096px med32px tiles. Start-/AI-zon och primärstock återanvänds; fulla strategiska kartor hör till132/133. Samma camera/minimap/fog/state fungerar över hela världens dimensioner. Navigationens befintliga BFS-gräns höjs4096→16384 efter att tester funnit falsk unreachable för stora omvägar. Ingen algoritm-/renderrefaktor. Save-config21 migrerar20 (äldre kedja går via20), validerar nya kartidentiteter/full fog/gränser och bevarar befintliga matcher. Mätning och miljö i PERFORMANCE.md.
+
+## RTS-132 – Highland Crossroads
+
+Egen96×96-layout med tre passager, terrängfickor och åtta ändliga noder. `MapDefinition.enemyMuster` låter aktuell karta ge en samlingspunkt nära egen enemy-base; match använder den som override över befintliga difficulty-settings, övriga kartor oförändrade. Scout/anfallswaypoints ligger på nåbar mark och sista anfallspunkten når spelarbasens synfält. Config22 migrerar21 utan att ändra gamla kartors state/stock/ledger. Highland-tester verifierar terrain kontra dynamiska footprints, node reachability, siege-crossings, byggutrymme, betald match/konservation och passiv AI.
+
+Kartan anger även `enemyBuildSites` nära egen bas; äldre kartor behåller sina kandidater. Placeringskontroll använder `canReachFootprint` för att finna en nåbar kontaktpunkt utan att optimera en route som aldrig används. Ordinarie `approachRoute` behåller sin tidigare routeordning. Produktionsmetadata får faktisk kartbredd/höjd för spawn-eligibility i UI, kö och enemy-adapter; dimensionerna härleds och sparas inte i jobbstate.

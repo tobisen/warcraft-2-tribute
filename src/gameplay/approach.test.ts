@@ -1,5 +1,5 @@
 import {expect,it} from 'vitest';
-import {approachRoute} from './approach';
+import {approachRoute,canReachFootprint} from './approach';
 // Golden routes captured from RTS-064 before the measured optimization.
 const cases=[
   {
@@ -228,3 +228,5 @@ const cases=[
   }
 ];
 for(const [index,c] of cases.entries())it('preserves pre-optimization approach route '+index,()=>{const target={x:500,y:200,width:64,height:64};const map={width:800,height:600,tileSize:32,revision:0,bodyHalf:c.half,obstacles:[target,...c.extra]};expect(approachRoute(map,c.position,target,32)).toEqual(c.route);});
+
+for(const [index,c] of cases.entries())it('connectivity witness matches full route reachability '+index,()=>{const target={x:500,y:200,width:64,height:64},map={width:800,height:600,tileSize:32,revision:0,bodyHalf:c.half,obstacles:[target,...c.extra]};expect(canReachFootprint(map,c.position,target,32)).toBe(c.route.status!=='blocked');});

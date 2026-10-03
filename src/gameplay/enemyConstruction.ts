@@ -1,3 +1,4 @@
+import {maps} from '../config/maps';
 import {enemyExpansionConfig} from '../config/enemyExpansion';
 import {enemyPolicyConfig} from '../config/enemyPolicy';
 import {forgeConfig,upgradeConfig} from '../config/upgrades';
@@ -40,7 +41,7 @@ export function prepareEnemyConstruction(m:MatchState):MatchState {
  if(site){for(const builder of available){g={...g,units:g.units.map(u=>({...u,selected:u.id===builder.id}))};const result=resumeConstruction(g,p,m.map,site.buildingType==='farm'?'farm-1':site.buildingType!);const job=site.buildingType==='barracks'?result.placement.construction:site.buildingType==='forge'?result.placement.forge?.construction:result.placement.farms?.[0]?.construction;if(job?.builderId===builder.id)return {...m,combat:{...m.combat,enemies:copySites(workers(m,result.gathering),result.placement)}};}return m;}
  const pop=enemyPopulation(m),kind=!p.barracks?'barracks':(p.farms?.length??0)<config.maxFarms&&pop.used+pop.reserved>=pop.cap-config.supplyMargin?'farm':m.enemyPolicy&&!p.forge&&(m.enemyPolicy.research.attack<upgradeConfig.maxLevel||m.enemyPolicy.research.defense<upgradeConfig.maxLevel)&&m.combat.enemies.filter(e=>!e.footprint&&e.kind!=='worker'&&e.hp>0).length>=enemyPolicyConfig.minLiveArmy?'forge':null;
  if(!kind)return m;
- for(const builder of available)for(const point of config.candidates){
+ for(const builder of available)for(const point of maps[m.map.id??'arena'].enemyBuildSites??config.candidates){
   g={...g,units:g.units.map(u=>({...u,selected:u.id===builder.id}))};
   const rect={...point,width:64,height:64};if(m.gathering.units.some(u=>overlaps(rect,unitBody(u.position,(u.kind==='worker'?unitStats:combatUnitStats(u)).size))))continue;
   const placed=placeBuilding(beginPlacement(p,kind),point,g.wood,[],{map:m.map,gathering:g,enemies:[...m.gathering.units,...m.combat.enemies.filter(e=>!e.footprint&&e.kind!=='worker')]});

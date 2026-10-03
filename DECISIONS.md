@@ -1182,3 +1182,9 @@ Visa spelarens tilldelade och faktiskt samlande workers, inte fiendens antal. Ge
 ## RTS-131 – Storlek och sökbudget
 
 Behåll32px tiles/world-pixelkoordinater.96/128 tiles ger3072/4096px. Två enkla Plains-layouter verifierar storleksstöd; detaljerad strategisk terräng införs separat. Höj befintlig BFS-budget till16384, högst ett besök per cell på största stödda karta, eftersom4096 gav falska unreachable på nåbara stora omvägar. Mät före optimering: routep95≤100ms, update/renderp95≤16.7ms, RAFp95≤33.4ms för dokumenterad liten baseline. Ingen renderoptimering behövdes;1920/128-kartan ligger nära RAF-gränsen och garanterar inte60FPS. Save-config21 migrerar20 utan modellegenskapsbyte; nya kartor kan inte utges för äldre saves.
+
+## RTS-132 – Egen landgeografi och kartanpassad AI
+
+Highland96×96 använder tre160px/bredare passager i en128px bergsrygg. Åtta noder ligger utanför terrängblockers, med rimligt basbyggutrymme och ändliga lager. Map-config kan ange enemyMuster; annars gäller äldre default. Sista scout/anfallspunkt måste både vara walkable och kunna leda till upptäckt av spelarbas, inte bara ligga nära på minimap. Config22 migrerar21. Referenser granskas geografiskt och återanvänds aldrig som spelassets/layoutkopior.
+
+Byggkandidater och samlingspunkt är karta-specifika där startzonen flyttats. Spawnkontroller använder aktuell värld, inte bootstrap-världens gamla1280×960-gräns. Connectivity-frågor får stanna vid första giltiga route; själva arbets-/stridsrutterna fortsätter välja tidigare bästa kontaktpunkt.

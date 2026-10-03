@@ -22,7 +22,7 @@ export function canInteract(map: WorldMap, point: Position, target: Footprint, r
 }
 
 export function approachRoute(map: WorldMap, position: Position, target: Footprint, range: number,
-  commandNumber=1): RouteState {
+  commandNumber=1,reachableOnly=false): RouteState {
   if(canInteract(map,position,target,range))return {commandNumber,destination:{...position},
     waypoints:[],revision:map.revision,status:'arrived'};
   const half=map.bodyHalf??navigationConfig.halfBody;
@@ -47,8 +47,14 @@ export function approachRoute(map: WorldMap, position: Position, target: Footpri
     let previous=position,length=0;
     for(const p of result.waypoints){length+=Math.hypot(p.x-previous.x,p.y-previous.y);previous=p;}
     if(!best || length<best.length-1e-9 || Math.abs(length-best.length)<=1e-9&&index<best.index)best={waypoints:result.waypoints,point,length,index};
+    if(reachableOnly)break;
   }
   return {commandNumber,destination:best?{...best.point}:{...position},waypoints:best?.waypoints??[],
     revision:map.revision,status:best?(best.waypoints.length?'moving':'arrived'):'blocked',
     ...(!best?{error:'unreachable' as const}:{})};
+}
+
+/** Connectivity checks need a witness, not the shortest interaction route. */
+export function canReachFootprint(map:WorldMap,position:Position,target:Footprint,range:number):boolean {
+ return approachRoute(map,position,target,range,1,true).status!=='blocked';
 }

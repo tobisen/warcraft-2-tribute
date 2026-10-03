@@ -388,7 +388,7 @@ export class BootScene extends Phaser.Scene {
     const trainSoldier = () => {
       if (!allowsProduction(this.selectedBuilding, 'barracks', this.placement.barracks !== null, this.gameplayActive())) return;
       const result = enqueueProduction(this.gathering, this.soldierProduction,
-        { kind: 'barracks', footprint: this.placement.barracks, ready:barracksReady(this.placement) },matchPopulation(this.currentMatch()));
+        { kind: 'barracks', bounds:this.map, footprint: this.placement.barracks, ready:barracksReady(this.placement) },matchPopulation(this.currentMatch()));
       this.gathering = result.gathering;
       this.soldierProduction = result.production;
       this.syncVisuals();
@@ -398,7 +398,7 @@ export class BootScene extends Phaser.Scene {
     const trainArcher=()=>{
       if(!allowsProduction(this.selectedBuilding,'barracks',this.placement.barracks!==null,this.gameplayActive()))return;
       const result=enqueueProduction(this.gathering,this.soldierProduction,
-        {kind:'barracks',footprint:this.placement.barracks,ready:barracksReady(this.placement),unitType:'archer'},
+        {kind:'barracks',bounds:this.map,footprint:this.placement.barracks,ready:barracksReady(this.placement),unitType:'archer'},
         matchPopulation(this.currentMatch()));
       this.gathering=result.gathering;this.soldierProduction=result.production;this.syncVisuals();
     };
@@ -407,7 +407,7 @@ export class BootScene extends Phaser.Scene {
     const trainCatapult=()=>{
       if(!allowsProduction(this.selectedBuilding,'barracks',this.placement.barracks!==null,this.gameplayActive()))return;
       const result=enqueueProduction(this.gathering,this.soldierProduction,
-        {kind:'barracks',footprint:this.placement.barracks,ready:barracksReady(this.placement),unitType:'catapult'},
+        {kind:'barracks',bounds:this.map,footprint:this.placement.barracks,ready:barracksReady(this.placement),unitType:'catapult'},
         matchPopulation(this.currentMatch()));
       this.gathering=result.gathering;this.soldierProduction=result.production;this.syncVisuals();
     };
@@ -742,7 +742,7 @@ export class BootScene extends Phaser.Scene {
     const population=matchPopulation(this.currentMatch());
     this.trainButton.disabled = !allowsProduction(this.selectedBuilding, 'base', true, this.gameplayActive()) || !this.gameplayActive() || !canEnqueue(this.gathering, this.production,{kind:'base'},population);
     this.productionStatus.textContent = productionLabel(this.gathering, this.production, this.outcome,{kind:'base'},population);
-    const barracks = { kind: 'barracks' as const, footprint: this.placement.barracks, ready:barracksReady(this.placement) };
+    const barracks = { kind: 'barracks' as const, bounds:this.map, footprint: this.placement.barracks, ready:barracksReady(this.placement) };
     this.soldierButton.disabled = !allowsProduction(this.selectedBuilding, 'barracks', this.placement.barracks !== null, this.gameplayActive()) || !this.gameplayActive() || !canEnqueue(this.gathering, this.soldierProduction, barracks,population);
     this.catapultButton.disabled=!allowsProduction(this.selectedBuilding,'barracks',this.placement.barracks!==null,this.gameplayActive())||!canEnqueue(this.gathering,this.soldierProduction,{...barracks,unitType:'catapult'},population);
     this.archerButton.disabled=!allowsProduction(this.selectedBuilding,'barracks',this.placement.barracks!==null,this.gameplayActive())||!canEnqueue(this.gathering,this.soldierProduction,{...barracks,unitType:'archer'},population);

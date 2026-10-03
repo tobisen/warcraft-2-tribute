@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-132 – Stor landkarta** — **Todo**.
+**RTS-133 – Stor kust- och ökarta** — **Todo**.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -3136,7 +3136,7 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 Användarens arbetslista: slutför RTS-115–120 först. Därefter inventering och implementation av RTS-121–126, en task åt gången, med taskvisa checks, browserverifiering, docs, commit med task-ID och push utan force. Kontrollera Pages-deploy där åtkomst finns. Historiskt etappstopp: RTS-127–150 var då endast planerade. Senaste fortsätt efter publicerad126 upphäver stoppet (se Current Focus). Fortsätt från Current Focus; denna etapp startar först efter RTS-120. Stora tasks delas i subtasks under samma ID. Saves bevaras via migration eller tydlig kontrollerad inkompatibilitetshantering. Ingen backend eller multiplayer.
 
-Kartreferenser inför RTS-132–133 (ännu inte lästa eller använda för kartinnehåll): [HoMM-kartor](http://modhomm3.free.fr/maps/map_english01.htm), [Warcraft II BNE](http://classic.battle.net/war2/lp/bne.shtml), [VGMaps](https://vgmaps.de/maps/pc/warcraft-ii-tides-of-darkness.php), [Fall of Lordaeron](https://www.blizzplanet.com/blog/comments/warcraft_ii_tides_of_darkness___orc_campaign_the_fall_of_lordaeron/warcraft-ii-the-fall-of-lordaeron-map). Använd geografi/expansioner/passager/tempo som referens, skapa egna kartor/assets och redovisa otillgängliga källor utan att hitta på innehåll.
+Kartreferenser inför RTS-132–133 (åtkomst och faktisk granskning dokumenteras i GAME_DESIGN.md under132): [HoMM-kartor](http://modhomm3.free.fr/maps/map_english01.htm), [Warcraft II BNE](http://classic.battle.net/war2/lp/bne.shtml), [VGMaps](https://vgmaps.de/maps/pc/warcraft-ii-tides-of-darkness.php), [Fall of Lordaeron](https://www.blizzplanet.com/blog/comments/warcraft_ii_tides_of_darkness___orc_campaign_the_fall_of_lordaeron/warcraft-ii-the-fall-of-lordaeron-map). Använd geografi/expansioner/passager/tempo som referens, skapa egna kartor/assets och redovisa otillgängliga källor utan att hitta på innehåll.
 
 ## RTS-121 – Inventering och detaljplan
 
@@ -3443,7 +3443,7 @@ Dokumentera prestandamål och testmiljö.
 
 ## RTS-132 – Stor landkarta
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Handgjord karta med flera expansioner, skogar, gruvor,
 
@@ -3464,7 +3464,9 @@ Dekorationer och höjdillusion får inte göra walkability otydlig.
 
 **Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
 
-**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+**Detaljplan:** Egen Highland Crossroads96×96, tre öppna landpassager i lång bergsrygg, lokala terrängfickor/vatten och flera ändliga wood/gold-expansioner. Befintlig spelarstart och generöst byggutrymme; egen nordöstlig enemy-zon med närresurser och författade scout/anfallswaypoints. Inga kopierade kartor/assets eller otydlig dekorativ collision. Läs/visuellt granska åtkomliga kartreferenser och dokumentera otillgängliga. Save-config22 migrerar21; verifiera nodreachability, tre oberoende korsningar för siege, byggutrymme, fog, AI/ekonomisk paid victory och native resurs-/kameraflöde.
+
+**Resultat:** Egen96×96-karta, tre siege-passager, åtta noder, lokala AI-bygg-/samlingspunkter, verkliga produktionsgränser och Save22.958tester/124filer PASS148.96s; typecheck/build/diff och native1280/1920 resurs-, bygg-, kameraflöde/Save/restart PASS. Tidigare timeout/spawnfel rättade med regressioner. Referenser och begränsningar i GAME_DESIGN/DEV_LOG.
 
 ## RTS-133 – Stor kust- och ökarta
 

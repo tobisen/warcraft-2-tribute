@@ -6,7 +6,7 @@ import { costs } from '../config/economy';
 import { canAfford, payCost } from './economy';
 import { arenaConfig } from '../config/arena';
 import { waveSchedule } from '../config/waves';
-import { approachRoute } from './approach';
+import { canReachFootprint } from './approach';
 import { bodyFits, overlaps, replaceObstacles, type WorldMap } from './map';
 import { spawnCandidates, hasSpawnExit, unitBody } from './spawning';
 import type { Unit } from './gathering';
@@ -91,8 +91,8 @@ export function placementError(state: PlacementState, point: Position, wood: num
     for(const worker of context.gathering.units.filter((u):u is Extract<Unit,{kind:'worker'}>=>u.kind==='worker')) {
       for(const [target,range] of [[base,gatheringConfig.deliveryRange],
         ...nodes.flatMap((node,i)=>resourceNodes(context.gathering)[i].remaining>0?[[node,gatheringConfig.range] as const]:[])] as const) {
-        if(approachRoute(context.map,worker.position,target,range).status!=='blocked'
-          && approachRoute(after,worker.position,target,range).status==='blocked')return uiText.blocksAWorkerRouteToTheBaseOr;
+        if(canReachFootprint(context.map,worker.position,target,range)
+          && !canReachFootprint(after,worker.position,target,range))return uiText.blocksAWorkerRouteToTheBaseOr;
       }
     }
     const sites=[...(state.forge&&state.forge.construction.remainingSeconds>0?[{footprint:state.forge.footprint,job:state.forge.construction}]:[]),...(state.barracks&&state.construction&&state.construction.remainingSeconds>0
@@ -100,16 +100,16 @@ export function placementError(state: PlacementState, point: Position, wood: num
       ...(state.farms??[]).filter(f=>f.construction.remainingSeconds>0).map(f=>({footprint:f.footprint,job:f.construction}))];
     for(const site of sites) {
       const builder=context.gathering.units.find(u=>u.id===site.job.builderId&&u.kind==='worker');
-      if(builder && approachRoute(context.map,builder.position,site.footprint,barracksConfig.constructionRange).status!=='blocked'
-        && approachRoute(after,builder.position,site.footprint,barracksConfig.constructionRange).status==='blocked')return uiText.blocksTheBuilderRoute;
+      if(builder && canReachFootprint(context.map,builder.position,site.footprint,barracksConfig.constructionRange)
+        && !canReachFootprint(after,builder.position,site.footprint,barracksConfig.constructionRange))return uiText.blocksTheBuilderRoute;
     }
     const exit=(map:WorldMap,foot:Footprint,kind:'base'|'barracks')=>spawnCandidates(map,foot,kind).some(p=>hasSpawnExit(map,p));
     if(exit(context.map,base,'base') && !exit(after,base,'base') || kind==='barracks' && !exit(after,rect,'barracks')
       || state.barracks && exit(context.map,state.barracks,'barracks') && !exit(after,state.barracks,'barracks'))return uiText.blocksAProductionExit;
     for(let i=0;i<Math.max(...waveSchedule.map(w=>w.count));i++) {
       const entry={x:arenaConfig.enemyEntry.x,y:arenaConfig.enemyEntry.y+i*arenaConfig.enemyEntry.spacing};
-      if(bodyFits(context.map,entry,12) && approachRoute(context.map,entry,base,32).status!=='blocked'
-        && (!bodyFits(after,entry,12) || approachRoute(after,entry,base,32).status==='blocked'))return uiText.blocksTheEnemyWaveRouteToTheBase;
+      if(bodyFits(context.map,entry,12) && canReachFootprint(context.map,entry,base,32)
+        && (!bodyFits(after,entry,12) || !canReachFootprint(after,entry,base,32)))return uiText.blocksTheEnemyWaveRouteToTheBase;
     }
   }
   if (context) {
@@ -117,7 +117,7 @@ export function placementError(state: PlacementState, point: Position, wood: num
       .sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}))[0];
     if (!builder) return uiText.selectAWorkerToBuild;
     const after=replaceObstacles(context.map,[...context.map.obstacles,rect]);
-    if (approachRoute(after,builder.position,rect,barracksConfig.constructionRange).status==='blocked') return uiText.theBuildingSiteCannotBeReached;
+    if (!canReachFootprint(after,builder.position,rect,barracksConfig.constructionRange)) return uiText.theBuildingSiteCannotBeReached;
   }
   return null;
 }

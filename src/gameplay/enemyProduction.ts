@@ -18,7 +18,7 @@ export function updateEnemyProduction(state:EnemyProductionState,combat:CombatSt
  if(!base?.footprint)return {combat,state:{...state,production:{...state.production,queue:[],remainingSeconds:null,blockedSpawnKey:undefined}}};
  if(buildings&&(!buildings.site?.footprint||buildings.site.construction?.remainingSeconds!==0))return {combat,state};
  let next=state,c=combat,time=Math.max(0,delta);
- const building={kind:'barracks' as const,unitType:enemyProductionConfig.unitType,footprint:buildings?.site?.footprint??base.footprint,jobCost:faction?factions[faction].units.soldier.cost:enemyProductionConfig.cost,durationSeconds:(state.durationSeconds??enemyProductionConfig.durationSeconds)+(faction?factions[faction].units.soldier.durationSeconds-5:0)};
+ const building={kind:'barracks' as const,bounds:map,unitType:enemyProductionConfig.unitType,footprint:buildings?.site?.footprint??base.footprint,jobCost:faction?factions[faction].units.soldier.cost:enemyProductionConfig.cost,durationSeconds:(state.durationSeconds??enemyProductionConfig.durationSeconds)+(faction?factions[faction].units.soldier.durationSeconds-5:0)};
  for(;;){
   const units:Unit[]=c.enemies.filter(e=>!e.footprint).map(e=>({kind:'soldier',id:e.id,hp:e.hp,cargo:0,selected:false,position:{...e.position},target:{...e.position},order:{kind:'idle'}}));
   let g:GatheringState={faction,units,wood:next.wood,goldBalance:next.gold,base:base.position,node:{id:'unused',position:base.position,remaining:0}};

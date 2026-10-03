@@ -23,10 +23,10 @@ export interface ProductionState {
   blockedSpawnKey?: string;
   nextUnitNumber: number;
 }
-export type ProductionBuilding = { kind: 'base' } | { kind: 'barracks'; footprint: Footprint | null; ready?:boolean;unitType?:'soldier'|'archer'|'catapult';jobCost?:ResourceCost;durationSeconds?:number };
+export type ProductionBuilding = { kind: 'base' } | { kind: 'barracks'; footprint: Footprint | null; ready?:boolean;bounds?:Pick<WorldMap,'width'|'height'>;unitType?:'soldier'|'archer'|'catapult';jobCost?:ResourceCost;durationSeconds?:number };
 const base: ProductionBuilding = { kind: 'base' };
 
-export function soldierSpawn(footprint: Footprint,size=soldierStats.size): Position | null {
+export function soldierSpawn(footprint: Footprint,size=soldierStats.size,bounds:Pick<WorldMap,'width'|'height'>=worldConfig): Position | null {
   const half = size / 2;
   const offset = half + soldierProductionConfig.spawnGap;
   const candidates = [
@@ -36,13 +36,13 @@ export function soldierSpawn(footprint: Footprint,size=soldierStats.size): Posit
     { x: footprint.x + footprint.width / 2, y: footprint.y - offset },
   ];
   return candidates.find(p => p.x - half >= 0 && p.y - half >= 0
-    && p.x + half <= worldConfig.width && p.y + half <= worldConfig.height) ?? null;
+    && p.x + half <= bounds.width && p.y + half <= bounds.height) ?? null;
 }
 
 export function canStartProduction(gathering: GatheringState, production: ProductionState, building: ProductionBuilding = base, population?:Population): boolean {
   const recipe=productionRecipe(gathering,building),cost=recipe.cost;
   return (!population || hasPopulation(population,recipe.supply)) && production.remainingSeconds === null && canAfford(gathering,cost)
-    && (building.kind === 'base' || (building.ready !== false && building.footprint !== null && soldierSpawn(building.footprint,recipe.size) !== null));
+    && (building.kind === 'base' || (building.ready !== false && building.footprint !== null && soldierSpawn(building.footprint,recipe.size,building.bounds) !== null));
 }
 
 export function startProduction(gathering: GatheringState, production: ProductionState, building: ProductionBuilding = base, population?:Population) {
@@ -72,7 +72,7 @@ export function updateProduction(gathering: GatheringState, production: Producti
     : building.kind === 'base' ? {
     x: gathering.base.x + productionConfig.spawnOffset.x,
     y: gathering.base.y + productionConfig.spawnOffset.y,
-  } : building.footprint ? soldierSpawn(building.footprint,recipe.size) : null;
+  } : building.footprint ? soldierSpawn(building.footprint,recipe.size,building.bounds) : null;
   if (!position) return { gathering, production: context?{...production,remainingSeconds:0,blockedSpawnKey:spawnKey}:production };
   let number = production.nextUnitNumber;
   while (gathering.units.some(unit => unit.id === `unit-${number}`)) number++;

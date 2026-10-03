@@ -688,3 +688,5 @@ Flera workers kan samla vid samma fyndighet. Vid hög belastning används nåbar
 Valda synliga resurser visar också tilldelade och aktivt samlande egna workers. Resa, kö och leverans ingår bara i assigned; orderbyte och uttömning uppdaterar bemanningen.
 
 RTS-131: Skirmish har Plains96×96 och Plains128×128, enkla storlekslayouter inför kommande strategiska kartor. Tiles förblir32px; kamera/minimap/orders/fog stödjer hela världen. Save-config21 migrerar befintliga saves till samma slot utan stateförlust. Se PERFORMANCE.md för faktisk mätning; största kartan vid1920×1080 låg omkring49FPS i headless-miljön.
+
+Highland Crossroads (RTS-132) är en egen96×96-landkarta med tre landpassager, fyra wood-groves/fyra gold mines och nordöstlig fiendebas. Använd Skirmish; utforska västra expansionen eller korsa bergsryggen. Save-config22 bevarar befintliga saves.
