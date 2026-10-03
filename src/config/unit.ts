@@ -1,17 +1,17 @@
-import { catapultConfig } from './catapult';
-import { archerConfig } from './archer';
-export const unitStats = {
-  speed: 160,
-  size: 24,
-  color: 0x7bd389,
-};
-
-export const soldierStats = {
-  speed: 160,
-  size: 24,
-  color: 0xf0a44b,
-};
-
-export function combatUnitStats(unit:{archetype?:'archer'|'catapult'}) {return unit.archetype==='catapult'?catapultConfig:unit.archetype==='archer'?archerConfig:soldierStats;}
-
-export function rangedStats(unit:{archetype?:'archer'|'catapult'}){return unit.archetype==='catapult'?catapultConfig:unit.archetype==='archer'?archerConfig:null;}
+import {factions,type FactionId} from './factions';
+import {soldierStats,unitStats} from './unitDefaults';
+export {soldierStats,unitStats} from './unitDefaults';
+import {catapultConfig} from './catapult';
+import {archerConfig} from './archer';
+type CombatProfile={faction?:FactionId;archetype?:'archer'|'catapult'|'specialist'};
+export function combatUnitStats(unit:CombatProfile,faction?:FactionId){
+ const role=unit.archetype??'soldier',baseline=role==='catapult'?catapultConfig:role==='archer'?archerConfig:soldierStats;
+ return {...baseline,...factions[faction??unit.faction??'crown'].units[role]};
+}
+export function rangedStats(unit:CombatProfile,faction?:FactionId){
+ const role=unit.archetype??'soldier',profile=factions[faction??unit.faction??'crown'].units[role];
+ if(role==='specialist'&&profile.combatMode!=='projectile'||role==='soldier')return null;
+ const baseline=role==='catapult'?catapultConfig:archerConfig;
+ return {...baseline,...profile} as typeof archerConfig|typeof catapultConfig;
+}
+export const workerStats=(faction:FactionId='crown')=>({...unitStats,...factions[faction].units.worker});

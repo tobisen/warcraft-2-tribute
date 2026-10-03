@@ -1,3 +1,4 @@
+import {factionForTeam} from '../config/factions';
 import {isVisible} from './fog';
 import {knownEnemyNode} from './enemyKnowledge';
 import {enemyEconomyConfig} from '../config/enemyEconomy';
@@ -14,7 +15,7 @@ export function addEnemyWorkers(m:MatchState):void {
  const base=m.combat.enemies.find(e=>e.kind==='base');if(!base?.footprint||!m.enemyProduction)return;
  for(let i=0;i<enemyEconomyConfig.workerCount;i++){
   const position=chooseSpawn(m.map,base.footprint,'barracks',m.gathering.units,m.combat.enemies);if(!position)throw Error('No enemy worker spawn');
-  m.combat.enemies.push({id:`enemy-worker-${i+1}`,owner:'enemy',kind:'worker',hp:combatConfig.workerHP,position,work:{target:{...position},cargo:0,order:{kind:'idle'}}});
+  m.combat.enemies.push({id:`enemy-worker-${i+1}`,owner:'enemy',kind:'worker',hp:factionForTeam(m,'enemy').units.worker.hp,position,work:{target:{...position},cargo:0,order:{kind:'idle'}}});
  }
  m.enemyProduction={...m.enemyProduction,extracted:{wood:0,gold:0},spent:{wood:0,gold:0},lostCargo:{wood:0,gold:0}};
 }

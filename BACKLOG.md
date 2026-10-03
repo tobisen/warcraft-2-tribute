@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-135 – Fraktionsdata och research prerequisites** — **Todo**.
+**RTS-136 – Humans** — **Todo**.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -3535,7 +3535,7 @@ innan respektive fraktion implementeras.
 
 ## RTS-135 – Fraktionsdata och research prerequisites
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Utöka befintligt fraktionssystem endast där det behövs.
 
@@ -3556,7 +3556,9 @@ Save/load sparar stabila fraktions- och typ-ID:n.
 
 **Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
 
-**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+**Detaljplan:**135A config-roster/prerequisites och atomisk queue-admission;135B UI-namn/kostnader/ikoner/blockeringsorsak och specialistprofiler via befintlig combat;135C faction research/naval-data och stabila wire-typ-ID:n med migration;135D beteendetester/regression/browser/docs. Runtime-fraktioner läggs till i136–140, befintliga recept bevaras tills respektive fraktion införs. Ingen generell systemombyggnad; koppla faktisk data där hårdkodade värden blockerar matrisen. Done först när hela135 är verifierad.
+
+**Verifiering:**990tester/129filer PASS166.07s; typecheck/build/diff och lokala doclänkar PASS. Native1280Crown/1920Clans betald prerequisites/research/specialist/movement/Save med explicit prototyproster PASS utan pageerrors. Dolda prototyper och generisk enemy-armé redovisas i docs.
 
 ## RTS-136 – Humans
 

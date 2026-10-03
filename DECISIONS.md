@@ -1196,3 +1196,9 @@ Behåll128×128/32px tiles och befintlig naval/cargo-modell. Coast använder utt
 ## RTS-134 – Fraktionsdesign
 
 Bevara crown/clans som stabila ID:n för Humans/Orcs; elves/dwarves/goblins är nya identiteter. Fraktionsmatrisen i GAME_DESIGN.md anger initiala kostnader/stats/prerequisites för25 units, fem building-rosters, attack/defense-research och fleet. Specialist är en separat roll med melee/projectileprofil, inte ett nytt magisystem. Nya buffs återanvänder befintliga self-buff-regler. Siege kräver färdig researchbyggnad; specialist också vald research1. Befintliga betalda jobb grandfatheras via kontrollerad migration, nya jobs kontrolleras atomiskt. Balansvärden verifieras vid respektive implementation, inga nya factions anses spelbara genom designen.
+
+## RTS-135 – Roster-admission och stabila wire-ID:n
+
+Utöka befintliga configobjekt och återanvänd queue/order/combat; inför inget generellt tech-tree-system. Prerequisites är enkla building/research-listor som kontrolleras atomiskt vid enqueue. Avslutade levande byggnader och färdig research räknas; in-progress jobb räknas inte. Godkända produktionsjobb behåller sin betalning och fortsätter efter prerequisite-förlust.
+
+Specialist är en Soldier-archetype med datastyrd melee eller projectile/splash och ett befintligt art-alias tills egna assets införs. Publicerade rosters är oförändrade i135. Save24 använder explicita stabila typeId för egna mark-/sjöenheter inklusive passagerare, härledda från matchens stabila fraktions-ID och roll. Migration23 lägger till dem, loader avvisar felaktig identitet och runtime härleder profiler från matchen. Schema/lagringsslot är oförändrade. Enemy-arméns gamla asymmetriska grundprofil bevaras tills faktiskt rosterarbete; inga fem spelbara fraktioner hävdas genom denna grund.

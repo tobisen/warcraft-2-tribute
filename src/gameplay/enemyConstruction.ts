@@ -1,3 +1,4 @@
+import {factionForTeam} from '../config/factions';
 import {maps} from '../config/maps';
 import {enemyExpansionConfig} from '../config/enemyExpansion';
 import {enemyPolicyConfig} from '../config/enemyPolicy';
@@ -22,11 +23,11 @@ export function enemyBuildingView(m:MatchState):PlacementState {
  return {...(forge?{forge:{id:'forge' as const,owner:'player' as const,hp:forge.hp,footprint:forge.footprint!,construction:forge.construction!}}:{}),active:false,barracks:bar?.footprint??null,...(bar?{barracksOwner:'player',barracksHP:bar.hp,construction:bar.construction}:{}),farms:farm?[{id:'farm-1',owner:'player',hp:farm.hp,footprint:farm.footprint!,construction:farm.construction!}]:[],nextFarmNumber:1};
 }
 export function enemyPopulation(m:MatchState){
- const g:GatheringState={...m.gathering,units:m.combat.enemies.flatMap(e=>{const w=enemyWorker(e);return w&&e.hp>0?[w]:[];})};g.units=[...g.units,...m.combat.enemies.filter(e=>!e.footprint&&e.kind!=='worker'&&e.hp>0).map(e=>({id:e.id,kind:'soldier' as const,hp:e.hp,cargo:0 as const,selected:false,position:e.position,target:e.position,order:{kind:'idle' as const}}))];
+ const g:GatheringState={...m.gathering,faction:factionForTeam(m,'enemy').id,units:m.combat.enemies.flatMap(e=>{const w=enemyWorker(e);return w&&e.hp>0?[w]:[];})};g.units=[...g.units,...m.combat.enemies.filter(e=>!e.footprint&&e.kind!=='worker'&&e.hp>0).map(e=>({id:e.id,kind:'soldier' as const,hp:e.hp,cargo:0 as const,selected:false,position:e.position,target:e.position,order:{kind:'idle' as const}}))];
  const population=populationState(g,enemyBuildingView(m),[...(m.enemyProduction?[m.enemyProduction.production]:[]),...(m.enemyRecovery?[m.enemyRecovery.production]:[])]);
  return {...population,used:population.used+m.combat.enemies.filter(e=>e.kind==='ship'&&e.hp>0).length+(m.enemyNaval?.passengers.length??0),reserved:population.reserved+(m.enemyNaval?.production.queue?.reduce((n,j)=>n+(j.supply??1),0)??0),cap:population.cap+m.combat.enemies.filter(e=>e.buildingType==='outpost'&&e.hp>0&&e.construction?.remainingSeconds===0).length*enemyExpansionConfig.supply};
 }
-function economy(m:MatchState):GatheringState {const base=m.combat.enemies.find(e=>e.kind==='base')!;return {base:base.position,baseSize:base.footprint!.width,units:m.combat.enemies.flatMap(e=>{const w=enemyWorker(e);return w?[w]:[];}),wood:m.enemyProduction!.wood,goldBalance:m.enemyProduction!.gold,node:m.gathering.node,gold:m.gathering.gold,extraNodes:m.gathering.extraNodes};}
+function economy(m:MatchState):GatheringState {const base=m.combat.enemies.find(e=>e.kind==='base')!;return {faction:factionForTeam(m,'enemy').id,base:base.position,baseSize:base.footprint!.width,units:m.combat.enemies.flatMap(e=>{const w=enemyWorker(e);return w?[w]:[];}),wood:m.enemyProduction!.wood,goldBalance:m.enemyProduction!.gold,node:m.gathering.node,gold:m.gathering.gold,extraNodes:m.gathering.extraNodes};}
 function workers(m:MatchState,g:GatheringState){const byId=new Map(g.units.map(u=>[u.id,u as Worker]));return m.combat.enemies.map(e=>{const u=byId.get(e.id);return u?{...e,position:u.position,navigation:u.navigation,work:{cargo:u.cargo,cargoType:u.cargoType,target:u.target,order:u.order}}:e;});}
 function copySites(enemies:Enemy[],p:PlacementState):Enemy[]{return enemies.map(e=>e.buildingType==='barracks'?{...e,construction:p.construction}:e.buildingType==='farm'?{...e,construction:p.farms?.[0]?.construction}:e.buildingType==='forge'?{...e,construction:p.forge?.construction}:e);}
 /** Bounded build decisions before the shared traffic snapshot. */

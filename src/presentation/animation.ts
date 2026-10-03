@@ -1,6 +1,6 @@
-import type {FactionId} from '../config/factions';
+import {factions,type FactionId} from '../config/factions';
 import type {Position} from '../gameplay/movement';
-export type UnitArt='worker'|'soldier'|'archer'|'catapult'|'warship'|'transport';
+export type UnitArt='worker'|'soldier'|'archer'|'catapult'|'warship'|'transport'|'specialist';
 export type Action='idle'|'walk'|'attack'|'death'|'gather'|'build';
 export const directions=['e','se','s','sw','w','nw','n','ne'] as const;
 export type Facing=typeof directions[number];
@@ -13,7 +13,7 @@ export function motion(previous:Motion|undefined,position:Position,action:Action
  const nextFacing=facing(moved?vector:aim?{x:aim.x-position.x,y:aim.y-position.y}:{x:0,y:0},previous?.facing);
  return {position:{...position},facing:nextFacing,action:nextAction,since:previous?.action===nextAction&&previous.facing===nextFacing?previous.since:time,type,owner,faction};
 }
-export function unitFrame(m:Motion,time:number):string{const frames=m.action==='idle'?1:4,elapsed=Math.max(0,time-m.since),index=m.action==='death'?Math.min(3,Math.floor(elapsed*8)):Math.floor(elapsed*8)%frames;return `${m.faction==='clans'?'clans-':''}${m.type}-${m.owner}-${m.facing}-${m.action}-${index}`;}
+export function unitFrame(m:Motion,time:number):string{const frames=m.action==='idle'?1:4,elapsed=Math.max(0,time-m.since),index=m.action==='death'?Math.min(3,Math.floor(elapsed*8)):Math.floor(elapsed*8)%frames;const type=m.type==='specialist'?factions[m.faction??'crown'].units.specialist.art??'soldier':m.type;return `${factions[m.faction??'crown'].artPrefix}${type}-${m.owner}-${m.facing}-${m.action}-${index}`;}
 export function unitOrigin(type:UnitArt){return {x:.5,y:type==='catapult'||type==='warship'||type==='transport'?40/64:22/32};}
 export interface DeathEffect {motion:Motion;expires:number}
 /** Called only for a logically removed, currently visible unit; fog hiding never creates a death. */

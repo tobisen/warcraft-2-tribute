@@ -1238,3 +1238,9 @@ Färdig hamn krävs för warship/transport. Alla transports har4platser,2supply,
 | Goblins |Powder Boat/35/20/6s|Junk Ferry/35/10|65/135|
 
 AI måste faktiskt betala/använda egna roster-/research-/naval-recept; inga fraktionsdata enbart i spelar-UI. Befintlig enemy combat-asymmetri från svårighetsprofiler inventeras135/141 och redovisas, inte tyst ersatt i design-tasken. Matrisen är startvärden för tester/balans, inte ett löfte om jämn win-rate. Varje fraktions-task kräver egna läsbara unit/building-assets och beteende/ekonomi/AI/Save/browser; generiska tillfälliga assets får inte markeras som färdig fraktion utan redovisning.
+
+## RTS-135 – Implementerad data- och prerequisitegrund
+
+Ordinarie spel har fortsatt Crown/Clans och fyra arméroller inklusive worker. Specialistprototyper är förberedda i data men dolda tills respektive fraktion kompletteras. En roster kan utesluta roller; då visas ingen träningsaction. Prerequisites kontrolleras vid betalning/start: byggnaden ska vara färdig och levande och research ska vara avslutad. Blockerad produktion drar inget saldo. Ett redan godkänt jobb fortsätter om ett prerequisite därefter försvinner.
+
+Recept styr namn, kostnader, tider, supply, HP, movement och spelarcombat samt researchmodifier och fartyg. Fraktionsdesignens nya balans/prerequisites aktiveras i136–140, inte retroaktivt genom135. Full fienderoster och fraktionsmatchups kommer141; nuvarande generiska enemy-armé är bevarad. Specialistens befintliga soldatbild är en prototyp, inte färdig fraktionsgrafik.

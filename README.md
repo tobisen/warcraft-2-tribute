@@ -698,3 +698,7 @@ Skirmish: välj Shattered Coast för den stora kust-/ökartan. Samla wood/gold, 
 ## RTS-134 – Fraktionsdesign
 
 Nästa fraktionsetapp är planerad i GAME_DESIGN.md: Humans, Orcs, Elves, Dwarves och Goblins med fem units vardera, byggnader/research/fartyg och olika spelstilar. Denna design är ännu inte runtime; menyn visar fortfarande befintliga Crown/Clans. Stable ID:n bevaras för gamla fraktioner, nya factions görs tillgängliga först efter sina verifierade implementationer136–140.
+
+## RTS-135 – Fraktionsgrund
+
+Roster, produktions-prerequisites, research och naval-recept är datastyrda. UI visar fraktionens namn/kostnader och en orsak när prerequisites saknas. Save24 validerar stabila typ-ID:n och migrerar tidigare saves. Vanliga spelet har fortsatt Crown/Clans och fyra roller; dolda specialistprototyper och återanvänd soldatgrafik är förberedelser inför136/137. Full fienderoster kommer141. Kommandon för test/typecheck/build är oförändrade.

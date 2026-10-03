@@ -10,7 +10,7 @@ import { placementObstacles } from './placement';
 import { updateMappedMove, planRoute, type RouteState } from './navigation';
 import type { WorldMap } from './map';
 import { gatheringConfig } from '../config/gathering';
-import { soldierStats, combatUnitStats, unitStats } from '../config/unit';
+import { soldierStats, combatUnitStats, unitStats,workerStats } from '../config/unit';
 import { moveTowards, type Position } from './movement';
 import type { SelectableUnit } from './selection';
 
@@ -28,7 +28,8 @@ export interface Worker extends SelectableUnit {
 }
 export interface Soldier extends SelectableUnit {
   ability?:AbilityState;
-  archetype?: 'archer'|'catapult';
+  faction?:FactionId;
+  archetype?: 'archer'|'catapult'|'specialist';
   attackCooldown?: number;
   autoOrigin?: Position;
   attackMoveTarget?: Position;
@@ -94,12 +95,12 @@ export function updateGathering(state: GatheringState, deltaSeconds: number, map
   const units = state.units.map(original => {
     if(original.kind==='soldier'&&original.attackMoveTarget)return original;
     if (map && (original.order.kind === 'move' || original.order.kind === 'idle' && original.navigation?.status === 'blocked'
-      && original.navigation.error !== 'no-space' && original.navigation.revision !== map.revision)) return updateMappedMove(original, map, deltaSeconds,queue?.gateFor?.(`${queue?.team??'player'}:${original.id}`));
+      && original.navigation.error !== 'no-space' && original.navigation.revision !== map.revision)) return updateMappedMove(original, map, deltaSeconds,queue?.gateFor?.(`${queue?.team??'player'}:${original.id}`),state.faction);
     if (original.order.kind === 'build') return original;
     if (original.kind === 'soldier') {
       if (original.attackMoveTarget) return original;
       if (original.order.kind !== 'move') return original;
-      const position = moveTowards(original.position, original.target, combatUnitStats(original).speed, Math.max(0, deltaSeconds));
+      const position = moveTowards(original.position, original.target, combatUnitStats(original,state.faction).speed, Math.max(0, deltaSeconds));
       return { ...original, position, order: position.x === original.target.x && position.y === original.target.y
         ? { kind: 'idle' as const } : original.order };
     }
@@ -107,7 +108,7 @@ export function updateGathering(state: GatheringState, deltaSeconds: number, map
     let time = Math.max(0, deltaSeconds);
     while (worker.order.kind !== 'idle' && worker.order.kind !== 'build') {
       if (worker.order.kind === 'move') {
-        worker.position = moveTowards(worker.position, worker.target, unitStats.speed, time);
+        worker.position = moveTowards(worker.position, worker.target, workerStats(state.faction).speed, time);
         if (worker.position.x === worker.target.x && worker.position.y === worker.target.y) {
           worker.order = { kind: 'idle' };
         }
@@ -138,15 +139,15 @@ export function updateGathering(state: GatheringState, deltaSeconds: number, map
         const cached = worker.navigation;
         const route = cached?.goalKey === goalKey && cached.revision === map.revision ? cached
           : { ...(service?planRoute(workMap,worker.position,service.point,cached?.commandNumber??1):approachRoute(workMap, worker.position, rect, range, cached?.commandNumber ?? 1)), goalKey };
-        const step = advanceRoute(workMap, worker.position, route, unitStats.speed, time,queue?.gateFor?.(`${queue?.team??'player'}:${worker.id}`));
+        const step = advanceRoute(workMap, worker.position, route, workerStats(state.faction).speed, time,queue?.gateFor?.(`${queue?.team??'player'}:${worker.id}`));
         worker.position = step.position;
         worker.navigation = { ...step.route, goalKey };
         time = step.remaining;
         if (step.route.status !== 'arrived' || service&&!service.working || !canInteract(workMap, worker.position, rect, range)) break;
       } else {
         const distance = Math.hypot(worker.position.x - destination.x, worker.position.y - destination.y);
-        const travel = Math.max(0, distance - range) / unitStats.speed;
-        worker.position = moveTowards(worker.position, destination, unitStats.speed, Math.min(time, travel));
+        const travel = Math.max(0, distance - range) / workerStats(state.faction).speed;
+        worker.position = moveTowards(worker.position, destination, workerStats(state.faction).speed, Math.min(time, travel));
         if (travel > time) break;
         time = Math.max(0, time - travel);
       }

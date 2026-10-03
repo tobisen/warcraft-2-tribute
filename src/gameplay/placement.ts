@@ -1,3 +1,4 @@
+import {productionFaction} from '../config/factions';
 import {text as uiText} from '../text';
 import {navyConfig} from '../config/navy';
 import { forgeConfig } from '../config/upgrades';
@@ -81,7 +82,7 @@ export function placementError(state: PlacementState, point: Position, wood: num
     && rect.y < other.y + other.height && rect.y + rect.height > other.y)) {
     return uiText.overlapsTheBaseOrAResourceNode;
   }
-  if (!canAfford({wood,goldBalance:context?.gathering.goldBalance},costs[kind])) return uiText.notEnoughWoodOrGold;
+  if (!canAfford({wood,goldBalance:context?.gathering.goldBalance},(context?productionFaction(context.gathering).buildings[kind].cost:costs[kind]))) return uiText.notEnoughWoodOrGold;
   if (context) {
     if(context.map.obstacles.some(o=>overlaps(rect,o)))return uiText.overlapsTerrainOrABuilding;
     if(context.gathering.units.some(u=>overlaps(rect,unitBody(u.position,u.kind==='worker'?unitStats.size:combatUnitStats(u).size)))
@@ -130,15 +131,16 @@ export function placeBuilding(state: PlacementState, point: Position, wood: numb
   const id: 'barracks'|'forge'|`farm-${number}` = kind==='forge'?'forge':kind==='barracks'?'barracks':`farm-${state.nextFarmNumber??1}`;
   const builder=context?.gathering.units.filter(u=>u.kind==='worker'&&u.selected)
     .sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}))[0];
-  const paid=payCost({...context?.gathering,wood},costs[kind]);
+  const recipe=productionFaction(context?.gathering??{}).buildings[kind];
+  const paid=payCost({...context?.gathering,wood},recipe.cost);
   return {
-    placement: kind==='forge'?{...state,active:false,kind:undefined,forge:{id:'forge',owner:'player',hp:forgeConfig.hp,footprint:rect,construction:{remainingSeconds:forgeConfig.constructionSeconds,builderId:builder?.id??null}}}:kind==='barracks'
-      ? {...state,active:false,kind:undefined,barracks:rect,barracksOwner:'player',barracksHP:combatConfig.barracksHP,...(builder?{construction:{remainingSeconds:barracksConfig.constructionSeconds,builderId:builder.id}}:{})}
+    placement: kind==='forge'?{...state,active:false,kind:undefined,forge:{id:'forge',owner:'player',hp:recipe.hp,footprint:rect,construction:{remainingSeconds:recipe.constructionSeconds,builderId:builder?.id??null}}}:kind==='barracks'
+      ? {...state,active:false,kind:undefined,barracks:rect,barracksOwner:'player',barracksHP:recipe.hp,...(builder?{construction:{remainingSeconds:recipe.constructionSeconds,builderId:builder.id}}:{})}
       : {...state,active:false,kind:undefined,nextFarmNumber:(state.nextFarmNumber??1)+1,
-        farms:[...(state.farms??[]),{owner:'player',hp:combatConfig.farmHP,id:id as `farm-${number}`,footprint:rect,construction:{remainingSeconds:farmConfig.constructionSeconds,builderId:builder?.id??null}}]},
+        farms:[...(state.farms??[]),{owner:'player',hp:recipe.hp,id:id as `farm-${number}`,footprint:rect,construction:{remainingSeconds:recipe.constructionSeconds,builderId:builder?.id??null}}]},
     wood:paid.wood,
     ...(context && builder ? {map:replaceObstacles(context.map,[...context.map.obstacles,rect]),
-      gathering:{...payCost({...context.gathering,wood},costs[kind]),units:context.gathering.units.map((u):Unit=>
+      gathering:{...payCost({...context.gathering,wood},recipe.cost),units:context.gathering.units.map((u):Unit=>
         u.id===builder.id&&u.kind==='worker'?{...u,navigation:undefined,order:{kind:'build',buildingId:id}}:u)}}:{}),
   };
 }

@@ -47,7 +47,7 @@ it('selected ships move only in water, use delta, preserve orders on deselection
 });
 it('Save/load persists build, paid queue, ship movement; strict coast/recipe/identity and reset',()=>{
  for(const m of [placeHarbor(start(),point),trainShip(funded()),updateNavy(trainShip(funded()),8)]){
-  const json=encodeSave(m,view),loaded=decodeSave(json);expect(loaded.ok).toBe(true);if(loaded.ok)expect(loaded.match.navy).toEqual(JSON.parse(json).state.navy);
+  const json=encodeSave(m,view),loaded=decodeSave(json);expect(loaded.ok).toBe(true);if(loaded.ok){const expected=JSON.parse(json).state.navy;for(const ship of expected.ships)delete ship.typeId;expect(loaded.match.navy).toEqual(expected);}
   for(const mutate of [(d:any)=>d.state.navy.harbor.footprint.x=400,(d:any)=>d.state.navy.production.nextUnitNumber=0,(d:any)=>d.configVersion='tribute-config-10']){const d=JSON.parse(json);mutate(d);expect(decodeSave(JSON.stringify(d)).ok).toBe(false);}
  }
  const fresh=createMatch('mission-outpost');expect(fresh.navy).toBeUndefined();const old=JSON.parse(encodeSave(fresh,{...view,building:null}));old.configVersion='tribute-config-10';delete old.state.statLedger;expect(decodeSave(JSON.stringify(old)).ok).toBe(true);

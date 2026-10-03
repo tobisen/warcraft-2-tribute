@@ -1,3 +1,4 @@
+import {technologyFor} from './productionPrerequisites';
 import {createStatLedger,readyBuildings,recordCompletions,type StatLedger} from './statLedger';
 import {createTutorial,updateTutorial,type TutorialState} from './tutorial';
 import {enemyStartingBudget} from '../config/enemyNaval';
@@ -17,12 +18,12 @@ import {resourceServices} from './resourceQueue';
 import {advanceAbilities} from './abilities';
 import {trafficGates} from './traffic';
 import {trafficConfig} from '../config/traffic';
-import {defaultFactions,isFactionId,type MatchFactions} from '../config/factions';
+import {factions as factionDefinitions,defaultFactions,isFactionId,type MatchFactions} from '../config/factions';
 import {segmentFits,type RouteState} from './navigation';
 import type {Position} from './movement';
 import type { ControlGroups } from './controlGroups';
 import { separateBodies } from './separation';
-import { combatUnitStats, unitStats } from '../config/unit';
+import { combatUnitStats, unitStats,workerStats } from '../config/unit';
 import { entityVisible } from './visibility';
 import { matchFog } from './matchFog';
 import type { FogState } from './fog';
@@ -88,7 +89,7 @@ export function createMatch(scenario:MatchScenario='survival',difficulty:Difficu
     gathering: {
       faction:factions.player,
       units: arenaConfig.workers.map((position, index) => ({
-        kind: 'worker',owner:'player',hp:combatConfig.workerHP, id: `unit-${index + 1}`, position: { ...position }, target: { ...position },
+        kind: 'worker',owner:'player',hp:factionDefinitions[factions.player].units.worker.hp, id: `unit-${index + 1}`, position: { ...position }, target: { ...position },
         selected: false, order: { kind: 'idle' }, cargo: 0,
       })),
       gold: {id:'gold-1',resource:goldConfig.resource,position:{...(maps[mapId].goldPosition??goldConfig.position)},remaining:maps[mapId].gold},
@@ -97,7 +98,7 @@ export function createMatch(scenario:MatchScenario='survival',difficulty:Difficu
       ...(maps[mapId].extraResources?{extraNodes:maps[mapId].extraResources!.map(n=>({id:n.id,resource:n.resource,position:{...n.position},remaining:n.amount}))}:{}),
       lostCargo:{wood:0,gold:0},wood: scenarioConfig[scenario].initial.wood, base: { ...gatheringConfig.basePosition },
     },
-    combat: {baseOwner:'player', baseHP: combatConfig.baseHP, enemies: [] },
+    combat: {baseOwner:'player', baseHP: factionDefinitions[factions.player].buildings.base.hp, enemies: [] },
     waves: { elapsedSeconds: 0, nextWave: 0, nextEnemyNumber: 1 },
     placement: { active: false, barracks: null,farms:[],nextFarmNumber:1 },
     production: { remainingSeconds: null, nextUnitNumber: 4 },
@@ -140,7 +141,7 @@ function advance(state: MatchState, delta: number): MatchState {
   state=prepareEnemyConstruction(state);
   state=prepareEnemyGathering(state);
   state=prepareEnemyScout(state);
-  const gateFor=trafficGates(state.map,[...state.gathering.units.map(u=>({id:`player:${u.id}`,position:u.position,half:(u.kind==='worker'?unitStats:combatUnitStats(u)).size/2,speed:(u.kind==='worker'?unitStats:combatUnitStats(u)).speed,active:u.order.kind!=='idle',waypoints:u.navigation?.waypoints??[u.target]})),...state.combat.enemies.filter(e=>e.kind!=='ship'&&e.kind!=='base'&&e.hp>0).map(e=>({id:`enemy:${e.id}`,position:e.position,half:combatConfig.enemySize/2,speed:e.kind==='worker'?unitStats.speed:combatConfig.enemySpeed,active:e.work?e.work.order.kind!=='idle':e.order?.kind!=='idle',waypoints:e.navigation?.waypoints??(e.work?[e.work.target]:undefined)??(e.order?.kind==='muster'||e.order?.kind==='attack-move'?[e.order.destination]:[])}))],state.waves.elapsedSeconds,delta);
+  const gateFor=trafficGates(state.map,[...state.gathering.units.map(u=>({id:`player:${u.id}`,position:u.position,half:(u.kind==='worker'?workerStats(state.gathering.faction):combatUnitStats(u,state.gathering.faction)).size/2,speed:(u.kind==='worker'?workerStats(state.gathering.faction):combatUnitStats(u,state.gathering.faction)).speed,active:u.order.kind!=='idle',waypoints:u.navigation?.waypoints??[u.target]})),...state.combat.enemies.filter(e=>e.kind!=='ship'&&e.kind!=='base'&&e.hp>0).map(e=>({id:`enemy:${e.id}`,position:e.position,half:combatConfig.enemySize/2,speed:e.kind==='worker'?workerStats(state.factions?.enemy??defaultFactions.enemy).speed:combatConfig.enemySpeed,active:e.work?e.work.order.kind!=='idle':e.order?.kind!=='idle',waypoints:e.navigation?.waypoints??(e.work?[e.work.target]:undefined)??(e.order?.kind==='muster'||e.order?.kind==='attack-move'?[e.order.destination]:[])}))],state.waves.elapsedSeconds,delta);
   const services=resourceServices({...state.gathering,units:[...state.gathering.units,...state.combat.enemies.flatMap(e=>{const worker=enemyWorker(e);return worker?[worker]:[];})]},state.map,state.waves.elapsedSeconds);
   let gathering = updateGathering(state.gathering, delta, state.map,{elapsedSeconds:state.waves.elapsedSeconds,gateFor,services});
   state=updateEnemyGathering({...state,gathering},delta,gateFor,services);const enemyBuilding=updateEnemyConstruction(state,delta,gateFor);state=enemyBuilding.match;gathering=state.gathering;
@@ -151,18 +152,18 @@ function advance(state: MatchState, delta: number): MatchState {
   let combat=state.research&&(state.research.attack||state.research.defense||state.combat.upgrades)?{...state.combat,upgrades:{attack:state.research.attack,defense:state.research.defense}}:state.combat;
   if(state.enemyPolicy&&(state.enemyPolicy.research.attack||state.enemyPolicy.research.defense||combat.enemyUpgrades))combat={...combat,enemyUpgrades:{attack:state.enemyPolicy.research.attack,defense:state.enemyPolicy.research.defense}};
   const vision=state.fog?matchFog({...state,gathering:building.gathering,combat,placement:building.placement}):undefined;
-  const fight=updateCombat(building.gathering,combat,delta,state.map,building.placement,vision?(e=>entityVisible(vision,'player',e)):undefined,vision?((t)=>entityVisible(vision,'enemy',{position:{x:t.footprint.x+t.footprint.width/2,y:t.footprint.y+t.footprint.height/2},...(t.kind==='ship'||t.kind==='worker'||t.kind==='soldier'?{}:{footprint:t.footprint})})):undefined,vision?(e=>entityVisible(vision,'player',e)):undefined,gateFor,state.navy,vision?(e=>entityVisible(vision,'player',e)):undefined);
+  const fight=updateCombat(building.gathering,combat,delta,state.map,building.placement,vision?(e=>entityVisible(vision,'player',e)):undefined,vision?((t)=>entityVisible(vision,'enemy',{position:{x:t.footprint.x+t.footprint.width/2,y:t.footprint.y+t.footprint.height/2},...(t.kind==='ship'||t.kind==='worker'||t.kind==='soldier'?{}:{footprint:t.footprint})})):undefined,vision?(e=>entityVisible(vision,'player',e)):undefined,gateFor,state.navy,vision?(e=>entityVisible(vision,'player',e)):undefined,state.factions?.enemy??defaultFactions.enemy);
   let cleaned=cleanDestroyed({...state,...(fight.navy?{navy:fight.navy}:{}),gathering:fight.gathering,combat:fight.combat,placement:fight.placement??building.placement});
   cleaned=advanceEnemyRecovery(cleaned,delta);
   const enemyPolicy=advanceEnemyPolicy(cleaned,delta);
-  const research=updateResearch(cleaned.research??createResearch(),cleaned.placement,delta);
+  const research=updateResearch(cleaned.research??createResearch(),cleaned.placement,delta,true,cleaned.factions?.player??defaultFactions.player);
   const worker=cleaned.combat.baseHP>0?updateQueuedProduction(cleaned.gathering,cleaned.production,delta,{kind:'base'},
     {map:cleaned.map,enemies:cleaned.combat.enemies}):{gathering:cleaned.gathering,production:cleaned.production};
   const soldier=cleaned.combat.baseHP>0?updateQueuedProduction(worker.gathering,cleaned.soldierProduction,delta,
     {kind:'barracks',bounds:cleaned.map,footprint:cleaned.placement.barracks,ready:barracksReady(cleaned.placement)},
     {map:cleaned.map,enemies:cleaned.combat.enemies}):{gathering:worker.gathering,production:cleaned.soldierProduction};
   const nextUnitNumber=Math.max(worker.production.nextUnitNumber,soldier.production.nextUnitNumber);
-  const enemy=cleaned.enemyProduction?updateEnemyProduction(cleaned.enemyProduction,cleaned.combat,soldier.gathering,cleaned.map,enemyBuilding.productionDelta,(cleaned.factions??defaultFactions).enemy,cleaned.enemyConstruction?{site:cleaned.combat.enemies.find(e=>e.buildingType==='barracks'),population:enemyPopulation(cleaned),maxArmy:cleaned.enemyNaval?2:undefined,embarked:cleaned.enemyNaval?.passengers.length??0,workerReservations:cleaned.enemyRecovery?.production.queue?.reduce((n,j)=>n+(j.supply??1),0)??0,startAllowed:!cleaned.enemyPolicy||enemyPriority(cleaned)==='army',reserveForFarm:cleaned.combat.enemies.some(e=>e.buildingType==='farm'&&e.construction?.remainingSeconds===0)?undefined:enemyConstructionConfig.supplyMargin}:undefined):{combat:cleaned.combat,state:undefined};
+  const enemy=cleaned.enemyProduction?updateEnemyProduction(cleaned.enemyProduction,cleaned.combat,soldier.gathering,cleaned.map,enemyBuilding.productionDelta,(cleaned.factions??defaultFactions).enemy,cleaned.enemyConstruction?{technology:technologyFor(cleaned,'enemy'),site:cleaned.combat.enemies.find(e=>e.buildingType==='barracks'),population:enemyPopulation(cleaned),maxArmy:cleaned.enemyNaval?2:undefined,embarked:cleaned.enemyNaval?.passengers.length??0,workerReservations:cleaned.enemyRecovery?.production.queue?.reduce((n,j)=>n+(j.supply??1),0)??0,startAllowed:!cleaned.enemyPolicy||enemyPriority(cleaned)==='army',reserveForFarm:cleaned.combat.enemies.some(e=>e.buildingType==='farm'&&e.construction?.remainingSeconds===0)?undefined:enemyConstructionConfig.supplyMargin}:undefined):{combat:cleaned.combat,state:undefined};
   const ai=cleaned.enemyAI?updateEnemyAI(cleaned.enemyAI,enemy.combat,cleaned.map,cleaned.enemyKnowledge?enemyAttackDestination(cleaned):soldier.gathering.base,delta,soldier.gathering.units,{...difficultyProfiles[cleaned.difficulty??'normal'].ai,...(maps[cleaned.map.id??'arena'].enemyMuster?{muster:maps[cleaned.map.id??'arena'].enemyMuster!}:{}),firstAttackSeconds:difficultyProfiles[cleaned.difficulty??'normal'].ai.firstAttackSeconds+(cleaned.enemyProduction?.extracted?enemyEconomyConfig.attackGraceSeconds:0)},vision?((u)=>entityVisible(vision,'enemy',u)):undefined):{combat:enemy.combat,state:undefined};
   const incoming=scenarioConfig[cleaned.scenario??'survival'].waves?updateWaves(cleaned.waves,ai.combat,delta,scenarioWaves(cleaned.scenario??'survival',cleaned.difficulty??'normal')):{combat:ai.combat,waves:{...cleaned.waves,elapsedSeconds:cleaned.waves.elapsedSeconds+delta}};
   let updated:MatchState={...cleaned,...(enemyPolicy?{enemyPolicy}:{}),...(vision?{fog:vision}:{}),research,...(enemy.state?{enemyProduction:enemy.state}:{}),...(ai.state?{enemyAI:ai.state}:{}),gathering:soldier.gathering,combat:incoming.combat,waves:incoming.waves,
@@ -171,8 +172,8 @@ function advance(state: MatchState, delta: number): MatchState {
   updated=updateNavy(updated,delta);
   updated={...updated,statLedger:recordCompletions(beforeNavyCompletion,updated)};
   updated=updateEnemyExploration(updated);
-  const separated=separateBodies(updated.map,[...updated.gathering.units.map(u=>({id:`player:${u.id}`,position:u.position,half:(u.kind==='worker'?unitStats:combatUnitStats(u)).size/2})),...updated.combat.enemies.filter(e=>e.kind!=='ship'&&e.kind!=='base').map(e=>({id:`enemy:${e.id}`,position:e.position,half:combatConfig.enemySize/2}))],delta);
-  if(separated.size){updated.gathering={...updated.gathering,units:updated.gathering.units.map(u=>{const position=separated.get(`player:${u.id}`);return position?{...u,position,navigation:correctedNavigation(updated.map,position,(u.kind==='worker'?unitStats:combatUnitStats(u)).size/2,u.navigation)}:u;})};updated.combat={...updated.combat,enemies:updated.combat.enemies.map(e=>{const position=separated.get(`enemy:${e.id}`);return position?{...e,position,navigation:correctedNavigation(updated.map,position,combatConfig.enemySize/2,e.navigation)}:e;})};}
+  const separated=separateBodies(updated.map,[...updated.gathering.units.map(u=>({id:`player:${u.id}`,position:u.position,half:(u.kind==='worker'?workerStats(state.gathering.faction):combatUnitStats(u,state.gathering.faction)).size/2})),...updated.combat.enemies.filter(e=>e.kind!=='ship'&&e.kind!=='base').map(e=>({id:`enemy:${e.id}`,position:e.position,half:combatConfig.enemySize/2}))],delta);
+  if(separated.size){updated.gathering={...updated.gathering,units:updated.gathering.units.map(u=>{const position=separated.get(`player:${u.id}`);return position?{...u,position,navigation:correctedNavigation(updated.map,position,(u.kind==='worker'?workerStats(state.gathering.faction):combatUnitStats(u,state.gathering.faction)).size/2,u.navigation)}:u;})};updated.combat={...updated.combat,enemies:updated.combat.enemies.map(e=>{const position=separated.get(`enemy:${e.id}`);return position?{...e,position,navigation:correctedNavigation(updated.map,position,combatConfig.enemySize/2,e.navigation)}:e;})};}
   updated.gathering=advanceAbilities(updated.gathering,delta);updated.fog=matchFog(updated);const taught=updateTutorial(updated);if(taught!==updated){updated=taught;updated.fog=matchFog(updated);}return resolveOutcome(updated);
 }
 

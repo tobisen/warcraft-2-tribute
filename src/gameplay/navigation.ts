@@ -1,6 +1,7 @@
+import type {FactionId} from '../config/factions';
 import { navigationConfig } from '../config/navigation';
 import type { MovementGate } from './traffic';
-import { soldierStats, combatUnitStats, unitStats } from '../config/unit';
+import { soldierStats, combatUnitStats, unitStats,workerStats } from '../config/unit';
 import type { Unit } from './gathering';
 import { bodyFits, tileCenter, worldTile, type Tile, type WorldMap } from './map';
 import { moveTowards, type Position } from './movement';
@@ -124,10 +125,10 @@ export function commandMappedMove(units: Unit[], destination: Position, map: Wor
   });
 }
 
-export function updateMappedMove(unit: Unit, map: WorldMap, delta: number, gate?:MovementGate): Unit {
-  map={...map,bodyHalf:(unit.kind==='worker'?unitStats:combatUnitStats(unit)).size/2};
+export function updateMappedMove(unit: Unit, map: WorldMap, delta: number, gate?:MovementGate,faction?:FactionId): Unit {
+  map={...map,bodyHalf:(unit.kind==='worker'?unitStats:combatUnitStats(unit,faction)).size/2};
   const route=unit.navigation??planRoute(map,unit.position,unit.target);
-  const step=advanceRoute(map,unit.position,route,unit.kind==='worker'?unitStats.speed:combatUnitStats(unit).speed,delta,gate);
+  const step=advanceRoute(map,unit.position,route,unit.kind==='worker'?workerStats(faction).speed:combatUnitStats(unit,faction).speed,delta,gate);
   return {...unit,position:step.position,navigation:step.route,
     order:{kind:step.route.status==='moving'?'move':'idle'}};
 }

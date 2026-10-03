@@ -1,5 +1,5 @@
 import {maps,type MapId} from '../config/maps';
-import type {FactionId} from '../config/factions';
+import {factions,type FactionId} from '../config/factions';
 import { arenaConfig } from '../config/arena';
 import {buildingArtConfig} from '../config/buildingArt';
 import {combatConfig} from '../config/combat';
@@ -34,8 +34,8 @@ export function terrainEdges(column:number,row:number,mapId:MapId='arena'):strin
 
 export type BuildingKind='base'|'barracks'|'farm'|'forge'|'harbor';
 export function buildingFrame(kind:BuildingKind,owner:'player'|'enemy',remaining=0,total=5,faction:FactionId='crown',hp?:number):string{
- const maxHP=kind==='harbor'?navyConfig.harbor.hp:kind==='forge'?forgeConfig.hp:kind==='farm'?combatConfig.farmHP:kind==='barracks'?combatConfig.barracksHP:combatConfig.baseHP;
+ const maxHP=kind==='harbor'?factions[faction].naval.harbor.hp:factions[faction].buildings[kind].hp;
  const stage=remaining>total/2?'foundation':remaining>0?'building':hp!==undefined&&hp>0&&hp<=maxHP*buildingArtConfig.damagedFraction?'damaged':'complete';
- return `${faction==='clans'?'clans-':''}${kind}-${owner}-${stage}`;
+ return `${factions[faction].artPrefix}${kind}-${owner}-${stage}`;
 }
 export function buildingOrigin(kind:BuildingKind){return kind==='farm'?{x:.5,y:.75}:{x:.5,y:.75};}

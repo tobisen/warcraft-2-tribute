@@ -1,4 +1,4 @@
-import {factions,type FactionId} from '../config/factions';
+import {factions,type FactionId,type TechnologyState} from '../config/factions';
 import { enemyProductionConfig } from '../config/enemyProduction';
 import { combatConfig } from '../config/combat';
 import { canEnqueue,enqueueProduction,updateQueuedProduction } from './productionQueue';
@@ -13,12 +13,12 @@ export function createEnemyProduction(profile:{budget:{wood:number;gold:number};
  production:{remainingSeconds:null,nextUnitNumber:1},acceptedJobs:0};
 }
 /** Adapter to shared atomic queue/time/spawn rules; temporary units never enter player state. */
-export function updateEnemyProduction(state:EnemyProductionState,combat:CombatState,player:GatheringState,map:WorldMap,delta:number,faction?:FactionId,buildings?:{site?:Enemy;population:Population;reserveForFarm?:number;startAllowed?:boolean;workerReservations?:number;maxArmy?:number;embarked?:number}) {
+export function updateEnemyProduction(state:EnemyProductionState,combat:CombatState,player:GatheringState,map:WorldMap,delta:number,faction?:FactionId,buildings?:{technology?:TechnologyState;site?:Enemy;population:Population;reserveForFarm?:number;startAllowed?:boolean;workerReservations?:number;maxArmy?:number;embarked?:number}) {
  const base=combat.enemies.find(e=>e.kind==='base'&&e.hp>0);
  if(!base?.footprint)return {combat,state:{...state,production:{...state.production,queue:[],remainingSeconds:null,blockedSpawnKey:undefined}}};
  if(buildings&&(!buildings.site?.footprint||buildings.site.construction?.remainingSeconds!==0))return {combat,state};
  let next=state,c=combat,time=Math.max(0,delta);
- const building={kind:'barracks' as const,bounds:map,unitType:enemyProductionConfig.unitType,footprint:buildings?.site?.footprint??base.footprint,jobCost:faction?factions[faction].units.soldier.cost:enemyProductionConfig.cost,durationSeconds:(state.durationSeconds??enemyProductionConfig.durationSeconds)+(faction?factions[faction].units.soldier.durationSeconds-5:0)};
+ const building={kind:'barracks' as const,bounds:map,technology:buildings?.technology,unitType:enemyProductionConfig.unitType,footprint:buildings?.site?.footprint??base.footprint,jobCost:faction?factions[faction].units.soldier.cost:enemyProductionConfig.cost,durationSeconds:(state.durationSeconds??enemyProductionConfig.durationSeconds)+(faction?factions[faction].units.soldier.durationSeconds-5:0)};
  for(;;){
   const units:Unit[]=c.enemies.filter(e=>!e.footprint).map(e=>({kind:'soldier',id:e.id,hp:e.hp,cargo:0,selected:false,position:{...e.position},target:{...e.position},order:{kind:'idle'}}));
   let g:GatheringState={faction,units,wood:next.wood,goldBalance:next.gold,base:base.position,node:{id:'unused',position:base.position,remaining:0}};

@@ -3,7 +3,7 @@ import { barracksConfig, farmConfig } from '../config/buildings';
 import type { GateFor } from './traffic';
 import { approachRoute, canInteract } from './approach';
 import { advanceRoute } from './navigation';
-import { unitStats } from '../config/unit';
+import { unitStats,workerStats } from '../config/unit';
 import type { GatheringState, Unit } from './gathering';
 import type { PlacementState, ConstructionJob, Footprint } from './placement';
 import type { WorldMap } from './map';
@@ -34,7 +34,7 @@ export function updateSite(gathering:GatheringState,job:ConstructionJob,rect:Foo
   const goalKey=`build:${id}`,cached=builder.navigation;
   const route=cached?.goalKey===goalKey&&cached.revision===map.revision?cached
     : {...approachRoute(map,builder.position,rect,range),goalKey};
-  const step=advanceRoute(map,builder.position,route,unitStats.speed,Math.max(0,delta),gateFor?.(`player:${builder.id}`));
+  const step=advanceRoute(map,builder.position,route,workerStats(gathering.faction).speed,Math.max(0,delta),gateFor?.(`player:${builder.id}`));
   const remainingSeconds=step.route.status==='arrived'&&canInteract(map,step.position,rect,range)
     ? Math.max(0,job.remainingSeconds-step.remaining):job.remainingSeconds;
   const done=remainingSeconds<=1e-10;
