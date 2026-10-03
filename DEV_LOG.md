@@ -2228,3 +2228,25 @@ Granskning av startupordning, gains, lagringsseparation och menu/load/restart
 gav inga kvarstående fynd. Ingen ändring av Save-schema eller gameplay.
 RTS-119 Done; nästa120 samlad releasekontroll, inklusive kvarvarande
 mänsklig lyssningsbedömning117/118.
+
+## 2026-10-03 – RTS-120: Samlad teknisk releasekontroll
+
+RTS-119 commit7392e32 push main bekräftad. Ny native Tutorialkontroll PASS
+Crown1280/0.75× och Clans1920/1×: sex riktiga inputsteg, paid ekonomi,
+produktion, manual attack, Victory, två Save/load-checkpoints, restart.
+Ljud11/11, gather-OGG404→WAV, work/build/train/impact/victory från verkliga
+aktiviteter, sourcebudget≤6, paus/reset/mute PASS. Native lokal engelsk
+röstcapability och accepterade requests PASS; ingen mänsklig lyssning påstås.
+Faktiska gather/resultat-screenshots granskade: läsbar HUD/units/fog/resultat
+i båda viewports; inga blockerande visuella fynd. Settings-browser119 PASS
+återanvänds eftersom ingen implementation har ändrats.
+
+Actions118 stoppade på5s timeout i buildingAssets rastertest. Samma
+palettkontroll gör nu en assertion per unik färg/frame istället för varje
+pixel; alla pixlar undersöks fortfarande, transparens/team/states bevaras.
+Riktad kontroll5tests PASS123ms; fullsvit878/114 PASS139.34s efter ändringen,
+typecheck/build/diff PASS. Bundlevarningen bevaras. Fixen levereras inom120
+för stabilare CI; ingen gameplayförändring.
+
+RTS-120 In Progress. Pages senaste119 verifieras när Actions slutförs.
+Mänsklig matchlyssning117/118 återstår före slutligt Done120 och start121.

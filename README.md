@@ -634,3 +634,8 @@ visas när en ändring inte kan sparas. Inställningar är separata från matchs
 Load/restart behåller matchens sparade spelregler och skriver inte över dina
 framtida menyval. Varje browser/origin har egna inställningar; localhost och
 GitHub Pages delar inte lagring.
+
+RTS-120 releasekontroll pågår. RTS-119:s lokala preferences och separata
+Voices-reglage är implementerade; tutorialmatch, Save/load/restart och
+settings→reload är browserverifierade. Slutlig lyssning av117/118 återstår;
+accepterade native speech requests är inte en bedömning av hörbarhet/klang.

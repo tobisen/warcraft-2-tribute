@@ -42,8 +42,10 @@ describe('building sprites preserve gameplay geometry',()=>{
     const f=atlas.frames[`${faction==='clans'?'clans-':''}${kind}-${owner}-${stage}`].frame,data=Buffer.alloc(f.w*f.h*4),seen=new Set();
     for(let y=0;y<f.h;y++)for(let x=0;x<f.w;x++){
      const p=(f.y+y)*stride+1+(f.x+x)*4,at=(y*f.w+x)*4;raw.copy(data,at,p,p+4);
-     if(raw[p+3]){const c='#'+raw.subarray(p,p+3).toString('hex');expect(colors.has(c)).toBe(true);seen.add(c);}
+     if(raw[p+3]){const c='#'+raw.subarray(p,p+3).toString('hex');seen.add(c);}
     }
+    // Validate every opaque color once per frame instead of an assertion per pixel.
+    expect([...seen].filter(c=>!colors.has(c))).toEqual([]);
     expect(data[3]).toBe(0);if(stage==='complete'||stage==='damaged')expect(seen.has(owner==='player'?palette.teamBlue:palette.teamRed)).toBe(true);
     states.push(data.toString('base64'));
    }

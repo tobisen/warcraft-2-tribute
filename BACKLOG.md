@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-120 – Samlat speltest och publicering** — **Todo**.
+**RTS-120 – Samlat speltest och publicering** — **In Progress**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -3108,13 +3108,21 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-120 – Samlat speltest och publicering
 
-**Status:** Todo.
+**Status:** In Progress.
 
 **Goal:** Verifiera startsida → matchval → spel → paus → resultat → ny match samt save/load. Granska grafik och lyssna igenom ljud. Verifiera GitHub Pages-versionen och publicera när checks passerar.
 
-**Dependencies:** RTS-119.
+**Requirements:** Samlad regression av native tutorialflöde med ekonomi/produktion/combat/resultat, två fraktioner och två viewportstorlekar. Kontrollera paus/load/restart, inställningspersistens, lokal engelsk voice-capability och ljudens loader/phase/budget/fallback. Granska faktiskt renderad karta/enheter/UI. Kontrollera senaste Actions build/deploy och publikt bundle samt start/paus/save. Redovisa separat vad browserautomation kan verifiera och faktisk mänsklig lyssning av nya117/118-ljud; den senare kvarstår tills bedömning finns.
 
-**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+**Non-goals:** Ny gameplay, grafikpolish, nya ljud, bundleoptimering, Save-schemaändring eller implementation121 innan120 är färdig.
+
+**Dependencies:** RTS-119; slutlig lyssningsbedömning117/118.
+
+**Acceptance criteria:** Relevanta tester/typecheck/build/diff PASS, sammanhängande tutorialmatch och settings/save/load/restart utan pageerrors, visuellt granskad faktisk rendering, Pages senaste implementation verifierad. Faktisk lyssningsbedömning redovisad innan Done; teknisk röstacceptans eller audio-context-status ersätter inte den. Eventuella begränsningar dokumenterade.
+
+**Tester:** Återanvänd aktuell fullsvit878/114 från119 om inga implementationer ändras; native tutorial/audio-regression två viewports/fraktioner, settings/load-regression från119, publik Frontier→start→paus→Save, Actions och bundleverifiering. Inga tester för enbart docs.
+
+**Docs:** BACKLOG, DEV_LOG och README med verifierad release och kvarstående kontroll.
 
 ## Nästa godkända etapp – RTS-121–150
 
