@@ -1,3 +1,4 @@
+import {voiceSpeaker,voiceOrders,orderedSpeaker} from '../presentation/voicePolicy';
 import {audioFiles} from '../config/audio';
 import {matchAudioSnapshot} from '../presentation/audioSnapshot';
 import {renderTutorial} from '../presentation/tutorial';
@@ -201,7 +202,7 @@ export class BootScene extends Phaser.Scene {
       if(!gameplayKeyAllowed(keyboardContext(event,this.gameplayActive()))||!validGroup(event.key))return;
       event.preventDefault();
       if(event.ctrlKey||event.metaKey)this.controlGroups=bindGroup(this.controlGroups,event.key,this.allSelectable(),u=>entityVisible(this.fog,'player',u));
-      else{this.setSelectable(recallGroup(this.controlGroups,event.key,this.allSelectable(),u=>entityVisible(this.fog,'player',u)));this.selectedBuilding=null;this.attackMoveMode=false;this.placement=cancelPlacement(this.placement);this.drag=undefined;this.dragBox.setVisible(false);}
+      else{this.setSelectable(recallGroup(this.controlGroups,event.key,this.allSelectable(),u=>entityVisible(this.fog,'player',u)));this.selectedBuilding=null;this.attackMoveMode=false;this.placement=cancelPlacement(this.placement);this.drag=undefined;this.dragBox.setVisible(false);gameAudio.say(voiceSpeaker(this.allSelectable()),'select',this.factions.player);}
       this.syncVisuals();
     };window.addEventListener('keydown',groupKey);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>window.removeEventListener('keydown',groupKey));
     this.fogOverlay=this.add.graphics().setDepth(40);
@@ -257,7 +258,7 @@ export class BootScene extends Phaser.Scene {
     this.orderVisuals.clear();
     this.farmVisuals.clear();
     this.stopButton = document.querySelector<HTMLButtonElement>('#stop-units')!;
-    const stop = () => { this.attackMoveMode=false; this.gathering.units = stopSelected(this.gathering.units, this.gameplayActive());if(this.gameplayActive())this.navy=stopShips(this.navy); this.syncVisuals(); };
+    const stop = () => { const before=voiceOrders(this.allSelectable());this.attackMoveMode=false; this.gathering.units = stopSelected(this.gathering.units, this.gameplayActive());if(this.gameplayActive())this.navy=stopShips(this.navy);gameAudio.say(orderedSpeaker(before,this.allSelectable()),'order',this.factions.player); this.syncVisuals(); };
     this.stopButton.addEventListener('click', stop);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.stopButton.removeEventListener('click', stop));
     this.selectedBuilding = loaded?.view.building??null;
@@ -455,7 +456,7 @@ export class BootScene extends Phaser.Scene {
   }
   private syncSession():void {
     gameAudio.setPhase(this.session.phase);
-    if(gameAudio.status.loaded)document.getElementById('audio-status')!.textContent=`${gameAudio.status.loaded}/${audioFiles.length} sounds loaded · ${gameAudio.settings.muted?uiText.muted:this.session.phase==='paused'?'paused':'ready'}`;
+    if(gameAudio.status.loaded)document.getElementById('audio-status')!.textContent=`${gameAudio.status.loaded}/${audioFiles.length} sounds loaded · ${gameAudio.settings.muted?uiText.muted:this.session.phase==='paused'?'paused':'ready'}${gameAudio.voices.status.available?'':' · Unit voices unavailable'}`;
     (document.getElementById('save-match') as HTMLButtonElement).disabled=this.session.phase==='menu'||this.restartPending;
     (document.getElementById('load-match') as HTMLButtonElement).disabled=this.restartPending;
     const phase=this.session.phase,menu=phase==='menu';
@@ -488,6 +489,13 @@ export class BootScene extends Phaser.Scene {
   }
 
   private handleDown(pointer: Phaser.Input.Pointer): void {
+    if(!this.gameplayActive())return;
+    const before=voiceOrders(this.allSelectable());
+    this.processDown(pointer);
+    gameAudio.say(orderedSpeaker(before,this.allSelectable()),'order',this.factions.player);
+  }
+
+  private processDown(pointer: Phaser.Input.Pointer): void {
     if (!this.gameplayActive()) return;
     const camera=this.cameras.main;if(pointer.x<camera.x||pointer.y<camera.y||pointer.x>=camera.x+camera.width||pointer.y>=camera.y+camera.height)return;
     this.game.canvas.focus({preventScroll:true});
@@ -584,6 +592,12 @@ export class BootScene extends Phaser.Scene {
   }
 
   private handleUp(pointer: Phaser.Input.Pointer): void {
+    const selects=this.gameplayActive()&&pointer.button===0&&!!this.drag&&!this.cameraDrag&&!this.placement.active&&!this.placementClick&&!(pointer.event.target instanceof Element&&pointer.event.target.closest('#hud, #match-menu, #game-toolbar, #minimap-overlay, #top-bar, #bottom-bar'));
+    this.processUp(pointer);
+    if(selects)gameAudio.say(voiceSpeaker(this.allSelectable()),'select',this.factions.player);
+  }
+
+  private processUp(pointer: Phaser.Input.Pointer): void {
     if (!this.gameplayActive()) return;
     if (pointer.button === 1) { this.cameraDrag = undefined; return; }
     if (this.cameraDrag) return;

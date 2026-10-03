@@ -1076,3 +1076,12 @@ plus två reserverade alerts/resultat minskar överlapp; game over städar gamla
 sources innan resultatcue. Musik/pitch använder verklig Web Audio-tid, inte
 ändrad gameplayhastighet. Arbetets ljudbudget valideras tekniskt i browser;
 mänsklig bedömning av mixen redovisas separat före taskens Done-status.
+
+## RTS-118 – Röstassets saknas; lokal syntes som redovisad ersättning
+
+Inga inspelade enhetsröster finns. Egna korta engelska textrepliker syntetiseras
+lokalt av browsern om lokal engelsk röst tillhandahålls. Ingen server, hämtad
+inspelning eller originalspelsreplik används. Saknad native capability ger
+synlig otillgänglighet och tyst fallback, utan gameplayeffekt. Existerande
+OS/browser-röster distribueras inte som projektassets. Faktisk röstklang är
+plattformberoende; den samlade hörbarhets-/mixbedömningen kvarstår i120.

@@ -1427,3 +1427,21 @@ ljud får högst fyra samtidiga sources; två ytterligare slots reserveras för
 warning/resultat, totalt högst sex. Musik är separat. End/reset stoppar sources
 omedelbart och kopplar bort både source och gain; paus suspenderar grafen.
 Alla11 lokala ljud har OGG/WAV-fallback; saknade ljud påverkar inte simulationen.
+
+## RTS-118 – Lokal unit-voice-lane
+
+config/voices.ts innehåller36 egna engelska repliker för sex befintliga roller,
+selection/order och2.5s global cooldown. voicePolicy väljer en stabil egen
+speaker per grupp och jämför order/target före/efter manuellt input; blockerade,
+oförändrade och ej valda units är tysta. Scenen anropar bara adaptern kring
+pointer-down/up, grupprecall och Stop; simulationens automatiska orderbyten
+utlöser inga repliker. UI utan unit-order, camera/placementcancel är tysta.
+
+UnitVoices använder browserns SpeechSynthesis med endast localService och
+engelsk lang. Ingen remote TTS, inspelad asset eller gameplaydependency.
+En aktiv utterance, ingen queue; busy/cooldown/mute/paus/end är gated.
+Variation roterar utan omedelbar upprepning; reset rensar historia/cooldown.
+Role/faction påverkar pitch, rate1.05. Gain följer master/effects tills119
+inför separat voices-volym. GameAudio äger lane/lifecycle; mute avbryter tal.
+Capability visas i ljudstatus om lokal engelsk röst saknas. Browserstöd och
+inspelade assets skiljs från verifierad text/policy/input-funktion.

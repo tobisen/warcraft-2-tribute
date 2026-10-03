@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-118 – Humoristiska engelska enhetsröster** — **Todo**.
+**RTS-119 – Inställningar och persistens** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -3072,13 +3072,21 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-118 – Humoristiska engelska enhetsröster
 
-**Status:** Todo.
+**Status:** Done (lokal talsyntes; inspelade assets saknas och slutlig matchlyssning i120 återstår).
 
-**Goal:** Inför korta selection- och order-repliker med personlighet. Använd variation, cooldown och begränsad upprepning. Återanvänd inte originalspelets inspelningar. Om röstassets saknas ska det rapporteras tydligt.
+**Goal:** Korta egna selection-/order-repliker med variation och personlighet.
 
-**Dependencies:** RTS-117.
+**Requirements:** Egna engelska texter för worker/soldier/archer/catapult/transport/warship; tre variationer för selection och order, ingen omedelbar upprepning. En speaker per group-input; gemensam2.5s cooldown och ingen talqueue. Endast egen faktiskt vald unit eller ändrad accepterad order; UI utan unit-order, avmarkering, blockerad order, automation och fogreveal är tysta. Lokal engelsk browser-talsyntes (localService) återanvänds som uttryckligen redovisad ersättning när inspelade röstassets saknas. Ingen nätbaserad TTS eller originalspelinspelning. Mute/master/effects gäller tills separat voices-kanal119 införs. Paus/end/load/restart avbryter och rensar. Capability visas tydligt om lokal röst saknas; gameplay fortsätter.
 
-**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+**Non-goals:** Importera/generera olicensierade inspelningar, externa tjänster, nya fraktioner, dialogsystem, all gameplayhändelse-narration eller egen ljudmotor.
+
+**Dependencies:** RTS-117 tekniskt implementerad; återstående lyssningsbedömning samlas i RTS-120.
+
+**Acceptance criteria:** Variation/cooldown/en speaker/ingen queue testade; input-adapter bevarar gameplay och selection/orders. Mute/paus/reset och unavailable-fallback fungerar. Röstassetlucka redovisad; lokala voices verifieras där browsern tillhandahåller dem och faktisk röstlyssning redovisas separat i120. Relevanta tester/typecheck/build/diff och browserselection/order/regressioner PASS.
+
+**Tester:** Speaker-role/group, accepterade orderdiffs/blocked/no-selection, variation/cooldown/busy, fake SpeechSynthesis lokala engelska röster/volym/cancel/capability; browser selection→move→gather→build→combat/Save/restart med oförändrat gameplay. Capability/faktisk hörbarhet skiljs från mockverifiering.
+
+**Docs:** BACKLOG, DEV_LOG, ARCHITECTURE, DECISIONS, README, assets/README och assets/ASSET_LICENSE.
 
 ## RTS-119 – Inställningar och persistens
 

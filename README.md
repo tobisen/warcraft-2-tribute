@@ -613,3 +613,13 @@ Arbetsljud upprepas högst var0.8s, vanliga effekter har fyra samtidiga slots
 med två reserverade för varning/resultat. Paus fryser ljudgrafen; load/restart
 rensar gamla sources. Musik och ljudpitch påverkas inte av spelhastigheten.
 RTS-117:s tekniska kontroller är separata från återstående mänsklig lyssning.
+
+## Enhetsrepliker (RTS-118)
+
+Egna korta engelska repliker följer selection och accepterade manuella orders.
+En speaker per grupp,2.5s cooldown och inga köade repliker. Stop/grupprecall
+stöds; automatiska leveransturer talar inte. Paus, mute, load och restart
+avbryter tal. Lokala engelska browser/OS-röster används; inspelade röstassets
+saknas. Om sådan röst inte finns visar ljudstatus “Unit voices unavailable”
+och gameplay fungerar tyst. Röstklang varierar mellan plattformar. Slutlig
+matchlyssning ingår i RTS-120.

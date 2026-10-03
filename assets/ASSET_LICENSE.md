@@ -23,3 +23,7 @@ RTS-114: sparse impact/splash/dust i assets/sources/ui.mjs och riktade pixelprim
 RTS-117: gather/build/train är egna deterministiskt syntetiserade ljud från
 scripts/export-audio.py; WAV-masters och OGG/WAV-runtimeassets följer samma
 projektvillkor. Inga externa inspelningar, enhetsröster eller attributioner.
+
+RTS-118: config/voices.ts innehåller egna originaltextrepliker. Inga inspelade
+röstassets finns eller distribueras. Browser/OS tillhandahåller eventuell
+lokal speech voice; projektet kopierar eller licensierar inte dess röstmodell.

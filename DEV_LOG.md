@@ -2183,3 +2183,27 @@ samma lista används av loader. Efter denna justering:11 riktade tester,
 typecheck/build/diff PASS och faktisk tutorialbrowser båda storlekar/fraktioner
 inklusive11/11status PASS. Tidigare fullsvit870 PASS bevaras; inga gameplayändringar.
 Inga röstassets finns i public/assets/audio; detta redovisas inför118.
+
+## 2026-10-03 – RTS-118: Lokala engelska enhetsrepliker
+
+36 egna selection/order-texter, sex unitroller. Lokal engelsk SpeechSynthesis
+med localService-only, inga remote voices/inspelningar/backend. En speaker
+per grupp,2.5s cooldown, ingen queue, roterande variation; accepted orderdiff
+kring native input och grupprecall/Stop. Automation/reveal/UI utan order är
+tyst. Mute/phase/load/reset avbryter; capability visas om voice saknas.
+
+Checks: npm test873tester/113filer PASS143.03s;10 riktade voice/audio-tester
+PASS; typecheck/build/diff PASS. Bundlevarningen bevarad. Browsernative
+tutorial1280/Crown0.75× och1920/Clans1× PASS faktisk lokal engelsk capability
+och accepterade worker selection/order och soldier selection, paid economy,
+combat/Victory, Save/load/restart och audio-regressioner utan pageerrors.
+Native-request-acceptans är inte påstående om mänsklig hörbarhet/klang.
+
+Separat speech-fixture kopplad till verklig browserinput PASS group/cooldown,
+variation, tom selection/tyst order, pause cancel/Save/load/restart; mocken är
+redovisad och används inte som akustisk verifiering. Granskning lade till
+kamera-pan-guard för selectionreplik; inga gameplay-/Save-/scopefynd kvar.
+
+RTS-118 levererad med uttrycklig begränsning: inspelade röstassets saknas,
+röstklang/capability är plattformsberoende. Mänsklig matchlyssning samlas i120
+med117; ingen påstådd lyssning. Nästa119 separerar voices-volym/persistens.
