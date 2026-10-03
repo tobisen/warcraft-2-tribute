@@ -1944,3 +1944,7 @@ innan slutrapport. Det redan verifierade produktionsbygget är oförändrat.
 ## 2026-10-03 – RTS-091 Done: presentation och roadmap091–120
 
 Beställd roadmap till120 tillagd,091–096 detaljerade och enda implementation i denna körning. Inventering i PRESENTATION_AUDIT.md visar återanvändbara system och brister. Chromium1280×720/1920×1080: startsida/match/paus/resume/mittendrag utan errors; screenshots granskade. Canvas800×600 börjar y299 och klipps under720pxfönstret. Relevant69tester/11filer PASS, typecheck/build/diff PASS; oförändrad bundlevarning. Ingen runtime ändrad eller doc-onlytester. Diff granskad för historik/task-ID/scope, inga blockerande fynd. Nästa092 referensdesign.
+
+## 2026-10-03 – RTS-092 Done: två visuella referenser
+
+Referenser för startsida och fönsterfyllande spelkomposition, palett/font/layout dokumenterade. Egen CSS-sköld, befintliga originaltiles/sprites; mock-HUD märkt097–101. Första kompositionsprovet visade atlas-sheet; ersatt med frameklippta riktiga tiles/byggnader/units för en begriplig scen. Chromium1280×720 och1920×1080, båda vyer screenshotgranskade, inga page errors.36presentationtester PASS, typecheck/build/diff PASS. Referensscriptets sista assetkomposition browserverifierad; produktionsruntime oförändrad. Granskning scope/licens/refs utan blockerande fynd. Screenshots `/tmp/w2t-092-{home,game}-{1280,1920}.png`. Nästa093 huvudmeny.

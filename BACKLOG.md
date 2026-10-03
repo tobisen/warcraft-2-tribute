@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-092 – Bestäm visuell riktning** — **Todo**.
+**RTS-093 – Skapa fantasy-startsida** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. Denna körning genomför endast091–096;097–120 är Todo och implementeras inte här.
 
@@ -2602,7 +2602,7 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-092 – Bestäm visuell riktning
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Skapa två referensvyer: startsida och spelvy. Definiera färgpalett, typografi och HUD-layout. Stil: klassiskt fantasy-RTS inspirerat av Warcraft 2, med egen identitet och egna eller licensierade assets.
 

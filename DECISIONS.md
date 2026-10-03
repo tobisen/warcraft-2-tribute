@@ -947,3 +947,7 @@ bas måste överleva. Ingen eskort, gratis flotta eller ny tidsseger införs.
 ScenarioDefinition.map styr fasta uppdrag; Skirmish kan fortsatt välja
 alla kartor. Save config16 skiljer nya uppdragssaves från15, medan gamla
 matchers ekonomi/map/objektiv bevaras vid migration.
+
+## RTS-092 – Visuell riktning för nästa etapp
+
+Egen skogsgrön/mässingsfantasy, Georgia/system-ui utan fontdependency, originalrepoassets. Två HTML/CSS/canvas-referenser i [design/references.html](design/references.html), palett och komposition i [VISUAL_DIRECTION.md](VISUAL_DIRECTION.md). Top/bottom-HUD är framtida097–101;095 behåller funktionell sidopanel. Campaign093 återanvänder fyra fristående uppdrag, ingen progression. Separat speedval094 visar verkliga1×;0.75× tidsmodell införs först108. Inga främmande assets eller gameplayändringar i referenserna.
