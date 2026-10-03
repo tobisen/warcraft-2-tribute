@@ -690,3 +690,7 @@ Valda synliga resurser visar också tilldelade och aktivt samlande egna workers.
 RTS-131: Skirmish har Plains96×96 och Plains128×128, enkla storlekslayouter inför kommande strategiska kartor. Tiles förblir32px; kamera/minimap/orders/fog stödjer hela världen. Save-config21 migrerar befintliga saves till samma slot utan stateförlust. Se PERFORMANCE.md för faktisk mätning; största kartan vid1920×1080 låg omkring49FPS i headless-miljön.
 
 Highland Crossroads (RTS-132) är en egen96×96-landkarta med tre landpassager, fyra wood-groves/fyra gold mines och nordöstlig fiendebas. Använd Skirmish; utforska västra expansionen eller korsa bergsryggen. Save-config22 bevarar befintliga saves.
+
+## RTS-133 – Shattered Coast
+
+Skirmish: välj Shattered Coast för den stora kust-/ökartan. Samla wood/gold, välj worker och bygg Harbor på östkusten (672,320 är ett giltigt exempel), träna Transport. För enheter till stranden, högerklicka transporten för boarding, välj skeppet och ge sjömål. Unload öppnar landstigningsval på synlig kust. Fienden ligger öster om första kanalen; avlägsna öar har ändliga resurser. Last följer arbetaren i transport men levereras först vid spelarens bas. Save-config23 migrerar befintliga saves.

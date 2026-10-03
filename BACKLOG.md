@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-133 – Stor kust- och ökarta** — **Todo**.
+**RTS-134 – Fraktionsdesign och jämförelsematris** — **Todo**.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -3470,7 +3470,7 @@ Dekorationer och höjdillusion får inte göra walkability otydlig.
 
 ## RTS-133 – Stor kust- och ökarta
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Handgjord karta med landvägar, kust, öar och landstigningsplatser.
 
@@ -3490,7 +3490,9 @@ Verifiera AI på kartan och undvik oavsiktliga dödlägen.
 
 **Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
 
-**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+**Detaljplan:** Egen128×128 Shattered Coast med separat västlig spelarö, nordöstlig landkust, sydlig kontinent och två resursöar i ett sammanhängande hav. Befintlig kort första överfart behåller landnings-/hamnprofil för verifierat AI-flöde; längre sjörutter leder till ändliga expansioner. Återanvänd naval-adapter med explicit map-profil och strikt Save23/migration22. Verifiera separata landmassor, coastal placement, sjörutter/boarding/landstigning på expansionsö, betald sjömatch och passiv AI-invasion, samt native hamn/transport/Save/restart. Inga nya fartyg eller AI-ekonomi-system.
+
+**Resultat:** Egen4096×4096-kustkarta, sammanhängande hav, fyra separata landmassor plus spelarön, tio ändliga noder, explicit naval-profil och Save23.975tester/125filer PASS169.20s; typecheck/build/diff och native1280/1920 betald hamn/transport, lång sjöresa, landstigning/gathering/Save/restart PASS.
 
 ## RTS-134 – Fraktionsdesign och jämförelsematris
 

@@ -1188,3 +1188,7 @@ Behåll32px tiles/world-pixelkoordinater.96/128 tiles ger3072/4096px. Två enkla
 Highland96×96 använder tre160px/bredare passager i en128px bergsrygg. Åtta noder ligger utanför terrängblockers, med rimligt basbyggutrymme och ändliga lager. Map-config kan ange enemyMuster; annars gäller äldre default. Sista scout/anfallspunkt måste både vara walkable och kunna leda till upptäckt av spelarbas, inte bara ligga nära på minimap. Config22 migrerar21. Referenser granskas geografiskt och återanvänds aldrig som spelassets/layoutkopior.
 
 Byggkandidater och samlingspunkt är karta-specifika där startzonen flyttats. Spawnkontroller använder aktuell värld, inte bootstrap-världens gamla1280×960-gräns. Connectivity-frågor får stanna vid första giltiga route; själva arbets-/stridsrutterna fortsätter välja tidigare bästa kontaktpunkt.
+
+## RTS-133 – Shattered Coast
+
+Behåll128×128/32px tiles och befintlig naval/cargo-modell. Coast använder uttrycklig enemyNaval-profil med samma första hamn-/överfartskoordinater som Islands; detta behåller verifierad invasionslogik medan kartan öppnar längre resursresor. Endast kartor med denna profil får naval-state i Save23.22 migreras utan ändrad ekonomi eller state; ny Coast kan inte utges för äldre saves.

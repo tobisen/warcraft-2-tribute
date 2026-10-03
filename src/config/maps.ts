@@ -1,11 +1,31 @@
 import {text as uiText} from '../text';
 import {gatheringConfig,goldConfig} from './gathering';
 import {arenaConfig} from './arena';
-export type MapId='arena'|'forest'|'river'|'islands'|'frontier'|'plains96'|'plains128'|'highlands';
+export type MapId='arena'|'forest'|'river'|'islands'|'frontier'|'plains96'|'plains128'|'highlands'|'coast';
 export interface TerrainPatch {column:number;row:number;columns:number;rows:number;kind:'rock'|'water'}
 export interface MapResource {id:string;resource:'wood'|'gold';position:{x:number;y:number};amount:number}
-export interface MapDefinition {enemyBuildSites?:readonly {x:number;y:number}[];enemyMuster?:{x:number;y:number};attackEntry?:{x:number;y:number};world?:{width:number;height:number};enemyBase?:{x:number;y:number;width:number;height:number};extraResources?:readonly MapResource[];label:string;wood:number;gold:number;terrain:readonly TerrainPatch[];instruction?:string;goldPosition?:{x:number;y:number};enemyAttackWaypoints?:readonly {x:number;y:number}[];enemyResourceWaypoints?:readonly {x:number;y:number}[]}
+export interface MapDefinition {enemyNaval?:boolean;enemyBuildSites?:readonly {x:number;y:number}[];enemyMuster?:{x:number;y:number};attackEntry?:{x:number;y:number};world?:{width:number;height:number};enemyBase?:{x:number;y:number;width:number;height:number};extraResources?:readonly MapResource[];label:string;wood:number;gold:number;terrain:readonly TerrainPatch[];instruction?:string;goldPosition?:{x:number;y:number};enemyAttackWaypoints?:readonly {x:number;y:number}[];enemyResourceWaypoints?:readonly {x:number;y:number}[]}
 export const maps:Record<MapId,MapDefinition>={
+ coast:{label:'Shattered Coast',enemyNaval:true,world:{width:4096,height:4096},wood:800,gold:400,goldPosition:{x:600,y:300},
+  instruction:'Build a harbor on the eastern shore of your western island. Transport troops across the northern channel, or sail south to the continent and resource islands. The enemy holds the northeast coast.',
+  enemyAttackWaypoints:[{x:928,y:480},{x:944,y:208},{x:912,y:384}],enemyResourceWaypoints:[{x:944,y:240},{x:1168,y:400},{x:912,y:560}],
+  extraResources:[{id:'wood-2',resource:'wood',position:{x:1600,y:300},amount:300},{id:'gold-2',resource:'gold',position:{x:1728,y:448},amount:200},
+   {id:'wood-3',resource:'wood',position:{x:800,y:1600},amount:300},{id:'gold-3',resource:'gold',position:{x:960,y:1728},amount:200},
+   {id:'wood-4',resource:'wood',position:{x:1920,y:1920},amount:200},{id:'gold-4',resource:'gold',position:{x:2080,y:2048},amount:150},
+   {id:'wood-5',resource:'wood',position:{x:3104,y:2816},amount:250},{id:'gold-5',resource:'gold',position:{x:3264,y:2944},amount:200}],
+  terrain:[{column:0,row:0,columns:128,rows:2,kind:'water'},{column:0,row:2,columns:2,rows:28,kind:'water'},
+   {column:22,row:2,columns:6,rows:28,kind:'water'},{column:126,row:2,columns:2,rows:28,kind:'water'},
+   {column:0,row:30,columns:128,rows:10,kind:'water'},
+   {column:0,row:40,columns:2,rows:80,kind:'water'},
+   {column:40,row:40,columns:88,rows:14,kind:'water'},
+   {column:40,row:54,columns:14,rows:16,kind:'water'},{column:70,row:54,columns:58,rows:16,kind:'water'},
+   {column:40,row:70,columns:88,rows:10,kind:'water'},
+   {column:40,row:80,columns:48,rows:24,kind:'water'},{column:112,row:80,columns:16,rows:24,kind:'water'},
+   {column:40,row:104,columns:88,rows:16,kind:'water'},{column:0,row:120,columns:128,rows:8,kind:'water'},
+   {column:5,row:4,columns:3,rows:3,kind:'rock'},{column:33,row:20,columns:2,rows:3,kind:'rock'},
+   {column:56,row:12,columns:8,rows:8,kind:'rock'},{column:84,row:2,columns:6,rows:14,kind:'rock'},
+   {column:18,row:62,columns:4,rows:22,kind:'rock'},{column:6,row:96,columns:12,rows:6,kind:'rock'},
+   {column:58,row:55,columns:2,rows:2,kind:'rock'},{column:100,row:84,columns:3,rows:3,kind:'rock'}]},
  highlands:{label:'Highland Crossroads',world:{width:3072,height:3072},wood:400,gold:300,
   enemyBuildSites:[{x:2592,y:192},{x:2816,y:192},{x:2784,y:256},{x:2528,y:512}],enemyMuster:{x:2592,y:512},enemyBase:{x:2688,y:96,width:96,height:96},attackEntry:{x:2624,y:144},
   extraResources:[
@@ -35,7 +55,7 @@ export const maps:Record<MapId,MapDefinition>={
   terrain:[{column:19,row:10,columns:3,rows:3,kind:'rock'},{column:25,row:14,columns:2,rows:5,kind:'water'},{column:25,row:22,columns:2,rows:9,kind:'water'},{column:32,row:5,columns:3,rows:7,kind:'rock'},{column:8,row:24,columns:5,rows:3,kind:'rock'},{column:36,row:22,columns:5,rows:4,kind:'rock'}]},
  arena:{label:uiText.arena,instruction:'Build east of your base. The open central land reaches the enemy base; small ponds leave the main route clear.',wood:400,gold:300,terrain:arenaConfig.terrain},
  forest:{label:uiText.forestPass,instruction:'Build east of your base. Keep the route to wood and gold open; cross the forest pass toward the northeast enemy base.',wood:500,gold:250,terrain:[{column:5,row:4,columns:3,rows:7,kind:'rock'},{column:3,row:17,columns:8,rows:3,kind:'water'},{column:21,row:11,columns:3,rows:3,kind:'rock'}]},
- islands:{label:uiText.islands,instruction:uiText.gatherOnTheWesternIslandBuildAHarbor,wood:800,gold:400,goldPosition:{x:600,y:300},enemyAttackWaypoints:[{x:928,y:480},{x:944,y:208},{x:912,y:384}],enemyResourceWaypoints:[{x:944,y:240},{x:1168,y:400},{x:912,y:560}],terrain:[{column:0,row:0,columns:40,rows:2,kind:'water'},{column:0,row:28,columns:40,rows:2,kind:'water'},{column:0,row:2,columns:2,rows:26,kind:'water'},{column:38,row:2,columns:2,rows:26,kind:'water'},{column:22,row:2,columns:6,rows:26,kind:'water'},{column:5,row:4,columns:3,rows:3,kind:'rock'},{column:33,row:20,columns:2,rows:3,kind:'rock'}]},
+ islands:{enemyNaval:true,label:uiText.islands,instruction:uiText.gatherOnTheWesternIslandBuildAHarbor,wood:800,gold:400,goldPosition:{x:600,y:300},enemyAttackWaypoints:[{x:928,y:480},{x:944,y:208},{x:912,y:384}],enemyResourceWaypoints:[{x:944,y:240},{x:1168,y:400},{x:912,y:560}],terrain:[{column:0,row:0,columns:40,rows:2,kind:'water'},{column:0,row:28,columns:40,rows:2,kind:'water'},{column:0,row:2,columns:2,rows:26,kind:'water'},{column:38,row:2,columns:2,rows:26,kind:'water'},{column:22,row:2,columns:6,rows:26,kind:'water'},{column:5,row:4,columns:3,rows:3,kind:'rock'},{column:33,row:20,columns:2,rows:3,kind:'rock'}]},
  river:{label:uiText.riverBend,instruction:'Keep to the north bank for the enemy base. Leave space for workers around the mines; southern water bends block direct travel.',wood:350,gold:400,terrain:[{column:7,row:16,columns:14,rows:2,kind:'water'},{column:31,row:14,columns:5,rows:4,kind:'water'},{column:10,row:3,columns:2,rows:5,kind:'rock'},{column:34,row:2,columns:2,rows:2,kind:'rock'}]},
 };
 export const isMapId=(value:unknown):value is MapId=>typeof value==='string'&&Object.hasOwn(maps,value);
