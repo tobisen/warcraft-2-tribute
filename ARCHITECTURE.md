@@ -1586,3 +1586,7 @@ Befintliga `mapResources` och `resourceNodes` från RTS-115 är gemensam källa 
 ## RTS-130 – Härledd resursbemanning
 
 `src/gameplay/resourceStaffing.ts` läser levande egna gather/deliver-workers per nodeId. Aktiv gathering kräver stock, lastutrymme, nådd navigation/servicepunkt och fysisk interaktion. Samma serviceberäkning inkluderar enemy-workers för korrekt delad admission, men endast egna workers räknas. SelectionInfo visar counts endast inom vision. Ingen ny simulationstate/Save-property eller arbetsplatsrendering.
+
+## RTS-131 – Stora kartstorlekar
+
+Plains96/Plains128 är enkla konfigurerade storlekslayouter,3072/4096px med32px tiles. Start-/AI-zon och primärstock återanvänds; fulla strategiska kartor hör till132/133. Samma camera/minimap/fog/state fungerar över hela världens dimensioner. Navigationens befintliga BFS-gräns höjs4096→16384 efter att tester funnit falsk unreachable för stora omvägar. Ingen algoritm-/renderrefaktor. Save-config21 migrerar20 (äldre kedja går via20), validerar nya kartidentiteter/full fog/gränser och bevarar befintliga matcher. Mätning och miljö i PERFORMANCE.md.

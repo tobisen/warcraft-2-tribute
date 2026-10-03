@@ -1142,3 +1142,7 @@ Fler än tre tilldelade gather-workers använder befintliga nåbara arbetsplatse
 ## RTS-130 – Resursbemanning
 
 En vald synlig fyndighet visar Workers: N assigned / M gathering. Assigned omfattar levande egna arbetare som reser, väntar, samlar eller levererar från noden. Gathering omfattar bara arbetare med plats, kontakt, ledig last och tillgänglig stock. Orderbyte/död/uttömning ändrar texten; hidden nodes visar ingen bemanning. Markering av arbetsplatser införs inte i denna slice.
+
+## RTS-131 – Plains96/128
+
+Skirmish erbjuder två enkla storlekslayouter:96×96 och128×128 tiles, fortfarande32px/tile. Start, resurser och fiendens bas ligger i den bekanta nordvästra zonen; resten är öppen utforskbar mark med en avlägsen stenpatch. Detta verifierar stora världar före132/133:s strategiska land-/kustkartor. Kamera/minimap kan nå hela världen; move-order, fog och Save/load använder fulla dimensioner.

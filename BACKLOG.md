@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-131 – Stöd för större kartor** — **Todo**.
+**RTS-132 – Stor landkarta** — **Todo**.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -3415,7 +3415,7 @@ Vid selection kan arbetsplatser markeras diskret.
 
 ## RTS-131 – Stöd för större kartor
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Inför storlekarna 96x96 och 128x128 tiles i kartdata.
 
@@ -3437,7 +3437,9 @@ Dokumentera prestandamål och testmiljö.
 
 **Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
 
-**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+**Detaljplan:** Inför två enkla storlekslayouter Plains96/Plains128 (3072/4096 world pixels, tile32), med befintlig start-/AI-zon och ändliga primärresurser; full strategisk terräng hör till132/133. Verifiera hela gränser/detour, fog/minimap/kamera och gamla/nya Save. Save-config21 migrerar20 utan stateförlust. Mät synkrona routekommandon och browser update/render/RAF innan eventuell optimering; mål p95 route≤100ms, update/render≤16.7ms, RAF≤33.4ms i dokumenterad baseline-miljö. Korrigera endast konkreta storleksproblem. Browser native val/pan/order/Save-load/restart, plus aktiv AI och betald matchregression.
+
+**Verifierat:** 934tester/122filer PASS142.57s;51 riktade map/navigation/Save/stats/setup-tester PASS efter korrigerad BFS-budget. Typecheck/build/diff PASS. Fyra production-browserkombinationer96/128×1280/1920: native karta/minimap/fjärrkamera/move/Save-load/restart PASS utan pageerrors. Profilering före/efter i PERFORMANCE.md; största1920-viewport omkring49FPS, ingen renderoptimering gjord. Diff/screenshotgranskning utan blockerande fynd. GitHub127–130 success och faktisk Pages130 native gather/selection/bemanning PASS.
 
 ## RTS-132 – Stor landkarta
 

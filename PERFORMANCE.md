@@ -159,3 +159,20 @@ Vid screenshotgranskning upptäcktes att den första navalfixture bytte
 modellkartan men inte scenens redan skapade Arena-tiles. Scriptet väljer
 nu Öarna i menyn före Start, så terräng och modell överensstämmer; ny
 isolerad full navalprofil ligger i tabellen ovan. Inga runtimeändringar.
+
+## RTS-131 – Stora kartor, före eventuell optimering
+
+MacBook Air/macOS15.7.4 arm64, Node20.20/npm10.8, Chromium147 headless, lokal Vite production-build. Tre idle startworkers, skirmish/Beginner med aktiv enemy AI, vanlig fog/HUD/minimap/rendering. Båda viewportstorlekar utan CSS-downscale.300+ frames efter60warmup; route10sökningar med2warmup på en separat barriärfixture över hela världen. CPU update/pre/post och render-events, RAF step; inte GPU-tid. Kördes separat från fulla testsviten. Inga extra units eller resursbanker injicerades i rendering/nativeflödet.
+
+Mål före mätning: routep95≤100ms, update/renderp95≤16.7ms, RAFp95≤33.4ms.
+
+| Karta / viewport | Update p95 ms | Render p95 ms | RAF p95 ms | FPS | Route p95 ms | Init ms |
+|---|---:|---:|---:|---:|---:|---:|
+|96 /1280×720|2.0|3.4|18.5|60.0|4.0|74|
+|128 /1280×720|2.6|6.0|18.6|60.0|6.0|106|
+|96 /1920×1080|2.1|3.4|18.4|59.8|4.1|77|
+|128 /1920×1080|2.7|6.0|33.4|49.3|5.9|109|
+
+Innan korrigering: samma update2–3/render3–6ms, men route1.5–1.6ms returnerade **unreachable felaktigt** med4096budget. Första1920/128-profilen gav RAFp95=34.2ms/FPS49.4, marginellt över RAF-målet. Höjning till16384 är korrekthetsfix; lyckad barriäromväg kostar4–6ms. Ingen render/pathfindingalgoritm optimerades.96-kartan har9306 displayobjects/9216fogcells;128 har16474/16384. Stor1920-viewport når omkring49FPS trots låga uppmätta CPU-events, nära RAF-budgeten; ingen60FPS-/GPU-/störrearmé-garanti.
+
+Native fyra kombinationer: välj karta, pan via minimap till världens slut, ge markerad worker lång world-order, Save/load med fjärrkamera/mål, restart till fräsch start PASS. Gamla/nyskapade Saves och betalda skirmish/aktiv AI verifieras separat i beteendetester. Temporär profilerhelper/loggar låg i /tmp, ingen runtime-debug-API levereras.

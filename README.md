@@ -686,3 +686,5 @@ Vänsterklick på en utforskad resurs visar namn, typ och mängd i bottom bar. A
 Flera workers kan samla vid samma fyndighet. Vid hög belastning används nåbara arbetsplatser och en tidsroterad kö; leveranser och orderbyte frigör plats.
 
 Valda synliga resurser visar också tilldelade och aktivt samlande egna workers. Resa, kö och leverans ingår bara i assigned; orderbyte och uttömning uppdaterar bemanningen.
+
+RTS-131: Skirmish har Plains96×96 och Plains128×128, enkla storlekslayouter inför kommande strategiska kartor. Tiles förblir32px; kamera/minimap/orders/fog stödjer hela världen. Save-config21 migrerar befintliga saves till samma slot utan stateförlust. Se PERFORMANCE.md för faktisk mätning; största kartan vid1920×1080 låg omkring49FPS i headless-miljön.

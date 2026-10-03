@@ -1,11 +1,17 @@
 import {text as uiText} from '../text';
 import {gatheringConfig,goldConfig} from './gathering';
 import {arenaConfig} from './arena';
-export type MapId='arena'|'forest'|'river'|'islands'|'frontier';
+export type MapId='arena'|'forest'|'river'|'islands'|'frontier'|'plains96'|'plains128';
 export interface TerrainPatch {column:number;row:number;columns:number;rows:number;kind:'rock'|'water'}
 export interface MapResource {id:string;resource:'wood'|'gold';position:{x:number;y:number};amount:number}
 export interface MapDefinition {attackEntry?:{x:number;y:number};world?:{width:number;height:number};enemyBase?:{x:number;y:number;width:number;height:number};extraResources?:readonly MapResource[];label:string;wood:number;gold:number;terrain:readonly TerrainPatch[];instruction?:string;goldPosition?:{x:number;y:number};enemyAttackWaypoints?:readonly {x:number;y:number}[];enemyResourceWaypoints?:readonly {x:number;y:number}[]}
 export const maps:Record<MapId,MapDefinition>={
+ plains96:{label:'Plains 96 × 96',world:{width:3072,height:3072},wood:400,gold:300,
+  instruction:'Large open size-test map. The familiar start and enemy zones lie in the northwest; explore the full plains.',
+  terrain:[...arenaConfig.terrain,{column:60,row:60,columns:3,rows:3,kind:'rock'}]},
+ plains128:{label:'Plains 128 × 128',world:{width:4096,height:4096},wood:400,gold:300,
+  instruction:'Largest open size-test map. The familiar start and enemy zones lie in the northwest; explore the full plains.',
+  terrain:[...arenaConfig.terrain,{column:90,row:90,columns:3,rows:3,kind:'rock'}]},
  frontier:{label:'Frontier Valley',attackEntry:{x:1248,y:144},world:{width:1600,height:1152},wood:400,gold:300,
   enemyBase:{x:1312,y:96,width:96,height:96},
   extraResources:[{id:'wood-2',resource:'wood',position:{x:1216,y:896},amount:200},{id:'gold-2',resource:'gold',position:{x:1184,y:640},amount:150}],

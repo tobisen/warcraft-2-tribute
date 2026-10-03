@@ -1178,3 +1178,7 @@ Utforskade fyndigheter får väljas, men aktuell mängd/uttömning kräver visio
 ## RTS-130 – Vad bemanningen räknar
 
 Visa spelarens tilldelade och faktiskt samlande workers, inte fiendens antal. Gemensam serviceadmission tar dock hänsyn till fiendens arbetare. Leverans behåller assigned men räknas inte som gathering; full last, resa och kö räknas inte som aktiv gathering. Counts härleds, sparas inte och döljs utanför vision.
+
+## RTS-131 – Storlek och sökbudget
+
+Behåll32px tiles/world-pixelkoordinater.96/128 tiles ger3072/4096px. Två enkla Plains-layouter verifierar storleksstöd; detaljerad strategisk terräng införs separat. Höj befintlig BFS-budget till16384, högst ett besök per cell på största stödda karta, eftersom4096 gav falska unreachable på nåbara stora omvägar. Mät före optimering: routep95≤100ms, update/renderp95≤16.7ms, RAFp95≤33.4ms för dokumenterad liten baseline. Ingen renderoptimering behövdes;1920/128-kartan ligger nära RAF-gränsen och garanterar inte60FPS. Save-config21 migrerar20 utan modellegenskapsbyte; nya kartor kan inte utges för äldre saves.
