@@ -1192,3 +1192,7 @@ Byggkandidater och samlingspunkt är karta-specifika där startzonen flyttats. S
 ## RTS-133 – Shattered Coast
 
 Behåll128×128/32px tiles och befintlig naval/cargo-modell. Coast använder uttrycklig enemyNaval-profil med samma första hamn-/överfartskoordinater som Islands; detta behåller verifierad invasionslogik medan kartan öppnar längre resursresor. Endast kartor med denna profil får naval-state i Save23.22 migreras utan ändrad ekonomi eller state; ny Coast kan inte utges för äldre saves.
+
+## RTS-134 – Fraktionsdesign
+
+Bevara crown/clans som stabila ID:n för Humans/Orcs; elves/dwarves/goblins är nya identiteter. Fraktionsmatrisen i GAME_DESIGN.md anger initiala kostnader/stats/prerequisites för25 units, fem building-rosters, attack/defense-research och fleet. Specialist är en separat roll med melee/projectileprofil, inte ett nytt magisystem. Nya buffs återanvänder befintliga self-buff-regler. Siege kräver färdig researchbyggnad; specialist också vald research1. Befintliga betalda jobb grandfatheras via kontrollerad migration, nya jobs kontrolleras atomiskt. Balansvärden verifieras vid respektive implementation, inga nya factions anses spelbara genom designen.

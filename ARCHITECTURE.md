@@ -1600,3 +1600,7 @@ Kartan anger även `enemyBuildSites` nära egen bas; äldre kartor behåller sin
 ## RTS-133 – Shattered Coast
 
 Shattered Coast är en handgjord128×128-karta. Separata landmassor och icke-överlappande vattenpatcher ger ett sammanhängande hav via befintlig domainMap. MapDefinition.enemyNaval aktiverar befintlig ändlig AI-invasion/budget på Islands och Coast; båda använder samma verifierade första överfartsprofil. Nya expansionsnoder är vanlig resource-state. Save-config23 migrerar22 och validerar naval-mode mot map-profilen; äldre maps/naval-state förblir oförändrade.
+
+## RTS-134 – Fraktionsdesign
+
+Måldesignen för fem fraktioner finns i GAME_DESIGN.md, avsnitt RTS-134. Runtime är fortfarande Crown/Clans.135 ska utöka befintliga config-definitioner med specialist/combat-mode, prerequisites, display/icon/research/naval-data och stabila typ-ID:n; befintlig queue/order/navigation/combat ska återanvändas. Specialistprofiler väljer melee eller projectile/splash. Namn/färg räcker inte för en färdig fraktion. Befintlig enemy-stat-asymmetri, globala research-/navalstats och hårdkodade archetype-checks måste inventeras och successivt kopplas till faktiska data; design-tasken ändrar ingen kod eller Save-version.

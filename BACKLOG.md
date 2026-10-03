@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-134 – Fraktionsdesign och jämförelsematris** — **Todo**.
+**RTS-135 – Fraktionsdata och research prerequisites** — **Todo**.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -3496,7 +3496,7 @@ Verifiera AI på kartan och undvik oavsiktliga dödlägen.
 
 ## RTS-134 – Fraktionsdesign och jämförelsematris
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Definiera Orcs, Humans, Elves, Dwarves och Goblins.
 
@@ -3529,7 +3529,9 @@ innan respektive fraktion implementeras.
 
 **Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
 
-**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+**Detaljplan:** Dokumentera fem egna rosters med worker/melee/ranged/siege/specialist, stats/kostnader/tider/supply, building/research/fleet/prerequisites och styrkor/svagheter. Bevara Crown/Clans-ID:n med Humans/Orcs-presentation enligt meddelat standardförslag; inga nya runtime-fraktioner i design-tasken. Skillnad via verkliga data/combat-profiler, utan nya aura-/magisystem. Granska matrisen mot befintlig kod och task135–141, verifiera docreferenser/diff; inga tester som endast testar text.
+
+**Resultat:** Fem fulla roster-/building-/research-/naval-matriser med stats, kostnader, specialistprofiler, prerequisites, strengths/weaknesses och legacy-ID-strategi i GAME_DESIGN. Design granskad mot befintlig kod; typecheck/build/diff/docreferenser PASS. Ingen runtime/Save-ändring eller texttest.
 
 ## RTS-135 – Fraktionsdata och research prerequisites
 

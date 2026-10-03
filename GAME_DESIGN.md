@@ -1156,3 +1156,85 @@ Kartreferensgranskning132/133,2026-10-03: [Blizzards BNE-översikt](https://clas
 ## RTS-133 – Shattered Coast
 
 Shattered Coast128×128 har västlig spelarö, nordöstlig landkust, sydlig kontinent och två resursöar i ett sammanhängande hav. Det finns inga landbroar mellan dessa landmassor. Första hamnen kan byggas på östkusten (t.ex.672,320); transportera armén över norra kanalen till fienden eller segla söderut efter ändliga resurser. Arbetare kan transporteras med last; för spelarens fjärröar krävs manuell transport tillbaka till huvudön för leverans. Automatisk transport av cargo införs inte. Totalstock1850wood/1150gold. Egen terräng återanvänder tidigare geografiska referensprinciper från132; inga externa kartor/assets kopieras.
+
+## RTS-134 – Fem fraktioner: beslutad design inför135–141
+
+Detta är måldesign, inte redan implementerat gameplay. Humans/Orcs kompletteras136/137; Elves/Dwarves/Goblins införs138–140; matchups/AI verifieras141. Nuvarande runtime har fortfarande bara Crown och Clans. Behåll `crown` för Humans och `clans` för Orcs; nya ID:n är `elves`, `dwarves`, `goblins`. Presentation och teamägare är separata från dessa stabila identiteter. Äldre matchers redan betalda jobb/costs/tider bevaras vid migration, inga gratis specialistupplåsningar.
+
+| Fraktion | Styrka och spelstil | Svaghet | Specialist |
+| --- | --- | --- | --- |
+| Humans | Balanserade grundtrupper, prisvärda flexibla byggnader | Ingen högsta rörlighet eller siege-skada | Banner Guard: tålig närstridseskort med lägre DPS |
+| Orcs | Stark närstrid, snabb offensiv raider | Kortare ranged/siege-räckvidd, dyrare grundmelee i gold | Raider: snabb melee med hög DPS |
+| Elves | Snabba workers och ranged, stor skotträckvidd | Lägre siege/base-HP, dyr specialtrupp | Marksman: lång räckvidd, låg HP |
+| Dwarves | Tåliga byggnader/trupper, tung siege | Långsam rörelse och produktion, hög wood-kostnad | Bulwark: mycket HP, låg hastighet/DPS |
+| Goblins | Billig snabb produktion, mobila explosiva vapen | Låg HP och kortare räckvidd | Grenadier: kort ranged med splash, sårbar närstrid |
+
+Roster använder tekniska roller `worker`, `soldier` (melee), `archer` (ranged), `catapult` (siege), `specialist`. Namn ändrar inte rollen. Kostnad anges wood/gold, tid gameplay-sekunder, fart world-px/s. Alla workers bär5 och samlar1/s; ingen ny resurstyp, deliveryregel eller bärkapacitet. Melee anger kontinuerlig DPS och32px range. Projectile anger skada/skottintervall och range; splash omfattar enbart fientliga mål enligt befintliga regler.
+
+| Fraktion / unit | Roll | Kostnad | Tid / supply | HP / fart | Attack / range / splash |
+| --- | --- | --- | --- | --- | --- |
+| Humans Worker | worker |20/0|5/1|30/160| ingen |
+| Humans Guard | soldier |20/5|5/1|60/160|18DPS/32/0|
+| Humans Archer | archer |20/10|6/1|40/140|12/1s,160/0|
+| Humans Catapult | catapult |40/20|10/2|80/80|24/2s,224/48|
+| Humans Banner Guard | specialist melee |30/15|8/2|100/130|14DPS/32/0|
+| Orcs Peon | worker |20/0|5/1|35/155| ingen |
+| Orcs Axe Warrior | soldier |18/6|6/1|66/160|20DPS/32/0|
+| Orcs Hunter | archer |20/10|6/1|45/135|12/1.1s,144/0|
+| Orcs Stone Thrower | catapult |40/20|11/2|90/75|26/2.1s,208/48|
+| Orcs Raider | specialist melee |26/12|7/2|80/175|24DPS/32/0|
+| Elves Grove Tender | worker |20/0|5/1|28/170| ingen |
+| Elves Warden | soldier |20/6|5/1|50/175|16DPS/32/0|
+| Elves Longbow | archer |22/12|6/1|45/170|14/0.9s,192/0|
+| Elves Ballista | catapult |45/25|10/2|60/100|18/1.8s,256/32|
+| Elves Marksman | specialist projectile |30/20|8/2|50/170|16/1s,200/0|
+| Dwarves Miner | worker |22/0|6/1|40/140| ingen |
+| Dwarves Iron Guard | soldier |24/5|6/1|85/120|17DPS/32/0|
+| Dwarves Crossbow | archer |24/10|7/1|55/115|16/1.2s,160/0|
+| Dwarves Cannon | catapult |45/25|12/2|110/60|30/2s,240/48|
+| Dwarves Bulwark | specialist melee |45/20|10/2|140/100|14DPS/32/0|
+| Goblins Tinkerer | worker |18/0|4/1|24/180| ingen |
+| Goblins Scrapper | soldier |16/4|4/1|40/180|16DPS/32/0|
+| Goblins Slinger | archer |18/8|5/1|30/175|10/0.8s,144/0|
+| Goblins Mortar | catapult |35/25|8/2|55/95|26/1.6s,208/64|
+| Goblins Grenadier | specialist projectile |25/25|7/2|35/170|20/1.5s,128/32|
+
+Body-storlek24px för worker/melee/ranged/specialist,40px för siege. Projectile-simulation återanvänder archer-parametrar300px/s,2s lifetime,16px hitRadius för archer/Marksman; siege/Grenadier180px/s,3s lifetime,16px hitRadius. Aggro-range är attack-range+40px för projectile,140px för melee. Specialist har egen roll, kostnad och stridsprofil; ingen healer/aura/magi eller självmordsmekanism krävs. Befintliga stance/fury och timer/input-regler bevaras för Humans/Orcs. Elves får True Shot (+20% utgående skada,5s/20s cooldown), Dwarves Brace (35% mindre inkommande skada,5s/25s), Goblins Overcharge (+35% utgående och +20% inkommande skada,4s/20s). Dessa self-buffs använder befintligt ability-state och valda levande combat-units; inga hidden-target spells, aura eller nya mana-system. Implementeras/testas i respektive fraktions-task; generic135 behöver endast stödja data/timer-reglerna.
+
+### Byggnader och prerequisites
+
+Varje fraktion har startbas, truppbyggnad, supplybyggnad, researchbyggnad och hamn. Samma byggmekanik, placement/grid och begränsningar återanvänds. Startbas96px har8supply och ingen ny byggplacering; övriga64px,5s worker-bygge. Supply ger5, högst befintliga tre supplybyggnader; truppproduktion använder befintlig FIFO-kö,5-unit-roster utan nya byggnadssystem.
+
+| Fraktion | Bas: namn / HP | Truppbyggnad: namn / kostnad / HP | Supply: namn / kostnad / HP | Research: namn / kostnad / HP | Hamn: namn / kostnad / HP |
+| --- | --- | --- | --- | --- | --- |
+| Humans |Keep/240|Barracks/40/0/120|Farm/20/0/80|Forge/40/10/120|Harbor/40/10/160|
+| Orcs |Stronghold/260|War Hut/40/0/130|Cattle Pen/20/0/90|Smithy/40/10/130|War Dock/40/10/170|
+| Elves |Grove Hall/220|Ranger Lodge/40/0/110|Garden/20/0/70|Moon Workshop/45/10/110|River Dock/40/10/140|
+| Dwarves |Stone Hold/300|Guard Hall/45/0/160|Storehouse/22/0/110|Foundry/45/15/160|Stone Dock/45/10/200|
+| Goblins |Workshop Hall/200|Scrap Yard/35/0/90|Supply Shack/18/0/60|Lab/35/15/90|Junk Dock/35/10/130|
+
+Worker kräver levande färdig bas; melee/ranged färdig truppbyggnad. Siege kräver dessutom färdig researchbyggnad. Specialist kräver färdig trupp- och researchbyggnad samt attack1 (Orcs/Elves/Goblins) eller defense1 (Humans/Dwarves). Alla krav kontrolleras vid enqueue; redan betalda jobb behåller sina recept. Destroyed producer följer tidigare cancellation-regler. Ingen extra tech-tier införs. UI visar faktisk blockerande prerequisite, kostnad/supply och researchnamn; otillgängliga factions exponeras först när deras task är verifierad.
+
+### Research och fartyg
+
+Research är en engångsnivå per befintlig attack/defense-role, en pågående research i taget vid färdig researchbyggnad. Samma tillämpning på combat som i nuvarande system; workers får inte nya vapen. Defensevärdet är mottagen skademultiplikator. Inga hypotetiska extra tech-träd.
+
+| Fraktion | Attack: namn / kostnad / tid / multiplier | Defense: namn / kostnad / tid / multiplier |
+| --- | --- | --- |
+| Humans |Tempered Arms/40/10/8s/1.25|Plate Craft/40/10/8s/0.75|
+| Orcs |War Blades/35/15/8s/1.30|Hide Armor/40/10/8s/0.80|
+| Elves |True Aim/40/15/8s/1.25|Woven Guard/35/15/8s/0.80|
+| Dwarves |Forged Shot/45/15/10s/1.25|Stone Plates/45/15/10s/0.65|
+| Goblins |Hot Powder/30/20/6s/1.30|Scrap Plating/30/15/6s/0.85|
+
+Färdig hamn krävs för warship/transport. Alla transports har4platser,2supply,8s träning,32px body och64px boarding-range; befintlig cargo/conservation gäller. Naval-HP/fart och warship-recept varierar via data, inte separata sjösystem. Warships använder befintlig projectile16damage/1.5s,range192 och280px/s projectile,3s lifetime,20px hitRadius.
+
+| Fraktion | Warship: namn / kostnad / tid | Transport: namn / kostnad | Fartyg HP / fart |
+| --- | --- | --- | --- |
+| Humans |Cutter/40/15/8s|Transport/40/10|90/110|
+| Orcs |War Barge/40/15/8s|Raft/40/10|100/105|
+| Elves |Swift Sail/45/15/8s|Grove Ferry/40/10|80/125|
+| Dwarves |Ironclad/50/15/10s|Heavy Ferry/45/10|120/85|
+| Goblins |Powder Boat/35/20/6s|Junk Ferry/35/10|65/135|
+
+AI måste faktiskt betala/använda egna roster-/research-/naval-recept; inga fraktionsdata enbart i spelar-UI. Befintlig enemy combat-asymmetri från svårighetsprofiler inventeras135/141 och redovisas, inte tyst ersatt i design-tasken. Matrisen är startvärden för tester/balans, inte ett löfte om jämn win-rate. Varje fraktions-task kräver egna läsbara unit/building-assets och beteende/ekonomi/AI/Save/browser; generiska tillfälliga assets får inte markeras som färdig fraktion utan redovisning.

@@ -694,3 +694,7 @@ Highland Crossroads (RTS-132) är en egen96×96-landkarta med tre landpassager, 
 ## RTS-133 – Shattered Coast
 
 Skirmish: välj Shattered Coast för den stora kust-/ökartan. Samla wood/gold, välj worker och bygg Harbor på östkusten (672,320 är ett giltigt exempel), träna Transport. För enheter till stranden, högerklicka transporten för boarding, välj skeppet och ge sjömål. Unload öppnar landstigningsval på synlig kust. Fienden ligger öster om första kanalen; avlägsna öar har ändliga resurser. Last följer arbetaren i transport men levereras först vid spelarens bas. Save-config23 migrerar befintliga saves.
+
+## RTS-134 – Fraktionsdesign
+
+Nästa fraktionsetapp är planerad i GAME_DESIGN.md: Humans, Orcs, Elves, Dwarves och Goblins med fem units vardera, byggnader/research/fartyg och olika spelstilar. Denna design är ännu inte runtime; menyn visar fortfarande befintliga Crown/Clans. Stable ID:n bevaras för gamla fraktioner, nya factions görs tillgängliga först efter sina verifierade implementationer136–140.
