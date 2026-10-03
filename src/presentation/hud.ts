@@ -14,7 +14,7 @@ import type { GatheringState } from '../gameplay/gathering';
 import type { MatchOutcome, MatchState } from '../gameplay/match';
 import { canStartProduction, type ProductionBuilding, type ProductionState } from '../gameplay/production';
 
-const routeErrors: Record<RouteError, string> = { 'outside-world': uiText.theDestinationIsOutsideTheWorld,
+export const routeErrors: Record<RouteError, string> = { 'outside-world': uiText.theDestinationIsOutsideTheWorld,
   'blocked-target': uiText.theDestinationIsBlocked, 'blocked-start': uiText.theStartingPositionIsBlocked,
   unreachable: uiText.noRouteToTheDestination, 'no-space': uiText.noFreeReachableDestination };
 

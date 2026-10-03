@@ -1287,3 +1287,7 @@ cameraFocus.ts är Phaserfri modell för selected-own boundingcenter/base/buildi
 ## RTS-104 – Pausdialog och fullscreen
 
 presentation/pauseMenu.ts har appägd main/settings/quit-navigation, backdrop och fokusfälla. syncHomeMenu reparentar befintliga controls utan listenerdubbling; new-match ligger stabilt i confirmation och samma Scene-session/Savecallbacks används. Phase-dialogen är fixed och ändrar inte worldviewport. Settings återanvänder audio/camera/display. fullscreen.ts anropar native enter/exit, synkar från faktisk fullscreenElement och visar failures/unsupported utan fabricerat state.
+
+## Orderfeedback (RTS-105)
+
+`presentation/orders.ts` härleder typade move/attack/work/blocked-markörer från verkliga orders, med redan fogfiltrerade enemies för land och navy. `config/feedback.ts` innehåller färger/storlek; scenen ritar ring, crosshair eller X. `presentation/commandFeedback.ts` ger ändringsstyrd aria-status för placement, modes, route/rallyfel. Actionpanelens resursbrist skiljer wood/gold/båda och supplygräns utan gameplaymutation.

@@ -144,3 +144,6 @@ body:not([data-phase='menu']) #game-toolbar{flex-wrap:nowrap;}
 #game-toolbar>*{flex-shrink:0;}
 #game-toolbar #match-results{flex-basis:auto;min-width:0;}
 body[data-phase='ended'] #game-toolbar{width:min(760px,calc(100vw - 32px));}
+
+#command-feedback{font:13px/1.5 system-ui,sans-serif;color:#bed0a1;overflow-wrap:anywhere;}
+#command-feedback[data-error='true']{color:#ef9b8b;}

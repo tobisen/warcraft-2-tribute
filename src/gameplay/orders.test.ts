@@ -24,7 +24,7 @@ describe('Stop and order feedback',()=>{
   });
   it('shows only current selected active/rejected orders and cleans completion/death',()=>{
     const s=createMatch(),u=s.gathering.units[0];u.selected=true;u.order={kind:'move'};u.target={x:700,y:300};
-    expect(orderMarkers(s.gathering,s.combat,true)).toEqual([{id:u.id,position:u.target,blocked:false}]);
+    expect(orderMarkers(s.gathering,s.combat,true)).toEqual([{id:u.id,position:u.target,blocked:false,kind:'move'}]);
     u.navigation=planRoute(s.map,u.position,{x:120,y:120});
     expect(orderMarkers(s.gathering,s.combat,true)[0].blocked).toBe(true);
     u.selected=false;expect(orderMarkers(s.gathering,s.combat,true)).toEqual([]);

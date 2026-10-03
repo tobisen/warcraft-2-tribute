@@ -1,3 +1,5 @@
+import {commandFeedback,renderCommandFeedback} from '../presentation/commandFeedback';
+import {orderFeedbackConfig} from '../config/feedback';
 import {cameraShortcut,cameraFocus,selectionFocusPoints} from '../presentation/cameraFocus';
 import {bindCameraInput} from '../presentation/cameraInput';
 import {selectedIcons,selectedQueue,renderSelectedIcons,renderSelectedQueue} from '../presentation/selectionCollection';
@@ -53,7 +55,7 @@ import { barracksReady, resumeConstruction } from '../gameplay/construction';
 import { costs } from '../config/economy';
 import { costLabel } from '../gameplay/economy';
 import { stopSelected } from '../gameplay/orders';
-import { orderMarkers } from '../presentation/orders';
+import { orderMarkers,navalOrderMarkers } from '../presentation/orders';
 import { setRally } from '../gameplay/rally';
 import { allowsProduction, baseFootprint, selectPlayerTarget, type BuildingSelection } from '../gameplay/buildingSelection';
 import { dragCamera, type CameraDrag } from '../presentation/camera';
@@ -102,7 +104,7 @@ export class BootScene extends Phaser.Scene {
   private baseVisual!:Phaser.GameObjects.Image;
   private baseLabel!:Phaser.GameObjects.Text;
   private queuePanel!:HTMLElement;
-  private orderVisuals = new Map<string, Phaser.GameObjects.Arc>();
+  private orderVisuals = new Map<string, Phaser.GameObjects.Graphics>();
   private enemyNaval?:EnemyNavalState;
   private unloadMode:string|null=null;
   private attackMoveMode=false;
@@ -135,6 +137,7 @@ export class BootScene extends Phaser.Scene {
   private shipButton!:HTMLButtonElement;
   private gathering!: GatheringState;
   private placement: PlacementState = { active: false, barracks: null };
+  private placementFeedbackError:string|null=null;
   private previewPoint: Position = { x: 0, y: 0 };
   private placementClick = false;
   private placementPreview!: Phaser.GameObjects.Rectangle;
@@ -612,6 +615,7 @@ export class BootScene extends Phaser.Scene {
     const rect = buildingFootprint(this.previewPoint,this.placement.kind??'barracks');
     const error = this.placement.active ? !placementVisible(this.fog,rect)?uiText.theSiteMustBeVisible:this.placement.kind==='harbor'?harborPlacementError(this.currentMatch(),this.previewPoint):placementError(this.placement, this.previewPoint, this.gathering.wood, placementObstacles(this.gathering),
       {map:this.map,gathering:this.gathering,enemies:this.combat.enemies}) : null;
+    this.placementFeedbackError=error;
     this.placementPreview.setPosition(rect.x, rect.y)
       .setFillStyle(error ? 0xe05b5b : 0x7bd389, 0.4).setVisible(this.placement.active);
     this.buildButton.setAttribute('aria-pressed',String(this.placement.active&&(!this.placement.kind||this.placement.kind==='barracks')));
@@ -657,16 +661,16 @@ export class BootScene extends Phaser.Scene {
     this.stopButton.disabled = !this.gameplayActive() || !this.allSelectable().some(u=>u.selected);
     this.hpBars?.clear();
     const visibleEnemies=this.combat.enemies.filter(e=>entityVisible(this.fog,'player',e));
-    const markers = orderMarkers(this.gathering, {...this.combat,enemies:visibleEnemies}, this.outcome==='playing',this.placement.barracks,this.placement.farms,this.placement.forge?.footprint);
-    for(const ship of this.navy?.ships??[])if(ship.selected&&ship.navigation&&(ship.order.kind==='attack'||ship.navigation.status==='moving'||ship.navigation.status==='blocked'))markers.push({id:ship.id,position:ship.order.kind==='attack'?this.combat.enemies.find(e=>ship.order.kind==='attack'&&e.id===ship.order.enemyId&&entityVisible(this.fog,'player',e))?.position??ship.position:ship.target,blocked:ship.navigation.status==='blocked'});
+    const markers = orderMarkers(this.gathering, {...this.combat,enemies:visibleEnemies}, this.outcome==='playing',this.placement.barracks,this.placement.farms,this.placement.forge?.footprint,this.navy?.harbor?.footprint);
+    markers.push(...navalOrderMarkers(this.navy,{...this.combat,enemies:visibleEnemies},this.outcome==='playing'));
     for (const [id, visual] of this.orderVisuals) {
       if (!markers.some(m=>m.id===id)) { visual.destroy(); this.orderVisuals.delete(id); }
     }
     for (const marker of markers) {
-      if (!this.orderVisuals.has(marker.id)) this.orderVisuals.set(marker.id,
-        this.add.circle(0,0,5).setDepth(7));
-      this.orderVisuals.get(marker.id)!.setPosition(marker.position.x,marker.position.y)
-        .setStrokeStyle(2,marker.blocked?0xe05b5b:0xffdc73);
+      if(!this.orderVisuals.has(marker.id))this.orderVisuals.set(marker.id,this.add.graphics().setDepth(7));
+      const visual=this.orderVisuals.get(marker.id)!,r=orderFeedbackConfig.radius;visual.clear().setPosition(marker.position.x,marker.position.y).lineStyle(orderFeedbackConfig.lineWidth,orderFeedbackConfig.colors[marker.kind]);
+      if(marker.kind==='blocked'){visual.lineBetween(-r,-r,r,r).lineBetween(-r,r,r,-r);}
+      else {visual.strokeCircle(0,0,r);if(marker.kind==='attack')visual.lineBetween(-r-4,0,-r+3,0).lineBetween(r-3,0,r+4,0).lineBetween(0,-r-4,0,-r+3).lineBetween(0,r-3,0,r+4);}
     }
     this.restartButton.hidden = this.session.phase!=='paused'&&this.session.phase!=='ended';
     this.restartButton.disabled = this.restartPending;
@@ -763,6 +767,7 @@ export class BootScene extends Phaser.Scene {
     if(this.fogOverlay)drawFog(this.fogOverlay,this.fog,this.fogPreview??'player');
     for(const shortcut of hotkeys){const button=document.getElementById(shortcut.button)!;button.textContent=`${button.textContent?.replace(/\s+\[[A-Z]\]$/,'')} [${shortcut.key}]`;button.title=shortcut.label;}
     renderActionPanel(actionPanel(this.currentMatch(),this.selectedBuilding,this.gameplayActive()));
+    renderCommandFeedback(commandFeedback(this.currentMatch(),this.selectedBuilding,{placementError:this.placementFeedbackError,attackMove:this.attackMoveMode,unload:!!this.unloadMode}));
     document.getElementById('group-status')!.textContent=Object.entries(this.controlGroups).map(([slot,ids])=>`${slot}: ${ids.length}`).join(' · ')||uiText.groupsCtrl19Assign19Recall;
     this.syncAudio(visibleEnemies);
     this.minimap?.render();

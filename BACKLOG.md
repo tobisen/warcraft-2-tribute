@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-105 – Order- och actionfeedback** — **Todo**.
+**RTS-106 – Attackvarningar** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -2836,13 +2836,21 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-105 – Order- och actionfeedback
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Visa tydliga move- och attack-markeringar. Ge begripliga besked, exempelvis: “Not enough gold”, “Population limit reached” och “Cannot build here”.
+**Goal:** Visa tydliga move- och attack-markeringar. Ge begripliga besked, exempelvis Not enough gold, Population limit reached och Cannot build here.
+
+**Requirements:** Befintliga selected-order markers får tydlig typ: green move-ring, red attack/attack-move crosshair, gold work-ring och red blocked-X. Navy stöds; inga dolda enemypositioner exponeras. Återanvänd aktuell orderstate, rensa vid completion/selection/death/restart. Synlig statusrad visar live placerings-/route-/rallyfel och modeinstruktioner; Cannot build here med befintligt skäl. Disabled actions anger wood/gold-brist korrekt och Population limit reached. Zero-cost-label är Free. Feedback är presentation utan debit/orderförändring; aria-status uppdateras bara vid förändring.
+
+**Non-goals:** Attackvarningar106, nya order-/placementregler, nya bilder/ljud, stora refaktoreringar.
 
 **Dependencies:** RTS-104.
 
-**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+**Acceptance criteria:** Move och attack visuellt åtskilda och följer verkliga orders. Hidden target ger ingen attackmarker; ingen stale marker efter nytt mål/Stop. Invalid placement och resurs/supplybrist är begripliga och lämnar ekonomin oförändrad. Status och HUD-actions ryms båda upplösningar; pause/restart rensar relevanta transientlabels.
+
+**Tester:** Ordertyp/blocked/attack-move/visible target/cleanup; resource deficitwood/gold/båda, route/rally/placement/modefeedback utan mutation. Relevanta orders/navigation/placement/economy/presentationtester; typecheck/build/diff. Browser riktiga move/block/placement/moneyflöden och paid soldier/visibleattack om möjligt, screenshots båda upplösningar.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, README.md.
 
 ## RTS-106 – Attackvarningar
 

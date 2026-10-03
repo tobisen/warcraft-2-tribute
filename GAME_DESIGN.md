@@ -1024,3 +1024,7 @@ Space centrerar aktuell egen selection (gruppens boundingcenter eller vald base/
 ## RTS-104 – Pause, Quit och fullscreen
 
 Menu/P/Escape öppnar pausdialog med Resume/Save/Load/Settings/Quit; Restart och slutresultat bevaras. Escape behåller tidigare previewcancel-prioritet. Settings har audio/camera/display och Back; Escape/P backar subpage/confirmation, main resume. Quit kräver Confirm quit; Cancel/Escape bevarar pausad match, bank/queue/orders/selection/kamera. Fullscreen är separat i top bar och Settings, ändrar inte matchstate; unavailable/failure visas. Ended har läsbar resultatdialog med intern scroll vid behov.
+
+## Order- och actionfeedback (RTS-105)
+
+Markerade egna enheter visar grön move-ring, rött attack/attack-move-crosshair, gul arbetsring och rött X för blockerad order. Attackmarkörer kräver synliga mål. Statusraden visar placeringsskäl, route/rallyproblem och modeinstruktioner. Actions visar Not enough wood/gold, båda resurser eller Population limit reached; ogiltiga actions ändrar varken saldo eller orders.

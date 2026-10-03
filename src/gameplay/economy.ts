@@ -10,7 +10,7 @@ export function payCost<T extends Balance>(balance:T,cost:ResourceCost):T {
     ...(balance.goldBalance!==undefined || cost.gold>0 ? {goldBalance:(balance.goldBalance??0)-cost.gold}: {})};
 }
 export function costLabel(cost:ResourceCost):string {
-  return [cost.wood>0?`${cost.wood} wood`:'',cost.gold>0?`${cost.gold} gold`:''].filter(Boolean).join(' + ') || 'Gratis';
+  return [cost.wood>0?`${cost.wood} wood`:'',cost.gold>0?`${cost.gold} gold`:''].filter(Boolean).join(' + ') || 'Free';
 }
 export function missingCost(balance:Balance,cost:ResourceCost):string {
   return costLabel({wood:Math.max(0,cost.wood-balance.wood),gold:Math.max(0,cost.gold-(balance.goldBalance??0))});

@@ -582,3 +582,5 @@ Kamera: piltangenter, mittenknappsdrag eller hover vid världsvyns kant. Klicka 
 Space centrerar selection, Home basen. Settings har camera speed240/480/720px/s och Edge panning; valen gäller appsessionen och bevaras vid restart, men lagras ännu inte över sidreload.
 
 Menu/P/Escape öppnar pausmenyn med Resume, Save, Load, Settings och Quit to Main Menu. Quit kräver confirmation; Cancel bevarar matchen. Fullscreen finns separat i top bar och Settings. Escape avbryter först aktiv placement/orderpreview.
+
+Orderfeedback: green = move, red = attack, gold = work; blocked orders show a red X. The status panel explains placement/routing errors and action buttons explain missing resources or population capacity.
