@@ -1309,3 +1309,19 @@ presentation/pauseMenu.ts har appägd main/settings/quit-navigation, backdrop oc
 Campaign erbjuder `tutorial` på Arena. `config/tutorial.ts` definierar mål och trösklar; `gameplay/tutorial.ts` observerar faktisk selection, move-order, levererat wood, färdig barracks, producerad soldier och dött träningsmål. Progression kör före/efter gameplay-steget utan Phaser eller walltime. Byte av worker under movement-steget byter referensposition. Ingen enemyproduktion eller wave finns i tutorialen. Efter produktion väljs en ledig, giltig och synlig spawnposition från befintlig spawnmodell. Målet är idle; soldatens befintliga autoDisabled väntar på manuellt kommando.
 
 `presentation/tutorial.ts` visar aktuellt mål, leveransprogress och genomförda steg. Scenen använder hela currentMatch för HUD så räknarna följer samma state. Saveconfig 18 validerar tutorialmilestones, workerreferens och target/counter; 17 och äldre migreras utan tutorial. Alla gamla releasebot-scenarier behålls; tutorialen har separata betalda genomspelningar för två fraktioner och två speeds.
+
+## RTS-111 – Terrängvariation och kust
+
+World-atlas är nu 256×192 RGBA med23 frames: fyra lågkontrast-gräsvarianter,
+två vattenvarianter, rock, åtta exponerade kanter, fyra konkava kusthörn och
+fyra resource states. terrainFrame bevarar patchernas rock/water-identitet;
+terrainImageFrame väljer vattenvariation separat. Coordinatehash väljer
+statiska gräsdetaljer; kartan genereras inte proceduralt. Vatten har gemensam
+grundton utan tilebreda mörka ränder. Kanten har jord/foam och samma djup vid
+tileändar; diagonala landkontakter får ett hörn även mellan två vattengrannar.
+Utanför världen fortsätter samma terräng, så världskanten ger ingen falsk kust.
+Skogskronor, stam och gruvsprickor har originaldetaljer från samma palett.
+
+Navigation, resursmängder, hitboxes, 40px nodefootprint, ankare32,40, fog och
+Saveformat ändras inte. Små grässtrån är dekor, aldrig hinder. Native32px,
+nearest/roundPixels och repo-lokal källa/export/licens gäller fortfarande.

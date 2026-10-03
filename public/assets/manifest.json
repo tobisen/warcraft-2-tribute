@@ -8,7 +8,7 @@
       "image": "assets/world-atlas.png",
       "data": "assets/world-atlas.json",
       "width": 256,
-      "height": 160
+      "height": 192
     },
     "buildings": {
       "image": "assets/buildings-atlas.png",
@@ -182,6 +182,46 @@
         "y": 0
       }
     },
+    "corner-water-nw": {
+      "atlas": "world",
+      "kind": "transition",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "corner-water-ne": {
+      "atlas": "world",
+      "kind": "transition",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "corner-water-se": {
+      "atlas": "world",
+      "kind": "transition",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "corner-water-sw": {
+      "atlas": "world",
+      "kind": "transition",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 0,
+        "y": 0
+      }
+    },
     "grass-a": {
       "atlas": "world",
       "kind": "terrain",
@@ -193,6 +233,36 @@
       }
     },
     "grass-b": {
+      "atlas": "world",
+      "kind": "terrain",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "grass-c": {
+      "atlas": "world",
+      "kind": "terrain",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "grass-d": {
+      "atlas": "world",
+      "kind": "terrain",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "water-b": {
       "atlas": "world",
       "kind": "terrain",
       "width": 32,

@@ -995,3 +995,19 @@ Tidsskalning sker enbart vid scenens gameplay-delta-ingång; updateMatch får ga
 ## Guidat tutorialuppdrag – RTS-109, 2026-10-03
 
 Tutorialen återanvänder Arena och befintlig ekonomi, input, byggande, produktion och combat. Progression mäts i verkligt utförda handlingar och leveranser, inte tid eller gratistilldelning. Ett stillastående idle-mål och soldier autoDisabled i stridslektionen ger utrymme för manuell attack; ordinarie andra matcher ändras inte. Tutorial får en egen victory-typ och Saveconfig 18 med validerade milestones. Inget generellt tutorialframework eller inputlås införs. Verkligt nybörjarspeltest kvarstår i RTS-110.
+
+## RTS-111 – Terrängvariation och kust
+
+World-atlas är nu 256×192 RGBA med23 frames: fyra lågkontrast-gräsvarianter,
+två vattenvarianter, rock, åtta exponerade kanter, fyra konkava kusthörn och
+fyra resource states. terrainFrame bevarar patchernas rock/water-identitet;
+terrainImageFrame väljer vattenvariation separat. Coordinatehash väljer
+statiska gräsdetaljer; kartan genereras inte proceduralt. Vatten har gemensam
+grundton utan tilebreda mörka ränder. Kanten har jord/foam och samma djup vid
+tileändar; diagonala landkontakter får ett hörn även mellan två vattengrannar.
+Utanför världen fortsätter samma terräng, så världskanten ger ingen falsk kust.
+Skogskronor, stam och gruvsprickor har originaldetaljer från samma palett.
+
+Navigation, resursmängder, hitboxes, 40px nodefootprint, ankare32,40, fog och
+Saveformat ändras inte. Små grässtrån är dekor, aldrig hinder. Native32px,
+nearest/roundPixels och repo-lokal källa/export/licens gäller fortfarande.

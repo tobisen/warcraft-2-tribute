@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-111 – Förbättrad pixelterräng** — **Todo**.
+**RTS-112 – Förbättrade byggnadssprites** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -2944,13 +2944,21 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-111 – Förbättrad pixelterräng
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Förbättra gräs, skog, vatten, kust och resurser. Skapa sammanhängande övergångar och lagom variation. Dekorationer ska inte förväxlas med blockerande terräng.
+**Goal:** Förbättra gräs, skog, vatten, kust och resurser med sammanhängande originalpixelgrafik.
+
+**Requirements:** Fyra lågkontrast-gräsvarianter utan checkerboard, två vattenvarianter utan sömmar, strand/bergkanter endast mot annan terräng, diagonala kusthörn där land möter vatten. Världskanten skapar inte falsk strand. Förtydliga skogskrona/stam och gold/depleted-noder. Behåll 32px tiles, native nearest-rendering och befintliga resourceankare. Alla variationer deterministiska från tilekoordinater, inga runtime-mapgeneratorer. Exportera befintlig repo-lokal originalkälla/atlas/manifest.
+
+**Non-goals:** Ny kartgeometri, blockerande dekor, gameplay/navigation/footprint/ekonomiändringar, animationer, byggnads-/enhetsart112–113, importerad spelgrafik.
 
 **Dependencies:** RTS-110.
 
-**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+**Acceptance criteria:** Exponerade kanter och hörn följer faktisk terrain på alla fyra kartor; inga interna kustsömmar eller världskantstrand. Resource states och fog behåller modellen. Screenshots i1280×720/1920×1080 granskas för skärpa, övergångar och läsbarhet. Export, relevanta regressioner, fulltester/typecheck/build/diff passerar.
+
+**Tester:** Frame- och kantval över alla kartor och världskanten; determinism och variation; resource states/ankare och exporterade framebounds. Befintliga navigation/maps/Save tester. Browser: terrain/fog/kamera, selection/gather, Save/load/restart; screenshots av kust och resurser i båda upplösningar.
+
+**Docs:** BACKLOG, DEV_LOG, ARCHITECTURE, DECISIONS, assets/README och assets/ASSET_LICENSE.
 
 ## RTS-112 – Förbättrade byggnadssprites
 

@@ -74,3 +74,19 @@ volym och pause/reset-graf används. Originalkällor/bruk finns i
 [ASSET_LICENSE.md](ASSET_LICENSE.md). `npm run assets:export` och optional
 `PYTHONPATH=/tmp/w2t-audio-tools npm run audio:export` återskapar exporter;
 tmp-path är verifieringsmiljön, ingen projektdependency.
+
+## RTS-111 – Terrängvariation och kust
+
+World-atlas är nu 256×192 RGBA med23 frames: fyra lågkontrast-gräsvarianter,
+två vattenvarianter, rock, åtta exponerade kanter, fyra konkava kusthörn och
+fyra resource states. terrainFrame bevarar patchernas rock/water-identitet;
+terrainImageFrame väljer vattenvariation separat. Coordinatehash väljer
+statiska gräsdetaljer; kartan genereras inte proceduralt. Vatten har gemensam
+grundton utan tilebreda mörka ränder. Kanten har jord/foam och samma djup vid
+tileändar; diagonala landkontakter får ett hörn även mellan två vattengrannar.
+Utanför världen fortsätter samma terräng, så världskanten ger ingen falsk kust.
+Skogskronor, stam och gruvsprickor har originaldetaljer från samma palett.
+
+Navigation, resursmängder, hitboxes, 40px nodefootprint, ankare32,40, fog och
+Saveformat ändras inte. Små grässtrån är dekor, aldrig hinder. Native32px,
+nearest/roundPixels och repo-lokal källa/export/licens gäller fortfarande.
