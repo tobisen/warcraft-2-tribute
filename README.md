@@ -423,3 +423,10 @@ levande stridsenheter prioriteras ersättning före ny forskning.
 Enemy-attack ger +25% skada, defense minskar inkommande skada 25%, enbart
 för stridsenheter. Workers/byggnader får ingen bonus. Save config7
 bevarar forskningen; gamla snapshots får inga gratis uppgraderingar.
+
+RTS-074: AI ersätter förlorade workers för20wood/5s till två levande.
+Efter färdig barracks, tre army och båda uppgraderingar kan den bygga
+en extra resursbas för80wood/20gold/10s. Färdig bas ger +8 supply och
+närmare leverans vid befintliga ändliga noder. Angripbar och möjlig att
+återuppbygga med ny kostnad. Save config8 bevarar betalda worker-jobb,
+extra bas och retry; äldre saves får inga nya units/baser gratis.

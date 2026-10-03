@@ -1382,3 +1382,56 @@ Befintlig bundle-varning kvar: index-BiRYLRwx.js1540,22KB/gzip404,49KB.
 RTS-072 GitHub Actions/Pages verifierat success för4c88dea.
 Begränsningar: inga ersättningsworkers/expansion eller begränsad AI-
 upptäckt ännu. Nästa task RTS-074.
+
+## 2026-10-03 – RTS-074: återhämtning och extra resursbas
+
+Implementerat betald ersättning till två workers med shared queue,
+20wood/5s/supply1, monotona ID:n, korrekt96px base-spawn och ledger.
+Bankbesparing för ersättning, fortsatta betalda jobb, blocked-spawn
+utan dubbel betalning, base-death-cancellation och save config8.
+Config7/äldre migreras utan gratis policy/units. En granskning fann
+att wood-rollen behöver följa lägsta levande worker-ID när original1
+förlorats; korrigerat med separat regressionstest för två ersättare.
+
+Slutlig npm test579 tester/75 filer PASS (93,89s). 8 recovery-tester;
+riktad recovery/policy19 PASS, typecheck/build, git diff --check och
+563 lokala dokumentreferenser PASS.
+Chromium147 mot slutligt index-BGp5HfxN.js1543,48KB/gzip405,09KB: båda
+fraktioner, kontrollerad worker-loss-fixture och accelererad tid. Betald
+träning/save-load mitt i träning, ny worker på resursorder, save med
+nya ID:n och restart PASS utan page/console/request-fel. Ingen naturlig
+fullmatch-balansgaranti. Två fel i extern browserfixture (fel fraktions-
+parameter och kostnadsassert som inkluderade army-job) korrigerades;
+sista kontrollen bokför separata verkliga betalningar.
+
+RTS-073 pushad7f743f6, Actions/Pages success37078604225.
+Användaren svarade extra resursbas; expansionen implementerad efter
+beslutet. En betald80wood/20gold/10s/96px/240HP resursbas med +8 supply
+vid färdigt bygge. Byggs efter barracks/tre army/attack1/defense1.
+Tre kandidater/1s retry, begränsad validering, workerbyte/lastbevarande,
+angripbar/fog/hinder och betald återuppbyggnad. Shared updateSite
+återanvänds; enemy-enhet auktoritativ, dropoffs/population härleds.
+Leverans väljer närmaste nåbara levande färdiga bas med cache; ingen
+ny nod eller gratis resurser. Huvudbasen är fortsatt objective/producent.
+
+7 expansionstester omfattar cost/time/supply/delivery/builder-loss/site-
+loss/Save/loaded carrier fallback. Riktad expansion/recovery15 PASS.
+Chromium147 production-preview: båda fraktioner scoutar ett synligt
+basbygge, korrekt faktisk betalning, save/load under bygge,10s arbete,
+verklig insamling och leverans vid nya basen, save efter färdig bas samt
+restart PASS utan page/console/request-fel. Kontrollerad fixture med
+färdig initial barracks/tre army/lärda nivåer/avstämd bank; accelererad
+klocka och faktisk scout-input, inte naturlig balansgaranti. Screenshot
+granskad med läsbar grund och laggrafik. Tidig browserassert tog felaktigt
+med samtidig armébetalning; separata faktiska utgifter kontrolleras nu.
+
+Granskning av krav, ledger, tid, supply, gamla saves, refs, scen och scope
+fann inga kvarstående blockerande fel. Befintlig bundle-varning bevaras.
+Begränsningar: en extra bas, två workers, inga nygenererade noder;
+basens kostnad/balans preliminär. RTS-075 hanterar upptäckt; ekonomin
+känner ännu resurspositioner och återstående mängd enligt tidigare slice.
+
+Slutlig RTS-074: npm test586 tester/76 filer PASS; typecheck/build PASS,
+git diff --check PASS,566 dokumentreferenser giltiga. Slutbundle
+index-BRPFZXH1.js1548,79KB/gzip406,12KB; befintlig varning kvar.
+RTS-074 Done. Nästa task RTS-075 – begränsad AI-information/upptäckt.

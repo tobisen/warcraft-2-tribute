@@ -16,7 +16,7 @@ function fixture():MatchState {
 }
 function forgeReady(){let m=prepareEnemyConstruction(fixture());for(let i=0;i<100;i++)m=updateEnemyConstruction(m,.1).match;return m;}
 it('orders barracks, army, forge, attack, defense; losses restore army priority',()=>{
- const m=createMatch('skirmish');expect(enemyPriority(m)).toBe('barracks');const ready=fixture();expect(enemyPriority(ready)).toBe('forge');const built=forgeReady();expect(enemyPriority(built)).toBe('attack');built.enemyPolicy!.research.attack=1;expect(enemyPriority(built)).toBe('defense');built.enemyPolicy!.research.defense=1;expect(enemyPriority(built)).toBe('army');built.enemyPolicy!.research.defense=0;built.combat.enemies=built.combat.enemies.filter(e=>e.id!=='enemy-produced-3');expect(enemyPriority(built)).toBe('army');
+ const m=createMatch('skirmish');expect(enemyPriority(m)).toBe('barracks');const ready=fixture();expect(enemyPriority(ready)).toBe('forge');const built=forgeReady();expect(enemyPriority(built)).toBe('attack');built.enemyPolicy!.research.attack=1;expect(enemyPriority(built)).toBe('defense');built.enemyPolicy!.research.defense=1;expect(enemyPriority(built)).toBe('expansion');built.enemyPolicy!.research.defense=0;built.combat.enemies=built.combat.enemies.filter(e=>e.id!=='enemy-produced-3');expect(enemyPriority(built)).toBe('army');
 });
 it('required supply precedes forge and no second construction starts beside an unfinished site',()=>{
  const m=fixture();m.combat.enemies.push(...[4,5].map(i=>({id:`enemy-produced-${i}`,kind:'unit' as const,owner:'enemy' as const,hp:36,position:{x:700+i*30,y:500}})));expect(enemyPriority(m)).toBe('supply');const next=prepareEnemyConstruction(m);expect(next.combat.enemies.some(e=>e.buildingType==='farm')).toBe(true);expect(next.combat.enemies.some(e=>e.buildingType==='forge')).toBe(false);expect(prepareEnemyConstruction(next).enemyProduction!.wood).toBe(next.enemyProduction!.wood);
@@ -43,7 +43,7 @@ it('save/load preserve paid research and ledger, pause freezes it and restart cl
  for(const mutate of [(d:any)=>d.state.enemyPolicy.research.job.remainingSeconds=9,(d:any)=>d.state.enemyPolicy.research.attack=2,(d:any)=>d.configVersion='tribute-config-6']){const d=JSON.parse(encodeSave(m,view));mutate(d);expect(decodeSave(JSON.stringify(d)).ok).toBe(false);}
 });
 it('config six migrates without free forge, levels, income or altered old construction policy',()=>{
- const m=createMatch('skirmish');delete m.enemyPolicy;const d=JSON.parse(encodeSave(m,view));d.configVersion='tribute-config-6';const loaded=decodeSave(JSON.stringify(d));expect(loaded.ok).toBe(true);if(loaded.ok){expect(loaded.match.enemyPolicy).toBeUndefined();expect(loaded.match.combat.enemies.some(e=>e.buildingType==='forge')).toBe(false);expect(loaded.match.enemyProduction).toEqual(m.enemyProduction);}
+ const m=createMatch('skirmish');delete m.enemyPolicy;delete m.enemyRecovery;const d=JSON.parse(encodeSave(m,view));d.configVersion='tribute-config-6';const loaded=decodeSave(JSON.stringify(d));expect(loaded.ok).toBe(true);if(loaded.ok){expect(loaded.match.enemyPolicy).toBeUndefined();expect(loaded.match.combat.enemies.some(e=>e.buildingType==='forge')).toBe(false);expect(loaded.match.enemyProduction).toEqual(m.enemyProduction);}
 });
 
 it('an existing paid production queue advances while the policy saves for a Forge',()=>{

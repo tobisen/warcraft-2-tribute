@@ -767,3 +767,21 @@ som spelaren men svag enemy-grundprofil bevaras. Ingen gratis HP.
 Forge-död avbryter aktiv forskning utan refund och bevarar lärda nivåer.
 Auktoritativ enemy-research sparas i config7; combat-cache härleds och
 serialiseras aldrig. Äldre config6/under får ingen ny policy vid Load.
+
+## RTS-074 – återhämtning och öppet expansionsbeslut
+
+Ersätt initialt två enemy-workers med betald base-produktion: samma
+20wood/5s/supply1 som spelaren, högst ett jobb, monotona ID:n och giltig
+spawn vid basens faktiska96px-footprint. Behövs en worker sparas banken
+före nya army/research-starter; betalda jobb fortsätter. Basdöd avbryter
+jobbet utan refund. Ingen magisk återhämtning om bank saknar20 och alla
+workers är döda. Gamla config7/under får ingen ny policy vid Load.
+
+Användaren valde extra resursbas. En avgränsad AI-outpost vid befintliga
+ändliga noder:80wood/20gold,96px/240HP/10s arbetarbygge/+8 supply.
+Betald efter färdig barracks, tre levande army och båda uppgraderingarna;
+förlorad ekonomi/armé återhämtas först. Tre gridkandidater/1s retry,
+full world/obstacle/body/kontakt/spawn-exit-kontroll. Ingen ny resursstock
+eller gratis income; färdig bas kortar befintlig leverans. Högst en extra
+bas, huvudbasen behåller objective/workerproduktion. Gamla saves får
+ingen ny policy. Grundbalansen är preliminär inför RTS-079.

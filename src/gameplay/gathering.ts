@@ -5,6 +5,7 @@ import { approachRoute, canInteract } from './approach';
 import { resourceServices } from './resourceQueue';
 import type { GateFor } from './traffic';
 import { advanceRoute } from './navigation';
+import type {Footprint} from './placement';
 import { placementObstacles } from './placement';
 import { updateMappedMove, planRoute, type RouteState } from './navigation';
 import type { WorldMap } from './map';
@@ -15,7 +16,7 @@ import type { SelectableUnit } from './selection';
 
 export type ResourceType = 'wood' | 'gold';
 export type WorkerOrder = { kind: 'idle' } | { kind: 'move' }
-  | { kind: 'gather' | 'deliver'; nodeId: string } | {kind:'build';buildingId:'barracks'|'forge'|`farm-${number}`};
+  | { kind: 'gather' | 'deliver'; nodeId: string } | {kind:'build';buildingId:'outpost'|'barracks'|'forge'|`farm-${number}`};
 export interface Worker extends SelectableUnit {
   navigation?: RouteState;
   kind: 'worker';
@@ -50,6 +51,8 @@ export interface GatheringState {
   /** Derived from match ownership; reconstructed on Load rather than serialized. */
   faction?:FactionId;
   baseSize?:number;
+  /** Derived live delivery buildings; never persisted independently. */
+  dropoffs?:Footprint[];
   units: Unit[];
   node: ResourceNode;
   gold?: ResourceNode;
@@ -117,11 +120,14 @@ export function updateGathering(state: GatheringState, deltaSeconds: number, map
         continue;
       }
       const delivering = worker.order.kind === 'deliver';
-      const destination = delivering ? state.base : node.position;
+      const deliveryRects=[placementObstacles(state)[0],...(delivering?state.dropoffs??[]:[])].sort((a,b)=>Math.hypot(worker.position.x-a.x-a.width/2,worker.position.y-a.y-a.height/2)-Math.hypot(worker.position.x-b.x-b.width/2,worker.position.y-b.y-b.height/2));
+      const cachedDelivery=worker.navigation?.revision===map?.revision?deliveryRects.find(rect=>worker.navigation?.goalKey===`deliver:${nodeId}:${rect.x}:${rect.y}`):undefined;
+      const deliveryRect=delivering&&map&&state.dropoffs?.length?(cachedDelivery??deliveryRects.find(rect=>approachRoute(map,worker.position,rect,gatheringConfig.deliveryRange).status!=='blocked')??deliveryRects[0]):deliveryRects[0];
+      const destination = delivering ? {x:deliveryRect.x+deliveryRect.width/2,y:deliveryRect.y+deliveryRect.height/2} : node.position;
       const range = delivering ? gatheringConfig.deliveryRange : gatheringConfig.range;
       if (map) {
         const workMap = { ...map, obstacles: [...map.obstacles, ...placementObstacles(state)] };
-        const rect = delivering ? placementObstacles(state)[0] : {
+        const rect = delivering ? deliveryRect : {
           x:node.position.x-gatheringConfig.nodeRadius, y:node.position.y-gatheringConfig.nodeRadius,
           width:gatheringConfig.nodeRadius*2, height:gatheringConfig.nodeRadius*2 };
         const service=!delivering?services?.get(worker.id):undefined;

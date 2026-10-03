@@ -1,3 +1,4 @@
+import {enemyExpansionConfig} from '../config/enemyExpansion';
 import {enemyPolicyConfig} from '../config/enemyPolicy';
 import {forgeConfig,upgradeConfig} from '../config/upgrades';
 import {enemyConstructionConfig as config} from '../config/enemyConstruction';
@@ -21,7 +22,8 @@ export function enemyBuildingView(m:MatchState):PlacementState {
 }
 export function enemyPopulation(m:MatchState){
  const g:GatheringState={...m.gathering,units:m.combat.enemies.flatMap(e=>{const w=enemyWorker(e);return w&&e.hp>0?[w]:[];})};g.units=[...g.units,...m.combat.enemies.filter(e=>!e.footprint&&e.kind!=='worker'&&e.hp>0).map(e=>({id:e.id,kind:'soldier' as const,hp:e.hp,cargo:0 as const,selected:false,position:e.position,target:e.position,order:{kind:'idle' as const}}))];
- return populationState(g,enemyBuildingView(m),m.enemyProduction?[m.enemyProduction.production]:[]);
+ const population=populationState(g,enemyBuildingView(m),[...(m.enemyProduction?[m.enemyProduction.production]:[]),...(m.enemyRecovery?[m.enemyRecovery.production]:[])]);
+ return {...population,cap:population.cap+m.combat.enemies.filter(e=>e.buildingType==='outpost'&&e.hp>0&&e.construction?.remainingSeconds===0).length*enemyExpansionConfig.supply};
 }
 function economy(m:MatchState):GatheringState {const base=m.combat.enemies.find(e=>e.kind==='base')!;return {base:base.position,baseSize:base.footprint!.width,units:m.combat.enemies.flatMap(e=>{const w=enemyWorker(e);return w?[w]:[];}),wood:m.enemyProduction!.wood,goldBalance:m.enemyProduction!.gold,node:m.gathering.node,gold:m.gathering.gold};}
 function workers(m:MatchState,g:GatheringState){const byId=new Map(g.units.map(u=>[u.id,u as Worker]));return m.combat.enemies.map(e=>{const u=byId.get(e.id);return u?{...e,position:u.position,navigation:u.navigation,work:{cargo:u.cargo,cargoType:u.cargoType,target:u.target,order:u.order}}:e;});}

@@ -975,3 +975,33 @@ nivåer består. Save schema2/config7 validerar research/site/referenser
 och återskapar cache. Config6/äldre migreras utan policy, Forge eller
 gratis nivåer. [enemyPolicy.test.ts](src/gameplay/enemyPolicy.test.ts)
 täcker prioritet, betalning, tid, last, effekter och migration.
+
+## RTS-074 – worker-återhämtning och extra resursbas
+
+[enemyRecovery.ts](src/gameplay/enemyRecovery.ts) använder shared
+enqueueProduction/updateQueuedProduction genom en tillfällig gathering-vy.
+MatchState.enemyRecovery äger worker-produktionsstate; bank/ledger ägs
+fortfarande av enemyProduction och enheter av combat.enemies. Population
+omfattar båda byggnaders betalda reservationer. Worker-behov stoppar nya
+army/research-starter, men befintliga jobb fortsätter. Enemy-worker-ID:n
+ökar från3; endast en ersättning i taget till två levande workers.
+Base-spawn använder GatheringState.baseSize för faktisk footprint;
+spelarens befintliga48px-bas bevarar samma beteende.
+
+Save config8 verifierar worker-job/recipe/timer/counter/supply-target och
+levande bas. Config7/äldre migreras utan recovery-policy.
+[enemyRecovery.test.ts](src/gameplay/enemyRecovery.test.ts) täcker betalning,
+tid, flera förluster, blockerad spawn, supply, migration och reset.
+[enemyExpansion.ts](src/gameplay/enemyExpansion.ts) placerar en extra96px
+resursbas med configkostnad80/20 och10s shared updateSite-arbete.
+[enemyExpansion.ts](src/config/enemyExpansion.ts) begränsar kandidater/
+retry/HP/supply. Auktoritativ outpost är en enemy-building-entitet;
+retry ligger i enemyRecovery. Ingen parallell persistent byggnadsmodell.
+GatheringState.dropoffs är härledda levande färdiga footprints, aldrig
+sparade. Leverans väljer närmaste nåbara footprint och återanvänder
+giltig route; förstörelse/revision gör om valet. Population räknar +8
+enbart efter färdigt bygge. Samma bas-sprites/byggstadier och fog används
+med tydlig Resursbas-text. [enemyExpansion.test.ts](src/gameplay/enemyExpansion.test.ts)
+täcker kostnad, blockering, tid, leverans, supply, builderbyte och Save.
+Save config8 validerar96px-footprint/240HP/10s/outpost-order/retry.
+Huvudbasens objective/workerproduktion ändras inte.

@@ -33,7 +33,7 @@ export function updateEnemyGathering(m:MatchState,delta:number,gateFor?:GateFor,
  if(!workers.length||!bank)return m;
  const base=m.combat.enemies.find(e=>e.kind==='base'&&e.hp>0);
  if(!base?.footprint)return {...m,combat:{...m.combat,enemies:m.combat.enemies.map(e=>e.work?{...e,navigation:undefined,work:{...e.work,order:{kind:'idle'}}}:e)}};
- let g:GatheringState={units:workers,wood:bank.wood,goldBalance:bank.gold,base:base.position,baseSize:base.footprint.width,faction:(m.factions??defaultFactions).enemy,node:m.gathering.node,gold:m.gathering.gold};
+ let g:GatheringState={units:workers,wood:bank.wood,goldBalance:bank.gold,base:base.position,baseSize:base.footprint.width,dropoffs:m.combat.enemies.filter(e=>e.buildingType==='outpost'&&e.hp>0&&e.construction?.remainingSeconds===0).map(e=>e.footprint!),faction:(m.factions??defaultFactions).enemy,node:m.gathering.node,gold:m.gathering.gold};
  for(const worker of workers){if(worker.order.kind!=='idle')continue;const index=Number(worker.id.split('-').at(-1))-1,resource=enemyEconomyConfig.resources[index%enemyEconomyConfig.resources.length],node=resource==='wood'?g.node:g.gold;if(node&&node.remaining>0)g.units=orderUnits(g.units.map(u=>({...u,selected:u.id===worker.id})),node.position,node);}
  g=updateGathering(g,delta,m.map,{elapsedSeconds:m.waves.elapsedSeconds,gateFor,team:'enemy',services});
  const byId=new Map(g.units.map(u=>[u.id,u as Worker]));

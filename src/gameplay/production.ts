@@ -64,8 +64,9 @@ export function updateProduction(gathering: GatheringState, production: Producti
     + gathering.units.map(u=>`${u.id}:${u.position.x}:${u.position.y}`).join('|')
     + ':'+context.enemies.map(e=>`${e.id}:${e.position.x}:${e.position.y}`).join('|') : undefined;
   if(production.remainingSeconds===0 && production.blockedSpawnKey===spawnKey && context)return {gathering,production};
-  const footprint=building.kind==='base'?{x:gathering.base.x-gatheringConfig.baseSize/2,
-    y:gathering.base.y-gatheringConfig.baseSize/2,width:gatheringConfig.baseSize,height:gatheringConfig.baseSize}:building.footprint;
+  const baseSize=gathering.baseSize??gatheringConfig.baseSize;
+  const footprint=building.kind==='base'?{x:gathering.base.x-baseSize/2,
+    y:gathering.base.y-baseSize/2,width:baseSize,height:baseSize}:building.footprint;
   const recipe=productionRecipe(gathering,building);
   const position = context ? footprint?chooseSpawn(context.map,footprint,building.kind,gathering.units,context.enemies,recipe.size):null
     : building.kind === 'base' ? {

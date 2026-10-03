@@ -38,7 +38,7 @@ it('saves construction/cargo/timers, freezes on pause and restart resets the who
  const m=prepareEnemyConstruction(createMatch('skirmish'));m.paused=true;const r=decodeSave(encodeSave(m,view));expect(r.ok).toBe(true);if(!r.ok)return;expect(r.match.enemyConstruction).toEqual(m.enemyConstruction);expect(r.match.combat.enemies).toEqual(m.combat.enemies);expect(updateMatch(r.match,100)).toBe(r.match);expect(createMatch('skirmish').combat.enemies.some(e=>e.buildingType)).toBe(false);
 });
 it('config five migrates without free buildings or changing existing base production',()=>{
- const m=createMatch('skirmish');delete m.enemyConstruction;delete m.enemyPolicy;const d=JSON.parse(encodeSave(m,view));d.configVersion='tribute-config-5';const r=decodeSave(JSON.stringify(d));expect(r.ok).toBe(true);if(!r.ok)return;expect(r.match.enemyConstruction).toBeUndefined();const next=updateMatch(r.match,6);expect(next.combat.enemies.some(e=>e.buildingType)).toBe(false);expect(next.combat.enemies.some(e=>e.id.startsWith('enemy-produced-'))).toBe(true);
+ const m=createMatch('skirmish');delete m.enemyConstruction;delete m.enemyPolicy;delete m.enemyRecovery;const d=JSON.parse(encodeSave(m,view));d.configVersion='tribute-config-5';const r=decodeSave(JSON.stringify(d));expect(r.ok).toBe(true);if(!r.ok)return;expect(r.match.enemyConstruction).toBeUndefined();const next=updateMatch(r.match,6);expect(next.combat.enemies.some(e=>e.buildingType)).toBe(false);expect(next.combat.enemies.some(e=>e.id.startsWith('enemy-produced-'))).toBe(true);
 });
 
 it('saves farm money near supply limit while paid production continues; completed farm permits more jobs',()=>{

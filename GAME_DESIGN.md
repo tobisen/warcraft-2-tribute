@@ -786,3 +786,21 @@ utan refund av dess redan betalda kostnad. Redan lärda nivåer består.
 Save config7 bevarar tids-/kostnadsmodell. Gamla snapshots behåller sin
 tidigare policy; restart aktiverar aktuell modell. Expansion och
 ersättningsworkers tillhör nästa slice, upptäckt RTS-075.
+
+## RTS-074 – återhämtning och extra resursbas
+
+Nya ekonomimatcher kan ersätta förlorade workers till två:20wood,
+5s träning, supply1 och giltig spawn vid levande bas. Ersättningsbehov
+prioriteras före nya armé-/research-betalningar; betalda jobb fortsätter.
+Last startar tom och worker börjar idle, sedan befintligt arbete.
+Blockerad spawn behåller betalt färdigt jobb utan ny kostnad. Om båda
+workers förlorats och banken saknar20wood kan ekonomin inte återhämta sig
+gratis. En extra resursbas kan byggas vid befintliga noder efter färdig barracks,
+tre levande army och attack1/defense1. Kostnad80wood/20gold,10s worker-
+arbete,96px/240HP och +8 supply vid färdigt bygge. Högst en extra bas;
+färdig bas tar emot last via samma leveransregler. Närmaste nåbara
+leveranspunkt används, utan ny resursstock eller incomebonus. Du kan
+angripa bygget/basen enligt fog. Förlust tar bort leverans och supply;
+återuppbyggnad kostar igen. Huvudbasen är fortfarande victory-objective
+och den enda enemy-worker-producenten. Betald expansion kan byggas
+samtidigt som redan betalda/nya army-jobb; obetald expansion sparar bank.

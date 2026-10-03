@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-074 – AI expanderar och återhämtar sig efter förluster** — **Todo**.
+**RTS-075 – AI utforskar och använder begränsad information** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
@@ -2274,13 +2274,21 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-074 – AI expanderar och återhämtar sig efter förluster
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** AI expanderar och återhämtar sig efter förluster.
+**Goal:** Betald återhämtning av AI-ekonomin och avgränsad expansion.
+
+**Requirements:** Basen ersätter förlorade workers till initialt två med spelarens worker-kostnad20 wood/träning5s, en betald produktion i taget, verklig supply och giltig spawn. Unika monotona ID:n, idle/tom last, inga gratis units. Ersättningsbehov prioriteras före nya army/research-betalningar; betalda jobb fortsätter. Befintlig byggpolicy återuppbygger förlorade sites med nya kostnader. Basdöd/game-over stoppar återhämtning. Save/load/restart bevarar/resetter verklig produktion och ledger. Användaren har valt extra resursbas: högst en enemy-outpost nära befintliga noder,80wood/20gold,96px-footprint/240HP,10s arbetarbygge. Betald efter färdig barracks, minst tre levande army och attack1/defense1; befintliga noder måste ha resurser. Färdig resursbas ger en alternativ närmaste nåbar leveranspunkt och +8 supply. Tre begränsade kandidater/1s retry. Ingen worker-produktion från extra basen; huvudbasens död behåller tidigare victory-villkor. Angripbar/fog/hinder, builderbyte, kostnadsbelagd återuppbyggnad, save/reset.
+
+**Non-goals:** Gratis income/enheter, nya resursarter, obegränsad expansion, avancerad ekonomi, ersättning efter matchslut och information-systemet i RTS-075.
 
 **Dependencies:** RTS-073.
 
-**Acceptance criteria:** Förluster och expansion ger verifierbar återhämtning med verkliga resurser.
+**Acceptance criteria:** Betald ersättning efter en/båda worker-förluster utan dubbel kostnad/spawn, fungerande nytt arbete/bygge och supply. Byggnadsförlust kan återhämtas med verkliga resurser. Betald resursbas kräver byggtid; supply/leverans gäller enbart färdig levande bas. Förstörelse tar bort dessa effekter och återuppbyggnad kostar igen. Ingen gratis ny policy vid migration.
+
+**Tester:** Worker-kostnad/tid/supply/ID/spawnblockering, betalda jobb och prioritet, ledger/last/död, återuppbyggnad, expansion, save/migration/pause/reset samt tidigare tester/typecheck/build/browser/diff.
+
+**Docs:** BACKLOG.md, DECISIONS.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md och README.md.
 
 ## RTS-075 – AI utforskar och använder begränsad information
 
