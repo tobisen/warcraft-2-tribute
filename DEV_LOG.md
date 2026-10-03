@@ -1819,3 +1819,24 @@ Inga page/console/request-fel. Counter-screenshot granskad. Lastad
 transportsänkning verifierad i beteendetest; browsercounter gällde ännu
 olastad transport. Accelererad klocka/kamera endast för verifiering.
 RTS-086 klar; nästa087 balans mellan landarmé/flotta/transport.
+
+## 2026-10-03 – RTS-087 Done: betald sjöbalans
+
+Sex betalda fraktions-/svårighetsmatcher till victory, sex passiva till
+defeat och sex tidiga betalda kanonbåtsmotmedel. Befintlig Öarna-victorytest
+utökad till alla svårigheter; navalBalance.test.ts testar verklig ekonomi,
+population och ändligt anfall. Inga balansvärden behövde ändras. Priser/
+supply och begränsningen en AI-transport utan återbyggnad dokumenterade.
+Riktad victory8 PASS25,44s; riktad balans12 PASS72,06s under samtidig
+fullsuite/browser. Full734/88 PASS139,51s; typecheck/build/diff PASS.
+Docs/refs verifierade. Granskning kostnader/progression/supply/motmedel
+utan blockerande fynd. Kanonmotmedlet gäller tidig tom transport, inte
+påstående om garanterad interception av en laddad rörlig transport.
+
+Chromium båda fraktioner Easy/Öarna, verklig insamling/armé/hamn/transport,
+Save/load, överfart och landcombat victory231,85/231,70s, restart, inga
+page/console/requestfel. Screenshot granskad. Tidig browserhelper
+högerklickade fiendebåten vid880432: transporten är obeväpnad och fick
+korrekt ingen attack/move, varför landsättning från västra stranden nekades.
+Helper ändrad att högerklicka tomt vatten880496 och landsätta912496;
+båda flöden gröna. Ingen runtimeändring behövdes. Nästa088 sjöuppdrag.

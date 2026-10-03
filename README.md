@@ -2,7 +2,7 @@
 
 Browserbaserat singleplayer-RTS inspirerat av Warcraft 2, Age of Empires 2 och
 Command & Conquer. Phaser, strict TypeScript och Vite; local-first, gameplay
-före grafik. Implementerat genom RTS-086 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
+före grafik. Implementerat genom RTS-087 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
 
 ## Installation och lokal start
 
@@ -512,3 +512,13 @@ inom syn/skjutavstånd och högerklicka den synliga transporten. AI har en
 transport, inga stridsfartyg och ingen gratis ersättning efter sänkning.
 Save/load bevarar passagerare och produktion. Äldre Öarna-saves behåller
 sin gamla ekonomi utan den nya flottan; restart aktiverar den nya profilen.
+
+## Sjöstrategi
+
+På Öarna: två workers samlar wood och en gold. För landstigning räcker
+kasern + tre soldater + hamn + transport inom8supply (180wood/35gold för
+Kronförbundet,174wood/38gold för klanerna). Mot AI-transporten kan en tidig
+hamn + kanonbåt för80wood/25gold stoppa anfallet. Högerklicka tomt vatten
+för transportens överfart, välj den och landsätt på synlig fri kust inom64px.
+En transport kan inte attackera ett fiendefartyg; välj en annan vattenpunkt
+om fienden ligger på önskad destination. Victory kräver förstörd fiendebas.

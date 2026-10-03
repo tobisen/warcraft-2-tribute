@@ -921,3 +921,21 @@ utforskningsmålet. Last är exklusiv EnemyNavalState, ej samtidig markarmé;
 sänkning förlorar last en gång. Gamla config14-saves får varken bonus eller
 flotta; restart krävs för nya profilens ekonomi. Enemytransport har32px
 kropp även i markanfallens range/contactberäkning.
+
+## RTS-087: verifierad sjöbalans
+
+Båda fraktioner × Easy/Normal/Hard klarar verklig insamling, kasern, tre
+soldater, hamn, transport och landstrid till victory. Priserna behålls:
+Kronförbundet180wood/35gold totalt, klanerna174wood/38gold. Tre workers +
+tre soldater + transportens2supply =8/8; ingen farm krävs. Transporten är
+obeväpnad och kan bära4 units. Ett tidigt stridsfartyg kräver inklusive
+hamn80wood/25gold och ger5/8 använd supply med de tre startarbetarna.
+
+AI anfaller tidigast260/220/190s för Easy/Normal/Hard med två betalda
+soldater. Passivt spel förlorar inom350s i alla sex kombinationer. En betald
+tidig kanonbåt kan sänka den ännu tomma transporten vid fiendens kust och
+hålla basen oskadad till350s. Det är ett avsiktligt enkelt motmedel; AI har
+bara en transport, inga kanonbåtar och ingen återuppbyggnad. Sänkning ger
+inte victory: fiendebasen måste fortfarande förstöras. Inga balansvärden
+ändrades eftersom de verifierade progressionerna fungerar. Resultaten
+är deterministiska scenarioflöden, inte ett statistiskt balanspåstående.

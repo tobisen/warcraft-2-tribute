@@ -19,8 +19,8 @@ const view={camera:{x:0,y:0},building:null};
 it('islands have reachable finite resources, separate landmasses and one connected sea',()=>{
  const m=createMatch('skirmish','normal',factionsForPlayer('crown'),'islands');expect(m.gathering.gold!.position).toEqual({x:600,y:300});expect(m.gathering.node.remaining).toBe(800);expect(m.gathering.gold!.remaining).toBe(400);for(const u of [...m.gathering.units,...m.combat.enemies.filter(e=>!e.footprint)])expect(bodyFits(m.map,u.position,12)).toBe(true);expect(findRoute(m.map,{x:688,y:432},{x:912,y:432}).ok).toBe(false);expect(findDomainRoute(m.map,'water',{x:720,y:432},{x:880,y:432},16).ok).toBe(true);expect(findDomainRoute(m.map,'water',{x:720,y:432},{x:1152,y:32},16).ok).toBe(true);expect(coastalFootprint(m.map,{x:672,y:320,width:64,height:64})).toBe(true);
 });
-for(const faction of ['crown','clans'] as const)it(`${faction} gathers, pays for army/harbor/transport, lands and wins through land combat`,()=>{
- let m=createMatch('skirmish','normal',factionsForPlayer(faction),'islands');
+for(const difficulty of ['easy','normal','hard'] as const)for(const faction of ['crown','clans'] as const)it(`${difficulty}/${faction} gathers, pays for army/harbor/transport, lands and wins through land combat`,()=>{
+ let m=createMatch('skirmish',difficulty,factionsForPlayer(faction),'islands');
  const select=(id:string)=>{m.gathering.units=m.gathering.units.map(u=>({...u,selected:u.id===id}));if(m.navy)m.navy.ships=m.navy.ships.map(s=>({...s,selected:s.id===id}));};
  const until=(goal:(m:MatchState)=>boolean,max=4000)=>{for(let i=0;i<max&&!goal(m)&&m.outcome==='playing';i++)m=updateMatch(m,.1);expect(goal(m),`time ${m.waves.elapsedSeconds}; ${JSON.stringify({navy:m.navy,units:m.gathering.units,production:m.soldierProduction})}`).toBe(true);};
  for(let i=0;i<2400&&(m.gathering.wood<180||m.gathering.goldBalance!<60);i++){

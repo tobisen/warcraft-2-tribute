@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-087 – Balans mellan landarmé, flotta och transporter** — **Todo**.
+**RTS-088 – Sjöuppdrag och save/load-/fog-of-war-regressioner** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
@@ -2508,13 +2508,21 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-087 – Balans mellan landarmé, flotta och transporter
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Balans mellan landarmé, flotta och transporter.
+**Goal:** Verifiera ändlig ekonomi, supply och fungerande motmedel på Öarna.
+
+**Requirements:** Spela båda fraktioner × Easy/Normal/Hard med verklig insamling och betald kasern/armé/hamn/transport till victory. Verifiera passiv defeat och betalt kanonfartyg som stoppar landstigning. Dokumentera tider, resurskostnader och supply. Ändra endast configbalans om faktiskt blockerande resultat kräver det; inga gratis resurser eller enheter. Befintliga landkartor bevaras.
+
+**Non-goals:** AI-kanonflotta, fler transporter, nya ekonomisystem, formationer, pathfindingändringar och grafikpolish.
 
 **Dependencies:** RTS-086.
 
-**Acceptance criteria:** Speltest dokumenterar fungerande motmedel och resurs-/supplykostnad.
+**Acceptance criteria:** Sex fraktions-/svårighetskombinationer kan vinna med betald transportarmé; passivt spel förlorar; betalt stridsfartyg kan stoppa transporten. Resurs-/supplykostnader och balansens begränsningar är dokumenterade.
+
+**Tester:** Betalda sexmatchers victory/counter-matriser och sex passiva matcher, resource-ledger, tidsgränser, fullsuite/typecheck/build och verkligt browserflöde.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, GAME_DESIGN.md, DECISIONS.md och README.md.
 
 ## RTS-088 – Sjöuppdrag och save/load-/fog-of-war-regressioner
 
