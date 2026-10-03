@@ -2,7 +2,7 @@
 
 Browserbaserat singleplayer-RTS inspirerat av Warcraft 2, Age of Empires 2 och
 Command & Conquer. Phaser, strict TypeScript och Vite; local-first, gameplay
-före grafik. Implementerat genom RTS-108 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
+före grafik. Implementerat genom RTS-109 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
 
 ## Installation och lokal start
 
@@ -590,3 +590,5 @@ Own damage triggers a red attack warning and short effects cue (at most once per
 Difficulty: Beginner adds longer preparation, smaller enemy armies and slower training. Easy/Normal/Hard retain their existing pressure. Choose in setup or use `?difficulty=beginner`; the profile survives Save/load and restart. See GAME_DESIGN.md for exact timings and mission/naval exceptions.
 
 Game speed: choose 0.75× or 1× in setup, independently of difficulty. Simulation and animations slow together; camera, UI and audio keep their normal speed. Save/load and restart preserve the choice; older saves migrate to 1×.
+
+Start learning in **Campaign → Tutorial – First Steps**. Follow the six objectives: selection, movement, wood delivery, building barracks, training a soldier and attacking the training target. The target appears after production and never attacks. Use ordinary controls and costs; Save/load preserves your progress and Restart starts fresh. Both factions and game speeds work.

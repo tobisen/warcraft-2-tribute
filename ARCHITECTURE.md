@@ -2,7 +2,7 @@
 
 ## Status och teknik
 
-Implementerat genom RTS-108 (historiska systembeskrivningar följer): archer/projectiles, catapult/splash och Forge/research, FIFO/refund, target-HP/destruktion, workerbygge, farms, population, kamera,
+Implementerat genom RTS-109 (historiska systembeskrivningar följer): archer/projectiles, catapult/splash och Forge/research, FIFO/refund, target-HP/destruktion, workerbygge, farms, population, kamera,
 byggnadsselection, rally, Stop, gold och
 atomiska kostnader ovanpå etapp 1:s HUD, handgjorda karta och navigation för
 move/work/combat, separata gruppmål och säkra placement/spawn-regler.
@@ -1303,3 +1303,9 @@ presentation/pauseMenu.ts har appägd main/settings/quit-navigation, backdrop oc
 ## Gemensam spelhastighet (RTS-108)
 
 `config/gameSpeed.ts` validerar 0.75 och 1. Options och matchmetadata bevarar speed; scenen multiplicerar delta exakt en gång via gameplayDelta före updateMatch. updateMatch tar redan gameplaysekunder, så fristående callers, bot och tester får inte skala en andra gång. Animationer och varningar följer gameplay; kameran använder ursprunglig UI-delta och WebAudio använder AudioContexttid. Saveconfig 17 kräver speed; 16 och äldre migreras till 1. Saveproduktion validerar headtimer mot faktisk enemyprofilduration, inklusive Beginners 12/13 sekunder.
+
+## Tutorial (RTS-109)
+
+Campaign erbjuder `tutorial` på Arena. `config/tutorial.ts` definierar mål och trösklar; `gameplay/tutorial.ts` observerar faktisk selection, move-order, levererat wood, färdig barracks, producerad soldier och dött träningsmål. Progression kör före/efter gameplay-steget utan Phaser eller walltime. Byte av worker under movement-steget byter referensposition. Ingen enemyproduktion eller wave finns i tutorialen. Efter produktion väljs en ledig, giltig och synlig spawnposition från befintlig spawnmodell. Målet är idle; soldatens befintliga autoDisabled väntar på manuellt kommando.
+
+`presentation/tutorial.ts` visar aktuellt mål, leveransprogress och genomförda steg. Scenen använder hela currentMatch för HUD så räknarna följer samma state. Saveconfig 18 validerar tutorialmilestones, workerreferens och target/counter; 17 och äldre migreras utan tutorial. Alla gamla releasebot-scenarier behålls; tutorialen har separata betalda genomspelningar för två fraktioner och två speeds.

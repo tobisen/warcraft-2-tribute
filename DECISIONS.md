@@ -991,3 +991,7 @@ Beginner får längre förberedelse, enhetsgrupper om1, lägre initialbudget/arm
 ## Separat gameplayspeed – RTS-108, 2026-10-03
 
 Tidsskalning sker enbart vid scenens gameplay-delta-ingång; updateMatch får gameplaysekunder och skalar inte metadatafältet speed igen. UIcamera använder originaldelta och ljud använder AudioContexttid. Options speed är optional för gamla callers med1×default; nya Save17snaphots kräver validerad speed. Äldre16migreras1× utan walltimecatchup. Ingen live speedändring i denna slice.
+
+## Guidat tutorialuppdrag – RTS-109, 2026-10-03
+
+Tutorialen återanvänder Arena och befintlig ekonomi, input, byggande, produktion och combat. Progression mäts i verkligt utförda handlingar och leveranser, inte tid eller gratistilldelning. Ett stillastående idle-mål och soldier autoDisabled i stridslektionen ger utrymme för manuell attack; ordinarie andra matcher ändras inte. Tutorial får en egen victory-typ och Saveconfig 18 med validerade milestones. Inget generellt tutorialframework eller inputlås införs. Verkligt nybörjarspeltest kvarstår i RTS-110.

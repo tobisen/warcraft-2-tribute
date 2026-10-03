@@ -1,3 +1,5 @@
+import {renderTutorial} from '../presentation/tutorial';
+import type {TutorialState} from '../gameplay/tutorial';
 import {isGameSpeed} from '../config/gameSpeed';
 import {commandFeedback,renderCommandFeedback} from '../presentation/commandFeedback';
 import {createWarningState,warningSnapshot,updateAttackWarnings,renderAttackWarning} from '../presentation/attackWarnings';
@@ -108,6 +110,7 @@ export class BootScene extends Phaser.Scene {
   private queuePanel!:HTMLElement;
   private orderVisuals = new Map<string, Phaser.GameObjects.Graphics>();
   private warningState=createWarningState();
+  private tutorial?:TutorialState;
   private warningVisual?:Phaser.GameObjects.Graphics;
   private enemyNaval?:EnemyNavalState;
   private unloadMode:string|null=null;
@@ -713,8 +716,7 @@ export class BootScene extends Phaser.Scene {
     const ability=abilityFor(this.gathering),abilityButton=document.querySelector<HTMLButtonElement>('#unit-ability')!;
     abilityButton.textContent=`${ability.label} · ${ability.description} · ${ability.durationSeconds} s`;abilityButton.disabled=!this.gameplayActive()||!this.gathering.units.some(u=>u.selected&&abilityReady(u));
     document.getElementById('ability-status')!.textContent=abilityStatus(this.gathering);
-    const labels = matchLabels({ factions:this.factions,map: this.map, gathering: this.gathering, combat: this.combat, waves: this.waves,
-      production: this.production, soldierProduction: this.soldierProduction, placement: this.placement, outcome: this.outcome,scenario:this.scenario,difficulty:this.difficulty,fog:this.fog });
+    const labels = matchLabels(this.currentMatch());
     for (const [id, text] of [['resource-status', labels.economy], ['health-status', labels.health],
       ['wave-status', labels.wave],['population-status',`Population: ${population.used} + ${population.reserved} reserved / ${population.cap}`], ['selection-status', this.selectedBuilding ? `${(this.selectedBuilding==='harbor'?uiText.harbor:factions[this.factions.player].buildingNames[this.selectedBuilding])} selected (${Math.ceil(this.selectedBuilding==='harbor'?this.navy!.harbor!.hp:this.selectedBuilding==='base'?this.combat.baseHP:this.placement.barracksHP??combatConfig.barracksHP)} HP) ${this.selectedBuilding==='harbor'?uiText.shipQueue:uiText.rightClickSetsRally2}${selectedProduction?.rallyError ? ': ' + uiText.theRallyDestinationIsBlockedOrUnreachable : ''}` : (this.navy?.ships.some(s=>s.selected)?`${this.allSelectable().filter(u=>u.selected).length} units selected · ships`:labels.selected)]]) {
       document.getElementById(id)!.textContent = text;
@@ -774,6 +776,7 @@ export class BootScene extends Phaser.Scene {
     if(this.fogOverlay)drawFog(this.fogOverlay,this.fog,this.fogPreview??'player');
     for(const shortcut of hotkeys){const button=document.getElementById(shortcut.button)!;button.textContent=`${button.textContent?.replace(/\s+\[[A-Z]\]$/,'')} [${shortcut.key}]`;button.title=shortcut.label;}
     renderActionPanel(actionPanel(this.currentMatch(),this.selectedBuilding,this.gameplayActive()));
+    renderTutorial(this.currentMatch());
     renderCommandFeedback(commandFeedback(this.currentMatch(),this.selectedBuilding,{placementError:this.placementFeedbackError,attackMove:this.attackMoveMode,unload:!!this.unloadMode}));
     const feedback=updateAttackWarnings(this.warningState,warningSnapshot(this.currentMatch()),this.visualTime,this.gameplayActive());
     this.warningState=feedback.state;renderAttackWarning(feedback.state.warning);if(feedback.sound)gameAudio.play('warning');
@@ -800,7 +803,7 @@ export class BootScene extends Phaser.Scene {
     this.syncVisuals();
   }
 
-  private currentMatch():MatchState {return {speed:this.session.options.speed??1,enemyNaval:this.enemyNaval,navy:this.navy,factions:{...this.factions},map:this.map,gathering:this.gathering,combat:this.combat,waves:this.waves,production:this.production,soldierProduction:this.soldierProduction,placement:this.placement,outcome:this.outcome,paused:!this.gameplayActive(),controlGroups:this.controlGroups,fog:this.fog,research:this.research,scenario:this.scenario,difficulty:this.difficulty,enemyProduction:this.enemyProduction,enemyAI:this.enemyAI,enemyConstruction:this.enemyConstruction,enemyPolicy:this.enemyPolicy,enemyRecovery:this.enemyRecovery,enemyKnowledge:this.enemyKnowledge};}
+  private currentMatch():MatchState {return {tutorial:this.tutorial,speed:this.session.options.speed??1,enemyNaval:this.enemyNaval,navy:this.navy,factions:{...this.factions},map:this.map,gathering:this.gathering,combat:this.combat,waves:this.waves,production:this.production,soldierProduction:this.soldierProduction,placement:this.placement,outcome:this.outcome,paused:!this.gameplayActive(),controlGroups:this.controlGroups,fog:this.fog,research:this.research,scenario:this.scenario,difficulty:this.difficulty,enemyProduction:this.enemyProduction,enemyAI:this.enemyAI,enemyConstruction:this.enemyConstruction,enemyPolicy:this.enemyPolicy,enemyRecovery:this.enemyRecovery,enemyKnowledge:this.enemyKnowledge};}
 
   private drawHP(position:Position,hp:number,max:number,width:number,offset:number,color:number):void {this.hpBars?.fillStyle(0x172422).fillRect(position.x-width/2-1,position.y-offset-1,width+2,5).fillStyle(color).fillRect(position.x-width/2,position.y-offset,width*Math.max(0,Math.min(1,hp/max)),3);}
 
@@ -845,6 +848,7 @@ export class BootScene extends Phaser.Scene {
     }
   }
   private applyMatch(match: MatchState): void {
+    this.tutorial=match.tutorial;
     this.navy=match.navy;this.enemyNaval=match.enemyNaval;
     this.factions={...(match.factions??defaultFactions)};
     this.controlGroups=match.controlGroups??{};

@@ -10,7 +10,7 @@
       <header id="home-brand"><div class="home-crest" aria-hidden="true">W</div><p class="eyebrow" data-ui-text="anIndependentFantasyRts">An independent fantasy RTS</p><h1>warcraft-2-tribute</h1><p class="home-subtitle">Raise a stronghold. Command your army.<br>Conquer the shores.</p></header>
       <nav id="home-navigation" aria-label="Main menu"><h2 data-ui-text="chooseYourBattle">Choose your battle</h2><button id="menu-campaign" type="button" data-ui-text="campaign">Campaign</button><button id="menu-skirmish" type="button" data-ui-text="skirmish">Skirmish</button><button id="menu-load" type="button" data-ui-text="loadGame">Load Game</button><button id="menu-settings" type="button" data-ui-text="settings">Settings</button><p class="home-note" data-ui-text="localSinglePlayerYourSavesStayInThis">Local single-player · Your saves stay in this browser</p></nav>
       <div id="home-content"><button id="menu-back" type="button" hidden data-ui-text="back">← Back</button><h2 id="home-heading" hidden></h2><div id="match-setup">
-      <label><span data-ui-text="scenario">Scenario</span> <select id="scenario-select"><option value="survival">Wave-survival</option><option value="skirmish" data-ui-text="skirmish">Skirmish</option></select></label>
+      <label><span data-ui-text="scenario">Scenario</span> <select id="scenario-select"><option value="tutorial">Tutorial – First Steps</option><option value="survival">Wave-survival</option><option value="skirmish" data-ui-text="skirmish">Skirmish</option></select></label>
       <label><span data-ui-text="faction">Faction</span> <select id="faction-select"><option value="crown" data-ui-text="crownAlliance">Crown Alliance</option><option value="clans" data-ui-text="ironClan">Iron Clan</option></select></label>
       <label><span data-ui-text="difficulty">Difficulty</span> <select id="difficulty-select"><option value="beginner">Beginner</option><option value="easy">Easy</option><option value="normal" selected>Normal</option><option value="hard">Hard</option></select></label>
       <label><span data-ui-text="map">Map</span> <select id="map-select" disabled><option value="arena" data-ui-text="arena">Arena</option><option value="forest" data-ui-text="forestPass">Forest Pass</option><option value="river" data-ui-text="riverBend">River Bend</option><option value="islands" data-ui-text="islands">Islands</option></select></label>
@@ -72,6 +72,7 @@
       <p id="ability-status" role="status"></p>
       <button id="stop-units" type="button" disabled>Stop</button>
       </fieldset>
+      <p id="tutorial-objective" role="status" hidden></p>
       <p id="command-feedback" role="status"></p>
       <p id="attack-warning" role="status" hidden></p>
       <details id="command-guide"><summary data-ui-text="keysAndCommands">Keys and commands</summary><div id="command-guide-text"></div></details>

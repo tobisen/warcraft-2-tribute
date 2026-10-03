@@ -44,7 +44,7 @@ export function matchLabels(state: MatchState) {
     population:`Population: ${population.used} + ${population.reserved} reserved / ${population.cap}`,
     economy: `Wood: ${state.gathering.wood.toFixed(1)} · node: ${remaining(state.gathering.node)} · Gold: ${(state.gathering.goldBalance ?? 0).toFixed(1)} · mine: ${remaining(state.gathering.gold)}`,
     health: `${faction.buildingNames.base}: ${Math.ceil(state.combat.baseHP)} / ${combatConfig.baseHP} HP`,
-    wave: definition.victory==='enemy-base'?`${definition.label} – destroy the enemy base`:definition.victory==='timer'?`Outpost: ${Math.max(0,definition.holdSeconds!-state.waves.elapsedSeconds).toFixed(1)} s remaining`: `Wave ${state.waves.nextWave} / ${waveSchedule.length} · ` + (next
+    wave: definition.victory==='tutorial'?`Tutorial: ${Math.min(6,(state.tutorial?.step??0)+1)} / 6`:definition.victory==='enemy-base'?`${definition.label} – destroy the enemy base`:definition.victory==='timer'?`Outpost: ${Math.max(0,definition.holdSeconds!-state.waves.elapsedSeconds).toFixed(1)} s remaining`: `Wave ${state.waves.nextWave} / ${waveSchedule.length} · ` + (next
       ? `next in ${Math.max(0, next.atSeconds - state.waves.elapsedSeconds).toFixed(1)} s`
       : uiText.allWavesHaveArrived),
     selected: state.gathering.units.filter(u => u.selected).map(u => u.kind === 'worker'

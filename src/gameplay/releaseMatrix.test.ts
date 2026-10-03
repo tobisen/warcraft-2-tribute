@@ -2,7 +2,7 @@ import { expect, it } from 'vitest';
 import { playableScenarios, scenarioConfig } from '../config/scenarios';
 import { createMatch, updateMatch } from './match';
 import { releasePlaythrough } from './testHelpers/releaseBot';
-for (const scenario of playableScenarios.filter(id=>scenarioConfig[id].map==='arena')) for (const difficulty of ['easy', 'normal', 'hard'] as const) {
+for (const scenario of playableScenarios.filter(id=>id!=='tutorial'&&scenarioConfig[id].map==='arena')) for (const difficulty of ['easy', 'normal', 'hard'] as const) {
   it(`release ${scenario}/${difficulty}: legal economy, combat, pause/save, outcome and fresh restart`, () => {
     const { match, spentWood, spentGold, saved } = releasePlaythrough(scenario, difficulty);
     console.info(`${scenario}/${difficulty}: ${match.outcome} ${match.waves.elapsedSeconds.toFixed(2)}s base=${match.combat.baseHP.toFixed(1)}`);

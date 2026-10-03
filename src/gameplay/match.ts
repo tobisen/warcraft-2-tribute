@@ -1,3 +1,4 @@
+import {createTutorial,updateTutorial,type TutorialState} from './tutorial';
 import {enemyStartingBudget} from '../config/enemyNaval';
 import {isGameSpeed,type GameSpeed} from '../config/gameSpeed';
 import {createEnemyNaval,prepareEnemyNaval,updateEnemyNaval,type EnemyNavalState} from './enemyNaval';
@@ -45,6 +46,7 @@ import { updateWaves, type WaveState } from './waves';
 export type MatchOutcome = 'playing' | 'defeat' | 'victory';
 export interface MatchState {
   speed?:GameSpeed;
+  tutorial?:TutorialState;
   enemyNaval?:EnemyNavalState;
   navy?:NavyState;
   factions?:MatchFactions;
@@ -98,6 +100,7 @@ export function createMatch(scenario:MatchScenario='survival',difficulty:Difficu
     soldierProduction: { remainingSeconds: null, nextUnitNumber: 4 },
   };
   if(scenarioConfig[scenario].enemyBase){state.enemyProduction=createEnemyProduction({...difficultyProfiles[difficulty],budget:enemyStartingBudget(difficultyProfiles[difficulty].budget,mapId==='islands')});if(mapId==='islands')state.enemyNaval=createEnemyNaval();state.enemyAI=createEnemyAI();const footprint={...enemyBaseConfig.footprint};state.combat.enemies.push({id:enemyBaseConfig.id,kind:'base',owner:'enemy',hp:enemyBaseConfig.hp,footprint,position:{x:footprint.x+footprint.width/2,y:footprint.y+footprint.height/2}});state.map.obstacles.push(footprint);}
+  if(scenario==='tutorial')state.tutorial=createTutorial();
   state.map.obstacles.push(...placementObstacles(state.gathering));
   if(scenarioConfig[scenario].enemyBase&&scenario!=='siege-test'){addEnemyWorkers(state);state.enemyConstruction=createEnemyConstruction();state.enemyPolicy=createEnemyPolicy();state.enemyRecovery=createEnemyRecovery();state.enemyKnowledge=createEnemyKnowledge();}
   state.fog=matchFog(state);
@@ -106,7 +109,7 @@ export function createMatch(scenario:MatchScenario='survival',difficulty:Difficu
 
 function resolveOutcome(state: MatchState): MatchState {
   const definition=scenarioConfig[state.scenario??'survival'];
-  const victory=definition.victory==='enemy-base'? !state.combat.enemies.some(e=>e.kind==='base'&&e.hp>0)
+  const victory=definition.victory==='tutorial'?state.tutorial?.step===6:definition.victory==='enemy-base'? !state.combat.enemies.some(e=>e.kind==='base'&&e.hp>0)
     :definition.victory==='timer'?state.waves.elapsedSeconds+1e-10>=definition.holdSeconds!
     :state.waves.nextWave===scenarioWaves(state.scenario??'survival',state.difficulty??'normal').length&&state.combat.enemies.every(e=>e.kind==='base');
   const outcome:MatchOutcome=state.combat.baseHP<=0?'defeat':victory?'victory':'playing';
@@ -162,13 +165,13 @@ function advance(state: MatchState, delta: number): MatchState {
   updated=updateEnemyExploration(updated);
   const separated=separateBodies(updated.map,[...updated.gathering.units.map(u=>({id:`player:${u.id}`,position:u.position,half:(u.kind==='worker'?unitStats:combatUnitStats(u)).size/2})),...updated.combat.enemies.filter(e=>e.kind!=='ship'&&e.kind!=='base').map(e=>({id:`enemy:${e.id}`,position:e.position,half:combatConfig.enemySize/2}))],delta);
   if(separated.size){updated.gathering={...updated.gathering,units:updated.gathering.units.map(u=>{const position=separated.get(`player:${u.id}`);return position?{...u,position,navigation:correctedNavigation(updated.map,position,(u.kind==='worker'?unitStats:combatUnitStats(u)).size/2,u.navigation)}:u;})};updated.combat={...updated.combat,enemies:updated.combat.enemies.map(e=>{const position=separated.get(`enemy:${e.id}`);return position?{...e,position,navigation:correctedNavigation(updated.map,position,combatConfig.enemySize/2,e.navigation)}:e;})};}
-  updated.gathering=advanceAbilities(updated.gathering,delta);updated.fog=matchFog(updated);return resolveOutcome(updated);
+  updated.gathering=advanceAbilities(updated.gathering,delta);updated.fog=matchFog(updated);const taught=updateTutorial(updated);if(taught!==updated){updated=taught;updated.fog=matchFog(updated);}return resolveOutcome(updated);
 }
 
 /** Split only at wave boundaries, retaining delta-based gameplay rather than a fixed timestep. */
 export function updateMatch(state: MatchState, deltaSeconds: number): MatchState {
   if (state.paused||state.outcome !== 'playing') return state;
-  const cleaned=cleanDestroyed(state);
+  const cleaned=updateTutorial(cleanDestroyed(state));
   let current = resolveOutcome(cleaned);
   if(cleaned.fog&&(deltaSeconds<=0||current.outcome!=='playing'))current={...current,fog:matchFog(cleaned)};
   let remaining = Math.max(0, deltaSeconds);

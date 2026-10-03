@@ -2,7 +2,7 @@
 
 ## Inriktning
 
-RTS-001–108 är implementerade. Roadmap109–120 återstår;091–106 omfattar den färdiga presentationsetappen. Slicebeskrivningarna visar utvecklingen;
+RTS-001–109 är implementerade. Roadmap110–120 återstår;091–106 omfattar den färdiga presentationsetappen. Slicebeskrivningarna visar utvecklingen;
 avsnitten RTS-018–060 längst ned anger dagens HUD, terrain/navigation,
 kantbaserade ranges, gruppmål och säkra placering/spawn.
 
@@ -1049,3 +1049,9 @@ Ekonomisk skirmish lägger befintliga20s grace till first dispatch; muster/armyt
 ## Spelhastighet (RTS-108)
 
 Välj 0.75× eller 1× oberoende av difficulty i setup. 1× är default och valet låses under match. All gameplay, inklusive movement, gathering, construction, production, combat, projectiles, research, abilities, AI, waves, navy och animationer använder gemensamt skalad tid. Vid 0.75× tar 5 gameplaysekunder cirka 6.67 verkliga sekunder; UI, kamera och ljudets pitch/tempo påverkas inte. Paus, end och menu ackumulerar ingen tid. Save/load och restart bevarar speed; äldre saves laddas med 1×.
+
+## Tutorial – First Steps (RTS-109)
+
+Campaigns första val erbjuder sex mål utan tidspress: välj worker, flytta minst 32 world pixels med en move-order, leverera 20 wood, färdigställ barracks, träna soldier och högerklicka det röda träningsmålet med vald soldier tills det är dött. Startsaldo är 40 wood och 10 gold; ordinarie kostnader, last, leverans och byggtid gäller. Wood i last räknas inte som levererat. Att byta vald worker under movement-steget fungerar.
+
+Inga fiender eller waves finns under förberedelsen. Det enda målet spawnar efter riktig produktion, väntar stilla och anfaller inte. Soldaten väntar på spelarens kommando i stridslektionen. Alla sex mål ger Victory; defeat har fortfarande företräde. UI visar mål, genomförda steg och levererad mängd. Pause/Save/load bevarar progression och en enda target; restart återställer alla mål och matchstate. Vanliga kontroller är tillgängliga, så spelaren får experimentera och bygga i förväg.

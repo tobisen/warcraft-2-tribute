@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-109 – Tutorial-uppdrag** — **Todo**.
+**RTS-110 – Speltest av Beginner** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -2908,13 +2908,21 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-109 – Tutorial-uppdrag
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Lär ut selection, movement, gathering, byggande, produktion och strid i små steg. Ingen tidig anfallspress. Visa tydligt aktuellt mål och när det är uppfyllt.
+**Goal:** Ett guidat uppdrag lär ut selection, movement, woodleverans, byggande, produktion och manuell attack utan tidig anfallspress.
+
+**Requirements:** Tutorial i Campaign, fast Arena och start40wood/10gold. Sex steg i ordning: välj worker; ge move-order och flytta minst32px; leverera20wood; färdigställ barracks; producera soldier; välj soldier och högerklicka träningsmålet tills det är dött. English mål/status visar aktuellt steg och genomförda steg. Alla vanliga inputs/economy gäller; inga gratis byggnader/units/debits. Ingen AI/wave före stridssteget. En stationary idle enemy spawnar på giltig ledig synlig position nära barracks först efter riktig produktion; soldier autoacquisition väntar på manuellt command i lektionen. Inga enemyattacks i tutorialen. Victory efter alla steg; defeat behåller företräde. Paus, Save/load och restart bevarar/återställer tutorialstate korrekt och ingen dubblerad target. Fristående progression/selection-positionmilestone och värden i config. Speed/difficulty oberoende, ingen ny balans för andra scenarios.
+
+**Non-goals:** Guided overlays på varje control, inputlås, nya maps/assets, avancerat tutorialframework, verkligt nybörjarspeltest110.
 
 **Dependencies:** RTS-108.
 
-**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+**Acceptance criteria:** En spelare kan genomföra sex tydliga mål och nå Victory med betald ekonomi, i båda fraktioner och speeds. Ingen tidsbaserad anfallspress även vid lång förberedelse. Gather räknar faktisk leverans, inte last/initialsaldo; movement kräver en move-order. Tutorial status/Englishcontrols ryms båda upplösningar. Save/load mitt i lektion och combat återupptar rätt steg/en enda target; restart fresh. Befintliga matcher ändras inte.
+
+**Tester:** Progressionsgränser, fel order/last vsleverans, construction/paidspawn/manualattack, noearlyenemy/targetonce, pause/end/restart, Save18/17migration och invalid tutorialstate. Dedikerade faktiska betalda genomspelningar för två fraktioner/två speeds; legacy releasebots behåller alla gamla scenarios. Relevanta session/Save/mission/presentation/combat/ekonomitester, fullsuite/typecheck/build/diff. Browser hela sexstegsflödet inklusive Save/load/restart båda upplösningar.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md, README.md.
 
 ## RTS-110 – Speltest av Beginner
 
