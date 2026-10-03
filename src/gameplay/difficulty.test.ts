@@ -2,10 +2,10 @@ import { describe,expect,it } from 'vitest';
 import { difficultyProfiles,initialDifficulty,type Difficulty } from '../config/difficulty';
 import { createMatch,updateMatch } from './match';
 import { matchLabels } from '../presentation/hud';
-const choices:Difficulty[]=['easy','normal','hard'];
+const choices:Difficulty[]=['beginner','easy','normal','hard'];
 describe('bounded difficulty profiles',()=>{
  it('validates initial choice and isolates mutable states/configs',()=>{
-  expect(initialDifficulty('invalid')).toBe('normal');expect(initialDifficulty('easy')).toBe('easy');expect(initialDifficulty('hard')).toBe('hard');
+  expect(initialDifficulty('beginner')).toBe('beginner');expect(initialDifficulty('invalid')).toBe('normal');expect(initialDifficulty('easy')).toBe('easy');expect(initialDifficulty('hard')).toBe('hard');
   const before=JSON.stringify(difficultyProfiles),a=createMatch('skirmish','easy'),b=createMatch('skirmish','easy');a.enemyProduction!.wood=0;a.enemyAI!.reserve.push('invalid');a.map.obstacles[0].x=0;
   expect(b.enemyProduction!.wood).toBe(40);expect(b.enemyAI!.reserve).toEqual([]);expect(JSON.stringify(difficultyProfiles)).toBe(before);
  });
@@ -25,7 +25,7 @@ describe('bounded difficulty profiles',()=>{
   expect(s.enemyAI!.groups.filter(g=>g.status==='attack')).toHaveLength(1);
   const restart=createMatch(s.scenario,s.difficulty);expect(restart.difficulty).toBe(difficulty);expect(restart.enemyProduction!.wood).toBe(p.budget.wood);expect(restart.enemyProduction!.gold).toBe(p.budget.gold);expect(restart.enemyProduction!.acceptedJobs).toBe(0);
  });
- it('easy/normal/hard provide increasing bounded pressure without combat stat cheats',()=>{
-  expect(choices.map(d=>difficultyProfiles[d].budget.wood)).toEqual([40,80,120]);expect(choices.map(d=>difficultyProfiles[d].durationSeconds)).toEqual([7,5,4]);expect(choices.map(d=>difficultyProfiles[d].waves.reduce((n,w)=>n+w.count,0))).toEqual([4,6,9]);expect(choices.map(d=>difficultyProfiles[d].ai.firstAttackSeconds)).toEqual([75,60,50]);
+ it('beginner/easy/normal/hard provide increasing bounded pressure without combat stat cheats',()=>{
+  expect(choices.map(d=>difficultyProfiles[d].budget.wood)).toEqual([20,40,80,120]);expect(choices.map(d=>difficultyProfiles[d].durationSeconds)).toEqual([12,7,5,4]);expect(choices.map(d=>difficultyProfiles[d].waves.reduce((n,w)=>n+w.count,0))).toEqual([3,4,6,9]);expect(choices.map(d=>difficultyProfiles[d].ai.firstAttackSeconds)).toEqual([120,75,60,50]);
  });
 });

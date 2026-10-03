@@ -2,7 +2,7 @@
 
 ## Inriktning
 
-RTS-001–106 är implementerade. Roadmap107–120 återstår;091–106 omfattar den färdiga presentationsetappen. Slicebeskrivningarna visar utvecklingen;
+RTS-001–107 är implementerade. Roadmap108–120 återstår;091–106 omfattar den färdiga presentationsetappen. Slicebeskrivningarna visar utvecklingen;
 avsnitten RTS-018–060 längst ned anger dagens HUD, terrain/navigation,
 kantbaserade ranges, gruppmål och säkra placering/spawn.
 
@@ -1032,3 +1032,16 @@ Markerade egna enheter visar grön move-ring, rött attack/attack-move-crosshair
 ## Attackvarningar (RTS-106)
 
 Skada mot egna objekt visar Your base/building/units are under attack! och en röd ring vid senaste skadepositionen. Basen prioriteras; ingen automatisk kameraflytt eller fiendeinformation. Kort originalcue, högst en varning per3gameplaysekunder,4sekunders visning. Mute/effects gäller; pause/end döljer varningen och restart/load börjar utan gamla alerts.
+
+## Svårighetsprofiler (RTS-107)
+
+Svårighet ändrar enemyresurser, armycap, produktion och attacktimers; spelarens ekonomi/combatstats och gameplaytid är lika. Normal är default. Beginner är en initial configprofil, ännu inte nybörjarspeltestad (RTS-110).
+
+| Profil | Enemy initial wood/gold | Armycap | Soldierproduktion | First dispatch | Group / gap | Survivalwaves tid:antal |
+| --- | --- | --- | --- | --- | --- | --- |
+| Beginner | 20/5 | 3 | 12s | 120s | 1 / 30s | 120:1, 180:1, 240:1 |
+| Easy | 40/10 | 4 | 7s | 75s | 2 / 20s | 75:1, 110:1, 145:2 |
+| Normal | 80/20 | 6 | 5s | 60s | 2 / 15s | 60:1, 90:2, 120:3 |
+| Hard | 120/30 | 8 | 4s | 50s | 3 / 12s | 50:2, 80:3, 110:4 |
+
+Ekonomisk skirmish lägger befintliga20s grace till first dispatch; muster/armytilgänglighet kan fördröja ytterligare. Clans soldierproduktion tar1s extra i alla profiler. Beginner reserve0/maxdefenders1; övriga reserve1/maxdefenders2. Custom Outpost waves justeras Beginner+30s/−1unit, Easy+10s/−1, Normal0/0, Hard−5s/+1 (minst1): Beginner60:1,90:1,110:1, men missionen slutar efter90s enligt befintligt timer-win-villkor. Islands får samma separata navalbonus120wood/30gold och två passagerare; transportlaunch tidigast320/260/220/190s. Enemy bygger och samlar enligt befintliga regler; lägre startbudget och längre produktion bromsar utvecklingen utan ändrad gatherhastighet.

@@ -983,3 +983,7 @@ Pan speed valideras mot240/480/720 och edge-pan mot boolean. Standard480/on enli
 ## RTS-104 – Modal UI återanvänder session
 
 Pausens subpages är appägd UI-state, inte match/Save. Quit-confirm använder befintlig new-match först efter uttrycklig Confirm; Cancel/Back/Escape gör ingen sessiontransition. Native browser fullscreen med faktisk state/felkvitto, separat från gameplay. Befintlig Escape-previewcancel prioriteras före paus. Modal har backdrop/fokusfälla och håller worldviewport stabil.
+
+## Beginnerprofil – RTS-107, 2026-10-03
+
+Beginner får längre förberedelse, enhetsgrupper om1, lägre initialbudget/armycap och12s soldierproduktion. Reserve0/maxdefenders1 gör att den enda initialt finansierade soldaten faktiskt kan ingå i ett anfall. Player combatstats/gather är lika; svårighet påverkar ingen global gameplayspeed. Outpost hålltid90s och navalbonus/passagerarantal bevaras, men attacker skjuts fram. Detta är en preliminär configprofil inför verkligt nybörjarspeltest110; exakta jämförelser finns i GAME_DESIGN.md.

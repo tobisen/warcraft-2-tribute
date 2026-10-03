@@ -15,6 +15,6 @@ export const scenarioConfig:Record<MatchScenario,ScenarioDefinition>={
 };
 export const playableScenarios:MatchScenario[]=['survival','skirmish','mission-waves','mission-base','mission-outpost','mission-sea'];
 export function initialScenario(value:string|null):MatchScenario{return value&&Object.hasOwn(scenarioConfig,value)?value as MatchScenario:'survival';}
-export function scenarioWaves(scenario:MatchScenario,difficulty:Difficulty){const custom=scenarioConfig[scenario].waveSchedule;if(!custom)return difficultyProfiles[difficulty].waves;return custom.map(w=>({atSeconds:w.atSeconds+(difficulty==='easy'?10:difficulty==='hard'?-5:0),count:Math.max(1,w.count+(difficulty==='easy'?-1:difficulty==='hard'?1:0))}));}
+export function scenarioWaves(scenario:MatchScenario,difficulty:Difficulty){const custom=scenarioConfig[scenario].waveSchedule;if(!custom)return difficultyProfiles[difficulty].waves;return custom.map(w=>({atSeconds:w.atSeconds+difficultyProfiles[difficulty].mission.delaySeconds,count:Math.max(1,w.count+difficultyProfiles[difficulty].mission.countAdjustment)}));}
 
 export function scenarioMapAllowed(scenario:MatchScenario,map:MapId):boolean{return scenario==='skirmish'||map===scenarioConfig[scenario].map;}

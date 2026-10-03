@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-107 – Svårighetsgrader** — **Todo**.
+**RTS-108 – Separat spelhastighet** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -2872,13 +2872,21 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-107 – Svårighetsgrader
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Definiera Beginner, Easy, Normal och Hard i config. Beginner ska ge längre förberedelsetid, mindre anfall och långsammare AI-utveckling. Dokumentera skillnaderna.
+**Goal:** Fyra tydliga configstyrda profiler Beginner/Easy/Normal/Hard; Beginner ger längre prep, mindre anfall och långsammare armyutveckling.
+
+**Requirements:** Beginner: enemy initial20wood/5gold, armycap3,12s produktion, group1, reserve0/maxdefenders1, förstattack120s (+befintlig economygrace),30s dispatchgap; survivalwaves120/180/240s en enhet pervåg. Custommissionwaves +30s/count−1(min1). Islands transportlaunch320s. Easy/Normal/Hard bibehålls exakt; custommissionjusteringar flyttas till samma profileconfig. Player costs/HP/gather/movement och gameplayspeed oförändrade. Menu/URL/summary/Save/load/restart accepterar Beginner; invalidval behåller befintliga defaults. Alla skillnader inklusive custommission/islandstider dokumenteras.
+
+**Non-goals:** Separat speed108, tutorial109, empirisk nybörjarbalans110, statcheats, nya AIbeteenden/maps.
 
 **Dependencies:** RTS-106.
 
-**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+**Acceptance criteria:** Verklig Beginner fördröjer första wave/dispatch och armyproduktion, färre/senare anfall än Easy. Alla fyra kan startas och laddas med rätt val; restart bevarar profil. Ingen regression av tre gamla profiler eller configmutation. Browser visar rätt English profile/details och inget tidigt anfall.
+
+**Tester:** Alla profilegränser/cap/budget/produktion/dispatch, defaultval, missionjusteringar, navylaunch, Save/load/restart, stats/speedoförändring och configisolation. Relevanta difficulty/missions/settings/Save/session/navaltester samt fullsuite inför commit; typecheck/build/diff. Browser Beginner/Summary/prep/Save/load/restart vid båda upplösningar.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md, README.md.
 
 ## RTS-108 – Separat spelhastighet
 
