@@ -83,7 +83,7 @@ export class BootScene extends Phaser.Scene {
   private enemyProduction?:EnemyProductionState;
   private scenario:MatchScenario=initialScenario(new URLSearchParams(window.location.search).get('scenario'));
   private difficulty:Difficulty=initialDifficulty(new URLSearchParams(window.location.search).get('difficulty'));
-  private session:MatchSession=createSession({scenario:this.scenario,difficulty:this.difficulty,map:'arena',faction:this.factions.player});
+  private session:MatchSession=createSession({scenario:this.scenario,difficulty:this.difficulty,map:scenarioConfig[this.scenario].map,faction:this.factions.player});
   private skipGameplayFrame=true;
   private scenarioSelect!:HTMLSelectElement;
   private research:ResearchState=createResearch();
@@ -437,7 +437,7 @@ export class BootScene extends Phaser.Scene {
     (document.getElementById('gameplay-controls') as HTMLFieldSetElement).disabled=!this.gameplayActive();
     document.getElementById('hud')!.hidden=menu;const game=document.getElementById('game')!,wasHidden=game.hidden;game.hidden=menu;
     if(wasHidden&&!menu)this.scale.refresh();
-    document.getElementById('mission-instruction')!.textContent=maps[this.session.options.map??'arena'].instruction??scenarioConfig[this.session.options.scenario].instruction;
+    document.getElementById('mission-instruction')!.textContent=this.session.options.scenario==='skirmish'?(maps[this.session.options.map??'arena'].instruction??scenarioConfig.skirmish.instruction):scenarioConfig[this.session.options.scenario].instruction;
     document.getElementById('session-status')!.textContent=menu?'Välj scenario och svårighetsgrad, sedan Starta match':phase==='paused'?'Pausad – matchen är fryst':phase==='ended'?'Matchen är avslutad – starta om eller välj ny match':`${scenarioConfig[this.session.options.scenario].label} · ${this.session.options.difficulty} · ${maps[this.session.options.map].label}`;
   }
 
@@ -644,7 +644,7 @@ export class BootScene extends Phaser.Scene {
     this.restartButton.hidden = this.session.phase!=='paused'&&this.session.phase!=='ended';
     this.restartButton.disabled = this.restartPending;
     const definition=scenarioConfig[this.scenario];
-    this.matchStatus.textContent=this.outcome==='defeat'?'Defeat – basen är förstörd':this.outcome==='victory'?definition.victory==='enemy-base'?'Victory – fiendebasen är förstörd':definition.victory==='timer'?'Victory – utposten höll i 90 sekunder':'Victory – alla vågor besegrade':maps[this.map.id??'arena'].instruction??definition.instruction;
+    this.matchStatus.textContent=this.outcome==='defeat'?'Defeat – basen är förstörd':this.outcome==='victory'?definition.victory==='enemy-base'?'Victory – fiendebasen är förstörd':definition.victory==='timer'?'Victory – utposten höll i 90 sekunder':'Victory – alla vågor besegrade':this.scenario==='skirmish'?(maps[this.map.id??'arena'].instruction??definition.instruction):definition.instruction;
     this.syncPlacement();this.syncNavy();
     this.goldVisual.setFrame(resourceFrame('gold',this.gathering.gold!.remaining,isVisible(this.fog,'player',this.gathering.gold!.position)));
     this.nodeVisual.setFrame(resourceFrame('wood',this.gathering.node.remaining,isVisible(this.fog,'player',this.gathering.node.position)));

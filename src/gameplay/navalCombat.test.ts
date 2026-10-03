@@ -58,3 +58,7 @@ it('real coastal melee destroys a paid harbor and clears builder/footprint witho
  m.navy!.harbor!.hp=6;m.combat.enemies=[{id:'enemy-1',owner:'enemy',hp:36,position:{x:288,y:448},order:{kind:'defend',targetId:'harbor'}}];const wood=m.gathering.wood,gold=m.gathering.goldBalance,revision=m.map.revision;
  m=tick(m,1);expect(m.navy!.harbor).toBeNull();expect(m.map.revision).toBeGreaterThan(revision);expect(m.map.obstacles).not.toContainEqual({x:192,y:416,width:64,height:64});expect(m.gathering.wood).toBe(wood);expect(m.gathering.goldBalance).toBe(gold);expect(m.gathering.units[0].order.kind).toBe('idle');expect(m.combat.enemies[0].order!.kind).toBe('idle');
 });
+
+it('inflight saved cannon resumes damage and fog cancellation identically without revealing target',()=>{
+ let m=fixture();m.navy=attackShips(m,'enemy-1');m=tick(m,.1);const loaded=decodeSave(encodeSave(m,{camera:{x:0,y:0},building:null}));expect(loaded.ok).toBe(true);if(!loaded.ok)throw Error(loaded.error);expect(tick(m,.6).combat.enemies[0].hp).toBe(tick(loaded.match,.6).combat.enemies[0].hp);const hidden=tick(loaded.match,.6,false);expect(hidden.combat.enemies[0].hp).toBe(36);expect(hidden.combat.projectiles).toEqual([]);expect(hidden.navy!.ships[0].order.kind).toBe('idle');
+});

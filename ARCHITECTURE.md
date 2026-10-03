@@ -1203,3 +1203,14 @@ Scene presenterar tillfällig röd transport; slutlig sjöart ligger i089.
 Save schema2/config15 migrerar14 utan gratis kapital/flotta; strikta
 passagerar-ID:n, fas/producer/route/domain/refs valideras. Restart skapar
 ny finite profil. Landkartors bank och AI förblir oförändrade.
+
+## RTS-088: konfigurering av fast sjöuppdrag
+
+scenarioConfig.mission-sea återanvänder enemy-base-objectivet på Öarna.
+scenarioMapAllowed delar kartregeln mellan Match, menyinställningar och
+Save; endast Skirmish har fritt kartval. Scenario-only menybyte väljer
+uppdragets fasta karta atomiskt; ogiltig scenario-patch avslås före uppslag.
+Save schema2/config16 migrerar15 och nekar förfalskat nytt uppdrag i äldre
+format. Presentation visar uppdragets instruktion framför kartans generella
+Skirmishtext. Tester fortsätter både verklig betald produktion och sparad
+överfart/projektilflykt; kanoncombat och fog-regler är oförändrade.

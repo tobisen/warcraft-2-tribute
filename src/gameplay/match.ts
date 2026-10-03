@@ -25,7 +25,7 @@ import { matchFog } from './matchFog';
 import type { FogState } from './fog';
 import { createEnemyAI,updateEnemyAI,type EnemyAIState } from './enemyAI';
 import { createEnemyProduction,updateEnemyProduction,type EnemyProductionState } from './enemyProduction';
-import { scenarioConfig,scenarioWaves,enemyBaseConfig,type MatchScenario } from '../config/scenarios';
+import { scenarioConfig,scenarioMapAllowed,scenarioWaves,enemyBaseConfig,type MatchScenario } from '../config/scenarios';
 import { createResearch,updateResearch,type ResearchState } from './research';
 import { cleanDestroyed } from './destruction';
 import { updateConstruction, barracksReady } from './construction';
@@ -69,8 +69,8 @@ export interface MatchState {
 }
 
 /** A fresh state owns every mutable position/array; restart never reuses a previous match. */
-export function createMatch(scenario:MatchScenario='survival',difficulty:Difficulty='normal',factions:MatchFactions={...defaultFactions},mapId:MapId='arena'): MatchState {
-  if(!isMapId(mapId)||scenario!=='skirmish'&&mapId!=='arena')throw Error('Unknown or unsupported map');
+export function createMatch(scenario:MatchScenario='survival',difficulty:Difficulty='normal',factions:MatchFactions={...defaultFactions},mapId:MapId=scenarioConfig[scenario].map): MatchState {
+  if(!isMapId(mapId)||!scenarioMapAllowed(scenario,mapId))throw Error('Unknown or unsupported map');
   if(!isFactionId(factions.player)||!isFactionId(factions.enemy))throw Error('Unknown faction');
   const state: MatchState = {
     factions:{...factions},

@@ -2,7 +2,7 @@
 
 ## Inriktning
 
-RTS-001–087 är implementerade. RTS-088–090 är planerade för fortsatt taskvis implementation. Slicebeskrivningarna visar utvecklingen;
+RTS-001–088 är implementerade. RTS-089–090 är planerade för fortsatt taskvis implementation. Slicebeskrivningarna visar utvecklingen;
 avsnitten RTS-018–060 längst ned anger dagens HUD, terrain/navigation,
 kantbaserade ranges, gruppmål och säkra placering/spawn.
 
@@ -951,3 +951,12 @@ bara en transport, inga kanonbåtar och ingen återuppbyggnad. Sänkning ger
 inte victory: fiendebasen måste fortfarande förstöras. Inga balansvärden
 ändrades eftersom de verifierade progressionerna fungerar. Resultaten
 är deterministiska scenarioflöden, inte ett statistiskt balanspåstående.
+
+## RTS-088: sjöuppdrag med befintligt basmål
+
+Uppdrag4 – Överfarten låser Öarna och börjar med20wood/10gold. Victory
+kräver förstörd fiendebas; egen bas0HP ger alltid defeat, även samtidigt.
+Samma betalda armé/transport och ändliga enemy-landstigning används.
+Inga gratis fartyg eller kampanjsystem. Meny/restart/Save behåller scenario,
+fraktion, svårighet och fast map. Egna lastade units och enemy-passagerare
+saknar separata minimap-/synmarkörer; kanonskott kräver fortsatt målsyn.

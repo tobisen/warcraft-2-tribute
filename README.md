@@ -2,7 +2,7 @@
 
 Browserbaserat singleplayer-RTS inspirerat av Warcraft 2, Age of Empires 2 och
 Command & Conquer. Phaser, strict TypeScript och Vite; local-first, gameplay
-före grafik. Implementerat genom RTS-087 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
+före grafik. Implementerat genom RTS-088 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
 
 ## Installation och lokal start
 
@@ -20,7 +20,7 @@ Små fönster kan scrollas.
 
 ## Spela matchen
 
-I startmenyn: välj Wave-survival, Skirmish eller något av de tre uppdragen och Easy/Normal/Hard, sedan
+I startmenyn: välj Wave-survival, Skirmish eller något av de fyra uppdragen och Easy/Normal/Hard, sedan
 ”Starta match”. Byt val via ”Ny match / meny” och starta där en ny match. Survival har tre ändliga waves; i Skirmish finns inga waves och målet
 är att förstöra fiendebasen vid (1008,144). Fienden delar wood- och gold-noderna med spelaren: två arbetare levererar till
 sin bas och finansierar produktion utöver startbudgeten. Fienden samlar grupper och
@@ -522,3 +522,11 @@ hamn + kanonbåt för80wood/25gold stoppa anfallet. Högerklicka tomt vatten
 för transportens överfart, välj den och landsätt på synlig fri kust inom64px.
 En transport kan inte attackera ett fiendefartyg; välj en annan vattenpunkt
 om fienden ligger på önskad destination. Victory kräver förstörd fiendebas.
+
+## Uppdrag 4 – Överfarten
+
+Välj sjöuppdraget i menyn: kartan låses till Öarna, med20wood/10gold
+startkapital. Samla, bygg hamn/transport och landsätt en betald armé på
+fiendeön. Förstör fiendebasen och håll din egen vid liv. Båda fraktioner
+har samma sjömål; fraktionspriser och svårighetsgrad gäller. Save/load
+bevarar även transportlast och pågående kanonskott.

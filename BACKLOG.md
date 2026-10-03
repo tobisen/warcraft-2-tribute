@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-088 – Sjöuppdrag och save/load-/fog-of-war-regressioner** — **Todo**.
+**RTS-089 – Presentation och ljud för fartyg och kust** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
@@ -2526,13 +2526,21 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-088 – Sjöuppdrag och save/load-/fog-of-war-regressioner
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Sjöuppdrag och save/load-/fog-of-war-regressioner.
+**Goal:** Ett spelbart sjöuppdrag med säkert sparat transport-/stridstillstånd.
+
+**Requirements:** Uppdrag4 – Överfarten använder fast Öarna-profil, befintlig betald transport/armé och målet förstörd fiendebas med egen bas vid liv. Startkapital20wood/10gold och samma ändliga naval-AI; inga nya objectivesystem. Meny/restart/save bevarar uppdrag/map/fraktion/svårighet. Save mitt i own/enemy-transport och marineprojektilflykt ska ge samma fortsatta resultat, utan fog-läckor. Paus/terminalfreeze/defeat priority och gamla saves bevaras.
+
+**Non-goals:** Kampanj, nya kartor, gratis startflotta, escortsystem och nya combatregler.
 
 **Dependencies:** RTS-087.
 
-**Acceptance criteria:** Sjömål vinner/förlorar korrekt; mitttransport-/projektilsaves återställs utan informationsläcka.
+**Acceptance criteria:** Uppdraget kan vinnas med betald landstigning och förloras av basdöd; samtidig defeat prioriteras. Sparad överfart/skott återställs med samma last/ID/order och synliga mål; dold state visas inte efter load.
+
+**Tester:** Meny/map-normalisering, båda fraktioners betalda uppdragsflöde, victory/defeat/priority/freeze, transport-/projektilresume/fog, migration, tidigare fullsuite/typecheck/build och browseruppdrag/save.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md.
 
 ## RTS-089 – Presentation och ljud för fartyg och kust
 

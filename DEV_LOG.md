@@ -1840,3 +1840,30 @@ högerklickade fiendebåten vid880432: transporten är obeväpnad och fick
 korrekt ingen attack/move, varför landsättning från västra stranden nekades.
 Helper ändrad att högerklicka tomt vatten880496 och landsätta912496;
 båda flöden gröna. Ingen runtimeändring behövdes. Nästa088 sjöuppdrag.
+
+## 2026-10-03 – RTS-088 Done: Överfarten och naval Save-regressioner
+
+Ett fast Öarna-uppdrag,20wood/10gold, betald armé/transport och befintligt
+basmål/defeat priority. Delad scenariokartregel i menu/Match/Save, scenario-
+normalisering, config16 med säker15-migration. Öarnas betalda6-matchmatrix
+kör också sjöuppdraget. Gamla landbot-matriser väljer uttryckligen Arena-
+scenarier; inget gammalt fall borttaget. Separata tester fortsätter saved
+owncarrier-route/cargo, Enemy-loaded överfart till samma defeat och skott
+med/utan målsyn. Dolda transporter/passagerare läcker inte till minimap.
+
+Riktat50/4 PASS6,64s. Första full745PASS/9FAIL: de två gamla matriserna
+hade automatiskt fått sjöuppdraget men deras markbot använde Arena.
+Behåll landmatris och verifiera nya uppdraget i betald sjömatris; slutlig
+full745/89 PASS144,94s. Typecheck/build/diff/docs PASS; sista ändringen
+endast mellanrum i instruktion, därefter ny typecheck/build. Bundle1599,09KB/
+gzip419,04KB, storvarning kvar. Diff granskad mot fixed map, save identity,
+legacy/fog/priority/terminal input och scope utan blockerande fynd.
+
+Chromium Easy/Överfarten båda fraktioner: verklig ekonomi/armé/hamn/transport,
+Save/load/landning/strid/victory218,44/214,64s och restart. Screenshot granskad.
+Normal Skirmish separat Save i AI-last2 samt verkligt kanonskott i flykt,
+load/Resume fortsatt sänkning, oskadad bas och restart. Inga page/console/
+requestfel. Helper behövde frysa vid riktigt skott (flygtid kortare än
+browseranrop), optional initial projectile-array och återuppta Phaser-
+klockan medan matchen pausad före scene-restart; runtime oförändrad.
+RTS-088 Done, nästa089 presentation/ljud för sjö.

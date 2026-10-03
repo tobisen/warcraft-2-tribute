@@ -939,3 +939,11 @@ bara en transport, inga kanonbåtar och ingen återuppbyggnad. Sänkning ger
 inte victory: fiendebasen måste fortfarande förstöras. Inga balansvärden
 ändrades eftersom de verifierade progressionerna fungerar. Resultaten
 är deterministiska scenarioflöden, inte ett statistiskt balanspåstående.
+
+## RTS-088: ett sjöuppdrag utan nytt objectivesystem
+
+Överfarten använder Öarna,20wood/10gold och det befintliga basmålet; egen
+bas måste överleva. Ingen eskort, gratis flotta eller ny tidsseger införs.
+ScenarioDefinition.map styr fasta uppdrag; Skirmish kan fortsatt välja
+alla kartor. Save config16 skiljer nya uppdragssaves från15, medan gamla
+matchers ekonomi/map/objektiv bevaras vid migration.

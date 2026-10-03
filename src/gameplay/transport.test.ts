@@ -38,3 +38,7 @@ it('capacity is four; multi-passenger landing preserves types and uses distinct 
 it('loaded archer identity/HP is saved and it returns idle without a hidden attack order',()=>{
  let m=shore();m.gathering.units.push({id:'unit-4',kind:'soldier',owner:'player',archetype:'archer',hp:40,cargo:0,position:{x:272,y:512},target:{x:272,y:512},selected:true,order:{kind:'attack',enemyId:'historical'},attackMoveTarget:{x:700,y:500}});m.production.nextUnitNumber=m.soldierProduction.nextUnitNumber=5;m=loadTransport(m,'ship-1');expect(m.navy!.ships[0].passengers).toHaveLength(2);const saved=decodeSave(encodeSave(m,view));expect(saved.ok).toBe(true);if(saved.ok){m=unloadTransport(saved.match,'ship-1',{x:272,y:512});expect(m.gathering.units.find(u=>u.id==='unit-4')).toMatchObject({archetype:'archer',hp:40,order:{kind:'idle'},selected:false});}
 });
+
+it('a saved moving loaded carrier resumes its water route and keeps its passengers inactive',()=>{
+ let m=loadTransport(shore(),'ship-1');m.navy=commandShips(m,{x:144,y:512});m=updateNavy(m,.1);m.fog=matchFog(m);const loaded=decodeSave(encodeSave(m,view));expect(loaded.ok).toBe(true);if(!loaded.ok)throw Error(loaded.error);const a=updateNavy(m,1),b=updateNavy(loaded.match,1);expect(b.navy!.ships[0].position).toEqual(a.navy!.ships[0].position);expect(b.navy!.ships[0].passengers).toEqual(a.navy!.ships[0].passengers);expect(b.gathering.units.map(u=>u.id)).toEqual(a.gathering.units.map(u=>u.id));expect(b.navy!.ships[0].passengers![0].selected).toBe(false);
+});

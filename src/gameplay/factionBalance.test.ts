@@ -4,7 +4,7 @@ import {factionsForPlayer} from '../config/factions';
 import {createMatch,updateMatch} from './match';
 import {releasePlaythrough} from './testHelpers/releaseBot';
 import {decodeSave,encodeSave} from './save';
-for(const faction of ['crown','clans'] as const)for(const scenario of playableScenarios)for(const difficulty of ['easy','normal','hard'] as const){
+for(const faction of ['crown','clans'] as const)for(const scenario of playableScenarios.filter(id=>scenarioConfig[id].map==='arena'))for(const difficulty of ['easy','normal','hard'] as const){
  it(`faction balance ${faction}/${scenario}/${difficulty}: paid victory with abilities and ledger`,()=>{
   const r=releasePlaythrough(scenario,difficulty,undefined,{faction,abilities:true}),m=r.match;
   console.info(JSON.stringify({faction,scenario,difficulty,outcome:m.outcome,time:m.waves.elapsedSeconds,baseHP:m.combat.baseHP,wood:r.spentWood,gold:r.spentGold,abilities:r.abilitiesUsed}));
