@@ -2,7 +2,7 @@
 
 ## Status och teknik
 
-Implementerat genom RTS-072: archer/projectiles, catapult/splash och Forge/research, FIFO/refund, target-HP/destruktion, workerbygge, farms, population, kamera,
+Implementerat genom RTS-096 (historiska systembeskrivningar följer): archer/projectiles, catapult/splash och Forge/research, FIFO/refund, target-HP/destruktion, workerbygge, farms, population, kamera,
 byggnadsselection, rally, Stop, gold och
 atomiska kostnader ovanpå etapp 1:s HUD, handgjorda karta och navigation för
 move/work/combat, separata gruppmål och säkra placement/spawn-regler.
@@ -1249,3 +1249,9 @@ oförändrad. Release och prestanda dokumenteras i
 ## RTS-095 – Responsiv spelvy
 
 Startsida och `#game-toolbar` har exklusiv visibility; befintliga session/audio/save DOM-element flyttas mellan containrar utan nya handlers. `main.ts` observerar faktisk `#game`-yta och anropar Scale.resize med heltal, bara vid ändring och positiv storlek. `presentation/viewport.ts` håller kamera i1:1 world pixels och centrerar en ändlig karta när canvas är större. Scenens Scale-resize uppdaterar viewport/bounds/scroll, rensar pågående drag och avregistreras på shutdown. Input använder camera.updateWorldPoint; canvasram utanför kartkameran tar inga nya orders. Sidopanelen behålls till097–101, nya kameragester till102–103.
+
+## RTS-096 – En enkel engelsk textkälla
+
+[src/text.ts](src/text.ts) är en beroendefri TypeScript-tabell för statisk UI-copy, guide, fraktions-/kart-/uppdragsnamn och återanvändbara feedbacksträngar. Config/presentation/gameplay-feedback importerar samma text utan i18nframework. `data-ui-text` ger statiska HTML-kontroller fallbacktext och gemensam bootstrapcopy; dynamiska tal/state formateras där de redan presenterades. Resultattal använder en-US.
+
+Save-schema/configversion och alla machine-ID:n bevaras. `LoadResult.code` skiljer missing/storage/version/invalid från visningsprosa; scenen använder en explicit awaitingLoadedResume-flagga. Gammal sparad rallyError används bara som error-state; den engelska UI-texten visas oavsett historiskt språk. Ingen balans eller gameplaytid ändrad.

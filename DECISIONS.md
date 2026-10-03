@@ -959,3 +959,7 @@ Karta/fraktion/svårighet återanvänder validerade options och låsta scenariok
 ## RTS-095 – Resize utan worldscale
 
 Canvas använder återstående fönsteryta efter befintlig280px HUD och sessionrad. Kartstorlek/grid/gameplay ändras inte vid resize. Kamera maximeras till kartans mått och centreras vid större fönster, utan zoom eller utsträckta pixlar; ramklick ignoreras. Resize avbryter bara oavslutad musdraggest, inte orders/selection. Nya top/bottom-HUD ingår först097–101.
+
+## RTS-096 – Engelska utan nytt språk-/Save-system
+
+Spelarvänd copy och visningsnamn är engelska. En enkel beroendefri texttabell används av config, feedback och DOM; inga locale-val eller externa dependencies. Machine IDs/orderkinds, stats och Saveversion bevaras. Nya Save-errorcodes och explicit load/resume-state ersätter textbaserade UI-villkor. Befintlig svensk sparad rally-prosa exponeras inte. Resultattal följer en-US. Dokumentation och historiska slice-texter får vara svenska.

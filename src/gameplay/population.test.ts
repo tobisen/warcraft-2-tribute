@@ -58,7 +58,7 @@ describe('farms and reserved population',()=>{
     s.map={...s.map,revision:1,obstacles:[...placementObstacles(s.gathering),s.placement.barracks,
       {x:544,y:0,width:64,height:320},{x:544,y:384,width:64,height:s.map.height-384},
       {x:728,y:48,width:24,height:104}]};
-    expect(placementError(beginPlacement(s.placement,'farm'),{x:544,y:320},s.gathering.wood,placementObstacles(s.gathering),{map:s.map,gathering:s.gathering,enemies:[]})).toContain('byggarbetarens');
+    expect(placementError(beginPlacement(s.placement,'farm'),{x:544,y:320},s.gathering.wood,placementObstacles(s.gathering),{map:s.map,gathering:s.gathering,enemies:[]})).toContain('builder');
     const r=placeBuilding(beginPlacement(s.placement,'farm'),{x:544,y:320},s.gathering.wood,placementObstacles(s.gathering),{map:s.map,gathering:s.gathering,enemies:[]});
     expect(r.placement.farms).toEqual([]);expect(r.map).toBe(s.map);expect(r.wood).toBe(200);
   });

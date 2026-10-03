@@ -1,3 +1,4 @@
+import {text as uiText} from '../text';
 import {unitStats,soldierStats} from './unit';
 import {combatConfig} from './combat';
 import {archerConfig} from './archer';
@@ -71,7 +72,7 @@ const upgrades:Record<UpgradeRole,UpgradeData>={
   defense:{role:'defense',cost:upgradeConfig.cost,durationSeconds:upgradeConfig.durationSeconds,
     maxLevel:upgradeConfig.maxLevel,multiplier:upgradeConfig.defenseMultiplier},
 };
-const factionNames={crown:{label:'Kronförbundet',unitNames:{worker:'Arbetare',soldier:'Soldat',archer:'Bågskytt',catapult:'Katapult'},buildingNames:{base:'Borg',barracks:'Kasern',farm:'Gård',forge:'Smedja'}},clans:{label:'Järnklanen',unitNames:{worker:'Klansarbetare',soldier:'Yxkrigare',archer:'Jägare',catapult:'Stenkastare'},buildingNames:{base:'Fäste',barracks:'Krigshydda',farm:'Boskapshägn',forge:'Ässja'}}};
+const factionNames={crown:{label:uiText.crownAlliance,unitNames:{worker:uiText.worker,soldier:uiText.guard,archer:uiText.archer,catapult:uiText.catapult},buildingNames:{base:uiText.keep,barracks:uiText.barracks,farm:uiText.farm,forge:uiText.forge}},clans:{label:uiText.ironClan,unitNames:{worker:uiText.clanWorker,soldier:uiText.axeWarrior,archer:uiText.hunter,catapult:uiText.stoneThrower},buildingNames:{base:uiText.stronghold,barracks:uiText.warHut,farm:uiText.cattlePen,forge:uiText.smithy}}};
 function defineFaction(id:FactionId):FactionDefinition {
   return {id,...factionNames[id],
     units:Object.fromEntries(Object.entries(units).map(([role,data])=>[role,{...data,cost:{...data.cost},id:`${id}:unit:${role}`,faction:id}])) as FactionDefinition['units'],

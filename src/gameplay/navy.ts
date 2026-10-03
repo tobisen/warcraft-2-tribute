@@ -1,3 +1,4 @@
+import {text as uiText} from '../text';
 import type {Unit} from './gathering';
 import {placementVisible} from './visibility';
 import {navyConfig} from '../config/navy';
@@ -32,22 +33,22 @@ export function harborSpawn(m:MatchState,footprint:Footprint,occupancy=true):Pos
  return spawnCandidates(map,footprint,'barracks',navyConfig.ship.size).find(p=>hasSpawnExit(map,p)&&(!occupancy||![...m.gathering.units.map(u=>unitBody(u.position,u.kind==='worker'?unitStats.size:combatUnitStats(u).size)),...(m.navy?.ships??[]).map(u=>unitBody(u.position,navyConfig.ship.size)),...m.combat.enemies.filter(e=>!e.footprint).map(e=>unitBody(e.position,24))].some(b=>overlaps(unitBody(p,navyConfig.ship.size),b))))??null;
 }
 export function harborPlacementError(m:MatchState,point:Position):string|null {
- if(m.navy?.harbor)return 'Hamn finns redan';
- const rect=harborFootprint(point);if(m.fog&&!placementVisible(m.fog,rect))return 'Platsen måste vara synlig';if(!coastalFootprint(m.map,rect))return 'Hamn kräver fri kust med land och vatten';
- if(!canAfford(m.gathering,navyConfig.harbor.cost))return 'Otillräckligt wood/gold';
- if(m.gathering.units.some(u=>overlaps(rect,unitBody(u.position,u.kind==='worker'?unitStats.size:combatUnitStats(u).size)))||m.combat.enemies.some(e=>!e.footprint&&overlaps(rect,unitBody(e.position,24)))||(m.navy?.ships??[]).some(s=>overlaps(rect,unitBody(s.position,navyConfig.ship.size))))return 'Överlappar en enhet';
+ if(m.navy?.harbor)return uiText.harborExists;
+ const rect=harborFootprint(point);if(m.fog&&!placementVisible(m.fog,rect))return uiText.theSiteMustBeVisible;if(!coastalFootprint(m.map,rect))return uiText.aHarborNeedsAFreeCoastWithLand;
+ if(!canAfford(m.gathering,navyConfig.harbor.cost))return uiText.notEnoughWoodOrGold;
+ if(m.gathering.units.some(u=>overlaps(rect,unitBody(u.position,u.kind==='worker'?unitStats.size:combatUnitStats(u).size)))||m.combat.enemies.some(e=>!e.footprint&&overlaps(rect,unitBody(e.position,24)))||(m.navy?.ships??[]).some(s=>overlaps(rect,unitBody(s.position,navyConfig.ship.size))))return uiText.overlapsAUnit;
  const builder=m.gathering.units.filter(u=>u.kind==='worker'&&u.selected).sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}))[0];
- if(!builder)return 'Välj en worker för att bygga';
+ if(!builder)return uiText.selectAWorkerToBuild;
  const after={...m,map:replaceObstacles(m.map,[...m.map.obstacles,rect])};
- if(approachRoute(after.map,builder.position,rect,navyConfig.harbor.constructionRange).status==='blocked')return 'Byggplatsen kan inte nås';
+ if(approachRoute(after.map,builder.position,rect,navyConfig.harbor.constructionRange).status==='blocked')return uiText.theBuildingSiteCannotBeReached;
  for(const worker of m.gathering.units.filter(u=>u.kind==='worker'))for(const [i,target] of placementObstacles(m.gathering).entries()){
   if(i>0&&[m.gathering.node,m.gathering.gold][i-1]?.remaining===0)continue;
-  if(approachRoute(m.map,worker.position,target,24).status!=='blocked'&&approachRoute(after.map,worker.position,target,24).status==='blocked')return 'Blockerar arbetarens bas- eller resursväg';
+  if(approachRoute(m.map,worker.position,target,24).status!=='blocked'&&approachRoute(after.map,worker.position,target,24).status==='blocked')return uiText.blocksAWorkerRouteToTheBaseOr;
  }
  const base=placementObstacles(m.gathering)[0];
  const exit=(map:typeof m.map,foot:Footprint,kind:'base'|'barracks')=>spawnCandidates(map,foot,kind).some(p=>hasSpawnExit(map,p));
- if(exit(m.map,base,'base')&&!exit(after.map,base,'base')||m.placement.barracks&&exit(m.map,m.placement.barracks,'barracks')&&!exit(after.map,m.placement.barracks,'barracks'))return 'Blockerar produktionsutgång';
- if(!harborSpawn(after,rect,false))return 'Ingen fri vattenutgång';
+ if(exit(m.map,base,'base')&&!exit(after.map,base,'base')||m.placement.barracks&&exit(m.map,m.placement.barracks,'barracks')&&!exit(after.map,m.placement.barracks,'barracks'))return uiText.blocksAProductionExit;
+ if(!harborSpawn(after,rect,false))return uiText.noFreeWaterExit;
  return null;
 }
 export function placeHarbor(m:MatchState,point:Position):MatchState {

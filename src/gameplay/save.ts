@@ -1,3 +1,4 @@
+import {text as uiText} from '../text';
 import {enemyStartingBudget,enemyNavalConfig} from '../config/enemyNaval';
 import {navyConfig} from '../config/navy';
 import {coastalFootprint,domainBodyFits} from './terrainNavigation';
@@ -26,10 +27,10 @@ import {updateMatch,type MatchState} from './match';
 import type {Position} from './movement';
 export interface SavedView {camera:Position;building:'harbor'|'base'|'barracks'|null}
 export interface SaveDocument {schemaVersion:number;configVersion:string;map:MapId;state:MatchState;view:SavedView}
-export type LoadResult={ok:true;match:MatchState;view:SavedView}|{ok:false;error:string};
+export type LoadResult={ok:true;match:MatchState;view:SavedView}|{ok:false;error:string;code:'missing'|'storage'|'version'|'invalid'};
 type Data=Record<string,unknown>;
 function ensure(test:unknown,label:string):asserts test {if(!test)throw new Error(`Ogiltig sparning: ${label}`);}
-function r(value:unknown,label:string,keys:string[]):Data {ensure(value!==null&&typeof value==='object'&&!Array.isArray(value),label);const o=value as Data;ensure(Object.keys(o).every(k=>keys.includes(k)),`${label} fält`);return o;}
+function r(value:unknown,label:string,keys:string[]):Data {ensure(value!==null&&typeof value==='object'&&!Array.isArray(value),label);const o=value as Data;ensure(Object.keys(o).every(k=>keys.includes(k)),`${label} fields`);return o;}
 function arr(value:unknown,label:string,max=saveConfig.maxUnits):unknown[]{ensure(Array.isArray(value)&&value.length<=max,label);return value;}
 function num(value:unknown,label:string,min=0,max=1e6):number {ensure(typeof value==='number'&&Number.isFinite(value)&&value>=min&&value<=max,label);return value;}
 function integer(value:unknown,label:string,min=0,max=1e6):number{const n=num(value,label,min,max);ensure(Number.isInteger(n),label);return n;}
@@ -89,7 +90,7 @@ export function decodeSave(json:string):LoadResult {
   if(doc.schemaVersion===2&&doc.configVersion==='tribute-config-13'){ensure(doc.map!=='islands','legacy islands');doc.configVersion='tribute-config-14';}
   if(doc.schemaVersion===2&&doc.configVersion==='tribute-config-14'){const old=doc.state as Data;ensure(!Object.hasOwn(old,'enemyNaval'),'legacy enemy naval');for(const e of ((old.combat as Data).enemies as Data[]))ensure(e.kind!=='ship'&&e.buildingType!=='harbor'&&!Object.hasOwn(e,'navalLanding'),'legacy enemy ship');doc.configVersion='tribute-config-15';}
   if(doc.schemaVersion===2&&doc.configVersion==='tribute-config-15'){ensure((doc.state as Data).scenario!=='mission-sea','legacy sea mission');doc.configVersion=saveConfig.configVersion;}
-  ensure(doc.schemaVersion===saveConfig.schemaVersion,'schema version (stöder v1-migration och v2)');ensure(doc.configVersion===saveConfig.configVersion,'config version');ensure(isMapId(doc.map),'map');const mapId=doc.map,definition=maps[mapId];
+  if(doc.schemaVersion!==saveConfig.schemaVersion||doc.configVersion!==saveConfig.configVersion)return {ok:false,error:'Unsupported save version',code:'version'};ensure(isMapId(doc.map),'map');const mapId=doc.map,definition=maps[mapId];
   const s=r(doc.state,'match',['enemyNaval','navy','factions','map','gathering','combat','placement','production','soldierProduction','waves','outcome','paused','research','scenario','difficulty','enemyProduction','enemyAI','enemyConstruction','enemyPolicy','enemyRecovery','enemyKnowledge','fog','controlGroups']);
   const factionData=r(s.factions,'factions',['player','enemy']);ensure(isFactionId(factionData.player)&&isFactionId(factionData.enemy),'faction identity');const playerFaction=factions[factionData.player];
   choice(s.scenario,'scenario',Object.keys(scenarioConfig));choice(s.difficulty,'difficulty',['easy','normal','hard']);choice(s.outcome,'outcome',['playing','victory','defeat']);bool(s.paused,'pause');const scenario=s.scenario as MatchScenario,difficulty=s.difficulty as Difficulty,profile=difficultyProfiles[difficulty],budget=enemyStartingBudget(profile.budget,s.enemyNaval!==undefined);
@@ -148,12 +149,12 @@ for(const u of state.gathering.units)ensure(bodyFits(state.map,u.position,(u.kin
   if(state.enemyPolicy&&(state.enemyPolicy.research.attack||state.enemyPolicy.research.defense))state.combat.enemyUpgrades={attack:state.enemyPolicy.research.attack,defense:state.enemyPolicy.research.defense};
   state.gathering.faction=factionData.player;state.placement={...state.placement,active:false};state.fog=matchFog(state);
   return {ok:true,match:state,view:{camera,building:view.building as SavedView['building']}};
- }catch(error){return {ok:false,error:error instanceof Error?error.message:'Sparningen kunde inte läsas'};}
+ }catch(error){return {ok:false,error:error instanceof Error?error.message:uiText.couldNotReadTheSave,code:'invalid'};}
 }
 export function encodeSave(state:MatchState,view:SavedView):string{
  const json=JSON.stringify({schemaVersion:saveConfig.schemaVersion,configVersion:saveConfig.configVersion,map:state.map.id??'arena',state:{...state,factions:{...(state.factions??defaultFactions)}},view},(key,value)=>['faction','navigation','blockedSpawnKey','rallyError','bodyHalf','baseSize','dropoffs','enemyUpgrades','destroyedEnemyFootprints'].includes(key)?undefined:value);
  const result=decodeSave(json);if(!result.ok)throw new Error(result.error);return json;
 }
 export interface SaveStorage {getItem(key:string):string|null;setItem(key:string,value:string):void}
-export function storeSave(storage:SaveStorage|(()=>SaveStorage),state:MatchState,view:SavedView):{ok:boolean;error?:string}{try{const target=typeof storage==='function'?storage():storage;target.setItem(saveConfig.key,encodeSave(state,view));return {ok:true};}catch(e){return {ok:false,error:e instanceof Error?e.message:'Lagring ej tillgänglig'};}}
-export function readSave(storage:SaveStorage|(()=>SaveStorage)):LoadResult{try{const target=typeof storage==='function'?storage():storage;const json=target.getItem(saveConfig.key);return json===null?{ok:false,error:'Ingen lokal sparning finns'}:decodeSave(json);}catch{return {ok:false,error:'Lokal lagring kunde inte läsas'};}}
+export function storeSave(storage:SaveStorage|(()=>SaveStorage),state:MatchState,view:SavedView):{ok:boolean;error?:string}{try{const target=typeof storage==='function'?storage():storage;target.setItem(saveConfig.key,encodeSave(state,view));return {ok:true};}catch(e){return {ok:false,error:e instanceof Error?e.message:uiText.storageUnavailable};}}
+export function readSave(storage:SaveStorage|(()=>SaveStorage)):LoadResult{try{const target=typeof storage==='function'?storage():storage;const json=target.getItem(saveConfig.key);return json===null?{ok:false,error:uiText.noLocalSaveExists,code:'missing'}:decodeSave(json);}catch{return {ok:false,error:uiText.couldNotReadLocalStorage,code:'storage'};}}

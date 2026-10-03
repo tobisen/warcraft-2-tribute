@@ -32,5 +32,5 @@ it('legacy bank without extraction records shows paid finite budget, without inv
  const m=createMatch('siege-test');const r=updateEnemyProduction(m.enemyProduction!,m.combat,m.gathering,m.map,0,'clans');m.enemyProduction=r.state;expect(matchStats(m).enemy.wood.spent).toBe(54);expect(matchStats(m).enemy.gold.spent).toBe(18);expect(matchStats(m).enemy.wood.gathered).toBe(0);expect(matchStats(m).enemy.wood.delivered).toBe(0);
 });
 it('result rows label net spending and use bounded decimals for fractional gathering',()=>{
- const m=playerGather();m.gathering=updateGathering(m.gathering,.123456,m.map);const rows=resultRows(matchStats(m));expect(rows).toHaveLength(9);expect(rows[0]).toEqual({label:'Insamlat wood',player:'0,1',enemy:'0'});expect(rows.some(r=>r.label==='Netto spenderat wood')).toBe(true);
+ const m=playerGather();m.gathering=updateGathering(m.gathering,.123456,m.map);const rows=resultRows(matchStats(m));expect(rows).toHaveLength(9);expect(rows[0]).toEqual({label:'Gathered wood',player:'0.1',enemy:'0'});expect(rows.some(r=>r.label==='Net spent wood')).toBe(true);
 });

@@ -11,7 +11,7 @@ describe('bounded difficulty profiles',()=>{
  });
  it.each(choices)('%s survival uses only its configured schedule and keeps player economy/stats',difficulty=>{
   let s=createMatch('survival',difficulty);const p=difficultyProfiles[difficulty];s=updateMatch(s,p.waves[0].atSeconds-.001);expect(s.waves.nextWave).toBe(0);
-  s=updateMatch(s,.001);expect(s.combat.enemies).toHaveLength(p.waves[0].count);expect(s.enemyProduction).toBeUndefined();expect(s.gathering.wood).toBe(0);expect(s.gathering.node.remaining).toBe(400);expect(s.combat.baseHP).toBe(240);expect(matchLabels(s).wave).toContain('Våg 1 / 3');
+  s=updateMatch(s,.001);expect(s.combat.enemies).toHaveLength(p.waves[0].count);expect(s.enemyProduction).toBeUndefined();expect(s.gathering.wood).toBe(0);expect(s.gathering.node.remaining).toBe(400);expect(s.combat.baseHP).toBe(240);expect(matchLabels(s).wave).toContain('Wave 1 / 3');
  });
  it.each(choices)('%s legacy fixture spends finite budget once, honors time/cap and dispatch grace',difficulty=>{
   let s=createMatch('siege-test',difficulty,{player:'crown',enemy:'crown'});const p=difficultyProfiles[difficulty],firstAttack=p.ai.firstAttackSeconds;s=updateMatch(s,p.durationSeconds-.001);expect(s.combat.enemies.filter(e=>e.kind!=='base'&&e.kind!=='worker')).toHaveLength(0);

@@ -1,78 +1,78 @@
 <!doctype html>
-<html lang="sv">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>warcraft-2-tribute</title>
   </head>
   <body>
-    <section id="match-menu" aria-label="Matchmeny">
-      <header id="home-brand"><div class="home-crest" aria-hidden="true">W</div><p class="eyebrow">An independent fantasy RTS</p><h1>warcraft-2-tribute</h1><p class="home-subtitle">Raise a stronghold. Command your army.<br>Conquer the shores.</p></header>
-      <nav id="home-navigation" aria-label="Main menu"><h2>Choose your battle</h2><button id="menu-campaign" type="button">Campaign</button><button id="menu-skirmish" type="button">Skirmish</button><button id="menu-load" type="button">Load Game</button><button id="menu-settings" type="button">Settings</button><p class="home-note">Local single-player · Your saves stay in this browser</p></nav>
-      <div id="home-content"><button id="menu-back" type="button" hidden>← Back</button><h2 id="home-heading" hidden></h2><div id="match-setup">
-      <label>Scenario <select id="scenario-select"><option value="survival">Wave-survival</option><option value="skirmish">Skirmish</option></select></label>
-      <label>Fraktion <select id="faction-select"><option value="crown">Kronförbundet</option><option value="clans">Järnklanen</option></select></label>
-      <label>Svårighetsgrad <select id="difficulty-select"><option value="easy">Easy</option><option value="normal" selected>Normal</option><option value="hard">Hard</option></select></label>
-      <label>Karta <select id="map-select" disabled><option value="arena">Handgjord arena</option><option value="forest">Skogspasset</option><option value="river">Flodkröken</option><option value="islands">Öarna</option></select></label>
-      <p id="map-description"></p><p id="difficulty-description"></p><label>Game speed <select id="speed-select" aria-describedby="speed-description"><option value="1">1× · Standard</option></select></label><p id="speed-description" class="home-note">Standard gameplay speed. Slower speed will be available in a later update.</p>
-      <button id="start-match" type="button">Starta match</button></div>
-      <button id="pause-match" type="button" hidden>Pausa [P]</button>
-      <button id="resume-match" type="button" hidden>Återuppta [P]</button>
-      <button id="new-match" type="button" hidden>Ny match / meny</button>
-      <button id="restart-match" type="button" hidden>Starta om</button>
-      <div id="save-controls"><button id="save-match" type="button" disabled>Spara lokalt</button> <button id="load-match" type="button">Ladda sparning</button> <span id="save-status" role="status"></span></div>
-      <details id="audio-controls"><summary>Ljud</summary>
-        <button id="audio-enable" type="button">Aktivera ljud</button>
-        <label><input id="audio-mute" type="checkbox"> Tyst</label>
-        <label>Master <input id="audio-master" type="range" min="0" max="1" step="0.05"></label>
-        <label>Effekter <input id="audio-effects" type="range" min="0" max="1" step="0.05"></label>
-        <label>Musik <input id="audio-music" type="range" min="0" max="1" step="0.05"></label>
-        <span id="audio-status" role="status">Ljud startar efter första klick eller tangenttryck</span>
+    <section id="match-menu" aria-label="Match menu">
+      <header id="home-brand"><div class="home-crest" aria-hidden="true">W</div><p class="eyebrow" data-ui-text="anIndependentFantasyRts">An independent fantasy RTS</p><h1>warcraft-2-tribute</h1><p class="home-subtitle">Raise a stronghold. Command your army.<br>Conquer the shores.</p></header>
+      <nav id="home-navigation" aria-label="Main menu"><h2 data-ui-text="chooseYourBattle">Choose your battle</h2><button id="menu-campaign" type="button" data-ui-text="campaign">Campaign</button><button id="menu-skirmish" type="button" data-ui-text="skirmish">Skirmish</button><button id="menu-load" type="button" data-ui-text="loadGame">Load Game</button><button id="menu-settings" type="button" data-ui-text="settings">Settings</button><p class="home-note" data-ui-text="localSinglePlayerYourSavesStayInThis">Local single-player · Your saves stay in this browser</p></nav>
+      <div id="home-content"><button id="menu-back" type="button" hidden data-ui-text="back">← Back</button><h2 id="home-heading" hidden></h2><div id="match-setup">
+      <label><span data-ui-text="scenario">Scenario</span> <select id="scenario-select"><option value="survival">Wave-survival</option><option value="skirmish" data-ui-text="skirmish">Skirmish</option></select></label>
+      <label><span data-ui-text="faction">Faction</span> <select id="faction-select"><option value="crown" data-ui-text="crownAlliance">Crown Alliance</option><option value="clans" data-ui-text="ironClan">Iron Clan</option></select></label>
+      <label><span data-ui-text="difficulty">Difficulty</span> <select id="difficulty-select"><option value="easy">Easy</option><option value="normal" selected>Normal</option><option value="hard">Hard</option></select></label>
+      <label><span data-ui-text="map">Map</span> <select id="map-select" disabled><option value="arena" data-ui-text="arena">Arena</option><option value="forest" data-ui-text="forestPass">Forest Pass</option><option value="river" data-ui-text="riverBend">River Bend</option><option value="islands" data-ui-text="islands">Islands</option></select></label>
+      <p id="map-description"></p><p id="difficulty-description"></p><label><span data-ui-text="gameSpeed">Game speed</span> <select id="speed-select" aria-describedby="speed-description"><option value="1" data-ui-text="value1Standard">1× · Standard</option></select></label><p id="speed-description" class="home-note" data-ui-text="standardGameplaySpeedSlowerSpeedWillBeAvailable">Standard gameplay speed. Slower speed will be available in a later update.</p>
+      <button id="start-match" type="button" data-ui-text="startMatch">Start Match</button></div>
+      <button id="pause-match" type="button" hidden data-ui-text="pauseP">Pause [P]</button>
+      <button id="resume-match" type="button" hidden data-ui-text="resumeP">Resume [P]</button>
+      <button id="new-match" type="button" hidden data-ui-text="newMatchMenu">New match / menu</button>
+      <button id="restart-match" type="button" hidden data-ui-text="restart">Restart</button>
+      <div id="save-controls"><button id="save-match" type="button" disabled data-ui-text="saveLocally">Save locally</button> <button id="load-match" type="button" data-ui-text="loadSave">Load save</button> <span id="save-status" role="status"></span></div>
+      <details id="audio-controls"><summary data-ui-text="audio">Audio</summary>
+        <button id="audio-enable" type="button" data-ui-text="enableAudio">Enable audio</button>
+        <label><input id="audio-mute" type="checkbox"> Muted</label>
+        <label><span data-ui-text="master">Master</span> <input id="audio-master" type="range" min="0" max="1" step="0.05"></label>
+        <label><span data-ui-text="effects">Effects</span> <input id="audio-effects" type="range" min="0" max="1" step="0.05"></label>
+        <label><span data-ui-text="music">Music</span> <input id="audio-music" type="range" min="0" max="1" step="0.05"></label>
+        <span id="audio-status" role="status">Audio starts after your first click or key press</span>
       </details>
       <p id="match-options-summary" aria-live="polite"></p>
       <p id="mission-instruction"></p>
       <p id="session-status" role="status"></p>
-      <section id="match-results" hidden aria-label="Matchresultat"></section>
+      <section id="match-results" hidden aria-label="Match results"></section>
       </div>
     </section>
     <section id="game-toolbar" hidden aria-label="Match controls"></section>
-    <section id="hud" aria-label="Matchstatus och kommandon">
+    <section id="hud" aria-label="Match status and commands">
       <p id="fog-fixture" hidden></p>
       <div id="match-overview">
         <span id="resource-status"></span><span id="health-status"></span><span id="wave-status"></span><span id="population-status"></span>
       </div>
       <fieldset id="gameplay-controls">
       <div id="production-controls">
-        <div class="control"><button id="train-worker" type="button" disabled>Träna arbetare – 20 wood</button>
+        <div class="control"><button id="train-worker" type="button" disabled data-ui-text="trainWorker20Wood">Train worker – 20 wood</button>
           <span id="production-status"></span></div>
-        <div class="control"><button id="build-harbor" type="button">Bygg hamn – 40 wood + 10 gold</button>
+        <div class="control"><button id="build-harbor" type="button" data-ui-text="buildHarbor40Wood10Gold">Build harbor – 40 wood + 10 gold</button>
         <div id="harbor-status"></div></div>
-        <div class="control"><button id="train-transport" type="button">Bygg transport – 40 wood + 10 gold</button></div>
-        <div class="control"><button id="unload-transport" type="button">Landsätt</button><div id="transport-status"></div></div>
-        <div class="control"><button id="train-ship" type="button">Bygg fartyg – 40 wood + 15 gold</button></div>
-        <div class="control"><button id="build-barracks" type="button">Bygg barracks – 40 wood</button>
+        <div class="control"><button id="train-transport" type="button" data-ui-text="buildTransport40Wood10Gold">Build transport – 40 wood + 10 gold</button></div>
+        <div class="control"><button id="unload-transport" type="button" data-ui-text="unload">Unload</button><div id="transport-status"></div></div>
+        <div class="control"><button id="train-ship" type="button" data-ui-text="buildWarship40Wood15Gold">Build warship – 40 wood + 15 gold</button></div>
+        <div class="control"><button id="build-barracks" type="button" data-ui-text="buildBarracks40Wood">Build barracks – 40 wood</button>
           <span id="placement-status"></span></div>
-        <div class="control"><button id="train-soldier" type="button" disabled>Träna soldier – 20 wood + 5 gold</button>
+        <div class="control"><button id="train-soldier" type="button" disabled data-ui-text="trainSoldier20Wood5Gold">Train soldier – 20 wood + 5 gold</button>
           <span id="soldier-production-status"></span></div>
-        <div class="control"><button id="build-farm" type="button" disabled>Bygg farm – 20 wood</button><span id="farm-status"></span></div>
+        <div class="control"><button id="build-farm" type="button" disabled data-ui-text="buildFarm20Wood">Build farm – 20 wood</button><span id="farm-status"></span></div>
       </div>
-      <button id="train-archer" type="button" disabled>Träna archer – 20 wood + 10 gold</button>
-      <button id="train-catapult" type="button" disabled>Träna catapult – 40 wood + 20 gold</button>
-      <button id="build-forge" type="button" disabled>Bygg Forge</button>
+      <button id="train-archer" type="button" disabled data-ui-text="trainArcher20Wood10Gold">Train archer – 20 wood + 10 gold</button>
+      <button id="train-catapult" type="button" disabled data-ui-text="trainCatapult40Wood20Gold">Train catapult – 40 wood + 20 gold</button>
+      <button id="build-forge" type="button" disabled data-ui-text="buildForge">Build forge</button>
       <button id="research-attack" type="button" disabled>Attack +25 %</button>
       <button id="research-defense" type="button" disabled>Defense −25 %</button>
       <p id="research-status"></p>
-      <div id="production-queue" aria-label="Produktionskö"></div>
+      <div id="production-queue" aria-label="Production queue"></div>
       <button id="attack-move" type="button" disabled>Attack-move</button>
-      <button id="unit-ability" type="button" disabled>Förmåga</button>
+      <button id="unit-ability" type="button" disabled data-ui-text="ability">Ability</button>
       <p id="ability-status" role="status"></p>
       <button id="stop-units" type="button" disabled>Stop</button>
       </fieldset>
-      <details id="command-guide"><summary>Tangenter och kommandon</summary><div id="command-guide-text"></div></details>
-      <p id="group-status">Grupper: Ctrl+1–9 bind, 1–9 återkalla</p>
+      <details id="command-guide"><summary data-ui-text="keysAndCommands">Keys and commands</summary><div id="command-guide-text"></div></details>
+      <p id="group-status" data-ui-text="groupsCtrl19Assign19Recall">Groups: Ctrl+1–9 assign, 1–9 recall</p>
       <p id="selection-status"></p>
-      <p id="match-status" role="status">Försvara basen</p>
-      <canvas id="minimap" width="200" height="150" aria-label="Minimap – klicka för att flytta kameran"></canvas>
+      <p id="match-status" role="status" data-ui-text="protectYourBase">Protect your base</p>
+      <canvas id="minimap" width="200" height="150" aria-label="Minimap – click to move the camera"></canvas>
 
     </section>
     <div id="game"></div>

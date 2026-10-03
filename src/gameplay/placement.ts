@@ -1,3 +1,4 @@
+import {text as uiText} from '../text';
 import {navyConfig} from '../config/navy';
 import { forgeConfig } from '../config/upgrades';
 import { combatConfig } from '../config/combat';
@@ -71,30 +72,30 @@ export function cancelPlacement(state: PlacementState): PlacementState {
 
 export function placementError(state: PlacementState, point: Position, wood: number, obstacles: Footprint[], context?: PlacementContext): string | null {
   const kind=state.kind??'barracks';
-  if(kind==='harbor')return 'Hamn placeras via kustregler';
-  if(kind==='forge'&&state.forge)return 'En Forge finns redan';
-  if (kind==='barracks'&&state.barracks) return 'En barracks finns redan';
-  if (kind==='farm'&&(state.farms?.length??0)>=farmConfig.maxCount) return 'Max antal farms';
+  if(kind==='harbor')return uiText.harborUsesCoastRules;
+  if(kind==='forge'&&state.forge)return uiText.forgeExists;
+  if (kind==='barracks'&&state.barracks) return uiText.barracksExists;
+  if (kind==='farm'&&(state.farms?.length??0)>=farmConfig.maxCount) return uiText.farmLimit;
   const rect = buildingFootprint(point,kind);
   if (rect.x < 0 || rect.y < 0 || rect.x + rect.width > worldConfig.width || rect.y + rect.height > worldConfig.height) {
-    return 'Utanför världen';
+    return uiText.outsideTheWorld;
   }
   if (obstacles.some(other => rect.x < other.x + other.width && rect.x + rect.width > other.x
     && rect.y < other.y + other.height && rect.y + rect.height > other.y)) {
-    return 'Överlappar bas eller resursnod';
+    return uiText.overlapsTheBaseOrAResourceNode;
   }
-  if (!canAfford({wood,goldBalance:context?.gathering.goldBalance},costs[kind])) return 'Otillräckligt wood/gold';
+  if (!canAfford({wood,goldBalance:context?.gathering.goldBalance},costs[kind])) return uiText.notEnoughWoodOrGold;
   if (context) {
-    if(context.map.obstacles.some(o=>overlaps(rect,o)))return 'Överlappar terräng eller byggnad';
+    if(context.map.obstacles.some(o=>overlaps(rect,o)))return uiText.overlapsTerrainOrABuilding;
     if(context.gathering.units.some(u=>overlaps(rect,unitBody(u.position,u.kind==='worker'?unitStats.size:combatUnitStats(u).size)))
-      || context.enemies.some(e=>overlaps(rect,unitBody(e.position,soldierStats.size))))return 'Överlappar en enhet';
+      || context.enemies.some(e=>overlaps(rect,unitBody(e.position,soldierStats.size))))return uiText.overlapsAUnit;
     const after=replaceObstacles(context.map,[...context.map.obstacles,rect]);
     const [base,...nodes]=placementObstacles(context.gathering);
     for(const worker of context.gathering.units.filter((u):u is Extract<Unit,{kind:'worker'}>=>u.kind==='worker')) {
       for(const [target,range] of [[base,gatheringConfig.deliveryRange],
         ...nodes.flatMap((node,i)=>[context.gathering.node,context.gathering.gold][i]!.remaining>0?[[node,gatheringConfig.range] as const]:[])] as const) {
         if(approachRoute(context.map,worker.position,target,range).status!=='blocked'
-          && approachRoute(after,worker.position,target,range).status==='blocked')return 'Blockerar arbetarens bas- eller resursväg';
+          && approachRoute(after,worker.position,target,range).status==='blocked')return uiText.blocksAWorkerRouteToTheBaseOr;
       }
     }
     const sites=[...(state.forge&&state.forge.construction.remainingSeconds>0?[{footprint:state.forge.footprint,job:state.forge.construction}]:[]),...(state.barracks&&state.construction&&state.construction.remainingSeconds>0
@@ -103,23 +104,23 @@ export function placementError(state: PlacementState, point: Position, wood: num
     for(const site of sites) {
       const builder=context.gathering.units.find(u=>u.id===site.job.builderId&&u.kind==='worker');
       if(builder && approachRoute(context.map,builder.position,site.footprint,barracksConfig.constructionRange).status!=='blocked'
-        && approachRoute(after,builder.position,site.footprint,barracksConfig.constructionRange).status==='blocked')return 'Blockerar byggarbetarens väg';
+        && approachRoute(after,builder.position,site.footprint,barracksConfig.constructionRange).status==='blocked')return uiText.blocksTheBuilderRoute;
     }
     const exit=(map:WorldMap,foot:Footprint,kind:'base'|'barracks')=>spawnCandidates(map,foot,kind).some(p=>hasSpawnExit(map,p));
     if(exit(context.map,base,'base') && !exit(after,base,'base') || kind==='barracks' && !exit(after,rect,'barracks')
-      || state.barracks && exit(context.map,state.barracks,'barracks') && !exit(after,state.barracks,'barracks'))return 'Blockerar produktionsutgång';
+      || state.barracks && exit(context.map,state.barracks,'barracks') && !exit(after,state.barracks,'barracks'))return uiText.blocksAProductionExit;
     for(let i=0;i<Math.max(...waveSchedule.map(w=>w.count));i++) {
       const entry={x:arenaConfig.enemyEntry.x,y:arenaConfig.enemyEntry.y+i*arenaConfig.enemyEntry.spacing};
       if(bodyFits(context.map,entry,12) && approachRoute(context.map,entry,base,32).status!=='blocked'
-        && (!bodyFits(after,entry,12) || approachRoute(after,entry,base,32).status==='blocked'))return 'Blockerar fiendevågornas basväg';
+        && (!bodyFits(after,entry,12) || approachRoute(after,entry,base,32).status==='blocked'))return uiText.blocksTheEnemyWaveRouteToTheBase;
     }
   }
   if (context) {
     const builder=context.gathering.units.filter(u=>u.kind==='worker' && u.selected)
       .sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}))[0];
-    if (!builder) return 'Välj en worker för att bygga';
+    if (!builder) return uiText.selectAWorkerToBuild;
     const after=replaceObstacles(context.map,[...context.map.obstacles,rect]);
-    if (approachRoute(after,builder.position,rect,barracksConfig.constructionRange).status==='blocked') return 'Byggplatsen kan inte nås';
+    if (approachRoute(after,builder.position,rect,barracksConfig.constructionRange).status==='blocked') return uiText.theBuildingSiteCannotBeReached;
   }
   return null;
 }

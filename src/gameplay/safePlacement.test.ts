@@ -11,11 +11,11 @@ const context=(s:ReturnType<typeof createMatch>)=>({map:s.map,gathering:s.gather
 const error=(s:ReturnType<typeof createMatch>,point:{x:number;y:number})=>placementError(s.placement,point,s.gathering.wood,placementObstacles(s.gathering),context(s));
 describe('safe placement and spawn', () => {
   it('rejects terrain and living bodies, including enemies and click-time changes', () => {
-    const s=ready();expect(error(s,{x:96,y:96})).toContain('terräng');
-    expect(error(s,{x:256,y:288})).toContain('enhet');
+    const s=ready();expect(error(s,{x:96,y:96})).toContain('terrain');
+    expect(error(s,{x:256,y:288})).toContain('unit');
     expect(error(s,{x:512,y:384})).toBeNull();
     s.combat.enemies.push({id:'e',hp:36,position:{x:530,y:400}});
-    expect(error(s,{x:512,y:384})).toContain('enhet');
+    expect(error(s,{x:512,y:384})).toContain('unit');
     s.combat.enemies=[];s.gathering.wood=0;expect(error(s,{x:512,y:384})).toContain('wood');
   });
   it('commits footprint/revision and cost atomically once, invalid/cancel leave all unchanged', () => {
@@ -34,15 +34,15 @@ describe('safe placement and spawn', () => {
   it('preserves worker access through a gateway and does not demand repair of pre-existing disconnection', () => {
     const s=ready();s.map=replaceObstacles(s.map,[...s.map.obstacles,
       {x:544,y:0,width:64,height:320},{x:544,y:384,width:64,height:s.map.height-384}]);
-    expect(error(s,{x:544,y:320})).toContain('arbetarens');
+    expect(error(s,{x:544,y:320})).toContain('worker');
     s.map=replaceObstacles(s.map,[...s.map.obstacles,{x:544,y:320,width:64,height:64}]);
     expect(error(s,{x:256,y:384})).toBeNull();
   });
   it('preserves entry-to-base paths and cannot block future wave entry bodies', () => {
     const s=ready();s.gathering.units=[];
     s.map=replaceObstacles(s.map,[...s.map.obstacles,{x:0,y:160,width:704,height:64},{x:768,y:160,width:s.map.width-768,height:64}]);
-    expect(error(s,{x:704,y:160})).toContain('fiendevågornas');
-    const normal=ready();expect(error(normal,{x:736,y:32})).toContain('fiendevågornas');
+    expect(error(s,{x:704,y:160})).toContain('enemy wave');
+    const normal=ready();expect(error(normal,{x:736,y:32})).toContain('enemy wave');
   });
   it('holds a finished job when every spawn is occupied and spawns once when space is freed', () => {
     const s=ready(),base=placementObstacles(s.gathering)[0];

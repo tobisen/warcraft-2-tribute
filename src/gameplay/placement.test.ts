@@ -24,11 +24,11 @@ describe('barracks placement', () => {
 
   it.each([{x:-1,y:0}, {x:0,y:-1}, {x:1248,y:0}, {x:0,y:928}, {x:1280,y:960}])
     ('rejects crossing a world edge: %j', point => {
-      expect(placementError(beginPlacement(idle()), point, 100, obstacles)).toBe('Utanför världen');
+      expect(placementError(beginPlacement(idle()), point, 100, obstacles)).toBe('Outside the world');
     });
 
   it.each([{x:384,y:448}, {x:608,y:160}])('rejects base/node overlap: %j', point => {
-    expect(placementError(beginPlacement(idle()), point, 100, obstacles)).toBe('Överlappar bas eller resursnod');
+    expect(placementError(beginPlacement(idle()), point, 100, obstacles)).toBe('Overlaps the base or a resource node');
   });
 
   it('uses centered base and node bounding-box footprints, including depleted node', () => {
@@ -63,7 +63,7 @@ describe('barracks placement', () => {
 
   it('checks current balance at placement, including balance spent after entering mode', () => {
     const active = beginPlacement(idle());
-    expect(placementError(active,{x:100,y:100},39.99,obstacles)).toBe('Otillräckligt wood/gold');
+    expect(placementError(active,{x:100,y:100},39.99,obstacles)).toBe('Not enough wood or gold');
     expect(placeBarracks(active,{x:100,y:100},39.99,obstacles)).toEqual({placement:active,wood:39.99});
     expect(placeBarracks(active,{x:100,y:100},40,obstacles).wood).toBe(0);
   });

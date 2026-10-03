@@ -17,7 +17,7 @@ describe('shared fog information contract',()=>{
   expect(entityVisible(f,'player',{position:{x:1008,y:144}})).toBe(false);expect(entityVisible(f,'player',{position:{x:1008,y:144},footprint:{x:960,y:96,width:96,height:96}})).toBe(true);expect(entityVisible(f,'enemy',{position:{x:976,y:144}})).toBe(false);
  });
  it('never leaks hidden enemy markers/footprints/HP or hidden resource quantities in HUD/minimap',()=>{
-  const s=createMatch('skirmish'),before=visibleMinimapData(s),hud=matchLabels(s);expect(before.markers.some(m=>m.owner==='enemy')).toBe(false);expect(before.terrain.some(r=>r.x===960&&r.y===96)).toBe(false);expect(hud.economy).toContain('nod: ?');
+  const s=createMatch('skirmish'),before=visibleMinimapData(s),hud=matchLabels(s);expect(before.markers.some(m=>m.owner==='enemy')).toBe(false);expect(before.terrain.some(r=>r.x===960&&r.y===96)).toBe(false);expect(hud.economy).toContain('node: ?');
   s.combat.enemies[0].hp=1;s.combat.enemies[0].position={x:1100,y:144};s.combat.enemies[0].footprint={x:1088,y:96,width:96,height:96};s.gathering.node.remaining=1;s.gathering.gold!.remaining=1;
   expect(visibleMinimapData(s)).toEqual(before);expect(matchLabels(s)).toEqual(hud);
  });

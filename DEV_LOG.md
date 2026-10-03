@@ -1960,3 +1960,13 @@ Form med befintliga karta/fraktion/svårighet och separat standard1×. Alla kart
 ## 2026-10-03 – RTS-095 Done: fönsterfyllande spelvy
 
 Startsida dold under match, separat sessionrad; sidopanel bevarad. ResizeObserver uppdaterar heltalscanvas, kamera/bounds/scroll1:1 och stabilt worldinput.74relevanta tester/14filer PASS; typecheck/build/diff PASS. Chromium1280×720→1920×1080→1280×720: canvas1000×671 respektive1640×1031 inom fönstret; mittendrag, verkliga klick/move/drag, HUD-save under paus utan stateändring, Load/resume/restart/huvudmeny. Screenshots båda upplösningar granskade, pixelgrafik skarp, inga errors. Första helpern matchade inte Vites main.ts-query och kunde inte se scene; korrigerad extern URL-glob, sedan kontrollerna gröna. Ingen runtimebug dold. Diff granskat resize-listenerlifecycle, coords/raminput/Save/scope utan blockerande fynd. Nästa096 engelska.
+
+## 2026-10-03 – RTS-096 Done: engelska i hela spelet
+
+Gemensam text.ts för statisk copy/confignamn/guide/feedback; menyer, HUD, placement/routes, köer, förmågor, uppdrag, flottilj, audio-status, Save och resultat engelska. en-US-tal, stabila IDs/stats/Saveversion. LoadResult errorcodes och explicit loaded/resume-state tar bort språkberoende UI-villkor. Legacy rallyError visas med aktuell engelsk feedback. Pausstatus rättad från ended till frozen.
+
+Slutlig full755tester/94filer PASS129,43s;154riktade PASS6,20s och sista118/19 PASS1,31s efter kvarvarande ASCII-svenska felsträngar/textsamling. Typecheck/build/diff PASS, bundlevarning kvar. Första text-extraktionsförsöket fångades av typecheck (numeriska nycklar, lokal namnkollision och state/type-literals); återställt ofärdig extraktion, begränsat till copy och nytt uiText-alias. Första fullkörning fyra gamla svenska assertions; uppdaterade språkförväntningar utan borttagna beteenden. Slutliga regressioner gröna.
+
+Chromium dev och faktisk production Pages-subpath1280×720/1920×1080: alla fyra huvudmenyingångar, ljud-UI, missing Save, verklig start/pause/Save/load/resume/menu/restart, resize+mittendrag+world click/move/drag, fixed sea mission och engelsk instruktion. Survival simulerad med accelererad gameplayklocka utan injicerad matchstate till faktisk defeat/resultattabell/restart. Granskade screenshots home/game/result; inga page errors. Productionpreview behövde godkänd localhost-bind utanför sandbox, därefter flödet grönt. Ingen akustisk lyssning krävs för texttasken och ingen sådan påstås. Diff granskad för språk/ID/Save/UI-isolering/scope; inga blockerande fynd.
+
+091–096 är Done.097–120 förblir Todo och implementeras inte i denna körning. Task096 pushas enligt mandat; slutlig Actions/Pages-resultat kontrolleras innan slutrapport.

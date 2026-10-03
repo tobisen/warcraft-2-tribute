@@ -2,7 +2,7 @@
 
 ## Inriktning
 
-RTS-001–090 är implementerade. Den beställda roadmappen är slutförd. Slicebeskrivningarna visar utvecklingen;
+RTS-001–096 är implementerade. Roadmap097–120 är planerad;091–096 är den färdiga presentationsetappen. Slicebeskrivningarna visar utvecklingen;
 avsnitten RTS-018–060 längst ned anger dagens HUD, terrain/navigation,
 kantbaserade ranges, gruppmål och säkra placering/spawn.
 
@@ -988,3 +988,7 @@ Fantasy-startsida med titel/sköld och Campaign, Skirmish, Load Game, Settings. 
 ## RTS-094 – Matchinställningar
 
 Befintliga kart-/fraktions-/svårighetsval presenteras med separata beskrivningar. Fast uppdragskarta förklaras och är låst. Spelhastighet är separat från svårighet: enda fungerande val är1× tills108. Svårighet påverkar bara tidigare definierade enemy/waveprofiler, inte klockhastighet.
+
+## RTS-096 – Engelska och bevarat spelkontrakt
+
+All synlig speltext är engelska: meny/matchval/uppdrag/guide, fraktioner, ekonomi, selection, routes/placement, produktion, fartyg, förmågor, ljudstatus, Save och resultat. Interna IDs, stats, kontroller, objectives och Saveformat bevaras. Crown Alliance/Iron Clan ersätter svenska visningsnamn. Save-load-status styrs av state/felkoder, inte textinnehåll; legacy rally-feedback visas med aktuell engelsk copy. Pausfeedback anger frozen, inte match ended. Ingen stegvis tutorial, nya svårigheter/hastigheter eller HUD-system097–120 införda.

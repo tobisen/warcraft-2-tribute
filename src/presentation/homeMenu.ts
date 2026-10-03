@@ -1,3 +1,4 @@
+import {text as uiText} from '../text';
 import type {SessionPhase} from '../gameplay/session';
 export type HomePage='home'|'campaign'|'skirmish'|'load'|'settings';
 export const homeScenarios={campaign:['mission-waves','mission-base','mission-outpost','mission-sea'],skirmish:['skirmish','survival']} as const;
@@ -11,7 +12,7 @@ export function syncHomeMenu(nextPhase:SessionPhase):void{
  for(const id of ['pause-match','resume-match','new-match','restart-match','save-controls','audio-controls','mission-instruction','session-status','match-results']){const target=element(menu?'home-content':'game-toolbar');if(element(id).parentElement!==target)target.append(element(id));}
  element('home-brand').hidden=!menu;element('home-navigation').hidden=!menu||current!=='home';
  element('home-content').hidden=menu&&current==='home';element('menu-back').hidden=!menu||current==='home';
- element('home-heading').hidden=!menu;element('home-heading').textContent=current==='campaign'?'Campaign · Choose a mission':current==='skirmish'?'Skirmish · Choose your battle':current==='load'?'Load Game':'Settings';
+ element('home-heading').hidden=!menu;element('home-heading').textContent=current==='campaign'?uiText.campaignChooseAMission:current==='skirmish'?uiText.skirmishChooseYourBattle:current==='load'?uiText.loadGame:uiText.settings;
  element('match-setup').hidden=!menu||!setup;element('audio-controls').hidden=menu&&current!=='settings';
  if(menu&&current==='settings')(element('audio-controls') as HTMLDetailsElement).open=true;
  element('save-controls').hidden=menu&&current!=='load';element('save-match').hidden=menu;

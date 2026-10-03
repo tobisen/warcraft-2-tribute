@@ -1,3 +1,4 @@
+import {text as uiText} from '../text';
 import {viewportGeometry} from '../presentation/viewport';
 import {syncHomeMenu} from '../presentation/homeMenu';
 import {enemyBody} from '../gameplay/enemyBody';
@@ -150,6 +151,7 @@ export class BootScene extends Phaser.Scene {
   private nodeVisual!: Phaser.GameObjects.Image;
 
   private visuals = new Map<string, { body: Phaser.GameObjects.Image; ring: Phaser.GameObjects.Arc; cargo: Phaser.GameObjects.Text }>();
+  private awaitingLoadedResume=false;
   private pendingLoad?:{match:MatchState;view:SavedView};
   private hpBars?:Phaser.GameObjects.Graphics;
   private impacts=new Map<number,{impact:Impact;visual:Phaser.GameObjects.Image}>();
@@ -174,7 +176,7 @@ export class BootScene extends Phaser.Scene {
     const loaded=this.pendingLoad;this.pendingLoad=undefined;
     if(!loaded)document.getElementById('save-status')!.textContent='';
     this.applyMatch(loaded?.match??createMatch(this.scenario,this.difficulty,this.factions,this.session.options.map));
-    this.game.canvas.tabIndex=0;this.game.canvas.setAttribute('aria-label','Spelvärld');
+    this.game.canvas.tabIndex=0;this.game.canvas.setAttribute('aria-label',uiText.gameWorld);
     const groupKey=(event:KeyboardEvent)=>{
       if(!gameplayKeyAllowed(keyboardContext(event,this.gameplayActive()))||!validGroup(event.key))return;
       event.preventDefault();
@@ -183,7 +185,7 @@ export class BootScene extends Phaser.Scene {
       this.syncVisuals();
     };window.addEventListener('keydown',groupKey);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>window.removeEventListener('keydown',groupKey));
     this.fogOverlay=this.add.graphics().setDepth(40);
-    const fixture=document.getElementById('fog-fixture')!;fixture.hidden=!this.fogPreview;fixture.textContent=`FOG FIXTURE (${this.fogPreview}) – modellpreview; informationsfiltrering använder player-team`;
+    const fixture=document.getElementById('fog-fixture')!;fixture.hidden=!this.fogPreview;fixture.textContent=`FOG FIXTURE (${this.fogPreview}) – model preview; information filtering uses the player team`;
     this.scenarioSelect=document.querySelector<HTMLSelectElement>('#scenario-select')!;
     this.scenarioSelect.replaceChildren(...playableScenarios.map(id=>{const option=document.createElement('option');option.value=id;option.textContent=scenarioConfig[id].label;return option;}));
     this.scenarioSelect.value=this.scenario==='siege-test'?'survival':this.scenario;
@@ -283,7 +285,7 @@ export class BootScene extends Phaser.Scene {
       .setOrigin(0).setStrokeStyle(2, 0xffffff).setVisible(false).setDepth(50);
     this.buildButton = document.querySelector<HTMLButtonElement>('#build-barracks')!;
     this.placementStatus = document.querySelector<HTMLElement>('#placement-status')!;
-    this.buildButton.textContent = `Bygg ${factions[this.factions.player].buildingNames.barracks} – ${costLabel(costs.barracks)}`;
+    this.buildButton.textContent = `Build ${factions[this.factions.player].buildingNames.barracks} – ${costLabel(costs.barracks)}`;
     const begin = (kind:'harbor'|'barracks'|'farm'|'forge'='barracks') => {
       if (!this.gameplayActive()) return;
       if (!this.gathering.units.some(u=>u.kind==='worker' && u.selected)) return;
@@ -306,7 +308,7 @@ export class BootScene extends Phaser.Scene {
     this.forgeVisual=undefined;
     const beginForge=()=>begin('forge');
     this.forgeButton=document.querySelector<HTMLButtonElement>('#build-forge')!;
-    this.forgeButton.textContent=`Bygg ${factions[this.factions.player].buildingNames.forge} – ${costLabel(costs.forge)}`;
+    this.forgeButton.textContent=`Build ${factions[this.factions.player].buildingNames.forge} – ${costLabel(costs.forge)}`;
     this.forgeButton.addEventListener('click',beginForge);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.forgeButton.removeEventListener('click',beginForge));
     this.researchButtons.clear();
@@ -318,7 +320,7 @@ export class BootScene extends Phaser.Scene {
     }
     const beginFarm=()=>begin('farm');
     this.farmButton=document.querySelector<HTMLButtonElement>('#build-farm')!;
-    this.farmButton.textContent=`Bygg ${factions[this.factions.player].buildingNames.farm} – ${costLabel(costs.farm)}`;
+    this.farmButton.textContent=`Build ${factions[this.factions.player].buildingNames.farm} – ${costLabel(costs.farm)}`;
     this.farmButton.addEventListener('click',beginFarm);
     this.buildButton.addEventListener('click', beginBarracks);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
@@ -335,7 +337,7 @@ export class BootScene extends Phaser.Scene {
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{this.harborButton.removeEventListener('click',beginHarbor);this.shipButton.removeEventListener('click',ship);});
     this.trainButton = document.querySelector<HTMLButtonElement>('#train-worker')!;
     this.productionStatus = document.querySelector<HTMLElement>('#production-status')!;
-    this.trainButton.textContent = `Träna ${factions[this.factions.player].unitNames.worker} – ${costLabel(factions[this.factions.player].units.worker.cost)}`;
+    this.trainButton.textContent = `Train ${factions[this.factions.player].unitNames.worker} – ${costLabel(factions[this.factions.player].units.worker.cost)}`;
     const train = () => {
       if (!allowsProduction(this.selectedBuilding, 'base', true, this.gameplayActive())) return;
       const result = enqueueProduction(this.gathering, this.production,{kind:'base'},matchPopulation(this.currentMatch()));
@@ -349,7 +351,7 @@ export class BootScene extends Phaser.Scene {
     });
     this.soldierButton = document.querySelector<HTMLButtonElement>('#train-soldier')!;
     this.soldierProductionStatus = document.querySelector<HTMLElement>('#soldier-production-status')!;
-    this.soldierButton.textContent = `Träna ${factions[this.factions.player].unitNames.soldier} – ${costLabel(factions[this.factions.player].units.soldier.cost)} · ${factions[this.factions.player].units.soldier.durationSeconds} s`;
+    this.soldierButton.textContent = `Train ${factions[this.factions.player].unitNames.soldier} – ${costLabel(factions[this.factions.player].units.soldier.cost)} · ${factions[this.factions.player].units.soldier.durationSeconds} s`;
     const trainSoldier = () => {
       if (!allowsProduction(this.selectedBuilding, 'barracks', this.placement.barracks !== null, this.gameplayActive())) return;
       const result = enqueueProduction(this.gathering, this.soldierProduction,
@@ -359,7 +361,7 @@ export class BootScene extends Phaser.Scene {
       this.syncVisuals();
     };
     this.archerButton=document.querySelector<HTMLButtonElement>('#train-archer')!;
-    this.archerButton.textContent=`Träna ${factions[this.factions.player].unitNames.archer} – ${costLabel(factions[this.factions.player].units.archer.cost)}`;
+    this.archerButton.textContent=`Train ${factions[this.factions.player].unitNames.archer} – ${costLabel(factions[this.factions.player].units.archer.cost)}`;
     const trainArcher=()=>{
       if(!allowsProduction(this.selectedBuilding,'barracks',this.placement.barracks!==null,this.gameplayActive()))return;
       const result=enqueueProduction(this.gathering,this.soldierProduction,
@@ -368,7 +370,7 @@ export class BootScene extends Phaser.Scene {
       this.gathering=result.gathering;this.soldierProduction=result.production;this.syncVisuals();
     };
     this.catapultButton=document.querySelector<HTMLButtonElement>('#train-catapult')!;
-    this.catapultButton.textContent=`Träna ${factions[this.factions.player].unitNames.catapult} – ${costLabel(factions[this.factions.player].units.catapult.cost)}`;
+    this.catapultButton.textContent=`Train ${factions[this.factions.player].unitNames.catapult} – ${costLabel(factions[this.factions.player].units.catapult.cost)}`;
     const trainCatapult=()=>{
       if(!allowsProduction(this.selectedBuilding,'barracks',this.placement.barracks!==null,this.gameplayActive()))return;
       const result=enqueueProduction(this.gathering,this.soldierProduction,
@@ -389,8 +391,8 @@ export class BootScene extends Phaser.Scene {
     abilityButton.addEventListener('click',activateAbility);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>abilityButton.removeEventListener('click',activateAbility));
     const saveButton=document.getElementById('save-match') as HTMLButtonElement;
     const loadButton=document.getElementById('load-match') as HTMLButtonElement;
-    const save=()=>{if(this.session.phase==='menu'||this.restartPending)return;const result=storeSave(()=>window.localStorage,this.currentMatch(),{camera:{x:this.cameras.main.scrollX,y:this.cameras.main.scrollY},building:this.selectedBuilding});document.getElementById('save-status')!.textContent=result.ok?'Sparad lokalt i slot 1':'Kunde inte spara lokalt. Kontrollera webbläsarens lagringsutrymme.';};
-    const load=()=>{if(this.restartPending)return;const result=readSave(()=>window.localStorage);if(!result.ok){document.getElementById('save-status')!.textContent=result.error==='Ingen lokal sparning finns'?result.error:result.error.includes('version')?'Sparningen använder ett format eller en spelversion som inte stöds. Aktiv match är oförändrad.':'Sparningen kunde inte läsas. Aktiv match är oförändrad.';return;}this.pendingLoad={match:{...result.match,paused:true},view:result.view};this.scenario=result.match.scenario!;this.difficulty=result.match.difficulty!;this.session={options:{scenario:this.scenario,difficulty:this.difficulty,map:result.match.map.id??'arena',faction:result.match.factions?.player??defaultFactions.player},phase:result.match.outcome==='playing'?'paused':'ended'};this.skipGameplayFrame=true;this.restartPending=true;this.restartButton.disabled=true;gameAudio.setPhase(this.session.phase);document.getElementById('save-status')!.textContent=result.match.outcome==='playing'?'Laddad – pausad, ingen tid passerar förrän Återuppta':'Laddad – avslutad match';this.scene.restart();};
+    const save=()=>{if(this.session.phase==='menu'||this.restartPending)return;const result=storeSave(()=>window.localStorage,this.currentMatch(),{camera:{x:this.cameras.main.scrollX,y:this.cameras.main.scrollY},building:this.selectedBuilding});document.getElementById('save-status')!.textContent=result.ok?uiText.savedLocallyInSlot1:uiText.couldNotSaveLocallyCheckBrowserStorage;};
+    const load=()=>{if(this.restartPending)return;const result=readSave(()=>window.localStorage);if(!result.ok){document.getElementById('save-status')!.textContent=result.code==='missing'?result.error:result.code==='version'?uiText.thisSaveUsesAnUnsupportedFormatOrGame:uiText.couldNotReadTheSaveTheActiveMatch;return;}this.awaitingLoadedResume=result.match.outcome==='playing';this.pendingLoad={match:{...result.match,paused:true},view:result.view};this.scenario=result.match.scenario!;this.difficulty=result.match.difficulty!;this.session={options:{scenario:this.scenario,difficulty:this.difficulty,map:result.match.map.id??'arena',faction:result.match.factions?.player??defaultFactions.player},phase:result.match.outcome==='playing'?'paused':'ended'};this.skipGameplayFrame=true;this.restartPending=true;this.restartButton.disabled=true;gameAudio.setPhase(this.session.phase);document.getElementById('save-status')!.textContent=result.match.outcome==='playing'?uiText.loadedPausedNoGameplayTimePassesUntilResume:uiText.loadedCompletedMatch;this.scene.restart();};
     saveButton.addEventListener('click',save);loadButton.addEventListener('click',load);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{saveButton.removeEventListener('click',save);loadButton.removeEventListener('click',load);});
     for(const [id,action] of [['start-match','start'],['pause-match','pause'],['resume-match','resume'],['new-match','new-match']] as const){const button=document.getElementById(id)!;const handler=()=>this.sessionAction(action);button.addEventListener('click',handler);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>button.removeEventListener('click',handler));}
     document.getElementById('command-guide-text')!.textContent=commandGuide;
@@ -421,14 +423,14 @@ export class BootScene extends Phaser.Scene {
     const next=sessionTransition(this.session,action);if(next===this.session||this.restartPending)return;
     this.session=next;gameAudio.setPhase(next.phase);
     if(action==='start')this.factions=factionsForPlayer(next.options.faction??defaultFactions.player);
-    if(action==='start'||action==='restart'){this.scenario=next.options.scenario;this.difficulty=next.options.difficulty;this.skipGameplayFrame=true;this.restartPending=true;this.restartButton.disabled=true;this.scene.restart();return;}
-    if(action==='resume'){this.skipGameplayFrame=true;if(document.getElementById('save-status')!.textContent?.startsWith('Laddad – pausad'))document.getElementById('save-status')!.textContent='Laddad – matchen fortsätter';}
+    if(action==='start'||action==='restart'){this.awaitingLoadedResume=false;this.scenario=next.options.scenario;this.difficulty=next.options.difficulty;this.skipGameplayFrame=true;this.restartPending=true;this.restartButton.disabled=true;this.scene.restart();return;}
+    if(action==='resume'){this.skipGameplayFrame=true;if(this.awaitingLoadedResume){document.getElementById('save-status')!.textContent=uiText.loadedMatchResumed;this.awaitingLoadedResume=false;}}
     if(action==='pause'||action==='new-match'){this.placement=cancelPlacement(this.placement);this.unloadMode=null;this.attackMoveMode=false;this.drag=undefined;this.cameraDrag=undefined;this.dragBox.setVisible(false);}
     this.syncVisuals();
   }
   private syncSession():void {
     gameAudio.setPhase(this.session.phase);
-    if(gameAudio.status.loaded)document.getElementById('audio-status')!.textContent=`${gameAudio.status.loaded}/8 ljud laddade · ${gameAudio.settings.muted?'tyst':this.session.phase==='paused'?'pausat':'redo'}`;
+    if(gameAudio.status.loaded)document.getElementById('audio-status')!.textContent=`${gameAudio.status.loaded}/8 sounds loaded · ${gameAudio.settings.muted?uiText.muted:this.session.phase==='paused'?'paused':'ready'}`;
     (document.getElementById('save-match') as HTMLButtonElement).disabled=this.session.phase==='menu'||this.restartPending;
     (document.getElementById('load-match') as HTMLButtonElement).disabled=this.restartPending;
     const phase=this.session.phase,menu=phase==='menu';
@@ -444,7 +446,7 @@ export class BootScene extends Phaser.Scene {
     document.getElementById('hud')!.hidden=menu;const game=document.getElementById('game')!,wasHidden=game.hidden;game.hidden=menu;
     if(wasHidden&&!menu)this.scale.refresh();
     document.getElementById('mission-instruction')!.textContent=this.session.options.scenario==='skirmish'?(maps[this.session.options.map??'arena'].instruction??scenarioConfig.skirmish.instruction):scenarioConfig[this.session.options.scenario].instruction;
-    document.getElementById('session-status')!.textContent=menu?'Välj scenario och svårighetsgrad, sedan Starta match':phase==='paused'?'Pausad – matchen är fryst':phase==='ended'?'Matchen är avslutad – starta om eller välj ny match':`${scenarioConfig[this.session.options.scenario].label} · ${this.session.options.difficulty} · ${maps[this.session.options.map].label}`;
+    document.getElementById('session-status')!.textContent=menu?uiText.chooseAScenarioAndDifficultyThenStartMatch:phase==='paused'?uiText.pausedSimulationIsFrozen:phase==='ended'?uiText.theMatchHasEndedRestartOrChooseA:`${scenarioConfig[this.session.options.scenario].label} · ${this.session.options.difficulty} · ${maps[this.session.options.map].label}`;
     syncHomeMenu(phase);
   }
 
@@ -593,12 +595,12 @@ export class BootScene extends Phaser.Scene {
     if(forge&&!this.forgeVisual)this.forgeVisual=this.add.image(forge.footprint.x+forge.footprint.width/2,forge.footprint.y+forge.footprint.height/2,'buildings',buildingFrame('forge','player',forge.construction.remainingSeconds,5,this.factions.player)).setOrigin(.5,.75);
     if(forge)this.forgeVisual!.setFrame(buildingFrame('forge','player',forge.construction.remainingSeconds,5,this.factions.player));
     this.forgeButton.disabled=!this.gameplayActive()||this.placement.active||!!forge||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected);
-    document.getElementById('research-status')!.textContent=forge?`Forge ${Math.ceil(forge.hp)} HP · bygge ${forge.construction.remainingSeconds.toFixed(1)} s · Attack ${this.research.attack} / Defense ${this.research.defense}${this.research.job?` · ${this.research.job.kind} ${this.research.job.remainingSeconds.toFixed(1)} s`:''}`:'Bygg Forge för uppgraderingar';
+    document.getElementById('research-status')!.textContent=forge?`Forge ${Math.ceil(forge.hp)} HP · construction ${forge.construction.remainingSeconds.toFixed(1)} s · Attack ${this.research.attack} / Defense ${this.research.defense}${this.research.job?` · ${this.research.job.kind} ${this.research.job.remainingSeconds.toFixed(1)} s`:''}`:uiText.buildAForgeForUpgrades;
     for(const [kind,button] of this.researchButtons){button.disabled=!canResearch(this.gathering,this.research,this.placement,kind,this.gameplayActive());button.textContent=`${kind==='attack'?'Attack +25 %':'Defense −25 %'} – ${costLabel(upgradeConfig.cost)}`;}
 
     if(!this.placement.barracks&&this.barracksVisual){this.barracksVisual.destroy();this.barracksVisual=undefined;}
     const rect = buildingFootprint(this.previewPoint,this.placement.kind??'barracks');
-    const error = this.placement.active ? !placementVisible(this.fog,rect)?'Platsen måste vara synlig':this.placement.kind==='harbor'?harborPlacementError(this.currentMatch(),this.previewPoint):placementError(this.placement, this.previewPoint, this.gathering.wood, placementObstacles(this.gathering),
+    const error = this.placement.active ? !placementVisible(this.fog,rect)?uiText.theSiteMustBeVisible:this.placement.kind==='harbor'?harborPlacementError(this.currentMatch(),this.previewPoint):placementError(this.placement, this.previewPoint, this.gathering.wood, placementObstacles(this.gathering),
       {map:this.map,gathering:this.gathering,enemies:this.combat.enemies}) : null;
     this.placementPreview.setPosition(rect.x, rect.y)
       .setFillStyle(error ? 0xe05b5b : 0x7bd389, 0.4).setVisible(this.placement.active);
@@ -606,15 +608,15 @@ export class BootScene extends Phaser.Scene {
     this.farmButton?.setAttribute('aria-pressed',String(this.placement.active&&this.placement.kind==='farm'));this.forgeButton.setAttribute('aria-pressed',String(this.placement.active&&this.placement.kind==='forge'));
     this.buildButton.disabled = !this.gameplayActive() || this.placement.active || this.placement.barracks !== null || !this.gathering.units.some(u=>u.kind==='worker'&&u.selected);
     this.placementStatus.textContent = this.placement.active
-      ? `${error ?? 'Giltig plats'} – klicka för placering, Esc/högerklick avbryter`
-      : !this.gameplayActive() ? 'Matchen är avslutad' : this.placement.barracks ? barracksReady(this.placement) ? 'Barracks färdig' : `Bygge: ${this.placement.construction!.remainingSeconds.toFixed(1)} s arbete kvar – högerklick med worker återupptar` : !this.gathering.units.some(u=>u.kind==='worker'&&u.selected) ? 'Välj en worker för att bygga' : `Kostar ${costLabel(costs.barracks)} – välj plats`;
+      ? `${error ?? uiText.validSite} – click to place, Escape/right-click to cancel`
+      : !this.gameplayActive() ? this.session.phase==='paused'?uiText.pausedSimulationIsFrozen:uiText.theMatchHasEnded : this.placement.barracks ? barracksReady(this.placement) ? uiText.barracksComplete : `Construction: ${this.placement.construction!.remainingSeconds.toFixed(1)} s work remaining – right-click with a worker to resume` : !this.gathering.units.some(u=>u.kind==='worker'&&u.selected) ? uiText.selectAWorkerToBuild : `Costs ${costLabel(costs.barracks)} – choose a site`;
     if (this.placement.barracks && !this.barracksVisual) {
       const building = this.placement.barracks;
       this.barracksVisual = this.add.image(building.x+building.width/2,building.y+building.height/2,'buildings',buildingFrame('barracks','player',this.placement.construction?.remainingSeconds,5,this.factions.player)).setOrigin(.5,.75);
     }
     this.farmButton.disabled=!this.gameplayActive()||this.placement.active
       ||(this.placement.farms?.length??0)>=farmConfig.maxCount||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected);
-    document.getElementById('farm-status')!.textContent=(this.placement.farms??[]).map(f=>`${f.id}: ${Math.ceil(f.hp??combatConfig.farmHP)} HP · ${f.construction.remainingSeconds===0?'färdig (+5)':f.construction.remainingSeconds.toFixed(1)+' s kvar'}`).join(' · ') || 'Välj worker – färdig farm ger +5 population';
+    document.getElementById('farm-status')!.textContent=(this.placement.farms??[]).map(f=>`${f.id}: ${Math.ceil(f.hp??combatConfig.farmHP)} HP · ${f.construction.remainingSeconds===0?uiText.complete5:f.construction.remainingSeconds.toFixed(1)+uiText.sRemaining}`).join(' · ') || uiText.selectAWorkerACompletedFarmAdds5;
     for(const [id,visual] of this.farmVisuals)if(!this.placement.farms?.some(f=>f.id===id)){visual.destroy();this.farmVisuals.delete(id);}
     for(const farm of this.placement.farms??[]) {
       if(!this.farmVisuals.has(farm.id))this.farmVisuals.set(farm.id,this.add.image(farm.footprint.x+farm.footprint.width/2,farm.footprint.y+farm.footprint.height/2,'buildings',buildingFrame('farm','player',farm.construction.remainingSeconds,5,this.factions.player)).setOrigin(buildingOrigin('farm').x,buildingOrigin('farm').y));
@@ -634,7 +636,7 @@ export class BootScene extends Phaser.Scene {
     }
     this.attackMoveButton.disabled=!this.gameplayActive()||!this.gathering.units.some(u=>u.kind==='soldier'&&u.selected);
     this.attackMoveButton.setAttribute('aria-pressed',String(this.attackMoveMode));
-    this.attackMoveButton.textContent=this.attackMoveMode?'Attack-move: klicka mål (Esc avbryter)':'Attack-move';
+    this.attackMoveButton.textContent=this.attackMoveMode?uiText.attackMoveClickADestinationEscapeCancels:'Attack-move';
     this.stopButton.disabled = !this.gameplayActive() || !this.allSelectable().some(u=>u.selected);
     this.hpBars?.clear();
     const visibleEnemies=this.combat.enemies.filter(e=>entityVisible(this.fog,'player',e));
@@ -652,7 +654,7 @@ export class BootScene extends Phaser.Scene {
     this.restartButton.hidden = this.session.phase!=='paused'&&this.session.phase!=='ended';
     this.restartButton.disabled = this.restartPending;
     const definition=scenarioConfig[this.scenario];
-    this.matchStatus.textContent=this.outcome==='defeat'?'Defeat – basen är förstörd':this.outcome==='victory'?definition.victory==='enemy-base'?'Victory – fiendebasen är förstörd':definition.victory==='timer'?'Victory – utposten höll i 90 sekunder':'Victory – alla vågor besegrade':this.scenario==='skirmish'?(maps[this.map.id??'arena'].instruction??definition.instruction):definition.instruction;
+    this.matchStatus.textContent=this.outcome==='defeat'?uiText.defeatYourBaseWasDestroyed:this.outcome==='victory'?definition.victory==='enemy-base'?uiText.victoryTheEnemyBaseWasDestroyed:definition.victory==='timer'?uiText.victoryTheOutpostSurvivedFor90Seconds:uiText.victoryAllWavesDefeated:this.scenario==='skirmish'?(maps[this.map.id??'arena'].instruction??definition.instruction):definition.instruction;
     this.syncPlacement();this.syncNavy();
     this.goldVisual.setFrame(resourceFrame('gold',this.gathering.gold!.remaining,isVisible(this.fog,'player',this.gathering.gold!.position)));
     this.nodeVisual.setFrame(resourceFrame('wood',this.gathering.node.remaining,isVisible(this.fog,'player',this.gathering.node.position)));
@@ -664,11 +666,11 @@ export class BootScene extends Phaser.Scene {
     const signature=`${this.selectedBuilding}:${this.outcome}:${queue.map(j=>j.id).join(',')}`;
     if(signature!==this.queueSignature){
       this.queueSignature=signature;this.queuePanel.replaceChildren();
-      if(!queue.length)this.queuePanel.textContent=this.selectedBuilding?'Ingen produktion i kön':'Välj byggnad för produktion och avbrytning';
+      if(!queue.length)this.queuePanel.textContent=this.selectedBuilding?uiText.theProductionQueueIsEmpty:uiText.selectABuildingToTrainUnitsOrCancel;
       queue.forEach((job,index)=>{
         const button=document.createElement('button');button.type='button';button.dataset.jobId=job.id;
         button.disabled=!this.gameplayActive();
-        button.textContent=`${index===0?'Aktiv':'Köad'} ${(job.kind==='transport'?'Transport':job.kind==='warship'?'Fartyg':factions[this.factions.player].unitNames[job.kind])} (${job.id}) – avbryt, ${Math.round((index===0?queueConfig.activeRefund:queueConfig.queuedRefund)*100)} % tillbaka`;
+        button.textContent=`${index===0?uiText.active:uiText.queued} ${(job.kind==='transport'?'Transport':job.kind==='warship'?uiText.warship:factions[this.factions.player].unitNames[job.kind])} (${job.id}) – cancel, ${Math.round((index===0?queueConfig.activeRefund:queueConfig.queuedRefund)*100)}% refund`;
         this.queuePanel.append(button);
       });
     }
@@ -693,7 +695,7 @@ export class BootScene extends Phaser.Scene {
     const labels = matchLabels({ factions:this.factions,map: this.map, gathering: this.gathering, combat: this.combat, waves: this.waves,
       production: this.production, soldierProduction: this.soldierProduction, placement: this.placement, outcome: this.outcome,scenario:this.scenario,difficulty:this.difficulty,fog:this.fog });
     for (const [id, text] of [['resource-status', labels.economy], ['health-status', labels.health],
-      ['wave-status', labels.wave],['population-status',`Population: ${population.used} + ${population.reserved} reserverade / ${population.cap}`], ['selection-status', this.selectedBuilding ? `${(this.selectedBuilding==='harbor'?'Hamn':factions[this.factions.player].buildingNames[this.selectedBuilding])} vald (${Math.ceil(this.selectedBuilding==='harbor'?this.navy!.harbor!.hp:this.selectedBuilding==='base'?this.combat.baseHP:this.placement.barracksHP??combatConfig.barracksHP)} HP) ${this.selectedBuilding==='harbor'?'– fartygskö':'– högerklick sätter rally'}${selectedProduction?.rallyError ? ': ' + selectedProduction.rallyError : ''}` : (this.navy?.ships.some(s=>s.selected)?`${this.allSelectable().filter(u=>u.selected).length} enheter valda · fartyg`:labels.selected)]]) {
+      ['wave-status', labels.wave],['population-status',`Population: ${population.used} + ${population.reserved} reserved / ${population.cap}`], ['selection-status', this.selectedBuilding ? `${(this.selectedBuilding==='harbor'?uiText.harbor:factions[this.factions.player].buildingNames[this.selectedBuilding])} selected (${Math.ceil(this.selectedBuilding==='harbor'?this.navy!.harbor!.hp:this.selectedBuilding==='base'?this.combat.baseHP:this.placement.barracksHP??combatConfig.barracksHP)} HP) ${this.selectedBuilding==='harbor'?uiText.shipQueue:uiText.rightClickSetsRally2}${selectedProduction?.rallyError ? ': ' + uiText.theRallyDestinationIsBlockedOrUnreachable : ''}` : (this.navy?.ships.some(s=>s.selected)?`${this.allSelectable().filter(u=>u.selected).length} units selected · ships`:labels.selected)]]) {
       document.getElementById(id)!.textContent = text;
     }
 
@@ -721,7 +723,7 @@ export class BootScene extends Phaser.Scene {
       if(enemy.buildingType)visual.body.setFrame(buildingFrame(enemy.buildingType==='outpost'?'base':enemy.buildingType,'enemy',enemy.construction?.remainingSeconds??0,enemy.buildingType==='outpost'?10:5,this.factions.enemy));
       if(enemy.kind==='ship')this.animateUnit(enemy.id,visual.body,enemy.position,'idle','transport','enemy');
       if(!enemy.footprint&&enemy.kind!=='ship'){const target=enemy.order?.kind==='defend'?this.gathering.units.find(u=>enemy.order?.kind==='defend'&&u.id===enemy.order.targetId)?.position:enemy.navigation?.targetId==='base'?this.gathering.base:undefined;const action:Action=enemy.navigation?.targetId&&enemy.navigation.targetId!=='explore-goal'&&enemy.navigation.status==='arrived'?'attack':enemy.work?.order.kind==='gather'?'gather':'idle';this.animateUnit(enemy.id,visual.body,enemy.position,action,enemy.kind==='worker'?'worker':'soldier','enemy',target);}
-      visual.label.setPosition(enemy.position.x,enemy.position.y-(enemy.kind==='ship'?48:90)).setVisible(!!enemy.footprint||enemy.kind==='ship').setText(`${enemy.buildingType==='outpost'?'Resursbas · ':''}${enemy.kind==='ship'?'Transport':enemy.buildingType==='harbor'?'Hamn':factions[this.factions.enemy].buildingNames[(enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base']} ${Math.ceil(enemy.hp)} HP`);
+      visual.label.setPosition(enemy.position.x,enemy.position.y-(enemy.kind==='ship'?48:90)).setVisible(!!enemy.footprint||enemy.kind==='ship').setText(`${enemy.buildingType==='outpost'?uiText.resourceOutpost:''}${enemy.kind==='ship'?'Transport':enemy.buildingType==='harbor'?uiText.harbor:factions[this.factions.enemy].buildingNames[(enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base']} ${Math.ceil(enemy.hp)} HP`);
       this.drawHP(enemy.position,enemy.hp,enemy.kind==='ship'?navyConfig.ship.hp:enemy.buildingType==='harbor'?navyConfig.harbor.hp:enemy.kind==='base'||enemy.buildingType==='outpost'?combatConfig.baseHP:enemy.buildingType==='barracks'?combatConfig.barracksHP:enemy.buildingType==='forge'?forgeConfig.hp:enemy.buildingType==='farm'?combatConfig.farmHP:enemy.kind==='worker'?combatConfig.workerHP:combatConfig.enemyHP,enemy.footprint?64:24,enemy.footprint?70:29,0xcf7770);
     }
     for (const unit of this.gathering.units) {
@@ -750,7 +752,7 @@ export class BootScene extends Phaser.Scene {
     for(const [id,d] of this.deaths){if(!effectAlive(d.effect,this.visualTime,isVisible(this.fog,'player',d.effect.motion.position))){d.visual.destroy();this.deaths.delete(id);}else d.visual.setFrame(unitFrame(d.effect.motion,this.visualTime));}
     if(this.fogOverlay)drawFog(this.fogOverlay,this.fog,this.fogPreview??'player');
     for(const shortcut of hotkeys){const button=document.getElementById(shortcut.button)!;button.textContent=`${button.textContent?.replace(/\s+\[[A-Z]\]$/,'')} [${shortcut.key}]`;button.title=shortcut.label;}
-    document.getElementById('group-status')!.textContent=Object.entries(this.controlGroups).map(([slot,ids])=>`${slot}: ${ids.length}`).join(' · ')||'Grupper: Ctrl+1–9 bind, 1–9 återkalla';
+    document.getElementById('group-status')!.textContent=Object.entries(this.controlGroups).map(([slot,ids])=>`${slot}: ${ids.length}`).join(' · ')||uiText.groupsCtrl19Assign19Recall;
     this.syncAudio(visibleEnemies);
     this.minimap?.render();
     this.syncSession();
@@ -798,20 +800,20 @@ export class BootScene extends Phaser.Scene {
   private setSelectable(units:(Unit|Ship)[]):void {this.gathering.units=units.filter((u):u is Unit=>u.kind!=='ship');if(this.navy)this.navy={...this.navy,ships:units.filter((u):u is Ship=>u.kind==='ship')};}
   private syncNavy():void {
     const harbor=this.navy?.harbor;this.navyGraphics.clear();
-    const transportButton=document.querySelector<HTMLButtonElement>('#train-transport')!,unloadButton=document.querySelector<HTMLButtonElement>('#unload-transport')!;transportButton.parentElement!.style.visibility=this.selectedBuilding==='harbor'?'visible':'hidden';transportButton.disabled=this.selectedBuilding!=='harbor'||!canTrainShip(this.currentMatch(),'transport');const selectedTransport=this.navy?.ships.find(s=>s.selected&&s.role==='transport');unloadButton.disabled=!this.gameplayActive()||!selectedTransport?.passengers?.length;if(this.unloadMode&&!this.navy?.ships.some(s=>s.id===this.unloadMode&&s.selected&&s.passengers?.length))this.unloadMode=null;document.getElementById('transport-status')!.textContent=this.unloadMode?'Klicka synlig fri landpunkt inom64px (Esc/högerklick avbryter)':selectedTransport?`Transport: ${selectedTransport.passengers?.length??0}/4 – flytta landenheter till kusten, högerklicka transport för lastning`:'Välj transport för last/landsättning';
+    const transportButton=document.querySelector<HTMLButtonElement>('#train-transport')!,unloadButton=document.querySelector<HTMLButtonElement>('#unload-transport')!;transportButton.parentElement!.style.visibility=this.selectedBuilding==='harbor'?'visible':'hidden';transportButton.disabled=this.selectedBuilding!=='harbor'||!canTrainShip(this.currentMatch(),'transport');const selectedTransport=this.navy?.ships.find(s=>s.selected&&s.role==='transport');unloadButton.disabled=!this.gameplayActive()||!selectedTransport?.passengers?.length;if(this.unloadMode&&!this.navy?.ships.some(s=>s.id===this.unloadMode&&s.selected&&s.passengers?.length))this.unloadMode=null;document.getElementById('transport-status')!.textContent=this.unloadMode?uiText.clickAVisibleFreeLandingWithin64Px:selectedTransport?`Transport: ${selectedTransport.passengers?.length??0}/4 – move land units to the coast, then right-click the transport to board`:uiText.selectATransportToBoardOrUnload;
     this.harborButton.disabled=!this.gameplayActive()||this.placement.active||!!harbor||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected);
     this.harborButton.setAttribute('aria-pressed',String(this.placement.active&&this.placement.kind==='harbor'));
     this.shipButton.parentElement!.style.visibility=this.selectedBuilding==='harbor'?'visible':'hidden';this.shipButton.disabled=this.selectedBuilding!=='harbor'||!canTrainShip(this.currentMatch());
-    document.getElementById('harbor-status')!.textContent=harbor?`Hamn ${Math.ceil(harbor.hp)} HP · ${harbor.construction.remainingSeconds>0?'bygge '+harbor.construction.remainingSeconds.toFixed(1)+' s':this.navy!.production.remainingSeconds!==null?this.navy!.production.remainingSeconds===0?'väntar på fri vattenutgång':'produktion '+this.navy!.production.remainingSeconds.toFixed(1)+' s':'färdig'} · fartyg2 supply`:'Välj worker – placera på synlig kust';
+    document.getElementById('harbor-status')!.textContent=harbor?`Harbor ${Math.ceil(harbor.hp)} HP · ${harbor.construction.remainingSeconds>0?uiText.construction3+harbor.construction.remainingSeconds.toFixed(1)+' s':this.navy!.production.remainingSeconds!==null?this.navy!.production.remainingSeconds===0?uiText.waitingForAFreeWaterExit:uiText.production+this.navy!.production.remainingSeconds.toFixed(1)+' s':'complete'} · ships use 2 supply`:uiText.selectAWorkerPlaceOnAVisibleCoast;
     if(!harbor&&this.harborLabel){this.harborLabel.destroy();this.harborLabel=undefined;}
     if(!harbor&&this.harborVisual){this.harborVisual.destroy();this.harborVisual=undefined;}
-    if(harbor){const r=harbor.footprint;if(!this.harborLabel)this.harborLabel=this.add.text(r.x+32,r.y-30,'Hamn',{fontSize:'12px',color:'#d6eef1'}).setOrigin(.5).setDepth(7);
+    if(harbor){const r=harbor.footprint;if(!this.harborLabel)this.harborLabel=this.add.text(r.x+32,r.y-30,uiText.harbor,{fontSize:'12px',color:'#d6eef1'}).setOrigin(.5).setDepth(7);
       if(!this.harborVisual)this.harborVisual=this.add.image(r.x+32,r.y+32,'buildings',buildingFrame('harbor','player',harbor.construction.remainingSeconds,5,this.factions.player)).setOrigin(.5,.75).setDepth(1);this.harborVisual.setFrame(buildingFrame('harbor','player',harbor.construction.remainingSeconds,5,this.factions.player));}
     for(const [id,body] of this.shipVisuals)if(!this.navy?.ships.some(s=>s.id===id)){this.removedVisual(id,true);body.destroy();this.shipVisuals.delete(id);}
     for(const [id,label] of this.shipLabels)if(!this.navy?.ships.some(s=>s.id===id)){label.destroy();this.shipLabels.delete(id);}
     for(const ship of this.navy?.ships??[]){const p=ship.position,type=ship.role==='transport'?'transport':'warship';this.drawHP(p,ship.hp,navyConfig.ship.hp,32,40,0x77c4cf);if(ship.selected)this.navyGraphics.lineStyle(2,0xffdf73).strokeCircle(p.x,p.y,22);
       if(!this.shipVisuals.has(ship.id))this.shipVisuals.set(ship.id,this.add.image(p.x,p.y,'naval',`${this.factions.player==='clans'?'clans-':''}${type}-player-s-idle-0`).setOrigin(.5,40/64).setDepth(1));const body=this.shipVisuals.get(ship.id)!;body.setPosition(p.x,p.y);const target=ship.order.kind==='attack'?this.combat.enemies.find(e=>ship.order.kind==='attack'&&e.id===ship.order.enemyId&&entityVisible(this.fog,'player',e))?.position:undefined;this.animateUnit(ship.id,body,p,target?'attack':'idle',type,'player',target);
-      if(!this.shipLabels.has(ship.id))this.shipLabels.set(ship.id,this.add.text(p.x,p.y-48,'Fartyg',{fontSize:'10px',color:'#d6eef1'}).setOrigin(.5).setDepth(7));this.shipLabels.get(ship.id)!.setPosition(p.x,p.y-48).setText(`${ship.role==='transport'?'Transport '+(ship.passengers?.length??0)+'/4':'Fartyg'} ${Math.ceil(ship.hp)} HP`);
+      if(!this.shipLabels.has(ship.id))this.shipLabels.set(ship.id,this.add.text(p.x,p.y-48,uiText.warship,{fontSize:'10px',color:'#d6eef1'}).setOrigin(.5).setDepth(7));this.shipLabels.get(ship.id)!.setPosition(p.x,p.y-48).setText(`${ship.role==='transport'?'Transport '+(ship.passengers?.length??0)+'/4':uiText.warship} ${Math.ceil(ship.hp)} HP`);
     }
   }
   private applyMatch(match: MatchState): void {

@@ -1,3 +1,4 @@
+import {text as uiText} from '../text';
 import {abilityConfig} from '../config/abilities';
 import type {GatheringState,Unit,Soldier} from './gathering';
 export interface AbilityState {activeSeconds:number;cooldownSeconds:number}
@@ -17,5 +18,5 @@ export function advanceAbilities(g:GatheringState,delta:number):GatheringState {
 export function abilityEffects(g:GatheringState,u:Unit,elapsed=0){return u.kind==='soldier'&&(u.ability?.activeSeconds??0)-elapsed>1e-9?abilityFor(g):{attackMultiplier:1,defenseMultiplier:1};}
 export function abilityStatus(g:GatheringState):string {
  const selected=g.units.filter((u):u is Soldier=>u.selected&&u.kind==='soldier');
- return selected.length?selected.map(u=>`${u.id}: ${(u.ability?.activeSeconds??0)>0?`aktiv ${u.ability!.activeSeconds.toFixed(1)} s`:abilityReady(u)?'redo':'cooldown'}${(u.ability?.cooldownSeconds??0)>0?` · ${u.ability!.cooldownSeconds.toFixed(1)} s till redo`:''}`).join(' · '):'Välj stridsenheter för förmågan';
+ return selected.length?selected.map(u=>`${u.id}: ${(u.ability?.activeSeconds??0)>0?`active ${u.ability!.activeSeconds.toFixed(1)} s`:abilityReady(u)?'ready':'cooldown'}${(u.ability?.cooldownSeconds??0)>0?` · ${u.ability!.cooldownSeconds.toFixed(1)} s until ready`:''}`).join(' · '):uiText.selectCombatUnitsToUseTheAbility;
 }

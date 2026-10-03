@@ -1,3 +1,4 @@
+import {text as uiText} from '../text';
 import {audioConfig} from '../config/audio';
 import {audioGain,defaultAudio,volume,type AudioSettings,type Sound} from './audioPolicy';
 import type {SessionPhase} from '../gameplay/session';
@@ -22,7 +23,7 @@ export class GameAudio {
    await this.context.resume();
    if(!this.loading)this.loading=this.load();await this.loading;
    if(this.phase==='playing')this.startMusic();else if(this.phase==='paused')await this.context.suspend();
-  }catch{document.getElementById('audio-status')!.textContent='Ljud ej tillgängligt – spelet fungerar ändå';}
+  }catch{document.getElementById('audio-status')!.textContent=uiText.audioUnavailableGameplayRemainsAvailable;}
  }
  private async load():Promise<void>{for(const name of ['music','command','impact','complete','victory','defeat','cannon','splash'] as const){for(const ext of ['ogg','wav'])try{const response=await fetch(`${import.meta.env.BASE_URL}audio/${name}.${ext}`);if(!response.ok)throw new Error('missing audio');this.buffers.set(name,await this.context!.decodeAudioData(await response.arrayBuffer()));break;}catch{/* Validated PCM fallback; missing sound never blocks gameplay. */}}}
  setSettings(change:Partial<AudioSettings>):void {this.settings={...this.settings,...change};this.settings.master=volume(this.settings.master);this.settings.music=volume(this.settings.music);this.settings.effects=volume(this.settings.effects);this.applyVolume();}

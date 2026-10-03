@@ -2,7 +2,7 @@
 
 Browserbaserat singleplayer-RTS inspirerat av Warcraft 2, Age of Empires 2 och
 Command & Conquer. Phaser, strict TypeScript och Vite; local-first, gameplay
-före grafik. Implementerat genom RTS-090 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
+före grafik. Implementerat genom RTS-096 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
 
 ## Installation och lokal start
 
@@ -14,9 +14,7 @@ npm run dev
 ```
 
 Öppna adressen Vite skriver ut, normalt http://localhost:5173/.
-Världen är 1280 × 960 px, viewport 800 × 600. Dra med mittenmusknappen för
-begränsad pan; zoom är 1. Kommandopanelen ligger bredvid canvas på desktop och staplas under i mindre fönster.
-Små fönster kan scrollas.
+Världen är 1280 × 960 world pixels. Spelvyn fyller fönstret med responsiv canvas, befintlig280px sidopanel och sessionrad. Dra med mittenmusknappen för begränsad pan; zoom är1. Vid större viewport centreras hela kartan utan att sprites förstoras. Sidopanelen scrollas. Verifierade layoutstorlekar är1280×720 och1920×1080.
 
 ## Spela matchen
 
@@ -562,3 +560,11 @@ Huvudmenyn erbjuder Campaign (fyra befintliga fristående uppdrag), Skirmish (Sk
 RTS-094: Campaign/Skirmish visar karta, fraktion, svårighet och separat Game speed. Kartan är låst för uppdrag/survival och valbar för Skirmish. Korta beskrivningar förklarar kartan och fiendetrycket. Endast1× stöds nu;0.75× införs i planerade RTS-108.
 
 RTS-095: startsidan är helt dold under match. Den separata spelvyn fyller fönstret med en responsiv canvas, scrollande befintlig sidopanel och sessionrad. World pixels/grid/zoom1 bevaras; om fönstret är större än hela kartan centreras kartan med ramyta. Resize och mittendrag bevarar korrekta klick-/drag-/orderkoordinater.
+
+## Aktuellt engelskt gränssnitt – RTS-096
+
+Spelets menyer, HUD, tooltips, fel, guide, fraktionsnamn, uppdrag och resultat är engelska. Dokumenten kan vara svenska och äldre slice-avsnitt beskriver historisk UI. Crown Alliance / Iron Clan och Arena / Forest Pass / River Bend / Islands är aktuella visningsnamn; interna ID:n och sparformat är samma.
+
+Välj Campaign för Mission1–4 eller Skirmish för Skirmish/Wave-survival. Start Match startar, Pause/Resume [P] stoppar/återupptar simulation; Save locally/Load save använder befintlig slot. Load återkommer pausad, Restart återställer matchen, New match / menu öppnar startsidan. Settings har befintligt ljud. Keys and commands visar den engelska kontrollguiden. Ingen ny stegvis tutorial är implementerad (109).
+
+RTS-091–096 är klara. RTS-097–120 är planerade; denna körning stannar här enligt arbetslistan. Nästa task är top bar097.

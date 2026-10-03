@@ -12,7 +12,7 @@ describe('atomic two-resource costs',()=>{
     const s=createMatch();Object.assign(s.gathering,balance);
     const result=startProduction(s.gathering,s.soldierProduction,building);
     expect(result.gathering).toBe(s.gathering);expect(result.production).toBe(s.soldierProduction);
-    expect(productionLabel(s.gathering,s.soldierProduction,'playing',building)).toContain('Behöver');
+    expect(productionLabel(s.gathering,s.soldierProduction,'playing',building)).toContain('Need');
   });
   it('debits exact balances once and blocks double start',()=>{
     const s=createMatch();s.gathering.wood=20;s.gathering.goldBalance=5;
