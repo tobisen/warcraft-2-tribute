@@ -1435,3 +1435,45 @@ Slutlig RTS-074: npm test586 tester/76 filer PASS; typecheck/build PASS,
 git diff --check PASS,566 dokumentreferenser giltiga. Slutbundle
 index-BRPFZXH1.js1548,79KB/gzip406,12KB; befintlig varning kvar.
 RTS-074 Done. Nästa task RTS-075 – begränsad AI-information/upptäckt.
+
+## 2026-10-03 – RTS-075: scouting och sist observerad information
+
+Egen enemyKnowledge med observerade noder/mängder, sista basposition
+och begränsade scout-index. Economy/policy/expansion använder minne;
+båda team extraherar fortsatt från verklig finite node. Högst en
+tom worker utforskar, utan att kasta last/avbryta bygge. Anfallsgrupper
+söker terrain-punkter före observerad bas och retargetar därefter.
+Ingen lokal attack mot osynliga targets. Save config9 strikt validerat
+minne/index/explored, migration utan ny policy/kunskap.
+
+Riktad knowledge/gathering20 PASS. Två informationsläckor identifierades
+och korrigerades: osedd uttömning avbröt fjärran gather, och återresa
+efter leverans läste aktuell dold mängd. Nu följs minne tills observation/
+fysisk kontakt; ingen gratis extraction. Gamla component-fixtures håller
+tidigare gathering/policy-modell explicit, och ny verklig factory
+scouting/ekonomi verifieras separat samt av full release-matris.
+
+Chromium147 production-preview båda fraktioner: naturligt startstate,
+worker-scout med först osedd wood, båda resurser upptäckta och levererade,
+save/load med minne, militär sökning innan observerad bas (~85,1–85,3s),
+attack mot observerad bas och restart PASS utan page/console/request-fel.
+Accelererad gameplay-klocka och faktisk spelar-scout-input; inga resurser,
+enheter eller uppgraderingar injicerade. Screenshot granskad med
+synlig röd worker vid delad wood. Ingen naturlig fullmatch-balansgaranti.
+
+Granskning omfattade strategi vs fysisk map, hidden-state-par, last/order,
+minne/attack, save/restart och scope. Inga kvarstående blockerande fynd.
+Fysisk placement/collision/spawn är fortfarande auktoritativ; den är
+ingen dold informationsplanner. Sökrutterna gäller befintlig arena.
+RTS-074 Pages/Actions verifierat success70fc0ea/37084173447.
+
+Slutlig browser-omkörning hittade ett verkligt sökstopp: combat-approach
+kan sluta vid en pseudo-footprints giltiga kontakt utanför56px från
+centrum. Separat attackArrivalRange80 i config och ett regressionstest
+löser det. Slutlig browser båda fraktioner PASS, basupptäckt ~85,1–85,3s
+i accelererad naturlig start. Worker-ankomstgräns56 bevaras.
+
+Slutlig RTS-075: npm test595 tester/77 filer PASS (91,50s), typecheck/build
+PASS, git diff --check PASS och569 dokumentreferenser giltiga.
+Slutbundle index-C9lyVIbS.js1553,10KB/gzip407,24KB; varningen behålls.
+RTS-075 Done. Nästa task RTS-076: tre handgjorda skirmish-kartor.

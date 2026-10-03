@@ -804,3 +804,15 @@ angripa bygget/basen enligt fog. Förlust tar bort leverans och supply;
 återuppbyggnad kostar igen. Huvudbasen är fortfarande victory-objective
 och den enda enemy-worker-producenten. Betald expansion kan byggas
 samtidigt som redan betalda/nya army-jobb; obetald expansion sparar bank.
+
+## RTS-075: AI utforskar
+
+Fienden känner egen ekonomi och terräng men måste se noder innan
+nya gather-orders skickas. En tom worker söker med en kort fast rutt;
+last/bygge avbryts inte. Senast sedd nodmängd behålls när den döljs.
+Verklig insamling följer fortfarande den delade ändliga noden.
+Anfallsgrupper söker terrängpunkter tills spelarbasen observerats,
+sedan används senaste kända position. Enbart synliga targets kan
+angripas. Minne och sökindex sparas i config9 och rensas vid restart.
+Gamla snapshots får ingen ny policy/kunskap vid Load. Sökrutterna gäller
+befintlig arena; flera kartor anpassas i nästa etapp.

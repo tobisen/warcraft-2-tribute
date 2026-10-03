@@ -1,3 +1,4 @@
+import type {EnemyKnowledgeState} from '../gameplay/enemyKnowledge';
 import type {EnemyRecoveryState} from '../gameplay/enemyRecovery';
 import type {EnemyPolicyState} from '../gameplay/enemyPolicy';
 import type {EnemyConstructionState} from '../gameplay/enemyConstruction';
@@ -102,6 +103,7 @@ export class BootScene extends Phaser.Scene {
   private combat!: CombatState;
   private enemyPolicy?:EnemyPolicyState;
   private enemyRecovery?:EnemyRecoveryState;
+  private enemyKnowledge?:EnemyKnowledgeState;
   private enemyConstruction?:EnemyConstructionState;
   private enemyVisuals = new Map<string, { body: Phaser.GameObjects.Image; label: Phaser.GameObjects.Text }>();
 
@@ -718,7 +720,7 @@ export class BootScene extends Phaser.Scene {
     this.syncVisuals();
   }
 
-  private currentMatch():MatchState {return {factions:{...this.factions},map:this.map,gathering:this.gathering,combat:this.combat,waves:this.waves,production:this.production,soldierProduction:this.soldierProduction,placement:this.placement,outcome:this.outcome,paused:!this.gameplayActive(),controlGroups:this.controlGroups,fog:this.fog,research:this.research,scenario:this.scenario,difficulty:this.difficulty,enemyProduction:this.enemyProduction,enemyAI:this.enemyAI,enemyConstruction:this.enemyConstruction,enemyPolicy:this.enemyPolicy,enemyRecovery:this.enemyRecovery};}
+  private currentMatch():MatchState {return {factions:{...this.factions},map:this.map,gathering:this.gathering,combat:this.combat,waves:this.waves,production:this.production,soldierProduction:this.soldierProduction,placement:this.placement,outcome:this.outcome,paused:!this.gameplayActive(),controlGroups:this.controlGroups,fog:this.fog,research:this.research,scenario:this.scenario,difficulty:this.difficulty,enemyProduction:this.enemyProduction,enemyAI:this.enemyAI,enemyConstruction:this.enemyConstruction,enemyPolicy:this.enemyPolicy,enemyRecovery:this.enemyRecovery,enemyKnowledge:this.enemyKnowledge};}
 
   private drawHP(position:Position,hp:number,max:number,width:number,offset:number,color:number):void {this.hpBars?.fillStyle(0x172422).fillRect(position.x-width/2-1,position.y-offset-1,width+2,5).fillStyle(color).fillRect(position.x-width/2,position.y-offset,width*Math.max(0,Math.min(1,hp/max)),3);}
 
@@ -747,7 +749,7 @@ export class BootScene extends Phaser.Scene {
     this.controlGroups=match.controlGroups??{};
     this.enemyAI=match.enemyAI;
     this.enemyConstruction=match.enemyConstruction;
-    this.enemyPolicy=match.enemyPolicy;this.enemyRecovery=match.enemyRecovery;
+    this.enemyPolicy=match.enemyPolicy;this.enemyRecovery=match.enemyRecovery;this.enemyKnowledge=match.enemyKnowledge;
     this.enemyProduction=match.enemyProduction;
     if(this.session.phase!=='menu'){this.scenario=match.scenario??'survival';this.difficulty=match.difficulty??'normal';}
     this.research=match.research??createResearch();

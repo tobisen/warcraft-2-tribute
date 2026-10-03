@@ -10,7 +10,7 @@ import {encodeSave,decodeSave} from './save';
 const view={camera:{x:0,y:0},building:null};
 /** Component preconditions: ready barracks, three army entities and a reconciled test bank. */
 function fixture():MatchState {
- const m=prepareEnemyConstruction(createMatch('skirmish','normal'));const bar=m.combat.enemies.find(e=>e.buildingType==='barracks')!;bar.construction={remainingSeconds:0,builderId:null};m.combat.enemies.find(e=>e.work)!.work!.order={kind:'idle'};
+ const m=prepareEnemyConstruction(createMatch('skirmish','normal'));delete m.enemyKnowledge;const bar=m.combat.enemies.find(e=>e.buildingType==='barracks')!;bar.construction={remainingSeconds:0,builderId:null};m.combat.enemies.find(e=>e.work)!.work!.order={kind:'idle'};
  m.combat.enemies.push(...Array.from({length:3},(_,i)=>({id:`enemy-produced-${i+1}`,kind:'unit' as const,owner:'enemy' as const,hp:36,position:{x:700+i*30,y:500},order:{kind:'idle' as const}})));m.enemyProduction!.production.nextUnitNumber=4;
  m.enemyProduction!.wood=100;m.enemyProduction!.gold=50;m.enemyProduction!.extracted={wood:60,gold:30};m.gathering.node.remaining-=60;m.gathering.gold!.remaining-=30;m.waves.elapsedSeconds=2;return m;
 }
@@ -43,7 +43,7 @@ it('save/load preserve paid research and ledger, pause freezes it and restart cl
  for(const mutate of [(d:any)=>d.state.enemyPolicy.research.job.remainingSeconds=9,(d:any)=>d.state.enemyPolicy.research.attack=2,(d:any)=>d.configVersion='tribute-config-6']){const d=JSON.parse(encodeSave(m,view));mutate(d);expect(decodeSave(JSON.stringify(d)).ok).toBe(false);}
 });
 it('config six migrates without free forge, levels, income or altered old construction policy',()=>{
- const m=createMatch('skirmish');delete m.enemyPolicy;delete m.enemyRecovery;const d=JSON.parse(encodeSave(m,view));d.configVersion='tribute-config-6';const loaded=decodeSave(JSON.stringify(d));expect(loaded.ok).toBe(true);if(loaded.ok){expect(loaded.match.enemyPolicy).toBeUndefined();expect(loaded.match.combat.enemies.some(e=>e.buildingType==='forge')).toBe(false);expect(loaded.match.enemyProduction).toEqual(m.enemyProduction);}
+ const m=createMatch('skirmish');delete m.enemyPolicy;delete m.enemyRecovery;delete m.enemyKnowledge;const d=JSON.parse(encodeSave(m,view));d.configVersion='tribute-config-6';const loaded=decodeSave(JSON.stringify(d));expect(loaded.ok).toBe(true);if(loaded.ok){expect(loaded.match.enemyPolicy).toBeUndefined();expect(loaded.match.combat.enemies.some(e=>e.buildingType==='forge')).toBe(false);expect(loaded.match.enemyProduction).toEqual(m.enemyProduction);}
 });
 
 it('an existing paid production queue advances while the policy saves for a Forge',()=>{

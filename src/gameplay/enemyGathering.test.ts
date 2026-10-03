@@ -8,7 +8,7 @@ import {encodeSave,decodeSave} from './save';
 import {resourceServices} from './resourceQueue';
 import {enemyWorker} from './enemyGathering';
 const view={camera:{x:0,y:0},building:null};
-const economy=()=>prepareEnemyGathering(createMatch('skirmish','normal'));
+const economy=()=>{const m=createMatch('skirmish','normal');delete m.enemyKnowledge;return prepareEnemyGathering(m);};
 it('starts two distinct real workers only in playable enemy-base scenarios',()=>{
  for(const scenario of ['skirmish','mission-base'] as const){const m=createMatch(scenario);expect(m.combat.enemies.filter(e=>e.kind==='worker')).toHaveLength(2);expect(m.gathering.units).toHaveLength(3);expect(m.combat.enemies.filter(e=>e.work).every(e=>e.hp===30&&e.work!.cargo===0)).toBe(true);}
  expect(createMatch('survival').combat.enemies).toHaveLength(0);expect(createMatch('siege-test').combat.enemies).toHaveLength(1);

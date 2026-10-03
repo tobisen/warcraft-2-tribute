@@ -430,3 +430,8 @@ en extra resursbas för80wood/20gold/10s. Färdig bas ger +8 supply och
 närmare leverans vid befintliga ändliga noder. Angripbar och möjlig att
 återuppbygga med ny kostnad. Save config8 bevarar betalda worker-jobb,
 extra bas och retry; äldre saves får inga nya units/baser gratis.
+
+RTS-075: fienden söker okända resurser med en tom arbetare och
+utforskar med anfallsgrupper innan spelarbasen setts. Dolda nodmängder
+uppdaterar inte minnet. Save config9 bevarar upptäckt; restart rensar den.
+Äldre saves behåller sin tidigare AI-policy.

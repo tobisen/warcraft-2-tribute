@@ -83,7 +83,7 @@ export function orderUnits(units: Unit[], target: Position, node?: ResourceNode)
 }
 
 /** Spend delta across approach, gathering, delivery and return without losing time. */
-export function updateGathering(state: GatheringState, deltaSeconds: number, map?: WorldMap,queue?:{elapsedSeconds:number;gateFor?:GateFor;team?:'player'|'enemy';services?:Map<string,ResourceService>}): GatheringState {
+export function updateGathering(state: GatheringState, deltaSeconds: number, map?: WorldMap,queue?:{elapsedSeconds:number;gateFor?:GateFor;team?:'player'|'enemy';services?:Map<string,ResourceService>;nodeVisible?:(node:ResourceNode)=>boolean;knownRemaining?:(node:ResourceNode)=>number}): GatheringState {
   const services=queue?.services??(map&&queue?resourceServices(state,map,queue.elapsedSeconds):undefined);
   const nodes = [state.node, ...(state.gold ? [state.gold] : [])].map(node=>({...node}));
   let goldBalance = state.goldBalance ?? 0;
@@ -115,7 +115,7 @@ export function updateGathering(state: GatheringState, deltaSeconds: number, map
       if (!node) { worker.order={kind:'idle'};worker.navigation=undefined;break; }
       const resource = node.resource ?? 'wood';
       let remaining = node.remaining;
-      if (worker.order.kind === 'gather' && (remaining <= 0 || worker.cargo >= gatheringConfig.capacity)) {
+      if (worker.order.kind === 'gather' && (remaining <= 0 && (!queue?.nodeVisible||queue.nodeVisible(node)) || worker.cargo >= gatheringConfig.capacity)) {
         worker.order = worker.cargo > 0 ? { kind: 'deliver', nodeId } : { kind: 'idle' };
         continue;
       }
@@ -152,9 +152,11 @@ export function updateGathering(state: GatheringState, deltaSeconds: number, map
         else wood += worker.cargo;
         worker.cargoType = undefined;
         worker.cargo = 0;
-        worker.order = remaining > 0 ? { kind: 'gather', nodeId } : { kind: 'idle' };
+        const returnRemaining=queue?.nodeVisible&&!queue.nodeVisible(node)?queue.knownRemaining?.(node)??remaining:remaining;
+        worker.order = returnRemaining > 0 ? { kind: 'gather', nodeId } : { kind: 'idle' };
         continue;
       }
+      if(remaining<=0){worker.order=worker.cargo>0?{kind:'deliver',nodeId}:{kind:'idle'};continue;}
       const amount = Math.min(remaining, gatheringConfig.capacity - worker.cargo,
         gatheringConfig.woodPerSecond * time);
       worker.cargoType = resource;
@@ -174,7 +176,7 @@ export function updateGathering(state: GatheringState, deltaSeconds: number, map
   return {
     ...state,
     units: units.map(worker => worker.kind === 'worker' && worker.order.kind === 'gather'
-      && nodes.find(n=>worker.order.kind==='gather' && n.id===worker.order.nodeId)?.remaining === 0
+      && nodes.find(n=>worker.order.kind==='gather' && n.id===worker.order.nodeId&&(!queue?.nodeVisible||queue.nodeVisible(n)))?.remaining === 0
       ? { ...worker, order: worker.cargo > 0
         ? { kind: 'deliver', nodeId: worker.order.nodeId } : { kind: 'idle' } } : worker),
     node: nodes[0], wood,

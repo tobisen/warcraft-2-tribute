@@ -785,3 +785,17 @@ full world/obstacle/body/kontakt/spawn-exit-kontroll. Ingen ny resursstock
 eller gratis income; färdig bas kortar befintlig leverans. Högst en extra
 bas, huvudbasen behåller objective/workerproduktion. Gamla saves får
 ingen ny policy. Grundbalansen är preliminär inför RTS-079.
+
+## RTS-075 – avgränsad upptäckt
+
+Ny enemyKnowledge minns bara senast synliga noder/mängder och observerad
+spelarbasposition. Hidden resource amount uppdaterar aldrig minnet. Egen
+bank/enheter och statisk terrain är kända. En tom worker utforskar
+via tre fasta terräng-waypoints; lastade/buildande workers avbryts inte.
+Anfallsgrupper söker via tre fasta terräng-waypoints tills basen setts,
+sedan mot senaste observerade plats. Ingen strategisk läsning av dold
+spelarposition/resursmängd. Collision/spawn/placement är fysisk
+auktoritativ validering, inte en information-planner. Kontakt med en
+uttömd nod ger ingen extraction; osedd uttömning avbryter inte fjärran
+gather-order. Save config9 bevarar strikt observerat minne; config8/under
+migreras utan ny knowledge-policy, fresh restart använder nya regler.

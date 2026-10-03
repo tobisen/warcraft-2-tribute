@@ -1,3 +1,4 @@
+import {knownEnemyNode} from './enemyKnowledge';
 import {wantsEnemyExpansion} from './enemyExpansion';
 import {enemyExpansionConfig} from '../config/enemyExpansion';
 import {needsEnemyWorker} from './enemyRecovery';
@@ -31,7 +32,7 @@ export function enemyPriority(m:MatchState):EnemyPriority {
 export function prepareEnemyPolicy(m:MatchState):MatchState {
  if(!m.enemyPolicy||!m.enemyProduction||!m.combat.enemies.some(e=>e.kind==='base'&&e.hp>0))return m;
  const priority=enemyPriority(m),base=m.combat.enemies.find(e=>e.kind==='base')!,bank=m.enemyProduction;
- let g:GatheringState={base:base.position,baseSize:base.footprint!.width,wood:bank.wood,goldBalance:bank.gold,units:m.combat.enemies.flatMap(e=>{const w=enemyWorker(e);return w?[w]:[];}),node:m.gathering.node,gold:m.gathering.gold};
+ let g:GatheringState={base:base.position,baseSize:base.footprint!.width,wood:bank.wood,goldBalance:bank.gold,units:m.combat.enemies.flatMap(e=>{const w=enemyWorker(e);return w?[w]:[];}),node:knownEnemyNode(m,m.gathering.node)??{...m.gathering.node,remaining:0},gold:knownEnemyNode(m,m.gathering.gold)};
  let research=m.enemyPolicy.research;
  if(priority==='attack'||priority==='defense'){const started=startResearch(g,research,enemyBuildingView(m),priority);g=started.gathering;research=started.research;}
  const recipe=factions[(m.factions??defaultFactions).enemy].units.soldier.cost;

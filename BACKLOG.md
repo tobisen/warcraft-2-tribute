@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-075 – AI utforskar och använder begränsad information** — **Todo**.
+**RTS-076 – Tre skirmish-kartor med olika terräng och resurser** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
@@ -2292,13 +2292,21 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-075 – AI utforskar och använder begränsad information
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** AI utforskar och använder begränsad information.
+**Goal:** AI-ekonomi och strategiska anfall utgår från egen upptäckt, inte dolda spelartillstånd.
+
+**Requirements:** Ny match har enemyKnowledge med sist observerade noder och spelarbasposition. Uppdatera minne enbart från enemy-teamets syn; ingen uppdatering av dold nodmängd. Workers söker resurser via avgränsade fasta terräng-waypoints innan gather-order mot okänd nod. Ekonomi/budget/expansion använder kända nodvärden; faktisk extraction fortsätter följa fysisk nod och ger inga extra resurser. Anfallsgrupper söker via fasta terräng-waypoints tills spelarbasen observerats, sedan mot senaste kända plats. Inga attacker på osynliga targets. Egen ekonomi och statisk arena-terrain är kända; fysisk collision/placement/spawn-validering är fortsatt auktoritativ, inte strategiskt minne. Högst en scouting-worker, lastad/buildande worker avbryts inte. Save/load/pause/restart; äldre snapshots behåller sin policy utan tillagd gratis kunskap.
+
+**Non-goals:** Slumpmässig planner, generell scouting-armé, avancerad information/AI-ekonomi, ändrad fog för spelaren och nya kartor.
 
 **Dependencies:** RTS-074.
 
-**Acceptance criteria:** AI-order utgår från teamets syn/upptäckt; dolda tillstånd ändrar inte beslut.
+**Acceptance criteria:** Dolda nodmängder/spelarpositioner ändrar inte strategiska orders/minne; synlig upptäckt gör det. Begränsat scoutflöde upptäcker resurs och bas i befintlig arena. Förlorad scout ersätts med befintlig betald recovery. Fog/attack-filter och resource ledger bevaras. Sparbart minne valideras och restart rensar det.
+
+**Tester:** Hidden-state-par, observerad uppdatering/sista kända position, scout-order/last/begränsning, grupp-anfall utan känd bas, ekonomi/expansion-policy, save/migration/paused/restart och tidigare tester/typecheck/build/browser/diff.
+
+**Docs:** BACKLOG.md, DECISIONS.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md och README.md.
 
 ## RTS-076 – Tre skirmish-kartor med olika terräng och resurser
 

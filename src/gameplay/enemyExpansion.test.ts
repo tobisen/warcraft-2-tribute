@@ -10,7 +10,7 @@ import {enemyExpansionConfig} from '../config/enemyExpansion';
 const view={camera:{x:0,y:0},building:null};
 /** Ready initial barracks/learned upgrades/three army: explicit component preconditions. */
 export function fixture():MatchState {
- const m=prepareEnemyConstruction(createMatch('skirmish','normal'));
+ const m=prepareEnemyConstruction(createMatch('skirmish','normal'));delete m.enemyKnowledge;
  const bar=m.combat.enemies.find(e=>e.buildingType==='barracks')!;bar.construction={remainingSeconds:0,builderId:null};
  m.combat.enemies.find(e=>e.id==='enemy-worker-1')!.position={x:720,y:144};for(const e of m.combat.enemies)if(e.work)e.work.order={kind:'idle'};
  m.combat.enemies.push(...Array.from({length:3},(_,i)=>({id:`army-${i}`,owner:'enemy' as const,hp:36,position:{x:700+i*30,y:500},order:{kind:'idle' as const}})));

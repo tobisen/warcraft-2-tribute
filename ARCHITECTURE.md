@@ -1005,3 +1005,27 @@ med tydlig Resursbas-text. [enemyExpansion.test.ts](src/gameplay/enemyExpansion.
 täcker kostnad, blockering, tid, leverans, supply, builderbyte och Save.
 Save config8 validerar96px-footprint/240HP/10s/outpost-order/retry.
 Huvudbasens objective/workerproduktion ändras inte.
+
+## RTS-075: egen observationsmodell
+
+[enemyKnowledge.ts](src/gameplay/enemyKnowledge.ts) äger observerade
+ResourceNode-kopior, sista basposition samt begränsade scout-index i
+MatchState.enemyKnowledge. [enemyKnowledge.ts](src/config/enemyKnowledge.ts)
+anger fasta terräng-sökrutter/ankomstgräns. observeEnemyKnowledge
+använder endast enemy-fog vid synlig node/base; hidden memory bevaras.
+Budget, nya gather-orders och expansion härleds från detta minne.
+Faktisk updateGathering använder fortsatt shared finite node och ledger;
+nodeVisible hindrar dold uttömning från att avbryta fjärran gather.
+Kontakt validerar faktisk mängd utan gratis wood/gold.
+
+En tom idle/move/gather-worker kan utforska; befintlig scout återanvänds.
+Bygg-/lastade orders bevaras. Militär dispatch/defender-release får
+sökpunkt eller minnesbas i stället för faktisk osedd spelarposition.
+Sökpunkt ändras vid ankomst; observerad bas retargetar attack-orders.
+Befintliga fog-filter för lokal attack bevaras. Fysisk hinder-/spawn-
+validering behöver faktisk map; den representerar inte strategiskt minne.
+
+Save config9 validerar index, unika kända noder/positioner/mängder och
+explored-celler; config8/äldre behåller tidigare AI-policy utan tillagd
+kunskap. [enemyKnowledge.test.ts](src/gameplay/enemyKnowledge.test.ts)
+täcker dolda tillstånd, scouting, lokal upptäckt och migration.
