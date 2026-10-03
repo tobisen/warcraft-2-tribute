@@ -13,10 +13,10 @@ export const maps:Record<MapId,MapDefinition>={
   enemyResourceWaypoints:[{x:1056,y:448},{x:848,y:240},{x:608,y:240},{x:1184,y:592},{x:1248,y:864}],
   enemyAttackWaypoints:[{x:1008,y:656},{x:736,y:656},{x:448,y:480}],
   terrain:[{column:19,row:10,columns:3,rows:3,kind:'rock'},{column:25,row:14,columns:2,rows:5,kind:'water'},{column:25,row:22,columns:2,rows:9,kind:'water'},{column:32,row:5,columns:3,rows:7,kind:'rock'},{column:8,row:24,columns:5,rows:3,kind:'rock'},{column:36,row:22,columns:5,rows:4,kind:'rock'}]},
- arena:{label:uiText.arena,wood:400,gold:300,terrain:arenaConfig.terrain},
- forest:{label:uiText.forestPass,wood:500,gold:250,terrain:[{column:5,row:4,columns:3,rows:7,kind:'rock'},{column:3,row:17,columns:8,rows:3,kind:'water'},{column:21,row:11,columns:3,rows:3,kind:'rock'}]},
+ arena:{label:uiText.arena,instruction:'Build east of your base. The open central land reaches the enemy base; small ponds leave the main route clear.',wood:400,gold:300,terrain:arenaConfig.terrain},
+ forest:{label:uiText.forestPass,instruction:'Build east of your base. Keep the route to wood and gold open; cross the forest pass toward the northeast enemy base.',wood:500,gold:250,terrain:[{column:5,row:4,columns:3,rows:7,kind:'rock'},{column:3,row:17,columns:8,rows:3,kind:'water'},{column:21,row:11,columns:3,rows:3,kind:'rock'}]},
  islands:{label:uiText.islands,instruction:uiText.gatherOnTheWesternIslandBuildAHarbor,wood:800,gold:400,goldPosition:{x:600,y:300},enemyAttackWaypoints:[{x:928,y:480},{x:944,y:208},{x:912,y:384}],enemyResourceWaypoints:[{x:944,y:240},{x:1168,y:400},{x:912,y:560}],terrain:[{column:0,row:0,columns:40,rows:2,kind:'water'},{column:0,row:28,columns:40,rows:2,kind:'water'},{column:0,row:2,columns:2,rows:26,kind:'water'},{column:38,row:2,columns:2,rows:26,kind:'water'},{column:22,row:2,columns:6,rows:26,kind:'water'},{column:5,row:4,columns:3,rows:3,kind:'rock'},{column:33,row:20,columns:2,rows:3,kind:'rock'}]},
- river:{label:uiText.riverBend,wood:350,gold:400,terrain:[{column:7,row:16,columns:14,rows:2,kind:'water'},{column:31,row:14,columns:5,rows:4,kind:'water'},{column:10,row:3,columns:2,rows:5,kind:'rock'},{column:34,row:2,columns:2,rows:2,kind:'rock'}]},
+ river:{label:uiText.riverBend,instruction:'Keep to the north bank for the enemy base. Leave space for workers around the mines; southern water bends block direct travel.',wood:350,gold:400,terrain:[{column:7,row:16,columns:14,rows:2,kind:'water'},{column:31,row:14,columns:5,rows:4,kind:'water'},{column:10,row:3,columns:2,rows:5,kind:'rock'},{column:34,row:2,columns:2,rows:2,kind:'rock'}]},
 };
 export const isMapId=(value:unknown):value is MapId=>typeof value==='string'&&Object.hasOwn(maps,value);
 

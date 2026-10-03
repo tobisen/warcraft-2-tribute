@@ -1068,3 +1068,12 @@ Gather-order behåller sin specifika resursnod över leveransturer; uttömning
 gäller den noden. Samma cap5 och hemleverans gäller expansioner, utan ny
 dropoffbyggnad. Fog döljer okända noder; utforskade men osynliga noder visar
 namn utan aktuell mängd. Pan/minimap/Save/load och restart följer kartstorleken.
+
+## Kartornas starttips (RTS-116)
+
+Arena: öppet centralt land mot fiendebasen, med små sidodammar.
+Forest Pass: håll workerleder till wood/gold fria och gå genom passet mot nordöst.
+River Bend: norra stranden ger landväg; södra vattenböjar hindrar direkt passage.
+Islands: befintlig västö-ekonomi, kustharbor och transport krävs över havet.
+Starttipsen visas under matchen. Befintlig geometri, stock och AI-balans är
+bevarade; landkartorna har plats för64×64-byggnader och40px-catapultväg.

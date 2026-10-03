@@ -600,3 +600,7 @@ Välj Skirmish och Frontier Valley för den större referenskartan. Utforska
 De levereras till den befintliga basen. Norra, centrala och södra landpassager
 ger alternativa anfallsvägar. Förstör fiendebasen vid(1360,144) för Victory.
 Totalt600wood/450gold är ändliga och delas med fienden.
+
+Arena, Forest Pass och River Bend visar nu korta starttips om basutrymme,
+workerleder och anfallsvägar. Islands kräver fortfarande harbor och transport
+över havet. Alla fyra äldre kartor behåller sin terräng, resursmängd och regler.

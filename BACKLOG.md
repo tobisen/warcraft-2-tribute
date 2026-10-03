@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-116 – Förbättra övriga kartor** — **Todo**.
+**RTS-117 – Nya ljudeffekter och ljudmix** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -3034,13 +3034,21 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-116 – Förbättra övriga kartor
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Använd referenskartans kvalitetsnivå. Verifiera startpositioner, resurser, navigation, AI och land-/sjövägar på relevanta kartor.
+**Goal:** Kontrollera referenskartans kvalitetskriterier även på Arena, Forest Pass, River Bend och Islands; tydliga kartanpassade starttips.
+
+**Requirements:** Inventera redan implementerade kartor och återanvänd deras geometri, resurser och AI. Startzoner ska ha nåbara noder och lediga64×64-byggplatser. Landkartor ska ha en40px-catapult-rutt mellan basregioner. Islands ska behålla separata landmassor, sammanhängande sjöväg, användbar harbor och landstigning. Lägg tydliga kartanpassade matchinstruktioner för de tre landkartorna; Islands har redan sjöinstruktion. Verifiera ekonomiska fullmatcher/AI och legacy Save18 på alla äldre kartor, fog/minimap och kamera. Åtgärda endast konkret upptäckta kartfel.
+
+**Non-goals:** Ändra fungerande topologi/stock/balans utan fynd, nya expansioner på gamla kartor, nya AI-system, ny Save-version, större kartor131–133 eller presentationpolish.
 
 **Dependencies:** RTS-115.
 
-**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+**Acceptance criteria:** Samtliga gamla mapstarts/spawns/noder och byggutrymme fungerar. Catapult når enemyregion på landkartorna; Islands land blockeras av hav men sjörutt/harbor/transport fungerar. Betald genomspelning och faktiskt AI-angrepp verifierade med relevanta befintliga tester. Config18-saves migrerar med samma karta och lager. Typecheck/build/tester/diff PASS; browser fyra kartor vid1280/1920 med granskade bilder och actual sjöproduktion/transport.
+
+**Tester:** Geometry/resursapproach/byggyta/catapult/sea routes; legacy18 för alla äldre kartor. Befintliga maps/islands/navalBalance/regressioner och hela sviten. Browser fyra kartval/tips/fog/kamera samt betald Islands harbor/transport/ship, Save/load/restart.
+
+**Docs:** BACKLOG, DEV_LOG, ARCHITECTURE, GAME_DESIGN och README.
 
 ## RTS-117 – Nya ljudeffekter och ljudmix
 

@@ -2111,3 +2111,27 @@ verifierade med gameplaybot; browserflödet verifierar ekonomi/produktion/reset.
 Begränsningar: expansioner använder befintlig bas som dropoff; långa leveranser
 är avsiktliga. Ingen ny AI-ekonomi, collision avoidance eller procedural map.
 RTS-115 Done; RTS-116 är nästa task. Ny roadmap121–150 planerad, ej implementerad.
+
+## 2026-10-03 – RTS-116: Äldre kartors kvalitet
+
+Arena/Forest Pass/River Bend har kartanpassade starttips. Befintlig terräng,
+resurser, spawns och AI-balans bevaras; inga blockerande kartfel hittades.
+Åtta nya beteendetester täcker64×64-byggutrymme, nåbara resursapproaches,
+40px-catapultväg eller Islands separata land/sammanhängande sjö/harbor, och
+legacy config18-migration med samma karta/stock för båda fraktionerna.
+
+Checks: npm test865tester/110filer PASS170.02s, typecheck/build/diff PASS.
+Befintlig bundlevarning kvar. Fullsviten inkluderar betalda landmatcher,
+Islands landstigning/Victory och AI:s verkliga sjöangrepp/Defeat.
+Browser fyra äldre kartor vid1280/1920 PASS fog/rendering/kamera/starttips;
+screenshotgranskning av kartornas bas/terräng/kust. För artreview doldes endast
+fog-grafik tillfälligt, inte modellens vision eller entityfilter.
+Betald Islands harbor→transport/warship→rörelse/selection→Save/load/restart
+PASS båda fraktioner/storlekar; finansiering120wood/70gold efter~111s,
+inga saldo-/unitinjektioner och inga pageerrors. Moving-worker-testklick
+uppdateras mot aktuell position i stället för att missa efter CPU-belastning.
+
+Granskning: inga blockerande kod-/scopefynd. Ingen onödig topologi- eller
+Saveversionsändring. RTS-116 Done; RTS-117 nästa. Pages för RTS-115 var vid
+senaste kontroll fortfarande in_progress; publicerad startsida hade ännu inte
+Frontier. Deploy är inte påstådd klar före faktiskt success/verifierad sida.

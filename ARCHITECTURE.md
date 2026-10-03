@@ -1400,3 +1400,13 @@ Kartkonfiguration styr world/fog-storlek, nod-ID/typ/position/stock, bas och
 resourceledger. Alla koordinater/footprints valideras mot vald karta.
 Camera lagras inom världen och clampas vid load/resize till aktuell viewport,
 i stället för gamla fasta 480/360-gränser. Temporär rendering sparas inte.
+
+## RTS-116 – Kvalitetskontroll av befintliga kartor
+
+Kartornas instruktioner är presentationsdata i MapDefinition, visade av samma
+scenadapter som Frontier Valley/Islands. Ingen ny spelregel eller topologi.
+mapQuality.test.ts verifierar resursapproach, två lediga64×64-startplatser,
+40px-catapultväg på tre landkartor respektive avskilt land/sjörutt/harbor på
+Islands, och oförändrat kart-/resursstate efter config18→19-migration för
+båda fraktionerna. Befintliga ekonomiska maps/islands/navalBalance-tester
+fortsätter täcka betald Victory, landstigning och verkligt AI-angrepp.
