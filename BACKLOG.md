@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-114 – Förbättrade stridseffekter** — **Todo**.
+**RTS-115 – En större referenskarta** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -2998,13 +2998,21 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-114 – Förbättrade stridseffekter
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Förtydliga projektiler, träffar och död. Effekter får inte skymma units, HP eller selection.
+**Goal:** Förtydliga projektiler, träffar och död utan att skymma units/HP/selection.
+
+**Requirements:** Riktningsorienterad arrow, stone respektive cannonball med korta trails; rent presentationsval från befintlig projectiledata. Synlig HP-minskning ger kort hit-feedback utan HP-/damageändring; inga effekter vid reveal/load/spawn. Befintliga visible landningar/misses/splash och death/sinking får läsbara lågkontrast-originalframes. Små death-dust endast för verkligt borttagna synliga landenheter; boarding/hide tysta. Cooldown/dedup/max64/livstid0.5s begränsar clutter. Markeffekter/dead sprites under units; projektiler underHP/ringar. Fog/pause/Save/load/restart och gameplay bevaras.
+
+**Non-goals:** Combatbalans, nya vapen eller damage, gameplaytimrar/animationsevents, ljudeffekter117, gore, partikelmotor, nya externa assets.
 
 **Dependencies:** RTS-113.
 
-**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+**Acceptance criteria:** Tre projektiltyper och hit/death läsbara i granskade screenshots; inga hidden-HP/reveal/deathfalsepositives. Boundedeffekter, enheter/HP/selection ovanför, paus fryser och restart/load städar. Relevant/fulltester/typecheck/build/diff PASS. Browser1280×720/1920×1080 med faktisk combat och visuellt separat riktad projectilefixture.
+
+**Tester:** Projectileclassification/rotation, hit-HPdiff utan spawn/reveal/removefalses, pause/cooldown/max, befintliga projectile/visibility/deathregressioner, RGBA/palett/bounds/distinktaFXframes. Browserrealmanualcombat, basskada, paus/Save/load/restart; separat artboard av tre projektiltyper/faser mot unit/HP/ring.
+
+**Docs:** BACKLOG, DEV_LOG, ARCHITECTURE, DECISIONS, assets/README och assets/ASSET_LICENSE.
 
 ## RTS-115 – En större referenskarta
 

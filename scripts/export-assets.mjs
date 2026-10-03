@@ -21,10 +21,10 @@ const unitImage=new Surface(2048,4096),unitAtlas={};
 for(const f of unitFrames(Surface,palette)){unitImage.blit(f.image,f.x,f.y);unitAtlas[f.id]={frame:{x:f.x,y:f.y,w:f.image.width,h:f.image.height},rotated:false,trimmed:false,spriteSourceSize:{x:0,y:0,w:f.image.width,h:f.image.height},sourceSize:{w:f.image.width,h:f.image.height}};manifest.frames[f.id]={atlas:'units',width:f.image.width,height:f.image.height,anchor:f.anchor,kind:f.kind,faction:f.faction,type:f.type,owner:f.owner,direction:f.direction,state:f.state,frame:f.frame};}
 manifest.atlases.units={image:'assets/units-atlas.png',data:'assets/units-atlas.json',width:2048,height:4096,source:'assets/sources/units.mjs',slotSize:64,directions,animations:animationSpec};
 writeFileSync(new URL('units-atlas.png',output),png(unitImage));writeFileSync(new URL('units-atlas.json',output),JSON.stringify({frames:unitAtlas,meta:{image:'units-atlas.png',size:{w:2048,h:4096},scale:'1'}},null,2)+'\n');writeFileSync(new URL('manifest.json',output),JSON.stringify(manifest,null,2)+'\n');
-const uiImage=new Surface(512,128),uiAtlas={};
+const uiImage=new Surface(512,160),uiAtlas={};
 for(const f of uiFrames(Surface,palette)){uiImage.blit(f.image,f.x,f.y);uiAtlas[f.id]={frame:{x:f.x,y:f.y,w:f.image.width,h:f.image.height},rotated:false,trimmed:false,spriteSourceSize:{x:0,y:0,w:f.image.width,h:f.image.height},sourceSize:{w:f.image.width,h:f.image.height}};manifest.frames[f.id]={atlas:'ui',width:f.image.width,height:f.image.height,anchor:f.anchor,kind:f.kind,...(f.border?{border:f.border}:{})};if(f.id==='panel')writeFileSync(new URL('panel.png',output),png(f.image));}
-manifest.atlases.ui={image:'assets/ui-atlas.png',data:'assets/ui-atlas.json',width:512,height:128,source:'assets/sources/ui.mjs',effectFPS:8,effectLifetime:.5};
-writeFileSync(new URL('ui-atlas.png',output),png(uiImage));writeFileSync(new URL('ui-atlas.json',output),JSON.stringify({frames:uiAtlas,meta:{image:'ui-atlas.png',size:{w:512,h:128},scale:'1'}},null,2)+'\n');writeFileSync(new URL('manifest.json',output),JSON.stringify(manifest,null,2)+'\n');
+manifest.atlases.ui={image:'assets/ui-atlas.png',data:'assets/ui-atlas.json',width:512,height:160,source:'assets/sources/ui.mjs',effectFPS:8,effectLifetime:.5};
+writeFileSync(new URL('ui-atlas.png',output),png(uiImage));writeFileSync(new URL('ui-atlas.json',output),JSON.stringify({frames:uiAtlas,meta:{image:'ui-atlas.png',size:{w:512,h:160},scale:'1'}},null,2)+'\n');writeFileSync(new URL('manifest.json',output),JSON.stringify(manifest,null,2)+'\n');
 console.log(`Exported ${Object.keys(frames).length} original world/resource frames.`);
 
 const navalImage=new Surface(1024,3328),navalAtlas={};

@@ -1359,3 +1359,22 @@ Enbart egna repo-lokala pixelkällor, inga importerade bilder. Unitsmanifestets
 width korrigeras från4096 till faktiskPNG2048; height4096 är oförändrad.
 Rasterregressioner kontrollerar typ/riktningsvariation och minst tre olika
 walk/attack/death-frames; icke-stridande transport har inget attackbeteende.
+
+## RTS-114 – Begränsad combat-feedback
+
+Presentation/effects.ts väljer arrow/stone/cannonball från befintlig projectile;
+marine har företräde framför splash. Arrow har riktad14px shaft/fjäder/spets,
+stone4px och cannonball3px har kort8px trail och highlight. Draw använder
+PhaserGraphics i presentation; inga gameplayfält eller damageevents ändras.
+Visible landningar/misses ger befintliga impact/splash. PublicHealth-samples
+från own warningSnapshot och entityVisible-enemies ger hit endast vid faktiskt
+minskad positivHP i två konsekutiva synliga snapshots; spawn/reveal/heal/hide/
+remove/load är inte hits. Samples seedas om på reset och paus är tyst.
+
+FX-sprites är glesa original32/64px med fyra8FPS-faser,0.5s livstid och
+max64. Nearby samma kind mergeas inom8px/0.15s. Synlig faktisk death ger
+land-dust eller befintlig naval-sinking; boarding/fog hiding ger ingen death.
+Ground-effects/dead sprites på depth−1 underunits0; projectile5, selection6,
+HP7 och fog40. Alpha0.8 och glesa sprites bevarar läsbarheten. UI-atlas512×160
+med21frames. Save lagrar fortfarande inte temporära effekter: load/restart
+rensar dem, paus fryser bildtid och terminal match stoppar simulationen.

@@ -27,7 +27,7 @@ import type {EnemyPolicyState} from '../gameplay/enemyPolicy';
 import type {EnemyConstructionState} from '../gameplay/enemyConstruction';
 import {useAbility,abilityFor,abilityReady,abilityStatus} from '../gameplay/abilities';
 import {storeSave,readSave,type SavedView} from '../gameplay/save';
-import {landedEffects,impactFrame,impactAlive,type Impact} from '../presentation/effects';
+import {landedEffects,impactFrame,impactAlive,hitEffects,canAddImpact,drawProjectile,type Impact,type HealthSample} from '../presentation/effects';
 import {effectConfig} from '../config/effects';
 import {gameAudio} from '../presentation/audio';
 import {audioEvents,type AudioSnapshot} from '../presentation/audioPolicy';
@@ -157,7 +157,7 @@ export class BootScene extends Phaser.Scene {
   private soldierProduction: ProductionState = { remainingSeconds: null, nextUnitNumber: 4 };
   private catapultButton!:HTMLButtonElement;
   private archerButton!:HTMLButtonElement;
-  private projectileVisuals=new Map<string,Phaser.GameObjects.Arc>();
+  private projectileVisuals=new Map<string,Phaser.GameObjects.Graphics>();
   private soldierButton!: HTMLButtonElement;
   private soldierProductionStatus!: HTMLElement;
   private trainButton!: HTMLButtonElement;
@@ -173,6 +173,7 @@ export class BootScene extends Phaser.Scene {
   private nextImpact=1;
   private audioSnapshot?:AudioSnapshot;
   private visualTime=0;
+  private hitSnapshot?:HealthSample[];
   private motions=new Map<string,Motion>();
   private deaths=new Map<string,{effect:DeathEffect;visual:Phaser.GameObjects.Image}>();
   private drag?: { world: Position; screen: Position; active: boolean;shift:boolean };
@@ -187,7 +188,7 @@ export class BootScene extends Phaser.Scene {
   create(): void {
     this.audioSnapshot=undefined;gameAudio.setPhase('menu');gameAudio.reset();
     this.warningState=createWarningState();this.warningVisual=this.add.graphics().setDepth(9);
-    this.visualTime=0;this.motions.clear();this.deaths.clear();this.impacts.clear();this.nextImpact=1;
+    this.visualTime=0;this.hitSnapshot=undefined;this.motions.clear();this.deaths.clear();this.impacts.clear();this.nextImpact=1;
     this.hpBars=this.add.graphics().setDepth(7);
     const loaded=this.pendingLoad;this.pendingLoad=undefined;
     if(!loaded)document.getElementById('save-status')!.textContent='';
@@ -248,7 +249,7 @@ export class BootScene extends Phaser.Scene {
     };
     this.queuePanel.addEventListener('click',cancelJob);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.queuePanel.removeEventListener('click',cancelJob));
-    this.shipLabels.clear();this.shipVisuals.clear();this.harborVisual=undefined;this.harborLabel=undefined;this.navyGraphics=this.add.graphics().setDepth(2);
+    this.shipLabels.clear();this.shipVisuals.clear();this.harborVisual=undefined;this.harborLabel=undefined;this.navyGraphics=this.add.graphics().setDepth(effectConfig.selectionDepth);
     this.projectileVisuals.clear();
     this.orderVisuals.clear();
     this.farmVisuals.clear();
@@ -258,7 +259,7 @@ export class BootScene extends Phaser.Scene {
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.stopButton.removeEventListener('click', stop));
     this.selectedBuilding = loaded?.view.building??null;
     this.rallyMarker = this.add.circle(0, 0, 8).setStrokeStyle(2, 0x7bd389).setDepth(6).setVisible(false);
-    this.buildingRing = this.add.rectangle(0, 0, 0, 0).setOrigin(0).setStrokeStyle(2, 0xffdc73).setDepth(5).setVisible(false);
+    this.buildingRing = this.add.rectangle(0, 0, 0, 0).setOrigin(0).setStrokeStyle(2, 0xffdc73).setDepth(effectConfig.selectionDepth).setVisible(false);
     this.cameras.main.setBounds(0, 0, this.map.width, this.map.height).setZoom(1).setScroll(loaded?.view.camera.x??0,loaded?.view.camera.y??0);
     const resizeCamera=()=>{const v=viewportGeometry(this.scale.width,this.scale.height,this.map);const camera=this.cameras.main;camera.setViewport(v.camera.x,v.camera.y,v.camera.width,v.camera.height);camera.setBounds(0,0,this.map.width,this.map.height);camera.setScroll(Math.max(0,Math.min(camera.scrollX,this.map.width-camera.width)),Math.max(0,Math.min(camera.scrollY,this.map.height-camera.height)));this.drag=undefined;this.cameraDrag=undefined;this.dragBox?.setVisible(false);};
     resizeCamera();this.scale.on(Phaser.Scale.Events.RESIZE,resizeCamera);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.scale.off(Phaser.Scale.Events.RESIZE,resizeCamera));
@@ -734,8 +735,7 @@ export class BootScene extends Phaser.Scene {
     }
     const visibleShots=this.outcome==='playing'?(this.combat.projectiles??[]).filter(p=>isVisible(this.fog,'player',p.position)):[];
     for(const [id,visual] of this.projectileVisuals)if(!visibleShots.some(p=>p.id===id)){visual.destroy();this.projectileVisuals.delete(id);}
-    for(const shot of visibleShots){if(!this.projectileVisuals.has(shot.id))this.projectileVisuals.set(shot.id,this.add.circle(0,0,shot.splashRadius?6:3,shot.splashRadius?0xb793d8:0xf9e7a0).setDepth(8));
-      this.projectileVisuals.get(shot.id)!.setPosition(shot.position.x,shot.position.y);}
+    for(const shot of visibleShots){if(!this.projectileVisuals.has(shot.id))this.projectileVisuals.set(shot.id,this.add.graphics().setDepth(effectConfig.projectileDepth));drawProjectile(this.projectileVisuals.get(shot.id)!,shot);}
     for (const enemy of visibleEnemies) {
       if (!this.enemyVisuals.has(enemy.id)) this.enemyVisuals.set(enemy.id, {
         body: enemy.footprint?this.add.image(enemy.position.x,enemy.position.y,'buildings',buildingFrame((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base','enemy',enemy.construction?.remainingSeconds??0,enemy.buildingType==='outpost'?10:5,this.factions.enemy)).setOrigin(buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').x,buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').y):enemy.kind==='ship'?this.add.image(enemy.position.x,enemy.position.y,'naval',`${this.factions.enemy==='clans'?'clans-':''}transport-enemy-s-idle-0`).setOrigin(.5,40/64):this.add.image(enemy.position.x,enemy.position.y,'units',`${this.factions.enemy==='clans'?'clans-':''}${enemy.kind==='worker'?'worker':'soldier'}-enemy-s-idle-0`).setOrigin(.5,22/32),
@@ -752,7 +752,7 @@ export class BootScene extends Phaser.Scene {
     for (const unit of this.gathering.units) {
       if (!this.visuals.has(unit.id)) {
         const ring = this.add.circle(unit.position.x, unit.position.y, unit.kind==='soldier'?Math.max(20,combatUnitStats(unit).size*.75):20)
-          .setStrokeStyle(2, 0xffdc73).setVisible(false);
+          .setStrokeStyle(2, 0xffdc73).setDepth(effectConfig.selectionDepth).setVisible(false);
         const art:UnitArt=unit.kind==='worker'?'worker':unit.archetype??'soldier';const origin=unitOrigin(art);
         const body=this.add.image(unit.position.x,unit.position.y,'units',`${this.factions.player==='clans'?'clans-':''}${art}-player-s-idle-0`).setOrigin(origin.x,origin.y);
         const cargo = this.add.text(unit.position.x, unit.position.y - 32, '',
@@ -771,6 +771,9 @@ export class BootScene extends Phaser.Scene {
         .setVisible(unit.kind==='worker'&&unit.selected).setText(unit.kind==='worker'?`${unit.cargo.toFixed(1)}/${gatheringConfig.capacity} ${unit.cargoType??'wood'}`:'');
       this.drawHP(unit.position,unit.hp??combatConfig.workerHP,unit.kind==='worker'?combatConfig.workerHP:factions[this.factions.player].units[unit.archetype??'soldier'].hp,unit.kind==='soldier'&&unit.archetype==='catapult'?40:24,unit.kind==='soldier'&&unit.archetype==='catapult'?39:29,0x7398c1);
     }
+    const publicHealth=[...warningSnapshot(this.currentMatch()),...visibleEnemies.map(e=>({id:e.id,hp:e.hp,position:{...e.position}}))].filter(p=>isVisible(this.fog,'player',p.position));
+    for(const hit of hitEffects(this.hitSnapshot,publicHealth,this.visualTime,this.gameplayActive()))this.addImpact(hit);
+    this.hitSnapshot=publicHealth;
     for(const [id,e] of this.impacts){if(!impactAlive(e.impact,this.visualTime,p=>isVisible(this.fog,'player',p))){e.visual.destroy();this.impacts.delete(id);}else e.visual.setFrame(impactFrame(e.impact,this.visualTime));}
     for(const [id,d] of this.deaths){if(!effectAlive(d.effect,this.visualTime,isVisible(this.fog,'player',d.effect.motion.position))){d.visual.destroy();this.deaths.delete(id);}else d.visual.setFrame(unitFrame(d.effect.motion,this.visualTime));}
     if(this.fogOverlay)drawFog(this.fogOverlay,this.fog,this.fogPreview??'player');
@@ -798,12 +801,17 @@ export class BootScene extends Phaser.Scene {
     const match = updateMatch(this.currentMatch(),dt);
     this.skipGameplayFrame=false;
     this.applyMatch(match);
-    for(const impact of landedEffects(previousShots,this.combat.projectiles??[],dt,this.visualTime,p=>isVisible(this.fog,'player',p))){if(this.impacts.size>=effectConfig.maxCount)break;this.impacts.set(this.nextImpact++,{impact,visual:this.add.image(impact.position.x,impact.position.y,'ui',impactFrame(impact,this.visualTime)).setOrigin(.5).setDepth(8)});}
+    for(const impact of landedEffects(previousShots,this.combat.projectiles??[],dt,this.visualTime,p=>isVisible(this.fog,'player',p)))this.addImpact(impact);
     if(this.outcome!=='playing')this.session=sessionTransition(this.session,'end');
     this.syncVisuals();
   }
 
   private currentMatch():MatchState {return {tutorial:this.tutorial,speed:this.session.options.speed??1,enemyNaval:this.enemyNaval,navy:this.navy,factions:{...this.factions},map:this.map,gathering:this.gathering,combat:this.combat,waves:this.waves,production:this.production,soldierProduction:this.soldierProduction,placement:this.placement,outcome:this.outcome,paused:!this.gameplayActive(),controlGroups:this.controlGroups,fog:this.fog,research:this.research,scenario:this.scenario,difficulty:this.difficulty,enemyProduction:this.enemyProduction,enemyAI:this.enemyAI,enemyConstruction:this.enemyConstruction,enemyPolicy:this.enemyPolicy,enemyRecovery:this.enemyRecovery,enemyKnowledge:this.enemyKnowledge};}
+
+  private addImpact(impact:Impact):void {
+    if(!canAddImpact([...this.impacts.values()].map(e=>e.impact),impact))return;
+    this.impacts.set(this.nextImpact++,{impact,visual:this.add.image(impact.position.x,impact.position.y,'ui',impactFrame(impact,this.visualTime)).setOrigin(.5).setDepth(effectConfig.groundDepth).setAlpha(effectConfig.groundAlpha)});
+  }
 
   private drawHP(position:Position,hp:number,max:number,width:number,offset:number,color:number):void {this.hpBars?.fillStyle(0x172422).fillRect(position.x-width/2-1,position.y-offset-1,width+2,5).fillStyle(color).fillRect(position.x-width/2,position.y-offset,width*Math.max(0,Math.min(1,hp/max)),3);}
 
@@ -824,7 +832,7 @@ export class BootScene extends Phaser.Scene {
   private removedVisual(id:string,removed:boolean):void {
     const previous=this.motions.get(id);this.motions.delete(id);if(!previous)return;
     const effect=deathEffect(previous,this.visualTime,isVisible(this.fog,'player',previous.position),removed);
-    if(effect){if(artAtlas(previous.type)==='naval')gameAudio.play('splash');const origin=unitOrigin(previous.type);this.deaths.set(id,{effect,visual:this.add.image(previous.position.x,previous.position.y,artAtlas(previous.type),unitFrame(effect.motion,this.visualTime)).setOrigin(origin.x,origin.y).setDepth(1)});}
+    if(effect){if(artAtlas(previous.type)==='naval')gameAudio.play('splash');else this.addImpact({kind:'dust',position:{...previous.position},since:this.visualTime});const origin=unitOrigin(previous.type);this.deaths.set(id,{effect,visual:this.add.image(previous.position.x,previous.position.y,artAtlas(previous.type),unitFrame(effect.motion,this.visualTime)).setOrigin(origin.x,origin.y).setDepth(effectConfig.groundDepth)});}
   }
 
   private allSelectable():(Unit|Ship)[]{return [...this.gathering.units,...(this.navy?.ships??[])];}

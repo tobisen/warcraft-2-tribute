@@ -12,6 +12,11 @@ export function uiFrames(Surface,p){const frames=[];
  if(id==='siege'){s.rect(4,18,24,7,p.bark);s.ellipse(7,25,4,4,p.ink);s.ellipse(25,25,4,4,p.ink);s.line(10,19,22,5,p.barkLight);s.ellipse(23,5,5,3,p.rockLight);}
  frames.push({id:`icon-${id}`,image:s,x:n*32,y:0,anchor:{x:0,y:0},kind:'icon'});});
  const panel=new Surface(48,48);panel.rect(0,0,48,48,p.barkDark);panel.rect(5,5,38,38,p.ink);panel.rect(1,1,46,2,p.goldDark);panel.rect(1,45,46,2,p.goldDark);panel.rect(1,1,2,46,p.goldDark);panel.rect(45,1,2,46,p.goldDark);for(const [x,y] of [[8,8],[39,8],[8,39],[39,39]]){panel.polygon([[x,y-4],[x+4,y],[x,y+4],[x-4,y]],p.gold);panel.pixel(x,y,p.goldLight);}frames.push({id:'panel',image:panel,x:320,y:0,anchor:{x:0,y:0},kind:'panel',border:16});
- for(const kind of ['impact','splash'])for(let n=0;n<4;n++){const size=kind==='splash'?64:32,s=new Surface(size,size),cx=size/2,radius=3+n*(kind==='splash'?7:3);for(let a=0;a<8;a++){const angle=a*Math.PI/4,x=cx+Math.cos(angle)*radius,y=cx+Math.sin(angle)*radius;s.line(x,y,x+Math.cos(angle)*3,y+Math.sin(angle)*3,n<2?p.goldLight:p.goldDark);}if(n<3){s.ellipse(cx,cx,5-n,5-n,p.gold);s.ellipse(cx,cx,2,2,p.goldLight);}frames.push({id:`${kind}-${n}`,image:s,x:(kind==='splash'?0:256)+n*size,y:64,anchor:{x:cx,y:cx},kind:'effect'});}
+ for(const kind of ['impact','splash'])for(let n=0;n<4;n++){const size=kind==='splash'?64:32,s=new Surface(size,size),cx=size/2,radius=3+n*(kind==='splash'?7:3);for(let a=0;a<8;a++){const angle=a*Math.PI/4,x=cx+Math.cos(angle)*radius,y=cx+Math.sin(angle)*radius;s.line(x,y,x+Math.cos(angle)*3,y+Math.sin(angle)*3,n<2?p.goldLight:(a%2?p.rockLight:p.earth));}if(n<2){s.ellipse(cx,cx,3-n,3-n,p.gold);s.ellipse(cx,cx,1,1,p.goldLight);}frames.push({id:`${kind}-${n}`,image:s,x:(kind==='splash'?0:256)+n*size,y:64,anchor:{x:cx,y:cx},kind:'effect'});}
+ for(let n=0;n<4;n++){
+  const s=new Surface(32,32),r=3+n*3;
+  for(let a=0;a<8;a++){const angle=a*Math.PI/4,x=16+Math.cos(angle)*r,y=16+Math.sin(angle)*r*.6;s.rect(x,y,n<2?2:1,1,a%2?p.earth:p.rockLight);}
+  frames.push({id:`dust-${n}`,image:s,x:n*32,y:128,anchor:{x:16,y:16},kind:'effect'});
+ }
  return frames;
 }

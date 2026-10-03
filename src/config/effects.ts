@@ -1,1 +1,1 @@
-export const effectConfig={fps:8,lifetimeSeconds:.5,maxCount:64};
+export const effectConfig={fps:8,lifetimeSeconds:.5,maxCount:64,hitCooldownSeconds:.15,mergeRadius:8,groundDepth:-1,projectileDepth:5,selectionDepth:6,groundAlpha:.8,arrowLength:14,stoneRadius:4,cannonRadius:3,trailLength:8};

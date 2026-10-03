@@ -71,7 +71,7 @@
       "image": "assets/ui-atlas.png",
       "data": "assets/ui-atlas.json",
       "width": 512,
-      "height": 128,
+      "height": 160,
       "source": "assets/sources/ui.mjs",
       "effectFPS": 8,
       "effectLifetime": 0.5
@@ -32684,6 +32684,46 @@
       "anchor": {
         "x": 32,
         "y": 32
+      },
+      "kind": "effect"
+    },
+    "dust-0": {
+      "atlas": "ui",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 16
+      },
+      "kind": "effect"
+    },
+    "dust-1": {
+      "atlas": "ui",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 16
+      },
+      "kind": "effect"
+    },
+    "dust-2": {
+      "atlas": "ui",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 16
+      },
+      "kind": "effect"
+    },
+    "dust-3": {
+      "atlas": "ui",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 16
       },
       "kind": "effect"
     },
