@@ -1011,3 +1011,20 @@ Skogskronor, stam och gruvsprickor har originaldetaljer från samma palett.
 Navigation, resursmängder, hitboxes, 40px nodefootprint, ankare32,40, fog och
 Saveformat ändras inte. Små grässtrån är dekor, aldrig hinder. Native32px,
 nearest/roundPixels och repo-lokal källa/export/licens gäller fortfarande.
+
+## RTS-112 – Byggnadstyper och synlig skada
+
+Buildingatlas1024×1280 innehåller80 originalframes: fem byggnadstyper,
+båda fraktioner/lag och foundation/building/complete/damaged. Warhut har
+vapenställ och sköld, Stronghold benprydda torn, Smithy skorsten/anvil/ugn,
+Cattlepen foder/staket och Harbor bryggdetaljer/lådor. Motsvarande Crown-
+detaljer använder samma ljus från övre vänster, skala och blå/röd heraldik.
+
+buildingFrame väljer damaged vid0<HP≤50% av typens befintliga maxHP, endast
+när byggnaden är färdig. Tröskeln är presentationsconfig i buildingArt.ts.
+Trasiga takbjälkar, sprickor och spillror är statiska; ingen eld, repair,
+skadeberäkning eller timer tillkommer. Own portraits använder samma frame.
+Synlig enemybase/outpost följer också HP; befintligt entityVisible-filter
+körs före frameval, så dold skada avslöjas inte. Construction och removed/
+dead/fog-renderobjekt följer befintlig lifecycle. Save behåller endast HP,
+inte bildstate; frame härleds på load/restart. Ankare/footprints är oförändrade.

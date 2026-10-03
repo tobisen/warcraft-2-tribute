@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-112 – Förbättrade byggnadssprites** — **Todo**.
+**RTS-113 – Förbättrade enhetssprites** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -2962,13 +2962,21 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-112 – Förbättrade byggnadssprites
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Gör byggnadstyper, byggstadier och skador tydliga. Behåll konsekvent skala, ljusriktning och lagfärger.
+**Goal:** Gör byggnadstyper, byggstadier och skador tydliga med konsekvent originalpixelgrafik.
+
+**Requirements:** Base/barracks/farm/forge/harbor för båda fraktioner och blå/röd lagfärg; tydliga egna typdetaljer även på clans. Behåll foundation/byggställning/complete och lägg ett statiskt damaged-utseende vid högst50%HP på färdiga byggnader. Construction behåller sitt steg. Samma ankare, footprint, native skala och ljus från övre vänster. Skadade portraits följer world-frame. Synliga enemies använder befintlig visionfilter; hidden HP ger ingen grafisk information. Export/manifest/licens uppdateras.
+
+**Non-goals:** HP/balans/byggtidändringar, nya byggnader, eld/smoke-system, repair, unitart eller nya assets från originalspel.
 
 **Dependencies:** RTS-111.
 
-**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+**Acceptance criteria:** Alla fem typer kan urskiljas i båda fraktioner; tre byggstadier och damaged är olika i granskade screenshots. HP-tröskel korrekt och fog/pause/Save/load/restart bevaras. Export, relevanta/fulltester, typecheck/build/diff PASS; browser/screenshot1280×720 och1920×1080 granskade.
+
+**Tester:** Framecoverage/bounds/palett/transparens/ankare för samtliga typer/lag/fraktioner/steg; damaged-gräns och constructionprioritet; porträtt med HP. Browser: verklig betald barracksbyggnad/produktion, faktisk basskada, pause/Save/load/restart samt separat assetboard för alla framevarianter.
+
+**Docs:** BACKLOG, DEV_LOG, ARCHITECTURE, DECISIONS, assets/README och assets/ASSET_LICENSE.
 
 ## RTS-113 – Förbättrade enhetssprites
 

@@ -14,7 +14,7 @@
       "image": "assets/buildings-atlas.png",
       "data": "assets/buildings-atlas.json",
       "width": 1024,
-      "height": 1024,
+      "height": 1280,
       "source": "assets/sources/buildings.mjs"
     },
     "units": {
@@ -410,6 +410,24 @@
       "buildingType": "base",
       "stage": "complete"
     },
+    "base-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "damaged"
+    },
     "barracks-player-foundation": {
       "atlas": "buildings",
       "width": 128,
@@ -463,6 +481,24 @@
       "owner": "player",
       "buildingType": "barracks",
       "stage": "complete"
+    },
+    "barracks-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "barracks",
+      "stage": "damaged"
     },
     "farm-player-foundation": {
       "atlas": "buildings",
@@ -518,6 +554,24 @@
       "buildingType": "farm",
       "stage": "complete"
     },
+    "farm-player-damaged": {
+      "atlas": "buildings",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "farm",
+      "stage": "damaged"
+    },
     "forge-player-foundation": {
       "atlas": "buildings",
       "width": 128,
@@ -571,6 +625,24 @@
       "owner": "player",
       "buildingType": "forge",
       "stage": "complete"
+    },
+    "forge-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "forge",
+      "stage": "damaged"
     },
     "harbor-player-foundation": {
       "atlas": "buildings",
@@ -626,6 +698,24 @@
       "buildingType": "harbor",
       "stage": "complete"
     },
+    "harbor-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "harbor",
+      "stage": "damaged"
+    },
     "base-enemy-foundation": {
       "atlas": "buildings",
       "width": 128,
@@ -679,6 +769,24 @@
       "owner": "enemy",
       "buildingType": "base",
       "stage": "complete"
+    },
+    "base-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "damaged"
     },
     "barracks-enemy-foundation": {
       "atlas": "buildings",
@@ -734,6 +842,24 @@
       "buildingType": "barracks",
       "stage": "complete"
     },
+    "barracks-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "barracks",
+      "stage": "damaged"
+    },
     "farm-enemy-foundation": {
       "atlas": "buildings",
       "width": 64,
@@ -787,6 +913,24 @@
       "owner": "enemy",
       "buildingType": "farm",
       "stage": "complete"
+    },
+    "farm-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "farm",
+      "stage": "damaged"
     },
     "forge-enemy-foundation": {
       "atlas": "buildings",
@@ -842,6 +986,24 @@
       "buildingType": "forge",
       "stage": "complete"
     },
+    "forge-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "forge",
+      "stage": "damaged"
+    },
     "harbor-enemy-foundation": {
       "atlas": "buildings",
       "width": 128,
@@ -895,6 +1057,24 @@
       "owner": "enemy",
       "buildingType": "harbor",
       "stage": "complete"
+    },
+    "harbor-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "harbor",
+      "stage": "damaged"
     },
     "clans-base-player-foundation": {
       "atlas": "buildings",
@@ -950,6 +1130,24 @@
       "buildingType": "base",
       "stage": "complete"
     },
+    "clans-base-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "damaged"
+    },
     "clans-barracks-player-foundation": {
       "atlas": "buildings",
       "width": 128,
@@ -1003,6 +1201,24 @@
       "owner": "player",
       "buildingType": "barracks",
       "stage": "complete"
+    },
+    "clans-barracks-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "barracks",
+      "stage": "damaged"
     },
     "clans-farm-player-foundation": {
       "atlas": "buildings",
@@ -1058,6 +1274,24 @@
       "buildingType": "farm",
       "stage": "complete"
     },
+    "clans-farm-player-damaged": {
+      "atlas": "buildings",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "farm",
+      "stage": "damaged"
+    },
     "clans-forge-player-foundation": {
       "atlas": "buildings",
       "width": 128,
@@ -1111,6 +1345,24 @@
       "owner": "player",
       "buildingType": "forge",
       "stage": "complete"
+    },
+    "clans-forge-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "forge",
+      "stage": "damaged"
     },
     "clans-harbor-player-foundation": {
       "atlas": "buildings",
@@ -1166,6 +1418,24 @@
       "buildingType": "harbor",
       "stage": "complete"
     },
+    "clans-harbor-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "harbor",
+      "stage": "damaged"
+    },
     "clans-base-enemy-foundation": {
       "atlas": "buildings",
       "width": 128,
@@ -1219,6 +1489,24 @@
       "owner": "enemy",
       "buildingType": "base",
       "stage": "complete"
+    },
+    "clans-base-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "damaged"
     },
     "clans-barracks-enemy-foundation": {
       "atlas": "buildings",
@@ -1274,6 +1562,24 @@
       "buildingType": "barracks",
       "stage": "complete"
     },
+    "clans-barracks-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "barracks",
+      "stage": "damaged"
+    },
     "clans-farm-enemy-foundation": {
       "atlas": "buildings",
       "width": 64,
@@ -1327,6 +1633,24 @@
       "owner": "enemy",
       "buildingType": "farm",
       "stage": "complete"
+    },
+    "clans-farm-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "farm",
+      "stage": "damaged"
     },
     "clans-forge-enemy-foundation": {
       "atlas": "buildings",
@@ -1382,6 +1706,24 @@
       "buildingType": "forge",
       "stage": "complete"
     },
+    "clans-forge-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "forge",
+      "stage": "damaged"
+    },
     "clans-harbor-enemy-foundation": {
       "atlas": "buildings",
       "width": 128,
@@ -1435,6 +1777,24 @@
       "owner": "enemy",
       "buildingType": "harbor",
       "stage": "complete"
+    },
+    "clans-harbor-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "harbor",
+      "stage": "damaged"
     },
     "worker-player-e-idle-0": {
       "atlas": "units",

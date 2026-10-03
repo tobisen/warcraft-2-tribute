@@ -1,7 +1,8 @@
 /** Original masonry, timber and heraldry; native pixels, shared team variants. */
 export function buildingFrames(Surface,p){
  const frames=[];
- for(const faction of ['crown','clans'])for(const owner of ['player','enemy'])for(const kind of ['base','barracks','farm','forge','harbor'])for(const stage of ['foundation','building','complete']){
+ for(const faction of ['crown','clans'])for(const owner of ['player','enemy'])for(const kind of ['base','barracks','farm','forge','harbor'])for(const exportedStage of ['foundation','building','complete','damaged']){
+  const stage=exportedStage==='damaged'?'complete':exportedStage;
   const size=kind==='farm'?64:128,s=new Surface(size,size),cx=size/2,ground=kind==='farm'?48:96,team=owner==='player'?p.teamBlue:p.teamRed,light=owner==='player'?p.teamBlueLight:p.teamRedLight;
   const width=kind==='farm'?48:kind==='base'?56:64,left=cx-width/2,top=ground-24;
   s.ellipse(cx,ground+14,width/2+4,7,p.earth);s.rect(left,top,width,38,p.rockDark);
@@ -42,7 +43,35 @@ export function buildingFrames(Surface,p){
    s.rect(41,102,10,9,p.goldDark);s.rect(43,104,6,5,p.gold);s.ellipse(83,105,5,4,p.barkDark);s.line(79,104,87,104,p.rockHighlight);
    if(stage==='complete'){s.rect(60,37,2,20,p.barkLight);s.polygon([[62,37],[76,40],[62,47]],team);if(faction==='clans')s.rect(66,40,4,3,p.rockHighlight);else s.rect(66,41,5,1,p.gold);}
   }
-  frames.push({id:`${faction==='clans'?'clans-':''}${kind}-${owner}-${stage}`,image:s,x:(frames.length%8)*128,y:Math.floor(frames.length/8)*128,anchor:{x:cx,y:ground},kind:'building',faction,owner,buildingType:kind,stage,logicalFootprint:{width:kind==='base'?(owner==='player'?48:96):64,height:kind==='base'?(owner==='player'?48:96):64}});
+  if(stage==='complete'){
+   // Readable type details survive both faction silhouettes; light is upper-left.
+   if(kind==='barracks'){
+    s.rect(left+5,ground-5,19,3,p.barkDark);s.line(left+8,ground-18,left+20,ground-7,p.rockHighlight);s.line(left+20,ground-18,left+8,ground-7,p.rockLight);
+    s.rect(left+width-17,ground-15,10,13,team);s.line(left+width-16,ground-15,left+width-9,ground-15,light);
+   }
+   if(kind==='base'&&faction==='clans'){
+    for(const x of [left-6,left+width-6]){s.rect(x,top-29,12,50,p.barkDark);s.rect(x+2,top-27,4,46,p.barkLight);s.polygon([[x-2,top-29],[x+5,top-43],[x+14,top-29]],p.rockHighlight);}
+   }
+   if(kind==='forge'){
+    s.rect(left+width-16,top-44,10,31,p.rockDark);s.rect(left+width-14,top-42,3,26,p.rockLight);
+    s.rect(left+8,ground-4,17,4,p.rockHighlight);s.rect(left+13,ground,5,8,p.rockDark);s.rect(cx-4,ground-6,8,12,p.goldDark);s.rect(cx-2,ground-4,4,7,p.goldLight);
+   }
+   if(kind==='farm'){
+    s.ellipse(cx+8,ground+5,6,3,p.goldDark);s.line(cx+3,ground+4,cx+12,ground+4,p.gold);s.rect(left+3,ground+9,width-6,2,p.barkLight);
+   }
+   if(kind==='harbor'){
+    s.line(36,80,90,80,p.barkLight);s.rect(73,95,12,10,p.barkDark);s.line(75,97,82,103,p.barkLight);s.line(82,97,75,103,p.barkLight);
+   }
+  }
+  if(exportedStage==='damaged'){
+   // Static broken roof beams, masonry cracks and ground rubble; no simulation.
+   const roofY=kind==='harbor'?48:top-17;
+   s.polygon([[cx-14,roofY],[cx-2,roofY+3],[cx+4,roofY+15],[cx-10,roofY+12]],p.ink);
+   s.line(cx-12,roofY+2,cx-5,roofY+12,p.bark);s.line(cx-11,roofY+2,cx-5,roofY+10,p.barkLight);
+   s.line(left+width-7,ground-14,left+width-12,ground-6,p.ink);s.line(left+width-12,ground-6,left+width-8,ground+3,p.ink);
+   for(const [x,y] of [[left-3,ground+14],[cx+11,ground+16],[left+width+1,ground+10]]){s.rect(x,y,4,3,p.rockDark);s.rect(x,y,3,1,p.rockLight);}
+  }
+  frames.push({id:`${faction==='clans'?'clans-':''}${kind}-${owner}-${exportedStage}`,image:s,x:(frames.length%8)*128,y:Math.floor(frames.length/8)*128,anchor:{x:cx,y:ground},kind:'building',faction,owner,buildingType:kind,stage:exportedStage,logicalFootprint:{width:kind==='base'?(owner==='player'?48:96):64,height:kind==='base'?(owner==='player'?48:96):64}});
  }
  return frames;
 }

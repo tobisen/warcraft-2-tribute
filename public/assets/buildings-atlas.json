@@ -60,9 +60,29 @@
         "h": 128
       }
     },
-    "barracks-player-foundation": {
+    "base-player-damaged": {
       "frame": {
         "x": 384,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      }
+    },
+    "barracks-player-foundation": {
+      "frame": {
+        "x": 512,
         "y": 0,
         "w": 128,
         "h": 128
@@ -82,7 +102,7 @@
     },
     "barracks-player-building": {
       "frame": {
-        "x": 512,
+        "x": 640,
         "y": 0,
         "w": 128,
         "h": 128
@@ -102,7 +122,27 @@
     },
     "barracks-player-complete": {
       "frame": {
-        "x": 640,
+        "x": 768,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      }
+    },
+    "barracks-player-damaged": {
+      "frame": {
+        "x": 896,
         "y": 0,
         "w": 128,
         "h": 128
@@ -122,8 +162,8 @@
     },
     "farm-player-foundation": {
       "frame": {
-        "x": 768,
-        "y": 0,
+        "x": 0,
+        "y": 128,
         "w": 64,
         "h": 64
       },
@@ -142,8 +182,8 @@
     },
     "farm-player-building": {
       "frame": {
-        "x": 896,
-        "y": 0,
+        "x": 128,
+        "y": 128,
         "w": 64,
         "h": 64
       },
@@ -162,7 +202,27 @@
     },
     "farm-player-complete": {
       "frame": {
+        "x": 256,
+        "y": 128,
+        "w": 64,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
         "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      }
+    },
+    "farm-player-damaged": {
+      "frame": {
+        "x": 384,
         "y": 128,
         "w": 64,
         "h": 64
@@ -182,7 +242,7 @@
     },
     "forge-player-foundation": {
       "frame": {
-        "x": 128,
+        "x": 512,
         "y": 128,
         "w": 128,
         "h": 128
@@ -202,7 +262,7 @@
     },
     "forge-player-building": {
       "frame": {
-        "x": 256,
+        "x": 640,
         "y": 128,
         "w": 128,
         "h": 128
@@ -222,7 +282,27 @@
     },
     "forge-player-complete": {
       "frame": {
-        "x": 384,
+        "x": 768,
+        "y": 128,
+        "w": 128,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      }
+    },
+    "forge-player-damaged": {
+      "frame": {
+        "x": 896,
         "y": 128,
         "w": 128,
         "h": 128
@@ -242,8 +322,8 @@
     },
     "harbor-player-foundation": {
       "frame": {
-        "x": 512,
-        "y": 128,
+        "x": 0,
+        "y": 256,
         "w": 128,
         "h": 128
       },
@@ -262,8 +342,8 @@
     },
     "harbor-player-building": {
       "frame": {
-        "x": 640,
-        "y": 128,
+        "x": 128,
+        "y": 256,
         "w": 128,
         "h": 128
       },
@@ -282,8 +362,28 @@
     },
     "harbor-player-complete": {
       "frame": {
-        "x": 768,
-        "y": 128,
+        "x": 256,
+        "y": 256,
+        "w": 128,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      }
+    },
+    "harbor-player-damaged": {
+      "frame": {
+        "x": 384,
+        "y": 256,
         "w": 128,
         "h": 128
       },
@@ -302,8 +402,8 @@
     },
     "base-enemy-foundation": {
       "frame": {
-        "x": 896,
-        "y": 128,
+        "x": 512,
+        "y": 256,
         "w": 128,
         "h": 128
       },
@@ -322,7 +422,7 @@
     },
     "base-enemy-building": {
       "frame": {
-        "x": 0,
+        "x": 640,
         "y": 256,
         "w": 128,
         "h": 128
@@ -342,7 +442,27 @@
     },
     "base-enemy-complete": {
       "frame": {
-        "x": 128,
+        "x": 768,
+        "y": 256,
+        "w": 128,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      }
+    },
+    "base-enemy-damaged": {
+      "frame": {
+        "x": 896,
         "y": 256,
         "w": 128,
         "h": 128
@@ -362,8 +482,8 @@
     },
     "barracks-enemy-foundation": {
       "frame": {
-        "x": 256,
-        "y": 256,
+        "x": 0,
+        "y": 384,
         "w": 128,
         "h": 128
       },
@@ -382,8 +502,8 @@
     },
     "barracks-enemy-building": {
       "frame": {
-        "x": 384,
-        "y": 256,
+        "x": 128,
+        "y": 384,
         "w": 128,
         "h": 128
       },
@@ -402,8 +522,28 @@
     },
     "barracks-enemy-complete": {
       "frame": {
-        "x": 512,
-        "y": 256,
+        "x": 256,
+        "y": 384,
+        "w": 128,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      }
+    },
+    "barracks-enemy-damaged": {
+      "frame": {
+        "x": 384,
+        "y": 384,
         "w": 128,
         "h": 128
       },
@@ -422,8 +562,8 @@
     },
     "farm-enemy-foundation": {
       "frame": {
-        "x": 640,
-        "y": 256,
+        "x": 512,
+        "y": 384,
         "w": 64,
         "h": 64
       },
@@ -442,8 +582,8 @@
     },
     "farm-enemy-building": {
       "frame": {
-        "x": 768,
-        "y": 256,
+        "x": 640,
+        "y": 384,
         "w": 64,
         "h": 64
       },
@@ -462,8 +602,28 @@
     },
     "farm-enemy-complete": {
       "frame": {
+        "x": 768,
+        "y": 384,
+        "w": 64,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      }
+    },
+    "farm-enemy-damaged": {
+      "frame": {
         "x": 896,
-        "y": 256,
+        "y": 384,
         "w": 64,
         "h": 64
       },
@@ -483,7 +643,7 @@
     "forge-enemy-foundation": {
       "frame": {
         "x": 0,
-        "y": 384,
+        "y": 512,
         "w": 128,
         "h": 128
       },
@@ -503,7 +663,7 @@
     "forge-enemy-building": {
       "frame": {
         "x": 128,
-        "y": 384,
+        "y": 512,
         "w": 128,
         "h": 128
       },
@@ -523,7 +683,27 @@
     "forge-enemy-complete": {
       "frame": {
         "x": 256,
-        "y": 384,
+        "y": 512,
+        "w": 128,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      }
+    },
+    "forge-enemy-damaged": {
+      "frame": {
+        "x": 384,
+        "y": 512,
         "w": 128,
         "h": 128
       },
@@ -542,8 +722,8 @@
     },
     "harbor-enemy-foundation": {
       "frame": {
-        "x": 384,
-        "y": 384,
+        "x": 512,
+        "y": 512,
         "w": 128,
         "h": 128
       },
@@ -562,8 +742,8 @@
     },
     "harbor-enemy-building": {
       "frame": {
-        "x": 512,
-        "y": 384,
+        "x": 640,
+        "y": 512,
         "w": 128,
         "h": 128
       },
@@ -582,8 +762,28 @@
     },
     "harbor-enemy-complete": {
       "frame": {
-        "x": 640,
-        "y": 384,
+        "x": 768,
+        "y": 512,
+        "w": 128,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      }
+    },
+    "harbor-enemy-damaged": {
+      "frame": {
+        "x": 896,
+        "y": 512,
         "w": 128,
         "h": 128
       },
@@ -602,8 +802,8 @@
     },
     "clans-base-player-foundation": {
       "frame": {
-        "x": 768,
-        "y": 384,
+        "x": 0,
+        "y": 640,
         "w": 128,
         "h": 128
       },
@@ -622,8 +822,8 @@
     },
     "clans-base-player-building": {
       "frame": {
-        "x": 896,
-        "y": 384,
+        "x": 128,
+        "y": 640,
         "w": 128,
         "h": 128
       },
@@ -642,8 +842,28 @@
     },
     "clans-base-player-complete": {
       "frame": {
+        "x": 256,
+        "y": 640,
+        "w": 128,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
         "x": 0,
-        "y": 512,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      }
+    },
+    "clans-base-player-damaged": {
+      "frame": {
+        "x": 384,
+        "y": 640,
         "w": 128,
         "h": 128
       },
@@ -662,8 +882,8 @@
     },
     "clans-barracks-player-foundation": {
       "frame": {
-        "x": 128,
-        "y": 512,
+        "x": 512,
+        "y": 640,
         "w": 128,
         "h": 128
       },
@@ -682,8 +902,8 @@
     },
     "clans-barracks-player-building": {
       "frame": {
-        "x": 256,
-        "y": 512,
+        "x": 640,
+        "y": 640,
         "w": 128,
         "h": 128
       },
@@ -702,8 +922,28 @@
     },
     "clans-barracks-player-complete": {
       "frame": {
-        "x": 384,
-        "y": 512,
+        "x": 768,
+        "y": 640,
+        "w": 128,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      }
+    },
+    "clans-barracks-player-damaged": {
+      "frame": {
+        "x": 896,
+        "y": 640,
         "w": 128,
         "h": 128
       },
@@ -722,8 +962,8 @@
     },
     "clans-farm-player-foundation": {
       "frame": {
-        "x": 512,
-        "y": 512,
+        "x": 0,
+        "y": 768,
         "w": 64,
         "h": 64
       },
@@ -742,8 +982,8 @@
     },
     "clans-farm-player-building": {
       "frame": {
-        "x": 640,
-        "y": 512,
+        "x": 128,
+        "y": 768,
         "w": 64,
         "h": 64
       },
@@ -762,8 +1002,28 @@
     },
     "clans-farm-player-complete": {
       "frame": {
-        "x": 768,
-        "y": 512,
+        "x": 256,
+        "y": 768,
+        "w": 64,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      }
+    },
+    "clans-farm-player-damaged": {
+      "frame": {
+        "x": 384,
+        "y": 768,
         "w": 64,
         "h": 64
       },
@@ -782,8 +1042,8 @@
     },
     "clans-forge-player-foundation": {
       "frame": {
-        "x": 896,
-        "y": 512,
+        "x": 512,
+        "y": 768,
         "w": 128,
         "h": 128
       },
@@ -802,8 +1062,8 @@
     },
     "clans-forge-player-building": {
       "frame": {
-        "x": 0,
-        "y": 640,
+        "x": 640,
+        "y": 768,
         "w": 128,
         "h": 128
       },
@@ -822,8 +1082,28 @@
     },
     "clans-forge-player-complete": {
       "frame": {
-        "x": 128,
-        "y": 640,
+        "x": 768,
+        "y": 768,
+        "w": 128,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      }
+    },
+    "clans-forge-player-damaged": {
+      "frame": {
+        "x": 896,
+        "y": 768,
         "w": 128,
         "h": 128
       },
@@ -842,8 +1122,8 @@
     },
     "clans-harbor-player-foundation": {
       "frame": {
-        "x": 256,
-        "y": 640,
+        "x": 0,
+        "y": 896,
         "w": 128,
         "h": 128
       },
@@ -862,8 +1142,8 @@
     },
     "clans-harbor-player-building": {
       "frame": {
-        "x": 384,
-        "y": 640,
+        "x": 128,
+        "y": 896,
         "w": 128,
         "h": 128
       },
@@ -882,8 +1162,28 @@
     },
     "clans-harbor-player-complete": {
       "frame": {
-        "x": 512,
-        "y": 640,
+        "x": 256,
+        "y": 896,
+        "w": 128,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      }
+    },
+    "clans-harbor-player-damaged": {
+      "frame": {
+        "x": 384,
+        "y": 896,
         "w": 128,
         "h": 128
       },
@@ -902,8 +1202,8 @@
     },
     "clans-base-enemy-foundation": {
       "frame": {
-        "x": 640,
-        "y": 640,
+        "x": 512,
+        "y": 896,
         "w": 128,
         "h": 128
       },
@@ -922,8 +1222,8 @@
     },
     "clans-base-enemy-building": {
       "frame": {
-        "x": 768,
-        "y": 640,
+        "x": 640,
+        "y": 896,
         "w": 128,
         "h": 128
       },
@@ -942,8 +1242,28 @@
     },
     "clans-base-enemy-complete": {
       "frame": {
+        "x": 768,
+        "y": 896,
+        "w": 128,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      }
+    },
+    "clans-base-enemy-damaged": {
+      "frame": {
         "x": 896,
-        "y": 640,
+        "y": 896,
         "w": 128,
         "h": 128
       },
@@ -963,7 +1283,7 @@
     "clans-barracks-enemy-foundation": {
       "frame": {
         "x": 0,
-        "y": 768,
+        "y": 1024,
         "w": 128,
         "h": 128
       },
@@ -983,7 +1303,7 @@
     "clans-barracks-enemy-building": {
       "frame": {
         "x": 128,
-        "y": 768,
+        "y": 1024,
         "w": 128,
         "h": 128
       },
@@ -1003,7 +1323,27 @@
     "clans-barracks-enemy-complete": {
       "frame": {
         "x": 256,
-        "y": 768,
+        "y": 1024,
+        "w": 128,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      }
+    },
+    "clans-barracks-enemy-damaged": {
+      "frame": {
+        "x": 384,
+        "y": 1024,
         "w": 128,
         "h": 128
       },
@@ -1022,8 +1362,8 @@
     },
     "clans-farm-enemy-foundation": {
       "frame": {
-        "x": 384,
-        "y": 768,
+        "x": 512,
+        "y": 1024,
         "w": 64,
         "h": 64
       },
@@ -1042,8 +1382,8 @@
     },
     "clans-farm-enemy-building": {
       "frame": {
-        "x": 512,
-        "y": 768,
+        "x": 640,
+        "y": 1024,
         "w": 64,
         "h": 64
       },
@@ -1062,8 +1402,28 @@
     },
     "clans-farm-enemy-complete": {
       "frame": {
-        "x": 640,
-        "y": 768,
+        "x": 768,
+        "y": 1024,
+        "w": 64,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      }
+    },
+    "clans-farm-enemy-damaged": {
+      "frame": {
+        "x": 896,
+        "y": 1024,
         "w": 64,
         "h": 64
       },
@@ -1082,8 +1442,8 @@
     },
     "clans-forge-enemy-foundation": {
       "frame": {
-        "x": 768,
-        "y": 768,
+        "x": 0,
+        "y": 1152,
         "w": 128,
         "h": 128
       },
@@ -1102,8 +1462,8 @@
     },
     "clans-forge-enemy-building": {
       "frame": {
-        "x": 896,
-        "y": 768,
+        "x": 128,
+        "y": 1152,
         "w": 128,
         "h": 128
       },
@@ -1122,8 +1482,28 @@
     },
     "clans-forge-enemy-complete": {
       "frame": {
+        "x": 256,
+        "y": 1152,
+        "w": 128,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
         "x": 0,
-        "y": 896,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      }
+    },
+    "clans-forge-enemy-damaged": {
+      "frame": {
+        "x": 384,
+        "y": 1152,
         "w": 128,
         "h": 128
       },
@@ -1142,8 +1522,8 @@
     },
     "clans-harbor-enemy-foundation": {
       "frame": {
-        "x": 128,
-        "y": 896,
+        "x": 512,
+        "y": 1152,
         "w": 128,
         "h": 128
       },
@@ -1162,8 +1542,8 @@
     },
     "clans-harbor-enemy-building": {
       "frame": {
-        "x": 256,
-        "y": 896,
+        "x": 640,
+        "y": 1152,
         "w": 128,
         "h": 128
       },
@@ -1182,8 +1562,28 @@
     },
     "clans-harbor-enemy-complete": {
       "frame": {
-        "x": 384,
-        "y": 896,
+        "x": 768,
+        "y": 1152,
+        "w": 128,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      }
+    },
+    "clans-harbor-enemy-damaged": {
+      "frame": {
+        "x": 896,
+        "y": 1152,
         "w": 128,
         "h": 128
       },
@@ -1205,7 +1605,7 @@
     "image": "buildings-atlas.png",
     "size": {
       "w": 1024,
-      "h": 1024
+      "h": 1280
     },
     "scale": "1"
   }

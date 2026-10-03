@@ -22,7 +22,7 @@ export function selectionInfo(m:MatchState,building:BuildingSelection):Selection
  const hp=building==='base'?m.combat.baseHP:building==='barracks'?m.placement.barracksHP??faction.buildings.barracks.hp:harbor!.hp;
  const maxHP=building==='harbor'?navyConfig.harbor.hp:faction.buildings[building].hp;
  const remaining=building==='barracks'?m.placement.construction?.remainingSeconds??0:building==='harbor'?harbor!.construction.remainingSeconds:0;
- return {name:building==='harbor'?'Harbor':faction.buildingNames[building],detail:remaining>0?`Construction ${remaining.toFixed(1)}s remaining`:'Complete',hp,maxHP,stats:building==='base'?[`Supply capacity ${faction.buildings.base.populationCapacity}`]:['Select production actions to train units.'],portrait:{atlas:'buildings',frame:buildingFrame(building,'player',remaining,5,faction.id)}};
+ return {name:building==='harbor'?'Harbor':faction.buildingNames[building],detail:remaining>0?`Construction ${remaining.toFixed(1)}s remaining`:'Complete',hp,maxHP,stats:building==='base'?[`Supply capacity ${faction.buildings.base.populationCapacity}`]:['Select production actions to train units.'],portrait:{atlas:'buildings',frame:buildingFrame(building,'player',remaining,5,faction.id,hp)}};
 }
 export function renderSelectionInfo(info:SelectionInfo):void {
  document.getElementById('selection-name')!.textContent=info.name;document.getElementById('selection-detail')!.textContent=info.detail;

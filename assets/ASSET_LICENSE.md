@@ -13,3 +13,5 @@ och tekniska exportvillkor finns i [README.md](README.md). Ingen extern
 attribution tillkommer för denna etapp.
 
 RTS-111: gräs-/vattenvarianter, kusthörn och nya skogs-/gruvdetaljer är egna repo-lokala pixelkompositioner i assets/sources/world.mjs. Samma användningsvillkor gäller; inga externa rasterbilder eller attributioner tillkommer.
+
+RTS-112: byggnadsdetaljer och damaged-varianter är originalkompositioner i assets/sources/buildings.mjs, samma projektvillkor. Ingen extern spelgrafik, röst eller font importerad.

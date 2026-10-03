@@ -1,6 +1,10 @@
 import {maps,type MapId} from '../config/maps';
 import type {FactionId} from '../config/factions';
 import { arenaConfig } from '../config/arena';
+import {buildingArtConfig} from '../config/buildingArt';
+import {combatConfig} from '../config/combat';
+import {forgeConfig} from '../config/upgrades';
+import {navyConfig} from '../config/navy';
 import {worldConfig} from '../config/buildings';
 export function terrainFrame(column:number,row:number,mapId:MapId='arena'):'grass-a'|'grass-b'|'grass-c'|'grass-d'|'rock'|'water' {
  const patch=maps[mapId].terrain.find(p=>column>=p.column&&column<p.column+p.columns&&row>=p.row&&row<p.row+p.rows);
@@ -29,5 +33,9 @@ export function terrainEdges(column:number,row:number,mapId:MapId='arena'):strin
 }
 
 export type BuildingKind='base'|'barracks'|'farm'|'forge'|'harbor';
-export function buildingFrame(kind:BuildingKind,owner:'player'|'enemy',remaining=0,total=5,faction:FactionId='crown'):string{return `${faction==='clans'?'clans-':''}${kind}-${owner}-${remaining<=0?'complete':remaining>total/2?'foundation':'building'}`;}
+export function buildingFrame(kind:BuildingKind,owner:'player'|'enemy',remaining=0,total=5,faction:FactionId='crown',hp?:number):string{
+ const maxHP=kind==='harbor'?navyConfig.harbor.hp:kind==='forge'?forgeConfig.hp:kind==='farm'?combatConfig.farmHP:kind==='barracks'?combatConfig.barracksHP:combatConfig.baseHP;
+ const stage=remaining>total/2?'foundation':remaining>0?'building':hp!==undefined&&hp>0&&hp<=maxHP*buildingArtConfig.damagedFraction?'damaged':'complete';
+ return `${faction==='clans'?'clans-':''}${kind}-${owner}-${stage}`;
+}
 export function buildingOrigin(kind:BuildingKind){return kind==='farm'?{x:.5,y:.75}:{x:.5,y:.75};}
