@@ -2263,3 +2263,18 @@ arbetskatalog efter implementationens push. RTS-120 tekniskt redo, men
 förblir In Progress tills faktisk lyssningsbedömning117/118 finns. Detta
 krav kommer från120:s spel-/ljudgranskning och Definition of Done; senaste
 etappen kräver120 färdig före121. Ingen implementation121–126 påbörjad.
+
+## 2026-10-03 – RTS-121: Inventering och detaljplan
+
+Användaren skjuter upp ljudtest/matchlyssning och säger gå vidare.117/120
+Done med uttryckligen uppskjuten perceptuell kontroll, inte påstådd lyssning.
+Inventerat faktisk homeMenu/pauseMenu/session/matchResults/matchStats,
+main-resize/fullscreen/preferences och Save config19/schema2, assets/export.
+121–126 detaljerade kring befintliga system och konkreta regressioner.
+Hittad lucka: matchStats primärnod-only missar expansionsgathering; rättas
+inom123 tillsammans med byggstatistik. Original femfolks-hero och inspelade
+voices saknas;126 hero planeras, native lokal speech förblir redovisad.
+Öppna taskvisa val i DECISIONS; inga förtida system eller gameplay införda.
+Docs-only: inga nya tester eller upprepad fullsvit. Befintliga878tester,
+typecheck/build och CI a8c42c1 gröna; dokumentreferenser/unik-ID/diff kontrolleras
+före commit.121 Done, nästa122 separat resultatvy.

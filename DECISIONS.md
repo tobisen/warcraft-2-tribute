@@ -1099,3 +1099,18 @@ inte mixas i appens AudioContext: byte av aktuell voice/master gain avbryter
 pågående tal, nästa replik använder nytt gain. Load behåller sparad matchs
 options, framtida meny-defaults behålls separat. Befintlig Save-key/version
 ändras inte. Preferences gäller browser/origin, inte mellan localhost/Pages.
+
+## RTS-121 – Etappavgränsning och senare verifiering
+
+Användaren skjuter uttryckligen upp ljudtester och matchlyssning till senare.
+117/120 kan avslutas med befintlig teknisk verifiering; ingen fysisk
+lyssningskontroll hävdas. Detta gäller även senare ljudpresentation i126.
+Spelbara fraktioner för122–126 förblir Crown/Clans. Ingen gameplay/roster eller
+kartändring ingår.122 återanvänder sessionens ended/restart/new-match;123
+återanvänder resurs-/unit-accounting och kompletterar verkliga luckor.
+
+Öppna implementationval löses inom respektive task:123 counter-save-migration
+och hantering av äldre historik;124 releaseformat/build-ID-källa;125
+renderingsviewport och gemensam DOM/canvas-skalning;126 kompositionens
+assetformat. Dessa är ännu inte implementerade beslut. Inspelade röster
+krävs inte här; plattformsberoende lokala röster redovisas fortsatt.

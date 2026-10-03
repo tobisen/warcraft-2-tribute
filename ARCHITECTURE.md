@@ -1468,3 +1468,35 @@ menyval och återställer prefererade defaults vid återgång till ny-match-meny
 Load/restart behåller sparad matchfaction/difficulty/speed och ändrar inte
 preferenser. Match-Save config19/schema2 är oförändrat; ingen matchstate,
 kamera-position, selection/order eller OS-fullscreen sparas som preferens.
+
+## RTS-121 – Inventering inför presentation122–126
+
+Faktisk utgångspunkt är implementation genom119 plus teknisk release120.
+[presentation/matchResults](src/presentation/matchResults.ts) renderar idag
+utfall/statistik i pauspanelen över synlig spelvärld. [session](src/gameplay/session.ts)
+har ended-gate;122 återanvänder den, restart och new-match och byter bara
+presentation. Resultatdata hämtas från MatchState, inte DOM.
+
+[matchStats](src/gameplay/matchStats.ts) härleder unit/resource-statistik;
+byggnader och egen borttagning saknar separata totals. Resourceberäkningen
+använder primärnoden och missar Frontier-expansioner:123 måste summera alla
+resourceNodes och lägga till auktoritativa bygg-/förlustcounters där
+härledning inte bevarar historik. Save config19/schema2 bevaras eller migreras
+testat vid nya counters; inga gissade historiska byggtotals i gamla saves.
+
+[homeMenu](src/presentation/homeMenu.ts) återanvänds för resultatnavigation,
+changelog och startsida. package.json har0.0.0, ingen release/buildkälla eller
+changelog finns ännu.124 inför en gemensam releasekälla separat från build-ID.
+
+[main](src/main.ts) resize:ar canvas till DOM-yta; HUD/top/bottom är DOM och
+kameran pan:ar world pixels.125 måste därför skala hela spelytan/HUD tillsammans
+med aspect-bevarande; det räcker inte att bara byta canvas-storlek. Fullscreen
+är redan separat och preferences-slot finns. Karta/tile/world påverkas inte.
+
+Originalatlaser för terrain/units/buildings/UI/FX och11 WAV/OGG-cues finns,
+med exportkällor i assets/scripts. Inspelade unit voices saknas; lokal engelsk
+SpeechSynthesis är befintlig fallback/capability och ingen inspelning hävdas.
+126 saknar en original startsideskomposition med fem folk. Spelbara factions
+är fortsatt endast Crown/Clans; Elves/Dwarves/Goblins får presenteras som
+motiv men inte erbjudas som spelbara. Audio använder befintlig musik/gains,
+reduced-motion måste stödjas. Användaren har skjutit upp perceptuella ljudtester.

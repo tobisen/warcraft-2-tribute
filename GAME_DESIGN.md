@@ -1077,3 +1077,12 @@ River Bend: norra stranden ger landväg; södra vattenböjar hindrar direkt pass
 Islands: befintlig västö-ekonomi, kustharbor och transport krävs över havet.
 Starttipsen visas under matchen. Befintlig geometri, stock och AI-balans är
 bevarade; landkartorna har plats för64×64-byggnader och40px-catapultväg.
+
+## Planerad presentation122–126
+
+Nästa etapp ersätter avslutad spelvy med resultat och separat statistik,
+inklusive byggnader och tydliga combatförluster. Play Again behåller matchval
+men skapar ny match; Main Menu går till startsidan. Version/changelog och
+valbar renderingsupplösning följer utan gameplayändring. Fem fantasyfolk
+visas som startsidemotiv; endast Crown/Clans är spelbara. Lyssningsbedömning
+av ljud/repliker är uppskjuten enligt användaren, inte utförd.

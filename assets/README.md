@@ -152,7 +152,7 @@ med lokala OGG och identisk WAV-fallback. Peak för nya cues0.156/0.227/0.098;
 alla filer är icke-tysta och utan sample-clipping. Befintliga OGG-filer bevaras
 för att undvika encoder-serialbrus vid ny export. Effektmix ligger i config,
 inte i assetmanifestets grundvolym. Ingen extern röst/ljudinspelning tillkommer.
-Faktisk mänsklig matchlyssning krävs innan RTS-117 markeras Done.
+Faktisk mänsklig matchlyssning är uppskjuten till senare enligt användaren; teknisk verifiering är utförd.
 
 ## RTS-118 – Egna texter, inga inspelade röstassets
 

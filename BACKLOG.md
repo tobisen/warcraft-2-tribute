@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-120 – Samlat speltest och publicering** — **In Progress**.
+**RTS-122 – Separat resultatvy** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -3052,7 +3052,7 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-117 – Nya ljudeffekter och ljudmix
 
-**Status:** Implemented — slutlig lyssning återstår i RTS-120.
+**Status:** Done — faktisk lyssning uppskjuten enligt användarens instruktion.
 
 **Goal:** Läsbara, måttliga egna ljud för gathering, byggarbete, produktion och combat.
 
@@ -3069,6 +3069,8 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 **Docs:** BACKLOG, DEV_LOG, ARCHITECTURE, DECISIONS, README, assets/README och assets/ASSET_LICENSE.
 
 **Verifieringsstatus:** Teknisk implementation,870tester/112filer, typecheck/build/diff, elva assetkontroller och browserflöde båda fraktionerna PASS. Användaren säger fortsätt; implementation levereras och återstående faktiska lyssning hålls öppen i RTS-120, utan påstående att den utförts. Statusraden visar korrekt11/11 från gemensam audioFiles-konfiguration.
+
+**Senaste styrning:** Användaren skjuter upp ljudtester och matchlyssning till senare och säger gå vidare. Teknisk verifiering gäller; uppskjuten perceptuell kontroll blockerar inte senare tasks. Ingen påstådd lyssning.
 
 ## RTS-118 – Humoristiska engelska enhetsröster
 
@@ -3108,7 +3110,7 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-120 – Samlat speltest och publicering
 
-**Status:** In Progress.
+**Status:** Done — lyssningsdelen uppskjuten av användaren.
 
 **Goal:** Verifiera startsida → matchval → spel → paus → resultat → ny match samt save/load. Granska grafik och lyssna igenom ljud. Verifiera GitHub Pages-versionen och publicera när checks passerar.
 
@@ -3126,6 +3128,8 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 **Verifieringsstatus:** Tekniska releasekontroller PASS:878tester/114filer, typecheck/build/diff, native tutorialmatch båda fraktioner/viewports, settings/save/load och renderingsgranskning. Actions a8c42c1 build/deploy success; publikt index-DiNwZpog.js verifierat via Voices→reload och Frontier→start→paus→Save utan pageerrors. Faktisk mänsklig lyssningsbedömning117/118 återstår;120 är därför fortfarande In Progress och121 startar inte ännu.
 
+**Senaste styrning:** Användaren skjuter upp ljudtester och matchlyssning till senare. Det tidigare lyssningskravet före Done/start121 är därmed upphävt; tekniska releasekontroller är uppfyllda och nästa etapp får börja. Detta är en senare instruktion, inte en utförd lyssningskontroll.
+
 ## Nästa godkända etapp – RTS-121–150
 
 Användarens arbetslista: slutför RTS-115–120 först. Därefter inventering och implementation av RTS-121–126, en task åt gången, med taskvisa checks, browserverifiering, docs, commit med task-ID och push utan force. Kontrollera Pages-deploy där åtkomst finns. RTS-127–150 är planerade och ska **inte implementeras i denna körning**. Fortsätt från Current Focus; denna etapp startar först efter RTS-120. Stora tasks delas i subtasks under samma ID. Saves bevaras via migration eller tydlig kontrollerad inkompatibilitetshantering. Ingen backend eller multiplayer.
@@ -3134,7 +3138,7 @@ Kartreferenser inför RTS-132–133 (ännu inte lästa eller använda för karti
 
 ## RTS-121 – Inventering och detaljplan
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Stäm av användarens feedback mot implementationen.
 
@@ -3181,6 +3185,8 @@ Simulationen stoppas och matchens input avaktiveras.
 
 **Subtasks:** Inventera berörda befintliga system → implementera avgränsad vertikal slice → beteende/regressionstester → browser/granskning → docs/checks/commit/push.
 
+**Detaljplan från121:** Återanvänd session ended och matchResults; separat fullskärmsresultat döljer canvas/HUD/minimap/top/bottom och pausbackdrop. Sammanfattning innehåller båda utfall, karta/fraktion/difficulty/tid. View Statistics växlar vy med Back; Play Again klickar befintlig restart, Main Menu befintlig new-match utan quit-confirm för redan avslutad match. Inga nya Savefält. Verifiera terminal load, dubbel rendering, båda utfall, tangentbord, ny match, reload/save och två viewports.
+
 ## RTS-123 – Utökad matchstatistik
 
 **Status:** Todo.
@@ -3205,6 +3211,8 @@ Statistik fungerar med save/load och restart.
 **Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
 
 **Subtasks:** Inventera berörda befintliga system → implementera avgränsad vertikal slice → beteende/regressionstester → browser/granskning → docs/checks/commit/push.
+
+**Detaljplan från121:** Summera alla noder i resursredovisningen och återanvänd befintlig unit-accounting. Lägg endast till counters som behövs för byggd/förstörd byggnad och separat egen borttagning; migration ska bevara gamla saves med uttrycklig historikbegränsning. Exakta once-per-event-tester för completion/destruction, expansion gathering, passenger/death, Save/load/restart och framtida borttagning skild från combat.
 
 ## RTS-124 – Version och changelog
 
@@ -3231,6 +3239,8 @@ Skilj releaseversion från senaste commit/build-ID.
 **Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras. Versionskälla och Changelog skapas inom tasken.
 
 **Subtasks:** Inventera berörda befintliga system → implementera avgränsad vertikal slice → beteende/regressionstester → browser/granskning → docs/checks/commit/push.
+
+**Detaljplan från121:** Gemensam config för release och användarsynlig changelog; rendera release på startsida och top bar. Build-ID hämtas separat vid build och får tydlig local/unknown fallback. Menylänk Changelog har Back/Escape; test av gemensam källa, lokal fallback, innehåll/navigering och browser. Inga ändrade match-Savefält.
 
 ## RTS-125 – Upplösning och skalning
 
@@ -3262,6 +3272,8 @@ kartstorlek är oberoende av upplösning.
 
 **Subtasks:** Inventera berörda befintliga system → implementera avgränsad vertikal slice → beteende/regressionstester → browser/granskning → docs/checks/commit/push.
 
+**Detaljplan från121:** En gemensam upplösningspolicy för alla sex angivna presets och separat adapt-to-window. Skala hela DOM/canvas-layout med samma aspect-bevarande skala och centrerad letterbox; vald logisk viewport styr kamera utan world/tileändring. Persistera validerat display-val separat från match-Save; fullscreen kräver användarhandling. Testa alla presets mot små/stora fönster, pointer/drag/world/minimap, resize, Save/load och restart utan klippt HUD.
+
 ## RTS-126 – Flashigare startsida
 
 **Status:** Todo.
@@ -3288,6 +3300,8 @@ visa ännu ospelbara fraktioner som tillgängliga.
 **Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
 
 **Subtasks:** Inventera berörda befintliga system → implementera avgränsad vertikal slice → beteende/regressionstester → browser/granskning → docs/checks/commit/push.
+
+**Detaljplan från121:** Återanvänd homeMenu och befintlig musik/gain/mute med diskreta animationer och reduced-motion. Original komposition med alla fem folk och läsbar meny; Crown/Clans är enda spelbara. Dokumentera källor/licens och saknade inspelade röster. Browser vid minsta/största upplösning samt navigation/load/mute/lifecycle. Perceptuell ljudtest uppskjuten enligt senaste instruktion.
 
 ## RTS-127 – Flera resursfyndigheter
 

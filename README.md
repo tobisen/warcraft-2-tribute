@@ -2,7 +2,7 @@
 
 Browserbaserat singleplayer-RTS inspirerat av Warcraft 2, Age of Empires 2 och
 Command & Conquer. Phaser, strict TypeScript och Vite; local-first, gameplay
-före grafik. Implementerat genom RTS-109 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
+före grafik. Implementerat genom RTS-120 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
 
 ## Installation och lokal start
 
@@ -644,3 +644,8 @@ Publicerad RTS-119/120-implementation: [Spela på GitHub Pages](https://tobisen.
 Actions build/deploy för a8c42c1 passerar; public settings→reload och
 Frontier→start→paus→Save verifierade utan browserfel. Slutlig faktisk
 lyssningsbedömning117/118 återstår före Done120 och nästa etapp121.
+
+Användaren har skjutit upp ljudtest och matchlyssning till senare. RTS-120
+är avslutad med tekniska kontroller; nästa godkända etapp är121–126.
+Inventeringen i ARCHITECTURE beskriver faktisk kod, assetluckor och
+verifieringsplan. RTS-127–150 är endast planerade i denna körning.
