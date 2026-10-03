@@ -161,3 +161,13 @@ röst-WAV/OGG-filer eller originalspelinspelningar har tillförts. Browserns
 lokala engelska SpeechSynthesis kan läsa dem; remote voices väljs inte.
 Native capability/funktion verifieras separat från mänsklig lyssning.
 Om lokal voice saknas är funktionen tyst och tydligt otillgänglig i status.
+
+## RTS-126 – Genererad originalillustration
+
+[Source/provenance](sources/home-fantasy-126.md),
+[PNG-master](sources/home-fantasy-126.png),
+[JPEG-runtime](../public/assets/home-fantasy-126.jpg). Inbyggt imagegen, inga
+externa referensbilder; fem fantasyfolk och original landscape/costumes.
+Master1672×941, runtime JPEG85 exporterad med sips. HTML-menu/title läggs
+ovanpå i appen och finns inte i bilden. Befintlig musik används för ambience;
+ingen ytterligare ljud-/röstasset. Lyssning uppskjuten enligt användaren.

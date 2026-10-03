@@ -1117,3 +1117,12 @@ resolution to window och Fullscreen. Hela spelytan skalar med bibehållet
 bildförhållande; letterbox visar outnyttjad yta. Kamera/world och gameplay
 påverkas inte av fysisk skalning. Inställningarna bevaras efter reload,
 Save/load och restart. Välj lägre preset för större text på liten skärm.
+
+## RTS-126 – Startsidespresentation
+
+Original fantasyillustration visar Humans, Orcs, Elves, Dwarves och Goblins
+mot kust/skog/stronghold. Titel och läsbar meny ligger ovanpå; endast Crown
+Alliance och Iron Clan erbjuds som spelbara. Subtila embers stängs av vid
+reduced-motion. Musik börjar efter interaction på lägre menyvolym; Mute
+ambience på startsidan använder samma mute som Settings och sparas lokalt.
+Paus och resultat följer befintliga ljudgates; artwork syns inte i matchen.

@@ -1,3 +1,4 @@
+import {homePeoples} from '../config/homeArt';
 import {bindPauseMenu,syncPauseMenu} from './pauseMenu';
 import {bindFullscreen} from './fullscreen';
 import {bindCameraSettings} from './cameraSettings';
@@ -10,6 +11,7 @@ let current:HomePage='home',phase:SessionPhase='menu';
 const element=(id:string)=>document.getElementById(id)!;
 export function syncHomeMenu(nextPhase:SessionPhase):void{
  if(nextPhase==='menu'&&phase!=='menu')current='home';phase=nextPhase;
+ element('home-art').hidden=phase!=='menu';
  const menu=phase==='menu',setup=current==='campaign'||current==='skirmish';
  document.body.dataset.phase=phase;document.getElementById('app')!.dataset.phase=phase;document.body.dataset.homePage=current;
  element('match-menu').hidden=!menu;element('game-toolbar').hidden=menu||phase==='playing';element('top-bar').hidden=menu;element('bottom-bar').hidden=menu;element('minimap-overlay').hidden=menu;element('match-menu-button').setAttribute('aria-expanded',String(phase==='paused'||phase==='ended'));
@@ -27,6 +29,7 @@ export function syncHomeMenu(nextPhase:SessionPhase):void{
  syncPauseMenu(phase);
 }
 export function bindHomeMenu():void{
+ element('home-peoples').textContent=homePeoples.map(p=>p.label).join(' · ')+' — artwork. Playable factions: Crown Alliance and Iron Clan.';
  bindActionPanel();bindCameraSettings();bindPauseMenu();bindFullscreen();
  const open=(page:HomePage)=>{if(phase!=='menu')return;current=page;if(page==='campaign'||page==='skirmish'){const select=element('scenario-select') as HTMLSelectElement;if(!homeScenarios[page].includes(select.value as never)){select.value=homeScenarios[page][0];select.dispatchEvent(new Event('change'));}}syncHomeMenu(phase);(page==='home'?element('menu-campaign'):element('menu-back')).focus();};
  for(const page of ['campaign','skirmish','load','settings','changelog'] as const)element(`menu-${page}`).addEventListener('click',()=>open(page));

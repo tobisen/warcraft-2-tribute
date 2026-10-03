@@ -1,5 +1,5 @@
 /** Presentation only; PCM composition length excludes Vorbis decoder padding. */
-export const audioConfig={musicLoopSeconds:16,maxEffects:6};
+export const audioConfig={musicLoopSeconds:16,menuMusicGain:.35,maxEffects:6};
 /** Leave two source slots for alerts/results; quiet work cues repeat less often. */
 export const effectMix={
  command:{gain:.65,cooldown:.12},impact:{gain:.65,cooldown:.16},complete:{gain:.65,cooldown:.4},

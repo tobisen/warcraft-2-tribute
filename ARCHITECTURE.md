@@ -2,7 +2,7 @@
 
 ## Status och teknik
 
-Implementerat genom RTS-124 (historiska systembeskrivningar följer): archer/projectiles, catapult/splash och Forge/research, FIFO/refund, target-HP/destruktion, workerbygge, farms, population, kamera,
+Implementerat genom RTS-126 (historiska systembeskrivningar följer): archer/projectiles, catapult/splash och Forge/research, FIFO/refund, target-HP/destruktion, workerbygge, farms, population, kamera,
 byggnadsselection, rally, Stop, gold och
 atomiska kostnader ovanpå etapp 1:s HUD, handgjorda karta och navigation för
 move/work/combat, separata gruppmål och säkra placement/spawn-regler.
@@ -1554,3 +1554,19 @@ används för selection/commands; edge-pan/minimap använder gemensam clientPoin
 för physical→logical. Dragtröskeln är fortsatt5 verkliga screen pixels.
 Preferences schema1 får validerat display-fält med defaults för äldre prefs;
 match-Save/schema/config20 ändras inte och load bevarar aktuell display.
+
+## RTS-126 – Original startsida och menyambience
+
+Original illustration/master och provenance finns i
+[home-fantasy-126](assets/sources/home-fantasy-126.md); JPEG-runtime i public.
+Fem folk visas som motiv, metadata i [homeArt](src/config/homeArt.ts), utan
+nya spelbara faction-ID:n. #home-art visas endast i menu och ligger under
+DOM-title/navigation; object-fit contain bevarar hela bilden. Tre små CSS-
+embers följer reduced-motion, påverkar inte matchstate och döljs med artwork.
+
+GameAudio återanvänder befintlig16s musikloop i menu med config menuMusicGain
+0.35. Unlock kräver fortfarande gesture, mute/master/music är gemensamma
+preferences och home-toggle synkar Settings-checkbox. Menu/playing använder
+en musiksource; pause suspenderar, ended reset stoppar och returnmenu startar
+lågvolymsloopen igen. Ingen ny ljudfil/voice eller gameplay/Saveändring.
+Perceptuell ljudbedömning är fortsatt uppskjuten enligt användaren.

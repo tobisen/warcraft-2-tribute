@@ -27,3 +27,9 @@ projektvillkor. Inga externa inspelningar, enhetsröster eller attributioner.
 RTS-118: config/voices.ts innehåller egna originaltextrepliker. Inga inspelade
 röstassets finns eller distribueras. Browser/OS tillhandahåller eventuell
 lokal speech voice; projektet kopierar eller licensierar inte dess röstmodell.
+
+RTS-126: [home-fantasy-126 provenance](sources/home-fantasy-126.md) redovisar
+projektgenererad originalillustration med inbyggt imagegen och utan externa
+referensbilder. Full PNG-master och JPEG-export finns i repot. Ingen extern
+spelfil, röstinspelning eller tredjepartsreferens har importerats. Övriga
+assetvillkor och ljudkällor ovan är oförändrade.

@@ -2,7 +2,7 @@
 
 Browserbaserat singleplayer-RTS inspirerat av Warcraft 2, Age of Empires 2 och
 Command & Conquer. Phaser, strict TypeScript och Vite; local-first, gameplay
-före grafik. Implementerat genom RTS-124 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
+före grafik. Implementerat genom RTS-126 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
 
 ## Installation och lokal start
 
@@ -672,3 +672,9 @@ fullscreen är separat. Fönsteranpassning är default och skalar minimum800×60
 ned i mindre fönster. Valet sparas lokalt och ändrar inte kartstorlek eller
 match-Save. Ett högt preset på liten skärm ger mindre text; välj lägre preset
 eller fönsteranpassning vid behov.
+
+Startsidan har original fantasyillustration med fem folk och diskreta embers
+(med reduced-motion-stöd). Crown Alliance/Iron Clan är fortfarande de enda
+spelbara fraktionerna. Mute ambience använder samma sparade mute som
+Settings; befintlig musikloop börjar först efter användarinteraktion, med
+lägre gain i menyn. Perceptuell ljudtest/matchlyssning är uppskjuten, inte utförd.

@@ -1149,3 +1149,16 @@ Kartan påverkas inte; större logisk canvas visar mer world via befintlig
 kamera, små fönster skalar ned samma vy. Settings sparas i preferences-slot,
 inte i match-Save. Mycket högt preset på liten skärm ger förväntat liten
 text/grafik; välj fönsteranpassning eller lägre preset för större visning.
+
+## RTS-126 – Original komposition och ambience
+
+Startsidan använder en projektgenererad rasterillustration med human/orc/elf/
+dwarf/goblin, skapad med inbyggt imagegen utan externa referensbilder. PNG-
+master och prompt/provenance bevaras; JPEG85 runtime-export. Bilden är
+ornament, title/menu är DOM och Crown/Clans enda spelbara. Illustrationens
+fem folk innebär inget gameplay-/fraktionsbeslut inför134.
+
+Diskreta embers har reduced-motion-fallback. Befintlig musik återanvänds som
+menuambience med0.35gain, efter gesture och med samma master/music/mute.
+Ingen separat autoplay eller dubbla musikloopar. Faktisk hörbarhet/balans
+är inte bedömd; användaren har uttryckligen skjutit upp ljudtest/matchlyssning.

@@ -2350,3 +2350,32 @@ Screenshots granskade; inget klippt HUD eller browserfel. Ingen match-Save/
 world/tile/gameplayändring. Hög preset i liten skärm ger mindre text som
 förväntat; lägre preset/adaptation dokumenteras. Bundlevarningen kvar.
 125 Done, nästa126 original startsideskomposition och diskret ambience.
+
+## 2026-10-03 – RTS-126: Original fantasy-startsida
+
+Inbyggt imagegen enligt imagegen-skillen: original femfolksillustration, inga
+externa referensbilder. PNG-master1672×941/provenance bevarad i repo,
+JPEG85-runtime682KB. Title/navigation DOM ovanpå art med kontrast, metadata
+för Humans/Orcs/Elves/Dwarves/Goblins utan nya playable faction-ID:n. Tre
+subtila CSS-embers/reduced-motion. Changelog kompletterad för125/126.
+
+Befintlig16s loop används för menuambience efter gesture med gain0.35;
+home-toggle och Settings delar master/music/mute/persistens. Browser hittade
+en verklig async race vid load från meny till paus: sen context.resume
+kunde väcka pausen. Faskontroll i callback suspenderar när aktuell phase
+är paused; test med kontrollerat fördröjd resume verifierar regressionen.
+
+Checks:888tester/118filer PASS148.89s efter racefix;9 riktade audio/home-
+tester och3 release/audio-tester efter changelogcopy PASS, typecheck/build/
+diff PASS. Native browser1280/preset1280,640/preset800/reduced-motion och
+1920/preset2048: hero-load, mute→reload, meny/playing/pause/load ljudstatus,
+navigation/changelog och endastCrown/Clans valbara PASS utan pageerrors.
+Kontrollskript väntar explicit scenrestart innan DOM-assertions. Komplett
+verklig Tutorial/resultat/statistik/save/restart båda fraktioner/viewports
+PASS; raster/produtseende visuellt granskat.150 unika IDs/636 filreferenser
+PASS. Granskning: inga kvarstående buggar/regressions-/scopefynd.
+
+Lyssning/hörbarhet/balans är fortfarande uppskjuten av användaren, inte
+påstått utförd. Bundlevarning kvar.126 Done; godkänd implementation121–126
+avslutad.127–150 endast planerade; inget sådant gameplay påbörjat.
+GitHub122–125 build/deploy success;126 publiceras och verifieras efter push.

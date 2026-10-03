@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-126 – Flashigare startsida** — **Todo**.
+**RTS-127 – Flera resursfyndigheter** — **Todo, planerad nästa etapp; utanför denna körning**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -3276,7 +3276,7 @@ kartstorlek är oberoende av upplösning.
 
 ## RTS-126 – Flashigare startsida
 
-**Status:** Todo.
+**Status:** Done — perceptuell ljudtest uppskjuten enligt användaren.
 
 **Goal:** Skapa egen fantasykomposition med motiv från:
 

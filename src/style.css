@@ -171,3 +171,23 @@ html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#
 #app[data-phase='menu'],#app[data-phase='ended']{overflow:auto;}
 #display-controls label{display:flex;gap:8px;align-items:center;margin:12px 0;}
 #display-status{font:12px/1.5 system-ui,sans-serif;color:#aebcaf;}
+
+/* RTS-126 original fantasy panorama, readable interface above the artwork. */
+#home-art{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;background:#101917;}
+#home-art img{width:100%;height:100%;object-fit:contain;object-position:center bottom;image-rendering:auto;}
+#home-art::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,#081310a8 0%,#08131048 40%,transparent 78%),linear-gradient(90deg,#08131065,transparent 60%);}
+#app[data-phase='menu']{position:absolute;place-items:start center;padding:clamp(20px,calc(var(--display-height) * .05),48px);isolation:isolate;}
+#app[data-phase='menu'] #match-menu{position:relative;z-index:2;align-items:start;width:min(1160px,94%);gap:64px;}
+#home-brand h1{color:#f4df9a;text-shadow:0 3px 0 #392d1d,0 6px 24px #000;}
+#home-brand .home-crest{display:none;}#home-brand .eyebrow{margin-top:8px;}
+#home-brand .home-subtitle,#home-peoples{text-shadow:0 2px 4px #000;color:#efe4c2;}
+#home-peoples{max-width:34rem;font-size:12px;line-height:1.7;}
+#home-audio-toggle{margin-top:16px;background:#172422dd;font:13px system-ui,sans-serif;}
+#home-navigation,#app[data-phase='menu'] #home-content{background:#101b18ed;backdrop-filter:blur(3px);border-color:#bea268;}
+#home-navigation button{font-size:18px;padding:10px 14px;margin:9px 0;}
+.home-embers{position:absolute;inset:0;z-index:1;}
+.home-embers i{position:absolute;left:14%;top:75%;width:3px;height:3px;border-radius:50%;background:#f3ce75;box-shadow:0 0 12px #ffad40;animation:home-ember 8s ease-in-out infinite;opacity:0;}
+.home-embers i:nth-child(2){left:44%;top:85%;animation-delay:2s;}.home-embers i:nth-child(3){left:64%;top:78%;animation-delay:5s;}
+@keyframes home-ember{0%,100%{opacity:0;transform:translateY(0);}40%{opacity:.45;}80%{opacity:0;transform:translateY(-28px);}}
+@media(prefers-reduced-motion:reduce){.home-embers i{animation:none;}#home-navigation button{transition:none;}}
+@media(max-width:900px){#app[data-phase='menu'] #match-menu{gap:20px;}#home-brand h1{font-size:34px;margin:10px 0;}#home-peoples{font-size:11px;}#home-audio-toggle{margin-top:6px;}#home-navigation{padding:14px;}#home-navigation h2{font-size:20px;margin-bottom:8px;}#home-navigation button{font-size:15px;padding:7px 10px;margin:6px 0;}}

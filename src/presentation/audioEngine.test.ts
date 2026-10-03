@@ -1,7 +1,7 @@
 import {afterEach,expect,it,vi} from 'vitest';
 import {GameAudio} from './audio';
 import {allowEffect,defaultAudio,type Sound} from './audioPolicy';
-import {effectMix} from '../config/audio';
+import {effectMix,audioConfig} from '../config/audio';
 afterEach(()=>vi.unstubAllGlobals());
 it('limits work repetition, reserves alert slots and preserves per-cue gains',()=>{
  expect(allowEffect('gather',.79,0,0)).toBe(false);expect(allowEffect('gather',.8,0,0)).toBe(true);
@@ -20,7 +20,7 @@ it('the engine caps concurrent sources, cleans gains/reset, mutes, pauses and le
   createBufferSource(){const node={buffer:null,playbackRate:{value:1},connect:vi.fn(),disconnect:vi.fn(),start:vi.fn(),stop:vi.fn(),onended:null};sources.push(node);return node;}
  }
  vi.stubGlobal('AudioContext',FakeContext);vi.stubGlobal('fetch',vi.fn(async()=>({ok:true,arrayBuffer:async()=>new ArrayBuffer(0)})));
- const engine=new GameAudio();await engine.unlock();expect(engine.status.loaded).toBe(11);engine.setPhase('playing');await Promise.resolve();expect(engine.status.music).toBe(true);
+ const engine=new GameAudio();await engine.unlock();expect(engine.status.loaded).toBe(11);expect(engine.status.music).toBe(true);expect(gains[1].gain.value).toBeCloseTo(defaultAudio.master*defaultAudio.music*audioConfig.menuMusicGain);engine.setPhase('playing');await Promise.resolve();expect(engine.status.music).toBe(true);expect(gains[1].gain.value).toBeCloseTo(defaultAudio.master*defaultAudio.music);
  for(const sound of ['gather','build','train','impact'] as Sound[])engine.play(sound);
  expect(engine.status.effects).toBe(4);engine.play('cannon');expect(engine.status.effects).toBe(4);
  engine.play('warning');expect(engine.status.effects).toBe(5);context.currentTime=2;engine.play('warning');expect(engine.status.effects).toBe(6);engine.play('warning');expect(engine.status.effects).toBe(6);
@@ -30,4 +30,7 @@ it('the engine caps concurrent sources, cleans gains/reset, mutes, pauses and le
  engine.reset();expect(engine.status.effects).toBe(0);expect(engine.status.music).toBe(false);expect(gains.slice(2).every(g=>g.disconnect.mock.calls.length>0)).toBe(true);
  engine.setPhase('playing');await Promise.resolve();engine.setPhase('ended');engine.play('victory',true);expect(engine.status.effects).toBe(1);expect(engine.status.music).toBe(false);
  expect(sources.filter(s=>s.stop.mock.calls.length>0).length).toBeGreaterThanOrEqual(7);
+ engine.setPhase('menu');await Promise.resolve();expect(engine.status.effects).toBe(0);expect(engine.status.music).toBe(true);expect(gains[1].gain.value).toBeCloseTo(defaultAudio.master*defaultAudio.music*audioConfig.menuMusicGain);engine.setPhase('menu');expect(sources.filter(s=>s.loop&&!s.stop.mock.calls.length)).toHaveLength(1);engine.setSettings({muted:true});expect(gains[1].gain.value).toBe(0);
+ // A delayed menu resume must not wake a match loaded into pause.
+ engine.setPhase('ended');let finishResume!:()=>void;context.resume=()=>new Promise<void>(resolve=>{finishResume=()=>{context.state='running';resolve();};});engine.setPhase('menu');engine.setPhase('paused');finishResume();await Promise.resolve();await Promise.resolve();expect(context.state).toBe('suspended');expect(engine.status.music).toBe(false);
 });
