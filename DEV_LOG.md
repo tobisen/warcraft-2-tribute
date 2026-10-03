@@ -1986,3 +1986,7 @@ Samma actionknappar/callbacks flyttade till bottom-right med selectionfilter, ko
 ## 2026-10-03 – RTS-100 Done: gruppikoner och produktionsprogress
 
 Originalikoner för markerade grupper; FIFO-kö med Active/Queued/tid/progress/Cancel, explicit paused disabled-state.133relevanta tester/23filer PASS; typecheck/build/diff PASS, bundlevarning kvar. Chromium1280×720/1920×1080: riktig gruppselection→utforska→gather/leverera bank70→tre betalda workerjobb→progress→pause freeze→Save/load bevarad kö/progress→resume→avbryt exakt mittjobb100%/head50%→restart rensar. Accelererad gameplayklocka, inga injicerade units/resurser. Screenshots grupp/kö granskade och ryms; inga errors. Diff granskad queue-ID/phase/DOM-lifecycle/refund/Save/fog/scope utan blockerande fynd. Nästa101 minimapoverlay.
+
+## 2026-10-03 – RTS-101 Done: minimapoverlay
+
+200×150 minimap som separat world-overlay ovanför bottom bar. Kamera-only input, playingpredicate/contextmenu/shutdown, guard för HUD-release av worlddrag. currentMatch inkluderar nu navy i fogfiltrerad datamodell.111relevanta tester/23filer PASS1,46s inklusive nytt input/lifecycle-regressionstest; typecheck/build/diff PASS, bundlevarning kvar. Chromium båda upplösningar: overlaybounds/fogpixel, hörnklick/clamp, höger/mitt utan orders, worlddrag-release utan selection, pauseblockering, Save/load/restart, resize fram/tillbaka; inga errors. Screenshots granskade. Diff granskad fog/input/listenerlifecycle/camera/navy/scope utan blockerande fynd. Nästa102 kamerapanorering.

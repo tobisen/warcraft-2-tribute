@@ -208,7 +208,7 @@ export class BootScene extends Phaser.Scene {
     factionSelect.addEventListener('change',changeFaction);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>factionSelect.removeEventListener('change',changeFaction));
 
-    this.minimap=bindMinimap(document.querySelector<HTMLCanvasElement>('#minimap')!,()=>({data:visibleMinimapData({fog:this.fog,map:this.map,gathering:this.gathering,combat:this.combat,placement:this.placement,production:this.production,soldierProduction:this.soldierProduction,waves:this.waves,outcome:this.outcome}),scroll:{x:this.cameras.main.scrollX,y:this.cameras.main.scrollY},viewport:{width:this.cameras.main.width,height:this.cameras.main.height}}),point=>this.cameras.main.setScroll(point.x,point.y));
+    this.minimap=bindMinimap(document.querySelector<HTMLCanvasElement>('#minimap')!,()=>({data:visibleMinimapData(this.currentMatch()),scroll:{x:this.cameras.main.scrollX,y:this.cameras.main.scrollY},viewport:{width:this.cameras.main.width,height:this.cameras.main.height}}),point=>this.cameras.main.setScroll(point.x,point.y),()=>this.gameplayActive());
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.minimap?.destroy());
 
     this.unloadMode=null;this.attackMoveMode=false;
@@ -566,7 +566,7 @@ export class BootScene extends Phaser.Scene {
       return;
     }
     if (this.placement.active || pointer.button !== 0 || !this.drag) return;
-    if (pointer.event.target instanceof Element && pointer.event.target.closest('#hud, #match-menu, #game-toolbar')) {
+    if (pointer.event.target instanceof Element && pointer.event.target.closest('#hud, #match-menu, #game-toolbar, #minimap-overlay, #top-bar, #bottom-bar')) {
       this.drag = undefined;
       this.dragBox.setVisible(false);
       return;

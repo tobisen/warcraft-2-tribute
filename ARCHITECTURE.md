@@ -1271,3 +1271,7 @@ presentation/actionPanel.ts härleder synliga actions och blockeringsskäl från
 ## RTS-100 – Gruppikoner och queue-modell
 
 presentation/selectionCollection.ts härleder egna markerade ikoner och aktuell selected-building FIFO med progress/refund/state utan Phaser. DOM återbyggs bara vid ID-byte, medan HP/etiketter/progress/disabled uppdateras varje sync. BootScene har en gemensam atlas-portrait-adapter för selection/grupp/kö; köcancellation använder samma delegerade callback och gameplayfunktion som tidigare. Timer/refund/Saveformat ändras inte.
+
+## RTS-101 – Camera-only minimapoverlay
+
+DOM-minimappen är en grid-overlay i worldytans nedre vänstra hörn, separat från Phaser-canvas och bottom actions. bindMinimap får explicit playingpredicate och tar bort click/contextmenu-listeners på shutdown. BootScene skickar currentMatch inklusive navy till befintlig fogfiltrerad datamodell; tidigare manuell snapshot saknade navy. Worlddrag-release på top/bottom/minimap/HUD avbryter drag utan selection.

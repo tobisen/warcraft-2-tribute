@@ -73,10 +73,11 @@
       <p id="group-status" data-ui-text="groupsCtrl19Assign19Recall">Groups: Ctrl+1–9 assign, 1–9 recall</p>
       <p id="selection-status"></p>
       <p id="match-status" role="status" data-ui-text="protectYourBase">Protect your base</p>
-      <canvas id="minimap" width="200" height="150" aria-label="Minimap – click to move the camera"></canvas>
+
 
     </section>
     <div id="game"></div>
+    <aside id="minimap-overlay" hidden aria-label="World overview"><canvas id="minimap" width="200" height="150" aria-label="Minimap – click to move the camera"></canvas></aside>
     <section id="bottom-bar" hidden aria-label="Selection information"><canvas id="selection-portrait" width="128" height="128" aria-label="Selected entity portrait"></canvas><div id="selection-info"><h2 id="selection-name"></h2><p id="selection-detail"></p><p id="selection-health"></p><progress id="selection-health-bar" max="1" value="0"></progress><p id="selection-stats"></p><div id="selection-icons" hidden aria-label="Selected group units"></div></div><section id="action-panel" aria-label="Selected entity actions"><p id="action-hint"></p></section></section>
     <script type="module" src="/src/main.ts"></script>
   </body>

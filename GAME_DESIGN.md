@@ -1008,3 +1008,7 @@ Bottom bars högra panel visar worker build/Stop, landcombat attack-move/ability
 ## RTS-100 – Blandade grupper och produktionskö
 
 Grupper visar en ikon per vald land-/sjöenhet, i befintlig landföljd följd av fartyg; hover/accessibel etikett visar namn, ID och HP. Total HP och union-actions bevaras, större grupper scrollar internt. Produktionsbyggnaden visar upp till tre befintliga FIFO-jobb med ikon, Active/Queued, tid och progress. Cancel ger50% refund för active och100% för queued. Färdig men blockerad spawn visar Waiting for free exit; paus fryser progress och blockerar cancellation.
+
+## RTS-101 – Minimap i spelvyn
+
+Minimappen ligger ovanpå worldytans nedre vänstra hörn. Vänsterklick centrerar/clampas kamera under playing; paus/ended/menu blockerar navigation. Höger-/mittklick ger inga orders/selection; context menu förhindras. Befintlig fog, kameraindikator och egna land-/navymarkers används, dolda fiender/resurser läcker inte.

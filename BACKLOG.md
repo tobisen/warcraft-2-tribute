@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-101 – Minimap ovanpå spelvyn** — **Todo**.
+**RTS-102 – Kamerapanorering** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -2764,13 +2764,21 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-101 – Minimap ovanpå spelvyn
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Placera minimap som overlay i nedre vänstra hörnet. Bevara kameraindikator, fog of war och klicknavigation. Undvik överlapp med actions och inputläckage till spelvärlden.
 
+**Requirements:** Befintlig200×150 DOM-minimap i spelvyns nedre vänstra hörn, ovan canvas men ovanför bottom bar. Samma fog/kameraindikator och clamped vänsterklicknavigation. Egna navy-markers ska få verklig matchstate. Minimap högerklick ger varken context menu eller orders; UI-release avslutar worlddrag utan selection. Navigation bara under playing; paus/ended/menu blockerar den. Samma sceneägda listeners, borttagna på shutdown.
+
+**Non-goals:** Ny minimaprendering/mapdata/zoom, kamera102–103, flytt av övrig statuspanel, nya orders/balans.
+
 **Dependencies:** RTS-100.
 
-**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+**Acceptance criteria:** Overlay ryms1280×720/1920×1080 och överlappar inga bottom-actions; kameraindikator uppdateras när klick flyttar/clampas. Fog döljer enemy/nodeinfo som tidigare. Vänster-/höger-/mittklick på minimap ger inga selection/orders/byggplatser. Worlddrag-release på HUD avbryts. Resize/Save/load/restart bevaras utan dubbla listeners.
+
+**Tester:** Befintliga minimap/fog/camera/viewport/navy/session/selectiontester; typecheck/build/diff. Browser båda upplösningar, hörnklick/kameraclamp, inputisolation inklusive worlddrag-release, pause/resize/Save/load/restart, granskade screenshots.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, README.md.
 
 ## RTS-102 – Kamerapanorering
 
