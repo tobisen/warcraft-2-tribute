@@ -18,6 +18,8 @@ const equalFoot=(a:Footprint,b:Footprint)=>a.x===b.x&&a.y===b.y&&a.width===b.wid
 /** One transaction removes bodies, references and reservations before any producer can tick. */
 export function cleanDestroyed(state:MatchState):MatchState {
   let gathering=removeDeadUnits(state.gathering);
+  const drowned=state.navy?.ships.filter(s=>s.hp<=0).flatMap(s=>s.passengers??[])??[];
+  if(drowned.length){const lost={...(gathering.lostCargo??{wood:0,gold:0})};for(const u of drowned)if(u.kind==='worker')lost[u.cargoType??'wood']+=u.cargo;gathering={...gathering,lostCargo:lost};}
   const baseDead=state.combat.baseHP<=0;
   const barDead=state.placement.barracks!==null&&state.placement.barracksHP!==undefined&&state.placement.barracksHP<=0;
   const harborDead=!!state.navy?.harbor&&state.navy.harbor.hp<=0;

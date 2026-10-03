@@ -894,3 +894,17 @@ avmarkering bevarar order. Befintliga army attack/defense-upgrades gäller
 fartygen; landförmågor gör det inte. Riktiga landfiender kan attackera
 fartyg vid nåbar kustkontakt och skada/förstöra hamnen. Inga fiendefartyg
 före086. Hamn/fartyg visar fortfarande placeholders och enkel HP-text.
+
+
+RTS-084: välj färdig hamn → Bygg transport (40wood/10gold,8s,2supply).
+Transporten har90HP/110px/s och fyra platser, men inga vapen. Flytta
+valda landenheter nära kusten (inom64px med fri kontakt) och högerklicka
+transporten. Upp till fyra lastas omedelbart; ingen boarding-kö finns.
+Lastade units behåller HP/ID/archetype/resurslast och supply, blir idle och
+omarkerade, ger ingen egen syn och agerar inte från marken. Deras timers
+fryser under transporten. Välj transport → Landsätt → vänsterklicka synlig
+landpunkt inom64px. Alla passagerare får separata giltiga platser runt
+klicket; annars sker ingen landsättning. Ogiltig punkt behåller läget,
+Escape/högerklick avbryter utan order. Efter landning är units idle och
+omarkerade och kan väljas igen. Vid sänkning dör alla passagerare och deras
+wood/gold-last förloras. Save/load omfattar lasten; restart tömmer matchen.

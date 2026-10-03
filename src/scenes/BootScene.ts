@@ -1,3 +1,4 @@
+import {loadTransport,unloadTransport} from '../gameplay/transport';
 import {navyConfig} from '../config/navy';
 import {attackShips,harborPlacementError,placeHarbor,trainShip,canTrainShip,commandShips,resumeHarbor,stopShips,matchPopulation,type NavyState,type Ship} from '../gameplay/navy';
 import {renderMatchResults} from '../presentation/matchResults';
@@ -93,6 +94,7 @@ export class BootScene extends Phaser.Scene {
   private queueSignature = '';
   private queuePanel!:HTMLElement;
   private orderVisuals = new Map<string, Phaser.GameObjects.Arc>();
+  private unloadMode:string|null=null;
   private attackMoveMode=false;
   private attackMoveButton!:HTMLButtonElement;
   private stopButton!: HTMLButtonElement;
@@ -198,7 +200,7 @@ export class BootScene extends Phaser.Scene {
     this.minimap=bindMinimap(document.querySelector<HTMLCanvasElement>('#minimap')!,()=>({data:visibleMinimapData({fog:this.fog,map:this.map,gathering:this.gathering,combat:this.combat,placement:this.placement,production:this.production,soldierProduction:this.soldierProduction,waves:this.waves,outcome:this.outcome}),scroll:{x:this.cameras.main.scrollX,y:this.cameras.main.scrollY},viewport:{width:this.cameras.main.width,height:this.cameras.main.height}}),point=>this.cameras.main.setScroll(point.x,point.y));
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.minimap?.destroy());
 
-    this.attackMoveMode=false;
+    this.unloadMode=null;this.attackMoveMode=false;
     this.attackMoveButton=document.querySelector<HTMLButtonElement>('#attack-move')!;
     const beginAttackMove=()=>{
       if(!this.gameplayActive()||!this.gathering.units.some(u=>u.kind==='soldier'&&u.selected))return;
@@ -276,7 +278,7 @@ export class BootScene extends Phaser.Scene {
     const begin = (kind:'harbor'|'barracks'|'farm'|'forge'='barracks') => {
       if (!this.gameplayActive()) return;
       if (!this.gathering.units.some(u=>u.kind==='worker' && u.selected)) return;
-      this.attackMoveMode=false;
+      this.unloadMode=null;this.attackMoveMode=false;
       if(kind==='harbor'&&this.navy?.harbor)return;
       this.placement = beginPlacement(this.placement,kind);
       this.drag = undefined;
@@ -287,7 +289,7 @@ export class BootScene extends Phaser.Scene {
     const cancel = (event?:KeyboardEvent) => {
       if(event&&!gameplayKeyAllowed(keyboardContext(event,this.gameplayActive())))return;
       if (!this.gameplayActive()) return;
-      this.attackMoveMode=false;
+      this.unloadMode=null;this.attackMoveMode=false;
       this.placement = cancelPlacement(this.placement);
       this.syncVisuals();
     };
@@ -315,6 +317,10 @@ export class BootScene extends Phaser.Scene {
       this.farmButton.removeEventListener('click',beginFarm);
     });
     this.harborButton=document.querySelector<HTMLButtonElement>('#build-harbor')!;this.shipButton=document.querySelector<HTMLButtonElement>('#train-ship')!;
+    const transportButton=document.querySelector<HTMLButtonElement>('#train-transport')!,unloadButton=document.querySelector<HTMLButtonElement>('#unload-transport')!;
+    const trainTransport=()=>{if(!this.gameplayActive()||this.selectedBuilding!=='harbor')return;this.applyMatch(trainShip(this.currentMatch(),'transport'));this.syncVisuals();};
+    const beginUnload=()=>{const ship=this.navy?.ships.find(s=>s.selected&&s.role==='transport'&&s.passengers?.length);if(!this.gameplayActive()||!ship)return;this.unloadMode=ship.id;this.placement=cancelPlacement(this.placement);this.attackMoveMode=false;this.drag=undefined;this.dragBox.setVisible(false);this.syncVisuals();};
+    transportButton.addEventListener('click',trainTransport);unloadButton.addEventListener('click',beginUnload);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{transportButton.removeEventListener('click',trainTransport);unloadButton.removeEventListener('click',beginUnload);});
     const beginHarbor=()=>begin('harbor'),ship=()=>{if(!this.gameplayActive()||this.selectedBuilding!=='harbor')return;this.applyMatch(trainShip(this.currentMatch()));this.syncVisuals();};
     this.harborButton.addEventListener('click',beginHarbor);this.shipButton.addEventListener('click',ship);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{this.harborButton.removeEventListener('click',beginHarbor);this.shipButton.removeEventListener('click',ship);});
@@ -381,7 +387,7 @@ export class BootScene extends Phaser.Scene {
     document.getElementById('command-guide-text')!.textContent=commandGuide;
     const actionKey=(event:KeyboardEvent)=>{
       const menuContext={...keyboardContext(event,this.session.phase==='playing'||this.session.phase==='paused'),ctrlKey:event.ctrlKey,metaKey:event.metaKey};
-      if(!event.ctrlKey&&!event.metaKey&&gameplayKeyAllowed(menuContext)&&(event.key.toLowerCase()==='p'||event.key==='Escape'&&(this.session.phase==='paused'||!this.placement.active&&!this.attackMoveMode))){event.preventDefault();this.sessionAction(this.session.phase==='paused'?'resume':'pause');return;}
+      if(!event.ctrlKey&&!event.metaKey&&gameplayKeyAllowed(menuContext)&&(event.key.toLowerCase()==='p'||event.key==='Escape'&&(this.session.phase==='paused'||!this.placement.active&&!this.attackMoveMode&&!this.unloadMode))){event.preventDefault();this.sessionAction(this.session.phase==='paused'?'resume':'pause');return;}
       const context={...keyboardContext(event,this.gameplayActive()),ctrlKey:event.ctrlKey,metaKey:event.metaKey};
       if(event.key==='Escape'&&!event.ctrlKey&&!event.metaKey&&gameplayKeyAllowed(context)){event.preventDefault();cancel(event);return;}
       if(!hotkeyButton(event.key,context))return;event.preventDefault();
@@ -408,7 +414,7 @@ export class BootScene extends Phaser.Scene {
     if(action==='start')this.factions=factionsForPlayer(next.options.faction??defaultFactions.player);
     if(action==='start'||action==='restart'){this.scenario=next.options.scenario;this.difficulty=next.options.difficulty;this.skipGameplayFrame=true;this.restartPending=true;this.restartButton.disabled=true;this.scene.restart();return;}
     if(action==='resume'){this.skipGameplayFrame=true;if(document.getElementById('save-status')!.textContent?.startsWith('Laddad – pausad'))document.getElementById('save-status')!.textContent='Laddad – matchen fortsätter';}
-    if(action==='pause'||action==='new-match'){this.placement=cancelPlacement(this.placement);this.attackMoveMode=false;this.drag=undefined;this.cameraDrag=undefined;this.dragBox.setVisible(false);}
+    if(action==='pause'||action==='new-match'){this.placement=cancelPlacement(this.placement);this.unloadMode=null;this.attackMoveMode=false;this.drag=undefined;this.cameraDrag=undefined;this.dragBox.setVisible(false);}
     this.syncVisuals();
   }
   private syncSession():void {
@@ -453,8 +459,9 @@ export class BootScene extends Phaser.Scene {
     }
     if (this.cameraDrag) return;
     const world = this.worldPoint(pointer);
+    if(this.unloadMode&&(pointer.button===0||pointer.button===2)){this.placementClick=true;if(pointer.button===2)this.unloadMode=null;else{const before=this.currentMatch(),after=unloadTransport(before,this.unloadMode,world);if(after!==before){this.applyMatch(after);this.unloadMode=null;}}this.syncVisuals();return;}
     if(this.attackMoveMode&&(pointer.button===0||pointer.button===2)) {
-      this.attackMoveMode=false;this.placementClick=true;
+      this.unloadMode=null;this.attackMoveMode=false;this.placementClick=true;
       if(pointer.button===0)this.gathering.units=commandAttackMove(this.gathering.units,world,this.map);
       this.syncVisuals();return;
     }
@@ -487,6 +494,7 @@ export class BootScene extends Phaser.Scene {
         this.syncVisuals();
         return;
       }
+      const transport=this.navy?.ships.find(s=>s.role==='transport'&&Math.abs(world.x-s.position.x)<=navyConfig.ship.size/2&&Math.abs(world.y-s.position.y)<=navyConfig.ship.size/2);if(transport&&this.gathering.units.some(u=>u.selected)){this.applyMatch(loadTransport(this.currentMatch(),transport.id));this.syncVisuals();return;}
       const harbor=this.navy?.harbor;if(harbor&&harbor.construction.remainingSeconds>0&&world.x>=harbor.footprint.x&&world.x<=harbor.footprint.x+64&&world.y>=harbor.footprint.y&&world.y<=harbor.footprint.y+64){this.applyMatch(resumeHarbor(this.currentMatch()));this.syncVisuals();return;}
       const forge=this.placement.forge;
       if(forge&&forge.construction.remainingSeconds>0&&world.x>=forge.footprint.x&&world.x<=forge.footprint.x+forge.footprint.width&&world.y>=forge.footprint.y&&world.y<=forge.footprint.y+forge.footprint.height){const result=resumeConstruction(this.gathering,this.placement,this.map,'forge');this.gathering=result.gathering;this.placement=result.placement;this.syncVisuals();return;}
@@ -607,7 +615,7 @@ export class BootScene extends Phaser.Scene {
     if(this.selectedBuilding==='harbor'&&!this.navy?.harbor||this.selectedBuilding==='barracks'&&!this.placement.barracks||this.selectedBuilding==='base'&&this.combat.baseHP<=0)this.selectedBuilding=null;
     this.baseVisual.setVisible(this.combat.baseHP>0);this.baseLabel.setVisible(this.combat.baseHP>0).setText(`${factions[this.factions.player].buildingNames.base} ${Math.ceil(this.combat.baseHP)} HP`);
     if (!this.gameplayActive()) {
-      this.attackMoveMode=false;
+      this.unloadMode=null;this.attackMoveMode=false;
       this.cameraDrag = undefined;
       this.drag = undefined;
       this.dragBox.setVisible(false);
@@ -648,7 +656,7 @@ export class BootScene extends Phaser.Scene {
       queue.forEach((job,index)=>{
         const button=document.createElement('button');button.type='button';button.dataset.jobId=job.id;
         button.disabled=!this.gameplayActive();
-        button.textContent=`${index===0?'Aktiv':'Köad'} ${(job.kind==='warship'?'Fartyg':factions[this.factions.player].unitNames[job.kind])} (${job.id}) – avbryt, ${Math.round((index===0?queueConfig.activeRefund:queueConfig.queuedRefund)*100)} % tillbaka`;
+        button.textContent=`${index===0?'Aktiv':'Köad'} ${(job.kind==='transport'?'Transport':job.kind==='warship'?'Fartyg':factions[this.factions.player].unitNames[job.kind])} (${job.id}) – avbryt, ${Math.round((index===0?queueConfig.activeRefund:queueConfig.queuedRefund)*100)} % tillbaka`;
         this.queuePanel.append(button);
       });
     }
@@ -679,7 +687,7 @@ export class BootScene extends Phaser.Scene {
 
     for (const [id, visual] of this.visuals) {
       if (!this.gathering.units.some(u => u.id === id)) {
-        this.removedVisual(id,true);visual.body.destroy(); visual.ring.destroy(); visual.cargo.destroy(); this.visuals.delete(id);
+        this.removedVisual(id,!this.navy?.ships.some(s=>s.passengers?.some(u=>u.id===id)));visual.body.destroy(); visual.ring.destroy(); visual.cargo.destroy(); this.visuals.delete(id);
       }
     }
     for (const [id, visual] of this.enemyVisuals) {
@@ -777,6 +785,7 @@ export class BootScene extends Phaser.Scene {
   private setSelectable(units:(Unit|Ship)[]):void {this.gathering.units=units.filter((u):u is Unit=>u.kind!=='ship');if(this.navy)this.navy={...this.navy,ships:units.filter((u):u is Ship=>u.kind==='ship')};}
   private syncNavy():void {
     const harbor=this.navy?.harbor;this.navyGraphics.clear();
+    const transportButton=document.querySelector<HTMLButtonElement>('#train-transport')!,unloadButton=document.querySelector<HTMLButtonElement>('#unload-transport')!;transportButton.parentElement!.style.visibility=this.selectedBuilding==='harbor'?'visible':'hidden';transportButton.disabled=this.selectedBuilding!=='harbor'||!canTrainShip(this.currentMatch(),'transport');const selectedTransport=this.navy?.ships.find(s=>s.selected&&s.role==='transport');unloadButton.disabled=!this.gameplayActive()||!selectedTransport?.passengers?.length;if(this.unloadMode&&!this.navy?.ships.some(s=>s.id===this.unloadMode&&s.selected&&s.passengers?.length))this.unloadMode=null;document.getElementById('transport-status')!.textContent=this.unloadMode?'Klicka synlig fri landpunkt inom64px (Esc/högerklick avbryter)':selectedTransport?`Transport: ${selectedTransport.passengers?.length??0}/4 – flytta landenheter till kusten, högerklicka transport för lastning`:'Välj transport för last/landsättning';
     this.harborButton.disabled=!this.gameplayActive()||this.placement.active||!!harbor||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected);
     this.harborButton.setAttribute('aria-pressed',String(this.placement.active&&this.placement.kind==='harbor'));
     this.shipButton.parentElement!.style.visibility=this.selectedBuilding==='harbor'?'visible':'hidden';this.shipButton.disabled=this.selectedBuilding!=='harbor'||!canTrainShip(this.currentMatch());
@@ -785,7 +794,7 @@ export class BootScene extends Phaser.Scene {
     if(harbor){const r=harbor.footprint;if(!this.harborLabel)this.harborLabel=this.add.text(r.x+32,r.y-14,'Hamn',{fontSize:'12px',color:'#d6eef1'}).setOrigin(.5).setDepth(7);this.navyGraphics.fillStyle(harbor.construction.remainingSeconds>0?0x6c5b46:0x986b42,.9).fillRect(r.x,r.y,r.width,r.height).lineStyle(2,0x77c4cf).strokeRect(r.x,r.y,r.width,r.height);}
     for(const [id,label] of this.shipLabels)if(!this.navy?.ships.some(s=>s.id===id)){label.destroy();this.shipLabels.delete(id);}
     for(const ship of this.navy?.ships??[]){const p=ship.position;this.navyGraphics.fillStyle(0x754a2b).fillEllipse(p.x,p.y,32,22).lineStyle(2,0xe6d6a5).lineBetween(p.x,p.y-13,p.x,p.y+5);if(ship.selected)this.navyGraphics.lineStyle(2,0xffdf73).strokeCircle(p.x,p.y,22);
-      if(!this.shipLabels.has(ship.id))this.shipLabels.set(ship.id,this.add.text(p.x,p.y-32,'Fartyg',{fontSize:'10px',color:'#d6eef1'}).setOrigin(.5).setDepth(7));this.shipLabels.get(ship.id)!.setPosition(p.x,p.y-32).setText(`Fartyg ${Math.ceil(ship.hp)} HP`);
+      if(!this.shipLabels.has(ship.id))this.shipLabels.set(ship.id,this.add.text(p.x,p.y-32,'Fartyg',{fontSize:'10px',color:'#d6eef1'}).setOrigin(.5).setDepth(7));this.shipLabels.get(ship.id)!.setPosition(p.x,p.y-32).setText(`${ship.role==='transport'?'Transport '+(ship.passengers?.length??0)+'/4':'Fartyg'} ${Math.ceil(ship.hp)} HP`);
     }
   }
   private applyMatch(match: MatchState): void {

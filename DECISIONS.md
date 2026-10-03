@@ -879,3 +879,19 @@ Army-upgrades gäller, landfraktionsförmågor inte. Samma levande snapshot
 möjliggör samtidiga dödsfall; hamndöd rensar jobs/foot utan refund.
 Save schema2/config12 migrerar11 utan att uppfinna attack-state.
 Transport och sjö-AI förblir084/086; balans087 och assets089.
+
+
+## RTS-084: omedelbar boarding och atomisk landsättning
+
+Transportrecept40wood/10gold,8s,2supply, fyra platser delas av båda
+fraktioner före balans087. Hull följer grundfartygets HP/hastighet/body.
+Spelaren flyttar markunits till fri kustkontakt inom64px före högerklick
+på båten; automatisk approach/boarding-kö introduceras inte. Högst
+återstående platser lastas i befintlig unitordning. Last är Unit-objekt
+med oförändrad identitet/HP/archetype/cargo, men utan aktiv order/selection.
+Endast båten simuleras; passagerartimers fryser. Supply/resultat räknar
+lastade units som levande; sänkning dödar dem och bokför förlorad cargo.
+Landsättning är atomisk: giltig synlig landpunkt inom64px, fri kontakt,
+och separata kroppsplatser runt klicket (kandidater inom48px).
+Config13 återanvänder strict unit-validation för ground och passengers,
+inklusive global ID-unikhet/counters. Inga nya kartor/transport-AI/assets.

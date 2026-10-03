@@ -1723,3 +1723,37 @@ arbetare med normala order till fri kustkontakt. Screenshot granskad.
 Komponenttester använder tydligt märkta stridsfixtures; hamntestet
 betalar verklig placering men har explicit låg-HP precondition.
 RTS-083 Done, nästa084 transport.
+
+
+## RTS-084 – transport, lastning och landsättning
+
+Betalt obeväpnat transportrecept i hamnens befintliga FIFO och gemensamma
+supply. Ship.passengers äger Unit-objekt som tagits ur marksimulationen;
+ID/HP/archetype/cargo bevaras, orders/selection rensas. Immediate boarding
+inom64px/fri synlig kontakt, fyra platser; atomisk visible/body/occupancy-
+kontrollerad landsättning. Ny DOM-knapp/Landsätt-läge med Esc/right cancel.
+Population/resultat inkluderar last. Sänkning förlorar passagerare och
+cargo exakt en gång. Ingen falsk dödsanimation vid boarding. Save config13
+validerar ground+passenger-identitet/inactive/kapacitet/refs/recipe och
+migrerar12 utan gratis transport; gamla migrationskedjan bevarad.
+
+Riktade9 transporttester PASS957ms; breda57 PASS1,36s.
+Första typecheck fann ett testfixture-unionfel för worker-cargo, smalnat
+korrekt. Full702/85 PASS107,11s före sista syn/Save/presentationsfixerna;
+slut-full702/85 PASS113,62s. Typecheck/build/diff och589 docsrefs PASS.
+Bundle1586,33KB/gzip416,01KB; stor bundle-
+varning kvar enligt uppdrag. Granskning av single ownership, landinaktivitet,
+supply/cargo/statistik, atomic landing, death/refs och Save utan blockerare.
+
+Chromium båda fraktioner: funded47,77/47,80s med riktiga resurser;
+betald hamn/transport, verklig arbetare flyttar till kust under8s produktion,
+lastning, Save/load/Resume, fartygsmove, ogiltigt vattenklick, right cancel,
+giltig landning, ny unit-selection/move, restart PASS utan page/console/
+request-fel. Screenshot granskad. Endast klocka/kameravy manipulerades,
+ingen resource/unit/HP-injektion. Tidiga hjälpfel: paus-knapp användes för
+resume (riktig resume-knapp krävs), en sent hämtad arbetare hann dö i våg,
+och en hjälpskriptvariabel refererades före deklaration. Korrigerade helper,
+inte gratis matchstate. Stats/capacity/archer/death-tester har märkta
+kontrollerade fixtures där relevant. Begränsningar: manuell kustapproach,
+frysande passagerartimers, inga nya transportassets/AI. RTS-084 Done;
+nästa085 ökarta.

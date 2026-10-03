@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-084 – Transportfartyg med lastning och landsättning** — **Todo**.
+**RTS-085 – Ökarta med land- och sjöstrid** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
@@ -2454,13 +2454,21 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-084 – Transportfartyg med lastning och landsättning
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Transportfartyg med lastning och landsättning.
+**Goal:** Betalt transportfartyg som bär befintliga egna landenheter över vatten.
+
+**Requirements:** Hamnens delade FIFO kan producera obeväpnad transport:40wood/10gold,8s,2supply,90HP,110px/s,32px body. Fyra passagerarplatser, alla befintliga egna landtyper. Flytta markerade landenheter till synlig kust inom64px och högerklicka transporten för omedelbar lastning; ingen automatisk boarding-kö. Giltig kropp/rak fri lastkontakt krävs, annars oförändrat. Lastade enheter behåller ID/HP/archetype/wood/gold-last men blir idle/omarkerade, tas ur marksimulation/syn/selection och behåller supply. Välj transport, Landsätt, vänsterklicka synlig fri landpunkt inom64px; atomisk placering av alla passagerare på giltiga separata landkroppar, annars ingen förändring. Escape/högerklick avbryter mode. Last påverkar inte andra orders. Transport kan röra sig men inte attackera. Sänkning dödar passagerarna och bokför förlorad resurslast en gång. Save/load/restart, grupper, statistik och freeze bevaras.
+
+**Non-goals:** Automatisk boarding/pursuit, transport-AI, ny karta, särskilda transportassets/ljud, formationer eller ändrade landcombat-regler.
 
 **Dependencies:** RTS-083.
 
-**Acceptance criteria:** Lastkapacitet, giltig landsättning, death och save/load bevarar enheters identitet.
+**Acceptance criteria:** Betald transport lastar/förflyttar/lämnar av befintliga units utan dubblering, ID-förlust eller supply-exploit. Ogiltig/full/fjärran lastning och ogiltig landsättning är säkra. Loaded units simuleras inte på land. Sänkning och Save behåller korrekta cargo/refs/resultat.
+
+**Tester:** Betalning/FIFO/spawn, lastkapacitet/range/LOS/selection, giltig/ogiltig landsättning/occupancy, identitet/last/supply, death/save/migration/freeze; alla tester/typecheck/build och browser.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md.
 
 ## RTS-085 – Ökarta med land- och sjöstrid
 

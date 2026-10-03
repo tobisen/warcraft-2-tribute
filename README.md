@@ -484,3 +484,12 @@ Fartyget håller sig i vatten och söker fri skottlinje inom192px;16 damage
 var1,5s. Move/Stop ersätter attack. Kustfiender kan skada fartyg och hamn.
 Save config12 omfattar attack/cooldown/skott och äldre saves migreras.
 Ingen fiendeflotta eller automatisk naval attack-move i denna slice.
+
+
+RTS-084: hamnen kan bygga transport (40wood/10gold,8s,2supply).
+Flytta valda landunits till kusten inom64px och högerklicka transporten
+för att lasta upp till fyra. Välj transport → Landsätt → klicka synlig
+fri landpunkt inom64px. Alla får giltiga platser eller ingen lämnar båten.
+Esc/högerklick avbryter landsättningsläget. ID/HP/resurslast bevaras,
+supply kvarstår ombord; en sänkt transport förlorar även passagerarna.
+Save config13 bevarar lasten; ingen automatisk boarding eller transport-AI.

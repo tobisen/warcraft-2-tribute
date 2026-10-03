@@ -1,3 +1,4 @@
+import {passengerUnits} from './navy';
 import {maps} from '../config/maps';
 import {scenarioConfig} from '../config/scenarios';
 import {difficultyProfiles} from '../config/difficulty';
@@ -14,7 +15,7 @@ export function matchStats(m:MatchState):MatchStats {
  const playerResource=(type:ResourceType):ResourceStats=>{
   const enemyGathered=bank?.extracted?.[type]??0,remaining=type==='wood'?m.gathering.node.remaining:m.gathering.gold?.remaining??definition.gold;
   const gathered=nonnegative(definition[type]-remaining-enemyGathered),balance=type==='wood'?m.gathering.wood:m.gathering.goldBalance??0;
-  const carried=m.gathering.units.reduce((n,u)=>n+(u.kind==='worker'&&(u.cargoType??'wood')===type?u.cargo:0),0),lost=m.gathering.lostCargo?.[type]??0;
+  const carried=[...m.gathering.units,...passengerUnits(m.navy)].reduce((n,u)=>n+(u.kind==='worker'&&(u.cargoType??'wood')===type?u.cargo:0),0),lost=m.gathering.lostCargo?.[type]??0;
   const spent=nonnegative(initial[type]+gathered-balance-carried-lost);
   return {gathered,delivered:nonnegative(gathered-carried-lost),spent};
  };
@@ -22,7 +23,7 @@ export function matchStats(m:MatchState):MatchStats {
   const gathered=bank?.extracted?.[type]??0,carried=m.combat.enemies.reduce((n,e)=>n+(e.work&&(e.work.cargoType??'wood')===type?e.work.cargo:0),0),lost=bank?.lostCargo?.[type]??0;
   return {gathered,delivered:nonnegative(gathered-carried-lost),spent:bank?.spent?.[type]??(bank?nonnegative(profile.budget[type]-bank[type]):0)};
  };
- const playerAdded=nonnegative(Math.max(m.production.nextUnitNumber,m.soldierProduction.nextUnitNumber)-4+(m.navy?m.navy.production.nextUnitNumber-1:0)),playerLost=nonnegative(3+playerAdded-m.gathering.units.filter(u=>(u.hp??1)>0).length-(m.navy?.ships.filter(s=>s.hp>0).length??0));
+ const playerAdded=nonnegative(Math.max(m.production.nextUnitNumber,m.soldierProduction.nextUnitNumber)-4+(m.navy?m.navy.production.nextUnitNumber-1:0)),playerLost=nonnegative(3+playerAdded-[...m.gathering.units,...passengerUnits(m.navy)].filter(u=>(u.hp??1)>0).length-(m.navy?.ships.filter(s=>s.hp>0).length??0));
  const initialEnemyWorkers=bank?.extracted?enemyEconomyConfig.workerCount:0;
  const enemyAdded=(m.waves.nextEnemyNumber-1)+(bank?.production.nextUnitNumber??1)-1+(m.enemyRecovery?m.enemyRecovery.production.nextUnitNumber-enemyEconomyConfig.workerCount-1:0);
  const enemyLost=nonnegative(initialEnemyWorkers+enemyAdded-m.combat.enemies.filter(e=>!e.footprint&&e.hp>0).length);

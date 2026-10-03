@@ -1151,3 +1151,24 @@ refs/cooldown/marine-recipe och migrerar11 utan att skapa stridsstate.
 Fiender kan använda befintlig landapproach mot ship/harbor, utan ny sjö-AI.
 [navalCombat.test.ts](src/gameplay/navalCombat.test.ts) täcker skott,
 vattenkontakt, LOS/fog, samtidiga dödsfall, hamnens städning och Save.
+
+
+## RTS-084: transport och passagerarnas ägarskap
+
+[transport.ts](src/gameplay/transport.ts) hanterar omedelbar lastning och
+atomisk landsättning utan Phaser. Transport använder samma hamn-FIFO,
+vattenrörelse, ship-ID/counter, HP och supply som stridsfartyg; role transport
+är obeväpnad. Ship.passengers är enda ägare till lastade Unit-objekt;
+de finns inte samtidigt i GatheringState.units. ID/HP/archetype/resurslast
+bevaras. Orders/selection/routes rensas, förmågetimers fryser med passageraren.
+Landning planeras helt före mutation, med body clearance, syn, fri kontakt
+och occupancy för varje kropp. Boarding städar builder-/enemy-/group-refs.
+
+MatchPopulation och MatchStats inkluderar passagerare. CleanDestroyed
+bokför last från sänkta passagerare en gång och tar bort deras supply.
+Scenen visar ingen dödsanimation när en enhet bara går ombord. Save
+schema2/config13 validerar ground+passenger-units med gemensamma unitregler,
+unika ID/counters, kapacitet, inactive-state, carrier/recipe och refs.
+Passagerare har ingen fysisk markposition; land clearance krävs efter
+landsättning. Config12 migrerar utan att införa transport. Se
+[transport.test.ts](src/gameplay/transport.test.ts).

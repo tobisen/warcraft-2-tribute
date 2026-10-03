@@ -1,3 +1,4 @@
+import type {Unit} from './gathering';
 import {placementVisible} from './visibility';
 import {navyConfig} from '../config/navy';
 import {queueConfig} from '../config/production';
@@ -17,13 +18,13 @@ import {domainMap,coastalFootprint,planDomainRoute,advanceDomainRoute} from './t
 import type {RouteState} from './navigation';
 import type {Position} from './movement';
 import type {MatchState} from './match';
-export interface Ship extends SelectableUnit {kind:'ship';owner:'player';hp:number;attackCooldown?:number;order:{kind:'idle'|'move'}|{kind:'attack';enemyId:string};navigation?:RouteState}
+export interface Ship extends SelectableUnit {kind:'ship';role?:'warship'|'transport';passengers?:Unit[];owner:'player';hp:number;attackCooldown?:number;order:{kind:'idle'|'move'}|{kind:'attack';enemyId:string};navigation?:RouteState}
 export interface Harbor {owner:'player';hp:number;footprint:Footprint;construction:ConstructionJob}
 export interface NavyState {harbor:Harbor|null;ships:Ship[];production:ProductionState}
 export const createNavy=():NavyState=>({harbor:null,ships:[],production:{remainingSeconds:null,nextUnitNumber:1}});
 export function matchPopulation(m:MatchState):Population {
  const pop=populationState(m.gathering,m.placement,[m.production,m.soldierProduction,...(m.navy?[m.navy.production]:[])]);
- return {...pop,used:pop.used+(m.navy?.ships.length??0)*navyConfig.ship.supply};
+ return {...pop,used:pop.used+(m.navy?.ships.length??0)*navyConfig.ship.supply+populationState({...m.gathering,units:passengerUnits(m.navy)},m.placement,[]).used};
 }
 export function harborFootprint(point:Position):Footprint {return buildingFootprint(point,'harbor');}
 export function harborSpawn(m:MatchState,footprint:Footprint,occupancy=true):Position|null {
@@ -54,9 +55,9 @@ export function placeHarbor(m:MatchState,point:Position):MatchState {
  const builder=m.gathering.units.filter(u=>u.kind==='worker'&&u.selected).sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}))[0],footprint=harborFootprint(point);
  return {...m,map:replaceObstacles(m.map,[...m.map.obstacles,footprint]),placement:{...m.placement,active:false,kind:undefined},navy:{...(m.navy??createNavy()),harbor:{owner:'player',hp:navyConfig.harbor.hp,footprint,construction:{remainingSeconds:navyConfig.harbor.constructionSeconds,builderId:builder.id}}},gathering:{...payCost(m.gathering,navyConfig.harbor.cost),units:m.gathering.units.map(u=>u.id===builder.id&&u.kind==='worker'?{...u,navigation:undefined,order:{kind:'build' as const,buildingId:'harbor' as const}}:u)}};
 }
-export function canTrainShip(m:MatchState){return m.outcome==='playing'&&!m.paused&&!!m.navy?.harbor&&m.navy.harbor.construction.remainingSeconds===0&&productionJobCount(m.navy.production)<queueConfig.maxJobs&&hasPopulation(matchPopulation(m),navyConfig.ship.supply)&&canAfford(m.gathering,navyConfig.ship.cost);}
-export function trainShip(m:MatchState):MatchState {
- if(!canTrainShip(m))return m;const navy=m.navy!,p=navy.production,number=p.nextJobNumber??1,job={id:`harbor-job-${number}`,kind:'warship' as const,supply:navyConfig.ship.supply,cost:{...navyConfig.ship.cost},durationSeconds:navyConfig.ship.durationSeconds,remainingSeconds:navyConfig.ship.durationSeconds};
+export function canTrainShip(m:MatchState,role:'warship'|'transport'='warship'){return m.outcome==='playing'&&!m.paused&&!!m.navy?.harbor&&m.navy.harbor.construction.remainingSeconds===0&&productionJobCount(m.navy.production)<queueConfig.maxJobs&&hasPopulation(matchPopulation(m),navyConfig.ship.supply)&&canAfford(m.gathering,role==='transport'?navyConfig.transport.cost:navyConfig.ship.cost);}
+export function trainShip(m:MatchState,role:'warship'|'transport'='warship'):MatchState {
+ if(!canTrainShip(m,role))return m;const recipe=role==='transport'?navyConfig.transport:navyConfig.ship;const navy=m.navy!,p=navy.production,number=p.nextJobNumber??1,job={id:`harbor-job-${number}`,kind:role,supply:recipe.supply,cost:{...recipe.cost},durationSeconds:recipe.durationSeconds,remainingSeconds:recipe.durationSeconds};
  return {...m,gathering:payCost(m.gathering,job.cost),navy:{...navy,production:{...p,queue:[...(p.queue??[]),job],nextJobNumber:number+1,remainingSeconds:p.remainingSeconds??job.durationSeconds}}};
 }
 export function commandShips(m:MatchState,target:Position):NavyState|undefined {return m.navy?{...m.navy,ships:m.navy.ships.map(s=>{if(!s.selected)return s;const navigation=planDomainRoute(m.map,'water',s.position,target,navyConfig.ship.size/2,(s.navigation?.commandNumber??0)+1);return {...s,target:{...target},navigation,order:{kind:navigation.status==='moving'?'move' as const:'idle' as const}};})}:undefined;}
@@ -72,7 +73,7 @@ export function updateNavy(m:MatchState,delta:number):MatchState {
   if(time>1e-10){p={...p,remainingSeconds:time,queue:p.queue.map((j,i)=>i?j:{...j,remainingSeconds:time})};break;}
   const position=harborSpawn({...m,gathering,navy},harbor.footprint);
   if(!position){p={...p,remainingSeconds:0,queue:p.queue.map((j,i)=>i?j:{...j,remainingSeconds:0})};break;}
-  const id=`ship-${p.nextUnitNumber}`;navy={...navy,ships:[...navy.ships,{id,kind:'ship',owner:'player',hp:navyConfig.ship.hp,selected:false,position,target:{...position},order:{kind:'idle'}}]};remaining=Math.max(0,remaining-head.remainingSeconds);const queue=p.queue.slice(1);p={...p,queue,remainingSeconds:queue[0]?.remainingSeconds??null,nextUnitNumber:p.nextUnitNumber+1};if(remaining<=0)break;
+  const id=`ship-${p.nextUnitNumber}`;navy={...navy,ships:[...navy.ships,{id,kind:'ship',...(head.kind==='transport'?{role:'transport' as const,passengers:[]}:{}),owner:'player',hp:navyConfig.ship.hp,selected:false,position,target:{...position},order:{kind:'idle'}}]};remaining=Math.max(0,remaining-head.remainingSeconds);const queue=p.queue.slice(1);p={...p,queue,remainingSeconds:queue[0]?.remainingSeconds??null,nextUnitNumber:p.nextUnitNumber+1};if(remaining<=0)break;
  }
  return {...m,gathering,navy:{...navy,production:p}};
 }
@@ -85,4 +86,6 @@ export function resumeHarbor(m:MatchState):MatchState {
 }
 export function stopShips(navy:NavyState|undefined){return navy?{...navy,ships:navy.ships.map(s=>s.selected?{...s,navigation:undefined,target:{...s.position},order:{kind:'idle' as const}}:s)}:undefined;}
 
-export function attackShips(m:MatchState,enemyId:string):NavyState|undefined {return m.navy?{...m.navy,ships:m.navy.ships.map(s=>s.selected?{...s,navigation:undefined,order:{kind:'attack' as const,enemyId}}:s)}:undefined;}
+export function attackShips(m:MatchState,enemyId:string):NavyState|undefined {return m.navy?{...m.navy,ships:m.navy.ships.map(s=>s.selected&&s.role!=='transport'?{...s,navigation:undefined,order:{kind:'attack' as const,enemyId}}:s)}:undefined;}
+
+export function passengerUnits(navy:NavyState|undefined):Unit[]{return navy?.ships.flatMap(s=>s.passengers??[])??[];}
