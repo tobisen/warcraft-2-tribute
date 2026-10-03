@@ -3124,6 +3124,8 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 **Docs:** BACKLOG, DEV_LOG och README med verifierad release och kvarstående kontroll.
 
+**Verifieringsstatus:** Tekniska releasekontroller PASS:878tester/114filer, typecheck/build/diff, native tutorialmatch båda fraktioner/viewports, settings/save/load och renderingsgranskning. Actions a8c42c1 build/deploy success; publikt index-DiNwZpog.js verifierat via Voices→reload och Frontier→start→paus→Save utan pageerrors. Faktisk mänsklig lyssningsbedömning117/118 återstår;120 är därför fortfarande In Progress och121 startar inte ännu.
+
 ## Nästa godkända etapp – RTS-121–150
 
 Användarens arbetslista: slutför RTS-115–120 först. Därefter inventering och implementation av RTS-121–126, en task åt gången, med taskvisa checks, browserverifiering, docs, commit med task-ID och push utan force. Kontrollera Pages-deploy där åtkomst finns. RTS-127–150 är planerade och ska **inte implementeras i denna körning**. Fortsätt från Current Focus; denna etapp startar först efter RTS-120. Stora tasks delas i subtasks under samma ID. Saves bevaras via migration eller tydlig kontrollerad inkompatibilitetshantering. Ingen backend eller multiplayer.

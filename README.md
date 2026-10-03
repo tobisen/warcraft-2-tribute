@@ -635,7 +635,12 @@ Load/restart behåller matchens sparade spelregler och skriver inte över dina
 framtida menyval. Varje browser/origin har egna inställningar; localhost och
 GitHub Pages delar inte lagring.
 
-RTS-120 releasekontroll pågår. RTS-119:s lokala preferences och separata
+RTS-120:s tekniska releasekontroll och Pages-publicering är verifierade. RTS-119:s lokala preferences och separata
 Voices-reglage är implementerade; tutorialmatch, Save/load/restart och
 settings→reload är browserverifierade. Slutlig lyssning av117/118 återstår;
 accepterade native speech requests är inte en bedömning av hörbarhet/klang.
+
+Publicerad RTS-119/120-implementation: [Spela på GitHub Pages](https://tobisen.github.io/warcraft-2-tribute/).
+Actions build/deploy för a8c42c1 passerar; public settings→reload och
+Frontier→start→paus→Save verifierade utan browserfel. Slutlig faktisk
+lyssningsbedömning117/118 återstår före Done120 och nästa etapp121.

@@ -2250,3 +2250,16 @@ för stabilare CI; ingen gameplayförändring.
 
 RTS-120 In Progress. Pages senaste119 verifieras när Actions slutförs.
 Mänsklig matchlyssning117/118 återstår före slutligt Done120 och start121.
+
+RTS-120 publicering verifierad: Actions37148107533/a8c42c1 build och deploy
+success. Både föregående118 och119 träffade samma5s rastertest-timeout;
+nya fixen passerar CI. Public native browser PASS Voices0.35→reload,
+Frontier→start→canvas→paus→Save, inga pageerrors. Faktiskt publikt bundle
+index-DiNwZpog.js på https://tobisen.github.io/warcraft-2-tribute/.
+Kontrollskriptet korrigerades för att använda synliga Settings-reglage;
+dolda summary/fokus i första försöken var kontrollskriptfel, inte appfel.
+150 unika backlog-ID och602 giltiga lokala dokumentreferenser PASS; ren
+arbetskatalog efter implementationens push. RTS-120 tekniskt redo, men
+förblir In Progress tills faktisk lyssningsbedömning117/118 finns. Detta
+krav kommer från120:s spel-/ljudgranskning och Definition of Done; senaste
+etappen kräver120 färdig före121. Ingen implementation121–126 påbörjad.
