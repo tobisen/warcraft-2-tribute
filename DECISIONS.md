@@ -951,3 +951,7 @@ matchers ekonomi/map/objektiv bevaras vid migration.
 ## RTS-092 – Visuell riktning för nästa etapp
 
 Egen skogsgrön/mässingsfantasy, Georgia/system-ui utan fontdependency, originalrepoassets. Två HTML/CSS/canvas-referenser i [design/references.html](design/references.html), palett och komposition i [VISUAL_DIRECTION.md](VISUAL_DIRECTION.md). Top/bottom-HUD är framtida097–101;095 behåller funktionell sidopanel. Campaign093 återanvänder fyra fristående uppdrag, ingen progression. Separat speedval094 visar verkliga1×;0.75× tidsmodell införs först108. Inga främmande assets eller gameplayändringar i referenserna.
+
+## RTS-094 – Separat matchform och speed-scope
+
+Karta/fraktion/svårighet återanvänder validerade options och låsta scenariokartor. Korta karta/svårighetsbeskrivningar separeras från hela sammanfattningen. Game speed är separat och visar enda fungerande1×.0.75× införs i108, inte i094, eftersom körningen uttryckligen inte får implementera097–120. Ingen ny Save-property behövs för konstant1×.

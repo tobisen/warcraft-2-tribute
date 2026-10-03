@@ -59,3 +59,5 @@ body[data-phase='menu'] #audio-controls label{display:flex;justify-content:space
 body[data-phase='menu'] #match-results{grid-column:1 / -1;}
 @media(max-width:900px){body[data-phase='menu'] #match-menu{grid-template-columns:1fr;gap:24px;width:min(600px,94vw);}#home-brand h1{font-size:38px}.home-crest{display:none}.home-subtitle{display:none;}}
 body[data-phase='menu']{grid-template-columns:1fr;}
+#map-description,#difficulty-description{font:13px/1.5 system-ui,sans-serif;color:#aebcaf;margin:8px 0;}
+body[data-phase='menu'] #home-content{max-height:calc(100vh - 64px);overflow:auto;}

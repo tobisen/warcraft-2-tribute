@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-094 – Matchinställningar** — **Todo**.
+**RTS-095 – Spelvy som fyller webbläsarfönstret** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. Denna körning genomför endast091–096;097–120 är Todo och implementeras inte här.
 
@@ -2638,7 +2638,7 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-094 – Matchinställningar
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Låt spelaren välja karta, fraktion, svårighet och spelhastighet. Visa kort beskrivning av karta och svårighetsgrad.
 

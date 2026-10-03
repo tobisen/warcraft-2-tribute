@@ -984,3 +984,7 @@ syn/pause/reset som gameplay. Releaseprofil och begränsningar finns i
 ## RTS-093 – Huvudmeny
 
 Fantasy-startsida med titel/sköld och Campaign, Skirmish, Load Game, Settings. Campaign väljer befintliga fyra fristående uppdrag, utan nya objectives/progression. Skirmish erbjuder befintlig skirmish/survival. Inställningar är befintligt ljud; sparning är lokal validerad slot, load återkommer pausad. Menynavigering ändrar inga unit-orders och skapar inga nya matchstate-system.
+
+## RTS-094 – Matchinställningar
+
+Befintliga kart-/fraktions-/svårighetsval presenteras med separata beskrivningar. Fast uppdragskarta förklaras och är låst. Spelhastighet är separat från svårighet: enda fungerande val är1× tills108. Svårighet påverkar bara tidigare definierade enemy/waveprofiler, inte klockhastighet.

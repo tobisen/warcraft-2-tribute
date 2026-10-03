@@ -5,7 +5,7 @@ import {loadTransport,unloadTransport} from '../gameplay/transport';
 import {navyConfig} from '../config/navy';
 import {attackShips,harborPlacementError,placeHarbor,trainShip,canTrainShip,commandShips,resumeHarbor,stopShips,matchPopulation,type NavyState,type Ship} from '../gameplay/navy';
 import {renderMatchResults} from '../presentation/matchResults';
-import {matchSettingsSummary} from '../presentation/matchSettings';
+import {matchSettingDetails,matchSettingsSummary} from '../presentation/matchSettings';
 import {maps,isMapId} from '../config/maps';
 import type {EnemyKnowledgeState} from '../gameplay/enemyKnowledge';
 import type {EnemyRecoveryState} from '../gameplay/enemyRecovery';
@@ -430,6 +430,7 @@ export class BootScene extends Phaser.Scene {
     (document.getElementById('load-match') as HTMLButtonElement).disabled=this.restartPending;
     const phase=this.session.phase,menu=phase==='menu';
     renderMatchResults(document.getElementById('match-results')!,this.currentMatch(),phase==='ended');
+    const details=matchSettingDetails(this.session.options);document.getElementById('map-description')!.textContent=details.map;document.getElementById('difficulty-description')!.textContent=details.difficulty;
     const summary=document.getElementById('match-options-summary')!;summary.textContent=matchSettingsSummary(this.session.options);summary.hidden=!menu;
     const mapSelect=document.querySelector<HTMLSelectElement>('#map-select')!;mapSelect.disabled=!menu||this.session.options.scenario!=='skirmish';mapSelect.value=this.session.options.map;
     const factionSelect=document.querySelector<HTMLSelectElement>('#faction-select')!;factionSelect.disabled=!menu;factionSelect.value=this.session.options.faction??defaultFactions.player;

@@ -1952,3 +1952,7 @@ Referenser för startsida och fönsterfyllande spelkomposition, palett/font/layo
 ## 2026-10-03 – RTS-093 Done: fantasy-startsida
 
 Original CSS-sköld/palett och fyra huvudmenyingångar. Befintliga uppdrag/Skirmish/Save/ljud återanvänds, appägd navigation utan scene-listenerduplication.71relevanta tester/12filer PASS, typecheck/build/diff PASS. Chromium båda målupplösningar: alla fyra ingångar, back/Escape, ljudkontroller, saknad Save, start/paus/Save/meny/load/resume/meny; inga page errors. Screenshots granskade, upptäckt ärvd body-grid som vänsterställde huvudmenyn1920; korrigerad till en kolumn och hela browserflödet omkört. Sista CSS-centering påverkar inte typ/logik. Diff granskad för UI-isolering/session/Save/scope utan blockerande fynd. Nästa094 matchform och beskrivningar.
+
+## 2026-10-03 – RTS-094 Done: tydliga matchinställningar
+
+Form med befintliga karta/fraktion/svårighet och separat standard1×. Alla kartor/svårigheter har beskrivningar och fasta kartor förklaras.73relevanta tester/13filer PASS, typecheck/build/diff PASS. Chromium båda upplösningar: hela menyn/load/session, välj Forest/Clans/Hard och se korrekt summary/beskrivningar, start/Save/load/resume. Screenshots setup granskade; inga page errors.0.75× avsiktligt inte implementerad (108 ligger utanför körning). Diff granskad options/Save/scope, inga blockerande fynd. Nästa095 resize/separat spelvy.

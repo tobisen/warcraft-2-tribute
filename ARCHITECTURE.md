@@ -1241,3 +1241,7 @@ oförändrad. Release och prestanda dokumenteras i
 ## RTS-093 – Separat startsidenavigering
 
 `presentation/homeMenu.ts` har en liten DOM-sidmodell och appägda listeners, initierade en gång i main. BootScene synkar sessionfas till sidan men hanterar samma start/load/save/actioncallbacks som tidigare. Scenario-ID:n/Saveformat är oförändrade; navigation filtrerar bara befintliga scenarioalternativ. CSS-riktningen följer VISUAL_DIRECTION.md. Gameplay och match-HUD är inte ombyggda i093.
+
+## RTS-094 – Beskrivna matchval
+
+`presentation/matchSettings.ts` exporterar karta-/svårighetsbeskrivningar och härleder detaljer från samma MatchOptions som start/Save/restart. Formuläret återanvänder gameplay/matchSettings-validation; konstant1× innebär ingen ny gameplay/Save-data. Nya värden får inte införas bara som UI utan faktisk tidsmodell108.
