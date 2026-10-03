@@ -476,5 +476,11 @@ RTS-082: välj worker → Bygg hamn på synlig kust → låt bygget
 färdigställas → välj hamnen → Bygg fartyg. Hamn40wood/10gold;
 fartyg40wood/15gold,8s och2 supply i gemensam FIFO/population.
 Välj fartyg med klick/drag och högerklicka i sammanhängande vatten.
-Stop/grupper/Save/restart fungerar; sjöstrid och transport är nästa
-slices. Hamn/fartyg är tydligt märkta kodritade placeholders.
+Stop/grupper/Save/restart fungerar; transport är nästa slice. Hamn/fartyg är tydligt märkta kodritade placeholders.
+
+
+RTS-083: markerat fartyg + högerklick på synlig fiende ger kanonattack.
+Fartyget håller sig i vatten och söker fri skottlinje inom192px;16 damage
+var1,5s. Move/Stop ersätter attack. Kustfiender kan skada fartyg och hamn.
+Save config12 omfattar attack/cooldown/skott och äldre saves migreras.
+Ingen fiendeflotta eller automatisk naval attack-move i denna slice.

@@ -1,3 +1,4 @@
+import {marineFlightMap} from './terrainNavigation';
 import { footprintDistance } from './approach';
 import { moveTowards, type Position } from './movement';
 import type { Enemy } from './combat';
@@ -5,7 +6,7 @@ import type { Footprint } from './placement';
 import type { WorldMap } from './map';
 import { segmentFits } from './navigation';
 export interface Projectile {
- id:string; shooterId?:string; targetId:string; position:Position; destination:Position;
+ marine?:true;id:string; shooterId?:string; targetId:string; position:Position; destination:Position;
  splashRadius?:number;targetFootprint?:Footprint;
  speed:number; remainingLife:number; damage:number; hitRadius:number;
 }
@@ -21,7 +22,8 @@ export function advanceProjectiles(projectiles:readonly Projectile[], enemies:re
   const time=Math.min(Math.max(0,delta),p.remainingLife);
   const position=moveTowards(p.position,p.destination,p.speed,time);
   const footprint=p.targetFootprint??enemy?.footprint;
-  const flightMap=map&&footprint?{...map,obstacles:map.obstacles.filter(o=>!(o.x===footprint.x&&o.y===footprint.y&&o.width===footprint.width&&o.height===footprint.height))}:map;
+  const shotMap=map&&p.marine?marineFlightMap(map):map;
+  const flightMap=shotMap&&footprint?{...shotMap,obstacles:shotMap.obstacles.filter(o=>!(o.x===footprint.x&&o.y===footprint.y&&o.width===footprint.width&&o.height===footprint.height))}:shotMap;
   if(flightMap&&!segmentFits(flightMap,p.position,position,0))continue;
   if(travel<=time+1e-9){
    if(p.splashRadius){

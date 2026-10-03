@@ -879,7 +879,18 @@ Välj färdig hamn, Bygg fartyg:40wood/15gold dras vid enqueue,
 refundpolicy. Land och sjö delar population/reservations. En blockerad
 vattenutgång håller färdigt jobb tills en giltig plats finns.
 Fartyg börjar idle/omarkerade och stöder klick, drag, shift, grupper,
-Stop och högerklick i vatten. Ingen gathering/attack eller hamn-rally
-i denna slice. Placeholder-hull/Hamn-text visar modellen; sjöstrid
-och transport tillkommer i083/084, slutlig presentation i089.
+Stop och högerklick i vatten. Ingen gathering eller hamn-rally.
+Placeholder-hull/Hamn-text visar modellen; transport tillkommer i084,
+slutlig presentation i089.
 Pause/game over/Save/load/restart omfattar hamn, jobs och fartyg.
+
+
+RTS-083: välj fartyg och högerklicka synlig fiende för manuell attack.
+Fartyget söker en nåbar vattenposition med fri skottlinje inom192px från
+målets footprint. Kanonskott gör16 damage var1,5s, speed280px/s och
+träffradie20px; aim låses vid skott, livstid3s. Vatten tillåter skott,
+sten/byggnader blockerar. Gömda mål avbryter attack; Move/Stop ersätter,
+avmarkering bevarar order. Befintliga army attack/defense-upgrades gäller
+fartygen; landförmågor gör det inte. Riktiga landfiender kan attackera
+fartyg vid nåbar kustkontakt och skada/förstöra hamnen. Inga fiendefartyg
+före086. Hamn/fartyg visar fortfarande placeholders och enkel HP-text.

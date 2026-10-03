@@ -17,7 +17,7 @@ import {domainMap,coastalFootprint,planDomainRoute,advanceDomainRoute} from './t
 import type {RouteState} from './navigation';
 import type {Position} from './movement';
 import type {MatchState} from './match';
-export interface Ship extends SelectableUnit {kind:'ship';owner:'player';hp:number;order:{kind:'idle'|'move'};navigation?:RouteState}
+export interface Ship extends SelectableUnit {kind:'ship';owner:'player';hp:number;attackCooldown?:number;order:{kind:'idle'|'move'}|{kind:'attack';enemyId:string};navigation?:RouteState}
 export interface Harbor {owner:'player';hp:number;footprint:Footprint;construction:ConstructionJob}
 export interface NavyState {harbor:Harbor|null;ships:Ship[];production:ProductionState}
 export const createNavy=():NavyState=>({harbor:null,ships:[],production:{remainingSeconds:null,nextUnitNumber:1}});
@@ -84,3 +84,5 @@ export function resumeHarbor(m:MatchState):MatchState {
  return {...m,navy:{...m.navy!,harbor:{...harbor,construction:{...harbor.construction,builderId:builder.id}}},gathering:{...m.gathering,units:m.gathering.units.map(u=>u.kind==='worker'&&u.id===builder.id?{...u,navigation:undefined,order:{kind:'build' as const,buildingId:'harbor' as const}}:u.order.kind==='build'&&u.order.buildingId==='harbor'?{...u,navigation:undefined,order:{kind:'idle' as const}}:u)}};
 }
 export function stopShips(navy:NavyState|undefined){return navy?{...navy,ships:navy.ships.map(s=>s.selected?{...s,navigation:undefined,target:{...s.position},order:{kind:'idle' as const}}:s)}:undefined;}
+
+export function attackShips(m:MatchState,enemyId:string):NavyState|undefined {return m.navy?{...m.navy,ships:m.navy.ships.map(s=>s.selected?{...s,navigation:undefined,order:{kind:'attack' as const,enemyId}}:s)}:undefined;}

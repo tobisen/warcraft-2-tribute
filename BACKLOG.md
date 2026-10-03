@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-083 – Stridsfartyg med distansattack** — **Todo**.
+**RTS-084 – Transportfartyg med lastning och landsättning** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
@@ -2436,13 +2436,21 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-083 – Stridsfartyg med distansattack
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Stridsfartyg med distansattack.
+**Goal:** Manuell fog-säker fartygsattack och verkliga motmedel vid kusten.
+
+**Requirements:** Markerade fartyg får attack-order vid högerklick på synlig befintlig fiende. Range192 world px till target-footprint,16 damage/1,5s, projektilspeed280/lifetime3/hitRadius20; båda fraktioner samma preliminära värden. Fartyg söker giltig vattenkontakt inom range och fri skottlinje; de går aldrig upp på land. Återanvänd befintliga fixed-aim/projectile/HP/delta-regler. Vatten blockerar inte marina projektiler, sten/byggnader gör det. Dolda/ogiltiga mål tas bort från order utan informationsläcka; målbyte/move/Stop fungerar och avmarkering avbryter inte attack. Fartyg och hamn blir giltiga mål för befintliga fiender; attacker kräver deras syn och fysisk kontakt från land. Befintliga army-upgrades gäller fartyg; fraktionsförmågan för landunits gör det inte. Döda fartyg/hamn städas med supply/refs/jobs/obstacles, projektilsaves återställs och terminal freeze bevaras. Visa HP med enkel text/placeholder-projektil.
+
+**Non-goals:** Fiendeflotta/sjö-AI (RTS-086), transport, nya kartor, automatiska marina patrol/attack-move-orders, splash och slutliga assets/ljud.
 
 **Dependencies:** RTS-082.
 
-**Acceptance criteria:** Fartygsattack följer räckvidd/projectiles/HP/fog och går att besegra.
+**Acceptance criteria:** Betalt fartyg kan skada/döda synlig fiende med tids/range/LOS-regler. Rörelse till skjutkontakt förblir i vatten och skott skadar inte osynliga mål. Fartyg kan skadas/dö från riktiga kustattacker och hamnens death städar korrekt. Match/save/reset/input och tidigare landcombat bevaras.
+
+**Tester:** Range/movement/contact/cooldown, fixed aim/LOS/fog/projectiles, kustdamage/death/cleanup, delta-equivalence, orderbyten, Save/migration/terminalfreeze och tidigare fullsuite/typecheck/build/browser.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, DECISIONS.md, GAME_DESIGN.md och README.md.
 
 ## RTS-084 – Transportfartyg med lastning och landsättning
 

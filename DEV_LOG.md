@@ -1694,3 +1694,32 @@ FIFO/delta/refund/spawnblock, cleanup/Save migration, drag/groups/
 Stop/terminalinput och scope. Inga kvarstående blockerande fynd.
 Begränsningar: placeholder, ingen sjöstrid/transport/hamnrally,
 fartyg kan överlappa vid samma move-mål. RTS-082 Done; nästa083.
+
+
+## RTS-083 – manuell marin distansattack
+
+Vattenkontakt/range/LOS i fristående navalCombat; samma snapshot,
+projektiler och HP/death-transaktion som landstrid. Navy-targets för
+befintlig kustmelee, HP-text/marker, move/Stop/fog, Save config12 med
+strict marina refs/recipe/cooldown och migration11. Preliminära stats
+192px/16damage/1,5s/projectile280/life3/radius20; army upgrades gäller.
+Inga fiendefartyg, transport eller slutliga assets.
+
+Fullsuite692 tester/84 filer PASS101,86s; sista tillagda hamn-dödtestet
+ingick inte i denna fullkörning, men slutliga riktade10 PASS322ms.
+Regression52 PASS1,34s, typecheck/build/diff/docs PASS. Bundle1580,13KB/
+gzip414,35KB, avsiktlig varning kvar. Granskning av delad combat,
+fog/LOS/domän, tidssteg, kustdamage/cleanup, refs/supply och Save utan
+blockerande fynd. Pages för082/081/080 verifierade success.
+
+Chromium: verklig Skirmish/Easy/Skogspasset, verklig gathering,
+betald hamn och fartyg, manuella klick/move/attack; kanonskada och
+fiendedöd PASS, inga page/console/request-fel. Enbart klockan
+accelererad och kameravy panorerad; inga gratis units/resurser/HP.
+Först nådde arenans kust inte basens attacker; ett skogsförsök
+klickade spawn nedanför canvas innan kamerapan och ett annat träffade
+men basen skymde fortsatta skott. Slutlig helper panorerar och flyttar
+arbetare med normala order till fri kustkontakt. Screenshot granskad.
+Komponenttester använder tydligt märkta stridsfixtures; hamntestet
+betalar verklig placering men har explicit låg-HP precondition.
+RTS-083 Done, nästa084 transport.

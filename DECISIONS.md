@@ -866,3 +866,16 @@ Ingen sjöstrid eller lastning i082. Fartyg får överlappa vid samma
 move-mål; spawn beaktar kroppar. Egen kodritad märkt hamn/hull
 är avsiktliga placeholders tills089. Save config11, gammal10 utan
 navy migrerar utan extra byggnader/enheter/resurser.
+
+
+## RTS-083: gemensam strid, separata rörelse-/skottplan
+
+Naval attacker är manuella och använder befintliga syn/HP/fixed-aim-regler.
+Vatten är farbart för fartyg och marina skott; mark är ofarbart för fartyg,
+sten/byggnader blockerar skott. Range192 mäts mot footprint; preliminära
+16damage/1,5s, projectile280/life3/radius20 i navyConfig. Landfiender får
+fysiskt nåbara kustmål ship/harbor; ingen gratis fiendeflotta introduceras.
+Army-upgrades gäller, landfraktionsförmågor inte. Samma levande snapshot
+möjliggör samtidiga dödsfall; hamndöd rensar jobs/foot utan refund.
+Save schema2/config12 migrerar11 utan att uppfinna attack-state.
+Transport och sjö-AI förblir084/086; balans087 och assets089.

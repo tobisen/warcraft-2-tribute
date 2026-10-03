@@ -34,3 +34,6 @@ export function coastalFootprint(map:WorldMap,rect:Footprint):boolean {
  const waterArea=water.reduce((n,p)=>n+Math.max(0,Math.min(rect.x+rect.width,p.x+p.width)-Math.max(rect.x,p.x))*Math.max(0,Math.min(rect.y+rect.height,p.y+p.height)-Math.max(rect.y,p.y)),0);
  return waterArea>0&&waterArea<rect.width*rect.height;
 }
+
+/** Marine shots cross water; rocks and actual structures remain physical occluders. */
+export function marineFlightMap(map:WorldMap):WorldMap {const water=terrain(map).filter(p=>p.kind==='water');return {...map,obstacles:map.obstacles.filter(o=>{const i=water.findIndex(p=>sameRect(p,o));if(i<0)return true;water.splice(i,1);return false;})};}

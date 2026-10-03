@@ -1,3 +1,5 @@
+import {prepareNavalCombat} from './navalCombat';
+import type {NavyState} from './navy';
 import {abilityEffects} from './abilities';
 import type { MovementGate, GateFor } from './traffic';
 import { upgradeConfig } from '../config/upgrades';
@@ -72,13 +74,14 @@ function combatApproach(map: WorldMap, position: Position, target: Footprint, ta
 const unitFootprint=(position:Position,size:number):Footprint=>({x:position.x-size/2,
   y:position.y-size/2,width:size,height:size});
 
-export function updateCombat(gathering: GatheringState, combat: CombatState, deltaSeconds: number, map?: WorldMap, placement?:PlacementState, visible?:EnemyVisibility,playerVisible:(target:PlayerTarget,enemy:Enemy)=>boolean=()=>true,projectileVisible?:(enemy:Enemy,projectile:Projectile)=>boolean,gateFor?:GateFor) {
+export function updateCombat(gathering: GatheringState, combat: CombatState, deltaSeconds: number, map?: WorldMap, placement?:PlacementState, visible?:EnemyVisibility,playerVisible:(target:PlayerTarget,enemy:Enemy)=>boolean=()=>true,projectileVisible?:(enemy:Enemy,projectile:Projectile)=>boolean,gateFor?:GateFor,navy?:NavyState,navalVisible:(enemy:Enemy)=>boolean=()=>true) {
   const delta = Math.max(0, deltaSeconds);
   const damage = new Map<string, number>();
   const attackMultiplier=combat.upgrades?.attack?upgradeConfig.attackMultiplier:1;
   const defenseMultiplier=combat.upgrades?.defense?upgradeConfig.defenseMultiplier:1;
   let nextProjectileNumber=combat.nextProjectileNumber??1;
-  const shots:{projectile:Projectile;time:number}[]=[];
+  const naval=prepareNavalCombat(navy,combat.enemies,delta,map,nextProjectileNumber,attackMultiplier,navalVisible);nextProjectileNumber=naval.nextProjectileNumber;
+  const shots:{projectile:Projectile;time:number}[]=[...naval.shots];
   let units = (delta>0?acquireTargets(gathering.units,combat.enemies,map,visible):gathering.units).map(unit => {
     if(unit.kind==='soldier'&&unit.attackMoveTarget&&unit.order.kind==='move') {
       const moved=map?updateMappedMove(unit,map,delta,gateFor?.(`player:${unit.id}`)):{...unit,position:moveTowards(unit.position,unit.target,combatUnitStats(unit).speed,delta)};
@@ -114,8 +117,8 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
   });
   // Both sides attack from the same live snapshot, so lethal blows are simultaneous.
   const playerDamage = new Map<string, number>();
-  const originalTargets=playerTargets(gathering,combat,placement);
-  const priority={soldier:0,worker:1,barracks:2,farm:2,forge:2,base:3};
+  const originalTargets=playerTargets(gathering,combat,placement,navy);
+  const priority={ship:0,harbor:2,soldier:0,worker:1,barracks:2,farm:2,forge:2,base:3};
   const movingEnemies = combat.enemies.filter(e => e.hp > 0).map(enemy => {
     if(enemy.kind==='worker'||enemy.footprint||enemy.order?.kind==='idle')return enemy;
     if(enemy.order?.kind==='muster'){
@@ -136,7 +139,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
       const step=map?combatApproach(map,enemy.position,baseFootprint(goal),'explore-goal',combatConfig.enemySpeed,combatConfig.enemyRange,delta,enemy.navigation?.targetId==='explore-goal'?enemy.navigation:undefined,gateFor?.(`enemy:${enemy.id}`)):approach(enemy.position,goal,combatConfig.enemySpeed,combatConfig.enemyRange,delta);
       return {...enemy,position:step.position,...(step.navigation?{navigation:step.navigation}:{})};
     }
-    const moved=units.find(u=>u.id===target.id);
+    const moved=units.find(u=>u.id===target.id)??naval.navy?.ships.find(s=>s.id===target.id);
     const footprint=map&&moved?unitFootprint(moved.position,target.footprint.width):target.footprint;
     if(!playerVisible({...target,footprint},enemy))return {...enemy,navigation:undefined};
     const center={x:footprint.x+footprint.width/2,y:footprint.y+footprint.height/2};
@@ -157,13 +160,15 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
     ...(placement.forge?{forge:{...placement.forge,hp:Math.max(0,placement.forge.hp-(playerDamage.get('forge')??0))}}:{}),
     ...(placement.barracks?{barracksHP:Math.max(0,(placement.barracksHP??combatConfig.barracksHP)-(playerDamage.get('barracks')??0))}:{}),
     ...(placement.farms?{farms:placement.farms.map(f=>({...f,hp:Math.max(0,(f.hp??combatConfig.farmHP)-(playerDamage.get(f.id)??0))}))}:{})}:undefined;
+  const nextNavy=naval.navy?{...naval.navy,ships:naval.navy.ships.map(s=>({...s,hp:Math.max(0,s.hp-(playerDamage.get(s.id)??0)*defenseMultiplier)})),harbor:naval.navy.harbor?{...naval.navy.harbor,hp:Math.max(0,naval.navy.harbor.hp-(playerDamage.get('harbor')??0))}:null}:undefined;
   const nextCombat={...combat,baseHP:Math.max(0,combat.baseHP-(playerDamage.get('base')??0))};
-  const aliveTargets=new Set(playerTargets(surviving,nextCombat,nextPlacement).map(t=>t.id));
+  const aliveTargets=new Set(playerTargets(surviving,nextCombat,nextPlacement,nextNavy).map(t=>t.id));
   const enemies = movingEnemies.map(enemy => ({ ...enemy, hp: Math.max(0, enemy.hp - (damage.get(enemy.id) ?? 0)*(!enemy.footprint&&enemy.kind!=='worker'&&combat.enemyUpgrades?.defense?upgradeConfig.defenseMultiplier:1)) }))
     .filter(e => e.hp > 0 || e.kind==='worker').map(enemy => enemy.navigation?.targetId && enemy.navigation.targetId!=='explore-goal' && !aliveTargets.has(enemy.navigation.targetId) ? {...enemy,navigation:undefined} : enemy);
   const destroyedEnemyFootprints=movingEnemies.filter(e=>e.footprint&&e.hp-(damage.get(e.id)??0)<=0).map(e=>e.footprint!);
   units = units.map(unit => unit.kind === 'soldier' && unit.order.kind === 'attack'
     && !enemies.some(e => e.id === (unit.order.kind === 'attack' ? unit.order.enemyId : ''))
     ? { ...unit, navigation: undefined, order: { kind: 'idle' as const } } : unit);
-  return { gathering: { ...surviving, units }, combat: {...nextCombat,enemies,...(destroyedEnemyFootprints.length?{destroyedEnemyFootprints}:{}),...(combat.projectiles||shots.length?{projectiles:projectiles.filter(p=>p.splashRadius||enemies.some(e=>e.hp>0&&e.id===p.targetId)),nextProjectileNumber}:{})},...(nextPlacement?{placement:nextPlacement}:{}) };
+  const finishedNavy=nextNavy?{...nextNavy,ships:nextNavy.ships.map(ship=>ship.order.kind==='attack'&&!enemies.some(e=>e.hp>0&&ship.order.kind==='attack'&&e.id===ship.order.enemyId)?{...ship,navigation:undefined,order:{kind:'idle' as const}}:ship)}:undefined;
+  return {...(finishedNavy?{navy:finishedNavy}:{}), gathering: { ...surviving, units }, combat: {...nextCombat,enemies,...(destroyedEnemyFootprints.length?{destroyedEnemyFootprints}:{}),...(combat.projectiles||shots.length?{projectiles:projectiles.filter(p=>p.splashRadius||enemies.some(e=>e.hp>0&&e.id===p.targetId)),nextProjectileNumber}:{})},...(nextPlacement?{placement:nextPlacement}:{}) };
 }

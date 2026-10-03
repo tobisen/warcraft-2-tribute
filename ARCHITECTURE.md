@@ -1130,9 +1130,24 @@ reservations. Ships har monotona ship-ID:n, maprevisionstyrd movement,
 vision/minimap och härledda resultat. Selection/drag/groups/Stop delar
 befintliga SelectableUnit-helpers; scenen distribuerar tillbaka listorna.
 
-Save schema2/config11 validerar coast/physical obstacles/builderrefs,
+Save schema2/config12 validerar coast/physical obstacles/builderrefs,
 ship-ID/HP/domain/body, naval cost/time/supply/job IDs och selected harbor.
 Config10 migrerar utan gratis NavyState; config1–9 behåller kedjan.
 Route-cache serialiseras inte: vattenroute återskapas efter Load.
 [navy.test.ts](src/gameplay/navy.test.ts) provar faktiskt betalda
 byggnader, insamling, FIFO/refunds/supply/spawn, orders och Save.
+
+
+## RTS-083: marina attacker
+
+[navalCombat.ts](src/gameplay/navalCombat.ts) förbereder vattenrörelse och
+fixed-aim-skott från samma levande snapshot som landcombat. Gemensam
+combat/projectile-uppdatering applicerar damage före death-städning.
+MarineFlightMap tar bort vattenblockerare men behåller sten och byggnader;
+landprojektilernas befintliga regler ändras inte. Firing-contact använder
+vattenadaptern och fog-syn; dolda mål rensar order. HP/cooldown/orders ligger
+i NavyState, skott i CombatState.projectiles. Config12 sparar strict attack-
+refs/cooldown/marine-recipe och migrerar11 utan att skapa stridsstate.
+Fiender kan använda befintlig landapproach mot ship/harbor, utan ny sjö-AI.
+[navalCombat.test.ts](src/gameplay/navalCombat.test.ts) täcker skott,
+vattenkontakt, LOS/fog, samtidiga dödsfall, hamnens städning och Save.

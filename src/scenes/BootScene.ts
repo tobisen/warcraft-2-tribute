@@ -1,5 +1,5 @@
 import {navyConfig} from '../config/navy';
-import {harborPlacementError,placeHarbor,trainShip,canTrainShip,commandShips,resumeHarbor,stopShips,matchPopulation,type NavyState,type Ship} from '../gameplay/navy';
+import {attackShips,harborPlacementError,placeHarbor,trainShip,canTrainShip,commandShips,resumeHarbor,stopShips,matchPopulation,type NavyState,type Ship} from '../gameplay/navy';
 import {renderMatchResults} from '../presentation/matchResults';
 import {matchSettingsSummary} from '../presentation/matchSettings';
 import {maps,isMapId} from '../config/maps';
@@ -502,6 +502,7 @@ export class BootScene extends Phaser.Scene {
       }
       const enemy = enemyAt(this.combat.enemies.filter(e=>entityVisible(this.fog,'player',e)), world);
       const resource = [this.gathering.node,this.gathering.gold].find(n=>n && knownResource(this.fog,n.position)&&isNodeHit(world,n));
+      if(enemy)this.navy=attackShips(this.currentMatch(),enemy.id);
       if(!enemy&&!resource)this.navy=commandShips(this.currentMatch(),world);
       this.gathering.units = enemy ? orderAttack(this.gathering.units, enemy.id)
         : resource ? orderUnits(this.gathering.units, world, resource)
@@ -618,7 +619,7 @@ export class BootScene extends Phaser.Scene {
     this.hpBars?.clear();
     const visibleEnemies=this.combat.enemies.filter(e=>entityVisible(this.fog,'player',e));
     const markers = orderMarkers(this.gathering, {...this.combat,enemies:visibleEnemies}, this.outcome==='playing',this.placement.barracks,this.placement.farms,this.placement.forge?.footprint);
-    for(const ship of this.navy?.ships??[])if(ship.selected&&ship.navigation&&(ship.navigation.status==='moving'||ship.navigation.status==='blocked'))markers.push({id:ship.id,position:ship.target,blocked:ship.navigation.status==='blocked'});
+    for(const ship of this.navy?.ships??[])if(ship.selected&&ship.navigation&&(ship.order.kind==='attack'||ship.navigation.status==='moving'||ship.navigation.status==='blocked'))markers.push({id:ship.id,position:ship.order.kind==='attack'?this.combat.enemies.find(e=>ship.order.kind==='attack'&&e.id===ship.order.enemyId&&entityVisible(this.fog,'player',e))?.position??ship.position:ship.target,blocked:ship.navigation.status==='blocked'});
     for (const [id, visual] of this.orderVisuals) {
       if (!markers.some(m=>m.id===id)) { visual.destroy(); this.orderVisuals.delete(id); }
     }
@@ -784,7 +785,7 @@ export class BootScene extends Phaser.Scene {
     if(harbor){const r=harbor.footprint;if(!this.harborLabel)this.harborLabel=this.add.text(r.x+32,r.y-14,'Hamn',{fontSize:'12px',color:'#d6eef1'}).setOrigin(.5).setDepth(7);this.navyGraphics.fillStyle(harbor.construction.remainingSeconds>0?0x6c5b46:0x986b42,.9).fillRect(r.x,r.y,r.width,r.height).lineStyle(2,0x77c4cf).strokeRect(r.x,r.y,r.width,r.height);}
     for(const [id,label] of this.shipLabels)if(!this.navy?.ships.some(s=>s.id===id)){label.destroy();this.shipLabels.delete(id);}
     for(const ship of this.navy?.ships??[]){const p=ship.position;this.navyGraphics.fillStyle(0x754a2b).fillEllipse(p.x,p.y,32,22).lineStyle(2,0xe6d6a5).lineBetween(p.x,p.y-13,p.x,p.y+5);if(ship.selected)this.navyGraphics.lineStyle(2,0xffdf73).strokeCircle(p.x,p.y,22);
-      if(!this.shipLabels.has(ship.id))this.shipLabels.set(ship.id,this.add.text(p.x,p.y-32,'Fartyg',{fontSize:'10px',color:'#d6eef1'}).setOrigin(.5).setDepth(7));this.shipLabels.get(ship.id)!.setPosition(p.x,p.y-32);
+      if(!this.shipLabels.has(ship.id))this.shipLabels.set(ship.id,this.add.text(p.x,p.y-32,'Fartyg',{fontSize:'10px',color:'#d6eef1'}).setOrigin(.5).setDepth(7));this.shipLabels.get(ship.id)!.setPosition(p.x,p.y-32).setText(`Fartyg ${Math.ceil(ship.hp)} HP`);
     }
   }
   private applyMatch(match: MatchState): void {
