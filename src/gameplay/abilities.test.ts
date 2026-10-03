@@ -21,10 +21,10 @@ describe('faction self abilities',()=>{
   const ready=advanceAbilities(next,15);expect(abilityReady(ready.units[3])).toBe(true);expect(useAbility(ready).units[3]).toMatchObject({ability:{activeSeconds:5,cooldownSeconds:20}});
  });
  it('crown defense and clan melee damage multiply upgrades, with unselected units unaffected',()=>{
-  for(const id of ['crown','clans'] as const){const m=fixture(id);m.gathering=useAbility(m.gathering);m.combat.upgrades={attack:1,defense:1};const f=updateCombat(m.gathering,m.combat,1);expect(f.combat.enemies[0].hp).toBeCloseTo(36-18*1.25*(id==='clans'?1.25:1));expect(f.gathering.units.find(u=>u.id==='unit-4')!.hp).toBeCloseTo((id==='clans'?66:60)-6*.75*(id==='crown'?.75:1));}
+  for(const id of ['crown','clans'] as const){const m=fixture(id);m.gathering=useAbility(m.gathering);m.combat.upgrades={attack:1,defense:1};const f=updateCombat(m.gathering,m.combat,1);expect(f.combat.enemies[0].hp).toBeCloseTo(36-(id==='clans'?20*1.3*1.25:18*1.25));expect(f.gathering.units.find(u=>u.id==='unit-4')!.hp).toBeCloseTo((id==='clans'?66:60)-6*(id==='crown'?.75*.75:.8));}
  });
  it('ranged damage is fixed at firing and shots at exact expiry receive no expired bonus',()=>{
-  const m=fixture('clans'),u=m.gathering.units[3] as Soldier;u.archetype='archer';u.hp=40;m.combat.enemies[0].position={x:550,y:300};m.gathering=useAbility(m.gathering);
+  const m=fixture('clans'),u=m.gathering.units[3] as Soldier;u.archetype='archer';u.hp=45;m.combat.enemies[0].position={x:540,y:300};m.gathering=useAbility(m.gathering);
   const first=updateCombat(m.gathering,m.combat,.01,undefined,undefined,()=>true);expect(first.combat.projectiles?.[0].damage).toBe(15);
   const expired={...m.gathering,units:m.gathering.units.map(u=>u.kind==='soldier'?{...u,ability:{activeSeconds:.1,cooldownSeconds:15.1},attackCooldown:.1}:u)};
   const boundary=updateCombat(expired,m.combat,.1,undefined,undefined,()=>true);expect(boundary.combat.projectiles?.[0].damage).toBe(12);
@@ -35,12 +35,12 @@ describe('faction self abilities',()=>{
  });
  it('matches continuous melee damage over expiry for coarse and fine steps',()=>{
   function run(steps:number){let m=fixture('clans');m.combat.enemies[0].hp=10000;m.gathering.units=m.gathering.units.filter(u=>u.kind==='soldier');m.gathering.units[0].hp=10000;m.gathering=useAbility(m.gathering);m.map.obstacles=[];for(let i=0;i<steps;i++)m=updateMatch(m,6/steps);return m.combat.enemies[0].hp;}
-  expect(run(1)).toBeCloseTo(10000-18*(5*1.25+1));expect(run(120)).toBeCloseTo(run(1));
+  expect(run(1)).toBeCloseTo(10000-20*(5*1.25+1));expect(run(120)).toBeCloseTo(run(1));
  });
  it('defense expires at the same boundary over coarse and fine steps and siege snapshots its bonus',()=>{
   function run(steps:number){let m=fixture('crown');m.combat.enemies[0].hp=10000;m.gathering.units=m.gathering.units.filter(u=>u.kind==='soldier');m.gathering.units[0].hp=10000;m.gathering=useAbility(m.gathering);m.map.obstacles=[];for(let i=0;i<steps;i++)m=updateMatch(m,6/steps);return m.gathering.units[0].hp!;}
   expect(run(1)).toBeCloseTo(10000-6*(5*.75+1));expect(run(120)).toBeCloseTo(run(1));
-  const m=fixture('clans'),u=m.gathering.units[3] as Soldier;u.archetype='catapult';u.hp=80;m.combat.enemies[0].position={x:550,y:300};m.gathering=useAbility(m.gathering);expect(updateCombat(m.gathering,m.combat,.01,undefined,undefined,()=>true).combat.projectiles?.[0].damage).toBe(30);
+  const m=fixture('clans'),u=m.gathering.units[3] as Soldier;u.archetype='catapult';u.hp=80;m.combat.enemies[0].position={x:550,y:300};m.gathering=useAbility(m.gathering);expect(updateCombat(m.gathering,m.combat,.01,undefined,undefined,()=>true).combat.projectiles?.[0].damage).toBe(32.5);
  });
  it('fog-hidden targets remain unavailable while a self buff reveals no enemy information',()=>{
   const m=fixture('clans');m.combat.enemies[0].position={x:1100,y:900};m.gathering=useAbility(m.gathering);const fight=updateCombat(m.gathering,m.combat,1,undefined,undefined,()=>false,()=>false);expect(fight.combat.enemies[0].hp).toBe(36);expect(fight.combat.projectiles??[]).toEqual([]);expect(fight.gathering.units.find(u=>u.id==='unit-4')?.order.kind).toBe('idle');

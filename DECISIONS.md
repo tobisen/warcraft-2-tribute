@@ -1206,3 +1206,9 @@ Specialist är en Soldier-archetype med datastyrd melee eller projectile/splash 
 ## RTS-136 – Human-komplettering
 
 Aktivera Banner Guard och Forge-prerequisite för Human-siege med stabila crown-ID:n. Human-specialisten har egna originalpixelramar, inte soldat-alias. Behåll befintliga Human-byggnadsbilder och faktisk basgeometri (player48px/enemy96px); korrigera felaktig134-inventering istället för oönskad placement/migrationsändring. Research/fartyg får beslutade displaynamn. Save25 markerar uppdaterad roster/prerequisites, migrerar24 och låter betalda äldre siege-jobb slutföras även utan Forge. Nytt enqueue kräver den. Full AI-roster hör till141 och får inte hävdas färdig i136.
+
+## RTS-137 – Orc-balans och betalda äldre jobb
+
+Använd134:s Orc-värden utan nya systemspecifika avvikelser: offensiv melee/Raider, något kortare ranged/siege och tåligare egna byggnader. Stable clans-ID bevaras, display Orcs · Iron Clan/Peon. Raider får egna originalpixelramar. Egen tidigare Orc-bygggrafik återanvänds.
+
+Stone Thrower träning ändras10→11s. Save26:s25-migration identifierar och validerar tidigare betalda10s/cost40/20-jobb innan legacy-markering; nya jobb får11s och prerequisites. Bevara befintliga HP/timer/bankfält, ingen retroaktiv healing eller ny debitering. Combatprofiler läses från aktuell balansdata som tidigare; inget generellt stat-snapshotsystem införs. Full NPC-roster/egen grundarmy/baseprofil förblir141, ska inte hävdas klar här.

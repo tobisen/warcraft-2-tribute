@@ -100,6 +100,24 @@ factions.crown.units.catapult={...factions.crown.units.catapult,aggroRange:264,p
 factions.crown.upgrades.attack.name='Tempered Arms';
 factions.crown.upgrades.defense.name='Plate Craft';
 factions.crown.naval.units.warship.name='Cutter';
+// RTS-137: offensive Orc roster with unchanged clans identities.
+factions.clans.label='Orcs · Iron Clan';
+factions.clans.roster=['worker','soldier','archer','catapult','specialist'];
+factions.clans.unitNames.worker='Peon';
+factions.clans.units.worker={...factions.clans.units.worker,hp:35,speed:155};
+factions.clans.units.soldier={...factions.clans.units.soldier,damagePerSecond:20};
+factions.clans.units.archer={...factions.clans.units.archer,hp:45,speed:135,range:144,aggroRange:184,attackInterval:1.1};
+factions.clans.units.catapult={...factions.clans.units.catapult,hp:90,speed:75,durationSeconds:11,range:208,aggroRange:248,damage:26,attackInterval:2.1,prerequisites:{buildings:['forge']}};
+factions.clans.units.specialist={...factions.clans.units.specialist,art:'specialist'};
+factions.clans.buildings.base={...factions.clans.buildings.base,hp:260};
+factions.clans.buildings.barracks={...factions.clans.buildings.barracks,hp:130};
+factions.clans.buildings.farm={...factions.clans.buildings.farm,hp:90};
+factions.clans.buildings.forge={...factions.clans.buildings.forge,hp:130};
+factions.clans.upgrades.attack={...factions.clans.upgrades.attack,name:'War Blades',cost:{wood:35,gold:15},multiplier:1.3};
+factions.clans.upgrades.defense={...factions.clans.upgrades.defense,name:'Hide Armor',multiplier:.8};
+factions.clans.naval.harbor={...factions.clans.naval.harbor,name:'War Dock',hp:170};
+factions.clans.naval.units.warship={...factions.clans.naval.units.warship,name:'War Barge',hp:100,speed:105};
+factions.clans.naval.units.transport={...factions.clans.naval.units.transport,name:'Raft',hp:100,speed:105};
 export function productionFaction(g:{faction?:FactionId}):FactionDefinition {return factions[g.faction??defaultFactions.player];}
 
 export function factionForTeam(match:{factions?:MatchFactions},team:keyof MatchFactions):FactionDefinition {

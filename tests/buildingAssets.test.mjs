@@ -1,3 +1,4 @@
+import {factions} from '../src/config/factions';
 import {inflateSync} from 'node:zlib';
 import {combatConfig} from '../src/config/combat';
 import {forgeConfig} from '../src/config/upgrades';
@@ -24,9 +25,9 @@ describe('building sprites preserve gameplay geometry',()=>{
  it('damage uses each building maximum and never replaces an unfinished stage',()=>{
   const hp={base:combatConfig.baseHP,barracks:combatConfig.barracksHP,farm:combatConfig.farmHP,forge:forgeConfig.hp,harbor:navyConfig.harbor.hp};
   for(const faction of ['crown','clans'])for(const owner of ['player','enemy'])for(const kind of Object.keys(hp)){
-   const prefix=`${faction==='clans'?'clans-':''}${kind}-${owner}-`;
-   expect(buildingFrame(kind,owner,0,5,faction,hp[kind]/2+.01)).toBe(prefix+'complete');
-   expect(buildingFrame(kind,owner,0,5,faction,hp[kind]/2)).toBe(prefix+'damaged');
+   const prefix=`${faction==='clans'?'clans-':''}${kind}-${owner}-`,max=kind==='harbor'?factions[faction].naval.harbor.hp:factions[faction].buildings[kind].hp;
+   expect(buildingFrame(kind,owner,0,5,faction,max/2+.01)).toBe(prefix+'complete');
+   expect(buildingFrame(kind,owner,0,5,faction,max/2)).toBe(prefix+'damaged');
    expect(buildingFrame(kind,owner,0,5,faction,1)).toBe(prefix+'damaged');
    expect(buildingFrame(kind,owner,5,5,faction,1)).toBe(prefix+'foundation');
    expect(buildingFrame(kind,owner,2.5,5,faction,1)).toBe(prefix+'building');

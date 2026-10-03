@@ -1,6 +1,6 @@
 import {expect,it} from 'vitest';
 import {playableScenarios,scenarioConfig} from '../config/scenarios';
-import {factionsForPlayer} from '../config/factions';
+import {factions,factionsForPlayer} from '../config/factions';
 import {createMatch,updateMatch} from './match';
 import {releasePlaythrough} from './testHelpers/releaseBot';
 import {decodeSave,encodeSave} from './save';
@@ -20,6 +20,6 @@ for(const faction of ['crown','clans'] as const){
   let m=createMatch('survival','hard',factionsForPlayer(faction));for(let i=0;i<4000&&m.outcome==='playing';i++)m=updateMatch(m,.1);
   expect(m.outcome).toBe('defeat');expect(m.combat.baseHP).toBe(0);expect(updateMatch(m,1000)).toBe(m);
   const saved=decodeSave(encodeSave(m,{camera:{x:0,y:0},building:null}));expect(saved.ok).toBe(true);
-  const next=createMatch('mission-outpost','easy',factionsForPlayer(faction==='crown'?'clans':'crown'));expect(next.factions?.player).not.toBe(m.factions?.player);expect(next.gathering.faction).toBe(next.factions?.player);expect(next.gathering.units).toHaveLength(3);expect(next.gathering.units.every(u=>!u.selected&&!('ability' in u))).toBe(true);expect(next.waves.elapsedSeconds).toBe(0);expect(next.combat.baseHP).toBe(240);expect(next.production.queue).toBeUndefined();expect(next.scenario).toBe('mission-outpost');expect(next.difficulty).toBe('easy');
+  const next=createMatch('mission-outpost','easy',factionsForPlayer(faction==='crown'?'clans':'crown'));expect(next.factions?.player).not.toBe(m.factions?.player);expect(next.gathering.faction).toBe(next.factions?.player);expect(next.gathering.units).toHaveLength(3);expect(next.gathering.units.every(u=>!u.selected&&!('ability' in u))).toBe(true);expect(next.waves.elapsedSeconds).toBe(0);expect(next.combat.baseHP).toBe(factions[next.factions!.player].buildings.base.hp);expect(next.production.queue).toBeUndefined();expect(next.scenario).toBe('mission-outpost');expect(next.difficulty).toBe('easy');
  },30_000);
 }

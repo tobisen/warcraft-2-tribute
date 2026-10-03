@@ -1248,3 +1248,7 @@ Recept styr namn, kostnader, tider, supply, HP, movement och spelarcombat samt r
 ## RTS-136 – Spelbara Humans
 
 Humans har fem beslutade roller, egen Banner Guard-grafik och befintliga Human-byggnadsutseenden. Forge låser upp siege; Plate Craft låser upp Banner Guard. Recept/stats enligt134; Catapult aggro-range264px motsvarar range+40. Researchnamn Tempered Arms och Plate Craft, warship Cutter; befintliga stance/ekonomi/delivery/produktion/selection/combat-regler återanvänds. Basens befintliga spelar-footprint48px och enemy96px bevaras;134-textens96px som generell spelarbas var en felaktig inventering och har rättats. Ingen geometri-/saveombyggnad genomförs här. Full femrolls-AI och matchup-balans verifieras141; nuvarande betalda enemy-grundproduktion/ekonomi kvar.
+
+## RTS-137 – Spelbara Orcs
+
+Orcs har hela femrolls-roster enligt134. Raider är snabb offensiv melee med egen lättare rustning/bare-head/tvåyxor-silhuett. Forge/War Blades låser upp den; attack1 ger1.30damage och Fury1.25, tillsammans1.625 medan buffen varar. Högre meleeDPS och HP men kortare ranged/siege-range skiljer spelstilen från Humans. Stronghold260HP, War Hut/Smithy130HP, Cattle Pen90HP och War Dock170HP. Egna befintliga trä-/spik-/tuskbyggnader återanvänds. NPC-grundarmé fortfarande generisk till141, egen research/ekonomi/naval fungerar redan. Save bevarar betalda äldre tider/kostnader och faktisk skadad HP; inga gratis refunds/heals.

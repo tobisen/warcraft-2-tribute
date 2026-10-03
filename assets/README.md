@@ -175,3 +175,7 @@ ingen ytterligare ljud-/röstasset. Lyssning uppskjuten enligt användaren.
 ## RTS-136 – Human Banner Guard
 
 Egen32px specialist med guldrustning, bred kite shield och fana i sources/units.mjs. Två teamägare, åtta riktningar, idle1 och walk/attack/death4frames vardera, samma8FPS. Ingen extern rasterreferens eller ny genererad illustration; utökar etablerade repo-native pixelkällor.2128frames i2048×4352atlas, metadata/PNG uppdaterade tillsammans. Befintliga Human-stenbyggnader, tak, heraldik och byggfaser återanvänds; deras logiska player-base48px/enemy-base96px bevaras. Rastertester verifierar distinct specialist-silhuett, åtta riktningar, minst tre motion/combat/death-faser och projektpalett.
+
+## RTS-137 – Orc Raider
+
+Original32px Raider i sources/units.mjs med bar hud/huvud, lätt läderrustning och andra yxan.208egna frames för två ägare/åtta riktningar/idle-walk-attack-death, samma8FPS/palett/anchors. Unit-atlas2048×4736 har2336frames för två femrolls-rosters; PNG/metadatamanifest exporterade tillsammans. Rastertester skiljer silhuett/riktningar och minst tre animationsfaser. Befintliga Orc-spik/tusk-/träbyggnader och navalbilder återanvänds. Ingen extern rasterreferens, ingen ny AI-bild eller attribution.

@@ -1616,3 +1616,9 @@ Save-config24 migrerar23 och tidigare kedja. Varje egen ground unit, fartyg och 
 ## RTS-136 – Human-roster och atlas
 
 crown-ID bevaras med Humans-presentation. Roster aktiverar specialist med egna specialist-atlasramar, Catapult prerequisite Forge och Banner Guard prerequisite Forge/defense1. UI/queue använder135-admission. Egna Human-byggnadsbilder återanvänds oförändrade; nytt original Banner Guard-art använder befintliga pixelkällor/export, två ägare/åtta riktningar och idle/walk/attack/death. Unit-atlas2048×4352 med2128frames, samma32/64px cellbilder och64px exportslots; befintliga ID:n bevaras trots nya slotpositioner. Save25 migrerar24 utan ändrade recept eller retroaktiv prerequisitekontroll av godkända jobb. Enemy-adapterns betalda Human-grundproduktion verifieras; dess generiska stridsprofil är fortsatt till141.
+
+## RTS-137 – Orc-profiler och migration
+
+clans aktiverar fem roller med134-profiler, art:specialist och Forge/attack1 för Raider. Befintliga config-driven gameplay-system används; NPC-grundarméns generiska combatprofil kvar till141 men worker/build/research/naval följer Orc-data. HUD/max-HP och förändrade NPC-hälsostaplar läser rätt profil. Raider har egen32px sourcegrafik och208frames; unit-atlas2048×4736/2336frames, samma ID-/anchor-/palettmodell.
+
+Save26 migrerar25: äldre clans:unit:catapult-jobb ska ha40/20 och10s, får kontrollerad legacyRecipe-markör och behåller timer/kostnad. Nuvarande jobb kräver Forge och11s; produktionens savegräns härleds från roster/naval-tider så att11s är giltigt. Legacy-soldierregeln från äldre migration bevaras. Befintlig HP/bank/queue-state skrivs inte upp vid load, aktuella unitprofiler används av fortsatt simulation. Projektilcooldown2.1 stöds av135:s datagräns.

@@ -98,7 +98,7 @@ export const text={
   "riverBend": "River Bend",
   "islands": "Islands",
   "crownAlliance": "Humans · Crown Alliance",
-  "ironClan": "Iron Clan",
+  "ironClan": "Orcs · Iron Clan",
   "clanWorker": "Clan Worker",
   "worker": "Worker",
   "axeWarrior": "Axe Warrior",

@@ -15,7 +15,7 @@ describe('faction presentation and menu isolation',()=>{
  });
  it('uses owner-independent names and keeps faction art on death',()=>{
   const state=createMatch('survival','normal',factionsForPlayer('clans'));state.gathering.units[0].selected=true;
-  expect(matchLabels(state).selected).toContain('Clan Worker');expect(matchLabels(state).health).toContain('Stronghold');expect(factionForTeam(state,'enemy').unitNames.soldier).toBe('Guard');
+  expect(matchLabels(state).selected).toContain('Peon');expect(matchLabels(state).health).toContain('Stronghold');expect(factionForTeam(state,'enemy').unitNames.soldier).toBe('Guard');
   const m=motion(undefined,{x:5,y:6},'attack',0,'soldier','player',undefined,'clans');expect(unitFrame(m,.125)).toBe('clans-soldier-player-s-attack-1');
   const dead=deathEffect(m,1,true,true)!;expect(unitFrame(dead.motion,1.25)).toBe('clans-soldier-player-s-death-2');
  });

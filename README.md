@@ -706,3 +706,7 @@ Roster, produktions-prerequisites, research och naval-recept är datastyrda. UI 
 ## RTS-136 – Humans
 
 Välj Humans · Crown Alliance (stabilt ID crown). Fem roller: Worker, Guard, Archer, Catapult och Banner Guard. Catapult kräver färdig Forge. Banner Guard kräver Forge och färdig Plate Craft:30wood/15gold,8s,2supply,100HP,130px/s och14DPS. Bygg Forge40wood/10gold och välj basen för research; Tempered Arms/Plate Craft kostar40wood/10gold och tar8s. Befintlig Defensive Stance bevaras. Human-warship heter Cutter. Banner Guard har egna riktnings-/animationsbilder; Human-byggnader behåller sina egna befintliga sten-/trä-/heraldikbilder. Save25 migrerar24 utan att avbryta betalda jobb. Fiendens fulla femrolls-AI återstår till141.
+
+## RTS-137 – Orcs
+
+Välj Orcs · Iron Clan (stabilt clans-ID). Peon35HP/155px/s, Axe Warrior20DPS, Hunter kortare144px range och Stone Thrower26damage/2.1s med11s produktion. Raider kräver färdig Smithy och War Blades, kostar26wood/12gold, tar7s och använder2supply:80HP,175px/s,24DPS. War Blades35wood/15gold,8s,+30% damage; Hide Armor40wood/10gold,8s,20% mindre inkommande skada. Fury ger fortsatt+25% outgoing i5s. Stronghold260HP; War Dock170HP, War Barge/Raft100HP och105px/s. Egen Raider-grafik med två yxor; befintliga Orc-byggnadsbilder återanvänds. Save26 bevarar äldre betalda siege-tider och befintlig skadad HP. Full AI-roster ligger141.

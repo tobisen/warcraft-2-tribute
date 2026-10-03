@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-137 – Orcs** — **Todo**.
+**RTS-138 – Elves** — **Todo**.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -3588,7 +3588,7 @@ Verifiera ekonomi, produktion, combat och AI.
 
 ## RTS-137 – Orcs
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Komplettera befintliga Orcs till den beslutade rostern.
 
@@ -3607,7 +3607,9 @@ Tydlig skillnad i spelstil, units, buildings och research.
 
 **Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
 
-**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+**Detaljplan:**137A aktivera fem Orc-roller/stats/recept/namn från134, siege Forge och Raider attack1.137B egen Raider-animation/silhuett, bevara befintliga egna Orc-byggnadsbilder.137C Save25→26 bevarar äldre betalda siegejobb/tider och HP, nya jobb följer nya recept; beteende- och Human-regressioner inklusive faktiskt offensivt combat.137D native ekonomi/bygg/research/Raider/combat/Save/restart, fulla checks och granskning/docs. Full AI-roster/matchups fortsatt141; betald befintlig AI-ekonomi/grundarmé verifieras.
+
+**Verifiering:**998tester/131filer PASS161.30s; typecheck/build/diff/doclänkar PASS. Native1280/1920 actual Orc-roster med egen Raider-art, korrigerad260/260HUD, paid economy/research/production/selection/movement/Save/combat/victory/restart PASS utan pageerrors. Paid Human/Orc-regressioner passerar; full AI-roster141 enligt avgränsning.
 
 ## RTS-138 – Elves
 

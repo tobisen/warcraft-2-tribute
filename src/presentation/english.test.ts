@@ -16,6 +16,6 @@ it('separates save error categories from player-facing language without modifyin
  const invalid=JSON.parse(save);invalid.configVersion='future';expect(decodeSave(JSON.stringify(invalid))).toMatchObject({ok:false,code:'version'});
 });
 it('shows English faction, mission, map, fog-safe HUD and command guidance',()=>{
- expect(factions.crown.label).toBe('Humans · Crown Alliance');expect(factions.clans.label).toBe('Iron Clan');expect(scenarioConfig['mission-sea'].label).toBe('Mission 4 – The Crossing');expect(maps.islands.label).toBe('Islands');
+ expect(factions.crown.label).toBe('Humans · Crown Alliance');expect(factions.clans.label).toBe('Orcs · Iron Clan');expect(scenarioConfig['mission-sea'].label).toBe('Mission 4 – The Crossing');expect(maps.islands.label).toBe('Islands');
  const hud=matchLabels(createMatch('skirmish'));expect(hud.economy).toContain('node: ?');expect(hud.selected).toBe('No unit selected');expect(commandGuide).toContain('Shift-click');expect(commandGuide).toContain('pause/resume');
 });
