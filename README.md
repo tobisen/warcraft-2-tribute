@@ -2,7 +2,7 @@
 
 Browserbaserat singleplayer-RTS inspirerat av Warcraft 2, Age of Empires 2 och
 Command & Conquer. Phaser, strict TypeScript och Vite; local-first, gameplay
-före grafik. Implementerat genom RTS-120 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
+före grafik. Implementerat genom RTS-124 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
 
 ## Installation och lokal start
 
@@ -622,7 +622,7 @@ stöds; automatiska leveransturer talar inte. Paus, mute, load och restart
 avbryter tal. Lokala engelska browser/OS-röster används; inspelade röstassets
 saknas. Om sådan röst inte finns visar ljudstatus “Unit voices unavailable”
 och gameplay fungerar tyst. Röstklang varierar mellan plattformar. Slutlig
-matchlyssning ingår i RTS-120.
+matchlyssning är uppskjuten till senare enligt användaren.
 
 ## Lokala inställningar (RTS-119)
 
@@ -643,7 +643,7 @@ accepterade native speech requests är inte en bedömning av hörbarhet/klang.
 Publicerad RTS-119/120-implementation: [Spela på GitHub Pages](https://tobisen.github.io/warcraft-2-tribute/).
 Actions build/deploy för a8c42c1 passerar; public settings→reload och
 Frontier→start→paus→Save verifierade utan browserfel. Slutlig faktisk
-lyssningsbedömning117/118 återstår före Done120 och nästa etapp121.
+lyssningsbedömning117/118 är uppskjuten och blockerar inte senare etapp.
 
 Användaren har skjutit upp ljudtest och matchlyssning till senare. RTS-120
 är avslutad med tekniska kontroller; nästa godkända etapp är121–126.
@@ -659,3 +659,8 @@ Resultatstatistik omfattar nu färdigställda och förstörda byggnader och
 separata owner-removals (action kommer senare), samt resurser från samtliga
 noder inklusive Frontier-expansioner. Äldre saves migreras med bibehållen
 match; saknad bygg-/borttagningshistorik före migration redovisas tydligt.
+
+Releaseversion visas i startsida och top bar; Changelog finns i huvudmenyn.
+Produktversionen kommer från src/config/release.ts. Separat build-ID visas
+i changelog och versionsetikettens tooltip: local i dev, HEAD-hash vid build
+eller unknown om git saknas. Saveconfig är oberoende av releaseversion.

@@ -1127,3 +1127,11 @@ Config20/schema2 inför ledger; migration från19 behåller speldata och markera
 bygg-/owner-removal-historik som ofullständig med räknare från migrationen.
 Vi gissar inte äldre byggda/förstörda totals från kvarvarande byggnader.
 Resursstatistik summerar alla noder, så expansionswood/gold räknas korrekt.
+
+## RTS-124 – Versionskälla
+
+Första presenterade produktrelease är0.1.0, definierad endast i config/release.ts.
+Changelog beskriver samlade användarsynliga funktioner och inte varje task
+som en egen release. Build-ID är separat HEAD commit-hash vid build, local
+i dev, unknown om git saknas. Release, build-ID och Saveconfig är olika
+värden med olika syfte; inga commits/amend eller match-Saveändringar.

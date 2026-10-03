@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-124 – Version och changelog** — **Todo**.
+**RTS-125 – Upplösning och skalning** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -3062,7 +3062,7 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 **Dependencies:** RTS-116.
 
-**Acceptance criteria:** Alla nya cues avfyras från rätt verklig aktivitet; idle/delivery/load/reveal/paus är tysta. Samtidiga workers/builders ger begränsad cuefrekvens och aktiv source-count hålls inom budget. Varning/resultat blockeras inte av lågprioriterade effekter. Volymer/mute/reset fungerar i browser och saknat OGG använder WAV utan att stoppa gameplay. Tester/typecheck/build/diff och assetvalidering PASS. Faktisk matchlyssning redovisas innan slutlig Done, samlat i RTS-120.
+**Acceptance criteria:** Alla nya cues avfyras från rätt verklig aktivitet; idle/delivery/load/reveal/paus är tysta. Samtidiga workers/builders ger begränsad cuefrekvens och aktiv source-count hålls inom budget. Varning/resultat blockeras inte av lågprioriterade effekter. Volymer/mute/reset fungerar i browser och saknat OGG använder WAV utan att stoppa gameplay. Tester/typecheck/build/diff och assetvalidering PASS. Faktisk matchlyssning är uppskjuten till senare enligt användarens senaste instruktion; ingen lyssning hävdas.
 
 **Tester:** Cargo/build/production-snapshotdiff, initial/paus/orderbyte/leverans, throttling/channelgain/concurrency/priority och engine-lifecycle med fake AudioContext; assetduration/peak/fallback. Browser faktisk tutorial gathering→building→production→combat/resultat, observerade cues och sourcebudget, pause/Save/load/restart och mute. Separat mänsklig lyssning i samma flöde.
 
@@ -3074,7 +3074,7 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-118 – Humoristiska engelska enhetsröster
 
-**Status:** Done (lokal talsyntes; inspelade assets saknas och slutlig matchlyssning i120 återstår).
+**Status:** Done (lokal talsyntes; inspelade assets saknas och matchlyssning är uppskjuten).
 
 **Goal:** Korta egna selection-/order-repliker med variation och personlighet.
 
@@ -3120,13 +3120,13 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 **Dependencies:** RTS-119; slutlig lyssningsbedömning117/118.
 
-**Acceptance criteria:** Relevanta tester/typecheck/build/diff PASS, sammanhängande tutorialmatch och settings/save/load/restart utan pageerrors, visuellt granskad faktisk rendering, Pages senaste implementation verifierad. Faktisk lyssningsbedömning redovisad innan Done; teknisk röstacceptans eller audio-context-status ersätter inte den. Eventuella begränsningar dokumenterade.
+**Acceptance criteria:** Relevanta tester/typecheck/build/diff PASS, sammanhängande tutorialmatch och settings/save/load/restart utan pageerrors, visuellt granskad faktisk rendering, Pages senaste implementation verifierad. Lyssningsbedömning uppskjuten enligt användaren; teknisk röstacceptans eller audio-context-status är inte perceptuell lyssning. Eventuella begränsningar dokumenterade.
 
 **Tester:** Återanvänd aktuell fullsvit878/114 från119 om inga implementationer ändras; native tutorial/audio-regression två viewports/fraktioner, settings/load-regression från119, publik Frontier→start→paus→Save, Actions och bundleverifiering. Inga tester för enbart docs.
 
 **Docs:** BACKLOG, DEV_LOG och README med verifierad release och kvarstående kontroll.
 
-**Verifieringsstatus:** Tekniska releasekontroller PASS:878tester/114filer, typecheck/build/diff, native tutorialmatch båda fraktioner/viewports, settings/save/load och renderingsgranskning. Actions a8c42c1 build/deploy success; publikt index-DiNwZpog.js verifierat via Voices→reload och Frontier→start→paus→Save utan pageerrors. Faktisk mänsklig lyssningsbedömning117/118 återstår;120 är därför fortfarande In Progress och121 startar inte ännu.
+**Verifieringsstatus:** Tekniska releasekontroller PASS:878tester/114filer, typecheck/build/diff, native tutorialmatch båda fraktioner/viewports, settings/save/load och renderingsgranskning. Actions a8c42c1 build/deploy success; publikt index-DiNwZpog.js verifierat via Voices→reload och Frontier→start→paus→Save utan pageerrors. Faktisk mänsklig lyssningsbedömning117/118 är uppskjuten enligt användaren;120 Done och etappen121–126 fortsätter.
 
 **Senaste styrning:** Användaren skjuter upp ljudtester och matchlyssning till senare. Det tidigare lyssningskravet före Done/start121 är därmed upphävt; tekniska releasekontroller är uppfyllda och nästa etapp får börja. Detta är en senare instruktion, inte en utförd lyssningskontroll.
 
@@ -3216,7 +3216,7 @@ Statistik fungerar med save/load och restart.
 
 ## RTS-124 – Version och changelog
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Visa aktuell releaseversion i top bar och huvudmeny.
 

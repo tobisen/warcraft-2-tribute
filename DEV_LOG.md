@@ -2315,3 +2315,18 @@ viewports: faktisk completion=1, statistikvisning, terminal Save/load
 bevarar ledger, restart/fresh match och Victory/Defeat/navigation PASS.
 623 filreferenser giltiga; granskning av completion/death/harbor/cargo och
 Savekedja gav inga kvarstående fynd. Bundlevarningen kvar.123 Done, nästa124.
+
+## 2026-10-03 – RTS-124: Releaseversion och changelog
+
+Gemensam config/release.ts ger0.1.0 i home/top bar och original changelog.
+Menyn Changelog använder befintlig Back/Escape; build-ID visas separat och
+Vite injicerar local/dev, HEAD-hash/build eller unknown utan git. Ingen
+match-/Saveändring. README/backlog äldre lyssningsspärrtext uppdaterad till
+användarens uttryckliga uppskjutning, utan påstådd utförd lyssning.
+
+Checks:885tester/117filer PASS144.76s;3 riktade tester PASS, typecheck/build/
+diff PASS. Native browser1280/1920 home-release→Changelog→Escape/Back→
+match-top-release→paus/Save PASS utan pageerrors. Byggt bundle innehåller
+separat release0.1.0 och dåvarande HEAD b279572. Browser hittade initialt
+changelog inuti dold match-setup; DOM-placeringen korrigerad och verifierad.
+Ingen kvarstående regression/scopefynd, bundlevarningen kvar.124 Done, nästa125.

@@ -2,7 +2,7 @@
 
 ## Status och teknik
 
-Implementerat genom RTS-109 (historiska systembeskrivningar följer): archer/projectiles, catapult/splash och Forge/research, FIFO/refund, target-HP/destruktion, workerbygge, farms, population, kamera,
+Implementerat genom RTS-124 (historiska systembeskrivningar följer): archer/projectiles, catapult/splash och Forge/research, FIFO/refund, target-HP/destruktion, workerbygge, farms, population, kamera,
 byggnadsselection, rally, Stop, gold och
 atomiska kostnader ovanpå etapp 1:s HUD, handgjorda karta och navigation för
 move/work/combat, separata gruppmål och säkra placement/spawn-regler.
@@ -1526,3 +1526,13 @@ Save schema2/config20 migrerar config19 (och tidigare kedja) med ledger noll
 och legacy-flagga: historiska bygg-/borttagningstal före migration är okända,
 inte rekonstruerade. Befintliga resurs-/unit-data bevaras, slot oförändrat.
 Resultatstatistiken visar uttrycklig historikbegränsning för migrerade saves.
+
+## RTS-124 – Release och build-identitet
+
+[release](src/config/release.ts) är gemensam produktversionskälla och innehåller
+changelogposter. [releaseInfo](src/presentation/releaseInfo.ts) visar samma
+version i home/top bar och changelog utan gameplay-/Savefält. HomePage
+changelog använder befintlig Back/Escape-navigation. Vite injicerar separat
+__BUILD_ID__: HEAD short hash vid build, unknown utan git och local i dev.
+UI validerar build-label och skriver textContent. package.json:s privata
+verktygsversion0.0.0 är inte produktversion eller matchconfig.

@@ -1103,3 +1103,9 @@ färdigställda/förstörda byggnader per sida. Starting units/baser räknas int
 som producerade/byggda. Förstörda foundations räknas som förlust, inte
 färdigställning. Egen borttagning är ännu ingen tillgänglig action.
 Äldre saves får tydlig upplysning om saknad historik före migration.
+
+## RTS-124 – Releaseinformation
+
+Startsida och matchens top bar visar samma releaseversion. Menyn Changelog
+visar större användarsynliga förändringar per release, plus separat build-ID.
+Back/Escape återgår till startsidan. Versionsinformationen påverkar inte matchen.
