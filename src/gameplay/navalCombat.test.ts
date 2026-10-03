@@ -43,7 +43,7 @@ it('static-target firing/cooldown/projectile outcomes agree across timestep size
 it('attack/cooldown/inflight marine Save roundtrips; old eleven migrates without marine state',()=>{
  let m=fixture();m.navy=attackShips(m,'enemy-1');m=tick(m,.1);const view={camera:{x:0,y:0},building:null},json=encodeSave(m,view),loaded=decodeSave(json);expect(loaded.ok).toBe(true);if(loaded.ok){expect(loaded.match.navy!.ships[0].order).toEqual(m.navy!.ships[0].order);expect(loaded.match.combat.projectiles).toEqual(m.combat.projectiles);expect(domainBodyFits(loaded.match.map,'water',loaded.match.navy!.ships[0].position,16)).toBe(true);}
  for(const mutate of [(d:any)=>d.state.navy.ships[0].attackCooldown=2,(d:any)=>d.state.navy.ships[0].order.enemyId='missing',(d:any)=>d.state.combat.projectiles[0].damage=100,(d:any)=>d.configVersion='tribute-config-11']){const d=JSON.parse(json);mutate(d);expect(decodeSave(JSON.stringify(d)).ok).toBe(false);}
- const old=fixture();const d=JSON.parse(encodeSave(old,view));d.configVersion='tribute-config-11';expect(decodeSave(JSON.stringify(d)).ok).toBe(true);
+ const old=fixture();const d=JSON.parse(encodeSave(old,view));d.configVersion='tribute-config-11';delete d.state.statLedger;expect(decodeSave(JSON.stringify(d)).ok).toBe(true);
 });
 
 it('approach to firing contact remains in water and removes a stale blocked marker when range opens',()=>{

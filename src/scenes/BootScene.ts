@@ -1,3 +1,4 @@
+import type {StatLedger} from '../gameplay/statLedger';
 import {syncResultScreen} from '../presentation/resultScreen';
 import {getPreferences,updatePreferences} from '../presentation/preferences';
 import {voiceSpeaker,voiceOrders,orderedSpeaker} from '../presentation/voicePolicy';
@@ -92,6 +93,7 @@ import {
 } from '../gameplay/selection';
 
 export class BootScene extends Phaser.Scene {
+  private statLedger?:StatLedger;
   private factions:MatchFactions=factionsForPlayer(getPreferences().game.faction);
   private controlGroups:ControlGroups={};
   private fog!:FogState;
@@ -832,7 +834,7 @@ export class BootScene extends Phaser.Scene {
     this.syncVisuals();
   }
 
-  private currentMatch():MatchState {return {tutorial:this.tutorial,speed:this.session.options.speed??1,enemyNaval:this.enemyNaval,navy:this.navy,factions:{...this.factions},map:this.map,gathering:this.gathering,combat:this.combat,waves:this.waves,production:this.production,soldierProduction:this.soldierProduction,placement:this.placement,outcome:this.outcome,paused:!this.gameplayActive(),controlGroups:this.controlGroups,fog:this.fog,research:this.research,scenario:this.scenario,difficulty:this.difficulty,enemyProduction:this.enemyProduction,enemyAI:this.enemyAI,enemyConstruction:this.enemyConstruction,enemyPolicy:this.enemyPolicy,enemyRecovery:this.enemyRecovery,enemyKnowledge:this.enemyKnowledge};}
+  private currentMatch():MatchState {return {statLedger:this.statLedger,tutorial:this.tutorial,speed:this.session.options.speed??1,enemyNaval:this.enemyNaval,navy:this.navy,factions:{...this.factions},map:this.map,gathering:this.gathering,combat:this.combat,waves:this.waves,production:this.production,soldierProduction:this.soldierProduction,placement:this.placement,outcome:this.outcome,paused:!this.gameplayActive(),controlGroups:this.controlGroups,fog:this.fog,research:this.research,scenario:this.scenario,difficulty:this.difficulty,enemyProduction:this.enemyProduction,enemyAI:this.enemyAI,enemyConstruction:this.enemyConstruction,enemyPolicy:this.enemyPolicy,enemyRecovery:this.enemyRecovery,enemyKnowledge:this.enemyKnowledge};}
 
   private addImpact(impact:Impact):void {
     if(!canAddImpact([...this.impacts.values()].map(e=>e.impact),impact))return;
@@ -882,6 +884,7 @@ export class BootScene extends Phaser.Scene {
     }
   }
   private applyMatch(match: MatchState): void {
+    this.statLedger=match.statLedger;
     this.tutorial=match.tutorial;
     this.navy=match.navy;this.enemyNaval=match.enemyNaval;
     this.factions={...(match.factions??defaultFactions)};

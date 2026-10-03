@@ -1509,3 +1509,20 @@ BootScene synkar efter homeMenu och döljer avslutad canvas/HUD; inga nya
 gameplay-/Savefält. matchResults ger summary med utfall/tid/karta/difficulty/
 faction samt separat statistics-del. Terminal load använder samma presentation.
 Save/load är fortsatt tillgängliga på resultatsidan; pauspanel gäller endast paused.
+
+## RTS-123 – Matchstatistik och historik
+
+[statLedger](src/gameplay/statLedger.ts) kompletterar härledd unit/resource-
+redovisning med färdigställda/förstörda byggnader och separata owner-removal
+counters. Completion registreras före combat för land/enemy, efter naval
+construction för harbor; destruction i den befintliga cleanDestroyed-
+transaktionen, inklusive foundation och base exakt en gång. Starting bases
+räknas inte som byggda. Ingen egen borttagningsaction införs före147.
+
+matchStats summerar alla resourceNodes mot mapResourceTotals, inklusive
+Frontier-expansioner. Cargo/passengers/lostCargo och refunds räknas fortsatt
+som tidigare; owner removals subtraheras från combatförluster/opponentkills.
+Save schema2/config20 migrerar config19 (och tidigare kedja) med ledger noll
+och legacy-flagga: historiska bygg-/borttagningstal före migration är okända,
+inte rekonstruerade. Befintliga resurs-/unit-data bevaras, slot oförändrat.
+Resultatstatistiken visar uttrycklig historikbegränsning för migrerade saves.

@@ -1,3 +1,4 @@
+import {createStatLedger,readyBuildings,recordCompletions,type StatLedger} from './statLedger';
 import {createTutorial,updateTutorial,type TutorialState} from './tutorial';
 import {enemyStartingBudget} from '../config/enemyNaval';
 import {isGameSpeed,type GameSpeed} from '../config/gameSpeed';
@@ -45,6 +46,7 @@ import { updateWaves, type WaveState } from './waves';
 
 export type MatchOutcome = 'playing' | 'defeat' | 'victory';
 export interface MatchState {
+  statLedger?:StatLedger;
   speed?:GameSpeed;
   tutorial?:TutorialState;
   enemyNaval?:EnemyNavalState;
@@ -78,6 +80,7 @@ export function createMatch(scenario:MatchScenario='survival',difficulty:Difficu
   if(!isMapId(mapId)||!scenarioMapAllowed(scenario,mapId))throw Error('Unknown or unsupported map');
   if(!isFactionId(factions.player)||!isFactionId(factions.enemy))throw Error('Unknown faction');
   const state: MatchState = {
+    statLedger:createStatLedger(),
     speed,
     factions:{...factions},
     outcome: 'playing',paused:false,controlGroups:{},scenario,difficulty,research:createResearch(),
@@ -128,6 +131,7 @@ function correctedNavigation(map:WorldMap,position:Position,half:number,route?:R
 
 function advance(state: MatchState, delta: number): MatchState {
   state=cleanDestroyed(state);
+  const readyBefore=readyBuildings(state);
   state=observeEnemyKnowledge(state);
   state=prepareEnemyNaval(state);
   state=prepareEnemyRecovery(state);
@@ -143,6 +147,7 @@ function advance(state: MatchState, delta: number): MatchState {
   state=updateEnemyExpansion(state,delta,gateFor);gathering=state.gathering;
   state=updateEnemyNaval(state,delta);gathering=state.gathering;
   const building = updateConstruction(gathering,state.placement,state.map,delta,gateFor);
+  state={...state,statLedger:recordCompletions(readyBefore,{...state,gathering:building.gathering,placement:building.placement})};
   let combat=state.research&&(state.research.attack||state.research.defense||state.combat.upgrades)?{...state.combat,upgrades:{attack:state.research.attack,defense:state.research.defense}}:state.combat;
   if(state.enemyPolicy&&(state.enemyPolicy.research.attack||state.enemyPolicy.research.defense||combat.enemyUpgrades))combat={...combat,enemyUpgrades:{attack:state.enemyPolicy.research.attack,defense:state.enemyPolicy.research.defense}};
   const vision=state.fog?matchFog({...state,gathering:building.gathering,combat,placement:building.placement}):undefined;
@@ -162,7 +167,9 @@ function advance(state: MatchState, delta: number): MatchState {
   const incoming=scenarioConfig[cleaned.scenario??'survival'].waves?updateWaves(cleaned.waves,ai.combat,delta,scenarioWaves(cleaned.scenario??'survival',cleaned.difficulty??'normal')):{combat:ai.combat,waves:{...cleaned.waves,elapsedSeconds:cleaned.waves.elapsedSeconds+delta}};
   let updated:MatchState={...cleaned,...(enemyPolicy?{enemyPolicy}:{}),...(vision?{fog:vision}:{}),research,...(enemy.state?{enemyProduction:enemy.state}:{}),...(ai.state?{enemyAI:ai.state}:{}),gathering:soldier.gathering,combat:incoming.combat,waves:incoming.waves,
     production:{...worker.production,nextUnitNumber},soldierProduction:{...soldier.production,nextUnitNumber}};
+  const beforeNavyCompletion=readyBuildings(updated);
   updated=updateNavy(updated,delta);
+  updated={...updated,statLedger:recordCompletions(beforeNavyCompletion,updated)};
   updated=updateEnemyExploration(updated);
   const separated=separateBodies(updated.map,[...updated.gathering.units.map(u=>({id:`player:${u.id}`,position:u.position,half:(u.kind==='worker'?unitStats:combatUnitStats(u)).size/2})),...updated.combat.enemies.filter(e=>e.kind!=='ship'&&e.kind!=='base').map(e=>({id:`enemy:${e.id}`,position:e.position,half:combatConfig.enemySize/2}))],delta);
   if(separated.size){updated.gathering={...updated.gathering,units:updated.gathering.units.map(u=>{const position=separated.get(`player:${u.id}`);return position?{...u,position,navigation:correctedNavigation(updated.map,position,(u.kind==='worker'?unitStats:combatUnitStats(u)).size/2,u.navigation)}:u;})};updated.combat={...updated.combat,enemies:updated.combat.enemies.map(e=>{const position=separated.get(`enemy:${e.id}`);return position?{...e,position,navigation:correctedNavigation(updated.map,position,combatConfig.enemySize/2,e.navigation)}:e;})};}

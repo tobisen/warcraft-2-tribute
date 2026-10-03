@@ -1,3 +1,4 @@
+import {createStatLedger} from './statLedger';
 import {tutorialConfig} from '../config/tutorial';
 import {tutorialDeliveredWood} from './tutorial';
 import {isGameSpeed} from '../config/gameSpeed';
@@ -95,9 +96,10 @@ export function decodeSave(json:string):LoadResult {
   if(doc.schemaVersion===2&&doc.configVersion==='tribute-config-15'){ensure((doc.state as Data).scenario!=='mission-sea','legacy sea mission');doc.configVersion='tribute-config-16';}
   if(doc.schemaVersion===2&&doc.configVersion==='tribute-config-16'){const old=doc.state as Data;ensure(old.speed===undefined||old.speed===1,'legacy speed');old.speed=1;doc.configVersion='tribute-config-17';}
   if(doc.schemaVersion===2&&doc.configVersion==='tribute-config-17'){ensure((doc.state as Data).scenario!=='tutorial'&&!Object.hasOwn(doc.state as Data,'tutorial'),'legacy tutorial');doc.configVersion='tribute-config-18';}
-  if(doc.schemaVersion===2&&doc.configVersion==='tribute-config-18'){ensure(doc.map!=='frontier'&&(doc.state as Data).gathering!==undefined&&((doc.state as Data).gathering as Data).extraNodes===undefined,'legacy map resources');doc.configVersion=saveConfig.configVersion;}
+  if(doc.schemaVersion===2&&doc.configVersion==='tribute-config-18'){ensure(doc.map!=='frontier'&&(doc.state as Data).gathering!==undefined&&((doc.state as Data).gathering as Data).extraNodes===undefined,'legacy map resources');doc.configVersion='tribute-config-19';}
+  if(doc.schemaVersion===2&&doc.configVersion==='tribute-config-19'){const old=doc.state as Data;ensure(!Object.hasOwn(old,'statLedger'),'legacy stat ledger');old.statLedger=createStatLedger(true);doc.configVersion=saveConfig.configVersion;}
   if(doc.schemaVersion!==saveConfig.schemaVersion||doc.configVersion!==saveConfig.configVersion)return {ok:false,error:'Unsupported save version',code:'version'};ensure(isMapId(doc.map),'map');const mapId=doc.map,definition=maps[mapId],configuredMap=createMap(mapId),resources=mapResources(mapId),totals=mapResourceTotals(mapId);checkTree(doc,configuredMap);
-  const s=r(doc.state,'match',['tutorial','speed','enemyNaval','navy','factions','map','gathering','combat','placement','production','soldierProduction','waves','outcome','paused','research','scenario','difficulty','enemyProduction','enemyAI','enemyConstruction','enemyPolicy','enemyRecovery','enemyKnowledge','fog','controlGroups']);
+  const s=r(doc.state,'match',['statLedger','tutorial','speed','enemyNaval','navy','factions','map','gathering','combat','placement','production','soldierProduction','waves','outcome','paused','research','scenario','difficulty','enemyProduction','enemyAI','enemyConstruction','enemyPolicy','enemyRecovery','enemyKnowledge','fog','controlGroups']);
   ensure(isGameSpeed(s.speed),'game speed');
   const factionData=r(s.factions,'factions',['player','enemy']);ensure(isFactionId(factionData.player)&&isFactionId(factionData.enemy),'faction identity');const playerFaction=factions[factionData.player];
   choice(s.scenario,'scenario',Object.keys(scenarioConfig));choice(s.difficulty,'difficulty',Object.keys(difficultyProfiles));choice(s.outcome,'outcome',['playing','victory','defeat']);bool(s.paused,'pause');const scenario=s.scenario as MatchScenario,difficulty=s.difficulty as Difficulty,profile=difficultyProfiles[difficulty],budget=enemyStartingBudget(profile.budget,s.enemyNaval!==undefined);
@@ -156,6 +158,7 @@ export function decodeSave(json:string):LoadResult {
    if(Number(t.step)>=3)ensure(tutorialDeliveredWood(s as unknown as MatchState)+1e-6>=tutorialConfig.deliveredWood,'tutorial delivered');
    if(Number(t.step)>=4)ensure(p.barracks!==null&&Number((p.construction as Data).remainingSeconds)===0,'tutorial barracks');
   }else ensure(s.tutorial===undefined,'unexpected tutorial');
+  if(s.statLedger!==undefined){const ledger=r(s.statLedger,'stat ledger',['player','enemy','playerBaseLost','legacy']);for(const team of ['player','enemy']){const counts=r(ledger[team],'team ledger',['built','destroyed','removed']);for(const key of ['built','destroyed','removed'])integer(counts[key],'stat count',0,1000000);}ensure(typeof ledger.playerBaseLost==='boolean'&&typeof ledger.legacy==='boolean','stat ledger flags');}
   const view=r(doc.view,'view',['camera','building']),camera=position(view.camera,'camera');ensure(camera.x<configuredMap.width&&camera.y<configuredMap.height,'camera bounds');choice(view.building,'building selection',[null,'base','barracks','harbor']);
   const state=s as unknown as MatchState,expected=[...createMap(mapId).obstacles,...placementObstacles(state.gathering).slice(Number(c.baseHP)>0?0:1),...(state.navy?.harbor?[state.navy.harbor.footprint]:[]),...(state.placement.barracks?[state.placement.barracks]:[]),...(state.placement.farms??[]).map(f=>f.footprint),...(state.placement.forge?[state.placement.forge.footprint]:[]),...state.combat.enemies.filter(e=>e.footprint).map(e=>e.footprint!)];
   const footKey=(f:Footprint)=>`${f.x},${f.y},${f.width},${f.height}`;ensure(JSON.stringify(obstacleValues.map(footKey).sort())===JSON.stringify(expected.map(footKey).sort()),'physical obstacle refs');

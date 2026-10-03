@@ -1094,3 +1094,12 @@ visar utfall, karta, fraktion, svårighet, hastighet och matchtid. Play Again
 skapar en ny match med samma val; Main Menu går direkt till startsidan.
 View Statistics och Back/Escape växlar presentation medan matchen förblir
 stoppad. Save/load av avslutad match återöppnar resultatsidan.
+
+## RTS-123 – Utökad statistik
+
+View Statistics visar insamlade/levererade/netto spenderade wood/gold,
+producerade units, combatförluster, besegrade fiender, owner-removals och
+färdigställda/förstörda byggnader per sida. Starting units/baser räknas inte
+som producerade/byggda. Förstörda foundations räknas som förlust, inte
+färdigställning. Egen borttagning är ännu ingen tillgänglig action.
+Äldre saves får tydlig upplysning om saknad historik före migration.

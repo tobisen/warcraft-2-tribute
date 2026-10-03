@@ -1114,3 +1114,16 @@ och hantering av äldre historik;124 releaseformat/build-ID-källa;125
 renderingsviewport och gemensam DOM/canvas-skalning;126 kompositionens
 assetformat. Dessa är ännu inte implementerade beslut. Inspelade röster
 krävs inte här; plattformsberoende lokala röster redovisas fortsatt.
+
+## RTS-123 – Statistikdefinitioner och äldre saves
+
+Buildings completed räknar faktisk färdigställning, inte placement eller
+starting bases. Buildings destroyed omfattar även ofärdiga sites och baser.
+Units removed by owner är separat från combat losses/enemy kills; action för
+egen borttagning ingår först147 och är fortfarande otillgänglig. Spending
+är fortsatt Net spent (betalda kostnader minus refunds).
+
+Config20/schema2 inför ledger; migration från19 behåller speldata och markerar
+bygg-/owner-removal-historik som ofullständig med räknare från migrationen.
+Vi gissar inte äldre byggda/förstörda totals från kvarvarande byggnader.
+Resursstatistik summerar alla noder, så expansionswood/gold räknas korrekt.

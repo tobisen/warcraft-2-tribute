@@ -11,7 +11,7 @@ import {releasePlaythrough} from './testHelpers/releaseBot';
 import {resultRows} from '../presentation/matchResults';
 function playerGather(){const m=createMatch('skirmish');const u=m.gathering.units[0];u.position={x:688,y:176};u.order={kind:'gather',nodeId:'wood-1'};return m;}
 it('fresh profiles do not count stocks, starting units or enemy budget as income/training/spending',()=>{
- for(const map of ['arena','forest','river'] as const){const m=createMatch('skirmish','hard',undefined,map);const stats=matchStats(m);expect(stats.seconds).toBe(0);for(const team of [stats.player,stats.enemy])expect(team).toEqual({wood:{gathered:0,delivered:0,spent:0},gold:{gathered:0,delivered:0,spent:0},added:0,lost:0,killed:0});}
+ for(const map of ['arena','forest','river'] as const){const m=createMatch('skirmish','hard',undefined,map);const stats=matchStats(m);expect(stats.seconds).toBe(0);for(const team of [stats.player,stats.enemy])expect(team).toEqual({wood:{gathered:0,delivered:0,spent:0},gold:{gathered:0,delivered:0,spent:0},added:0,lost:0,killed:0,built:0,destroyed:0,removed:0});}
 });
 it('gathered cargo becomes delivered only at actual delivery and does not invent spending',()=>{
  const m=playerGather();m.gathering=updateGathering(m.gathering,5,m.map);expect(matchStats(m).player.wood).toEqual({gathered:5,delivered:0,spent:0});m.gathering.units[0].position={x:464,y:450};m.gathering.units[0].navigation=undefined;m.gathering=updateGathering(m.gathering,1,m.map);expect(matchStats(m).player.wood).toEqual({gathered:5,delivered:5,spent:0});
@@ -32,5 +32,5 @@ it('legacy bank without extraction records shows paid finite budget, without inv
  const m=createMatch('siege-test');const r=updateEnemyProduction(m.enemyProduction!,m.combat,m.gathering,m.map,0,'clans');m.enemyProduction=r.state;expect(matchStats(m).enemy.wood.spent).toBe(54);expect(matchStats(m).enemy.gold.spent).toBe(18);expect(matchStats(m).enemy.wood.gathered).toBe(0);expect(matchStats(m).enemy.wood.delivered).toBe(0);
 });
 it('result rows label net spending and use bounded decimals for fractional gathering',()=>{
- const m=playerGather();m.gathering=updateGathering(m.gathering,.123456,m.map);const rows=resultRows(matchStats(m));expect(rows).toHaveLength(9);expect(rows[0]).toEqual({label:'Gathered wood',player:'0.1',enemy:'0'});expect(rows.some(r=>r.label==='Net spent wood')).toBe(true);
+ const m=playerGather();m.gathering=updateGathering(m.gathering,.123456,m.map);const rows=resultRows(matchStats(m));expect(rows).toHaveLength(12);expect(rows[0]).toEqual({label:'Gathered wood',player:'0.1',enemy:'0'});expect(rows.some(r=>r.label==='Net spent wood')).toBe(true);
 });

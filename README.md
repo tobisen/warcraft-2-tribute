@@ -654,3 +654,8 @@ Efter Victory/Defeat visas nu en separat resultatsida. Play Again startar om
 med samma matchval, Main Menu går till startsidan och View Statistics visar
 matchstatistiken med Back/Escape tillbaka. Avslutad match kan sparas/laddas;
 spelvärld och gameplay-input är avstängda i resultatläget.
+
+Resultatstatistik omfattar nu färdigställda och förstörda byggnader och
+separata owner-removals (action kommer senare), samt resurser från samtliga
+noder inklusive Frontier-expansioner. Äldre saves migreras med bibehållen
+match; saknad bygg-/borttagningshistorik före migration redovisas tydligt.

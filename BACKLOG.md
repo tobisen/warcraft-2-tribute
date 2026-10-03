@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-123 – Utökad matchstatistik** — **Todo**.
+**RTS-124 – Version och changelog** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -3189,7 +3189,7 @@ Simulationen stoppas och matchens input avaktiveras.
 
 ## RTS-123 – Utökad matchstatistik
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Visa insamlade/spenderade resurser, producerade/förlorade units,
 

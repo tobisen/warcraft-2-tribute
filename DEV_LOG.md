@@ -2293,3 +2293,25 @@ Screenshots visuellt granskade; ingen spelvärld synlig bakom resultat.
 Granskning korrigerade upprepad flytt av DOM-kontroller för att bevara fokus
 över frames; inga kvarstående fynd. Bundlevarning kvar, perceptuell lyssning
 uppskjuten enligt användaren.122 Done; nästa123 kompletterar matchstats.
+
+## 2026-10-03 – RTS-123: Utökad matchstatistik
+
+Alla resourceNodes/mapResourceTotals används nu, inklusive Frontier. Ledger
+för completed/destroyed buildings och separata owner removals; inga nya
+borttagningsactions. Completion före combat för land/enemy och efter navy
+för harbor; cleanDestroyed registrerar death en gång inklusive base/foundation.
+Counters separerar egen borttagning från combatförlust/opponent kills.
+
+Save schema2/config20 migrerar19 och tidigare kedja med legacy-historikflagga
+och noll nya bygg/removal-counters; matchdata/slot bevaras. Äldre totals
+gissas inte, begränsningen visas i statistiknoten. Migrationstesternas
+simulerade gamla docs tar bort det nya fältet och verifierar verklig migration.
+
+Checks:884tester/116filer PASS145.79s;65 riktade tester och17 nolltid/ledger-
+regressionstester PASS; typecheck/build/diff PASS. Första fullsviten hittade
+att ledger tillsattes vid delta0 i fältlös fixture; korrigerat att bevara
+nolltid utan events, andra fullsviten grön. Browser Tutorial båda fraktioner/
+viewports: faktisk completion=1, statistikvisning, terminal Save/load
+bevarar ledger, restart/fresh match och Victory/Defeat/navigation PASS.
+623 filreferenser giltiga; granskning av completion/death/harbor/cargo och
+Savekedja gav inga kvarstående fynd. Bundlevarningen kvar.123 Done, nästa124.

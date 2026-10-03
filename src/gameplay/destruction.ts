@@ -1,3 +1,4 @@
+import {recordBuildingDeaths} from './statLedger';
 import { pruneGroups } from './controlGroups';
 import { replaceObstacles } from './map';
 import { baseFootprint } from './buildingSelection';
@@ -29,6 +30,7 @@ export function cleanDestroyed(state:MatchState):MatchState {
   const forgeDead=!!state.placement.forge&&state.placement.forge.hp<=0;
   const deadFarms=(state.placement.farms??[]).filter(f=>f.hp!==undefined&&f.hp<=0);
   const deadSites=new Set<string>([...(harborDead?['harbor']:[]),...(forgeDead?['forge']:[]),...(barDead?['barracks']:[]),...deadFarms.map(f=>f.id)]);
+  state={...state,statLedger:recordBuildingDeaths(state,deadSites.size,(state.combat.destroyedEnemyFootprints?.length??0)+state.combat.enemies.filter(e=>e.hp<=0&&e.footprint).length)};
   const removed:Footprint[]=[...(harborDead?[state.navy!.harbor!.footprint]:[]),...(forgeDead?[state.placement.forge!.footprint]:[]),...(state.combat.destroyedEnemyFootprints??[]),...state.combat.enemies.filter(e=>e.hp<=0&&e.footprint).map(e=>e.footprint!),...(baseDead?[baseFootprint(gathering.base)]:[]),...(barDead?[state.placement.barracks!]:[]),...deadFarms.map(f=>f.footprint)];
   const obstacles=state.map.obstacles.filter(o=>!removed.some(f=>equalFoot(o,f)));
   const alive=new Set(gathering.units.map(u=>u.id));

@@ -16,7 +16,7 @@ import {cleanDestroyed} from './destruction';
 const point={x:192,y:416},view={camera:{x:0,y:0},building:'harbor' as const};
 function start(faction:'crown'|'clans'='crown'){const m=createMatch('mission-outpost','easy',factionsForPlayer(faction));m.gathering.units=m.gathering.units.map(u=>({...u,selected:u.id==='unit-1'}));m.placement={...m.placement,active:true,kind:'harbor'};return m;}
 function built(faction:'crown'|'clans'='crown'){
- let m=placeHarbor(start(faction),point);expect(m.navy?.harbor).toBeTruthy();for(let i=0;i<200&&m.navy!.harbor!.construction.remainingSeconds>0;i++)m=updateMatch(m,.05);expect(m.navy!.harbor!.construction.remainingSeconds).toBe(0);return m;
+ let m=placeHarbor(start(faction),point);expect(m.navy?.harbor).toBeTruthy();for(let i=0;i<200&&m.navy!.harbor!.construction.remainingSeconds>0;i++)m=updateMatch(m,.05);expect(m.navy!.harbor!.construction.remainingSeconds).toBe(0);expect(matchStats(m).player.built).toBe(1);return m;
 }
 /** Real extraction/delivery; no injected balance for paid jobs. Fog/path discovery is tested in browser. */
 function funded(faction:'crown'|'clans'='crown'){
@@ -50,7 +50,7 @@ it('Save/load persists build, paid queue, ship movement; strict coast/recipe/ide
   const json=encodeSave(m,view),loaded=decodeSave(json);expect(loaded.ok).toBe(true);if(loaded.ok)expect(loaded.match.navy).toEqual(JSON.parse(json).state.navy);
   for(const mutate of [(d:any)=>d.state.navy.harbor.footprint.x=400,(d:any)=>d.state.navy.production.nextUnitNumber=0,(d:any)=>d.configVersion='tribute-config-10']){const d=JSON.parse(json);mutate(d);expect(decodeSave(JSON.stringify(d)).ok).toBe(false);}
  }
- const fresh=createMatch('mission-outpost');expect(fresh.navy).toBeUndefined();const old=JSON.parse(encodeSave(fresh,{...view,building:null}));old.configVersion='tribute-config-10';expect(decodeSave(JSON.stringify(old)).ok).toBe(true);
+ const fresh=createMatch('mission-outpost');expect(fresh.navy).toBeUndefined();const old=JSON.parse(encodeSave(fresh,{...view,building:null}));old.configVersion='tribute-config-10';delete old.state.statLedger;expect(decodeSave(JSON.stringify(old)).ok).toBe(true);
 });
 it('pause and game over freeze naval state; dead builder/harbor cleanup removes refs and reservations',()=>{
  const m=trainShip(funded());expect(updateNavy({...m,paused:true},100).navy).toBe(m.navy);expect(updateNavy({...m,outcome:'defeat'},100).navy).toBe(m.navy);const dead={...m,navy:{...m.navy!,harbor:{...m.navy!.harbor!,hp:0}}};const cleaned=cleanDestroyed(dead);expect(cleaned.navy!.harbor).toBeNull();expect(cleaned.navy!.production.queue).toEqual([]);expect(cleaned.gathering.wood).toBe(m.gathering.wood);
