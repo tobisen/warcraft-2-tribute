@@ -1630,3 +1630,26 @@ blockerande fynd. Ingen ny runtimeändring i080.
 
 git diff --check och581 dokumentreferenser PASS. RTS-080 Done.
 Nästa RTS-081: vattennavigation och explicita kustregler.
+
+## 2026-10-03 – RTS-081: vattennavigation/kust
+
+Ren terrainNavigation-adapter, inga nya enheter eller Save-state.
+Partition vid terränggränser blockerar vattenunionens komplement och
+dynamiska hinder; land returnerar originalmap. Befintlig body/segment/
+BFS/orderadvance/revision återanvänds. Kust positiv land+vattenarea
+med bounds/sten/dynamiskt-hinderkontroll. Aktuella profile-waterpatches
+överlappar inte; angränsande patchunion testas explicit.
+7 riktade tester PASS235ms, extra seam-regression tillagd och verifierad
+separat. Typecheck/build PASS; bundle oförändrad eftersom adapter inte
+kopplas till entities förrän082. Faktisk Chromium-landselection/right-
+click blockerar vatten, giltigt landmove rör, Save/load/restart PASS utan
+errors. Inget browser-fartygsflöde påstås; inga ships finns ännu.
+
+Slutgranskning: domänpartition/swept-kollision, obstacle-revision,
+coast-area, bounds/body och Save-rekonstruktion utan dubbelstate. Inga
+blockerande fynd; kusttest förutsätter dagens ickeöverlappande profiler.
+Fullsuite669 tester/82 filer PASS103,75s (före sista seam-testet);
+slutlig riktad suite8 PASS522ms inkluderar extra seam-testet.
+Typecheck/build,git diff --check och583 dokumentreferenser PASS.
+Oförändrad runtime-bundle1559,52KB/gzip409,25; varning kvar.
+RTS-081 Done. Nästa RTS-082: hamnplacering/fartygsproduktion.

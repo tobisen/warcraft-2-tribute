@@ -857,3 +857,11 @@ vinnas inom fem gameplay-minuter. Oskyddat passivt Normal-spel ska
 förlora inom samma observationsfönster. Detta bevisar spelbara flöden,
 inte optimal strategi, jämn vinstchans eller att alla uppgraderingar och
 expansioner hinner användas i varje match.
+
+## RTS-081: kustregler inför hamnar
+
+Landrörelse bevaras. Kommande fartyg rör sig enbart inom sammanhängande
+vatten där hela kroppen ryms, utan landgenvägar. En hamnfootprint ska
+ha positiv area på både land och vatten och inte överlappa sten eller
+byggnader; att bara nudda stranden räcker inte. RTS-081 introducerar
+regler/ruttadapter, ingen spelbar hamn eller fartygsproduktion ännu.

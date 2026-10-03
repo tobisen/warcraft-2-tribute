@@ -467,3 +467,7 @@ RTS-080-release: [spela på GitHub Pages](https://tobisen.github.io/warcraft-2-t
 Två fraktioner, tre skirmish-kartor, betald AI-ekonomi och matchresultat
 är publicerade. Aktuella releasekontroller och begränsningar finns i
 [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md). Sjösystem kommer i nästa etapp.
+
+Vatten/kust-reglernas grund finns i RTS-081: ruttadapter och kroppsgiltighet
+är testade utan ändrad landrörelse. Spelbara hamnar/fartyg följer i
+RTS-082; inga fartygsknappar är införda i grundslicen.

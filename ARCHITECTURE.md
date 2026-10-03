@@ -1098,3 +1098,18 @@ kostnad verifieras. Sex passiva Normal-matcher verifierar terminal
 defeat och freeze. Sökpunkter måste passa land på alla kartor.
 EnemyExploration normaliserar gamla attack-move-destinationer till den
 aktuella indexerade rutten utan ny kunskap eller Save-schemaändring.
+
+## RTS-081: härledda rörelsedomäner
+
+[terrainNavigation.ts](src/gameplay/terrainNavigation.ts) återanvänder
+befintlig body/segment/BFS/route-motor. Landmap är originalet. Watermap
+partitionerar världen vid terränggränser och blockerar vattenunionens
+komplement plus dynamiska byggnader/noder. Hel square-body måste passa
+och swept segment kan inte gena över land. Ingen kopia av domänmap
+lagras i match eller Save; map-ID och revision är auktoritativa.
+Kustfootprint kräver positiv area i båda domänerna, world bounds och
+frånvaro av sten/dynamiska hinder. Placering, kustutgång och fartyg
+kopplas in i RTS-082; inga nya entities/scenknappar i denna grundslice.
+[terrainNavigation.test.ts](src/gameplay/terrainNavigation.test.ts) provar
+storlek, vattenunion/separata dammar, swept route/order/revision, kust
+och rekonstruktion efter Save/reset på alla tre kartor.

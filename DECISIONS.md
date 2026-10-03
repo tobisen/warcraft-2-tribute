@@ -839,3 +839,14 @@ sten och448/528 i Flodkrökens vatten. Ingen dold basposition läses;
 observerad bas fortsätter vara målet först efter synkontakt.
 Tidigare sparade attack-move-order normaliseras vid nästa simulation.
 Inga kostnads-/HP-/tryckändringar utan påvisat behov; Save config10 kvar.
+
+## RTS-081: land/vatten/kust
+
+Rörelsedomänen är explicit land eller vatten. Samma square-body,
+fyra-grannars BFS och world-pixel/delta-modell används. Landenheter
+korsar inte vatten; vattenkroppar korsar inte land/sten och måste
+rymmas helt, inklusive worldgräns och dynamiska byggnader. Vatten från
+handgjord mapprofil bildar en geometrisk union; angränsande patchkanter
+är inte hinder. Kustbyggnad straddlar land/vatten med positiv area i
+båda, utan sten/byggnader. Kustutgång och recipe bestäms i RTS-082.
+Ingen ny sparad terrängkopia, schema eller fartygsstate i RTS-081.

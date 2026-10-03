@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-081 – Vattennavigation och kustregler** — **Todo**.
+**RTS-082 – Hamnplacering och fartygsproduktion** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
@@ -2400,13 +2400,21 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-081 – Vattennavigation och kustregler
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Vattennavigation och kustregler.
+**Goal:** Explicita och återanvändbara land/vatten/kustregler för nästa hamnslice.
+
+**Requirements:** Härled vatten från kartprofilens verkliga terräng. Återanvänd befintlig square-body/swept-segment/BFS för en vattenadapter; vattenkroppar måste helt ligga i vatten, landkroppar behåller reglerna. World bounds, kroppsstorlek, sammanhängande vatten och byggnadsobstacles gäller. Definiera kustfootprint som inom världen, positiv area på både land och vatten, utan sten eller befintlig byggnad. Inga självständigt sparade terrängkopior. Save/load/reset rekonstruerar samma regler från befintlig map-ID. Testa orderplan/advance/replan och land-regressioner. Browser verifierar befintliga landorders vid vatten.
+
+**Non-goals:** Fartygsenheter/UI/produktion (RTS-082), sjöstrid, transport, ny karta, diagonalnavigation och ändrad Save-schema.
 
 **Dependencies:** RTS-080.
 
-**Acceptance criteria:** Land/sjö/kust regleras explicit och testas för kroppsstorlek, orders och save/reset.
+**Acceptance criteria:** Vattenroute når exakta mål inom sammanhängande vatten utan att korsa land, sten eller byggnader; fel domän/storlek/gränser blockerar. Kust har tydliga geometriska villkor och ingen påverkan på landnavigationen. Save/load/reset ger samma härledda routes, tidigare beteenden bevaras.
+
+**Tester:** Domängränser/storlek/swept segments, anslutna/separerade vattenområden, giltig/ogiltig kust, route/order/revision, Save/reset och befintliga landnavigationstest; fullsuite/typecheck/build/browser/diff.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, DECISIONS.md, GAME_DESIGN.md och README.md.
 
 ## RTS-082 – Hamnplacering och fartygsproduktion
 
