@@ -1,3 +1,4 @@
+import {enemyBody,enemySize} from './enemyBody';
 import {prepareNavalCombat} from './navalCombat';
 import type {NavyState} from './navy';
 import {abilityEffects} from './abilities';
@@ -22,11 +23,11 @@ import type { GatheringState, Unit,WorkerOrder,ResourceType } from './gathering'
 import { moveTowards, type Position } from './movement';
 
 export interface EnemyWork {cargo:number;cargoType?:ResourceType;target:Position;order:WorkerOrder}
-export interface Enemy { owner?:'enemy'; kind?:'unit'|'base'|'worker'|'building';buildingType?:'outpost'|'barracks'|'farm'|'forge';construction?:import('./placement').ConstructionJob;work?:EnemyWork; order?:{kind:'idle'}|{kind:'defend';targetId:string}|{kind:'muster'|'attack-move';destination:Position}; id: string; position: Position; hp: number; footprint?:Footprint; navigation?: RouteState }
+export interface Enemy { owner?:'enemy'; kind?:'ship'|'unit'|'base'|'worker'|'building';navalLanding?:true;buildingType?:'harbor'|'outpost'|'barracks'|'farm'|'forge';construction?:import('./placement').ConstructionJob;work?:EnemyWork; order?:{kind:'idle'}|{kind:'defend';targetId:string}|{kind:'muster'|'attack-move';destination:Position}; id: string; position: Position; hp: number; footprint?:Footprint; navigation?: RouteState }
 export interface CombatState { baseOwner?:'player'; enemies: Enemy[]; baseHP: number; projectiles?:Projectile[]; nextProjectileNumber?:number; destroyedEnemyFootprints?:Footprint[]; enemyUpgrades?:{attack:number;defense:number};upgrades?:{attack:number;defense:number} }
 
 export function enemyAt(enemies: Enemy[], point: Position): Enemy | undefined {
-  return [...enemies].reverse().find(e=>e.footprint?point.x>=e.footprint.x&&point.x<=e.footprint.x+e.footprint.width&&point.y>=e.footprint.y&&point.y<=e.footprint.y+e.footprint.height:Math.abs(e.position.x-point.x)<=combatConfig.enemySize/2&&Math.abs(e.position.y-point.y)<=combatConfig.enemySize/2);
+  return [...enemies].reverse().find(e=>e.footprint?point.x>=e.footprint.x&&point.x<=e.footprint.x+e.footprint.width&&point.y>=e.footprint.y&&point.y<=e.footprint.y+e.footprint.height:Math.abs(e.position.x-point.x)<=enemySize(e)/2&&Math.abs(e.position.y-point.y)<=enemySize(e)/2);
 }
 
 export function orderAttack(units: Unit[], enemyId: string): Unit[] {
@@ -94,7 +95,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
     const ranged=rangedStats(unit);
     const range=ranged?.range??combatConfig.soldierRange;
     const speed=combatUnitStats(unit).speed;
-    const step = map ? combatApproach({...map,bodyHalf:combatUnitStats(unit).size/2},unit.position,enemy.footprint??unitFootprint(enemy.position,combatConfig.enemySize),
+    const step = map ? combatApproach({...map,bodyHalf:combatUnitStats(unit).size/2},unit.position,enemyBody(enemy),
       enemy.id,speed,range,delta,unit.navigation,gateFor?.(`player:${unit.id}`))
       : approach(unit.position, enemy.position, speed, range, delta);
     if(ranged) {
@@ -120,7 +121,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
   const originalTargets=playerTargets(gathering,combat,placement,navy);
   const priority={ship:0,harbor:2,soldier:0,worker:1,barracks:2,farm:2,forge:2,base:3};
   const movingEnemies = combat.enemies.filter(e => e.hp > 0).map(enemy => {
-    if(enemy.kind==='worker'||enemy.footprint||enemy.order?.kind==='idle')return enemy;
+    if(enemy.kind==='ship'||enemy.kind==='worker'||enemy.footprint||enemy.order?.kind==='idle')return enemy;
     if(enemy.order?.kind==='muster'){
       const route=enemy.navigation??(map?planRoute(map,enemy.position,enemy.order.destination):undefined);
       const step=map&&route?advanceRoute(map,enemy.position,route,combatConfig.enemySpeed,delta,gateFor?.(`enemy:${enemy.id}`)):{position:moveTowards(enemy.position,enemy.order.destination,combatConfig.enemySpeed,delta),route:undefined};

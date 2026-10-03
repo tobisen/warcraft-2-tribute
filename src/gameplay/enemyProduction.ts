@@ -13,7 +13,7 @@ export function createEnemyProduction(profile:{budget:{wood:number;gold:number};
  production:{remainingSeconds:null,nextUnitNumber:1},acceptedJobs:0};
 }
 /** Adapter to shared atomic queue/time/spawn rules; temporary units never enter player state. */
-export function updateEnemyProduction(state:EnemyProductionState,combat:CombatState,player:GatheringState,map:WorldMap,delta:number,faction?:FactionId,buildings?:{site?:Enemy;population:Population;reserveForFarm?:number;startAllowed?:boolean;workerReservations?:number}) {
+export function updateEnemyProduction(state:EnemyProductionState,combat:CombatState,player:GatheringState,map:WorldMap,delta:number,faction?:FactionId,buildings?:{site?:Enemy;population:Population;reserveForFarm?:number;startAllowed?:boolean;workerReservations?:number;maxArmy?:number;embarked?:number}) {
  const base=combat.enemies.find(e=>e.kind==='base'&&e.hp>0);
  if(!base?.footprint)return {combat,state:{...state,production:{...state.production,queue:[],remainingSeconds:null,blockedSpawnKey:undefined}}};
  if(buildings&&(!buildings.site?.footprint||buildings.site.construction?.remainingSeconds!==0))return {combat,state};
@@ -23,7 +23,7 @@ export function updateEnemyProduction(state:EnemyProductionState,combat:CombatSt
   const units:Unit[]=c.enemies.filter(e=>!e.footprint).map(e=>({kind:'soldier',id:e.id,hp:e.hp,cargo:0,selected:false,position:{...e.position},target:{...e.position},order:{kind:'idle'}}));
   let g:GatheringState={faction,units,wood:next.wood,goldBalance:next.gold,base:base.position,node:{id:'unused',position:base.position,remaining:0}};
   let p=next.production,acceptedJobs=next.acceptedJobs,spent=next.spent?{...next.spent}:undefined;
-  const population=()=>({cap:Math.min(next.cap,buildings?buildings.population.cap-c.enemies.filter(e=>e.kind==='worker').length-(buildings.workerReservations??0):Infinity),used:c.enemies.filter(e=>!e.footprint&&e.kind!=='worker').length,reserved:p.queue?.reduce((n,j)=>n+(j.supply??1),0)??0});
+  const population=()=>({cap:Math.min(next.cap,buildings?.maxArmy??Infinity,buildings?buildings.population.cap-c.enemies.filter(e=>e.kind==='worker').length-(buildings.workerReservations??0):Infinity),used:c.enemies.filter(e=>!e.footprint&&e.kind!=='ship'&&e.kind!=='worker').length+(buildings?.embarked??0),reserved:p.queue?.reduce((n,j)=>n+(j.supply??1),0)??0});
   const savingForFarm=()=>buildings?.reserveForFarm!==undefined&&population().used+population().reserved+c.enemies.filter(e=>e.kind==='worker').length+(buildings.workerReservations??0)>=buildings.population.cap-buildings.reserveForFarm;
   while(buildings?.startAllowed!==false&&!savingForFarm()&&canEnqueue(g,p,building,population())){const started=enqueueProduction(g,p,building,population());if(spent){spent.wood+=g.wood-started.gathering.wood;spent.gold+=(g.goldBalance??0)-(started.gathering.goldBalance??0);}g=started.gathering;p=started.production;acceptedJobs++;}
   if(p.remainingSeconds===null)return {combat:c,state:{...next,wood:g.wood,gold:g.goldBalance??0,production:p,acceptedJobs,...(spent?{spent}:{})}};

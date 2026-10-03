@@ -2,7 +2,7 @@
 
 ## Inriktning
 
-RTS-001–066 är implementerade. RTS-067–090 är planerade för fortsatt taskvis implementation. Slicebeskrivningarna visar utvecklingen;
+RTS-001–086 är implementerade. RTS-087–090 är planerade för fortsatt taskvis implementation. Slicebeskrivningarna visar utvecklingen;
 avsnitten RTS-018–060 längst ned anger dagens HUD, terrain/navigation,
 kantbaserade ranges, gruppmål och säkra placering/spawn.
 
@@ -921,3 +921,15 @@ Markunits kan inte gå över havet. Grundvillkoren victory/defeat gäller.
 Fienden använder befintligt ändligt startkapital och lokal land-AI;
 produktion/landstigning via sjö-AI följer i086. Resursnoderna och banken
 är aldrig gratis/påfyllda under matchen. Save/restart behåller kartprofilen.
+
+## RTS-086: betalt AI-landstigningsanfall
+
+Öarnas AI betalar hamn40wood/10gold och transport40wood/10gold samt två
+ordinarie producerade soldater ur sin ändliga bank. Ökartan ger120wood/
+30gold extra startkapital, aldrig inkomst. Transporten tar2supply, har90HP,
+ryms i32px och seglar110px/s. AI använder inga kanonfartyg. Landarmén
+samlas vid synlig kust och lämnar landstate medan den bärs; landning är
+atomisk på synligt fritt land. Publika terrängvägpunkter styr utforskning
+innan spelarbasen observeras. En sänkt transport återbyggs inte; lastade
+soldater dör, väntande soldater återgår till ordinarie AI. Avmarkering,
+Save/load, paus och terminalfreeze bevarar matchens regler. Balans087 följer.

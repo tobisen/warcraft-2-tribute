@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-086 – Sjö-AI och landstigningsanfall** — **Todo**.
+**RTS-087 – Balans mellan landarmé, flotta och transporter** — **Todo**.
 
 Arbeta med Current Focus i ordning; en task åt gången.
 
@@ -2490,13 +2490,21 @@ Fraktionsnamn, specialförmågor och exakta balansvärden är öppna beslut. Nya
 
 ## RTS-086 – Sjö-AI och landstigningsanfall
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Sjö-AI och landstigningsanfall.
+**Goal:** Ett verkligt betalt, fog-säkert AI-landstigningsanfall på Öarna.
+
+**Requirements:** Färsk Öarna-match ger AI konfigurerat ändligt extra startkapital120wood/30gold för hamn/transport/landarmé, aldrig passiv inkomst. AI bygger hamn864320 med verklig worker-kontakt och betalar befintliga priser. Hamnens FIFO producerar högst en obeväpnad transport med samma8s/40wood/10gold/2supply som spelaren; verklig bank/supply/spawn används. Två befintliga betalda stridsenheter går till synlig kust, lastas, korsar vatten och landsätts på giltig synlig landpunkt. Preliminär starttid Easy260/Normal220/Hard190 gameplay-sekunder. Publika terrängvägpunkter styr utforskning innan en spelarbas faktiskt observerats; mål/skott/input lämnar inte dold state. Landstigna enheter använder befintlig landstrid och kan förstöra spelarbasen. Spelarens stridsfartyg kan sänka transporten; passagerare/counters/supply/refs/resultat städas utan gratis ersättning. Save/load mitt i bygge/kö/transport/landstigning och restart/gameover fungerar. Äldre saves får inte gratis kapital eller flotta.
+
+**Non-goals:** AI-stridsfartyg/automatisk kanonflotta, flera samtidiga transporter, återuppbyggnad av sänkt transport, workertransport/resursnoder, ny generell AI-ekonomi eller nya slutliga assets. Balans följer087.
 
 **Dependencies:** RTS-085.
 
-**Acceptance criteria:** AI kan producera och transportera med verklig ekonomi och begränsad syn.
+**Acceptance criteria:** Betald AI-transport lastar riktiga producerade units och genomför ett fog-säkert landstigningsanfall till basdamage/defeat. Spelaren kan stoppa anfallet genom riktig skada på transporten. Inga enhets-/resurs-/supply-duplicationer och äldre landkartor/matchsaves bevaras.
+
+**Tester:** Verkliga priser/kontakt/timer/supply/spawn/ID och resource-ledger, boarding/landing/HP/death/städning, begränsad syn/terrängvägpunkter, mellanfas-saves/legacy migration/restart/freeze, fullsuite/typecheck/build och browserattack/counterplay.
+
+**Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md.
 
 ## RTS-087 – Balans mellan landarmé, flotta och transporter
 

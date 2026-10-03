@@ -15,7 +15,7 @@ export function updateEnemyAI(state:EnemyAIState,combat:CombatState,map:WorldMap
  const defense=updateEnemyDefense({...state,groups},combat,map,playerBase,playerUnits,settings,visible);groups=defense.state.groups;
  let enemies=defense.combat.enemies,nextGroupNumber=state.nextGroupNumber,lastDispatchSeconds=state.lastDispatchSeconds;
  const assigned=new Set([...groups.flatMap(g=>g.members),...defense.protectedIds]);
- const recruits=enemies.filter(e=>e.hp>0&&e.id.startsWith('enemy-produced-')&&!assigned.has(e.id)).sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}));
+ const recruits=enemies.filter(e=>e.hp>0&&e.id.startsWith('enemy-produced-')&&!e.navalLanding&&!assigned.has(e.id)).sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}));
  for(const recruit of recruits){
   let group=groups.find(g=>g.status==='muster'&&g.members.length<settings.groupSize);
   if(!group){group={id:`enemy-group-${nextGroupNumber++}`,status:'muster',members:[],destinations:{},startedAt:elapsedSeconds};groups.push(group);}

@@ -908,3 +908,16 @@ passiv inkomst. Enemy terräng-scouting hålls på östra ön; inga dolda
 resurs-/baspositioner lämnas ut. Enemy har ännu inget sätt att korsa havet:
 naval AI tillkommer086. Gamla landkartor behåller ekonomi och slutflöde.
 Save schema2/config14 kopplar map-id till faktisk profilposition/stock.
+
+## RTS-086: avgränsad ändlig sjö-AI
+
+Endast färska Skirmish/Öarna får extra120wood/30gold och en betald transport.
+Ingen passiv inkomst, AI-kanonflotta eller återuppbyggnad efter sänkning.
+Två riktiga producerade soldater används; inga gratis passagerare. Preliminär
+launch Easy260/Normal220/Hard190 sekunder ligger i config och verifieras087.
+Harbor86432064x64, kust912432, vatten880432→720432 och land688432 är publika
+kartvägpunkter, aldrig dold basinformation. Observerad bas ersätter
+utforskningsmålet. Last är exklusiv EnemyNavalState, ej samtidig markarmé;
+sänkning förlorar last en gång. Gamla config14-saves får varken bonus eller
+flotta; restart krävs för nya profilens ekonomi. Enemytransport har32px
+kropp även i markanfallens range/contactberäkning.

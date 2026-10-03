@@ -1793,3 +1793,29 @@ accelererad/panorerad; inga injicerade units/resurser/HP. Tidig helper
 väntade bara150s på180wood (fick170) och16s på klanens18s-kö; väntade
 korrekta faktiska tider och verifierade igen. Pages för083/084 success.
 RTS-085 Done, nästa086 sjö-AI/landstigning.
+
+## 2026-10-03 – RTS-086 Done: sjö-AI och landstigning
+
+Betald enemy-hamn/transport från ändlig Öarna-bank, två verkliga producerade
+soldater, fog-säker kust/överfart/atomisk landning och vanlig basattack.
+Separat Phaser-fri controller/config; canonical last, supply/stats/ledger,
+sänkning/boarding-release, Save config15/legacy14 utan bonus samt restart.
+Enemytransportens32px-kropp delas av combat/contact; en24px-regression
+som blockerade meleekontakt i vatten upptäcktes och rättades. Inga
+AI-kanonfartyg eller gratis ny transport. Landkartor bevarade.
+
+Slutlig fullsuite:718 tester/87 filer PASS118,40s. Typecheck/build PASS;
+bundle1598,39KB/gzip418,82KB, avsiktlig storvarning kvar. Riktad naval/
+Öarna/save34 PASS10,34s. Två integrationstesters5s-default gav timeout i
+första parallella fullkörningen; explicit30s för verkliga hela matcher,
+sedan två fullkörningar gröna. Diff granskad för betalning/faser/ID/fog/
+domain/population/death/migration, inga kvarstående blockerande fynd.
+
+Chromium verklig Normal/Öarna/Kronförbundet utan injicerade resurser/HP/units:
+AI-last2 vid224,27s, pause/Save/load/Resume mitttransport, defeat256,29s.
+Separat betald egen insamling→hamn→stridsfartyg→synlig tom AI-transport
+sänkt; efter339,61s bas240HP, ingen ersättning, pause/restart återställer.
+Inga page/console/request-fel. Counter-screenshot granskad. Lastad
+transportsänkning verifierad i beteendetest; browsercounter gällde ännu
+olastad transport. Accelererad klocka/kamera endast för verifiering.
+RTS-086 klar; nästa087 balans mellan landarmé/flotta/transport.

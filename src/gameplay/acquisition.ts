@@ -1,3 +1,4 @@
+import {enemySize} from './enemyBody';
 import { combatUnitStats,rangedStats } from '../config/unit';
 import { archerConfig } from '../config/archer';
 import { combatConfig } from '../config/combat';
@@ -13,7 +14,7 @@ export const allEnemiesVisible: EnemyVisibility = () => true;
 const distance = (a: {x:number;y:number}, b: {x:number;y:number}) => Math.hypot(a.x-b.x,a.y-b.y);
 function reachable(unit: Soldier, enemy: Enemy, map?: WorldMap): boolean {
   if (!map) return true;
-  const half=combatConfig.enemySize/2;
+  const half=enemySize(enemy)/2;
   return approachRoute({...map,bodyHalf:combatUnitStats(unit).size/2},unit.position,enemy.footprint??{x:enemy.position.x-half,y:enemy.position.y-half,
     width:half*2,height:half*2},(rangedStats(unit)?.range??combatConfig.soldierRange)).status!=='blocked';
 }

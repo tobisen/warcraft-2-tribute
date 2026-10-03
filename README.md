@@ -2,7 +2,7 @@
 
 Browserbaserat singleplayer-RTS inspirerat av Warcraft 2, Age of Empires 2 och
 Command & Conquer. Phaser, strict TypeScript och Vite; local-first, gameplay
-före grafik. Implementerat genom RTS-072 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
+före grafik. Implementerat genom RTS-086 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
 
 ## Installation och lokal start
 
@@ -501,3 +501,14 @@ Lastkontakt: armé688432/transport720432. Segla till880432, landsätt
 på912432 och angrip fiendebasen i nordöst.800wood/400gold är ändliga;
 ingen markväg går över havet. Save config14/restart bevarar Öarna.
 Befintlig fiende-land-AI stannar på sin ö fram till sjö-AI i086.
+
+## RTS-086: AI-landstigning på Öarna
+
+På färska Skirmish-matcher på Öarna bygger AI en betald hamn och transport
+med ändligt extra startkapital120wood/30gold. Två producerade soldater kan
+landsättas och förstöra basen. Tidigast Easy260/Normal220/Hard190 sekunder;
+balansen verifieras i RTS-087. Motmedel: bygg hamn och stridsfartyg, segla
+inom syn/skjutavstånd och högerklicka den synliga transporten. AI har en
+transport, inga stridsfartyg och ingen gratis ersättning efter sänkning.
+Save/load bevarar passagerare och produktion. Äldre Öarna-saves behåller
+sin gamla ekonomi utan den nya flottan; restart aktiverar den nya profilen.

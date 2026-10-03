@@ -1187,3 +1187,19 @@ Save config14 migrerar13 för äldre kartor; föregående format kan inte
 utge sig för att redan stödja Öarna. Landkartornas gamla balansmatris
 är fortsatt oförändrad, medan [islands.test.ts](src/gameplay/islands.test.ts)
 verifierar verkligt betald transport+armé+landcombat till victory.
+
+## RTS-086: separat enemy naval-controller
+
+[src/gameplay/enemyNaval.ts](src/gameplay/enemyNaval.ts) styr betalt hamnbygge,
+FIFO, befintlig armés samling, vattenrutt och atomisk landsättning.
+[src/config/enemyNaval.ts](src/config/enemyNaval.ts) samlar kapital/tider/
+terrängvägpunkter. EnemyNavalState.passengers är ensam canonical plats för
+lastad enemy-armé; Combat.enemies håller fysiska markenheter och transport.
+Markschemaläggaren utesluter ship; naval-adaptern använder befintliga
+vattenrutter. Population/statistik/ledger inkluderar last och reservationer.
+[src/gameplay/enemyBody.ts](src/gameplay/enemyBody.ts) delar korrekt32px
+ship-kropp mellan acquisition, skjutkontakt och combat, mot24px markenhet.
+Scene presenterar tillfällig röd transport; slutlig sjöart ligger i089.
+Save schema2/config15 migrerar14 utan gratis kapital/flotta; strikta
+passagerar-ID:n, fas/producer/route/domain/refs valideras. Restart skapar
+ny finite profil. Landkartors bank och AI förblir oförändrade.

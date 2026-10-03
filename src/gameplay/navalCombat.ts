@@ -1,3 +1,4 @@
+import {enemyBody} from './enemyBody';
 import {navyConfig} from '../config/navy';
 import {navigationConfig} from '../config/navigation';
 import {footprintDistance} from './approach';
@@ -13,12 +14,12 @@ import type {Footprint} from './placement';
 import type {Position} from './movement';
 const cfg=navyConfig.ship;
 function canShoot(map:WorldMap|undefined,point:Position,enemy:Enemy){
- const foot=enemy.footprint??unitBody(enemy.position,combatConfig.enemySize);
+ const foot=enemyBody(enemy);
  if(footprintDistance(point,foot)>cfg.range+1e-9)return false;
  if(!map)return true;const flight=marineFlightMap(map);return segmentFits({...flight,obstacles:flight.obstacles.filter(o=>!enemy.footprint||o.x!==foot.x||o.y!==foot.y||o.width!==foot.width||o.height!==foot.height)},point,enemy.position,0);
 }
 function firingRoute(map:WorldMap,ship:Ship,enemy:Enemy):RouteState {
- const water={...domainMap(map,'water'),bodyHalf:cfg.size/2},foot:Footprint=enemy.footprint??unitBody(enemy.position,combatConfig.enemySize),candidates:{point:Position;bound:number;index:number}[]=[];
+ const water={...domainMap(map,'water'),bodyHalf:cfg.size/2},foot:Footprint=enemyBody(enemy),candidates:{point:Position;bound:number;index:number}[]=[];
  for(let row=Math.max(0,Math.floor((foot.y-cfg.range)/map.tileSize));row<=Math.floor((foot.y+foot.height+cfg.range)/map.tileSize);row++)for(let column=Math.max(0,Math.floor((foot.x-cfg.range)/map.tileSize));column<=Math.floor((foot.x+foot.width+cfg.range)/map.tileSize);column++){
   const point=tileCenter(map,{column,row});if(point&&bodyFits(water,point,cfg.size/2)&&canShoot(map,point,enemy))candidates.push({point,bound:Math.hypot(point.x-ship.position.x,point.y-ship.position.y),index:candidates.length});
  }
