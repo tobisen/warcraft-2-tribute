@@ -1,3 +1,4 @@
+import {initializePreferences} from './presentation/preferences';
 import {applyEnglishText} from './text';
 import {bindHomeMenu} from './presentation/homeMenu';
 import {applySkin} from './presentation/skin';
@@ -7,7 +8,7 @@ import Phaser from 'phaser';
 import { BootScene } from './scenes/BootScene';
 import { viewportConfig } from './config/camera';
 
-applyEnglishText();bindAudioControls();applySkin();bindHomeMenu();
+applyEnglishText();initializePreferences();bindAudioControls();applySkin();bindHomeMenu();
 
 const game=new Phaser.Game({
   type: Phaser.AUTO,

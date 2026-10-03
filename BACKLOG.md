@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-119 – Inställningar och persistens** — **Todo**.
+**RTS-120 – Samlat speltest och publicering** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -3090,13 +3090,21 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-119 – Inställningar och persistens
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Spara volymer, kameraval och spelpreferenser lokalt. Separata volymer för musik, effekter och röster. Hantera saknade eller ogiltiga sparade inställningar.
+**Goal:** Lokala användarinställningar över reload, med separat röstvolym.
+
+**Requirements:** Versionerat separat preferences-slot för master/music/effects/voices/mute, pan speed/edge pan och menu-defaults faction/difficulty/game speed. Återanvänd audio/camera/settings; startup läser en gång och UI visar validerade värden. Spara endast explicita ändringar; ingen ändring av aktiv matchtid/saldo/orders eller Save-slot. Save/load/restart behåller egna matchoptions och skriver inte över framtida menyval. Ogiltig JSON/version/typ/range/enum ger säkra defaults per fält, storage exceptions påverkar inte sessionen. Voices följer master/mute men inte effects. Noll röstvolym/mute avbryter aktiv replik. Storagefel redovisas i settings-status utan blockerande dialog.
+
+**Non-goals:** Campaignprogression/highscores, ny match-Save-version, fullscreen-autostart, renderingsupplösningar125, persistens av pågående selection/orders eller backend.
 
 **Dependencies:** RTS-118.
 
-**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+**Acceptance criteria:** Reload bevarar fyra volymer/mute, kamera och menu-defaults; native UI återställs korrekt. Voice/effects/music-kanaler oberoende. Ogiltiga/saknade/future-version/blocked storage hanteras; ändringar gäller sessionen även när lagring misslyckas. Preferensläsning muterar inte saves/match och load påverkar inte lagrade menydefaults. Tester/typecheck/build/diff och browser settings→reload→match→pause/save/load/restart PASS.
+
+**Tester:** Preference schema/defaults/per-field validation/storage fail/roundtrip/immutable snapshots, separata kanalgains och voice cancellation. Browser native controls, reload, saved match options versus preferences, storage failure/fallback och inga gameplay-inputeffekter.
+
+**Docs:** BACKLOG, DEV_LOG, ARCHITECTURE, DECISIONS och README.
 
 ## RTS-120 – Samlat speltest och publicering
 

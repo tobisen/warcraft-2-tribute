@@ -1085,3 +1085,17 @@ inspelning eller originalspelsreplik används. Saknad native capability ger
 synlig otillgänglighet och tyst fallback, utan gameplayeffekt. Existerande
 OS/browser-röster distribueras inte som projektassets. Faktisk röstklang är
 plattformberoende; den samlade hörbarhets-/mixbedömningen kvarstår i120.
+
+## RTS-119 – Preferences är inte en matchsave
+
+Versionerat separat preferences-slot, utan backend. Master/music/effects/
+voices/mute, camera pan/edge och meny-defaults faction/difficulty/game speed
+sparas vid faktisk ändring och läses vid startup. Map/scenario och aktiv match
+lagras inte i preferences. Säker fallback per fält; future-schema ignoreras
+utan automatisk överskrivning vid läsning. Nya explicita val får spara schema1.
+
+Voices-volym skiljs från effects och följer master/mute. Native speech kan
+inte mixas i appens AudioContext: byte av aktuell voice/master gain avbryter
+pågående tal, nästa replik använder nytt gain. Load behåller sparad matchs
+options, framtida meny-defaults behålls separat. Befintlig Save-key/version
+ändras inte. Preferences gäller browser/origin, inte mellan localhost/Pages.

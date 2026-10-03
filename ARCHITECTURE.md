@@ -1445,3 +1445,26 @@ Role/faction påverkar pitch, rate1.05. Gain följer master/effects tills119
 inför separat voices-volym. GameAudio äger lane/lifecycle; mute avbryter tal.
 Capability visas i ljudstatus om lokal engelsk röst saknas. Browserstöd och
 inspelade assets skiljs från verifierad text/policy/input-funktion.
+
+## RTS-119 – Separata lokala användarinställningar
+
+preferences.ts har validering och en injicerbar store; schema1 lagras endast i
+warcraft-2-tribute.preferences.v1. Audio master/effects/music/voices/mute,
+camera speed/edgePan och game faction/difficulty/speed har säkra per-field
+defaults. Ogiltig JSON/schema/enum/typ/range eller blockerad storage ger
+funktionell session; writes sker bara vid explicita användarändringar.
+Getter returnerar kopior. Read/updates rör aldrig warcraft-2-tribute:save:v1.
+
+main initialiserar preferences före appbinders/Phaser-instans. Pure camera-
+validering flyttas till cameraPreferences.ts och återexporteras från befintlig
+cameraSettings.ts; bindern och kamera-input återanvänder samma validering.
+Audio-controls visar fyra oberoende volymer och mute. UnitVoices följer
+master/voices, inte effects; ändrad voice/master gain avbryter aktiv replik
+så att inget gammalt gain fortsätter tills dess slut. Music/effects grafgains
+ändras direkt. Skrivfel syns i settings-status utan att blockera UI/gameplay.
+
+BootScene läser game-defaults vid första konstruktion, sparar explicita
+menyval och återställer prefererade defaults vid återgång till ny-match-menyn.
+Load/restart behåller sparad matchfaction/difficulty/speed och ändrar inte
+preferenser. Match-Save config19/schema2 är oförändrat; ingen matchstate,
+kamera-position, selection/order eller OS-fullscreen sparas som preferens.

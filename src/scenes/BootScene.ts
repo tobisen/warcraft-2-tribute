@@ -1,3 +1,4 @@
+import {getPreferences,updatePreferences} from '../presentation/preferences';
 import {voiceSpeaker,voiceOrders,orderedSpeaker} from '../presentation/voicePolicy';
 import {audioFiles} from '../config/audio';
 import {matchAudioSnapshot} from '../presentation/audioSnapshot';
@@ -90,7 +91,7 @@ import {
 } from '../gameplay/selection';
 
 export class BootScene extends Phaser.Scene {
-  private factions:MatchFactions={...defaultFactions};
+  private factions:MatchFactions=factionsForPlayer(getPreferences().game.faction);
   private controlGroups:ControlGroups={};
   private fog!:FogState;
   private fogOverlay?:Phaser.GameObjects.Graphics;
@@ -99,8 +100,8 @@ export class BootScene extends Phaser.Scene {
   private enemyAI?:EnemyAIState;
   private enemyProduction?:EnemyProductionState;
   private scenario:MatchScenario=initialScenario(new URLSearchParams(window.location.search).get('scenario'));
-  private difficulty:Difficulty=initialDifficulty(new URLSearchParams(window.location.search).get('difficulty'));
-  private session:MatchSession=createSession({scenario:this.scenario,difficulty:this.difficulty,map:scenarioConfig[this.scenario].map,faction:this.factions.player});
+  private difficulty:Difficulty=initialDifficulty(new URLSearchParams(window.location.search).get('difficulty')??getPreferences().game.difficulty);
+  private session:MatchSession=createSession({scenario:this.scenario,difficulty:this.difficulty,map:scenarioConfig[this.scenario].map,faction:this.factions.player,speed:getPreferences().game.speed});
   private skipGameplayFrame=true;
   private scenarioSelect!:HTMLSelectElement;
   private research:ResearchState=createResearch();
@@ -218,13 +219,13 @@ export class BootScene extends Phaser.Scene {
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.scenarioSelect.removeEventListener('change',changeScenario));
 
     const difficultySelect=document.querySelector<HTMLSelectElement>('#difficulty-select')!;difficultySelect.value=this.difficulty;
-    const speedSelect=document.querySelector<HTMLSelectElement>('#speed-select')!;const changeSpeed=()=>{const speed=Number(speedSelect.value);if(!isGameSpeed(speed))return;this.session=changeOptions(this.session,{speed});this.syncSession();};speedSelect.addEventListener('change',changeSpeed);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>speedSelect.removeEventListener('change',changeSpeed));
-    const changeDifficulty=()=>{if(!Object.hasOwn(difficultyProfiles,difficultySelect.value))return;this.session=changeOptions(this.session,{difficulty:difficultySelect.value as Difficulty});this.difficulty=this.session.options.difficulty;this.syncSession();};
+    const speedSelect=document.querySelector<HTMLSelectElement>('#speed-select')!;const changeSpeed=()=>{const speed=Number(speedSelect.value);if(!isGameSpeed(speed))return;this.session=changeOptions(this.session,{speed});this.saveGamePreferences();this.syncSession();};speedSelect.addEventListener('change',changeSpeed);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>speedSelect.removeEventListener('change',changeSpeed));
+    const changeDifficulty=()=>{if(!Object.hasOwn(difficultyProfiles,difficultySelect.value))return;this.session=changeOptions(this.session,{difficulty:difficultySelect.value as Difficulty});this.difficulty=this.session.options.difficulty;this.saveGamePreferences();this.syncSession();};
     difficultySelect.addEventListener('change',changeDifficulty);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>difficultySelect.removeEventListener('change',changeDifficulty));
 
     const factionSelect=document.querySelector<HTMLSelectElement>('#faction-select')!;
-    const changeFaction=()=>{if(this.session.phase!=='menu'||!isFactionId(factionSelect.value))return;this.session=changeOptions(this.session,{faction:factionSelect.value});this.factions=factionsForPlayer(factionSelect.value);this.syncSession();};
+    const changeFaction=()=>{if(this.session.phase!=='menu'||!isFactionId(factionSelect.value))return;this.session=changeOptions(this.session,{faction:factionSelect.value});this.factions=factionsForPlayer(factionSelect.value);this.saveGamePreferences();this.syncSession();};
     factionSelect.addEventListener('change',changeFaction);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>factionSelect.removeEventListener('change',changeFaction));
 
@@ -447,13 +448,15 @@ export class BootScene extends Phaser.Scene {
   private gameplayActive():boolean{return this.session.phase==='playing'&&this.outcome==='playing'&&!this.restartPending;}
   private sessionAction(action:SessionAction):void {
     const next=sessionTransition(this.session,action);if(next===this.session||this.restartPending)return;
-    this.session=next;gameAudio.setPhase(next.phase);
+    this.session=action==='new-match'?changeOptions(next,getPreferences().game):next;gameAudio.setPhase(next.phase);
     if(action==='start')this.factions=factionsForPlayer(next.options.faction??defaultFactions.player);
     if(action==='start'||action==='restart'){this.awaitingLoadedResume=false;this.scenario=next.options.scenario;this.difficulty=next.options.difficulty;this.skipGameplayFrame=true;this.restartPending=true;this.restartButton.disabled=true;this.scene.restart();return;}
     if(action==='resume'){this.skipGameplayFrame=true;if(this.awaitingLoadedResume){document.getElementById('save-status')!.textContent=uiText.loadedMatchResumed;this.awaitingLoadedResume=false;}}
     if(action==='pause'||action==='new-match'){this.placement=cancelPlacement(this.placement);this.unloadMode=null;this.attackMoveMode=false;this.drag=undefined;this.cameraDrag=undefined;this.dragBox.setVisible(false);}
     this.syncVisuals();
   }
+  private saveGamePreferences():void {if(this.session.phase==='menu')updatePreferences({game:{difficulty:this.session.options.difficulty,faction:this.session.options.faction??defaultFactions.player,speed:this.session.options.speed??1}});}
+
   private syncSession():void {
     gameAudio.setPhase(this.session.phase);
     if(gameAudio.status.loaded)document.getElementById('audio-status')!.textContent=`${gameAudio.status.loaded}/${audioFiles.length} sounds loaded · ${gameAudio.settings.muted?uiText.muted:this.session.phase==='paused'?'paused':'ready'}${gameAudio.voices.status.available?'':' · Unit voices unavailable'}`;

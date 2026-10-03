@@ -2207,3 +2207,24 @@ kamera-pan-guard för selectionreplik; inga gameplay-/Save-/scopefynd kvar.
 RTS-118 levererad med uttrycklig begränsning: inspelade röstassets saknas,
 röstklang/capability är plattformsberoende. Mänsklig matchlyssning samlas i120
 med117; ingen påstådd lyssning. Nästa119 separerar voices-volym/persistens.
+
+## 2026-10-03 – RTS-119: Separata lokala inställningar
+
+Schema1 preferences-slot separerat från match-Save: master/effects/music/voices,
+mute, pan speed/edge pan och faction/difficulty/speed för nya matcher. Läsning
+vid startup, skrivning endast vid användarändring. Per-fält defaults för
+ogiltiga värden; future version/JSON/storagefel blockerar inte spel. Voices
+har egen gain; master/voice-ändring avbryter aktiv native replik för korrekt
+volym. Camera preferences har en liten separat pure validator.
+
+Checks: npm test878tester/114filer PASS141.72s;21 riktade tester PASS;
+typecheck/build/git diff --check PASS. Bundlevarningen lämnas enligt mandat.
+Native browser: fyra volymer/mute/kamera/menyval → reload PASS. Save/load
+behåller sparad match Clans/Beginner/0.75 trots nya menydefaults Crown/Normal/1;
+restart behåller matchval och new-match återställer preferenser. Save-slot
+förblir oförändrad av preferensändringar. Invalid JSON och blockerad storage
+ger defaults och spelbar session, med icke-blockerande status vid skrivfel.
+Granskning av startupordning, gains, lagringsseparation och menu/load/restart
+gav inga kvarstående fynd. Ingen ändring av Save-schema eller gameplay.
+RTS-119 Done; nästa120 samlad releasekontroll, inklusive kvarvarande
+mänsklig lyssningsbedömning117/118.

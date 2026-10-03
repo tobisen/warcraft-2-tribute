@@ -1,3 +1,4 @@
+import {getPreferences,updatePreferences} from './preferences';
 import {UnitVoices} from './voices';
 import {voiceRole,type VoiceUnit} from './voicePolicy';
 import type {VoiceAction} from '../config/voices';
@@ -33,7 +34,7 @@ export class GameAudio {
   }catch{document.getElementById('audio-status')!.textContent=uiText.audioUnavailableGameplayRemainsAvailable;}
  }
  private async load():Promise<void>{for(const name of audioFiles){for(const ext of ['ogg','wav'])try{const response=await fetch(`${import.meta.env.BASE_URL}audio/${name}.${ext}`);if(!response.ok)throw new Error('missing audio');this.buffers.set(name,await this.context!.decodeAudioData(await response.arrayBuffer()));break;}catch{/* Validated PCM fallback; missing sound never blocks gameplay. */}}}
- setSettings(change:Partial<AudioSettings>):void {this.settings={...this.settings,...change};this.settings.master=volume(this.settings.master);this.settings.music=volume(this.settings.music);this.settings.effects=volume(this.settings.effects);this.applyVolume();this.voices.onSettingsChange();}
+ setSettings(change:Partial<AudioSettings>):void {this.settings={...this.settings,...change};this.settings.master=volume(this.settings.master);this.settings.music=volume(this.settings.music);this.settings.effects=volume(this.settings.effects);this.settings.voices=volume(this.settings.voices??defaultAudio.voices!);this.applyVolume();this.voices.onSettingsChange();}
  private applyVolume():void {if(this.context&&this.effectGain&&this.musicGain){this.effectGain.gain.setValueAtTime(audioGain(this.settings,'effects'),this.context.currentTime);this.musicGain.gain.setValueAtTime(audioGain(this.settings,'music'),this.context.currentTime);}}
  setPhase(phase:SessionPhase):void{
   this.voices.setPhase(phase);if(this.phase===phase)return;this.phase=phase;
@@ -49,8 +50,9 @@ export class GameAudio {
 }
 export const gameAudio=new GameAudio();
 export function bindAudioControls():void{
+ gameAudio.setSettings(getPreferences().audio);
  const gesture=()=>{void gameAudio.unlock();document.removeEventListener('pointerdown',gesture);document.removeEventListener('keydown',gesture);};document.addEventListener('pointerdown',gesture);document.addEventListener('keydown',gesture);
- for(const channel of ['master','effects','music'] as const){const input=document.getElementById(`audio-${channel}`) as HTMLInputElement;input.value=String(gameAudio.settings[channel]);input.addEventListener('input',()=>gameAudio.setSettings({[channel]:Number(input.value)}));}
+ for(const channel of ['master','effects','music','voices'] as const){const input=document.getElementById(`audio-${channel}`) as HTMLInputElement;input.value=String(gameAudio.settings[channel]);input.addEventListener('input',()=>{gameAudio.setSettings({[channel]:Number(input.value)});updatePreferences({audio:gameAudio.settings});});}
  document.getElementById('audio-enable')!.addEventListener('click',()=>{void gameAudio.unlock();});
- const mute=document.getElementById('audio-mute') as HTMLInputElement;mute.addEventListener('change',()=>gameAudio.setSettings({muted:mute.checked}));
+ const mute=document.getElementById('audio-mute') as HTMLInputElement;mute.checked=gameAudio.settings.muted;mute.addEventListener('change',()=>{gameAudio.setSettings({muted:mute.checked});updatePreferences({audio:gameAudio.settings});});
 }

@@ -1,8 +1,8 @@
 import {audioConfig,effectMix} from '../config/audio';
-export interface AudioSettings {master:number;effects:number;music:number;muted:boolean}
-export const defaultAudio:AudioSettings={master:.65,effects:.7,music:.35,muted:false};
+export interface AudioSettings {master:number;effects:number;music:number;voices?:number;muted:boolean}
+export const defaultAudio:AudioSettings={master:.65,effects:.7,music:.35,voices:.65,muted:false};
 export function volume(value:number):number{return Number.isFinite(value)?Math.max(0,Math.min(1,value)):0;}
-export function audioGain(settings:AudioSettings,channel:'effects'|'music'):number{return settings.muted?0:volume(settings.master)*volume(settings[channel]);}
+export function audioGain(settings:AudioSettings,channel:'effects'|'music'|'voices'):number{return settings.muted?0:volume(settings.master)*volume(settings[channel]??defaultAudio[channel]??0);}
 export type Sound=keyof typeof effectMix;
 export function allowEffect(name:Sound,now:number,last:number|undefined,active:number):boolean{
  const priority=name==='warning'||name==='victory'||name==='defeat';

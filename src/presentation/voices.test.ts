@@ -30,3 +30,11 @@ it('missing API or only remote voices is silent and never blocks gameplay',()=>{
  const lane=new UnitVoices(()=>defaultAudio);lane.setPhase('playing');expect(lane.status.available).toBe(false);expect(lane.speak('worker','select','crown')).toBe(false);
  const speak=vi.fn();vi.stubGlobal('speechSynthesis',{getVoices:()=>[{localService:false,lang:'en-US',name:'Cloud'}],speaking:false,pending:false,speak});expect(lane.speak('worker','select','crown')).toBe(false);expect(speak).not.toHaveBeenCalled();
 });
+it('voice gain is independent of effects and a changed voice/master gain cancels active speech',()=>{
+ const settings={...defaultAudio,effects:0,voices:.8},spoken:any[]=[];let time=0;const cancel=vi.fn();
+ vi.stubGlobal('speechSynthesis',{getVoices:()=>[{localService:true,lang:'en-US',name:'Local'}],speaking:false,pending:false,speak:(u:any)=>spoken.push(u),cancel});
+ vi.stubGlobal('SpeechSynthesisUtterance',class{constructor(public text:string){}});
+ const lane=new UnitVoices(()=>settings,()=>time);lane.setPhase('playing');expect(lane.speak('soldier','select','crown')).toBe(true);expect(spoken[0].volume).toBeCloseTo(settings.master*.8*.9);
+ settings.music=0;lane.onSettingsChange();expect(cancel).not.toHaveBeenCalled();settings.voices=.2;lane.onSettingsChange();expect(cancel).toHaveBeenCalledTimes(1);
+ time=3;expect(lane.speak('soldier','order','crown')).toBe(true);settings.voices=0;lane.onSettingsChange();expect(cancel).toHaveBeenCalledTimes(2);time=6;expect(lane.speak('soldier','select','crown')).toBe(false);
+});
