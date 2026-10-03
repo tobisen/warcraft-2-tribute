@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-113 – Förbättrade enhetssprites** — **Todo**.
+**RTS-114 – Förbättrade stridseffekter** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -2980,13 +2980,21 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-113 – Förbättrade enhetssprites
 
-**Status:** Todo.
+**Status:** Done.
 
-**Goal:** Förtydliga typer, riktningar, rörelse, attack och död. Enheter ska kunna särskiljas utan selection. Inkludera befintliga fartyg och båda fraktionerna.
+**Goal:** Förtydliga befintliga typer, riktningar, rörelse, attack och död, inklusive fartyg och båda fraktioner.
+
+**Requirements:** Worker med verktyg/satchel, soldier med sköld/armor eller axe/bone, archer med hood/quiver/bow och catapult med läsbar arm/hjul. Sjötyper skiljs med lastdäck respektive kanon och fraktionsdetaljer. Förtydliga attackposer och gång/vak/sjunkning. Behåll1920land- och832navalframes, åtta riktningar, blå/röd färg, native32/64px och originalkällor. Inga animationsevents driver gameplay. Frame-ID:n, ankare, animationtimers, hitbox och fog/death lifecycle bevaras.
+
+**Non-goals:** Nya units, stats/balans/combatändringar, ljud114/117, imported artwork, nya animation-/renderingsystem.
 
 **Dependencies:** RTS-112.
 
-**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+**Acceptance criteria:** Typer urskiljbara utan selection i granskade artboards/worldscreenshots; åtta riktningar och walk/attack/death läsbara. Exportmetadata stämmer med PNG, palett/ankare/framecoverage korrekt. Relevant/fulltester/typecheck/build/diff PASS. Browser1280×720/1920×1080 med faktisk selection/move/produktion/combat samt navalflow där praktiskt; pause/Save/load/restart bevaras.
+
+**Tester:** Exportcoverage/bounds/PNGmetadata; faktiska rastertyper/riktningar/states skiljer sig och har rätt palett/lagfärg/transparens. Animation/fog/death-regressioner; browser med betald tutorial och sjöproduktion/boarding/rörelse, separat artboard för samtliga typer/fraktioner/lag/riktningar/states.
+
+**Docs:** BACKLOG, DEV_LOG, ARCHITECTURE, assets/README och assets/ASSET_LICENSE.
 
 ## RTS-114 – Förbättrade stridseffekter
 

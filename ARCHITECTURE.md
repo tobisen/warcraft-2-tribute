@@ -1342,3 +1342,20 @@ Synlig enemybase/outpost följer också HP; befintligt entityVisible-filter
 körs före frameval, så dold skada avslöjas inte. Construction och removed/
 dead/fog-renderobjekt följer befintlig lifecycle. Save behåller endast HP,
 inte bildstate; frame härleds på load/restart. Ankare/footprints är oförändrade.
+
+## RTS-113 – Läsbara enhetstyper och animationer
+
+Worker har verktyg, brätte, rem och satchel; soldier har armor/axelplåtar,
+Crown-hjälmprydnad/sköld eller Clans-axe/bone. Archer får hood/quiver och
+animerad bågsträng i attack. Catapult har tydligare tvärbalk/teamplåt och
+hjulekrar som följer gångposer. Naval hull/lastdäck/kanon/heraldik skiljer
+roller och fraktioner; kanon får rekyl och gångvak har tre synliga faser.
+Spiked Clans-bog respektive Crown-bogdetaljer renderas före vapen/last.
+
+1920land- och832navalframes, stabilaID:n, åtta riktningar, native32/64px,
+ankare16,22/32,40, palett och befintlig8FPS/0.5sdeath-lifecycle kvarstår.
+Stats, gameplay, hitboxes, fog, selection, Save och eventtiming ändras inte.
+Enbart egna repo-lokala pixelkällor, inga importerade bilder. Unitsmanifestets
+width korrigeras från4096 till faktiskPNG2048; height4096 är oförändrad.
+Rasterregressioner kontrollerar typ/riktningsvariation och minst tre olika
+walk/attack/death-frames; icke-stridande transport har inget attackbeteende.

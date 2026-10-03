@@ -20,7 +20,7 @@
     "units": {
       "image": "assets/units-atlas.png",
       "data": "assets/units-atlas.json",
-      "width": 4096,
+      "width": 2048,
       "height": 4096,
       "source": "assets/sources/units.mjs",
       "slotSize": 64,
