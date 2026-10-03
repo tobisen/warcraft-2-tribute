@@ -12,3 +12,26 @@ it('new orders and dead workers leave service immediately; cancellation retains 
 it('service is derived identically after save/load and pause does not rotate it',()=>{let m=createMatch('skirmish');m.gathering.units=Array.from({length:8},(_,i)=>({...m.gathering.units[i%3],id:`unit-${i+1}`,position:{x:300+i*28,y:300}}));m.production.nextUnitNumber=9;m.soldierProduction.nextUnitNumber=9;m.waves.elapsedSeconds=7;m.gathering.units=m.gathering.units.map(u=>u.kind==='worker'?({...u,order:{kind:'gather',nodeId:m.gathering.node.id}}):u);m=updateMatch(m,.5);const saved=decodeSave(encodeSave(m,{camera:{x:0,y:0},building:null}));expect(saved.ok).toBe(true);if(!saved.ok)return;expect(resourceServices(saved.match.gathering,saved.match.map,saved.match.waves.elapsedSeconds)).toEqual(resourceServices(m.gathering,m.map,m.waves.elapsedSeconds));expect(resourceServices(m.gathering,m.map,m.waves.elapsedSeconds).size).toBe(8);const resumed=updateMatch({...saved.match,paused:false},.05),continued=updateMatch(m,.05);expect(resumed.gathering.units.map(u=>[u.id,u.order,u.cargo])).toEqual(continued.gathering.units.map(u=>[u.id,u.order,u.cargo]));expect(resumed.gathering.node.remaining).toBeCloseTo(continued.gathering.node.remaining);for(let i=0;i<resumed.gathering.units.length;i++){const a=resumed.gathering.units[i],b=continued.gathering.units[i];expect(Math.hypot(a.position.x-b.position.x,a.position.y-b.position.y)).toBeLessThanOrEqual(10.4);}m.paused=true;expect(updateMatch(m,10)).toBe(m);});
 it('delivery trips release service slots so the remaining gatherers can work',()=>{const s=fixture();s.units=s.units.map((u,i)=>u.kind==='worker'&&i<5?{...u,order:{kind:'deliver',nodeId:'wood'}}:u);const services=resourceServices(s,map,0);expect([...services.values()].some(p=>p.working)).toBe(false);expect(services.has('worker-6')).toBe(false);});
 it('returning carriers cannot bypass the shared slot limit inside a large delta',()=>{const s=fixture();s.units=s.units.map((u,i)=>u.kind==='worker'&&i<5?{...u,position:{x:260,y:400},cargo:1,order:{kind:'deliver',nodeId:'wood'}}:u);const next=updateGathering(s,20,map,{elapsedSeconds:0});expect(next.wood).toBeGreaterThanOrEqual(5);expect(next.units.slice(0,5).every(u=>u.cargo===0&&u.order.kind==='gather')).toBe(true);});
+
+it('separate wood and gold deposits admit independent cohorts with reachable distinct places',()=>{
+ const s=fixture();s.gold={id:'gold',resource:'gold',position:{x:600,y:400},remaining:100};s.goldBalance=0;
+ s.units.push(...s.units.map((u,i):Worker=>({...u as Worker,id:`gold-worker-${i+1}`,position:{x:520,y:200+i*25},target:{x:600,y:400},order:{kind:'gather',nodeId:'gold'}})));
+ const services=resourceServices(s,map,0);
+ for(const prefix of ['worker-','gold-worker-']){
+  const cohort=[...services].filter(([id])=>id.startsWith(prefix));
+  expect(cohort).toHaveLength(8);expect(cohort.filter(([,p])=>p.working)).toHaveLength(3);
+  expect(new Set(cohort.map(([,p])=>`${p.point.x},${p.point.y}`)).size).toBe(8);
+ }
+ const placed={...s,units:s.units.map(u=>({...u,position:services.get(u.id)!.point}))};
+ const next=updateGathering(placed,1,map,{elapsedSeconds:0});
+ expect(next.node.remaining).toBe(97);expect(next.gold!.remaining).toBe(97);
+ expect(next.units.filter(u=>u.cargo>0)).toHaveLength(6);
+ expect(next.wood).toBe(0);expect(next.goldBalance).toBe(0);
+});
+it('an isolated worker waits without occupying a reachable worker’s service place',()=>{
+ const s=fixture();s.units[0].position={x:100,y:100};
+ const blocked={...map,revision:1,obstacles:[...map.obstacles,{x:150,y:0,width:32,height:600}]};
+ const services=resourceServices(s,blocked,0);
+ expect(services.get('worker-1')!.working).toBe(false);
+ expect([...services.values()].filter(p=>p.working)).toHaveLength(3);
+});

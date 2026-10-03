@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-129 – Flera arbetare per resurs** — **Todo**.
+**RTS-130 – Visa resursbemanning** — **Todo**.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -3361,7 +3361,7 @@ Information om dolda resurser följer fog-of-war-reglerna.
 
 ## RTS-129 – Flera arbetare per resurs
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Flera workers kan arbeta på samma fyndighet.
 
@@ -3382,7 +3382,9 @@ Workers ska vara visuellt urskiljbara vid resursen.
 
 **Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
 
-**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+**Detaljplan:** RTS-064/067 har redan tre delade serviceplatser, tidsroterad kö, nåbarhetsfilter och separation. Återanvänd systemen; komplettera tester för separata samtidiga wood/gold-köer och blockerad worker utan att låsa nåbara workers. Befintliga tester täcker begränsad stock, orderbyte/död, Save/load och delning med fienden. Native betald workerproduktion ger fler än tre workers vid samma nod; granska urskiljbarhet och kö, utan fixturebank.
+
+**Verifierat:** 900tester/120filer PASS139.56s;20 riktade kö/enemy-gatheringtester PASS; typecheck/build/diff PASS. Native1280/1920: fem betalda workers, gemensam fyndighet, leverans och kö PASS. Screenshot granskad med urskiljbara kroppar; inga browserfel/blockerande diff-fynd. Befintlig runtime återanvänd.
 
 ## RTS-130 – Visa resursbemanning
 

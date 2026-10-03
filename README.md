@@ -682,3 +682,5 @@ lägre gain i menyn. Perceptuell ljudtest/matchlyssning är uppskjuten, inte utf
 RTS-127 verifierar flera oberoende fyndigheter på Frontier Valley, med leverans till samma mål och bevarade orderreferenser vid Save/load.
 
 Vänsterklick på en utforskad resurs visar namn, typ och mängd i bottom bar. Aktuell mängd/Depleted visas bara inom synfältet. Klicket avmarkerar units men avbryter inte deras arbete.
+
+Flera workers kan samla vid samma fyndighet. Vid hög belastning används nåbara arbetsplatser och en tidsroterad kö; leveranser och orderbyte frigör plats.

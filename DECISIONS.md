@@ -1170,3 +1170,7 @@ Behåll RTS-115:s författade kartdata och ID-baserade gather/deliver-orders. Fy
 ## RTS-128 – Resursinformation och fog
 
 Utforskade fyndigheter får väljas, men aktuell mängd/uttömning kräver vision. Ingen ny stock-minnesmodell införs; dolda noder visar Outside current vision. Egna units/byggnader har klickprioritet vid överlappning. Resursselection är exklusiv, även med Shift, och hålls som lokal presentation utan Save-formatändring; Load/restart rensar den.
+
+## RTS-129 – Behåll servicekön
+
+Återanvänd tidigare tre serviceplatser och femsekunders rotation från traffic-config. Kö härleds från levande workers, orders och gameplaytid, delas mellan ägare och återställs deterministiskt efter Save/load. Ingen separat persisterad kö eller nytt resursregelsystem införs.

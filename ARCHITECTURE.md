@@ -1578,3 +1578,7 @@ Befintliga `mapResources` och `resourceNodes` från RTS-115 är gemensam källa 
 ## RTS-128 – Resursselection
 
 `src/gameplay/resourceSelection.ts` återanvänder unit/building-hit och väljer därefter kända fyndigheter; egna entities har prioritet vid överlappning. BootScene håller ett lokalt selectedResource-ID, rensat av annan selection/grupprecall och scenrestart. Resursklick ersätter även Shift-selection utan gameplay-order. `selectionInfo` visar live stock endast inom aktuell vision; utforskade dolda noder visar namn/typ och Outside current vision. Save-schema ändras inte; denna presentationselection återställs vid Load.
+
+## RTS-129 – Delade arbetsplatser
+
+Återanvänder `resourceServices`, konfigurerade tre platser/femsekunders rotation och befintlig separation. Platser filtreras efter nåbarhet; överfulla cohorts får distinkta köpunkter. En gemensam snapshot för spelarens och fiendens workers används av matchuppdateringen. Tester kompletterar samtidiga oberoende wood/gold-köer och isolerad worker utan låsta platser; inget nytt köstate eller Save-format.

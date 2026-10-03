@@ -1134,3 +1134,7 @@ Frontier har två wood-fyndigheter och två gold mines med egna lager. En arbeta
 ## RTS-128 – Välj fyndighet
 
 Vänsterklick på utforskad fyndighet ersätter unit/building-selection, även med Shift. Bottom bar visar Wood grove/Gold mine, ID, typ och synlig återstående mängd eller Depleted. Utanför aktuell vision visas ingen stock eller aktuell uttömningsstatus. Resursselection ger inga orders; arbetare fortsätter sin arbetsloop. Klick på unit/byggnad, drag eller grupprecall ersätter resursselection.
+
+## RTS-129 – Flera arbetare vid fyndighet
+
+Fler än tre tilldelade gather-workers använder befintliga nåbara arbetsplatser och tidsroterad väntkö. Levererande workers lämnar arbetsplatsen. Orderbyte/död frigör plats; den ändliga fyndighetens lager och levererade saldo bevaras. Befintlig separation håller arbetarna urskiljbara, utan full collision avoidance.
