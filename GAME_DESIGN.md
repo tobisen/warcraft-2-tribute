@@ -1130,3 +1130,7 @@ Paus och resultat följer befintliga ljudgates; artwork syns inte i matchen.
 ## RTS-127 – Oberoende resursfyndigheter
 
 Frontier har två wood-fyndigheter och två gold mines med egna lager. En arbetare återgår till sin beordrade fyndighet efter leverans; en uttömd fyndighet ändrar inte orders eller lager vid andra fyndigheter. Inga nya resurser eller kartor införs i denna task.
+
+## RTS-128 – Välj fyndighet
+
+Vänsterklick på utforskad fyndighet ersätter unit/building-selection, även med Shift. Bottom bar visar Wood grove/Gold mine, ID, typ och synlig återstående mängd eller Depleted. Utanför aktuell vision visas ingen stock eller aktuell uttömningsstatus. Resursselection ger inga orders; arbetare fortsätter sin arbetsloop. Klick på unit/byggnad, drag eller grupprecall ersätter resursselection.

@@ -680,3 +680,5 @@ Settings; befintlig musikloop börjar först efter användarinteraktion, med
 lägre gain i menyn. Perceptuell ljudtest/matchlyssning är uppskjuten, inte utförd.
 
 RTS-127 verifierar flera oberoende fyndigheter på Frontier Valley, med leverans till samma mål och bevarade orderreferenser vid Save/load.
+
+Vänsterklick på en utforskad resurs visar namn, typ och mängd i bottom bar. Aktuell mängd/Depleted visas bara inom synfältet. Klicket avmarkerar units men avbryter inte deras arbete.

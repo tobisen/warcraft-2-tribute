@@ -1,3 +1,6 @@
+import {resourceNodes} from '../gameplay/gathering';
+import {knownResource} from '../gameplay/visibility';
+import {isVisible} from '../gameplay/fog';
 import {factionForTeam} from '../config/factions';
 import {navyConfig} from '../config/navy';
 import type {BuildingSelection} from '../gameplay/buildingSelection';
@@ -5,9 +8,15 @@ import type {MatchState} from '../gameplay/match';
 import {artAtlas,motion,unitFrame,type UnitArt} from './animation';
 import {buildingFrame} from './assets';
 export interface SelectionInfo {name:string;detail:string;hp:number|null;maxHP:number|null;stats:string[];portrait:{atlas:'units'|'naval'|'buildings';frame:string}|null}
-const empty=():SelectionInfo=>({name:'No selection',detail:'Click a unit or building, or drag to select a group.',hp:null,maxHP:null,stats:[],portrait:null});
+const empty=():SelectionInfo=>({name:'No selection',detail:'Click a unit, building or resource, or drag to select a group.',hp:null,maxHP:null,stats:[],portrait:null});
 /** Presentation only: reads selected player entities, never enemy or hidden resources. Stats are baseline recipes. */
-export function selectionInfo(m:MatchState,building:BuildingSelection):SelectionInfo {
+export function selectionInfo(m:MatchState,building:BuildingSelection,resourceId:string|null=null):SelectionInfo {
+ if(resourceId){
+  const node=resourceNodes(m.gathering).find(n=>n.id===resourceId);
+  if(!node||!m.fog||!knownResource(m.fog,node.position))return empty();
+  const type=node.resource??'wood',visible=isVisible(m.fog,'player',node.position);
+  return {name:type==='wood'?'Wood grove':'Gold mine',detail:`${node.id} · ${visible?node.remaining<=0?'Depleted':`${Math.ceil(node.remaining)} remaining`:'Outside current vision'}`,hp:null,maxHP:null,stats:[`Resource: ${type}`],portrait:null};
+ }
  const faction=factionForTeam(m,'player'),selected=[...m.gathering.units,...(m.navy?.ships??[])].filter(u=>u.selected);
  if(selected.length>1){const infos=selected.map(u=>selectionInfo({...m,gathering:{...m.gathering,units:m.gathering.units.map(x=>({...x,selected:x.id===u.id}))},navy:m.navy?{...m.navy,ships:m.navy.ships.map(x=>({...x,selected:x.id===u.id}))}:undefined},null));return {name:`${selected.length} units selected`,detail:'Right-click to command the group. Workers gather; combat units fight.',hp:infos.reduce((n,x)=>n+(x.hp??0),0),maxHP:infos.reduce((n,x)=>n+(x.maxHP??0),0),stats:['Combined health'],portrait:null};}
  const u=selected[0];
@@ -28,5 +37,5 @@ export function renderSelectionInfo(info:SelectionInfo):void {
  document.getElementById('selection-name')!.textContent=info.name;document.getElementById('selection-detail')!.textContent=info.detail;
  document.getElementById('selection-health')!.textContent=info.hp===null?'':`HP ${Math.ceil(info.hp)} / ${info.maxHP}`;
  const health=document.getElementById('selection-health-bar') as HTMLProgressElement;health.hidden=info.hp===null;health.max=info.maxHP??1;health.value=info.hp??0;
- document.getElementById('selection-stats')!.textContent=info.stats.length?'Baseline stats · '+info.stats.join(' · '):'';
+ document.getElementById('selection-stats')!.textContent=info.stats.length?info.stats.join(' · '):'';
 }

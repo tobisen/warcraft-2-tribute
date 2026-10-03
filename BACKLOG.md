@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-128 – Selection av resurser** — **Todo**.
+**RTS-129 – Flera arbetare per resurs** — **Todo**.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -3134,7 +3134,7 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## Nästa godkända etapp – RTS-121–150
 
-Användarens arbetslista: slutför RTS-115–120 först. Därefter inventering och implementation av RTS-121–126, en task åt gången, med taskvisa checks, browserverifiering, docs, commit med task-ID och push utan force. Kontrollera Pages-deploy där åtkomst finns. RTS-127–150 är planerade och ska **inte implementeras i denna körning**. Fortsätt från Current Focus; denna etapp startar först efter RTS-120. Stora tasks delas i subtasks under samma ID. Saves bevaras via migration eller tydlig kontrollerad inkompatibilitetshantering. Ingen backend eller multiplayer.
+Användarens arbetslista: slutför RTS-115–120 först. Därefter inventering och implementation av RTS-121–126, en task åt gången, med taskvisa checks, browserverifiering, docs, commit med task-ID och push utan force. Kontrollera Pages-deploy där åtkomst finns. Historiskt etappstopp: RTS-127–150 var då endast planerade. Senaste fortsätt efter publicerad126 upphäver stoppet (se Current Focus). Fortsätt från Current Focus; denna etapp startar först efter RTS-120. Stora tasks delas i subtasks under samma ID. Saves bevaras via migration eller tydlig kontrollerad inkompatibilitetshantering. Ingen backend eller multiplayer.
 
 Kartreferenser inför RTS-132–133 (ännu inte lästa eller använda för kartinnehåll): [HoMM-kartor](http://modhomm3.free.fr/maps/map_english01.htm), [Warcraft II BNE](http://classic.battle.net/war2/lp/bne.shtml), [VGMaps](https://vgmaps.de/maps/pc/warcraft-ii-tides-of-darkness.php), [Fall of Lordaeron](https://www.blizzplanet.com/blog/comments/warcraft_ii_tides_of_darkness___orc_campaign_the_fall_of_lordaeron/warcraft-ii-the-fall-of-lordaeron-map). Använd geografi/expansioner/passager/tempo som referens, skapa egna kartor/assets och redovisa otillgängliga källor utan att hitta på innehåll.
 
@@ -3334,7 +3334,7 @@ Uttömning av en fyndighet påverkar inte övriga.
 
 ## RTS-128 – Selection av resurser
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Klick på resurs visar namn, typ och återstående mängd i bottom bar.
 
@@ -3355,7 +3355,9 @@ Information om dolda resurser följer fog-of-war-reglerna.
 
 **Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
 
-**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+**Detaljplan:** Pure targetval återanvänder unit/building-hit och därefter utforskade resurser; klick på resurs ersätter selection även med Shift. Unit-/building-klick, drag och grupprecall rensar resursselection. Bottom bar visar namn/typ och synlig aktuell mängd/uttömning; utforskad men dold nod visar ingen aktuell stock. Resursselection är lokal presentation och återställs vid scenrestart/Load, utan Save-formatändring. Tester för prioritet/ersättning/fog/live stock samt native klickflöde.
+
+**Verifierat:** 898tester/120filer PASS149.76s;18 riktade selection-regressioner PASS, typecheck/build/diff PASS. Native1280/1920: resurs/unit/bas/Shift/drag och orderbevarande PASS; separat fryst renderfixture verifierar Depleted/dold stock. Screenshot granskad utan klippt bottom bar. Inga browserfel eller blockerande diff-fynd.
 
 ## RTS-129 – Flera arbetare per resurs
 

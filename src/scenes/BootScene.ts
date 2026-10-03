@@ -1,3 +1,4 @@
+import {selectWorldTarget} from '../gameplay/resourceSelection';
 import type {StatLedger} from '../gameplay/statLedger';
 import {syncResultScreen} from '../presentation/resultScreen';
 import {getPreferences,updatePreferences} from '../presentation/preferences';
@@ -67,7 +68,7 @@ import { costLabel } from '../gameplay/economy';
 import { stopSelected } from '../gameplay/orders';
 import { orderMarkers,navalOrderMarkers } from '../presentation/orders';
 import { setRally } from '../gameplay/rally';
-import { allowsProduction, baseFootprint, selectPlayerTarget, type BuildingSelection } from '../gameplay/buildingSelection';
+import { allowsProduction, baseFootprint, type BuildingSelection } from '../gameplay/buildingSelection';
 import { dragCamera, type CameraDrag } from '../presentation/camera';
 import { commandGroupMove } from '../gameplay/groupMovement';
 import { arenaConfig } from '../config/arena';
@@ -125,6 +126,7 @@ export class BootScene extends Phaser.Scene {
   private attackMoveButton!:HTMLButtonElement;
   private stopButton!: HTMLButtonElement;
   private selectedBuilding: BuildingSelection = null;
+  private selectedResource:string|null=null;
   private rallyMarker!: Phaser.GameObjects.Arc;
   private buildingRing!: Phaser.GameObjects.Rectangle;
   private cameraDrag?: CameraDrag;
@@ -206,7 +208,7 @@ export class BootScene extends Phaser.Scene {
       if(!gameplayKeyAllowed(keyboardContext(event,this.gameplayActive()))||!validGroup(event.key))return;
       event.preventDefault();
       if(event.ctrlKey||event.metaKey)this.controlGroups=bindGroup(this.controlGroups,event.key,this.allSelectable(),u=>entityVisible(this.fog,'player',u));
-      else{this.setSelectable(recallGroup(this.controlGroups,event.key,this.allSelectable(),u=>entityVisible(this.fog,'player',u)));this.selectedBuilding=null;this.attackMoveMode=false;this.placement=cancelPlacement(this.placement);this.drag=undefined;this.dragBox.setVisible(false);gameAudio.say(voiceSpeaker(this.allSelectable()),'select',this.factions.player);}
+      else{this.setSelectable(recallGroup(this.controlGroups,event.key,this.allSelectable(),u=>entityVisible(this.fog,'player',u)));this.selectedBuilding=null;this.selectedResource=null;this.attackMoveMode=false;this.placement=cancelPlacement(this.placement);this.drag=undefined;this.dragBox.setVisible(false);gameAudio.say(voiceSpeaker(this.allSelectable()),'select',this.factions.player);}
       this.syncVisuals();
     };window.addEventListener('keydown',groupKey);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>window.removeEventListener('keydown',groupKey));
     this.fogOverlay=this.add.graphics().setDepth(40);
@@ -265,6 +267,7 @@ export class BootScene extends Phaser.Scene {
     const stop = () => { const before=voiceOrders(this.allSelectable());this.attackMoveMode=false; this.gathering.units = stopSelected(this.gathering.units, this.gameplayActive());if(this.gameplayActive())this.navy=stopShips(this.navy);gameAudio.say(orderedSpeaker(before,this.allSelectable()),'order',this.factions.player); this.syncVisuals(); };
     this.stopButton.addEventListener('click', stop);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.stopButton.removeEventListener('click', stop));
+    this.selectedResource=null;
     this.selectedBuilding = loaded?.view.building??null;
     this.rallyMarker = this.add.circle(0, 0, 8).setStrokeStyle(2, 0x7bd389).setDepth(6).setVisible(false);
     this.buildingRing = this.add.rectangle(0, 0, 0, 0).setOrigin(0).setStrokeStyle(2, 0xffdc73).setDepth(effectConfig.selectionDepth).setVisible(false);
@@ -620,13 +623,15 @@ export class BootScene extends Phaser.Scene {
     this.handleMove(pointer);
     const end = this.worldPoint(pointer);
     if (this.drag.active) {
+      this.selectedResource=null;
       const all=this.allSelectable(),hits=selectUnitsInRectangle(all, this.drag.world, end);
       this.setSelectable(this.drag.shift?combineSelection(all,hits,'add'):hits);
       if(!this.drag.shift||this.allSelectable().some(u=>u.selected))this.selectedBuilding = null;
     } else {
-      const selected = selectPlayerTarget(this.allSelectable(), end, this.gathering.base,
-        this.placement.barracks, u=>u.kind==='ship'?navyConfig.ship.size:u.kind==='worker'?unitStats.size:combatUnitStats(u).size,this.navy?.harbor?.footprint);
-      if(this.drag.shift&&!selected.building){
+      const selected = selectWorldTarget(this.allSelectable(), end, this.gathering.base,
+        this.placement.barracks, u=>u.kind==='ship'?navyConfig.ship.size:u.kind==='worker'?unitStats.size:combatUnitStats(u).size,this.navy?.harbor?.footprint,resourceNodes(this.gathering),n=>knownResource(this.fog,n.position));
+      this.selectedResource=selected.resource;
+      if(this.drag.shift&&!selected.building&&!selected.resource){
         this.setSelectable(combineSelection(this.allSelectable(),selected.units,'toggle'));
         if(selected.units.some(u=>u.selected))this.selectedBuilding=null;
       }else{this.setSelectable(selected.units);this.selectedBuilding=selected.building;}
@@ -730,7 +735,7 @@ export class BootScene extends Phaser.Scene {
     this.buildingRing.setVisible(selectedFootprint !== null);
     if (selectedFootprint) this.buildingRing.setPosition(selectedFootprint.x, selectedFootprint.y)
       .setSize(selectedFootprint.width, selectedFootprint.height);
-    const info=selectionInfo(this.currentMatch(),this.selectedBuilding);renderSelectionInfo(info);
+    const info=selectionInfo(this.currentMatch(),this.selectedBuilding,this.selectedResource);renderSelectionInfo(info);
     const portrait=document.getElementById('selection-portrait') as HTMLCanvasElement;portrait.hidden=!info.portrait;this.paintPortrait(portrait,info.portrait);
     renderSelectedIcons(selectedIcons(this.currentMatch()),(canvas,asset)=>this.paintPortrait(canvas,asset));
     renderTopBar(this.currentMatch());
@@ -747,7 +752,7 @@ export class BootScene extends Phaser.Scene {
     document.getElementById('ability-status')!.textContent=abilityStatus(this.gathering);
     const labels = matchLabels(this.currentMatch());
     for (const [id, text] of [['resource-status', labels.economy], ['health-status', labels.health],
-      ['wave-status', labels.wave],['population-status',`Population: ${population.used} + ${population.reserved} reserved / ${population.cap}`], ['selection-status', this.selectedBuilding ? `${(this.selectedBuilding==='harbor'?uiText.harbor:factions[this.factions.player].buildingNames[this.selectedBuilding])} selected (${Math.ceil(this.selectedBuilding==='harbor'?this.navy!.harbor!.hp:this.selectedBuilding==='base'?this.combat.baseHP:this.placement.barracksHP??combatConfig.barracksHP)} HP) ${this.selectedBuilding==='harbor'?uiText.shipQueue:uiText.rightClickSetsRally2}${selectedProduction?.rallyError ? ': ' + uiText.theRallyDestinationIsBlockedOrUnreachable : ''}` : (this.navy?.ships.some(s=>s.selected)?`${this.allSelectable().filter(u=>u.selected).length} units selected · ships`:labels.selected)]]) {
+      ['wave-status', labels.wave],['population-status',`Population: ${population.used} + ${population.reserved} reserved / ${population.cap}`], ['selection-status', this.selectedBuilding ? `${(this.selectedBuilding==='harbor'?uiText.harbor:factions[this.factions.player].buildingNames[this.selectedBuilding])} selected (${Math.ceil(this.selectedBuilding==='harbor'?this.navy!.harbor!.hp:this.selectedBuilding==='base'?this.combat.baseHP:this.placement.barracksHP??combatConfig.barracksHP)} HP) ${this.selectedBuilding==='harbor'?uiText.shipQueue:uiText.rightClickSetsRally2}${selectedProduction?.rallyError ? ': ' + uiText.theRallyDestinationIsBlockedOrUnreachable : ''}` : (this.selectedResource?info.name:this.navy?.ships.some(s=>s.selected)?`${this.allSelectable().filter(u=>u.selected).length} units selected · ships`:labels.selected)]]) {
       document.getElementById(id)!.textContent = text;
     }
 

@@ -1166,3 +1166,7 @@ Ingen separat autoplay eller dubbla musikloopar. Faktisk hörbarhet/balans
 ## RTS-127 – Återanvänd flera fyndigheter
 
 Behåll RTS-115:s författade kartdata och ID-baserade gather/deliver-orders. Fyndigheter har separata ändliga lager; ingen automatisk omdirigering vid uttömning. Regressionstäckning kompletteras utan att omstrukturera fungerande resource-state.
+
+## RTS-128 – Resursinformation och fog
+
+Utforskade fyndigheter får väljas, men aktuell mängd/uttömning kräver vision. Ingen ny stock-minnesmodell införs; dolda noder visar Outside current vision. Egna units/byggnader har klickprioritet vid överlappning. Resursselection är exklusiv, även med Shift, och hålls som lokal presentation utan Save-formatändring; Load/restart rensar den.

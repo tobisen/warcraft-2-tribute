@@ -1574,3 +1574,7 @@ Perceptuell ljudbedömning är fortsatt uppskjuten enligt användaren.
 ## RTS-127 – Flera fyndigheter
 
 Befintliga `mapResources` och `resourceNodes` från RTS-115 är gemensam källa för alla fyndigheter. Gathering/delivery refererar fyndigheter via `nodeId`; egna ändliga lager och Save-validering återanvänds. `src/gameplay/multipleResources.test.ts` täcker oberoende lager, mål över upprepade turer, uttömning och aktiva expansionorders efter Save/load. Ingen ny runtime-abstraktion behövdes.
+
+## RTS-128 – Resursselection
+
+`src/gameplay/resourceSelection.ts` återanvänder unit/building-hit och väljer därefter kända fyndigheter; egna entities har prioritet vid överlappning. BootScene håller ett lokalt selectedResource-ID, rensat av annan selection/grupprecall och scenrestart. Resursklick ersätter även Shift-selection utan gameplay-order. `selectionInfo` visar live stock endast inom aktuell vision; utforskade dolda noder visar namn/typ och Outside current vision. Save-schema ändras inte; denna presentationselection återställs vid Load.
