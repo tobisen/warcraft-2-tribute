@@ -1,3 +1,4 @@
+import {resourceStaffing} from '../gameplay/resourceStaffing';
 import {resourceNodes} from '../gameplay/gathering';
 import {knownResource} from '../gameplay/visibility';
 import {isVisible} from '../gameplay/fog';
@@ -15,7 +16,8 @@ export function selectionInfo(m:MatchState,building:BuildingSelection,resourceId
   const node=resourceNodes(m.gathering).find(n=>n.id===resourceId);
   if(!node||!m.fog||!knownResource(m.fog,node.position))return empty();
   const type=node.resource??'wood',visible=isVisible(m.fog,'player',node.position);
-  return {name:type==='wood'?'Wood grove':'Gold mine',detail:`${node.id} · ${visible?node.remaining<=0?'Depleted':`${Math.ceil(node.remaining)} remaining`:'Outside current vision'}`,hp:null,maxHP:null,stats:[`Resource: ${type}`],portrait:null};
+  const staffing=visible?resourceStaffing(m,node):null;
+  return {name:type==='wood'?'Wood grove':'Gold mine',detail:`${node.id} · ${visible?node.remaining<=0?'Depleted':`${Math.ceil(node.remaining)} remaining`:'Outside current vision'}`,hp:null,maxHP:null,stats:[`Resource: ${type}`,...(staffing?[`Workers: ${staffing.assigned} assigned / ${staffing.gathering} gathering`]:[])],portrait:null};
  }
  const faction=factionForTeam(m,'player'),selected=[...m.gathering.units,...(m.navy?.ships??[])].filter(u=>u.selected);
  if(selected.length>1){const infos=selected.map(u=>selectionInfo({...m,gathering:{...m.gathering,units:m.gathering.units.map(x=>({...x,selected:x.id===u.id}))},navy:m.navy?{...m.navy,ships:m.navy.ships.map(x=>({...x,selected:x.id===u.id}))}:undefined},null));return {name:`${selected.length} units selected`,detail:'Right-click to command the group. Workers gather; combat units fight.',hp:infos.reduce((n,x)=>n+(x.hp??0),0),maxHP:infos.reduce((n,x)=>n+(x.maxHP??0),0),stats:['Combined health'],portrait:null};}

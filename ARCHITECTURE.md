@@ -1582,3 +1582,7 @@ Befintliga `mapResources` och `resourceNodes` från RTS-115 är gemensam källa 
 ## RTS-129 – Delade arbetsplatser
 
 Återanvänder `resourceServices`, konfigurerade tre platser/femsekunders rotation och befintlig separation. Platser filtreras efter nåbarhet; överfulla cohorts får distinkta köpunkter. En gemensam snapshot för spelarens och fiendens workers används av matchuppdateringen. Tester kompletterar samtidiga oberoende wood/gold-köer och isolerad worker utan låsta platser; inget nytt köstate eller Save-format.
+
+## RTS-130 – Härledd resursbemanning
+
+`src/gameplay/resourceStaffing.ts` läser levande egna gather/deliver-workers per nodeId. Aktiv gathering kräver stock, lastutrymme, nådd navigation/servicepunkt och fysisk interaktion. Samma serviceberäkning inkluderar enemy-workers för korrekt delad admission, men endast egna workers räknas. SelectionInfo visar counts endast inom vision. Ingen ny simulationstate/Save-property eller arbetsplatsrendering.

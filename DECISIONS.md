@@ -1174,3 +1174,7 @@ Utforskade fyndigheter får väljas, men aktuell mängd/uttömning kräver visio
 ## RTS-129 – Behåll servicekön
 
 Återanvänd tidigare tre serviceplatser och femsekunders rotation från traffic-config. Kö härleds från levande workers, orders och gameplaytid, delas mellan ägare och återställs deterministiskt efter Save/load. Ingen separat persisterad kö eller nytt resursregelsystem införs.
+
+## RTS-130 – Vad bemanningen räknar
+
+Visa spelarens tilldelade och faktiskt samlande workers, inte fiendens antal. Gemensam serviceadmission tar dock hänsyn till fiendens arbetare. Leverans behåller assigned men räknas inte som gathering; full last, resa och kö räknas inte som aktiv gathering. Counts härleds, sparas inte och döljs utanför vision.

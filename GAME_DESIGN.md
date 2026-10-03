@@ -1138,3 +1138,7 @@ Vänsterklick på utforskad fyndighet ersätter unit/building-selection, även m
 ## RTS-129 – Flera arbetare vid fyndighet
 
 Fler än tre tilldelade gather-workers använder befintliga nåbara arbetsplatser och tidsroterad väntkö. Levererande workers lämnar arbetsplatsen. Orderbyte/död frigör plats; den ändliga fyndighetens lager och levererade saldo bevaras. Befintlig separation håller arbetarna urskiljbara, utan full collision avoidance.
+
+## RTS-130 – Resursbemanning
+
+En vald synlig fyndighet visar Workers: N assigned / M gathering. Assigned omfattar levande egna arbetare som reser, väntar, samlar eller levererar från noden. Gathering omfattar bara arbetare med plats, kontakt, ledig last och tillgänglig stock. Orderbyte/död/uttömning ändrar texten; hidden nodes visar ingen bemanning. Markering av arbetsplatser införs inte i denna slice.

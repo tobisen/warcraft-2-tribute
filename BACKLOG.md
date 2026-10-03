@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-130 – Visa resursbemanning** — **Todo**.
+**RTS-131 – Stöd för större kartor** — **Todo**.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -3388,7 +3388,7 @@ Workers ska vara visuellt urskiljbara vid resursen.
 
 ## RTS-130 – Visa resursbemanning
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Visa antal tilldelade workers och antal aktivt samlande workers.
 
@@ -3409,7 +3409,9 @@ Vid selection kan arbetsplatser markeras diskret.
 
 **Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
 
-**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+**Detaljplan:** Härled bemanning från levande egna workers med gather/deliver-order till vald nod. Gathering kräver tillgänglig stock, fri lastkapacitet, fysisk interaktion/nådd serviceplats och aktiv serviceadmission. Återanvänd gemensam kö med enemy-workers så att upptagen plats räknas rätt. Visa Workers: N assigned / M gathering i bottom bar endast inom vision. Inga nya arbetsplatsmarkörer (valfria), köstate eller Save-fält. Tester för resa/kö/gather/delivery/order/death/depletion/fog samt native femworkersflöde.
+
+**Verifierat:** 905tester/121filer PASS148.93s;20 riktade bemanning/selectiontester PASS efter worker-typavgränsning i fixture. Typecheck/build/diff PASS. Native1280/1920: fem betalda workers, live assigned/gathering över flera steg och orderbyte till0/0 PASS. Screenshot visar5/3 och läsbar text; inga pageerrors eller blockerande diff-fynd.
 
 ## RTS-131 – Stöd för större kartor
 

@@ -28,7 +28,7 @@ it('overlapping own entities have priority and unknown resources cannot be selec
 it.each(['wood','gold'] as const)('bottom bar displays live %s stock and depletion, never hidden current quantities',type=>{
  const m=createMatch(),node=resourceNodes(m.gathering).find(n=>n.resource===type)!;
  expect(selectionInfo(m,null,node.id).name).toBe('No selection');reveal(m,node.position);
- node.remaining=12.5;expect(selectionInfo(m,null,node.id)).toMatchObject({name:type==='wood'?'Wood grove':'Gold mine',detail:`${node.id} · 13 remaining`,hp:null,portrait:null,stats:[`Resource: ${type}`]});
+ node.remaining=12.5;expect(selectionInfo(m,null,node.id)).toMatchObject({name:type==='wood'?'Wood grove':'Gold mine',detail:`${node.id} · 13 remaining`,hp:null,portrait:null,stats:[`Resource: ${type}`,'Workers: 0 assigned / 0 gathering']});
  node.remaining=0;expect(selectionInfo(m,null,node.id).detail).toContain('Depleted');
  reveal(m,node.position,false);expect(selectionInfo(m,null,node.id).detail).toBe(`${node.id} · Outside current vision`);
  node.remaining=55;expect(selectionInfo(m,null,node.id).detail).toBe(`${node.id} · Outside current vision`);
