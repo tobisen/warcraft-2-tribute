@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-110 – Speltest av Beginner** — **Todo**.
+**RTS-111 – Förbättrad pixelterräng** — **Todo**.
 
 RTS-001–090 är klara. Ny beställd roadmap091–120 följer nedan. 091–096 är levererade. Användaren har därefter sagt fortsätt; fortsätt återstående roadmap i ordning enligt taskvisa checks/commit/push.
 
@@ -2926,13 +2926,21 @@ Gemensamt: HUD/menyer fångar input; vänsterdrag selection, mittendrag kamera. 
 
 ## RTS-110 – Speltest av Beginner
 
-**Status:** Todo.
+**Status:** Done. Användaren rapporterade 2026-10-03: ”speltestet är avklarat och det såg bra ut”. Övergripande godkännande; detaljer ej rapporterade dokumenteras i PLAYTEST.md. Ingen balansändring utan problemunderlag.
 
-**Goal:** Verifiera att en ny spelare hinner förstå kontrollerna, bygga ekonomi och producera ett försvar. Dokumentera speltest och justera balans utifrån resultatet. Automatiserade tester ersätter inte användarens speltest.
+**Goal:** Verifiera att en ny spelare förstår kontrollerna, bygger ekonomi och producerar ett försvar före första Beginnerangreppet. Dokumentera observationer och justera endast utifrån resultat.
+
+**Requirements:** En verklig spelare genomför Campaign → Tutorial och därefter Skirmish/Arena/Beginner/Crown/1× på publicerade109versionen. Dokumentera erfarenhetsnivå, browser/viewport om kända, vilka tutorialmål som var otydliga, om gather/leverans/build/train kunde hittas utan extern hjälp, om en soldier var färdig före första synliga angreppet samt bugs/frustration. Notera faktisk observation separat från automatiska kontroller och förväntade configvärden. Behövs balansändring: avgränsa den till Beginner och verifiera relevanta regressioner samt typecheck/build/browser. Låt användaren spela igen när ändringen påverkar testets slutsats.
+
+**Non-goals:** Bot som ersättning för människan, uppdiktade observationer, automatiskt Done, nya mekaniker, obestyrkta balansändringar, grafik111–116 eller ljud117–118.
 
 **Dependencies:** RTS-109.
 
-**Detaljering:** Krav, non-goals, acceptance criteria, tester och relevanta docs konkretiseras före framtida implementation.
+**Acceptance criteria:** Verklig speltestrapport finns med tydlig slutsats för begriplighet och prep-time. Kända blockerande nybörjarproblem rättade eller uttryckligt kvarstående hinder. Eventuella ändringar har passerade kontroller och omspelat påverkat flöde. Automatiserade tester ersätter inte användarens speltest.
+
+**Tester:** Baseline109: full822 tester, typecheck/build/diff, riktiga browserinputs i båda upplösningar och två betalda Save/load-checkpoints PASS. Dessa är tekniska kontroller, inte nybörjarobservationer. Humanprotokoll i PLAYTEST.md. Kör endast relevanta checks om faktisk kod/balans ändras; doc-only behöver inga nya tester.
+
+**Docs:** [PLAYTEST.md](PLAYTEST.md), BACKLOG.md, DEV_LOG.md; GAME_DESIGN/DECISIONS om balans ändras.
 
 ## RTS-111 – Förbättrad pixelterräng
 
