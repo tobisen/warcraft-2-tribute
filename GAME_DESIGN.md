@@ -1203,7 +1203,7 @@ Body-storlek24px för worker/melee/ranged/specialist,40px för siege. Projectile
 
 ### Byggnader och prerequisites
 
-Varje fraktion har startbas, truppbyggnad, supplybyggnad, researchbyggnad och hamn. Samma byggmekanik, placement/grid och begränsningar återanvänds. Startbas96px har8supply och ingen ny byggplacering; övriga64px,5s worker-bygge. Supply ger5, högst befintliga tre supplybyggnader; truppproduktion använder befintlig FIFO-kö,5-unit-roster utan nya byggnadssystem.
+Varje fraktion har startbas, truppbyggnad, supplybyggnad, researchbyggnad och hamn. Samma byggmekanik, placement/grid och begränsningar återanvänds. Spelarens startbas har befintligt48px-footprint och8supply; fiendens startbas har96px-footprint. Ingen ny basplacering; övriga64px,5s worker-bygge. Supply ger5, högst befintliga tre supplybyggnader; truppproduktion använder befintlig FIFO-kö,5-unit-roster utan nya byggnadssystem.
 
 | Fraktion | Bas: namn / HP | Truppbyggnad: namn / kostnad / HP | Supply: namn / kostnad / HP | Research: namn / kostnad / HP | Hamn: namn / kostnad / HP |
 | --- | --- | --- | --- | --- | --- |
@@ -1241,6 +1241,10 @@ AI måste faktiskt betala/använda egna roster-/research-/naval-recept; inga fra
 
 ## RTS-135 – Implementerad data- och prerequisitegrund
 
-Ordinarie spel har fortsatt Crown/Clans och fyra arméroller inklusive worker. Specialistprototyper är förberedda i data men dolda tills respektive fraktion kompletteras. En roster kan utesluta roller; då visas ingen träningsaction. Prerequisites kontrolleras vid betalning/start: byggnaden ska vara färdig och levande och research ska vara avslutad. Blockerad produktion drar inget saldo. Ett redan godkänt jobb fortsätter om ett prerequisite därefter försvinner.
+Vid leverans av135 hade ordinarie spel Crown/Clans och fyra arméroller inklusive worker. Specialistprototyper är förberedda i data men dolda tills respektive fraktion kompletteras. En roster kan utesluta roller; då visas ingen träningsaction. Prerequisites kontrolleras vid betalning/start: byggnaden ska vara färdig och levande och research ska vara avslutad. Blockerad produktion drar inget saldo. Ett redan godkänt jobb fortsätter om ett prerequisite därefter försvinner.
 
 Recept styr namn, kostnader, tider, supply, HP, movement och spelarcombat samt researchmodifier och fartyg. Fraktionsdesignens nya balans/prerequisites aktiveras i136–140, inte retroaktivt genom135. Full fienderoster och fraktionsmatchups kommer141; nuvarande generiska enemy-armé är bevarad. Specialistens befintliga soldatbild är en prototyp, inte färdig fraktionsgrafik.
+
+## RTS-136 – Spelbara Humans
+
+Humans har fem beslutade roller, egen Banner Guard-grafik och befintliga Human-byggnadsutseenden. Forge låser upp siege; Plate Craft låser upp Banner Guard. Recept/stats enligt134; Catapult aggro-range264px motsvarar range+40. Researchnamn Tempered Arms och Plate Craft, warship Cutter; befintliga stance/ekonomi/delivery/produktion/selection/combat-regler återanvänds. Basens befintliga spelar-footprint48px och enemy96px bevaras;134-textens96px som generell spelarbas var en felaktig inventering och har rättats. Ingen geometri-/saveombyggnad genomförs här. Full femrolls-AI och matchup-balans verifieras141; nuvarande betalda enemy-grundproduktion/ekonomi kvar.

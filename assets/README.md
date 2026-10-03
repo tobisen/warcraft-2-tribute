@@ -171,3 +171,7 @@ externa referensbilder; fem fantasyfolk och original landscape/costumes.
 Master1672×941, runtime JPEG85 exporterad med sips. HTML-menu/title läggs
 ovanpå i appen och finns inte i bilden. Befintlig musik används för ambience;
 ingen ytterligare ljud-/röstasset. Lyssning uppskjuten enligt användaren.
+
+## RTS-136 – Human Banner Guard
+
+Egen32px specialist med guldrustning, bred kite shield och fana i sources/units.mjs. Två teamägare, åtta riktningar, idle1 och walk/attack/death4frames vardera, samma8FPS. Ingen extern rasterreferens eller ny genererad illustration; utökar etablerade repo-native pixelkällor.2128frames i2048×4352atlas, metadata/PNG uppdaterade tillsammans. Befintliga Human-stenbyggnader, tak, heraldik och byggfaser återanvänds; deras logiska player-base48px/enemy-base96px bevaras. Rastertester verifierar distinct specialist-silhuett, åtta riktningar, minst tre motion/combat/death-faser och projektpalett.

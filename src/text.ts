@@ -97,7 +97,7 @@ export const text={
   "forestPass": "Forest Pass",
   "riverBend": "River Bend",
   "islands": "Islands",
-  "crownAlliance": "Crown Alliance",
+  "crownAlliance": "Humans · Crown Alliance",
   "ironClan": "Iron Clan",
   "clanWorker": "Clan Worker",
   "worker": "Worker",

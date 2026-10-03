@@ -21,7 +21,7 @@
       "image": "assets/units-atlas.png",
       "data": "assets/units-atlas.json",
       "width": 2048,
-      "height": 4096,
+      "height": 4352,
       "source": "assets/sources/units.mjs",
       "slotSize": 64,
       "directions": [
@@ -17151,6 +17151,3334 @@
       "kind": "unit",
       "faction": "crown",
       "type": "catapult",
+      "owner": "enemy",
+      "direction": "ne",
+      "state": "death",
+      "frame": 3
+    },
+    "specialist-player-e-idle-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "e",
+      "state": "idle",
+      "frame": 0
+    },
+    "specialist-player-e-walk-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "e",
+      "state": "walk",
+      "frame": 0
+    },
+    "specialist-player-e-walk-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "e",
+      "state": "walk",
+      "frame": 1
+    },
+    "specialist-player-e-walk-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "e",
+      "state": "walk",
+      "frame": 2
+    },
+    "specialist-player-e-walk-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "e",
+      "state": "walk",
+      "frame": 3
+    },
+    "specialist-player-e-attack-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "e",
+      "state": "attack",
+      "frame": 0
+    },
+    "specialist-player-e-attack-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "e",
+      "state": "attack",
+      "frame": 1
+    },
+    "specialist-player-e-attack-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "e",
+      "state": "attack",
+      "frame": 2
+    },
+    "specialist-player-e-attack-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "e",
+      "state": "attack",
+      "frame": 3
+    },
+    "specialist-player-e-death-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "e",
+      "state": "death",
+      "frame": 0
+    },
+    "specialist-player-e-death-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "e",
+      "state": "death",
+      "frame": 1
+    },
+    "specialist-player-e-death-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "e",
+      "state": "death",
+      "frame": 2
+    },
+    "specialist-player-e-death-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "e",
+      "state": "death",
+      "frame": 3
+    },
+    "specialist-player-se-idle-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "se",
+      "state": "idle",
+      "frame": 0
+    },
+    "specialist-player-se-walk-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "se",
+      "state": "walk",
+      "frame": 0
+    },
+    "specialist-player-se-walk-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "se",
+      "state": "walk",
+      "frame": 1
+    },
+    "specialist-player-se-walk-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "se",
+      "state": "walk",
+      "frame": 2
+    },
+    "specialist-player-se-walk-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "se",
+      "state": "walk",
+      "frame": 3
+    },
+    "specialist-player-se-attack-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "se",
+      "state": "attack",
+      "frame": 0
+    },
+    "specialist-player-se-attack-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "se",
+      "state": "attack",
+      "frame": 1
+    },
+    "specialist-player-se-attack-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "se",
+      "state": "attack",
+      "frame": 2
+    },
+    "specialist-player-se-attack-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "se",
+      "state": "attack",
+      "frame": 3
+    },
+    "specialist-player-se-death-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "se",
+      "state": "death",
+      "frame": 0
+    },
+    "specialist-player-se-death-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "se",
+      "state": "death",
+      "frame": 1
+    },
+    "specialist-player-se-death-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "se",
+      "state": "death",
+      "frame": 2
+    },
+    "specialist-player-se-death-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "se",
+      "state": "death",
+      "frame": 3
+    },
+    "specialist-player-s-idle-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "s",
+      "state": "idle",
+      "frame": 0
+    },
+    "specialist-player-s-walk-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "s",
+      "state": "walk",
+      "frame": 0
+    },
+    "specialist-player-s-walk-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "s",
+      "state": "walk",
+      "frame": 1
+    },
+    "specialist-player-s-walk-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "s",
+      "state": "walk",
+      "frame": 2
+    },
+    "specialist-player-s-walk-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "s",
+      "state": "walk",
+      "frame": 3
+    },
+    "specialist-player-s-attack-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "s",
+      "state": "attack",
+      "frame": 0
+    },
+    "specialist-player-s-attack-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "s",
+      "state": "attack",
+      "frame": 1
+    },
+    "specialist-player-s-attack-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "s",
+      "state": "attack",
+      "frame": 2
+    },
+    "specialist-player-s-attack-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "s",
+      "state": "attack",
+      "frame": 3
+    },
+    "specialist-player-s-death-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "s",
+      "state": "death",
+      "frame": 0
+    },
+    "specialist-player-s-death-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "s",
+      "state": "death",
+      "frame": 1
+    },
+    "specialist-player-s-death-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "s",
+      "state": "death",
+      "frame": 2
+    },
+    "specialist-player-s-death-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "s",
+      "state": "death",
+      "frame": 3
+    },
+    "specialist-player-sw-idle-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "sw",
+      "state": "idle",
+      "frame": 0
+    },
+    "specialist-player-sw-walk-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "sw",
+      "state": "walk",
+      "frame": 0
+    },
+    "specialist-player-sw-walk-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "sw",
+      "state": "walk",
+      "frame": 1
+    },
+    "specialist-player-sw-walk-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "sw",
+      "state": "walk",
+      "frame": 2
+    },
+    "specialist-player-sw-walk-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "sw",
+      "state": "walk",
+      "frame": 3
+    },
+    "specialist-player-sw-attack-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "sw",
+      "state": "attack",
+      "frame": 0
+    },
+    "specialist-player-sw-attack-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "sw",
+      "state": "attack",
+      "frame": 1
+    },
+    "specialist-player-sw-attack-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "sw",
+      "state": "attack",
+      "frame": 2
+    },
+    "specialist-player-sw-attack-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "sw",
+      "state": "attack",
+      "frame": 3
+    },
+    "specialist-player-sw-death-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "sw",
+      "state": "death",
+      "frame": 0
+    },
+    "specialist-player-sw-death-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "sw",
+      "state": "death",
+      "frame": 1
+    },
+    "specialist-player-sw-death-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "sw",
+      "state": "death",
+      "frame": 2
+    },
+    "specialist-player-sw-death-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "sw",
+      "state": "death",
+      "frame": 3
+    },
+    "specialist-player-w-idle-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "w",
+      "state": "idle",
+      "frame": 0
+    },
+    "specialist-player-w-walk-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "w",
+      "state": "walk",
+      "frame": 0
+    },
+    "specialist-player-w-walk-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "w",
+      "state": "walk",
+      "frame": 1
+    },
+    "specialist-player-w-walk-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "w",
+      "state": "walk",
+      "frame": 2
+    },
+    "specialist-player-w-walk-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "w",
+      "state": "walk",
+      "frame": 3
+    },
+    "specialist-player-w-attack-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "w",
+      "state": "attack",
+      "frame": 0
+    },
+    "specialist-player-w-attack-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "w",
+      "state": "attack",
+      "frame": 1
+    },
+    "specialist-player-w-attack-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "w",
+      "state": "attack",
+      "frame": 2
+    },
+    "specialist-player-w-attack-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "w",
+      "state": "attack",
+      "frame": 3
+    },
+    "specialist-player-w-death-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "w",
+      "state": "death",
+      "frame": 0
+    },
+    "specialist-player-w-death-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "w",
+      "state": "death",
+      "frame": 1
+    },
+    "specialist-player-w-death-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "w",
+      "state": "death",
+      "frame": 2
+    },
+    "specialist-player-w-death-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "w",
+      "state": "death",
+      "frame": 3
+    },
+    "specialist-player-nw-idle-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "nw",
+      "state": "idle",
+      "frame": 0
+    },
+    "specialist-player-nw-walk-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "nw",
+      "state": "walk",
+      "frame": 0
+    },
+    "specialist-player-nw-walk-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "nw",
+      "state": "walk",
+      "frame": 1
+    },
+    "specialist-player-nw-walk-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "nw",
+      "state": "walk",
+      "frame": 2
+    },
+    "specialist-player-nw-walk-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "nw",
+      "state": "walk",
+      "frame": 3
+    },
+    "specialist-player-nw-attack-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "nw",
+      "state": "attack",
+      "frame": 0
+    },
+    "specialist-player-nw-attack-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "nw",
+      "state": "attack",
+      "frame": 1
+    },
+    "specialist-player-nw-attack-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "nw",
+      "state": "attack",
+      "frame": 2
+    },
+    "specialist-player-nw-attack-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "nw",
+      "state": "attack",
+      "frame": 3
+    },
+    "specialist-player-nw-death-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "nw",
+      "state": "death",
+      "frame": 0
+    },
+    "specialist-player-nw-death-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "nw",
+      "state": "death",
+      "frame": 1
+    },
+    "specialist-player-nw-death-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "nw",
+      "state": "death",
+      "frame": 2
+    },
+    "specialist-player-nw-death-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "nw",
+      "state": "death",
+      "frame": 3
+    },
+    "specialist-player-n-idle-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "n",
+      "state": "idle",
+      "frame": 0
+    },
+    "specialist-player-n-walk-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "n",
+      "state": "walk",
+      "frame": 0
+    },
+    "specialist-player-n-walk-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "n",
+      "state": "walk",
+      "frame": 1
+    },
+    "specialist-player-n-walk-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "n",
+      "state": "walk",
+      "frame": 2
+    },
+    "specialist-player-n-walk-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "n",
+      "state": "walk",
+      "frame": 3
+    },
+    "specialist-player-n-attack-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "n",
+      "state": "attack",
+      "frame": 0
+    },
+    "specialist-player-n-attack-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "n",
+      "state": "attack",
+      "frame": 1
+    },
+    "specialist-player-n-attack-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "n",
+      "state": "attack",
+      "frame": 2
+    },
+    "specialist-player-n-attack-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "n",
+      "state": "attack",
+      "frame": 3
+    },
+    "specialist-player-n-death-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "n",
+      "state": "death",
+      "frame": 0
+    },
+    "specialist-player-n-death-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "n",
+      "state": "death",
+      "frame": 1
+    },
+    "specialist-player-n-death-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "n",
+      "state": "death",
+      "frame": 2
+    },
+    "specialist-player-n-death-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "n",
+      "state": "death",
+      "frame": 3
+    },
+    "specialist-player-ne-idle-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "ne",
+      "state": "idle",
+      "frame": 0
+    },
+    "specialist-player-ne-walk-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "ne",
+      "state": "walk",
+      "frame": 0
+    },
+    "specialist-player-ne-walk-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "ne",
+      "state": "walk",
+      "frame": 1
+    },
+    "specialist-player-ne-walk-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "ne",
+      "state": "walk",
+      "frame": 2
+    },
+    "specialist-player-ne-walk-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "ne",
+      "state": "walk",
+      "frame": 3
+    },
+    "specialist-player-ne-attack-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "ne",
+      "state": "attack",
+      "frame": 0
+    },
+    "specialist-player-ne-attack-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "ne",
+      "state": "attack",
+      "frame": 1
+    },
+    "specialist-player-ne-attack-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "ne",
+      "state": "attack",
+      "frame": 2
+    },
+    "specialist-player-ne-attack-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "ne",
+      "state": "attack",
+      "frame": 3
+    },
+    "specialist-player-ne-death-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "ne",
+      "state": "death",
+      "frame": 0
+    },
+    "specialist-player-ne-death-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "ne",
+      "state": "death",
+      "frame": 1
+    },
+    "specialist-player-ne-death-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "ne",
+      "state": "death",
+      "frame": 2
+    },
+    "specialist-player-ne-death-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "player",
+      "direction": "ne",
+      "state": "death",
+      "frame": 3
+    },
+    "specialist-enemy-e-idle-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "e",
+      "state": "idle",
+      "frame": 0
+    },
+    "specialist-enemy-e-walk-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "e",
+      "state": "walk",
+      "frame": 0
+    },
+    "specialist-enemy-e-walk-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "e",
+      "state": "walk",
+      "frame": 1
+    },
+    "specialist-enemy-e-walk-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "e",
+      "state": "walk",
+      "frame": 2
+    },
+    "specialist-enemy-e-walk-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "e",
+      "state": "walk",
+      "frame": 3
+    },
+    "specialist-enemy-e-attack-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "e",
+      "state": "attack",
+      "frame": 0
+    },
+    "specialist-enemy-e-attack-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "e",
+      "state": "attack",
+      "frame": 1
+    },
+    "specialist-enemy-e-attack-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "e",
+      "state": "attack",
+      "frame": 2
+    },
+    "specialist-enemy-e-attack-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "e",
+      "state": "attack",
+      "frame": 3
+    },
+    "specialist-enemy-e-death-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "e",
+      "state": "death",
+      "frame": 0
+    },
+    "specialist-enemy-e-death-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "e",
+      "state": "death",
+      "frame": 1
+    },
+    "specialist-enemy-e-death-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "e",
+      "state": "death",
+      "frame": 2
+    },
+    "specialist-enemy-e-death-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "e",
+      "state": "death",
+      "frame": 3
+    },
+    "specialist-enemy-se-idle-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "se",
+      "state": "idle",
+      "frame": 0
+    },
+    "specialist-enemy-se-walk-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "se",
+      "state": "walk",
+      "frame": 0
+    },
+    "specialist-enemy-se-walk-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "se",
+      "state": "walk",
+      "frame": 1
+    },
+    "specialist-enemy-se-walk-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "se",
+      "state": "walk",
+      "frame": 2
+    },
+    "specialist-enemy-se-walk-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "se",
+      "state": "walk",
+      "frame": 3
+    },
+    "specialist-enemy-se-attack-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "se",
+      "state": "attack",
+      "frame": 0
+    },
+    "specialist-enemy-se-attack-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "se",
+      "state": "attack",
+      "frame": 1
+    },
+    "specialist-enemy-se-attack-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "se",
+      "state": "attack",
+      "frame": 2
+    },
+    "specialist-enemy-se-attack-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "se",
+      "state": "attack",
+      "frame": 3
+    },
+    "specialist-enemy-se-death-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "se",
+      "state": "death",
+      "frame": 0
+    },
+    "specialist-enemy-se-death-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "se",
+      "state": "death",
+      "frame": 1
+    },
+    "specialist-enemy-se-death-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "se",
+      "state": "death",
+      "frame": 2
+    },
+    "specialist-enemy-se-death-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "se",
+      "state": "death",
+      "frame": 3
+    },
+    "specialist-enemy-s-idle-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "s",
+      "state": "idle",
+      "frame": 0
+    },
+    "specialist-enemy-s-walk-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "s",
+      "state": "walk",
+      "frame": 0
+    },
+    "specialist-enemy-s-walk-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "s",
+      "state": "walk",
+      "frame": 1
+    },
+    "specialist-enemy-s-walk-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "s",
+      "state": "walk",
+      "frame": 2
+    },
+    "specialist-enemy-s-walk-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "s",
+      "state": "walk",
+      "frame": 3
+    },
+    "specialist-enemy-s-attack-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "s",
+      "state": "attack",
+      "frame": 0
+    },
+    "specialist-enemy-s-attack-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "s",
+      "state": "attack",
+      "frame": 1
+    },
+    "specialist-enemy-s-attack-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "s",
+      "state": "attack",
+      "frame": 2
+    },
+    "specialist-enemy-s-attack-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "s",
+      "state": "attack",
+      "frame": 3
+    },
+    "specialist-enemy-s-death-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "s",
+      "state": "death",
+      "frame": 0
+    },
+    "specialist-enemy-s-death-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "s",
+      "state": "death",
+      "frame": 1
+    },
+    "specialist-enemy-s-death-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "s",
+      "state": "death",
+      "frame": 2
+    },
+    "specialist-enemy-s-death-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "s",
+      "state": "death",
+      "frame": 3
+    },
+    "specialist-enemy-sw-idle-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "sw",
+      "state": "idle",
+      "frame": 0
+    },
+    "specialist-enemy-sw-walk-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "sw",
+      "state": "walk",
+      "frame": 0
+    },
+    "specialist-enemy-sw-walk-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "sw",
+      "state": "walk",
+      "frame": 1
+    },
+    "specialist-enemy-sw-walk-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "sw",
+      "state": "walk",
+      "frame": 2
+    },
+    "specialist-enemy-sw-walk-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "sw",
+      "state": "walk",
+      "frame": 3
+    },
+    "specialist-enemy-sw-attack-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "sw",
+      "state": "attack",
+      "frame": 0
+    },
+    "specialist-enemy-sw-attack-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "sw",
+      "state": "attack",
+      "frame": 1
+    },
+    "specialist-enemy-sw-attack-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "sw",
+      "state": "attack",
+      "frame": 2
+    },
+    "specialist-enemy-sw-attack-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "sw",
+      "state": "attack",
+      "frame": 3
+    },
+    "specialist-enemy-sw-death-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "sw",
+      "state": "death",
+      "frame": 0
+    },
+    "specialist-enemy-sw-death-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "sw",
+      "state": "death",
+      "frame": 1
+    },
+    "specialist-enemy-sw-death-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "sw",
+      "state": "death",
+      "frame": 2
+    },
+    "specialist-enemy-sw-death-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "sw",
+      "state": "death",
+      "frame": 3
+    },
+    "specialist-enemy-w-idle-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "w",
+      "state": "idle",
+      "frame": 0
+    },
+    "specialist-enemy-w-walk-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "w",
+      "state": "walk",
+      "frame": 0
+    },
+    "specialist-enemy-w-walk-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "w",
+      "state": "walk",
+      "frame": 1
+    },
+    "specialist-enemy-w-walk-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "w",
+      "state": "walk",
+      "frame": 2
+    },
+    "specialist-enemy-w-walk-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "w",
+      "state": "walk",
+      "frame": 3
+    },
+    "specialist-enemy-w-attack-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "w",
+      "state": "attack",
+      "frame": 0
+    },
+    "specialist-enemy-w-attack-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "w",
+      "state": "attack",
+      "frame": 1
+    },
+    "specialist-enemy-w-attack-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "w",
+      "state": "attack",
+      "frame": 2
+    },
+    "specialist-enemy-w-attack-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "w",
+      "state": "attack",
+      "frame": 3
+    },
+    "specialist-enemy-w-death-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "w",
+      "state": "death",
+      "frame": 0
+    },
+    "specialist-enemy-w-death-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "w",
+      "state": "death",
+      "frame": 1
+    },
+    "specialist-enemy-w-death-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "w",
+      "state": "death",
+      "frame": 2
+    },
+    "specialist-enemy-w-death-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "w",
+      "state": "death",
+      "frame": 3
+    },
+    "specialist-enemy-nw-idle-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "nw",
+      "state": "idle",
+      "frame": 0
+    },
+    "specialist-enemy-nw-walk-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "nw",
+      "state": "walk",
+      "frame": 0
+    },
+    "specialist-enemy-nw-walk-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "nw",
+      "state": "walk",
+      "frame": 1
+    },
+    "specialist-enemy-nw-walk-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "nw",
+      "state": "walk",
+      "frame": 2
+    },
+    "specialist-enemy-nw-walk-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "nw",
+      "state": "walk",
+      "frame": 3
+    },
+    "specialist-enemy-nw-attack-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "nw",
+      "state": "attack",
+      "frame": 0
+    },
+    "specialist-enemy-nw-attack-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "nw",
+      "state": "attack",
+      "frame": 1
+    },
+    "specialist-enemy-nw-attack-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "nw",
+      "state": "attack",
+      "frame": 2
+    },
+    "specialist-enemy-nw-attack-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "nw",
+      "state": "attack",
+      "frame": 3
+    },
+    "specialist-enemy-nw-death-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "nw",
+      "state": "death",
+      "frame": 0
+    },
+    "specialist-enemy-nw-death-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "nw",
+      "state": "death",
+      "frame": 1
+    },
+    "specialist-enemy-nw-death-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "nw",
+      "state": "death",
+      "frame": 2
+    },
+    "specialist-enemy-nw-death-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "nw",
+      "state": "death",
+      "frame": 3
+    },
+    "specialist-enemy-n-idle-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "n",
+      "state": "idle",
+      "frame": 0
+    },
+    "specialist-enemy-n-walk-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "n",
+      "state": "walk",
+      "frame": 0
+    },
+    "specialist-enemy-n-walk-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "n",
+      "state": "walk",
+      "frame": 1
+    },
+    "specialist-enemy-n-walk-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "n",
+      "state": "walk",
+      "frame": 2
+    },
+    "specialist-enemy-n-walk-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "n",
+      "state": "walk",
+      "frame": 3
+    },
+    "specialist-enemy-n-attack-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "n",
+      "state": "attack",
+      "frame": 0
+    },
+    "specialist-enemy-n-attack-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "n",
+      "state": "attack",
+      "frame": 1
+    },
+    "specialist-enemy-n-attack-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "n",
+      "state": "attack",
+      "frame": 2
+    },
+    "specialist-enemy-n-attack-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "n",
+      "state": "attack",
+      "frame": 3
+    },
+    "specialist-enemy-n-death-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "n",
+      "state": "death",
+      "frame": 0
+    },
+    "specialist-enemy-n-death-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "n",
+      "state": "death",
+      "frame": 1
+    },
+    "specialist-enemy-n-death-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "n",
+      "state": "death",
+      "frame": 2
+    },
+    "specialist-enemy-n-death-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "n",
+      "state": "death",
+      "frame": 3
+    },
+    "specialist-enemy-ne-idle-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "ne",
+      "state": "idle",
+      "frame": 0
+    },
+    "specialist-enemy-ne-walk-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "ne",
+      "state": "walk",
+      "frame": 0
+    },
+    "specialist-enemy-ne-walk-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "ne",
+      "state": "walk",
+      "frame": 1
+    },
+    "specialist-enemy-ne-walk-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "ne",
+      "state": "walk",
+      "frame": 2
+    },
+    "specialist-enemy-ne-walk-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "ne",
+      "state": "walk",
+      "frame": 3
+    },
+    "specialist-enemy-ne-attack-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "ne",
+      "state": "attack",
+      "frame": 0
+    },
+    "specialist-enemy-ne-attack-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "ne",
+      "state": "attack",
+      "frame": 1
+    },
+    "specialist-enemy-ne-attack-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "ne",
+      "state": "attack",
+      "frame": 2
+    },
+    "specialist-enemy-ne-attack-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "ne",
+      "state": "attack",
+      "frame": 3
+    },
+    "specialist-enemy-ne-death-0": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "ne",
+      "state": "death",
+      "frame": 0
+    },
+    "specialist-enemy-ne-death-1": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "ne",
+      "state": "death",
+      "frame": 1
+    },
+    "specialist-enemy-ne-death-2": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
+      "owner": "enemy",
+      "direction": "ne",
+      "state": "death",
+      "frame": 2
+    },
+    "specialist-enemy-ne-death-3": {
+      "atlas": "units",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 22
+      },
+      "kind": "unit",
+      "faction": "crown",
+      "type": "specialist",
       "owner": "enemy",
       "direction": "ne",
       "state": "death",

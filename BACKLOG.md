@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-136 – Humans** — **Todo**.
+**RTS-137 – Orcs** — **Todo**.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -3562,7 +3562,7 @@ Save/load sparar stabila fraktions- och typ-ID:n.
 
 ## RTS-136 – Humans
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Komplettera befintliga Humans till den beslutade rostern.
 
@@ -3582,7 +3582,9 @@ Verifiera ekonomi, produktion, combat och AI.
 
 **Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
 
-**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+**Detaljplan:**136A aktivera fem Human-roller, siege/specialist-prerequisites, forsknings- och fartygsnamn enligt134 utan att ändra stabilt crown-ID.136B egen Banner Guard-silhuett/animation och bibehållen Human-bygggrafik.136C betald ekonomi/production/combat/AI-regression och Save24→25-migration som bevarar betalda jobb.136D native UI/browser, fulla checks, granskning/docs. AI:s befintliga betalda grundarmé verifieras här; full femrolls-AI/matchups ligger141. Done kräver synlig faktiskt användbar specialist och egna atlasramar, inte prototyp-alias.
+
+**Verifiering:**994tester/130filer PASS165.29s; typecheck/build/diff/doclänkar PASS. Native1280/1920 Human-production/egna specialistbilder/research/movement/Save/load/attack/victory/restart PASS utan pageerrors. Betald enemy-grundproduktion/ekonomi och Human/Clans-regressioner passerar; full AI-roster141 enligt avgränsningen ovan.
 
 ## RTS-137 – Orcs
 

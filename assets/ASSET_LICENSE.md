@@ -33,3 +33,5 @@ projektgenererad originalillustration med inbyggt imagegen och utan externa
 referensbilder. Full PNG-master och JPEG-export finns i repot. Ingen extern
 spelfil, röstinspelning eller tredjepartsreferens har importerats. Övriga
 assetvillkor och ljudkällor ovan är oförändrade.
+
+RTS-136: Human Banner Guard med fana, guldrustning och sköld är en egen originalpixelkomposition i sources/units.mjs. Samma projektvillkor gäller källan och exporterna; ingen Warcraft-grafik, extern bild, röst eller annan attribution tillkommer.

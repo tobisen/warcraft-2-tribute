@@ -24,7 +24,7 @@ export interface TechnologyState {buildings:readonly BuildingRole[];research:Par
 export interface UnitPrerequisites {buildings?:readonly BuildingRole[];research?:Partial<Record<UpgradeRole,number>>}
 interface UnitData {
   combatMode?:'melee'|'projectile';
-  art?:'worker'|'soldier'|'archer'|'catapult';
+  art?:'worker'|'soldier'|'archer'|'catapult'|'specialist';
   prerequisites?:UnitPrerequisites;
   role:UnitRole;cost:ResourceCost;durationSeconds:number;supply:number;
   trainedAt:'base'|'barracks';hp:number;speed:number;size:number;
@@ -92,6 +92,14 @@ function defineFaction(id:FactionId):FactionDefinition {
 export const factions:Record<FactionId,FactionDefinition>={crown:defineFaction('crown'),clans:defineFaction('clans')};
 factions.clans.units.soldier={...factions.clans.units.soldier,hp:66,cost:{wood:18,gold:6},durationSeconds:6};
 factions.clans.units.specialist={...factions.clans.units.specialist,cost:{wood:26,gold:12},durationSeconds:7,hp:80,speed:175,damagePerSecond:24,prerequisites:{buildings:['forge'],research:{attack:1}}};
+// RTS-136: completed Human roster, stable crown identity.
+factions.crown.label='Humans · Crown Alliance';
+factions.crown.roster=['worker','soldier','archer','catapult','specialist'];
+factions.crown.units.specialist={...factions.crown.units.specialist,art:'specialist'};
+factions.crown.units.catapult={...factions.crown.units.catapult,aggroRange:264,prerequisites:{buildings:['forge']}};
+factions.crown.upgrades.attack.name='Tempered Arms';
+factions.crown.upgrades.defense.name='Plate Craft';
+factions.crown.naval.units.warship.name='Cutter';
 export function productionFaction(g:{faction?:FactionId}):FactionDefinition {return factions[g.faction??defaultFactions.player];}
 
 export function factionForTeam(match:{factions?:MatchFactions},team:keyof MatchFactions):FactionDefinition {

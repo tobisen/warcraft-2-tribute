@@ -37,7 +37,7 @@ describe('catapult splash and body',()=>{
  });
  it('debits both costs, reserves two supply and spawns safely after ten seconds',()=>{
   const s=createMatch();s.gathering.wood=100;s.gathering.goldBalance=50;s.placement.barracks={x:512,y:384,width:64,height:64};s.map.obstacles.push(s.placement.barracks);
-  const b={kind:'barracks' as const,unitType:'catapult' as const,footprint:s.placement.barracks};
+  const b={kind:'barracks' as const,unitType:'catapult' as const,technology:{buildings:['forge' as const],research:{}},footprint:s.placement.barracks};
   const r=enqueueProduction(s.gathering,s.soldierProduction,b,populationState(s.gathering,s.placement,[s.production,s.soldierProduction]));
   expect(r.gathering).toMatchObject({wood:60,goldBalance:30});expect(populationState(r.gathering,s.placement,[r.production]).reserved).toBe(2);
   const result=updateQueuedProduction(r.gathering,r.production,10,b,{map:s.map,enemies:[]});const spawned=result.gathering.units[3];

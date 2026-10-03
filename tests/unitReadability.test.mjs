@@ -14,7 +14,8 @@ for(const atlas of ['units','naval'])it(`${atlas}: actual role/facing/motion/com
  const frame=sheet(atlas),directions=['e','se','s','sw','w','nw','n','ne'],types=atlas==='units'?['worker','soldier','archer','catapult']:['transport','warship'],colors=new Set(Object.values(palette));
  for(const faction of ['crown','clans'])for(const owner of ['player','enemy']){
   const prefix=faction==='clans'?'clans-':'',roles=[];
-  for(const role of types){
+  const roster=atlas==='units'&&faction==='crown'?[...types,'specialist']:types;
+  for(const role of roster){
    const id=(dir,state,n)=>`${prefix}${role}-${owner}-${dir}-${state}-${n}`;
    const idle=frame(id('s','idle',0));roles.push(idle.toString('base64'));expect(idle[3]).toBe(0);
    const seen=new Set();for(let i=0;i<idle.length;i+=4)if(idle[i+3]){const c='#'+idle.subarray(i,i+3).toString('hex');expect(colors.has(c)).toBe(true);seen.add(c);}
@@ -26,6 +27,6 @@ for(const atlas of ['units','naval'])it(`${atlas}: actual role/facing/motion/com
     expect(variants.size,`${faction}/${owner}/${role}/${dir}/${state}`).toBeGreaterThanOrEqual(3);
    }
   }
-  expect(new Set(roles).size).toBe(types.length);
+  expect(new Set(roles).size).toBe(roster.length);
  }
 });

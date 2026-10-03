@@ -2,7 +2,7 @@
 
 Browserbaserat singleplayer-RTS inspirerat av Warcraft 2, Age of Empires 2 och
 Command & Conquer. Phaser, strict TypeScript och Vite; local-first, gameplay
-före grafik. Implementerat genom RTS-126 med egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD.
+före grafik. Egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD. Aktuell taskstatus finns i [BACKLOG.md](BACKLOG.md).
 
 ## Installation och lokal start
 
@@ -701,4 +701,8 @@ Nästa fraktionsetapp är planerad i GAME_DESIGN.md: Humans, Orcs, Elves, Dwarve
 
 ## RTS-135 – Fraktionsgrund
 
-Roster, produktions-prerequisites, research och naval-recept är datastyrda. UI visar fraktionens namn/kostnader och en orsak när prerequisites saknas. Save24 validerar stabila typ-ID:n och migrerar tidigare saves. Vanliga spelet har fortsatt Crown/Clans och fyra roller; dolda specialistprototyper och återanvänd soldatgrafik är förberedelser inför136/137. Full fienderoster kommer141. Kommandon för test/typecheck/build är oförändrade.
+Roster, produktions-prerequisites, research och naval-recept är datastyrda. UI visar fraktionens namn/kostnader och en orsak när prerequisites saknas. Save24 validerar stabila typ-ID:n och migrerar tidigare saves. Vid leverans av135 hade vanliga spelet Crown/Clans och fyra roller; dolda specialistprototyper och återanvänd soldatgrafik är förberedelser inför136/137. Full fienderoster kommer141. Kommandon för test/typecheck/build är oförändrade.
+
+## RTS-136 – Humans
+
+Välj Humans · Crown Alliance (stabilt ID crown). Fem roller: Worker, Guard, Archer, Catapult och Banner Guard. Catapult kräver färdig Forge. Banner Guard kräver Forge och färdig Plate Craft:30wood/15gold,8s,2supply,100HP,130px/s och14DPS. Bygg Forge40wood/10gold och välj basen för research; Tempered Arms/Plate Craft kostar40wood/10gold och tar8s. Befintlig Defensive Stance bevaras. Human-warship heter Cutter. Banner Guard har egna riktnings-/animationsbilder; Human-byggnader behåller sina egna befintliga sten-/trä-/heraldikbilder. Save25 migrerar24 utan att avbryta betalda jobb. Fiendens fulla femrolls-AI återstår till141.
