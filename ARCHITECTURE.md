@@ -1722,3 +1722,10 @@ storlek. Canvas ResizeObserver läser clientWidth/clientHeight utan CSS-transfor
 Phaser scale.refresh/clientPoint bevarar inputmapping. Pixelated rendering kvar.
 Preferences-v1 läser äldre adaptToWindow som modefallback; ny state skriver endast
 resolution/mode och ändrar inte andra preferenser eller match-Save.
+
+## RTS-154 – Arbetstitel i befintlig meny
+
+index.html visar Iron & Timber med undertiteln A Tribute to Warcraft II och samma
+fulla browser title. CSS gör en egen typografisk identitet med I/T-monogram,
+järnfärg och trä/guldaccent; inget rasterasset eller menyflöde ändras.
+Repo/package/remote/Pages/storagekeys/Save-ID:n behåller warcraft-2-tribute.

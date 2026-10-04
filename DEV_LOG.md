@@ -2676,3 +2676,32 @@ porträtt64px och actionbredd320px vid logisk bredd≤900. Omkörning motiverad 
 CSS-ändring:435unit PASS5.54s, build/strict typecheck PASS och samma48geometrier/
 fullscreens/input/minimap/HUD/reload-flöden PASS. Uppdaterad bild granskad: rubrik,
 funktion/HP synliga, längre stats rullbara. Diffkontroll PASS, ingen gameplayändring.
+
+## 2026-10-04 – RTS-154: Iron & Timber (slutregression pågår)
+
+153/58bf3fe pushad. Index/browser title visar Iron & Timber — A Tribute to Warcraft II;
+egen typografisk järn/trä-identitet och I/T-monogram i befintlig meny. Inga repo,
+remote, package/storagekeys/Pages eller gameplayändringar. Arbetstitel utan juridisk granskning.
+Fyra devbrowserlayouter(800Native/Fit1920,1280Native1280,2048Fit640) PASS:
+titel/undertitel, alla sex menylänkar, åtta campaignkort, start/pause/quit utan browsererrors.
+Två byggda subpath-previewlayouter800Native1920/800Fit1280 PASS samma flöden;
+produktionsassets och titeln är kontrollerade. Native800-menyns footer kan kräva
+scroll, alla menylänkar är åtkomliga. Screenshots granskade.
+6riktade meny/text/release-tester PASS. Initial435unit PASS7.03s, build inklusive
+strict typecheck PASS. Review av ändrade testfiler klassificerade resourceSelection
+som integration eftersom filen nu kombinerar MatchState/fog/inspektion/actionPanel;
+manifestkorrigering utan raderade assertions. Slutligt uniturval428tester/75filer
+PASS8.55s; fullregressionsurvalet oförändrat(alla filer) och redan pågående körning
+behöver inte startas om. npm test full regression återstår före Done/commit.
+Markdownreferenser/diffkontroll PASS. Review av titel, menyåteranvändning, remote/
+storageidentitet och docs utan blockerande fynd. Lokal preview behövde sandbox-
+eskalering för lyssningsport. gh CLI saknas; ingen ny CI-/Pages-status påstås verifierad.
+
+154 slutlig full regression: npm test1146tester/145filer PASS499.66s inklusive alla
+integrationer och matchsimuleringar. Slutligt uniturval428/75 PASS8.55s, npm run
+build(strict typecheck inkluderad) PASS. Diff/Markdownreferenser/testmanifest PASS.
+Runtime/css/index oförändrade sedan dessa checks; efterföljande status-/överlämningstext
+är dokumentation.154 Done,151–154-etappen avslutad; stanna före155. HANDOFF.md anger
+nästa task, commits151–153, nya/återanvända belägg och begränsningar. Ingen senarefeature,
+ny releaseversion eller verifierad ny CI-/Pages-publicering påstås. Sista taskcommit/push
+följer enligt nytt uppdrag; faktisk hash och pushresultat rapporteras till användaren.

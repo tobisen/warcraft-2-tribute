@@ -1,4 +1,7 @@
-# warcraft-2-tribute
+# Iron & Timber — A Tribute to Warcraft II
+
+Arbetstiteln är inte juridiskt granskad för kommersiell release. Reponamnet
+`warcraft-2-tribute`, GitHub-remote och Pages-adress är oförändrade.
 
 Browserbaserat singleplayer-RTS inspirerat av Warcraft 2, Age of Empires 2 och
 Command & Conquer. Phaser, strict TypeScript och Vite; local-first, gameplay
@@ -767,4 +770,16 @@ Produkt/packageversion0.2.0 samlar fem fraktioner, större kartor, åtta campaig
 
 Full regression körs vid denna etappgräns; unit+berörda integrationer räcker för löpande tasks enligt AGENTS. Faktisk ljudlyssning och matchlyssning är uppskjutna av användaren. Teknisk ljudkontroll ersätter inte lyssning. Bundlevarningen är kvar enligt uppdraget. Nästa RTS-151 är inte påbörjad eller scopebestämd här.
 
-Release0.2.0 är publicerad som Build53267ef efter grön [CI/Pages-run](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37199039458). Publik nativekontroll i1280/1920 verifierade version/changelog/menyer, canvas, faktisk selection/movement och Save/load/restart utan HTTP- eller browserfel. RTS-150 är Done; aktuell körning stannar före151. Full lokal regression1142tester/145filer samt strict typecheck/build är godkända.
+Release0.2.0 är publicerad som Build53267ef efter grön [CI/Pages-run](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37199039458). Publik nativekontroll i1280/1920 verifierade version/changelog/menyer, canvas, faktisk selection/movement och Save/load/restart utan HTTP- eller browserfel. RTS-150 är historiskt Done; nytt uppdrag återställer151–180 och genomför151–154. Full lokal regression1142tester/145filer samt strict typecheck/build är godkända.
+
+## RTS-151–154: presentation och inspektion
+
+Arbetstiteln är Iron & Timber — A Tribute to Warcraft II. Alla egna byggnader
+kan inspekteras; synliga fiendebyggnader ger en begränsad vy utan orders eller
+privat information. Display har separata Native Size/Fit to Window-val med
+fast renderingsupplösning och lokalt sparat visningsläge.
+
+[QUALITY_REVIEW.md](QUALITY_REVIEW.md) redovisar kvalitetsinventeringens belägg,
+prioriteringar och begränsningar. [HANDOFF.md](HANDOFF.md) samlar denna etapps
+leveranser, verifiering och nästa task RTS-155. Roadmap151–180 finns i
+[BACKLOG.md](BACKLOG.md); uppdraget omfattar endast151–154.

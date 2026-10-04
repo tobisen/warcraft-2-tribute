@@ -1,4 +1,7 @@
-# Game design
+# Iron & Timber — Game design
+
+Arbetstitel: **Iron & Timber — A Tribute to Warcraft II**. Egen typografisk
+identitet; ingen juridisk granskning för kommersiell release.
 
 ## Inriktning
 

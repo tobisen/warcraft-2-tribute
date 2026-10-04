@@ -58,6 +58,7 @@
   "src/gameplay/releaseMatrix.test.ts",
   "src/gameplay/research.test.ts",
   "src/gameplay/resourceQueue.test.ts",
+  "src/gameplay/resourceSelection.test.ts",
   "src/gameplay/save.test.ts",
   "src/gameplay/scenarios.test.ts",
   "src/gameplay/seaMission.test.ts",

@@ -225,3 +225,11 @@ html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#
  #selection-portrait{width:64px;height:64px;}
  #action-panel{width:320px;}
 }
+
+/* RTS-154: original typographic working-title identity, iron tones and timber gold. */
+#home-brand h1{font-weight:700;font-variant:small-caps;letter-spacing:.025em;color:#e1e7df;text-shadow:0 3px 0 #13221f,0 5px 14px #000;}
+#home-brand .brand-amp{color:#d6ae62;font-weight:400;font-style:italic;}
+#home-brand .tribute-title{font:12px/1.5 system-ui,sans-serif;letter-spacing:.12em;color:#e4c58b;margin:-12px 0 24px;}
+#home-brand .home-crest{color:#dfe5df;border-color:#8d9b91;background:linear-gradient(135deg,#314039,#152722);font-size:30px;letter-spacing:.04em;}
+#home-brand .home-crest span{color:#d6ae62;font-size:22px;padding:0 3px;}
+@container(max-width:900px){#home-brand .tribute-title{margin:0 0 14px;font-size:11px;}}

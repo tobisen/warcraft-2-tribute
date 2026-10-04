@@ -1300,3 +1300,10 @@ Fit kan förstora eller förminska proportionellt. Båda centrerar/skalar ned vi
 utrymmesbrist. Fullscreen är större tillgänglig visningsyta, inte ny rendering
 eller nytt mode. Default Native1280×720; äldre adaptToWindow=true migreras Fit,
 false migreras Native med bevarat preset. Ingen automatiskt fönsterstor upplösning.
+
+## RTS-154 – Iron & Timber är en arbetstitel
+
+Synligt produktnamn och browser title blir Iron & Timber — A Tribute to Warcraft II.
+Egen typografisk logotyp i befintlig meny; befintlig originalillustration återanvänds.
+Repo, package, remote, Pages och lokala storagekeys ändras inte. Titeln är inte
+juridiskt granskad för kommersiell release; inget sådant godkännande hävdas.

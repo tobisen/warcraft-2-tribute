@@ -88,3 +88,11 @@ RTS-148–150 är verifierade och levererade;0.2.0/Build53267ef publicerad och k
 ## Nytt mandat 2026-10-04
 
 Nytt uppdrag ersätter tidigare stopp före151: återställ roadmap151–180, genomför endast151–154 en task i taget med verifiering, docs och commit/push. Stanna efter154 och lämna över med nästa task155. Ingen automatisk agentdelegering. Historiska releasebelägg ska skiljas från ny verifiering.
+
+## Avslutad etapp RTS-151–154
+
+RTS-151–154 är färdiga. Roadmap151–180 är återställd, men aktuell körning avslutas
+före155. HANDOFF.md och QUALITY_REVIEW.md redovisar kontroller och begränsningar.
+Nästa task155 är Todo och kräver nytt uppdrag; äldre fortsättningsmandat startar
+inte senare tasks. Full regression1146/145 PASS, slutlig unit428/75 och build med
+strict typecheck PASS. Ny CI-/Pages-build är inte separat verifierad här.

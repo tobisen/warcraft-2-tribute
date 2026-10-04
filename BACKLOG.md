@@ -2,9 +2,9 @@
 
 ## Current Focus
 
-**RTS-154 – Ny titel och huvudmeny** — **Todo**.
+**RTS-154 – Ny titel och huvudmeny** — **Done**. Etappen avslutad; stopp före RTS-155.
 
-**Aktuell etapp:** återställ roadmap RTS-151–180 enligt nytt uppdrag 2026-10-04, genomför endast151–154 taskvis med checks/commit/push. Nästa steg: ny arbetstitel/typografisk identitet i befintlig meny; full regression och överlämning efter154. Stanna efter154; nästa task155. Äldre stopp och fortsättningsmandat nedan är historik.
+**Aktuell etapp:** RTS-151–154 färdiga enligt nytt uppdrag2026-10-04. Roadmap151–180 återställd; senare tasks Todo och inte implementerade. Nästa task är RTS-155, men inget fortsatt implementationsmandat efter154. Se [HANDOFF.md](HANDOFF.md) och [QUALITY_REVIEW.md](QUALITY_REVIEW.md). Tidigare stopp/fortsättningsmandat nedan är historik.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -4060,7 +4060,7 @@ Spara inställningen lokalt.
 
 ## RTS-154 – Ny titel och huvudmeny
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Ny titel och huvudmeny.
 
@@ -4083,6 +4083,8 @@ Titeln är en arbetstitel, inte juridiskt granskad för kommersiell release.
 **Tests:** Text/menyregression, browsergranskning i Native/Fit; unit/build och full regression vid etappslut. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
 
 **Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+**Slutverifiering:**428unit/75filer PASS8.55s efter korrekt klassificering av ändrad selectionfil;6riktade meny/text/release-tester PASS. Full npm test1146tester/145filer PASS499.66s inklusive alla integrationer/matchsimuleringar. Build inklusive strict typecheck, diff och Markdownreferenser PASS. Fyra dev-Native/Fit-layouter samt två byggda subpath-previewlayouter PASS titel/sex menylänkar/åtta campaignkort/start/pause/quit utan browsererrors. Bilder och diff granskade. Repo/remote/Pages/storageidentitet oförändrade. Ingen ny version eller senare feature. Ljud-/fysisk monitorlyssning/check ej utförd; CI/ny publicerad Pages-build ej verifierad i denna etapp. Överlämning HANDOFF.md; stanna före155.
 
 ## RTS-155 – Ny kvalitetsnivå för sprites
 
