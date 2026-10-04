@@ -12,10 +12,10 @@ export function inspectedBuilding(m:MatchState,selection:BuildingSelection){
  if(selection.startsWith('enemy:')&&(!enemy||!m.fog||!entityVisible(m.fog,'player',enemy)))return null;
  const team=enemy?'enemy':'player',faction=factionForTeam(m,team);
  const tower=m.placement.defenses?.find(t=>t.id===selection);
- const kind=tower?'tower':enemy?(enemy.kind==='base'?'base':enemy.buildingType??'barracks'):selection.startsWith('farm-')?'farm':selection as 'base'|'barracks'|'forge'|'harbor';
+ const kind=tower?tower.kind:enemy?(enemy.kind==='base'?'base':enemy.buildingType??'barracks'):selection.startsWith('farm-')?'farm':selection as 'base'|'barracks'|'forge'|'harbor';
  const farm=m.placement.farms?.find(f=>f.id===selection),forge=m.placement.forge,harbor=m.navy?.harbor;
  const footprint=tower?.footprint??enemy?.footprint??(kind==='base'?m.combat.baseHP>0?baseFootprint(m.gathering.base):null:kind==='barracks'?m.placement.barracks:kind==='farm'?farm?.footprint:kind==='forge'?forge?.footprint:harbor?.footprint);
- const maxHP=kind==='tower'?defenseConfig.tower.hp:enemy?enemyMaximumHP(enemy,faction.id):kind==='harbor'?faction.naval.harbor.hp:kind==='outpost'?0:faction.buildings[kind].hp;
+ const maxHP=kind==='tower'||kind==='wall'||kind==='gate'?defenseConfig[kind].hp:enemy?enemyMaximumHP(enemy,faction.id):kind==='harbor'?faction.naval.harbor.hp:kind==='outpost'?0:faction.buildings[kind].hp;
  const hp=tower?.hp??enemy?.hp??(kind==='base'?m.combat.baseHP:kind==='barracks'?m.placement.barracksHP??maxHP:kind==='farm'?farm?.hp??maxHP:kind==='forge'?forge?.hp:harbor?.hp);
  if(!footprint||hp===undefined||hp<=0)return null;
  const remaining=tower?.construction.remainingSeconds??enemy?.construction?.remainingSeconds??(kind==='barracks'?m.placement.construction?.remainingSeconds:kind==='farm'?farm?.construction.remainingSeconds:kind==='forge'?forge?.construction.remainingSeconds:kind==='harbor'?harbor?.construction.remainingSeconds:0)??0;

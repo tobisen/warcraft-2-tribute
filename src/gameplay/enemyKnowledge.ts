@@ -1,3 +1,4 @@
+import {enemyNavigationMap} from './map';
 import {maps} from '../config/maps';
 import {enemyKnowledgeConfig as config} from '../config/enemyKnowledge';
 import {isVisible} from './fog';
@@ -22,7 +23,7 @@ export function prepareEnemyScout(m:MatchState):MatchState {
  const workers=m.combat.enemies.filter(e=>e.kind==='worker'&&e.hp>0&&e.work!.cargo===0&&['idle','move','gather'].includes(e.work!.order.kind)).sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}));const scout=workers.find(e=>e.work!.order.kind==='move')??workers[0];if(!scout)return m;
  const waypoints=maps[m.map.id??'arena'].enemyResourceWaypoints??config.resourceWaypoints;let index=m.enemyKnowledge.resourceScoutIndex;const goal=waypoints[index];if(Math.hypot(scout.position.x-goal.x,scout.position.y-goal.y)<=config.arrivalRange||scout.navigation?.status==='blocked')index=Math.min(index+1,waypoints.length-1);
  const target=waypoints[index];if(scout.work!.order.kind==='move'&&scout.work!.target.x===target.x&&scout.work!.target.y===target.y)return {...m,enemyKnowledge:{...m.enemyKnowledge,resourceScoutIndex:index}};
- const worker=commandMappedMove([{...enemyWorker(scout)!,selected:true}],target,m.map)[0] as Worker;
+ const worker=commandMappedMove([{...enemyWorker(scout)!,selected:true}],target,enemyNavigationMap(m.map))[0] as Worker;
  return {...m,enemyKnowledge:{...m.enemyKnowledge,resourceScoutIndex:index},combat:{...m.combat,enemies:m.combat.enemies.map(e=>e.id===scout.id?{...e,navigation:worker.navigation,work:{...e.work!,target:worker.target,order:worker.order}}:e)}};
 }
 export function updateEnemyExploration(m:MatchState):MatchState {

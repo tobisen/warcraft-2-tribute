@@ -3,7 +3,7 @@ import type { Position } from './movement';
 import type { Footprint } from './placement';
 import { selectUnitAt, type SelectableUnit } from './selection';
 
-export type BuildingSelection = `tower-${number}` | 'base' | 'barracks' | 'harbor' | 'forge' | `farm-${number}` | `enemy:${string}` | null;
+export type BuildingSelection = `wall-${number}` | `gate-${number}` | `tower-${number}` | 'base' | 'barracks' | 'harbor' | 'forge' | `farm-${number}` | `enemy:${string}` | null;
 export function baseFootprint(base: Position): Footprint {
   const size = gatheringConfig.baseSize;
   return { x:base.x-size/2, y:base.y-size/2, width:size, height:size };

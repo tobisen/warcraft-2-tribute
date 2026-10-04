@@ -1,3 +1,4 @@
+import {enemyNavigationMap} from './map';
 import {knownEnemyNode} from './enemyKnowledge';
 import {barracksConfig} from '../config/buildings';
 import {enemyExpansionConfig as config} from '../config/enemyExpansion';
@@ -17,7 +18,7 @@ import type {Footprint} from './placement';
 export function wantsEnemyExpansion(m:MatchState):boolean {
  return !!m.enemyRecovery&&!!m.enemyPolicy&&m.combat.enemies.some(e=>e.buildingType==='barracks'&&e.hp>0&&e.construction?.remainingSeconds===0)&&m.enemyPolicy.research.attack===upgradeConfig.maxLevel&&m.enemyPolicy.research.defense===upgradeConfig.maxLevel&&!m.combat.enemies.some(e=>e.buildingType==='outpost')&&m.combat.enemies.filter(e=>e.kind==='worker'&&e.hp>0).length>=2&&m.combat.enemies.filter(e=>!e.footprint&&e.kind!=='worker'&&e.hp>0).length>=enemyPolicyConfig.minLiveArmy&&((knownEnemyNode(m,m.gathering.node)?.remaining??0)>0||(knownEnemyNode(m,m.gathering.gold)?.remaining??0)>0);
 }
-function builderFor(m:MatchState,rect:Footprint){return m.combat.enemies.filter(e=>e.kind==='worker'&&e.hp>0&&e.work?.order.kind!=='build').sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true})).find(e=>approachRoute(m.map,e.position,rect,barracksConfig.constructionRange).status!=='blocked');}
+function builderFor(m:MatchState,rect:Footprint){return m.combat.enemies.filter(e=>e.kind==='worker'&&e.hp>0&&e.work?.order.kind!=='build').sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true})).find(e=>approachRoute(enemyNavigationMap(m.map),e.position,rect,barracksConfig.constructionRange).status!=='blocked');}
 export function prepareEnemyExpansion(m:MatchState):MatchState {
  if(!m.enemyRecovery||!m.enemyProduction||!m.combat.enemies.some(e=>e.kind==='base'&&e.hp>0))return m;
  const site=m.combat.enemies.find(e=>e.buildingType==='outpost');
@@ -40,6 +41,6 @@ export function prepareEnemyExpansion(m:MatchState):MatchState {
 export function updateEnemyExpansion(m:MatchState,delta:number,gateFor?:GateFor):MatchState {
  const site=m.combat.enemies.find(e=>e.buildingType==='outpost'),base=m.combat.enemies.find(e=>e.kind==='base'&&e.hp>0);if(!site?.construction||!base||site.construction.remainingSeconds===0)return m;
  const g:GatheringState={...m.gathering,base:base.position,baseSize:base.footprint!.width,units:m.combat.enemies.flatMap(e=>{const w=enemyWorker(e);return w?[w]:[];})};
- const result=updateSite(g,site.construction,site.footprint!,'outpost',m.map,delta,gateFor?(id=>gateFor(id.replace(/^player:/,'enemy:'))):undefined);const byId=new Map(result.gathering.units.map(u=>[u.id,u as Worker]));
+ const result=updateSite(g,site.construction,site.footprint!,'outpost',enemyNavigationMap(m.map),delta,gateFor?(id=>gateFor(id.replace(/^player:/,'enemy:'))):undefined);const byId=new Map(result.gathering.units.map(u=>[u.id,u as Worker]));
  return {...m,combat:{...m.combat,enemies:m.combat.enemies.map(e=>{if(e.id===site.id)return {...e,construction:result.job};const u=byId.get(e.id);return u?{...e,position:u.position,navigation:u.navigation,work:{cargo:u.cargo,cargoType:u.cargoType,target:u.target,order:u.order}}:e;})}};
 }

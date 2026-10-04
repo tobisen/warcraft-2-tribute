@@ -1,3 +1,4 @@
+import {enemyNavigationMap} from './map';
 import {enemyEconomyConfig} from '../config/enemyEconomy';
 import {defaultFactions} from '../config/factions';
 import {enqueueProduction,updateQueuedProduction} from './productionQueue';
@@ -24,7 +25,7 @@ export function prepareEnemyRecovery(m:MatchState):MatchState {
 }
 export function advanceEnemyRecovery(m:MatchState,delta:number):MatchState {
  if(!m.enemyRecovery||!m.enemyProduction||!m.combat.enemies.some(e=>e.kind==='base'&&e.hp>0))return m;
- const g=view(m),result=updateQueuedProduction(g,m.enemyRecovery.production,delta,{kind:'base'},{map:m.map,enemies:[...m.gathering.units,...m.combat.enemies.filter(e=>e.kind!=='worker')]});
+ const g=view(m),result=updateQueuedProduction(g,m.enemyRecovery.production,delta,{kind:'base'},{map:enemyNavigationMap(m.map),enemies:[...m.gathering.units,...m.combat.enemies.filter(e=>e.kind!=='worker')]});
  const existing=new Set(g.units.map(u=>u.id));
  const spawned=result.gathering.units.filter(u=>!existing.has(u.id)).map(unit=>{const u=unit as Worker;return {id:`enemy-worker-${u.id.slice(5)}`,owner:'enemy' as const,kind:'worker' as const,hp:u.hp!,position:u.position,work:{cargo:0,target:u.target,order:{kind:'idle' as const}}};});
  return {...m,enemyRecovery:{...m.enemyRecovery,production:result.production},combat:{...m.combat,enemies:[...m.combat.enemies,...spawned]}};

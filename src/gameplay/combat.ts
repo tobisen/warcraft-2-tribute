@@ -1,3 +1,4 @@
+import {enemyNavigationMap} from './map';
 import {towerShots} from './towers';
 import {enemyUnitStats,enemyRangedStats,enemySoldier} from './enemyUnits';
 import {factions,type FactionId} from '../config/factions';
@@ -124,12 +125,12 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
   // Both sides attack from the same live snapshot, so lethal blows are simultaneous.
   const playerDamage = new Map<string, number>();
   const originalTargets=playerTargets(gathering,combat,placement,navy);
-  const priority={tower:2,ship:0,harbor:2,soldier:0,worker:1,barracks:2,farm:2,forge:2,base:3};
+  const priority={wall:2,gate:2,tower:2,ship:0,harbor:2,soldier:0,worker:1,barracks:2,farm:2,forge:2,base:3};
   const enemyGathering={...gathering,faction:enemyFaction};
   const movingEnemies = combat.enemies.filter(e => e.hp > 0).map(enemy => {
     const stats=enemyUnitStats(enemy,enemyFaction),ranged=enemyRangedStats(enemy,enemyFaction);
     const cooling={...enemy,...(ranged?{attackCooldown:Math.max(0,(enemy.attackCooldown??0)-delta)}:{})};
-    const enemyMap=map?{...map,bodyHalf:stats.size/2}:undefined;
+    const enemyMap=map?{...enemyNavigationMap(map),bodyHalf:stats.size/2}:undefined;
     if(enemy.kind==='ship'||enemy.kind==='worker'||enemy.footprint||enemy.order?.kind==='idle')return cooling;
     if(enemy.order?.kind==='muster'){
       const route=enemy.navigation??(map?planRoute(enemyMap!,enemy.position,enemy.order.destination):undefined);

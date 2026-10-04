@@ -1341,3 +1341,7 @@ RTS-159: dekorativa djur är aldrig gameplayunit eller visionobserver. Absolutti
 ## RTS-160: huvudbyggnadsnivåer och produktion
 
 Uppgraderingen betalas vid start;20/30s pausar endast huvudbyggnadens workerproduktion. Nya köjobb får accepteras enligt vanliga regler men tickar inte under uppgraderingen. Kö, rally, selection och återstående produktionstid bevaras, även genom save/load. Slutförandeframens överskjutande tid går till produktion. HP och footprint ändras inte. Nivågrafik återanvänder godkända arkitekturdelar utan att hävda särskild godkänd nivåreferens. Save config34 migrerar äldre33 utan nivåfält till implicit nivå1.
+
+## RTS-163: portpassage och placeringssäkerhet
+
+Portens fysiska footprint tas bort vid öppning, men en härledd och ej sparad enemyPassageBlocks-vy behåller ägarens spärr för motståndarlaget. Befintliga lag är player/enemy; egna workers och stridsenheter delar passage. Route-revision ändras vid toggle/förstörelse. Projektiler använder fysiska öppningen enligt befintliga stridsregler. Stängning över kropp eller som bryter nödvändig connectivity/spawn spärras. Alla fortification-placeringar skyddar befintliga enheters åtkomst till resurser, leveranser och byggnader, även combat units.32 forts är den explicita gemensamma gränsen. Grafik använder godkända masonry/timber-delar; ingen särskild illustrativ mur/portreferens påstås finnas.

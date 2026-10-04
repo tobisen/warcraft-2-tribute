@@ -17,7 +17,7 @@ export function combatAudioSnapshot(m:MatchState):CombatAudioSnapshot{
  if(p.forge)building('forge',p.forge.hp,p.forge.footprint);if(n?.harbor)building('harbor',n.harbor.hp,n.harbor.footprint);
  for(const t of p.defenses??[])building(t.id,t.hp,t.footprint);
  const attacks:AudibleAttack[]=[];
- for(const t of p.defenses??[])if(t.hp>0&&t.construction.remainingSeconds===0){const position={x:t.footprint.x+16,y:t.footprint.y+16};attacks.push({id:t.id,position,visible:seen(position),cooldown:t.cooldown,sound:'bow',range:t.level===2?208:176});}
+ for(const t of p.defenses??[])if(t.kind==='tower'&&t.hp>0&&t.construction.remainingSeconds===0){const position={x:t.footprint.x+16,y:t.footprint.y+16};attacks.push({id:t.id,position,visible:seen(position),cooldown:t.cooldown,sound:'bow',range:t.level===2?208:176});}
  for(const [team,units]of [['player',m.gathering.units],['enemy',m.combat.enemies]] as const)for(const u of units){
   if(u.kind==='worker'||u.kind==='base'||u.kind==='building'||'footprint'in u&&u.footprint)continue;
   const type='archetype'in u?u.archetype??'soldier':'role'in u?u.role??'soldier':'soldier',stats=factions[m.factions?.[team]??'crown'].units[type==='archer'||type==='catapult'||type==='specialist'?type:'soldier'];

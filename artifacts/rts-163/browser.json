@@ -1,0 +1,96 @@
+[
+  {
+    "width": 800,
+    "defenses": [
+      {
+        "id": "gate-1",
+        "kind": "gate",
+        "open": false,
+        "owner": "player",
+        "footprint": {
+          "x": 480,
+          "y": 384,
+          "width": 64,
+          "height": 32
+        },
+        "hp": 240,
+        "construction": {
+          "remainingSeconds": 0,
+          "builderId": null
+        },
+        "level": 1,
+        "upgradeRemaining": null,
+        "cooldown": 0,
+        "readyAfter": 0
+      },
+      {
+        "id": "wall-2",
+        "kind": "wall",
+        "owner": "player",
+        "footprint": {
+          "x": 544,
+          "y": 384,
+          "width": 32,
+          "height": 32
+        },
+        "hp": 180,
+        "construction": {
+          "remainingSeconds": 0,
+          "builderId": null
+        },
+        "level": 1,
+        "upgradeRemaining": null,
+        "cooldown": 0,
+        "readyAfter": 0
+      }
+    ],
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "defenses": [
+      {
+        "id": "gate-1",
+        "kind": "gate",
+        "open": false,
+        "owner": "player",
+        "footprint": {
+          "x": 480,
+          "y": 384,
+          "width": 64,
+          "height": 32
+        },
+        "hp": 240,
+        "construction": {
+          "remainingSeconds": 0,
+          "builderId": null
+        },
+        "level": 1,
+        "upgradeRemaining": null,
+        "cooldown": 0,
+        "readyAfter": 0
+      },
+      {
+        "id": "wall-2",
+        "kind": "wall",
+        "owner": "player",
+        "footprint": {
+          "x": 544,
+          "y": 384,
+          "width": 32,
+          "height": 32
+        },
+        "hp": 180,
+        "construction": {
+          "remainingSeconds": 0,
+          "builderId": null
+        },
+        "level": 1,
+        "upgradeRemaining": null,
+        "cooldown": 0,
+        "readyAfter": 0
+      }
+    ],
+    "errors": []
+  }
+]

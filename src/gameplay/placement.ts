@@ -30,7 +30,7 @@ export interface ConstructionJob {remainingSeconds:number;builderId:string|null}
 export interface Farm {owner?:'player';hp?:number;id:`farm-${number}`;footprint:Footprint;construction:ConstructionJob}
 export interface PlacementState {
   defenses?:import('./towers').Defense[];nextDefenseNumber?:number;
-  kind?:'harbor'|'barracks'|'farm'|'forge'|'tower';
+  kind?:'harbor'|'barracks'|'farm'|'forge'|'tower'|'wall'|'gate';
   forge?:{id:'forge';owner:'player';hp:number;footprint:Footprint;construction:ConstructionJob};
   farms?:Farm[];
   nextFarmNumber?:number;
@@ -41,8 +41,8 @@ export interface PlacementState {
   barracksHP?:number;
 }
 
-export function buildingFootprint(point: Position,kind:'harbor'|'barracks'|'farm'|'forge'|'tower'='barracks'): Footprint {
-  if(kind==='tower')return {x:Math.floor(point.x/32)*32,y:Math.floor(point.y/32)*32,width:32,height:32};
+export function buildingFootprint(point: Position,kind:'harbor'|'barracks'|'farm'|'forge'|'tower'|'wall'|'gate'='barracks'): Footprint {
+  if(kind==='tower'||kind==='wall'||kind==='gate')return {x:Math.floor(point.x/32)*32,y:Math.floor(point.y/32)*32,width:kind==='gate'?64:32,height:32};
   const config=kind==='harbor'?navyConfig.harbor:kind==='forge'?forgeConfig:kind==='farm'?farmConfig:barracksConfig;
   const size = config.tileSize * config.footprintTiles;
   return {
@@ -63,7 +63,7 @@ export function placementObstacles(state: GatheringState): Footprint[] {
   ];
 }
 
-export function beginPlacement(state: PlacementState,kind:'harbor'|'barracks'|'farm'|'forge'|'tower'='barracks'): PlacementState {
+export function beginPlacement(state: PlacementState,kind:'harbor'|'barracks'|'farm'|'forge'|'tower'|'wall'|'gate'='barracks'): PlacementState {
   return kind==='forge'&&state.forge || kind==='barracks'&&state.barracks || kind==='farm'&&(state.farms?.length??0)>=farmConfig.maxCount
     ? state : { ...state, active:true,...(kind!=='barracks'?{kind}: {kind:undefined}) };
 }
@@ -74,7 +74,7 @@ export function cancelPlacement(state: PlacementState): PlacementState {
 
 export function placementError(state: PlacementState, point: Position, wood: number, obstacles: Footprint[], context?: PlacementContext): string | null {
   const kind=state.kind??'barracks';
-  if(context?.technology){const locked=buildingAvailability(productionFaction(context.gathering),kind==='tower'?'base':kind,context.technology);if(locked)return locked;}
+  if(context?.technology){const locked=buildingAvailability(productionFaction(context.gathering),kind==='tower'||kind==='wall'||kind==='gate'?'base':kind,context.technology);if(locked)return locked;}
   if(kind==='harbor')return uiText.harborUsesCoastRules;
   if(kind==='forge'&&state.forge)return uiText.forgeExists;
   if (kind==='barracks'&&state.barracks) return uiText.barracksExists;
@@ -87,9 +87,9 @@ export function placementError(state: PlacementState, point: Position, wood: num
     && rect.y < other.y + other.height && rect.y + rect.height > other.y)) {
     return uiText.overlapsTheBaseOrAResourceNode;
   }
-  if (!canAfford({wood,goldBalance:context?.gathering.goldBalance},(kind==='tower'?defenseConfig.tower.cost:context?productionFaction(context.gathering).buildings[kind].cost:costs[kind]))) return uiText.notEnoughWoodOrGold;
+  if (!canAfford({wood,goldBalance:context?.gathering.goldBalance},(kind==='tower'||kind==='wall'||kind==='gate'?defenseConfig[kind].cost:context?productionFaction(context.gathering).buildings[kind].cost:costs[kind]))) return uiText.notEnoughWoodOrGold;
   if (context) {
-    if(context.map.obstacles.some(o=>overlaps(rect,o)))return uiText.overlapsTerrainOrABuilding;
+    if([...context.map.obstacles,...(context.map.enemyPassageBlocks??[])].some(o=>overlaps(rect,o)))return uiText.overlapsTerrainOrABuilding;
     if(context.gathering.units.some(u=>overlaps(rect,unitBody(u.position,u.kind==='worker'?unitStats.size:combatUnitStats(u).size)))
       || context.enemies.some(e=>overlaps(rect,unitBody(e.position,otherBodySize(e)))))return uiText.overlapsAUnit;
     const after=replaceObstacles(context.map,[...context.map.obstacles,rect]);
@@ -130,7 +130,7 @@ export function placementError(state: PlacementState, point: Position, wood: num
 
 export function placeBuilding(state: PlacementState, point: Position, wood: number, obstacles: Footprint[], context?: PlacementContext):
   {placement:PlacementState;wood:number;map?:WorldMap;gathering?:GatheringState} {
-  if (state.kind==='harbor'||state.kind==='tower'||!state.active || placementError(state, point, wood, obstacles, context)) return { placement: state, wood, ...(context?{map:context.map}:{}) };
+  if (state.kind==='harbor'||state.kind==='tower'||state.kind==='wall'||state.kind==='gate'||!state.active || placementError(state, point, wood, obstacles, context)) return { placement: state, wood, ...(context?{map:context.map}:{}) };
   const kind=state.kind??'barracks';
   const rect=buildingFootprint(point,kind);
   const id: 'barracks'|'forge'|`farm-${number}` = kind==='forge'?'forge':kind==='barracks'?'barracks':`farm-${state.nextFarmNumber??1}`;

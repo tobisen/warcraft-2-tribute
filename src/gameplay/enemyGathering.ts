@@ -1,3 +1,4 @@
+import {enemyNavigationMap} from './map';
 import {factionForTeam} from '../config/factions';
 import {isVisible} from './fog';
 import {knownEnemyNode} from './enemyKnowledge';
@@ -14,7 +15,7 @@ export function enemyWorker(e:Enemy):Worker|null {return e.kind==='worker'&&e.wo
 export function addEnemyWorkers(m:MatchState):void {
  const base=m.combat.enemies.find(e=>e.kind==='base');if(!base?.footprint||!m.enemyProduction)return;
  for(let i=0;i<enemyEconomyConfig.workerCount;i++){
-  const position=chooseSpawn(m.map,base.footprint,'barracks',m.gathering.units,m.combat.enemies);if(!position)throw Error('No enemy worker spawn');
+  const position=chooseSpawn(enemyNavigationMap(m.map),base.footprint,'barracks',m.gathering.units,m.combat.enemies);if(!position)throw Error('No enemy worker spawn');
   m.combat.enemies.push({id:`enemy-worker-${i+1}`,owner:'enemy',kind:'worker',hp:factionForTeam(m,'enemy').units.worker.hp,position,work:{target:{...position},cargo:0,order:{kind:'idle'}}});
  }
  m.enemyProduction={...m.enemyProduction,extracted:{wood:0,gold:0},spent:{wood:0,gold:0},lostCargo:{wood:0,gold:0}};
@@ -41,7 +42,7 @@ export function updateEnemyGathering(m:MatchState,delta:number,gateFor?:GateFor,
  if(!base?.footprint)return {...m,combat:{...m.combat,enemies:m.combat.enemies.map(e=>e.work?{...e,navigation:undefined,work:{...e.work,order:{kind:'idle'}}}:e)}};
  let g:GatheringState={units:workers,wood:bank.wood,goldBalance:bank.gold,base:base.position,baseSize:base.footprint.width,dropoffs:m.combat.enemies.filter(e=>e.buildingType==='outpost'&&e.hp>0&&e.construction?.remainingSeconds===0).map(e=>e.footprint!),faction:(m.factions??defaultFactions).enemy,node:m.gathering.node,gold:m.gathering.gold,extraNodes:m.gathering.extraNodes};
  for(const worker of workers){if(worker.order.kind!=='idle')continue;const index=Number(worker.id.split('-').at(-1))-1,resource=enemyEconomyConfig.resources[index%enemyEconomyConfig.resources.length],node=knownResourceFor(m,resource);if(node&&node.remaining>0)g.units=orderUnits(g.units.map(u=>({...u,selected:u.id===worker.id})),node.position,node);}
- g=updateGathering(g,delta,m.map,{elapsedSeconds:m.waves.elapsedSeconds,gateFor,team:'enemy',services,...(m.enemyKnowledge&&m.fog?{nodeVisible:(node:import('./gathering').ResourceNode)=>isVisible(m.fog!,'enemy',node.position),knownRemaining:(node:import('./gathering').ResourceNode)=>knownEnemyNode(m,node)?.remaining??0}:{})});
+ g=updateGathering(g,delta,enemyNavigationMap(m.map),{elapsedSeconds:m.waves.elapsedSeconds,gateFor,team:'enemy',services,...(m.enemyKnowledge&&m.fog?{nodeVisible:(node:import('./gathering').ResourceNode)=>isVisible(m.fog!,'enemy',node.position),knownRemaining:(node:import('./gathering').ResourceNode)=>knownEnemyNode(m,node)?.remaining??0}:{})});
  const byId=new Map(g.units.map(u=>[u.id,u as Worker]));
  return {...m,gathering:{...m.gathering,node:g.node,...(g.gold?{gold:g.gold}:{}),...(g.extraNodes?{extraNodes:g.extraNodes}:{})},enemyProduction:{...bank,wood:g.wood,gold:g.goldBalance??0,extracted:{wood:(bank.extracted?.wood??0)+resourceNodes(m.gathering).filter(n=>(n.resource??'wood')==='wood').reduce((sum,n)=>sum+n.remaining,0)-resourceNodes(g).filter(n=>(n.resource??'wood')==='wood').reduce((sum,n)=>sum+n.remaining,0),gold:(bank.extracted?.gold??0)+resourceNodes(m.gathering).filter(n=>n.resource==='gold').reduce((sum,n)=>sum+n.remaining,0)-resourceNodes(g).filter(n=>n.resource==='gold').reduce((sum,n)=>sum+n.remaining,0)}},combat:{...m.combat,enemies:m.combat.enemies.map(e=>{const u=byId.get(e.id);return u?{...e,position:u.position,navigation:u.navigation,work:{cargo:u.cargo,cargoType:u.cargoType,target:u.target,order:u.order as EnemyWork['order']}}:e;})}};
 }

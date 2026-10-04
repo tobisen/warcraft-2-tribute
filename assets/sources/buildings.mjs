@@ -1,3 +1,4 @@
+import {wallFrames} from './walls.mjs';
 import {towerFrames} from './towers.mjs';
 import {baseLevelFrames} from './base-levels.mjs';
 import {settlement} from './settlement-complete.mjs';
@@ -652,5 +653,6 @@ export function buildingFrames(Surface, p) {
           });
         }
   const bases=[...frames,...baseLevelFrames(Surface,p,frames)];
-  return [...bases,...towerFrames(Surface,p,bases.length)];
+  const towers=[...bases,...towerFrames(Surface,p,bases.length)];
+  return [...towers,...wallFrames(Surface,p,towers.length)];
 }

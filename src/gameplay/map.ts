@@ -6,7 +6,7 @@ import type { Footprint } from './placement';
 
 export interface Tile { column: number; row: number }
 export interface WorldMap {
-  bodyHalf?:number;
+  enemyPassageBlocks?:Footprint[];bodyHalf?:number;
   id?:MapId;
   width: number; height: number; tileSize: number;
   revision: number;
@@ -61,3 +61,6 @@ export function bodyFits(map: WorldMap, point: Position, halfSize = 0): boolean 
 export function replaceObstacles(map: WorldMap, obstacles: Footprint[]): WorldMap {
   return { ...map, revision: map.revision + 1, obstacles: obstacles.map(o => ({ ...o })) };
 }
+
+/** Open own gates remain impassable to the opposing team. */
+export function enemyNavigationMap(map:WorldMap):WorldMap{return map.enemyPassageBlocks?.length?{...map,enemyPassageBlocks:undefined,obstacles:[...map.obstacles,...map.enemyPassageBlocks]}:map;}

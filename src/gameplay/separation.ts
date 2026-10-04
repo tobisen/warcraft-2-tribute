@@ -1,3 +1,4 @@
+import {enemyNavigationMap} from './map';
 import { separationConfig as config } from '../config/separation';
 import type { Position } from './movement';
 import type { WorldMap } from './map';
@@ -13,9 +14,9 @@ export function separateBodies(map:WorldMap, bodies:readonly SeparationBody[], d
   const shift=(actor:typeof actors[number],axis:'x'|'y',direction:number,wanted:number):number=>{
     const amount=Math.min(wanted,Math.max(0,budget-actor.spent));if(amount<=config.epsilon)return 0;
     const point=(distance:number)=>({...actor.position,[axis]:actor.position[axis]+direction*distance});
-    let allowed=amount;
-    if(!segmentFits(map,actor.position,point(amount),actor.half)){
-      let low=0,high=amount;for(let i=0;i<7;i++){const mid=(low+high)/2;if(segmentFits(map,actor.position,point(mid),actor.half))low=mid;else high=mid;}allowed=low;
+    let allowed=amount;const actorMap=actor.id.startsWith('enemy:')?enemyNavigationMap(map):map;
+    if(!segmentFits(actorMap,actor.position,point(amount),actor.half)){
+      let low=0,high=amount;for(let i=0;i<7;i++){const mid=(low+high)/2;if(segmentFits(actorMap,actor.position,point(mid),actor.half))low=mid;else high=mid;}allowed=low;
     }
     if(allowed<=config.epsilon)return 0;
     actor.position=point(allowed);actor.spent+=allowed;return allowed;

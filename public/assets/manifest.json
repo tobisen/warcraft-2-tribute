@@ -14,7 +14,7 @@
       "image": "assets/buildings-atlas.png",
       "data": "assets/buildings-atlas.json",
       "width": 1024,
-      "height": 5760,
+      "height": 7296,
       "source": "assets/sources/buildings.mjs"
     },
     "units": {
@@ -7115,6 +7115,1626 @@
       "owner": "enemy",
       "buildingType": "tower",
       "stage": "damaged"
+    },
+    "wall-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "wall",
+      "stage": "foundation"
+    },
+    "wall-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "wall",
+      "stage": "building"
+    },
+    "wall-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "wall",
+      "stage": "complete"
+    },
+    "wall-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "wall",
+      "stage": "damaged"
+    },
+    "gate-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "gate",
+      "stage": "foundation"
+    },
+    "gate-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "gate",
+      "stage": "building"
+    },
+    "gate-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "gate",
+      "stage": "complete"
+    },
+    "gate-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "gate",
+      "stage": "damaged"
+    },
+    "gate-player-open": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "gate",
+      "stage": "open"
+    },
+    "wall-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "wall",
+      "stage": "foundation"
+    },
+    "wall-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "wall",
+      "stage": "building"
+    },
+    "wall-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "wall",
+      "stage": "complete"
+    },
+    "wall-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "wall",
+      "stage": "damaged"
+    },
+    "gate-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "gate",
+      "stage": "foundation"
+    },
+    "gate-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "gate",
+      "stage": "building"
+    },
+    "gate-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "gate",
+      "stage": "complete"
+    },
+    "gate-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "gate",
+      "stage": "damaged"
+    },
+    "gate-enemy-open": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "gate",
+      "stage": "open"
+    },
+    "clans-wall-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "wall",
+      "stage": "foundation"
+    },
+    "clans-wall-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "wall",
+      "stage": "building"
+    },
+    "clans-wall-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "wall",
+      "stage": "complete"
+    },
+    "clans-wall-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "wall",
+      "stage": "damaged"
+    },
+    "clans-gate-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "gate",
+      "stage": "foundation"
+    },
+    "clans-gate-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "gate",
+      "stage": "building"
+    },
+    "clans-gate-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "gate",
+      "stage": "complete"
+    },
+    "clans-gate-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "gate",
+      "stage": "damaged"
+    },
+    "clans-gate-player-open": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "gate",
+      "stage": "open"
+    },
+    "clans-wall-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "wall",
+      "stage": "foundation"
+    },
+    "clans-wall-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "wall",
+      "stage": "building"
+    },
+    "clans-wall-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "wall",
+      "stage": "complete"
+    },
+    "clans-wall-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "wall",
+      "stage": "damaged"
+    },
+    "clans-gate-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "gate",
+      "stage": "foundation"
+    },
+    "clans-gate-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "gate",
+      "stage": "building"
+    },
+    "clans-gate-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "gate",
+      "stage": "complete"
+    },
+    "clans-gate-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "gate",
+      "stage": "damaged"
+    },
+    "clans-gate-enemy-open": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "gate",
+      "stage": "open"
+    },
+    "elves-wall-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "player",
+      "buildingType": "wall",
+      "stage": "foundation"
+    },
+    "elves-wall-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "player",
+      "buildingType": "wall",
+      "stage": "building"
+    },
+    "elves-wall-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "player",
+      "buildingType": "wall",
+      "stage": "complete"
+    },
+    "elves-wall-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "player",
+      "buildingType": "wall",
+      "stage": "damaged"
+    },
+    "elves-gate-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "player",
+      "buildingType": "gate",
+      "stage": "foundation"
+    },
+    "elves-gate-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "player",
+      "buildingType": "gate",
+      "stage": "building"
+    },
+    "elves-gate-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "player",
+      "buildingType": "gate",
+      "stage": "complete"
+    },
+    "elves-gate-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "player",
+      "buildingType": "gate",
+      "stage": "damaged"
+    },
+    "elves-gate-player-open": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "player",
+      "buildingType": "gate",
+      "stage": "open"
+    },
+    "elves-wall-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "enemy",
+      "buildingType": "wall",
+      "stage": "foundation"
+    },
+    "elves-wall-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "enemy",
+      "buildingType": "wall",
+      "stage": "building"
+    },
+    "elves-wall-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "enemy",
+      "buildingType": "wall",
+      "stage": "complete"
+    },
+    "elves-wall-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "enemy",
+      "buildingType": "wall",
+      "stage": "damaged"
+    },
+    "elves-gate-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "enemy",
+      "buildingType": "gate",
+      "stage": "foundation"
+    },
+    "elves-gate-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "enemy",
+      "buildingType": "gate",
+      "stage": "building"
+    },
+    "elves-gate-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "enemy",
+      "buildingType": "gate",
+      "stage": "complete"
+    },
+    "elves-gate-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "enemy",
+      "buildingType": "gate",
+      "stage": "damaged"
+    },
+    "elves-gate-enemy-open": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "enemy",
+      "buildingType": "gate",
+      "stage": "open"
+    },
+    "dwarves-wall-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "player",
+      "buildingType": "wall",
+      "stage": "foundation"
+    },
+    "dwarves-wall-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "player",
+      "buildingType": "wall",
+      "stage": "building"
+    },
+    "dwarves-wall-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "player",
+      "buildingType": "wall",
+      "stage": "complete"
+    },
+    "dwarves-wall-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "player",
+      "buildingType": "wall",
+      "stage": "damaged"
+    },
+    "dwarves-gate-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "player",
+      "buildingType": "gate",
+      "stage": "foundation"
+    },
+    "dwarves-gate-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "player",
+      "buildingType": "gate",
+      "stage": "building"
+    },
+    "dwarves-gate-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "player",
+      "buildingType": "gate",
+      "stage": "complete"
+    },
+    "dwarves-gate-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "player",
+      "buildingType": "gate",
+      "stage": "damaged"
+    },
+    "dwarves-gate-player-open": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "player",
+      "buildingType": "gate",
+      "stage": "open"
+    },
+    "dwarves-wall-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "enemy",
+      "buildingType": "wall",
+      "stage": "foundation"
+    },
+    "dwarves-wall-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "enemy",
+      "buildingType": "wall",
+      "stage": "building"
+    },
+    "dwarves-wall-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "enemy",
+      "buildingType": "wall",
+      "stage": "complete"
+    },
+    "dwarves-wall-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "enemy",
+      "buildingType": "wall",
+      "stage": "damaged"
+    },
+    "dwarves-gate-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "enemy",
+      "buildingType": "gate",
+      "stage": "foundation"
+    },
+    "dwarves-gate-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "enemy",
+      "buildingType": "gate",
+      "stage": "building"
+    },
+    "dwarves-gate-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "enemy",
+      "buildingType": "gate",
+      "stage": "complete"
+    },
+    "dwarves-gate-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "enemy",
+      "buildingType": "gate",
+      "stage": "damaged"
+    },
+    "dwarves-gate-enemy-open": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "enemy",
+      "buildingType": "gate",
+      "stage": "open"
+    },
+    "goblins-wall-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "player",
+      "buildingType": "wall",
+      "stage": "foundation"
+    },
+    "goblins-wall-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "player",
+      "buildingType": "wall",
+      "stage": "building"
+    },
+    "goblins-wall-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "player",
+      "buildingType": "wall",
+      "stage": "complete"
+    },
+    "goblins-wall-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "player",
+      "buildingType": "wall",
+      "stage": "damaged"
+    },
+    "goblins-gate-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "player",
+      "buildingType": "gate",
+      "stage": "foundation"
+    },
+    "goblins-gate-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "player",
+      "buildingType": "gate",
+      "stage": "building"
+    },
+    "goblins-gate-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "player",
+      "buildingType": "gate",
+      "stage": "complete"
+    },
+    "goblins-gate-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "player",
+      "buildingType": "gate",
+      "stage": "damaged"
+    },
+    "goblins-gate-player-open": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "player",
+      "buildingType": "gate",
+      "stage": "open"
+    },
+    "goblins-wall-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "enemy",
+      "buildingType": "wall",
+      "stage": "foundation"
+    },
+    "goblins-wall-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "enemy",
+      "buildingType": "wall",
+      "stage": "building"
+    },
+    "goblins-wall-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "enemy",
+      "buildingType": "wall",
+      "stage": "complete"
+    },
+    "goblins-wall-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "enemy",
+      "buildingType": "wall",
+      "stage": "damaged"
+    },
+    "goblins-gate-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "enemy",
+      "buildingType": "gate",
+      "stage": "foundation"
+    },
+    "goblins-gate-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "enemy",
+      "buildingType": "gate",
+      "stage": "building"
+    },
+    "goblins-gate-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "enemy",
+      "buildingType": "gate",
+      "stage": "complete"
+    },
+    "goblins-gate-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "enemy",
+      "buildingType": "gate",
+      "stage": "damaged"
+    },
+    "goblins-gate-enemy-open": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "enemy",
+      "buildingType": "gate",
+      "stage": "open"
     },
     "worker-player-e-idle-0": {
       "atlas": "units",

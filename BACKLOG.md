@@ -27,7 +27,7 @@ avslutas efter denna fix; ingen senare roadmap-task startas.
   /tmp/w2t-bottom-bar; ingen ny CI-/Pages-verifiering hävdas.
 
 
-**Aktuellt mandat RTS-160–164:** RTS-159 accepteras som Done och implementationen har inventerats.160 Done (`7d7290c`),161 Done (`b7439ae`),162 aktuell, därefter163–164 en task i taget med checks/browser/docs/commit/push. Stanna efter164 och uppdatera HANDOFF.157 lyssning och158 inspelningar kvarstår enligt historisk överlämning; återstående sprites dokumenteras separat.
+**Aktuellt mandat RTS-160–164:** RTS-159 accepteras som Done och implementationen har inventerats.160 Done (`7d7290c`),161 Done (`b7439ae`),162 Done (`4658a0d`),163 aktuell, därefter164 en task i taget med checks/browser/docs/commit/push. Stanna efter164 och uppdatera HANDOFF.157 lyssning och158 inspelningar kvarstår enligt historisk överlämning; återstående sprites dokumenteras separat.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -4394,7 +4394,9 @@ Verifiera fog of war, projektiler och AI-targeting.
 
 ## RTS-163 – Murar och portar
 
-**Status:** Todo.
+**Status:** Done.
+
+**Leverans:** Mur10 wood/180HP/3s/32×32, port30 wood+5gold/240HP/5s/64×32. Worker bygger, förstörelse tar bort hinder. Port startar stängd; X/ikon öppnar/stänger utan kostnad. Öppen port släpper igenom spelarens befintliga lag, fiender måste gå runt eller förstöra. Routes invalidieras via revision; enemy-workers, AI, landning, spawn och separation använder ägarskapskontrollen. Instängning, obligatoriska leverans-/builder-/produktions-/wavevägar och kroppskollision kontrolleras; stängning över enhet spärras.32 fortifications sammanlagt. Strikt Save36/35-migration, öppen gate-state och navigationscache rekonstrueras.90 atlasframes från godkända base-delar; särskild godkänd mur/portreferens saknas. Riktade81 tests PASS, browser800/1280 med fysisk bygg/open/move/close/save; artifacts/rts-163.
 
 **Goal:** Murar och portar.
 

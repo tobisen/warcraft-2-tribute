@@ -7,7 +7,7 @@ import { unitStats,workerStats } from '../config/unit';
 import type { GatheringState, Unit } from './gathering';
 import type { PlacementState, ConstructionJob, Footprint } from './placement';
 import type { WorldMap } from './map';
-type SiteId = `tower-${number}`| 'harbor'|'outpost'|'barracks'|'forge'|`farm-${number}`;
+type SiteId = `wall-${number}`|`gate-${number}`|`tower-${number}`| 'harbor'|'outpost'|'barracks'|'forge'|`farm-${number}`;
 export function barracksReady(placement:PlacementState):boolean {
   return placement.barracks!==null && (!placement.construction || placement.construction.remainingSeconds===0);
 }

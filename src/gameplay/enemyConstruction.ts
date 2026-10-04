@@ -1,3 +1,5 @@
+import {approachRoute} from './approach';
+import {enemyNavigationMap} from './map';
 import {enemySoldier,enemySupply} from './enemyUnits';
 import {factionForTeam} from '../config/factions';
 import {maps} from '../config/maps';
@@ -7,7 +9,7 @@ import {forgeConfig,upgradeConfig} from '../config/upgrades';
 import {enemyConstructionConfig as config} from '../config/enemyConstruction';
 import {combatConfig} from '../config/combat';
 import {combatUnitStats,unitStats} from '../config/unit';
-import {beginPlacement,placeBuilding,type PlacementState} from './placement';
+import {buildingFootprint,beginPlacement,placeBuilding,type PlacementState} from './placement';
 import {resumeConstruction,updateConstruction} from './construction';
 import {populationState} from './population';
 import {overlaps} from './map';
@@ -40,12 +42,13 @@ export function prepareEnemyConstruction(m:MatchState):MatchState {
  if(m.waves.elapsedSeconds+1e-9<m.enemyConstruction.nextAttemptSeconds)return m;
  m={...m,enemyConstruction:{nextAttemptSeconds:m.waves.elapsedSeconds+config.retrySeconds}};
  const available=g.units.filter(u=>u.kind==='worker'&&u.hp!>0).sort((a,b)=>a.id.localeCompare(b.id));
- if(site){for(const builder of available){g={...g,units:g.units.map(u=>({...u,selected:u.id===builder.id}))};const result=resumeConstruction(g,p,m.map,site.buildingType==='farm'?'farm-1':site.buildingType!);const job=site.buildingType==='barracks'?result.placement.construction:site.buildingType==='forge'?result.placement.forge?.construction:result.placement.farms?.[0]?.construction;if(job?.builderId===builder.id)return {...m,combat:{...m.combat,enemies:copySites(workers(m,result.gathering),result.placement)}};}return m;}
+ if(site){for(const builder of available){g={...g,units:g.units.map(u=>({...u,selected:u.id===builder.id}))};const result=resumeConstruction(g,p,enemyNavigationMap(m.map),site.buildingType==='farm'?'farm-1':site.buildingType!);const job=site.buildingType==='barracks'?result.placement.construction:site.buildingType==='forge'?result.placement.forge?.construction:result.placement.farms?.[0]?.construction;if(job?.builderId===builder.id)return {...m,combat:{...m.combat,enemies:copySites(workers(m,result.gathering),result.placement)}};}return m;}
  const pop=enemyPopulation(m),kind=!p.barracks?'barracks':(p.farms?.length??0)<config.maxFarms&&pop.used+pop.reserved>=pop.cap-config.supplyMargin?'farm':m.enemyPolicy&&!p.forge&&(m.enemyPolicy.research.attack<upgradeConfig.maxLevel||m.enemyPolicy.research.defense<upgradeConfig.maxLevel)&&m.combat.enemies.filter(e=>!e.footprint&&e.kind!=='worker'&&e.hp>0).length>=enemyPolicyConfig.minLiveArmy?'forge':null;
  if(!kind)return m;
  for(const builder of available)for(const point of maps[m.map.id??'arena'].enemyBuildSites??config.candidates){
   g={...g,units:g.units.map(u=>({...u,selected:u.id===builder.id}))};
   const rect={...point,width:64,height:64};if(m.gathering.units.some(u=>overlaps(rect,unitBody(u.position,(u.kind==='worker'?unitStats:combatUnitStats(u)).size))))continue;
+  if(approachRoute(enemyNavigationMap(m.map),builder.position,buildingFootprint(point,kind),24).status==='blocked')continue;
   const placed=placeBuilding(beginPlacement(p,kind),point,g.wood,[],{map:m.map,gathering:g,enemies:[...m.gathering.units,...m.combat.enemies.filter(e=>!e.footprint&&e.kind!=='worker')]});
   if(!placed.gathering||placed.wood===g.wood)continue;
   p=placed.placement;const footprint=kind==='barracks'?p.barracks!:kind==='forge'?p.forge!.footprint:p.farms![0].footprint,construction=kind==='barracks'?p.construction!:kind==='forge'?p.forge!.construction:p.farms![0].construction;
@@ -56,7 +59,7 @@ export function prepareEnemyConstruction(m:MatchState):MatchState {
 }
 export function updateEnemyConstruction(m:MatchState,delta:number,gateFor?:GateFor):{match:MatchState;productionDelta:number} {
  if(!m.enemyConstruction||!m.enemyProduction||!m.combat.enemies.some(e=>e.kind==='base'))return {match:m,productionDelta:delta};
- const result=updateConstruction(economy(m),enemyBuildingView(m),m.map,delta,gateFor?(id=>gateFor(id.replace(/^player:/,'enemy:'))):undefined);
+ const result=updateConstruction(economy(m),enemyBuildingView(m),enemyNavigationMap(m.map),delta,gateFor?(id=>gateFor(id.replace(/^player:/,'enemy:'))):undefined);
  const ready=result.placement.barracks&&result.placement.construction?.remainingSeconds===0;
  return {match:{...m,combat:{...m.combat,enemies:copySites(workers(m,result.gathering),result.placement)}},productionDelta:ready?Math.max(0,delta-(result.barracksReadyAfter??0)):0};
 }

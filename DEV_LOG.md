@@ -2924,3 +2924,13 @@ Slutlig unit445/80 PASS, build inklusive strict typecheck PASS. Diffcheck hittad
 58 riktade tester PASS (torn, construction, AI-defense, save, UI, atlas, combatAudio). Browser native800/1280: fysisk workerselection/build/placering, konstruktion, tornselection/spärr, uppgradering och save, synlig projektil/impact; screenshots granskade artifacts/rts-162. Browser upptäckte återaktiveringsfel för ny knapp; rättat/verifierat. Separat godkänd tornreferens saknas; originalpixeldelar från godkända huvudbyggnaden används, inga illustrativa cropframes. Actual audio-listening/CI/Pages ej utfört. Ingen bred campaign-regression i162; slutchecks nedan.
 
 Slutlig unit445/80 PASS, build inklusive strict typecheck PASS, git diff --check PASS. Befintlig src/style.css är byte-identisk med starten; otrackade docs bevarade. RTS-161 commit/push b7439ae.
+
+## RTS-163 – murar och ägarstyrda portar
+
+Murar10wood/180HP/3s, portar30wood+5gold/240HP/5s. Återanvänder fortifications/worker-konstruktion/AI-targeting/destruction. X-toggle och ikon, öppen/stängd värld och porträtt. Öppen fysisk passage reserveras för player-laget via härledd enemy-navigation, inklusive enemy-workers/construction/scouting/naval landning/production och separation. Placement skyddar allas nödvändiga connectivity samt spawn/delivery; close över enhet eller routes spärras. Saves36 migrerar35 och återskapar cache från gate-state, validerar grid/type/cost-relevant HP/construction/owner/counter.90 nya pixelatlasframes från approved building parts; ingen separat godkänd mur/portreferens.
+
+Riktade81 tests/9files PASS (gate/tower, enemy naval/construction/gathering, separation, Save, UI, atlas). Browser native800/1280: fysisk workerplacering av gate/wall, konstruktion/selection, open, fysisk move genom egen gate, spärrad close medan worker passerar, close efter passage och faktisk lokal save. Screenshots granskade i artifacts/rts-163, browser.json. Extra slutlig browserkörning för korrigerat öppet porträtt/spawn-skydd. Ingen bred campaign-simulering i163, ingen CI/Pages. RTS-162 commit/push4658a0d. Slutchecks nedan.
+
+Första slutliga unitkörningen upptäckte ett gammalt hotkey-test som antog X var oanvänd; X är nu gate-toggle. Testet kontrollerar i stället P (som fortsatt hanteras av pause-flödet, inte action-hotkeys). Slutchecks körs om på slutlig kod.
+
+Slutlig unit445/80 PASS, build inklusive strict typecheck PASS, git diff --check PASS. Slutlig browser800/1280 PASS. User-CSS fortsatt byte-identisk. Ingen ny full regression ännu; planeras en gång vid etappslut eftersom164 påverkar strid/ekonomi/navigation.

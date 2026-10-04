@@ -36,6 +36,7 @@
   "src/gameplay/fog.test.ts",
   "src/gameplay/frontier.test.ts",
   "src/gameplay/gameSpeed.test.ts",
+  "src/gameplay/gates.test.ts",
   "src/gameplay/groupMovement.test.ts",
   "src/gameplay/highlands.test.ts",
   "src/gameplay/highscoreSave.test.ts",
