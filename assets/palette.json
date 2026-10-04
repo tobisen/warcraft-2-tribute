@@ -35,5 +35,19 @@
   "linenShadow": "#9e9476",
   "linen": "#d0c5a5",
   "linenLight": "#f1e6c8",
-  "metalLight": "#e5e9dc"
+  "metalLight": "#e5e9dc",
+  "elfGreen": "#267447",
+  "elfGreenDark": "#123d2d",
+  "elfGreenLight": "#66a960",
+  "tinkerTeal": "#177b83",
+  "tinkerTealDark": "#0b414a",
+  "tinkerTealLight": "#52b4b3",
+  "orcSkin": "#7fac39",
+  "orcSkinShadow": "#3e642c",
+  "orcSkinLight": "#b8d364",
+  "dwarfBeard": "#aa561f",
+  "dwarfBeardShadow": "#63341b",
+  "dwarfBeardLight": "#d7832f",
+  "copper": "#b7753d",
+  "copperLight": "#e5aa65"
 }

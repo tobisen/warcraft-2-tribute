@@ -50,3 +50,5 @@ RTS-155-korrigering: Human-worker/soldier/base i [sources/humans.mjs](sources/hu
 lokala stilreferenser har granskats, men inga illustrationscrops eller externa
 spel-spritefiler har importerats i atlaserna. [Protokollet](sources/humans.md)
 skiljer underlag, skapade assets, export och faktisk visuell verifiering.
+
+RTS-155 fraktionspass: faction-people.mjs och faction-bases.mjs är originalkompositioner i integer-pixel-kod, baserade på användarens lokala stilreferenser (identifierade/hashade i sources/faction-references.md). Referensillustrationerna är inte importerade, nedskalade eller beskurna in i runtime-atlaserna. Goblins följer teknikerreferensen enligt uttrycklig instruktion; fraktionsnamnet behålls.

@@ -143,3 +143,6 @@ export function humanBase(Surface,p,owner,stage){
  }
  return s;
 }
+
+// Shared integer-pixel material brushes; Human compositions above remain unchanged.
+export const pixelParts={limb,boot,helmet,shield,sword,masonry,battlements,roof,flag,banner,tower};

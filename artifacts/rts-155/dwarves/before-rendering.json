@@ -1,0 +1,482 @@
+[
+  {
+    "name": "worker-idle",
+    "width": 800,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 340,
+          "y": 300
+        },
+        "frame": "dwarves-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 1664,
+          "y": 3520,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 440,
+          "y": 300
+        },
+        "frame": "dwarves-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 1664,
+          "y": 3840,
+          "width": 32,
+          "height": 32
+        }
+      }
+    ],
+    "base": {
+      "frame": "dwarves-base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "Miner"
+  },
+  {
+    "name": "soldier-idle",
+    "width": 800,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 340,
+          "y": 300
+        },
+        "frame": "dwarves-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 1664,
+          "y": 3520,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 440,
+          "y": 300
+        },
+        "frame": "dwarves-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 1664,
+          "y": 3840,
+          "width": 32,
+          "height": 32
+        }
+      }
+    ],
+    "base": {
+      "frame": "dwarves-base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "Iron Guard"
+  },
+  {
+    "name": "together-idle",
+    "width": 800,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 340,
+          "y": 300
+        },
+        "frame": "dwarves-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 1664,
+          "y": 3520,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 440,
+          "y": 300
+        },
+        "frame": "dwarves-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 1664,
+          "y": 3840,
+          "width": 32,
+          "height": 32
+        }
+      }
+    ],
+    "base": {
+      "frame": "dwarves-base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "2 units selected"
+  },
+  {
+    "name": "base",
+    "width": 800,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 340,
+          "y": 300
+        },
+        "frame": "dwarves-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 1664,
+          "y": 3520,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 440,
+          "y": 300
+        },
+        "frame": "dwarves-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 1664,
+          "y": 3840,
+          "width": 32,
+          "height": 32
+        }
+      }
+    ],
+    "base": {
+      "frame": "dwarves-base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "Stone Hold"
+  },
+  {
+    "name": "together-movement",
+    "width": 800,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 368,
+          "y": 300
+        },
+        "frame": "dwarves-worker-player-e-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 3200,
+          "y": 3456,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 464,
+          "y": 300
+        },
+        "frame": "dwarves-soldier-player-e-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 128,
+          "y": 3840,
+          "width": 32,
+          "height": 32
+        }
+      }
+    ],
+    "base": {
+      "frame": "dwarves-base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "2 units selected"
+  },
+  {
+    "name": "worker-idle",
+    "width": 1280,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 340,
+          "y": 300
+        },
+        "frame": "dwarves-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 1664,
+          "y": 3520,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 440,
+          "y": 300
+        },
+        "frame": "dwarves-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 1664,
+          "y": 3840,
+          "width": 32,
+          "height": 32
+        }
+      }
+    ],
+    "base": {
+      "frame": "dwarves-base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "Miner"
+  },
+  {
+    "name": "soldier-idle",
+    "width": 1280,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 340,
+          "y": 300
+        },
+        "frame": "dwarves-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 1664,
+          "y": 3520,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 440,
+          "y": 300
+        },
+        "frame": "dwarves-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 1664,
+          "y": 3840,
+          "width": 32,
+          "height": 32
+        }
+      }
+    ],
+    "base": {
+      "frame": "dwarves-base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "Iron Guard"
+  },
+  {
+    "name": "together-idle",
+    "width": 1280,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 340,
+          "y": 300
+        },
+        "frame": "dwarves-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 1664,
+          "y": 3520,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 440,
+          "y": 300
+        },
+        "frame": "dwarves-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 1664,
+          "y": 3840,
+          "width": 32,
+          "height": 32
+        }
+      }
+    ],
+    "base": {
+      "frame": "dwarves-base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "2 units selected"
+  },
+  {
+    "name": "base",
+    "width": 1280,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 340,
+          "y": 300
+        },
+        "frame": "dwarves-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 1664,
+          "y": 3520,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 440,
+          "y": 300
+        },
+        "frame": "dwarves-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 1664,
+          "y": 3840,
+          "width": 32,
+          "height": 32
+        }
+      }
+    ],
+    "base": {
+      "frame": "dwarves-base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "Stone Hold"
+  },
+  {
+    "name": "together-movement",
+    "width": 1280,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 368,
+          "y": 300
+        },
+        "frame": "dwarves-worker-player-e-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 3200,
+          "y": 3456,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 464,
+          "y": 300
+        },
+        "frame": "dwarves-soldier-player-e-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 128,
+          "y": 3840,
+          "width": 32,
+          "height": 32
+        }
+      }
+    ],
+    "base": {
+      "frame": "dwarves-base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "2 units selected"
+  }
+]

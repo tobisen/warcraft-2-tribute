@@ -1323,3 +1323,7 @@ samma native-scen, source/exportjämförelse och visuell granskning redovisas i
 [Human-protokollet](assets/sources/humans.md). Tidigare Done upphävs;155 hålls
 In Progress för användarens bedömning av korrigeringen. Inga andra fraktioner,
 nytt gameplay eller senare roadmaparbete startas av detta beslut.
+
+## 2026-10-04 – RTS-155: fyra fraktionsreferenser utan namnbyte
+
+Användaren accepterar Human-slicen för tillfället och godkänner de åtta nya referenserna. Teknikerbilderna används uttryckligen för Goblins med befintliga namn och gameplay kvar. Worker/melee/base adapteras först för Orcs/Elves/Dwarves/Goblins med egna native pixelkompositioner,64px unitceller och128px base. Normaliserade anchors, atlas-ID:n och logical footprints behålls; lagfärg syns utöver fraktionens materialpalett. Samma materialpenslar används som Human, men kroppar, utrustning och arkitektur ges fraktionsspecifika former. Referensbildernas separata ranged-byggnad skapar ingen ny typ. Övriga assetgrupper kvarstår inom155;156+ startas inte. Se [protokoll](assets/sources/faction-references.md).

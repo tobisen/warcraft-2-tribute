@@ -27,9 +27,9 @@ avslutas efter denna fix; ingen senare roadmap-task startas.
   /tmp/w2t-bottom-bar; ingen ny CI-/Pages-verifiering hävdas.
 
 
-**RTS-155 – Ny kvalitetsnivå för sprites** — **In Progress**. Human-worker, melee och base är korrigerade och visuellt granskade; användarens bedömning av det nya resultatet återstår. Se tasken och [granskningsprotokollet](assets/sources/humans.md).
+**RTS-155 – Ny kvalitetsnivå för sprites** — **In Progress**. Human-worker, melee och base är korrigerade och accepterade av användaren för tillfället. Worker/melee/base för Orcs, Elves, Dwarves och Goblins är implementerade från de nya referenserna. Se [protokoll och kvarvarande assetgrupper](assets/sources/faction-references.md). Se tasken och [granskningsprotokollet](assets/sources/humans.md).
 
-**Aktuell etapp:** RTS-151–154 färdiga. RTS-155 återöppnad för beställd Human-korrigering2026-10-04. Roadmap151–180 återställd; senare tasks Todo och inte implementerade. RTS-156 är pausad/inte startad; inget fortsatt implementationsmandat efter denna korrigering. Se [HANDOFF.md](HANDOFF.md) och [QUALITY_REVIEW.md](QUALITY_REVIEW.md). Tidigare stopp/fortsättningsmandat nedan är historik.
+**Aktuell etapp:** RTS-151–154 färdiga. RTS-155 återöppnad för beställd Human-korrigering2026-10-04, nu accepterad för tillfället och utökad med nya fraktionsreferenser och worker/melee/base-slices. Roadmap151–180 återställd; senare tasks Todo och inte implementerade. RTS-156 är pausad/inte startad; nytt assetmandat gäller inom RTS-155; inget mandat för senare tasks. Se [HANDOFF.md](HANDOFF.md) och [QUALITY_REVIEW.md](QUALITY_REVIEW.md). Tidigare stopp/fortsättningsmandat nedan är historik.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -4140,7 +4140,7 @@ Titeln är en arbetstitel, inte juridiskt granskad för kommersiell release.
 
 ## RTS-155 – Ny kvalitetsnivå för sprites
 
-**Status:** In Progress – Human-korrigering implementerad och visuellt granskad; slutlig användarbedömning återstår.
+**Status:** In Progress – Human accepterad för tillfället; worker/melee/base för övriga fyra fraktioner implementerade. Övriga assetgrupper återstår.
 
 **Goal:** Ny kvalitetsnivå för sprites.
 
@@ -4180,16 +4180,18 @@ kamera/selection vid Native800×600 och1280×720. Worker och soldier separat och
  [Protokoll/begränsningar](assets/sources/humans.md). Inga tekniska PASS används
  som ersättning för användarens visuella godkännande av det nya resultatet.
 
-**Subtasks inom155 (inga nya RTS-ID:n, inget mandat att starta resten):**
+**Nytt underlag2026-10-04:** Användaren accepterar Human-resultatet för tillfället och ber att de åtta nya fraktionsbilderna används. Se [inventering och exakt omfattning](assets/sources/faction-references.md). Orcs/Elves/Dwarves är identifierade. Användaren har uttryckligen bekräftat teknikerreferensen för Goblins och att alla namn behålls. Worker/melee/base har nu egna64px/128px speladaptioner för dessa fyra fraktioner. Sjöreferenser saknas. [Före/efter](artifacts/rts-155/factions/index.html) och [käll-/atlasaudit](artifacts/rts-155/factions/source-export-audit.json) skiljer källgrafik, export och runtime åt. Slutlig unit433/77 och build inklusive strict typecheck PASS; browserkontroll före/efter för fyra fraktioner vid Native800×600 och1280×720 PASS. Slutliga bilder och kontaktblad visuellt granskade; diff-/länkkontroll PASS. Ingen campaign-/matchsimulering.
+
+**Subtasks inom155 (inga nya RTS-ID:n):**
 
 | Slice | Status |
 | --- | --- |
-| Human-worker/melee/base | Korrigerad och visuellt granskad; användarbedömning återstår. |
+| Human-worker/melee/base | Korrigerad, visuellt granskad och accepterad av användaren för tillfället. |
 | Human övriga landunits/byggnader/sjöassets | Inte uppdaterade i denna korrigering. |
-| Orcs units/buildings/naval | Inte uppdaterade; eget stilunderlag och mandat krävs. |
-| Elves units/buildings/naval | Inte uppdaterade; eget stilunderlag och mandat krävs. |
-| Dwarves units/buildings/naval | Inte uppdaterade; eget stilunderlag och mandat krävs. |
-| Goblins units/buildings/naval | Inte uppdaterade; eget stilunderlag och mandat krävs. |
+| Orcs units/buildings/naval | Worker/melee/base implementerade och visuellt granskade. Övriga landassets återstår; sjöunderlag saknas. |
+| Elves units/buildings/naval | Worker/melee/base implementerade och visuellt granskade. Övriga landassets återstår; sjöunderlag saknas. |
+| Dwarves units/buildings/naval | Worker/melee/base implementerade och visuellt granskade. Övriga landassets återstår; sjöunderlag saknas. |
+| Goblins units/buildings/naval | Teknikerreferensen bekräftad, namn behålls. Worker/melee/base implementerade och visuellt granskade. Övriga landassets återstår; sjöunderlag saknas. |
 
 Stanna efter denna leverans. RTS-156 och senare startas inte.
 

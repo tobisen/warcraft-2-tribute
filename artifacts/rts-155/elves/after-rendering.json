@@ -1,0 +1,482 @@
+[
+  {
+    "name": "worker-idle",
+    "width": 800,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 340,
+          "y": 300
+        },
+        "frame": "elves-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 640,
+          "y": 2368,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 440,
+          "y": 300
+        },
+        "frame": "elves-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 640,
+          "y": 2688,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ],
+    "base": {
+      "frame": "elves-base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "Grove Tender"
+  },
+  {
+    "name": "soldier-idle",
+    "width": 800,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 340,
+          "y": 300
+        },
+        "frame": "elves-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 640,
+          "y": 2368,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 440,
+          "y": 300
+        },
+        "frame": "elves-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 640,
+          "y": 2688,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ],
+    "base": {
+      "frame": "elves-base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "Warden"
+  },
+  {
+    "name": "together-idle",
+    "width": 800,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 340,
+          "y": 300
+        },
+        "frame": "elves-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 640,
+          "y": 2368,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 440,
+          "y": 300
+        },
+        "frame": "elves-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 640,
+          "y": 2688,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ],
+    "base": {
+      "frame": "elves-base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "2 units selected"
+  },
+  {
+    "name": "base",
+    "width": 800,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 340,
+          "y": 300
+        },
+        "frame": "elves-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 640,
+          "y": 2368,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 440,
+          "y": 300
+        },
+        "frame": "elves-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 640,
+          "y": 2688,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ],
+    "base": {
+      "frame": "elves-base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "Grove Hall"
+  },
+  {
+    "name": "together-movement",
+    "width": 800,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 374,
+          "y": 300
+        },
+        "frame": "elves-worker-player-e-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 2176,
+          "y": 2304,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 475,
+          "y": 300
+        },
+        "frame": "elves-soldier-player-e-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 3200,
+          "y": 2624,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ],
+    "base": {
+      "frame": "elves-base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "2 units selected"
+  },
+  {
+    "name": "worker-idle",
+    "width": 1280,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 340,
+          "y": 300
+        },
+        "frame": "elves-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 640,
+          "y": 2368,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 440,
+          "y": 300
+        },
+        "frame": "elves-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 640,
+          "y": 2688,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ],
+    "base": {
+      "frame": "elves-base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "Grove Tender"
+  },
+  {
+    "name": "soldier-idle",
+    "width": 1280,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 340,
+          "y": 300
+        },
+        "frame": "elves-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 640,
+          "y": 2368,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 440,
+          "y": 300
+        },
+        "frame": "elves-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 640,
+          "y": 2688,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ],
+    "base": {
+      "frame": "elves-base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "Warden"
+  },
+  {
+    "name": "together-idle",
+    "width": 1280,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 340,
+          "y": 300
+        },
+        "frame": "elves-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 640,
+          "y": 2368,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 440,
+          "y": 300
+        },
+        "frame": "elves-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 640,
+          "y": 2688,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ],
+    "base": {
+      "frame": "elves-base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "2 units selected"
+  },
+  {
+    "name": "base",
+    "width": 1280,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 340,
+          "y": 300
+        },
+        "frame": "elves-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 640,
+          "y": 2368,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 440,
+          "y": 300
+        },
+        "frame": "elves-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 640,
+          "y": 2688,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ],
+    "base": {
+      "frame": "elves-base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "Grove Hall"
+  },
+  {
+    "name": "together-movement",
+    "width": 1280,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 374,
+          "y": 300
+        },
+        "frame": "elves-worker-player-e-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 2176,
+          "y": 2304,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 475,
+          "y": 300
+        },
+        "frame": "elves-soldier-player-e-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 3200,
+          "y": 2624,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ],
+    "base": {
+      "frame": "elves-base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "2 units selected"
+  }
+]

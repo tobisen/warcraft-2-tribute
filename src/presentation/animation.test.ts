@@ -11,7 +11,7 @@ it('naval sprites keep role/team/facing and have bounded fog-safe sinking frames
  const a=motion(undefined,{x:700,y:432},'idle',0,'transport','enemy',undefined,'clans');const sailing=motion(a,{x:699,y:432},'idle',.1,'transport','enemy',undefined,'clans');expect(unitFrame(sailing,.36)).toBe('clans-transport-enemy-w-walk-2');expect(unitOrigin('transport')).toEqual({x:.5,y:40/64});const firing=motion(undefined,{x:800,y:432},'attack',0,'warship','player',{x:880,y:432});expect(unitFrame(firing,.15)).toBe('warship-player-e-attack-1');expect(deathEffect(sailing,.4,false,true)).toBeNull();expect(deathEffect(sailing,.4,true,false)).toBeNull();const death=deathEffect(sailing,.4,true,true)!;expect(unitFrame(death.motion,1)).toBe('clans-transport-enemy-w-death-3');expect(effectAlive(death,.9,true)).toBe(false);
 });
 
-it('keeps Human labels above the taller native silhouette without moving other faction overlays',()=>{
- for(const type of ['worker','soldier'] as const){expect(unitOverlayOffsets(type,'crown')).toEqual({hp:48,cargo:68});expect(unitOverlayOffsets(type,'clans')).toEqual({hp:29,cargo:48});}
+it('keeps labels above all detailed land silhouettes without changing unrelated roles',()=>{
+ for(const type of ['worker','soldier'] as const){expect(unitOverlayOffsets(type,'crown')).toEqual({hp:48,cargo:68});for(const faction of ['clans','dwarves','goblins'] as const)expect(unitOverlayOffsets(type,faction)).toEqual({hp:48,cargo:68});expect(unitOverlayOffsets(type,'elves')).toEqual({hp:48,cargo:68});}
  expect(unitOverlayOffsets('catapult','crown')).toEqual({hp:39,cargo:48});
 });

@@ -90,9 +90,11 @@ Inga fullständiga campaign-/matchsimuleringar kördes. Bundlevarningen kvarstå
 
 Den nya64px-adaptionen har färre mikrodetaljer än den stora referensillustrationen.
 Detta är ett eget spelassetpass som använder referensens identitetsdrag, inte en
-pixelidentisk kopia. Slutligt visuellt godkännande från användaren finns ännu
-inte för dessa nya bilder; därför hålls RTS-155 öppen. Human-ranged/siege/specialist,
-övriga byggnader/sjöassets och andra fraktioner är inte uppdaterade och har
-fortfarande äldre skala/stil. De ska inte utges som färdiga genom detta pass.
+pixelidentisk kopia. Användaren accepterade dessa nya bilder som tillräckligt bra för tillfället
+2026-10-04. RTS-155 hålls öppen för återstående assetgrupper. Human-ranged/siege/specialist,
+övriga byggnader/sjöassets är inte uppdaterade och har fortfarande äldre skala/stil.
+Worker/melee/base för de fyra andra fraktionerna har därefter adapterats enligt
+[det nya fraktionsprotokollet](faction-references.md). Human-bilder/audit här är
+historisk evidens från c5b3c71; den nya auditen visar att Human-rastren bevarats. De ska inte utges som färdiga genom detta pass.
 Ingen senare task startas. Ingen ny CI-/Pages- eller fysisk monitorgranskning
 påstås verifierad. Referensfilerna finns lokalt men är fortsatt otrackade.
