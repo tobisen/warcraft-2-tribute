@@ -2669,3 +2669,10 @@ vid nedskalning(cirka en fysisk pixel; observerat1.36worldpx), ingen runtimefix 
 Screenshots granskade, review geometri/migration/input/CSS och docs utan blockerande fynd.
 Ingen full matchsimulation för layouttasken; full regression efter154. Bundlevarning kvar;
 headlessfullscreen är API-/layoutbelägg, ingen mänsklig faktisk monitorcheck.
+
+153/71938fb pushad. Slutlig bildgranskning identifierade klippt rubrik på den längre
+byggnadsinformationen vid800Native. Komplettering inom153: info max144px/overflowauto,
+porträtt64px och actionbredd320px vid logisk bredd≤900. Omkörning motiverad av faktisk
+CSS-ändring:435unit PASS5.54s, build/strict typecheck PASS och samma48geometrier/
+fullscreens/input/minimap/HUD/reload-flöden PASS. Uppdaterad bild granskad: rubrik,
+funktion/HP synliga, längre stats rullbara. Diffkontroll PASS, ingen gameplayändring.

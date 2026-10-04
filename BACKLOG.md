@@ -4056,6 +4056,8 @@ Spara inställningen lokalt.
 
 **Verifiering:**435unit/76filer PASS5.91s, build inklusive strict typecheck PASS.10riktade display/preference/viewport-tester och18input/selection/minimap/fokus-tester PASS. Browser48 geometrier, API-fullscreen båda lägen, reload/persistens samt fysisk selection/move/building/minimap/Home/HUD i Native800/Fit800/stort nedskalat preset PASS utan browsererrors. Pekaravrundning vid nedskalning tolereras inom en fysisk pixel; faktisk monitor-fullscreen inte mänskligt testad.
 
+**HUD-komplettering efter bildfynd:** Native800 visade klippt rubrik på lång byggnadsinfo. Begränsad/rullbar infopanel och mindre porträtt/actionbredd vid liten logisk upplösning.435unit PASS5.54s, ny build/strict typecheck och samma relevanta browserflöden PASS. Bilder granskade; rubrik/HP/funktion nu synliga och resten rullbart.
+
 ## RTS-154 – Ny titel och huvudmeny
 
 **Status:** Todo.
