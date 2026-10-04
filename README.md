@@ -728,3 +728,9 @@ Välj Goblins för snabb, billig och ömtålig armé med splashvapen. Bygg Scrap
 Startmenyn har Enemy faction för alla fem fraktioner, även samma som din egen. Automatic opponent använder tidigare standardval. Ny Skirmish/basmission har betald fraktionsarmé med egna roller, forskning, projektiler och självbuff. Bygg supply och en tillräcklig armé; den tidigare fyrsoldatsstrategin räcker inte alltid. Land-AI har längre förberedelse före första gruppanfall, men reagerar när dess bas hotas. Äldre Save migreras till config30 med befintliga profiler, HP och betalda timers bevarade. Scripted waves och diagnostiskt Siege test behåller generiska raiders; sjö-AI:s enda tvåpassagerar-invasion är fortsatt begränsad.
 
 Matchsimulationerna i `npm test` körs med högst två Vitest-workers så CPU-tunga spelgenomgångar inte konkurrerar med obegränsat många tester om sina deadlines. `vitest.config.ts` styr enbart testkonkurrensen.
+
+## RTS-142 – Campaign progression
+
+Öppna **Campaign**, läs briefing/objektiv och starta **Tutorial – First Steps**. Seger låser upp nästa operation: Forest Watch → The Siege → The Outpost → The Crossing. Menyn visar Available, Locked och Completed · Replay. Återspela avklarade uppdrag via missionknappen; Play Again startar samma uppdrag med friskt matchstate. Resultatvyn visar debriefing.
+
+Framsteg sparas i den här browsern, separat från matchens lokala Save. Save/load bevarar campaign-uppdraget och dess pågående state; gamla Saves ger ingen påhittad completion. Vid storagefel visas att progression bara finns för sessionen. Skirmish och Survival påverkar inte campaignprogression.142 återanvänder fem befintliga uppdrag; längre campaign följer143–145.

@@ -1,3 +1,4 @@
+import {campaignMission} from '../config/campaign';
 import {enemyMaximumHP} from './enemyUnits';
 import {enemySize} from './enemyBody';
 import type {Enemy} from './combat';
@@ -121,10 +122,12 @@ export function decodeSave(json:string):LoadResult {
    const all=[...((old.combat as Data).enemies as Data[]),...(((old.enemyNaval as Data|undefined)?.passengers as Data[]|undefined)??[])];
    for(const e of all){ensure(!['role','ability','attackCooldown','legacyProfile','typeId'].some(k=>Object.hasOwn(e,k)),'legacy enemy profile');if(e.kind==='base'||e.kind==='building'&&['barracks','farm','forge'].includes(e.buildingType as string))e.legacyProfile=true;}
    for(const p of (((old.combat as Data).projectiles as Data[]|undefined)??[]))ensure(p.owner===undefined,'legacy projectile owner');
-   doc.configVersion=saveConfig.configVersion;
+   doc.configVersion='tribute-config-30';
   }
+  if(doc.schemaVersion===2&&doc.configVersion==='tribute-config-30'){ensure(!Object.hasOwn(doc.state as Data,'campaignMission'),'legacy campaign run');doc.configVersion=saveConfig.configVersion;}
   if(doc.schemaVersion!==saveConfig.schemaVersion||doc.configVersion!==saveConfig.configVersion)return {ok:false,error:'Unsupported save version',code:'version'};ensure(isMapId(doc.map),'map');const mapId=doc.map,definition=maps[mapId],configuredMap=createMap(mapId),resources=mapResources(mapId),totals=mapResourceTotals(mapId);checkTree(doc,configuredMap);
-  const s=r(doc.state,'match',['statLedger','tutorial','speed','enemyNaval','navy','factions','map','gathering','combat','placement','production','soldierProduction','waves','outcome','paused','research','scenario','difficulty','enemyProduction','enemyAI','enemyConstruction','enemyPolicy','enemyRecovery','enemyKnowledge','fog','controlGroups']);
+  const s=r(doc.state,'match',['campaignMission','statLedger','tutorial','speed','enemyNaval','navy','factions','map','gathering','combat','placement','production','soldierProduction','waves','outcome','paused','research','scenario','difficulty','enemyProduction','enemyAI','enemyConstruction','enemyPolicy','enemyRecovery','enemyKnowledge','fog','controlGroups']);
+  optional(s.campaignMission,v=>{const mission=campaignMission(v);ensure(!!mission&&mission.scenario===s.scenario&&scenarioConfig[mission.scenario].map===doc.map,'campaign mission identity');});
   ensure(isGameSpeed(s.speed),'game speed');
   const factionData=r(s.factions,'factions',['player','enemy']);ensure(isFactionId(factionData.player)&&isFactionId(factionData.enemy),'faction identity');const playerFaction=factions[factionData.player];
   choice(s.scenario,'scenario',Object.keys(scenarioConfig));choice(s.difficulty,'difficulty',Object.keys(difficultyProfiles));choice(s.outcome,'outcome',['playing','victory','defeat']);bool(s.paused,'pause');const scenario=s.scenario as MatchScenario,difficulty=s.difficulty as Difficulty,profile=difficultyProfiles[difficulty],budget=enemyStartingBudget(profile.budget,s.enemyNaval!==undefined);

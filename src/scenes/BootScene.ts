@@ -1,3 +1,7 @@
+import {campaignMissionForScenario,type CampaignMissionId} from '../config/campaign';
+import {startCampaignMission} from '../gameplay/campaign';
+import {campaignStore} from '../presentation/campaign';
+import {currentHomePage} from '../presentation/homeMenu';
 import {enemyMaximumHP} from '../gameplay/enemyUnits';
 import {technologyFor} from '../gameplay/productionPrerequisites';
 import {selectWorldTarget} from '../gameplay/resourceSelection';
@@ -96,6 +100,7 @@ import {
 } from '../gameplay/selection';
 
 export class BootScene extends Phaser.Scene {
+  private campaignMission?:CampaignMissionId;
   private statLedger?:StatLedger;
   private factions:MatchFactions=factionsForPlayer(getPreferences().game.faction,getPreferences().game.enemyFaction);
   private controlGroups:ControlGroups={};
@@ -205,7 +210,8 @@ export class BootScene extends Phaser.Scene {
     this.hpBars=this.add.graphics().setDepth(7);
     const loaded=this.pendingLoad;this.pendingLoad=undefined;
     if(!loaded)document.getElementById('save-status')!.textContent='';
-    this.applyMatch(loaded?.match??createMatch(this.scenario,this.difficulty,this.factions,this.session.options.map,this.session.options.speed??1));
+    const fresh=()=>({...createMatch(this.scenario,this.difficulty,this.factions,this.session.options.map,this.session.options.speed??1),...(this.campaignMission?{campaignMission:this.campaignMission}:{})});
+    this.applyMatch(loaded?.match??fresh());
     this.game.canvas.tabIndex=0;this.game.canvas.setAttribute('aria-label',uiText.gameWorld);
     const groupKey=(event:KeyboardEvent)=>{
       if(!gameplayKeyAllowed(keyboardContext(event,this.gameplayActive()))||!validGroup(event.key))return;
@@ -475,6 +481,12 @@ export class BootScene extends Phaser.Scene {
 
   private gameplayActive():boolean{return this.session.phase==='playing'&&this.outcome==='playing'&&!this.restartPending;}
   private sessionAction(action:SessionAction):void {
+    if(action==='start'&&this.session.phase==='menu'&&!this.restartPending){
+      const mission=currentHomePage()==='campaign'?campaignMissionForScenario(this.session.options.scenario):undefined;
+      if(currentHomePage()==='campaign'&&!mission)return;
+      if(mission&&!startCampaignMission(campaignStore.get(),mission.id,this.session.options.difficulty,factionsForPlayer(this.session.options.faction??defaultFactions.player,this.session.options.enemyFaction),this.session.options.speed??1))return;
+      this.campaignMission=mission?.id;
+    }
     const next=sessionTransition(this.session,action);if(next===this.session||this.restartPending)return;
     this.session=action==='new-match'?changeOptions(next,getPreferences().game):next;gameAudio.setPhase(next.phase);
     if(action==='start')this.factions=factionsForPlayer(next.options.faction??defaultFactions.player,next.options.enemyFaction);
@@ -491,6 +503,7 @@ export class BootScene extends Phaser.Scene {
     (document.getElementById('save-match') as HTMLButtonElement).disabled=this.session.phase==='menu'||this.restartPending;
     (document.getElementById('load-match') as HTMLButtonElement).disabled=this.restartPending;
     const phase=this.session.phase,menu=phase==='menu';
+    if(phase==='ended')campaignStore.record(this.currentMatch());
     renderMatchResults(document.getElementById('match-results')!,this.currentMatch(),phase==='ended');
     const details=matchSettingDetails(this.session.options);document.getElementById('map-description')!.textContent=details.map;document.getElementById('difficulty-description')!.textContent=details.difficulty;
     const summary=document.getElementById('match-options-summary')!;summary.textContent=matchSettingsSummary(this.session.options);summary.hidden=!menu;
@@ -862,7 +875,7 @@ export class BootScene extends Phaser.Scene {
     this.syncVisuals();
   }
 
-  private currentMatch():MatchState {return {statLedger:this.statLedger,tutorial:this.tutorial,speed:this.session.options.speed??1,enemyNaval:this.enemyNaval,navy:this.navy,factions:{...this.factions},map:this.map,gathering:this.gathering,combat:this.combat,waves:this.waves,production:this.production,soldierProduction:this.soldierProduction,placement:this.placement,outcome:this.outcome,paused:!this.gameplayActive(),controlGroups:this.controlGroups,fog:this.fog,research:this.research,scenario:this.scenario,difficulty:this.difficulty,enemyProduction:this.enemyProduction,enemyAI:this.enemyAI,enemyConstruction:this.enemyConstruction,enemyPolicy:this.enemyPolicy,enemyRecovery:this.enemyRecovery,enemyKnowledge:this.enemyKnowledge};}
+  private currentMatch():MatchState {return {campaignMission:this.campaignMission,statLedger:this.statLedger,tutorial:this.tutorial,speed:this.session.options.speed??1,enemyNaval:this.enemyNaval,navy:this.navy,factions:{...this.factions},map:this.map,gathering:this.gathering,combat:this.combat,waves:this.waves,production:this.production,soldierProduction:this.soldierProduction,placement:this.placement,outcome:this.outcome,paused:!this.gameplayActive(),controlGroups:this.controlGroups,fog:this.fog,research:this.research,scenario:this.scenario,difficulty:this.difficulty,enemyProduction:this.enemyProduction,enemyAI:this.enemyAI,enemyConstruction:this.enemyConstruction,enemyPolicy:this.enemyPolicy,enemyRecovery:this.enemyRecovery,enemyKnowledge:this.enemyKnowledge};}
 
   private addImpact(impact:Impact):void {
     if(!canAddImpact([...this.impacts.values()].map(e=>e.impact),impact))return;
@@ -912,6 +925,7 @@ export class BootScene extends Phaser.Scene {
     }
   }
   private applyMatch(match: MatchState): void {
+    this.campaignMission=match.campaignMission;
     this.statLedger=match.statLedger;
     this.tutorial=match.tutorial;
     this.navy=match.navy;this.enemyNaval=match.enemyNaval;

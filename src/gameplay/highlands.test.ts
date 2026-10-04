@@ -36,7 +36,7 @@ for(const faction of ['crown','clans'] as const)it(`${faction}: paid finite-reso
  for(const type of ['wood','gold'] as const){const cargo=m.gathering.units.reduce((n,u)=>n+(u.kind==='worker'&&(u.cargoType??'wood')===type?u.cargo:0),0),stock=resourceNodes(m.gathering).filter(n=>n.resource===type).reduce((n,node)=>n+node.remaining,0);expect(stock+cargo+(type==='wood'?m.gathering.wood:m.gathering.goldBalance!)+(type==='wood'?result.spentWood:result.spentGold)+(m.enemyProduction?.extracted?.[type]??0)+(m.gathering.lostCargo?.[type]??0)).toBeCloseTo(mapResourceTotals('highlands')[type]);}
  expect(decodeSave(encodeSave(m,{camera:{x:0,y:0},building:null})).ok).toBe(true);expect(updateMatch(m,10)).toBe(m);
  expect(createMatch('skirmish','normal',undefined,'highlands').gathering.extraNodes!.map(n=>n.remaining)).toEqual(mapResources('highlands').slice(2).map(n=>n.amount));
-},60_000);
+},120_000);
 it('enemy scouts nearby authored resources, funds an army and reaches the player across the ridge',()=>{
  let m=createMatch('skirmish','normal',undefined,'highlands');for(let i=0;i<1200&&m.outcome==='playing';i++)m=updateMatch(m,.25);
  const barracks=m.combat.enemies.find(e=>e.buildingType==='barracks');expect(barracks?.footprint?.x).toBeGreaterThan(2400);

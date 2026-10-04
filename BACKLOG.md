@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-141 – Fraktionsval, AI och balans** — **Done**.
+**RTS-142 – Campaign-struktur och progression** — **Done**.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -3716,7 +3716,7 @@ eller tillfälliga assets utan tydlig redovisning.
 
 ## RTS-142 – Campaign-struktur och progression
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Återanvänd befintligt scenario-system.
 
@@ -3737,7 +3737,7 @@ Spara progression lokalt; replay av avklarade uppdrag är möjligt.
 
 **Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
 
-**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+**Detaljplan:**142A använd de fem befintliga scenarios som ordnad campaign med stabila mission-ID:n: Tutorial → Forest Watch → The Siege → The Outpost → The Crossing. Endast första uppdraget är initialt upplåst; faktisk victory låser nästa, defeat gör det inte. Avklarade uppdrag kan spelas om.142B lokal separat versionsmärkt progression med robust hantering av saknade/ogiltiga värden och storagefel; idempotent completion, ingen backend/scoring.142C Campaign-menyn visar låst/upplåst/avklarat, briefing och verkligt mål; låst start nekas även i logik. Resultat visar debriefing och upplåsning. Skirmish och äldre standalone/Save-flöden bevaras.142D campaign-run-ID följer paus/Save/load/restart och återställs vid ny Skirmish; kontrollerad Save31 från30 utan påhittad historisk progression.142E unlock/defeat/replay/corrupt storage/Save/reset-tester, native betald Tutorial → debriefing → nästa uppdrag → replay/Save/load och regressionschecks. Åtta uppdrag/story/fraktionsplan och nya måltyper hör till143–145, inte142.
 
 ## RTS-143 – Utöka campaign till minst åtta uppdrag
 

@@ -191,3 +191,6 @@ html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#
 @keyframes home-ember{0%,100%{opacity:0;transform:translateY(0);}40%{opacity:.45;}80%{opacity:0;transform:translateY(-28px);}}
 @media(prefers-reduced-motion:reduce){.home-embers i{animation:none;}#home-navigation button{transition:none;}}
 @media(max-width:900px){#app[data-phase='menu'] #match-menu{gap:20px;}#home-brand h1{font-size:34px;margin:10px 0;}#home-peoples{font-size:11px;}#home-audio-toggle{margin-top:6px;}#home-navigation{padding:14px;}#home-navigation h2{font-size:20px;margin-bottom:8px;}#home-navigation button{font-size:15px;padding:7px 10px;margin:6px 0;}}
+
+#campaign-overview ol { display: grid; gap: .4rem; padding-left: 1.5rem; }
+#campaign-briefing { white-space: pre-line; line-height: 1.5; }

@@ -1230,3 +1230,9 @@ Använd134:s fem roller och befintlig projectile/splash-kod för Grenadier/Morta
 Tillåt separat motståndarval och alla 25 player/enemy-par. Återanvänd befintlig produktionskö/prerequisites/projektil/splash/självbuff via små NPC-adaptrar. AI:n sparar till nästa upplåsta rosterroll; den väljer inte ständigt billigaste tillgängliga recept. Balansvärden ligger i config: nya roster-matcher använder 120 s ekonomigrace, äldre matcher behåller 20 s. Stats ändras inte för att göra NPC-enheter svagare än egna motsvarigheter.
 
 Save30 skiljer ny roster från historisk generisk army och markerar tidigare bygg-/basprofil utan att läka skadad HP eller ändra betalda jobb. Type-ID:n i wireformat binder NPC-roll till matchens fraktions-ID. Ändliga scripted raiders och diagnostiskt Siege test behåller sina befintliga generiska profiler. Befintlig tvåpassagerar-invasion väljer en-supply-roller; inga nya transport-/AI-ekonomiregler införs.
+
+## RTS-142 – Lokal campaignprogression
+
+Återanvänd de fem fungerande scenarios som linjär introduktionscampaign; använd stabila mission-ID:n oberoende av engelska titlar. Seger med ett validerat campaign-run-ID ger completion exakt en gång och låser nästa uppdrag; defeat/standalone gör det inte. Avklarade uppdrag får alltid replay. Completion gäller oberoende av vald fraktion/svårighet i142; separerade resultat/scoring hör till149.
+
+Separat progressionsnyckel/version1, inga konton/backend. Match-Save31 innehåller endast run-ID och fortsätter befintlig Save-state/migration. Tidigare version30 har inget run-ID och får ingen påhittad campaignhistorik. Lokalt progressionsminne valideras strikt och storagefel rapporteras. Load på en browser utan tidigare progression kan ge endast det faktiskt återupptagna uppdragets completion, aldrig automatisk completion för dess föregångare. Åtta missioners berättelse/fraktioner/nya mål planeras143 och implementeras144–145.

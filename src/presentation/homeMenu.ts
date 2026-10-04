@@ -1,3 +1,4 @@
+import {campaignStore,syncCampaignMenu} from './campaign';
 import {homePeoples} from '../config/homeArt';
 import {bindPauseMenu,syncPauseMenu} from './pauseMenu';
 import {bindFullscreen} from './fullscreen';
@@ -8,6 +9,7 @@ import type {SessionPhase} from '../gameplay/session';
 export type HomePage='home'|'campaign'|'skirmish'|'load'|'settings'|'changelog';
 export const homeScenarios={campaign:['tutorial','mission-waves','mission-base','mission-outpost','mission-sea'],skirmish:['skirmish','survival']} as const;
 let current:HomePage='home',phase:SessionPhase='menu';
+export const currentHomePage=()=>current;
 const element=(id:string)=>document.getElementById(id)!;
 export function syncHomeMenu(nextPhase:SessionPhase):void{
  if(nextPhase==='menu'&&phase!=='menu')current='home';phase=nextPhase;
@@ -26,9 +28,11 @@ export function syncHomeMenu(nextPhase:SessionPhase):void{
  for(const id of ['match-options-summary','mission-instruction','session-status'])element(id).hidden=menu&&!setup;
  const select=element('scenario-select') as HTMLSelectElement;
  for(const option of select.options)option.hidden=menu&&setup&&!homeScenarios[current as 'campaign'|'skirmish'].includes(option.value as never);
+ syncCampaignMenu(menu&&current==='campaign',select);
  syncPauseMenu(phase);
 }
 export function bindHomeMenu():void{
+ campaignStore.load();
  element('home-peoples').textContent=homePeoples.map(p=>p.label).join(' · ')+' — artwork. Playable factions: Humans (Crown Alliance), Orcs (Iron Clan) Elves, Dwarves and Goblins.';
  bindActionPanel();bindCameraSettings();bindPauseMenu();bindFullscreen();
  const open=(page:HomePage)=>{if(phase!=='menu')return;current=page;if(page==='campaign'||page==='skirmish'){const select=element('scenario-select') as HTMLSelectElement;if(!homeScenarios[page].includes(select.value as never)){select.value=homeScenarios[page][0];select.dispatchEvent(new Event('change'));}}syncHomeMenu(phase);(page==='home'?element('menu-campaign'):element('menu-back')).focus();};

@@ -50,6 +50,7 @@ import { updateWaves, type WaveState } from './waves';
 
 export type MatchOutcome = 'playing' | 'defeat' | 'victory';
 export interface MatchState {
+  campaignMission?:import('../config/campaign').CampaignMissionId;
   statLedger?:StatLedger;
   speed?:GameSpeed;
   tutorial?:TutorialState;
