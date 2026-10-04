@@ -108,8 +108,9 @@ export function decodeSave(json:string):LoadResult {
    if((old.factions as Data)?.player==='clans')for(const value of (((old.soldierProduction as Data)?.queue as Data[]|undefined)??[]))if(value.kind==='catapult'){
     const cost=value.cost as Data;ensure(value.legacyRecipe===undefined&&value.durationSeconds===10&&cost?.wood===40&&cost?.gold===20,'legacy Orc siege recipe');value.legacyRecipe=true;
    }
-   doc.configVersion=saveConfig.configVersion;
+   doc.configVersion='tribute-config-26';
   }
+  if(doc.schemaVersion===2&&doc.configVersion==='tribute-config-26'){ensure(!Object.values((doc.state as Data).factions as Data).includes('elves'),'legacy elf faction');doc.configVersion=saveConfig.configVersion;}
   if(doc.schemaVersion!==saveConfig.schemaVersion||doc.configVersion!==saveConfig.configVersion)return {ok:false,error:'Unsupported save version',code:'version'};ensure(isMapId(doc.map),'map');const mapId=doc.map,definition=maps[mapId],configuredMap=createMap(mapId),resources=mapResources(mapId),totals=mapResourceTotals(mapId);checkTree(doc,configuredMap);
   const s=r(doc.state,'match',['statLedger','tutorial','speed','enemyNaval','navy','factions','map','gathering','combat','placement','production','soldierProduction','waves','outcome','paused','research','scenario','difficulty','enemyProduction','enemyAI','enemyConstruction','enemyPolicy','enemyRecovery','enemyKnowledge','fog','controlGroups']);
   ensure(isGameSpeed(s.speed),'game speed');

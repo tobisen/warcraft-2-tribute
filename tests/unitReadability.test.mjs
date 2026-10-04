@@ -12,15 +12,15 @@ function sheet(kind){
 }
 for(const atlas of ['units','naval'])it(`${atlas}: actual role/facing/motion/combat/death rasters are readable and palette-only`,()=>{
  const frame=sheet(atlas),directions=['e','se','s','sw','w','nw','n','ne'],types=atlas==='units'?['worker','soldier','archer','catapult']:['transport','warship'],colors=new Set(Object.values(palette));
- for(const faction of ['crown','clans'])for(const owner of ['player','enemy']){
-  const prefix=faction==='clans'?'clans-':'',roles=[];
+ for(const faction of ['crown','clans','elves'])for(const owner of ['player','enemy']){
+  const prefix=faction==='crown'?'':`${faction}-`,roles=[];
   const roster=atlas==='units'?[...types,'specialist']:types;
   for(const role of roster){
    const id=(dir,state,n)=>`${prefix}${role}-${owner}-${dir}-${state}-${n}`;
    const idle=frame(id('s','idle',0));roles.push(idle.toString('base64'));expect(idle[3]).toBe(0);
    const seen=new Set();for(let i=0;i<idle.length;i+=4)if(idle[i+3]){const c='#'+idle.subarray(i,i+3).toString('hex');expect(colors.has(c)).toBe(true);seen.add(c);}
    expect(seen.has(owner==='player'?palette.teamBlue:palette.teamRed)).toBe(true);
-   expect(new Set(directions.map(dir=>frame(id(dir,'idle',0)).toString('base64'))).size).toBe(8);
+   expect(new Set(directions.map(dir=>frame(id(dir,'idle',0)).toString('base64'))).size,`${faction}/${owner}/${role}/idle-facing`).toBe(8);
    for(const dir of directions)for(const state of ['walk','attack','death']){
     const variants=new Set([0,1,2,3].map(n=>frame(id(dir,state,n)).toString('base64')));
     if(role==='transport'&&state==='attack')continue; // Noncombat transport has no attack action.

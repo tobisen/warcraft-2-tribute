@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-138 – Elves** — **Todo**.
+**RTS-139 – Dwarves** — **Todo**.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -3613,7 +3613,7 @@ Tydlig skillnad i spelstil, units, buildings och research.
 
 ## RTS-138 – Elves
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Implementera den beslutade elf-rostern,
 
@@ -3632,7 +3632,9 @@ byggnader, research och assets.
 
 **Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
 
-**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+**Detaljplan:**138A elves-ID, fem roller/recept/stats/buildings/research/naval enligt134, True Shot och datastyrd prefix/meny.138B egna woodland-/leaf-/longbow-/ballista-unitbilder och tree/garden/workshop/dock samt naval-silhuetter i etablerade pixelkällor; export och rasterregression.138C Save26→27 med historisk ID-validering, stabila type-ID:n och beteende/ekonomi/production/projectile/buff/naval-regressioner, befintliga fraktioner oförändrade.138D nativebetald gathering/build/research/Marksman/combat/Save/restart, fulla checks/review/docs. Defaultopponent Humans via befintlig factionsForPlayer; full matchup/AI-roster141.
+
+**Verifierat 2026-10-04:**1002tester/132filer PASS175.58s; typecheck/build/diff/doclänkar PASS. Native1280/1920 betald Tutorial/research/Marksman/combat/Save/restart samt Coast River Dock/Grove Ferry/landstigning/5wood/Save/restart PASS utan pageerrors. Originalsprites/raster granskade. Bundlevarning och uppskjuten ljudlyssning kvar; full AI141.
 
 ## RTS-139 – Dwarves
 

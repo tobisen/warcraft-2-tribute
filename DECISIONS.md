@@ -1212,3 +1212,7 @@ Aktivera Banner Guard och Forge-prerequisite för Human-siege med stabila crown-
 Använd134:s Orc-värden utan nya systemspecifika avvikelser: offensiv melee/Raider, något kortare ranged/siege och tåligare egna byggnader. Stable clans-ID bevaras, display Orcs · Iron Clan/Peon. Raider får egna originalpixelramar. Egen tidigare Orc-bygggrafik återanvänds.
 
 Stone Thrower träning ändras10→11s. Save26:s25-migration identifierar och validerar tidigare betalda10s/cost40/20-jobb innan legacy-markering; nya jobb får11s och prerequisites. Bevara befintliga HP/timer/bankfält, ingen retroaktiv healing eller ny debitering. Combatprofiler läses från aktuell balansdata som tidigare; inget generellt stat-snapshotsystem införs. Full NPC-roster/egen grundarmy/baseprofil förblir141, ska inte hävdas klar här.
+
+## RTS-138 – Stabil Elf-identitet
+
+Aktivera elves med134:s femrollsprofil och befintligt projectile-specialistsystem. True Shot är samma självbuffmodell, inget nytt spell-/mana-system. Ge alla factionbilder datastyrt artPrefix och egna kompositioner i befintliga repo-native pixelkällor; återanvänd inte soldat-alias för Marksman. Ballista får beslutad16px hitRadius och egen bult/riktning utan gammal stenbasket. Save27 migrerar26 med oförändrat historiskt state; elves i historisk26 avvisas. Full NPC-roster/baseprofil och valbara matchups ligger141.

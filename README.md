@@ -697,7 +697,7 @@ Skirmish: välj Shattered Coast för den stora kust-/ökartan. Samla wood/gold, 
 
 ## RTS-134 – Fraktionsdesign
 
-Nästa fraktionsetapp är planerad i GAME_DESIGN.md: Humans, Orcs, Elves, Dwarves och Goblins med fem units vardera, byggnader/research/fartyg och olika spelstilar. Denna design är ännu inte runtime; menyn visar fortfarande befintliga Crown/Clans. Stable ID:n bevaras för gamla fraktioner, nya factions görs tillgängliga först efter sina verifierade implementationer136–140.
+Nästa fraktionsetapp är planerad i GAME_DESIGN.md: Humans, Orcs, Elves, Dwarves och Goblins med fem units vardera, byggnader/research/fartyg och olika spelstilar. Vid designleveransen134 visade menyn bara Crown/Clans; respektive implementation nedan anger nu tillgängliga fraktioner. Stable ID:n bevaras för gamla fraktioner, nya factions görs tillgängliga först efter sina verifierade implementationer136–140.
 
 ## RTS-135 – Fraktionsgrund
 
@@ -710,3 +710,7 @@ Välj Humans · Crown Alliance (stabilt ID crown). Fem roller: Worker, Guard, Ar
 ## RTS-137 – Orcs
 
 Välj Orcs · Iron Clan (stabilt clans-ID). Peon35HP/155px/s, Axe Warrior20DPS, Hunter kortare144px range och Stone Thrower26damage/2.1s med11s produktion. Raider kräver färdig Smithy och War Blades, kostar26wood/12gold, tar7s och använder2supply:80HP,175px/s,24DPS. War Blades35wood/15gold,8s,+30% damage; Hide Armor40wood/10gold,8s,20% mindre inkommande skada. Fury ger fortsatt+25% outgoing i5s. Stronghold260HP; War Dock170HP, War Barge/Raft100HP och105px/s. Egen Raider-grafik med två yxor; befintliga Orc-byggnadsbilder återanvänds. Save26 bevarar äldre betalda siege-tider och befintlig skadad HP. Full AI-roster ligger141.
+
+## RTS-138 – Elves
+
+Välj Elves för snabbare, lättare units med längre båg-/ballistaräckvidd. Bygg Ranger Lodge och Moon Workshop45wood/10gold, forska True Aim40wood/15gold vid Grove Hall och träna Marksman30wood/20gold (8s,2supply). True Shot [E] ger+20% utgående skada i5s. River Dock och Swift Sail/Grove Ferry använder egna woodlandbilder och80HP/125px/s. Save27 bevarar äldre matcher; full femfraktions-AI återstår i141. Test/typecheck/build-kommandon är oförändrade.

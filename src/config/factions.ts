@@ -11,7 +11,7 @@ import {barracksConfig,farmConfig,populationConfig} from './buildings';
 import {forgeConfig,upgradeConfig} from './upgrades';
 
 // Stable identity is independent of team ownership and presentation.
-export const factionIds=['crown','clans'] as const;
+export const factionIds=['crown','clans','elves'] as const;
 export type FactionId=typeof factionIds[number];
 export type UnitRole='worker'|'soldier'|'archer'|'catapult'|'specialist';
 export type BuildingRole='base'|'barracks'|'farm'|'forge';
@@ -81,15 +81,15 @@ const upgrades:Record<UpgradeRole,UpgradeData>={
   defense:{name:'Defense −25 %',role:'defense',cost:upgradeConfig.cost,durationSeconds:upgradeConfig.durationSeconds,
     maxLevel:upgradeConfig.maxLevel,multiplier:upgradeConfig.defenseMultiplier},
 };
-const factionNames={crown:{label:uiText.crownAlliance,unitNames:{worker:uiText.worker,soldier:uiText.guard,archer:uiText.archer,catapult:uiText.catapult,specialist:'Banner Guard'},buildingNames:{base:uiText.keep,barracks:uiText.barracks,farm:uiText.farm,forge:uiText.forge}},clans:{label:uiText.ironClan,unitNames:{worker:uiText.clanWorker,soldier:uiText.axeWarrior,archer:uiText.hunter,catapult:uiText.stoneThrower,specialist:'Raider'},buildingNames:{base:uiText.stronghold,barracks:uiText.warHut,farm:uiText.cattlePen,forge:uiText.smithy}}};
+const factionNames={crown:{label:uiText.crownAlliance,unitNames:{worker:uiText.worker,soldier:uiText.guard,archer:uiText.archer,catapult:uiText.catapult,specialist:'Banner Guard'},buildingNames:{base:uiText.keep,barracks:uiText.barracks,farm:uiText.farm,forge:uiText.forge}},clans:{label:uiText.ironClan,unitNames:{worker:uiText.clanWorker,soldier:uiText.axeWarrior,archer:uiText.hunter,catapult:uiText.stoneThrower,specialist:'Raider'},buildingNames:{base:uiText.stronghold,barracks:uiText.warHut,farm:uiText.cattlePen,forge:uiText.smithy}},elves:{label:'Elves',unitNames:{worker:'Grove Tender',soldier:'Warden',archer:'Longbow',catapult:'Ballista',specialist:'Marksman'},buildingNames:{base:'Grove Hall',barracks:'Ranger Lodge',farm:'Garden',forge:'Moon Workshop'}}};
 function defineFaction(id:FactionId):FactionDefinition {
-  return {id,...factionNames[id],artPrefix:id==='clans'?'clans-':'',naval:{harbor:{...navyConfig.harbor,cost:{...navyConfig.harbor.cost},name:'Harbor'},units:{warship:{...navyConfig.ship,cost:{...navyConfig.ship.cost},id:`${id}:naval:warship`,role:'warship',name:'Warship'},transport:{...navyConfig.ship,...navyConfig.transport,cost:{...navyConfig.transport.cost},id:`${id}:naval:transport`,role:'transport',name:'Transport'}}},roster:['worker','soldier','archer','catapult'],
+  return {id,...factionNames[id],artPrefix:id==='crown'?'':`${id}-`,naval:{harbor:{...navyConfig.harbor,cost:{...navyConfig.harbor.cost},name:'Harbor'},units:{warship:{...navyConfig.ship,cost:{...navyConfig.ship.cost},id:`${id}:naval:warship`,role:'warship',name:'Warship'},transport:{...navyConfig.ship,...navyConfig.transport,cost:{...navyConfig.transport.cost},id:`${id}:naval:transport`,role:'transport',name:'Transport'}}},roster:['worker','soldier','archer','catapult'],
     units:Object.fromEntries(Object.entries(units).map(([role,data])=>[role,{...data,cost:{...data.cost},id:`${id}:unit:${role}`,faction:id}])) as FactionDefinition['units'],
     buildings:Object.fromEntries(Object.entries(buildings).map(([role,data])=>[role,{...data,cost:{...data.cost},id:`${id}:building:${role}`,faction:id}])) as FactionDefinition['buildings'],
     upgrades:Object.fromEntries(Object.entries(upgrades).map(([role,data])=>[role,{...data,cost:{...data.cost},id:`${id}:upgrade:${role}`,faction:id}])) as FactionDefinition['upgrades'],
   };
 }
-export const factions:Record<FactionId,FactionDefinition>={crown:defineFaction('crown'),clans:defineFaction('clans')};
+export const factions:Record<FactionId,FactionDefinition>={crown:defineFaction('crown'),clans:defineFaction('clans'),elves:defineFaction('elves')};
 factions.clans.units.soldier={...factions.clans.units.soldier,hp:66,cost:{wood:18,gold:6},durationSeconds:6};
 factions.clans.units.specialist={...factions.clans.units.specialist,cost:{wood:26,gold:12},durationSeconds:7,hp:80,speed:175,damagePerSecond:24,prerequisites:{buildings:['forge'],research:{attack:1}}};
 // RTS-136: completed Human roster, stable crown identity.
@@ -118,6 +118,22 @@ factions.clans.upgrades.defense={...factions.clans.upgrades.defense,name:'Hide A
 factions.clans.naval.harbor={...factions.clans.naval.harbor,name:'War Dock',hp:170};
 factions.clans.naval.units.warship={...factions.clans.naval.units.warship,name:'War Barge',hp:100,speed:105};
 factions.clans.naval.units.transport={...factions.clans.naval.units.transport,name:'Raft',hp:100,speed:105};
+// RTS-138: mobile woodland faction with ranged specialist and shared systems.
+factions.elves.roster=['worker','soldier','archer','catapult','specialist'];
+factions.elves.units.worker={...factions.elves.units.worker,hp:28,speed:170};
+factions.elves.units.soldier={...factions.elves.units.soldier,cost:{wood:20,gold:6},hp:50,speed:175,damagePerSecond:16};
+factions.elves.units.archer={...factions.elves.units.archer,cost:{wood:22,gold:12},hp:45,speed:170,range:192,aggroRange:232,damage:14,attackInterval:.9};
+factions.elves.units.catapult={...factions.elves.units.catapult,cost:{wood:45,gold:25},hp:60,speed:100,range:256,aggroRange:296,damage:18,attackInterval:1.8,hitRadius:16,splashRadius:32,prerequisites:{buildings:['forge']}};
+factions.elves.units.specialist={...factions.elves.units.specialist,combatMode:'projectile',art:'specialist',cost:{wood:30,gold:20},hp:50,speed:170,range:200,aggroRange:240,damagePerSecond:undefined,damage:16,attackInterval:1,projectileSpeed:300,projectileLifetime:2,hitRadius:16,prerequisites:{buildings:['forge'],research:{attack:1}}};
+factions.elves.buildings.base={...factions.elves.buildings.base,hp:220};
+factions.elves.buildings.barracks={...factions.elves.buildings.barracks,hp:110};
+factions.elves.buildings.farm={...factions.elves.buildings.farm,hp:70};
+factions.elves.buildings.forge={...factions.elves.buildings.forge,cost:{wood:45,gold:10},hp:110};
+factions.elves.upgrades.attack={...factions.elves.upgrades.attack,name:'True Aim',cost:{wood:40,gold:15},multiplier:1.25};
+factions.elves.upgrades.defense={...factions.elves.upgrades.defense,name:'Woven Guard',cost:{wood:35,gold:15},multiplier:.8};
+factions.elves.naval.harbor={...factions.elves.naval.harbor,name:'River Dock',hp:140};
+factions.elves.naval.units.warship={...factions.elves.naval.units.warship,name:'Swift Sail',cost:{wood:45,gold:15},hp:80,speed:125};
+factions.elves.naval.units.transport={...factions.elves.naval.units.transport,name:'Grove Ferry',hp:80,speed:125};
 export function productionFaction(g:{faction?:FactionId}):FactionDefinition {return factions[g.faction??defaultFactions.player];}
 
 export function factionForTeam(match:{factions?:MatchFactions},team:keyof MatchFactions):FactionDefinition {

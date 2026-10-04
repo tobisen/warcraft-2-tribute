@@ -1252,3 +1252,7 @@ Humans har fem beslutade roller, egen Banner Guard-grafik och befintliga Human-b
 ## RTS-137 – Spelbara Orcs
 
 Orcs har hela femrolls-roster enligt134. Raider är snabb offensiv melee med egen lättare rustning/bare-head/tvåyxor-silhuett. Forge/War Blades låser upp den; attack1 ger1.30damage och Fury1.25, tillsammans1.625 medan buffen varar. Högre meleeDPS och HP men kortare ranged/siege-range skiljer spelstilen från Humans. Stronghold260HP, War Hut/Smithy130HP, Cattle Pen90HP och War Dock170HP. Egna befintliga trä-/spik-/tuskbyggnader återanvänds. NPC-grundarmé fortfarande generisk till141, egen research/ekonomi/naval fungerar redan. Save bevarar betalda äldre tider/kostnader och faktisk skadad HP; inga gratis refunds/heals.
+
+## RTS-138 – Spelbara Elves
+
+Välj Elves: Grove Tender, Warden, Longbow, Ballista och Marksman. Lättare HP och högre fart, längre ranged/siege-range enligt134. Moon Workshop45wood/10gold låser upp Ballista; True Aim40/15,8s låser dessutom upp Marksman30/20,8s/2supply/50HP/170px/s/range200/16damage. True Shot ger+20% outgoing i5s,20s cooldown och bevarar orders. Woven Guard35/15,8s reducerar mottagen skada20%. Grove Hall220HP, Ranger Lodge110, Garden70, Moon Workshop110; River Dock140HP, Swift Sail45/15 och Grove Ferry40/10, båda80HP/125px/s. Alla använder befintlig ekonomi/leverans/produktion och egna woodland-/leaf-/bow-/ballista-/root-/canopybilder. Full fraktions-AI hör till141; ingen sådan färdigmarkering här.

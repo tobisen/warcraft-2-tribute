@@ -2,8 +2,8 @@
 export const directions=['e','se','s','sw','w','nw','n','ne'];
 export const animationSpec={idle:{frames:1,fps:1,loop:true},walk:{frames:4,fps:8,loop:true},attack:{frames:4,fps:8,loop:true},death:{frames:4,fps:8,loop:false},gather:{frames:4,fps:8,loop:true},build:{frames:4,fps:8,loop:true}};
 export function unitFrames(Surface,p){const frames=[];
- for(const faction of ['crown','clans'])for(const type of ['worker','soldier','archer','catapult','specialist'])for(const owner of ['player','enemy'])for(let dir=0;dir<8;dir++)for(const state of type==='worker'?Object.keys(animationSpec):['idle','walk','attack','death'])for(let frame=0;frame<animationSpec[state].frames;frame++){
-  const guard=type==='soldier'||type==='specialist',orc=faction==='clans',skin=orc?p.leafHighlight:p.skin;
+ for(const faction of ['crown','clans','elves'])for(const type of ['worker','soldier','archer','catapult','specialist'])for(const owner of ['player','enemy'])for(let dir=0;dir<8;dir++)for(const state of type==='worker'?Object.keys(animationSpec):['idle','walk','attack','death'])for(let frame=0;frame<animationSpec[state].frames;frame++){
+  const elf=faction==='elves',archer=type==='archer'||elf&&type==='specialist',guard=type==='soldier'||type==='specialist'&&!elf,orc=faction==='clans',skin=orc?p.leafHighlight:p.skin;
   const size=type==='catapult'?64:32,s=new Surface(size,size),cx=size/2,cy=type==='catapult'?40:22,angle=dir*Math.PI/4,dx=Math.round(Math.cos(angle)*3),dy=Math.round(Math.sin(angle)*2),team=owner==='player'?p.teamBlue:p.teamRed,light=owner==='player'?p.teamBlueLight:p.teamRedLight;
   const stride=state==='walk'?[0,2,0,-2][frame]:0,bob=state==='walk'?frame%2:0,swing=['attack','gather','build'].includes(state)?[0,-3,2,4][frame]:0;
   if(type==='catapult'){
@@ -11,7 +11,7 @@ export function unitFrames(Surface,p){const frames=[];
    s.polygon([[cx-vx-8,cy-vy-5],[cx+vx-8,cy+vy-5],[cx+vx+8,cy+vy+5],[cx-vx+8,cy-vy+5]],p.barkDark);s.line(cx-vx,cy-vy,cx+vx,cy+vy,p.barkLight);
    for(const x of [-15,15]){s.ellipse(cx+x,cy+5+stride/2,5,7,p.ink);s.ellipse(cx+x,cy+5+stride/2,3,5,p.bark);s.pixel(cx+x,cy+5,p.rockLight);s.line(cx+x-2,cy+2+stride/2,cx+x+2,cy+8+stride/2,p.barkLight);s.line(cx+x-2,cy+8+stride/2,cx+x+2,cy+2+stride/2,p.barkLight);}
    if(orc){for(const x of [-12,12])s.polygon([[cx+x-3,cy-7],[cx+x,cy-17],[cx+x+3,cy-7]],p.rockHighlight);}
-   s.rect(cx-7,cy-10,14,7,team);s.rect(cx-5,cy-9,10,2,light);const lift=state==='attack'?[14,20,4,9][frame]:14;s.line(cx-vx/2,cy-vy/2,cx+vx/2,cy+vy/2-lift,p.barkLight);s.line(cx-vx/2+1,cy-vy/2,cx+vx/2+1,cy+vy/2-lift,p.bark);s.ellipse(cx+vx/2,cy+vy/2-lift,7,3,p.barkDark);if(state!=='attack'||frame<2)s.ellipse(cx+vx/2,cy+vy/2-lift-3,4,4,p.rockLight);
+   s.rect(cx-7,cy-10,14,7,team);s.rect(cx-5,cy-9,10,2,light);if(!elf){const lift=state==='attack'?[14,20,4,9][frame]:14;s.line(cx-vx/2,cy-vy/2,cx+vx/2,cy+vy/2-lift,p.barkLight);s.line(cx-vx/2+1,cy-vy/2,cx+vx/2+1,cy+vy/2-lift,p.bark);s.ellipse(cx+vx/2,cy+vy/2-lift,7,3,p.barkDark);if(state!=='attack'||frame<2)s.ellipse(cx+vx/2,cy+vy/2-lift-3,4,4,p.rockLight);}
    s.rect(cx-8,cy-5,16,3,p.bark);s.line(cx-7,cy-5,cx+7,cy-5,p.barkLight);s.rect(cx-4,cy-8,8,3,team);
   }else{
    s.ellipse(cx,cy+5,10,3,p.earth);s.rect(cx-5-stride/2,cy-1,4,6,p.barkDark);s.rect(cx+2+stride/2,cy-1,4,6,p.barkDark);s.rect(cx-6-stride/2,cy+4,5,2,p.ink);s.rect(cx+2+stride/2,cy+4,5,2,p.ink);
@@ -28,7 +28,7 @@ export function unitFrames(Surface,p){const frames=[];
     s.rect(cx-7,cy-11-bob,3,4,orc?p.rockHighlight:p.rockLight);s.rect(cx+4,cy-11-bob,3,4,orc?p.rockHighlight:p.rockLight);
     if(!orc){s.rect(cx-1+dx,cy-23+dy-bob,3,4,team);s.pixel(cx+dx,cy-23+dy-bob,light);s.line(cx-4,cy-7,cx+3,cy-7,p.rockHighlight);}
    }
-   if(type==='archer'){
+   if(archer){
     s.line(cx-5+dx,cy-18+dy-bob,cx-5+dx,cy-13+dy-bob,p.leafDark);s.line(cx+4+dx,cy-18+dy-bob,cx+4+dx,cy-13+dy-bob,p.leafDark);
     s.line(cx-5+dx,cy-19+dy-bob,cx+4+dx,cy-19+dy-bob,team);s.line(cx-7,cy-14,cx-7,cy-4,p.barkLight);
     for(const offset of [-2,1]){s.line(cx-7+offset,cy-17,cx-7+offset,cy-12,p.rockLight);s.pixel(cx-6+offset,cy-17,p.rockHighlight);}
@@ -37,9 +37,9 @@ export function unitFrames(Surface,p){const frames=[];
    if(type==='worker'){s.line(handX,handY+3,handX+dx+3,handY-7,p.barkLight);s.rect(handX+dx,handY-8,7,3,state==='build'?p.rockDark:p.rockLight);}
    if(guard&&orc){s.line(handX,handY+2,handX+dx,handY-11+swing,p.barkLight);s.polygon([[handX+dx-6,handY-12+swing],[handX+dx+7,handY-12+swing],[handX+dx+5,handY-5+swing],[handX+dx-4,handY-6+swing]],p.rockHighlight);}
    if(guard&&!orc){s.line(handX,handY,handX+dx*2,handY-11+swing,p.rockHighlight);s.rect(handX-3,handY-1,6,2,p.gold);const shieldX=cx-(dx>=0?10:-6);s.polygon([[shieldX,cy-10],[shieldX+7,cy-10],[shieldX+8,cy-2],[shieldX+4,cy+2],[shieldX-1,cy-2]],p.ink);s.rect(shieldX+1,cy-9,5,7,team);s.pixel(shieldX+3,cy-6,p.goldLight);}
-   if(type==='archer'){const bowX=handX+dx;s.line(bowX,handY-8,bowX+4,handY,p.barkLight);s.line(bowX+4,handY,bowX,handY+7,p.barkLight);s.line(bowX,handY-8,bowX,handY+7,p.rockLight);if(state==='attack'){const pull=[0,2,4,0][frame];s.line(bowX,handY-8,bowX-pull,handY,p.rockLight);s.line(bowX-pull,handY,bowX,handY+7,p.rockLight);s.line(bowX-pull-3,handY,bowX+8,handY,p.rockHighlight);}s.rect(cx-7,cy-13,3,10,p.barkDark);s.line(cx-6,cy-16,cx-6,cy-10,p.rockHighlight);}
+   if(archer){const bowX=handX+dx;s.line(bowX,handY-8,bowX+4,handY,p.barkLight);s.line(bowX+4,handY,bowX,handY+7,p.barkLight);s.line(bowX,handY-8,bowX,handY+7,p.rockLight);if(state==='attack'){const pull=[0,2,4,0][frame];s.line(bowX,handY-8,bowX-pull,handY,p.rockLight);s.line(bowX-pull,handY,bowX,handY+7,p.rockLight);s.line(bowX-pull-3,handY,bowX+8,handY,p.rockHighlight);}s.rect(cx-7,cy-13,3,10,p.barkDark);s.line(cx-6,cy-16,cx-6,cy-10,p.rockHighlight);}
   }
-  if(type==='specialist'&&!orc){
+  if(type==='specialist'&&faction==='crown'){
    // Human banner escort: gold plate, broad kite shield and a tall pennant.
    s.rect(cx-6,cy-12-bob,12,3,p.goldDark);s.line(cx-6,cy-12-bob,cx+5,cy-12-bob,p.goldLight);
    s.rect(cx-5+dx,cy-19+dy-bob,10,2,p.gold);s.pixel(cx+dx,cy-20+dy-bob,p.goldLight);
@@ -63,10 +63,31 @@ export function unitFrames(Surface,p){const frames=[];
    s.line(offX-dx-3,offY-9-swing,offX-dx+3,offY-9-swing,p.rockHighlight);
    s.pixel(cx+dx,cy-15+dy-bob,p.ink);s.rect(cx-3+dx,cy-12+dy-bob,2,2,p.rockHighlight);
   }
+  if(elf&&type!=='catapult'){
+   // Leaf cloaks, pointed ears and slim equipment distinguish the woodland roster.
+   s.rect(cx-7+dx,cy-17+dy-bob,3,2,skin);s.rect(cx+4+dx,cy-17+dy-bob,3,2,skin);
+   s.polygon([[cx-5+dx,cy-18+dy-bob],[cx+dx,cy-23+dy-bob],[cx+5+dx,cy-18+dy-bob]],p.leafDark);
+   s.rect(cx-4+dx,cy-20+dy-bob,8,2,p.leaf);s.line(cx-4,cy-10-bob,cx+3,cy-10-bob,p.leafHighlight);
+   s.polygon([[cx-6,cy-9],[cx-9,cy+2],[cx-4,cy],[cx+5,cy],[cx+8,cy+2],[cx+5,cy-9]],p.leafDark);
+   s.rect(cx-3,cy-8,6,5,team);s.pixel(cx,cy-3,p.goldLight);
+   if(type==='worker'){s.ellipse(cx-6,cy-3,3,4,p.leaf);s.line(cx-7,cy-5,cx-5,cy-1,p.leafHighlight);}
+   if(type==='soldier'){const spearX=cx+dx*2+(dx>=0?6:-6),spearY=cy-7+dy*2+swing;s.line(spearX,spearY+5,spearX+dx,spearY-13,p.barkLight);s.polygon([[spearX+dx-2,spearY-12],[spearX+dx,spearY-17],[spearX+dx+2,spearY-12]],p.rockHighlight);s.ellipse(cx-(dx>=0?8:-7),cy-5,3,5,p.leaf);}
+   if(archer){s.line(cx-8,cy-15,cx-8,cy-4,p.barkLight);s.pixel(cx-8,cy-16,p.rockHighlight);}
+   if(type==='specialist'){s.rect(cx-5+dx,cy-21+dy-bob,10,2,p.rockHighlight);s.pixel(cx+dx,cy-22+dy-bob,p.gold);s.rect(cx-6,cy-12-bob,3,7,p.goldDark);s.rect(cx+4,cy-12-bob,3,7,p.goldDark);}
+  }
+  if(elf&&type==='catapult'){
+   // A wood-and-vine ballista replaces the stone basket with a wide bow and bolt.
+   const vx=Math.round(Math.cos(angle)*16),vy=Math.round(Math.sin(angle)*10);
+   s.line(cx-vx,cy-vy-13,cx+vx,cy+vy-13,p.leafDark);s.line(cx-vx+1,cy-vy-13,cx+vx+1,cy+vy-13,p.leafHighlight);
+   s.line(cx-vx,cy-vy-13,cx,cy-9,p.rockLight);s.line(cx,cy-9,cx+vx,cy+vy-13,p.rockLight);
+   const kick=state==='attack'?[0,3,-5,-2][frame]:0;
+   const boltX=cx+vx,boltY=cy-14+vy+kick;s.line(cx-vx/2,cy-14-vy/2+kick,boltX,boltY,p.barkLight);s.ellipse(boltX,boltY,3,2,p.rockHighlight);s.pixel(boltX+Math.sign(vx)*3,boltY+Math.sign(vy),p.goldLight);
+   s.ellipse(cx-17,cy+3,4,6,p.leafDark);s.ellipse(cx+17,cy+3,4,6,p.leafDark);s.rect(cx-4,cy-8,8,3,team);
+  }
   if(state==='death'){
    const dead=new Surface(size,size);for(let y=0;y<size;y++)for(let x=0;x<size;x++){const i=(y*size+x)*4;if(!s.data[i+3]||frame===3&&(x+y)%3===0)continue;const color='#'+[...s.data.subarray(i,i+3)].map(n=>n.toString(16).padStart(2,'0')).join('');const flat=frame/3;dead.pixel(cx+(x-cx)*(1-flat*.25),cy+(y-cy)*(1-flat*.8)+frame*2,color);}s.data=dead.data;
   }
-  frames.push({id:`${orc?'clans-':''}${type}-${owner}-${directions[dir]}-${state}-${frame}`,image:s,x:(frames.length%32)*64,y:Math.floor(frames.length/32)*64,anchor:{x:cx,y:cy},kind:'unit',faction,type,owner,direction:directions[dir],state,frame});
+  frames.push({id:`${faction==='crown'?'':faction+'-'}${type}-${owner}-${directions[dir]}-${state}-${frame}`,image:s,x:(frames.length%32)*64,y:Math.floor(frames.length/32)*64,anchor:{x:cx,y:cy},kind:'unit',faction,type,owner,direction:directions[dir],state,frame});
  }
  return frames;
 }

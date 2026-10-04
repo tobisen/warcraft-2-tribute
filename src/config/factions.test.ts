@@ -8,7 +8,7 @@ import {catapultConfig} from './catapult';
 import {upgradeConfig} from './upgrades';
 import {createMatch,updateMatch} from '../gameplay/match';
 
-it('both factions define all shared roles with distinct, globally unique type IDs',()=>{
+it('implemented factions define all shared roles with distinct, globally unique type IDs',()=>{
   const ids=new Set<string>();
   for(const id of factionIds){const f=factions[id];
     expect(Object.keys(f.units)).toEqual(['worker','soldier','archer','catapult','specialist']);
@@ -19,7 +19,7 @@ it('both factions define all shared roles with distinct, globally unique type ID
       expect(ids.has(type.id)).toBe(false);ids.add(type.id);
     }
   }
-  expect(ids.size).toBe(22);
+  expect(ids.size).toBe(33);
 });
 it('catalog values preserve current baseline and costs do not alias the other faction',()=>{
   for(const f of [factions.crown]){

@@ -179,3 +179,7 @@ Egen32px specialist med guldrustning, bred kite shield och fana i sources/units.
 ## RTS-137 – Orc Raider
 
 Original32px Raider i sources/units.mjs med bar hud/huvud, lätt läderrustning och andra yxan.208egna frames för två ägare/åtta riktningar/idle-walk-attack-death, samma8FPS/palett/anchors. Unit-atlas2048×4736 har2336frames för två femrolls-rosters; PNG/metadatamanifest exporterade tillsammans. Rastertester skiljer silhuett/riktningar och minst tre animationsfaser. Befintliga Orc-spik/tusk-/träbyggnader och navalbilder återanvänds. Ingen extern rasterreferens, ingen ny AI-bild eller attribution.
+
+## RTS-138 – Original woodland-roster
+
+Elves har egna leaf-cloaks/öron, verktyg, Warden-spear/leafshield, Longbow/quiver, Marksman-guld/vit headband och Ballista med riktad bult. Building-källan ger root/pillar/canopy, Garden, Moon Workshop och River Dock; fyra separata bygg/damagefaser. Naval har carved leaf-prow/sails och transportcanopy. Två lagägare/åtta unit- och fartygsriktningar; samma anchors/palett/animationer. Export:3504unitframes2048×7040,120buildingframes1024×1920,1248navalframes1024×4992. PNG/metadatamanifest exporterade tillsammans, alla dimensioner under8192px. Egna repo-native kompositioner utan externa rasterreferenser.

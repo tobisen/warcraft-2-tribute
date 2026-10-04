@@ -789,7 +789,7 @@ export class BootScene extends Phaser.Scene {
     for(const shot of visibleShots){if(!this.projectileVisuals.has(shot.id))this.projectileVisuals.set(shot.id,this.add.graphics().setDepth(effectConfig.projectileDepth));drawProjectile(this.projectileVisuals.get(shot.id)!,shot);}
     for (const enemy of visibleEnemies) {
       if (!this.enemyVisuals.has(enemy.id)) this.enemyVisuals.set(enemy.id, {
-        body: enemy.footprint?this.add.image(enemy.position.x,enemy.position.y,'buildings',buildingFrame((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base','enemy',enemy.construction?.remainingSeconds??0,enemy.buildingType==='outpost'?10:5,this.factions.enemy)).setOrigin(buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').x,buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').y):enemy.kind==='ship'?this.add.image(enemy.position.x,enemy.position.y,'naval',`${this.factions.enemy==='clans'?'clans-':''}transport-enemy-s-idle-0`).setOrigin(.5,40/64):this.add.image(enemy.position.x,enemy.position.y,'units',`${this.factions.enemy==='clans'?'clans-':''}${enemy.kind==='worker'?'worker':'soldier'}-enemy-s-idle-0`).setOrigin(.5,22/32),
+        body: enemy.footprint?this.add.image(enemy.position.x,enemy.position.y,'buildings',buildingFrame((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base','enemy',enemy.construction?.remainingSeconds??0,enemy.buildingType==='outpost'?10:5,this.factions.enemy)).setOrigin(buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').x,buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').y):enemy.kind==='ship'?this.add.image(enemy.position.x,enemy.position.y,'naval',`${factions[this.factions.enemy].artPrefix}transport-enemy-s-idle-0`).setOrigin(.5,40/64):this.add.image(enemy.position.x,enemy.position.y,'units',`${factions[this.factions.enemy].artPrefix}${enemy.kind==='worker'?'worker':'soldier'}-enemy-s-idle-0`).setOrigin(.5,22/32),
         label: this.add.text(0, 0, '', { fontSize: '14px', color: '#ffffff' }).setOrigin(0.5, 0),
       });
       const visual = this.enemyVisuals.get(enemy.id)!;
@@ -805,7 +805,7 @@ export class BootScene extends Phaser.Scene {
         const ring = this.add.circle(unit.position.x, unit.position.y, unit.kind==='soldier'?Math.max(20,combatUnitStats(unit).size*.75):20)
           .setStrokeStyle(2, 0xffdc73).setDepth(effectConfig.selectionDepth).setVisible(false);
         const art:UnitArt=unit.kind==='worker'?'worker':unit.archetype??'soldier';const origin=unitOrigin(art);
-        const body=this.add.image(unit.position.x,unit.position.y,'units',`${this.factions.player==='clans'?'clans-':''}${art}-player-s-idle-0`).setOrigin(origin.x,origin.y);
+        const body=this.add.image(unit.position.x,unit.position.y,'units',`${factions[this.factions.player].artPrefix}${art}-player-s-idle-0`).setOrigin(origin.x,origin.y);
         const cargo = this.add.text(unit.position.x, unit.position.y - 32, '',
           { fontSize: '14px', color: '#ffffff' }).setOrigin(0.5, 0);
         this.visuals.set(unit.id, { body, ring, cargo });
@@ -902,7 +902,7 @@ export class BootScene extends Phaser.Scene {
     for(const [id,body] of this.shipVisuals)if(!this.navy?.ships.some(s=>s.id===id)){this.removedVisual(id,true);body.destroy();this.shipVisuals.delete(id);}
     for(const [id,label] of this.shipLabels)if(!this.navy?.ships.some(s=>s.id===id)){label.destroy();this.shipLabels.delete(id);}
     for(const ship of this.navy?.ships??[]){const p=ship.position,type=ship.role==='transport'?'transport':'warship';this.drawHP(p,ship.hp,factions[this.factions.player].naval.units[ship.role??'warship'].hp,32,40,0x77c4cf);if(ship.selected)this.navyGraphics.lineStyle(2,0xffdf73).strokeCircle(p.x,p.y,22);
-      if(!this.shipVisuals.has(ship.id))this.shipVisuals.set(ship.id,this.add.image(p.x,p.y,'naval',`${this.factions.player==='clans'?'clans-':''}${type}-player-s-idle-0`).setOrigin(.5,40/64).setDepth(1));const body=this.shipVisuals.get(ship.id)!;body.setPosition(p.x,p.y);const target=ship.order.kind==='attack'?this.combat.enemies.find(e=>ship.order.kind==='attack'&&e.id===ship.order.enemyId&&entityVisible(this.fog,'player',e))?.position:undefined;this.animateUnit(ship.id,body,p,target?'attack':'idle',type,'player',target);
+      if(!this.shipVisuals.has(ship.id))this.shipVisuals.set(ship.id,this.add.image(p.x,p.y,'naval',`${factions[this.factions.player].artPrefix}${type}-player-s-idle-0`).setOrigin(.5,40/64).setDepth(1));const body=this.shipVisuals.get(ship.id)!;body.setPosition(p.x,p.y);const target=ship.order.kind==='attack'?this.combat.enemies.find(e=>ship.order.kind==='attack'&&e.id===ship.order.enemyId&&entityVisible(this.fog,'player',e))?.position:undefined;this.animateUnit(ship.id,body,p,target?'attack':'idle',type,'player',target);
       if(!this.shipLabels.has(ship.id))this.shipLabels.set(ship.id,this.add.text(p.x,p.y-48,uiText.warship,{fontSize:'10px',color:'#d6eef1'}).setOrigin(.5).setDepth(7));this.shipLabels.get(ship.id)!.setPosition(p.x,p.y-48).setText(`${ship.role==='transport'?'Transport '+(ship.passengers?.length??0)+'/4':uiText.warship} ${Math.ceil(ship.hp)} HP`);
     }
   }

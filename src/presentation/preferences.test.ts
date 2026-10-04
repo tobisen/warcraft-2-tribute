@@ -4,8 +4,9 @@ import {createPreferenceStore,preferencesKey,validatePreferences} from './prefer
 import {defaultAudio,audioGain} from './audioPolicy';
 import {defaultCameraPreferences} from './cameraPreferences';
 it('missing/invalid/future preferences use defaults and validate fields independently',()=>{
+ expect(validatePreferences({game:{faction:'elves'}}).game.faction).toBe('elves');
  const defaults=validatePreferences(null);expect(defaults.audio).toEqual(defaultAudio);expect(defaults.camera).toEqual(defaultCameraPreferences);
- expect(validatePreferences({audio:{master:.2,effects:2,music:'0.4',voices:.8,muted:true},camera:{speed:NaN,edgePan:false},game:{faction:'elves',difficulty:'beginner',speed:.75}})).toMatchObject({audio:{master:.2,effects:defaultAudio.effects,music:defaultAudio.music,voices:.8,muted:true},camera:{speed:defaultCameraPreferences.speed,edgePan:false},game:{faction:'crown',difficulty:'beginner',speed:.75}});
+ expect(validatePreferences({audio:{master:.2,effects:2,music:'0.4',voices:.8,muted:true},camera:{speed:NaN,edgePan:false},game:{faction:'unknown-faction',difficulty:'beginner',speed:.75}})).toMatchObject({audio:{master:.2,effects:defaultAudio.effects,music:defaultAudio.music,voices:.8,muted:true},camera:{speed:defaultCameraPreferences.speed,edgePan:false},game:{faction:'crown',difficulty:'beginner',speed:.75}});
  for(const raw of [null,'{','[]','null',JSON.stringify({version:2,settings:{audio:{master:0}}}),'x'.repeat(17000)]){
   const write=()=>{throw Error('load must not write');};const store=createPreferenceStore(()=>({getItem:()=>raw,setItem:write}));store.load();expect(store.get()).toEqual(defaults);
  }

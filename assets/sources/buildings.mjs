@@ -1,7 +1,7 @@
 /** Original masonry, timber and heraldry; native pixels, shared team variants. */
 export function buildingFrames(Surface,p){
  const frames=[];
- for(const faction of ['crown','clans'])for(const owner of ['player','enemy'])for(const kind of ['base','barracks','farm','forge','harbor'])for(const exportedStage of ['foundation','building','complete','damaged']){
+ for(const faction of ['crown','clans','elves'])for(const owner of ['player','enemy'])for(const kind of ['base','barracks','farm','forge','harbor'])for(const exportedStage of ['foundation','building','complete','damaged']){
   const stage=exportedStage==='damaged'?'complete':exportedStage;
   const size=kind==='farm'?64:128,s=new Surface(size,size),cx=size/2,ground=kind==='farm'?48:96,team=owner==='player'?p.teamBlue:p.teamRed,light=owner==='player'?p.teamBlueLight:p.teamRedLight;
   const width=kind==='farm'?48:kind==='base'?56:64,left=cx-width/2,top=ground-24;
@@ -63,6 +63,27 @@ export function buildingFrames(Surface,p){
     s.line(36,80,90,80,p.barkLight);s.rect(73,95,12,10,p.barkDark);s.line(75,97,82,103,p.barkLight);s.line(82,97,75,103,p.barkLight);
    }
   }
+  if(faction==='elves'){
+   // Authored living wood structures: roots, canopy, garden and moon workshop.
+   s.data.fill(0);s.ellipse(cx,ground+13,width/2+6,7,p.earth);
+   const low=ground-25,roof=kind==='base'?ground-66:ground-52;
+   for(const x of [left+3,left+width-9]){s.rect(x,low-17,7,48,p.barkDark);s.rect(x+1,low-15,2,42,p.barkLight);s.line(x+3,ground+8,x-8,ground+15,p.bark);s.line(x+3,ground+8,x+12,ground+15,p.bark);}
+   s.rect(left+4,ground-2,width-8,13,p.barkDark);s.line(left+4,ground-1,left+width-4,ground-1,p.barkLight);
+   if(stage!=='foundation'){
+    s.rect(left+8,low,width-16,27,p.bark);s.rect(cx-7,low+5,14,24,p.ink);s.rect(cx-5,low+8,10,21,p.barkDark);
+    s.line(left+6,low,left+6,ground+5,p.leaf);s.line(left+width-6,low,left+width-6,ground+5,p.leafHighlight);
+    if(stage==='building'){s.line(left,roof+16,cx,roof,p.barkLight);s.line(cx,roof,left+width,roof+16,p.barkLight);s.line(left,roof+16,left+width,roof+16,p.bark);}
+    else{
+     for(const [x,y,r] of [[cx,roof+10,width/2+6],[left+10,roof+21,18],[left+width-10,roof+21,18]]){s.ellipse(x,y,r,14,p.leafDark);s.ellipse(x-2,y-3,r-3,11,p.leaf);s.ellipse(x-5,y-6,r-8,6,p.leafHighlight);}
+     for(const x of [left+11,left+width-18]){s.rect(x,low+4,7,9,p.goldDark);s.rect(x+2,low+5,3,6,p.goldLight);}
+     const flagTop=Math.max(2,roof-6);s.line(cx,flagTop,cx,flagTop+27,p.barkLight);s.polygon([[cx+1,flagTop],[cx+14,flagTop+3],[cx+1,flagTop+10]],team);s.pixel(cx+4,flagTop+4,p.goldLight);
+     if(kind==='barracks'){s.line(left+3,ground-15,left+3,ground+7,p.barkLight);s.line(left+3,ground-15,left+11,ground-4,p.barkLight);s.line(left+11,ground-4,left+3,ground+7,p.barkLight);s.line(left+3,ground-15,left+3,ground+7,p.rockLight);}
+     if(kind==='forge'){s.ellipse(cx,roof+24,12,10,p.rockHighlight);s.ellipse(cx+4,roof+22,10,9,p.leafDark);s.rect(left+width-18,ground-2,14,3,p.rockLight);s.rect(left+width-13,ground+1,4,7,p.barkDark);}
+    }
+   }
+   if(kind==='farm'){s.rect(left+2,ground+7,width-4,13,p.barkDark);for(let x=left+5;x<left+width-4;x+=7){s.line(x,ground+9,x,ground+18,p.leaf);s.pixel(x,ground+10,p.goldLight);s.pixel(x+1,ground+16,p.leafHighlight);}}
+   if(kind==='harbor'){s.rect(32,ground-1,64,25,p.barkDark);for(let x=34;x<95;x+=6)s.rect(x,ground+1,3,22,p.barkLight);s.line(32,ground+10,95,ground+10,p.leafDark);for(const x of [33,91]){s.rect(x,ground-8,3,31,p.bark);s.ellipse(x,ground-10,5,3,p.leaf);}}
+  }
   if(exportedStage==='damaged'){
    // Static broken roof beams, masonry cracks and ground rubble; no simulation.
    const roofY=kind==='harbor'?48:top-17;
@@ -71,7 +92,7 @@ export function buildingFrames(Surface,p){
    s.line(left+width-7,ground-14,left+width-12,ground-6,p.ink);s.line(left+width-12,ground-6,left+width-8,ground+3,p.ink);
    for(const [x,y] of [[left-3,ground+14],[cx+11,ground+16],[left+width+1,ground+10]]){s.rect(x,y,4,3,p.rockDark);s.rect(x,y,3,1,p.rockLight);}
   }
-  frames.push({id:`${faction==='clans'?'clans-':''}${kind}-${owner}-${exportedStage}`,image:s,x:(frames.length%8)*128,y:Math.floor(frames.length/8)*128,anchor:{x:cx,y:ground},kind:'building',faction,owner,buildingType:kind,stage:exportedStage,logicalFootprint:{width:kind==='base'?(owner==='player'?48:96):64,height:kind==='base'?(owner==='player'?48:96):64}});
+  frames.push({id:`${faction==='crown'?'':faction+'-'}${kind}-${owner}-${exportedStage}`,image:s,x:(frames.length%8)*128,y:Math.floor(frames.length/8)*128,anchor:{x:cx,y:ground},kind:'building',faction,owner,buildingType:kind,stage:exportedStage,logicalFootprint:{width:kind==='base'?(owner==='player'?48:96):64,height:kind==='base'?(owner==='player'?48:96):64}});
  }
  return frames;
 }
