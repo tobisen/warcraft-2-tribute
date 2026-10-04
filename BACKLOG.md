@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**Nytt mandat RTS-165–169:**165 Done (`838f729`),166 Done (`2cd36a6`),167 Done (denna taskcommit);168 kräver luftroster/referenser. Användarens bifogade uppdrag för165–173 anger etappstopp efter169 och ny chatt170–173.160–164 är verifierade och pushade;164 `874f761`. Befintliga ändringar bevaras.
+**Nytt mandat RTS-165–169:**165 Done (`838f729`),166 Done (`2cd36a6`),167 Done (`fd9dfd3`),168 Blocked;169 blockerad av luftdelen. Användarens bifogade uppdrag för165–173 anger etappstopp efter169 och ny chatt170–173.160–164 är verifierade och pushade;164 `874f761`. Befintliga ändringar bevaras.
 
 **UI-BUGFIX-BOTTOM-BAR – Horisontell bottom bar** — **Done** (2026-10-04).
 Separat beställd UI-bugfix; befintliga RTS-ID:n/statusar bevaras. Uppdraget
@@ -4518,7 +4518,9 @@ AI använder spells genom enkla, testbara regler.
 
 ## RTS-168 – Flygande enheter och anti-air
 
-**Status:** Todo.
+**Status:** Blocked.
+
+**Blockerare:** Användarens krav är flygare enligt befintlig faction-plan, men134-planen/runtime definierar enbart fem landroller samt transport/warship. Ingen luftroster eller godkänd flygarsilhuett/animation/porträtt finns i registrerade referenser. Designfråga ställd, obesvarad. Behöver enhetsidentiteter/roller/produktionsprereqs och land/sea/air/anti-air-beslut samt referens eller beslut om nytt originalunderlag. Se assets/sources/air-168.md. Ingen placeholderimplementation eller luftvisuell verifiering hävdas.
 
 **Goal:** Flygande enheter och anti-air.
 
@@ -4539,7 +4541,9 @@ Silhuetter och skuggor visar flyghöjd.
 
 ## RTS-169 – Balans för mark, sjö, luft och magi
 
-**Status:** Todo.
+**Status:** Blocked (centrala luft-/anti-air-krav beror på168).
+
+**Avstämning:** Befintliga mark/sjö/specialistprofiler och manabegränsningar inventerade i artifacts/rts-169/partial-review.md. Magi/AI och relevanta äldre factionBalance-genomspelningar verifierade inom165–167; detta är inte en färdig169 combined-arms-balans eller mänskligt helmatchspeltest. Inga169-stats ändrade utan belägg. Luftkostnad/counters/tillgång/AI kan inte testas före168. Nästa task är att lösa168:s konkreta design-/assetunderlag;170–173 inte startade.
 
 **Goal:** Balans för mark, sjö, luft och magi.
 

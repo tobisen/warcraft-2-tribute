@@ -112,3 +112,13 @@ Användaren ersätter stoppet efter159 med160–164, en task i taget, riktad/bro
 ## Mandat RTS-165–169
 
 Användarens bifogade uppdrag beskriver165–173 men begär uttryckligt stopp och HANDOFF efter169 för ny chatt170–173. Genomför165–169 en task i taget, riktade tester/browser och slutlig unit/build/typecheck/diff samt docs/commit/push. Full regression vid etappgräns. Bevara CSS/docs. Öppna caster-/luftdesignfrågor tas upp före beroende kod. Ingen agentdelegering.
+
+## Överlämning RTS-165–167 och blockering168/169
+
+165–167 är Done och pushade838f729/2cd36a6/fd9dfd3. Full regression1227/158,
+unit446/80 och build med strict typecheck PASS; lokal browser800/1280 för
+magiflöden granskad.168 Blocked: den befintliga134-planen/referenserna saknar
+luftroster och flygarassets; designfråga ställd men obesvarad.169:s centrala
+luft/anti-air/combined-arms-verifiering är också blockerad. Se HANDOFF.md och
+assets/sources/air-168.md. Inga flygplaceholders eller full169-balans hävdas.
+Nästa task är att lösa168:s underlag, inte170.170–173 har inte startats.
