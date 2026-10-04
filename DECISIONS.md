@@ -1276,3 +1276,11 @@ Användarens senaste styrning skiljer hela unit-testsuiten från relevanta integ
 Poäng är outcome+gameplaytid enligt modell1: victory10000+max(0,3600-floor(seconds)), defeat0. Uppdrag/karta, svårighet, speed, båda fraktioner, Save-config/ruleversion och modell ingår i partitionsnyckel. Produktens releaseversion är separat från regelversionen. Ingen statistikbonus eller global leaderboard.
 
 Scenen tilldelar nya matcher UUIDv4; Save33 bevarar det. Äldre Save32 saknar säkert match-ID och migrerar utan att uppfinna ett; dessa matcher blir inte highscore-registrerade. Första terminala resultatet perID gäller även efter load från tidigare gren. Top10 är presentation, inte pruning: alla ID:n behålls. Vid5000entries stoppas ny registrering utan att gamla dedup-ID:n glöms. Quota/blockerad storage redovisas med sessionfallback.
+
+## RTS-150 – Samlad0.2.0-release
+
+Produkt- och packageversion0.2.0 betecknar femfraktions-/åttamissionsetappen. Save-config33 och highscoremodell1 ändras inte av versionstexten. Historisk0.1.0 behålls i Changelog. Befintlig Pagesworkflow publicerar endast efter full npm test och build med strict typecheck; dubbel separat typecheck tas bort.
+
+Användarens uttryckliga uppskjutna ljudtest/matchlyssning har företräde framför ursprunglig150-lyssningsrad. Tekniska assets/engine-checks och grafisk granskning utförs, lyssning förblir ej verifierad och redovisas. Releasekandidat behöver push för CI-publicering; tasken kvarstår In Progress tills faktisk Pages-build verifierats, därefter dokumenteras Done. Stoppa före151.
+
+Rena Markdown-/rollinstruktionspushar undantas från automatisk Pages/fullregression genom paths-ignore. Blandad kod+docs och workflow_dispatch kör fulla checks. Detta följer effektivare checkstyrningen: final docs efter verifierad publicering kontrolleras för text/länkar/diff, medan publicerad kodbuild behåller verifierad commitidentitet.

@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-150 – Samlat speltest och release** — **Todo**.
+**RTS-150 – Samlat speltest och release** — **In Progress**.
 
 **Aktuell etapp:** användaren har återupptagit arbetet genom RTS-150 med effektivare verifiering och taskvis commit/push. Efter150 lämnas slutrapport/överlämning; stanna före151. Tidigare paus före148 är upphävd.
 
@@ -3935,7 +3935,7 @@ Ingen backend eller global leaderboard i denna fas.
 
 ## RTS-150 – Samlat speltest och release
 
-**Status:** Todo.
+**Status:** In Progress.
 
 **Goal:** Verifiera fem fraktioner, stora kartor, campaign,
 
@@ -3957,4 +3957,8 @@ Verifiera GitHub Pages och publicera efter godkända checks.
 
 **Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
 
-**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+**Detaljplan:**150A inventera levererade funktioner och befintliga belägg utan återimplementation; uppdatera produkt/packageversion till0.2.0 och behåll0.1.0 i changelog.150B native aktuell paidcampaign1–8 i1280/1920, femfraktions-/storkarts-/Save-/restart-/grafik-/resolutionflöden samt återanvänd149:s scoreflöde där oförändrat.150C granska ljudassets/engine/policy men faktisk lyssning uppskjuten enligt användarens explicita styrning; detta undantag redovisas.150D en full slutregression inklusive integrationer/matchsimuleringar, build med strict typecheck, diff/doclänkar/review.150E publicera verifierad releasekandidat via befintlig Pages-CI, kontrollera faktisk release/build och avsluta docs/status med kort överlämning. Inga balans-/bundle-/MVP-utökningar. Stanna före151.
+
+**Acceptance-förtydligande:** faktisk lyssning och matchlyssning är uppskjutna av användaren och får inte markeras verifierade. Teknisk audioverifiering och grafisk granskning ingår; kvarstående lyssning anges i överlämningen.
+
+**RTS-150 releasekandidat:** full npm test1142tester/145filer PASS652.08s (hela unit+integration), en build inklusive strict typecheck/diff/doclänkar/packageidentitet PASS. Native aktuell full paidCampaign1–8 och femfraktions-/storkarts-/Save-restart-/sex-resolutionflöde PASS1280/1920 utan browsererrors. Teknisk audio11filer decode/mute/pause PASS; lyssning ej kontrollerad enligt användaren. Review utan blockerande fynd. Publicering återstår;150 fortfarande In Progress och151 inte påbörjad.

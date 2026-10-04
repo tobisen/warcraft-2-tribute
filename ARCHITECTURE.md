@@ -2,12 +2,11 @@
 
 ## Status och teknik
 
-Implementerat genom RTS-126 (historiska systembeskrivningar följer): archer/projectiles, catapult/splash och Forge/research, FIFO/refund, target-HP/destruktion, workerbygge, farms, population, kamera,
+Implementerat genom RTS-149; RTS-150 verifierar release0.2.0. Fem fraktioner, åtta campaign-operationer, stora kartor, Save33, dismissal, grupperade commands och lokala highscores kompletterar följande historiska systembeskrivningar: archer/projectiles, catapult/splash och Forge/research, FIFO/refund, target-HP/destruktion, workerbygge, farms, population, kamera,
 byggnadsselection, rally, Stop, gold och
 atomiska kostnader ovanpå etapp 1:s HUD, handgjorda karta och navigation för
 move/work/combat, separata gruppmål och säkra placement/spawn-regler.
-De ursprungliga MVP-avsnitten nedan är historik; RTS-018–060-avsnitten längst
-ned beskriver gällande ändringar av presentation, ranges och navigation.
+De ursprungliga MVP-avsnitten nedan är historik; taskavsnitten beskriver ändringarna i ordning. Senaste relevanta avsnitt har företräde.
 
 
 RTS-001 har implementerat en minimal bootstrap med Phaser 4.2.1, strict
@@ -1694,3 +1693,9 @@ Actionpanel grupperar samma befintliga DOM-knappar/handlers i Orders, Build, Tra
 `gameplay/highscores.ts` beräknar poäng från utfall/gameplaytid, tar en MatchStats-snapshot, validerar strikt lokalt schema och registrerar en gång per UUID. Partitionsnyckeln innehåller campaign-ID/skirmishkarta, faktisk karta, difficulty, speed, båda fraktioner, config och scoremodell. Top10-visning raderar inga dedup-ID:n;5000 entries är lagringsgräns. Storagefel har tydlig sessionfallback.
 
 BootScene skapar UUID endast för verklig ny match och bevarar det via currentMatch/applyMatch/Save33. Ren createMatch förblir deterministisk. Save32 migrerar utan identitet; äldre matchers gameplay/progression bevaras utan fiktiva highscores. Presentation i `presentation/highscores.ts` använder textContent och grupperade listor från huvudmeny/resultat. Resultatpanelen kan behålla öppen undersida efter ended→ended-load. `highscoreSave.test.ts` klassas integration; score/storage-tester unit.
+
+## RTS-150 – Releaseidentifiering och slutkontroll
+
+`config/release.ts`, package.json och lockfilens rootpackage använder0.2.0. Changelog behåller0.1.0; inga dependencies ändras. Vites build-ID är gitHEAD, separat från Save-config33 och scoremodell1. Pages-CI kör fortsatt full regression; `npm run build` inkluderar strict typecheck och ersätter dubbel separat typecheck. Verifierad releasekandidat publiceras av befintlig workflow innan slutlig publiceringsstatus dokumenteras. Inga simulation-/balanssystem ändras i150.
+
+Pages-workflow hoppar över push som enbart ändrar Markdown/rollinstruktioner (`**/*.md`, `.agents/**`); kod/config/package/asset/workflow-ändring kör fortsatt full test+build. workflow_dispatch kan alltid köras. Slutlig docscommit kan därför ligga efter den publicerade kodbuilden utan en identisk ny matchregression.

@@ -2,9 +2,7 @@
 
 ## Inriktning
 
-RTS-001–109 är implementerade. Roadmap110–120 återstår;091–106 omfattar den färdiga presentationsetappen. Slicebeskrivningarna visar utvecklingen;
-avsnitten RTS-018–060 längst ned anger dagens HUD, terrain/navigation,
-kantbaserade ranges, gruppmål och säkra placering/spawn.
+RTS-001–149 är implementerade; RTS-150 verifierar release0.2.0. Fem spelbara fraktioner, nio kartval och åtta campaign-operationer med lokala resultat/progression ingår. Slicebeskrivningarna visar historiken; senare taskavsnitt anger aktuella regler. Ursprunglig MVP nedan är ursprungsplanen, inte nuvarande featuregräns.
 
 
 Ett browserbaserat singleplayer-RTS inspirerat av Warcraft 2, Age of Empires 2
@@ -1347,3 +1345,7 @@ Orders/Build/Train/Research visas som rubriker för kontextens befintliga action
 Campaign-uppdrag och Skirmish-kartor har separata lokala highscores, ytterligare uppdelade efter svårighet, hastighet, spelar-/fiendefraktion och regelversion. Modell1: victory10000 plus högst3600 tidsbonus (hela gameplaysekunder dras av); defeat0. Förlust visas som förlust. Kills, produktion, dismiss och resurser ger inga scorebonusar. Matchstatistik sparas tillsammans med utfall/tid och profiler.
 
 Första terminala resultatet per match-ID gäller; load av en tidigare gren ger inte ett andra resultat. Ny replay/restart ger ny identitet. Äldre Saves saknar säker ID och är ej rankade. Top10 visas, alla dedup-ID:n behålls upp till5000entries. Detta är lokal spelhistorik utan backend eller garanti mot lokal manipulation.
+
+## RTS-150 – Slutetappens avgränsning
+
+Release0.2.0 samlar befintliga system utan nya mål eller balansjusteringar. Native genomspelning och full regression verifierar kampanjens betalda ekonomi/mål och befintlig femfraktions-/kartfunktion. Lokala scores och Save/restart ingår i användarflödet. Faktisk ljudlyssning/matchlyssning är uppskjutna enligt användaren; teknisk ljudkontroll får inte beskrivas som en lyssningsgranskning eller garanti om mixkvalitet. RTS-151 startas inte.

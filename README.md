@@ -14,33 +14,17 @@ npm run dev
 ```
 
 Öppna adressen Vite skriver ut, normalt http://localhost:5173/.
-De tidigare kartorna är 1280 × 960 world pixels; Frontier Valley är 1600 × 1152. Spelvyn fyller fönstret med responsiv canvas, befintlig280px sidopanel och sessionrad. Dra med mittenmusknappen för begränsad pan; zoom är1. Vid större viewport centreras hela kartan utan att sprites förstoras. Sidopanelen scrollas. Verifierade layoutstorlekar är1280×720 och1920×1080.
+De mindre kartorna är1280×960 world pixels; Frontier Valley1600×1152, Highlands/Plains96 är3072×3072 och Coast/Plains128 är4096×4096. Spelvyn fyller fönstret med responsiv canvas, befintlig280px sidopanel och sessionrad. Dra med mittenmusknappen för begränsad pan; zoom är1. Vid större viewport centreras hela kartan utan att sprites förstoras. Sidopanelen scrollas. Verifierade layoutstorlekar är1280×720 och1920×1080.
 
 ## Spela matchen
 
-I startmenyn: välj Wave-survival, Skirmish eller något av de fyra uppdragen och Easy/Normal/Hard, sedan
-”Starta match”. Byt val via ”Ny match / meny” och starta där en ny match. Survival har tre ändliga waves; i Skirmish finns inga waves och målet
-är att förstöra fiendebasen vid (1008,144). Fienden delar wood- och gold-noderna med spelaren: två arbetare levererar till
-sin bas och finansierar produktion utöver startbudgeten. Fienden samlar grupper och
-håller ett lokalt försvar. Restart behåller
-valt läge. Förlust vid spelarbasens död har alltid företräde.
+I huvudmenyn väljer du Campaign (åtta upplåsbara operationer), Skirmish eller Wave-survival. Campaign låser första matchprofilen till uppdragets fraktionspar; Skirmish låter dig välja fem fraktioner, fiende och karta. Välj Beginner/Normal/Hard och gameplayhastighet. Läs briefing och målstatus: vågor, fiendebas, överlevnadstid, eskort, räddning eller kustkontroll har olika segervillkor. Förlust vid basens död har företräde.
 
-1. Fog är aktiv. Välj två blå workers och flytta mot (600,220) för att
-   upptäcka wood; högerklicka sedan noden vid (650,180). Välj den tredje, pan
-   åt höger och flytta mot (780,240) för att upptäcka gruvan vid (850,220);
-   högerklicka gruvan.
-   Workers samlar och levererar automatiskt till den blå basen vid (400,450).
-2. Vid 40 levererade wood: välj en worker och ”Bygg barracks – 40 wood”. Placera grön
-   preview, exempelvis vid (512,384) om platsen är fri. Escape/högerklick avbryter.
-3. Efter 5 s byggarbete: ge builder ny gather-order. Välj barracks och träna blå soldiers för 20 wood + 5 gold och 5 gameplay-
-   sekunder vardera. Välj basen för workers för 20 wood och 5 s. Tre FIFO-jobb per
-   byggnad inklusive aktivt; bas och barracks kan producera samtidigt.
-4. Välj soldiers och högerklicka på röda enemies för manuell attack. Ge nästa
-   mål efter varje fiendedöd. På Normal anländer tre waves med 1/2/3 enemies vid
-   60/90/120 gameplay-sekunder. Träna förstärkningar vid förluster.
-5. Alla enemies döda efter sista wave ger Victory; basens HP 0 ger Defeat.
-   Defeat har företräde vid samtidig utgång. Simulation och gameplay-input
-   stoppas; ”Starta om” återställer hela matchen, inklusive kamera och rally.
+1. Välj workers och utforska nära basen. Högerklicka upptäckt wood/gold. På de flesta kartor finns wood vid(650,180), gold vid(850,220); på kust-/ö-kartor ligger startgruvan vid(600,300). Workers samlar och levererar automatiskt.
+2. Välj en worker och Build Barracks. Placera grön preview nära basen, exempelvis(528,400) om platsen är fri. Worker bygger; ge därefter ny gather-order. Kostnader/tider varierar med fraktion och visas på knapparna. Escape/högerklick avbryter preview.
+3. Välj barracks och träna en betald armé. Bygg farm för supply, och forge/research vid behov. Orders/Build/Train/Research grupperar relevanta actions. Arbetare och stridsenheter produceras parallellt i sina byggnader.
+4. Klick eller drag väljer trupper; högerklick ger move eller attack på synlig fiende. Attack Move/Stop/förmåga har knapp och hotkey. Skydda workers/bas och uppfyll briefingens mål. På naval-uppdrag behövs harbor, transport, boarding och fri synlig landstigningsyta.
+5. Victory/Defeat fryser gameplay. Visa statistik/highscores, Play Again för helt ny match, eller Main Menu. Save/load bevarar pågående mål och match-ID; äldre Saves förblir spelbara utan highscore-registrering.
 
 Vänsterklick väljer en unit eller bas/barracks. Units har företräde vid
 överlapp; byggnadsval och unit-selection är exklusiva. Tom mark avmarkerar.
@@ -48,7 +32,7 @@ Drag ersätter selection med units vars centrum ligger i rektangeln, inklusive
 kanten. Gester under 5 screen pixels är klick. Ringar/byggnadsram visar val.
 
 Högerklick på mark med valda units ger separata nåbara slutpositioner kring
-klickmålet med enhetens config-hastighet (worker/soldier 160, archer 140 och catapult 80 px/s). Ny order ersätter föregående; avmarkering stoppar inte
+klickmålet med enhetens fraktionsspecifika config-hastighet. Ny order ersätter föregående; avmarkering stoppar inte
 rörelse/arbete. Stop avbryter valda units men bevarar last. Gul målring visar
 aktiv order, röd ring blockerad route; HUD visar fas och felorsak.
 
@@ -57,7 +41,7 @@ markör visar målet. Ogiltigt mål behåller föregående rally. Spawnade units
 börjar omarkerade; utan rally är de idle, annars får de move. Worker-rally
 innebär ingen automatisk gathering.
 
-Wood-noden innehåller 400 wood, gruvan 300 gold. Rate är 1/s, lastkapacitet 5;
+Startnoder och extra förråd varierar mellan kartor. Insamlingshastighet och lastkapacitet följer fraktionens worker-config; för Humans är rate1/s och kapacitet5;
 leverans/gathering sker inom 24 px från footprintens kant. Full last går till
 basen; depletion levererar även partiallast. Saldo ökar först vid leverans.
 Last innehåller en enda resurstyp. Byte typ med last levererar gammal last
@@ -772,3 +756,9 @@ Actions är grupperade under Orders, Build, Train och Research. Tangent visas p�
 Local Highscores finns i huvudmenyn och på resultatvyn. Campaign grupperas per uppdrag, Skirmish per karta; svårighet, gameplayhastighet, båda fraktionerna, configversion och scoremodell separerar listorna. Seger ger `10000 + max(0, 3600 - floor(gameplaysekunder))`; förlust ger0. Statistik ger inga poängbonusar. Top10 visas per grupp.
 
 Nya matcher får ett UUID som Save33 bevarar. Första avslutade resultatet för ett match-ID registreras en gång även efter load eller upprepad resultatvisning. Replay/restart skapar en ny match. Äldre Saves migreras utan påhittad identitet och kan spelas vidare men inte registrera highscores. Lokal lagring behåller upp till5000 resultat inklusive dedup-ID:n; vid full lagring registreras inget nytt resultat. Storagefel visas och nya resultat behålls endast under sessionen. Inga globala eller manipulationssäkra resultat garanteras.
+
+## RTS-150 – Release0.2.0 och överlämning
+
+Produkt/packageversion0.2.0 samlar fem fraktioner, större kartor, åtta campaign-operationer, grupperade hotkeys, Dismiss Unit och lokala highscores. Huvudmenyns Changelog bevarar föregående0.1.0; versionsetikettens tooltip visar faktisk buildhash. Save-ruleconfig33 är separat från produktversion. Publik adress: [GitHub Pages](https://tobisen.github.io/warcraft-2-tribute/). Publiceringsbelägg och slutlig taskstatus finns i BACKLOG/DEV_LOG.
+
+Full regression körs vid denna etappgräns; unit+berörda integrationer räcker för löpande tasks enligt AGENTS. Faktisk ljudlyssning och matchlyssning är uppskjutna av användaren. Teknisk ljudkontroll ersätter inte lyssning. Bundlevarningen är kvar enligt uppdraget. Nästa RTS-151 är inte påbörjad eller scopebestämd här.
