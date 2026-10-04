@@ -1,0 +1,92 @@
+[
+  {
+    "id": "arena",
+    "width": 800,
+    "errors": []
+  },
+  {
+    "id": "arena",
+    "width": 1280,
+    "errors": []
+  },
+  {
+    "id": "forest",
+    "width": 800,
+    "errors": []
+  },
+  {
+    "id": "forest",
+    "width": 1280,
+    "errors": []
+  },
+  {
+    "id": "islands",
+    "width": 800,
+    "errors": []
+  },
+  {
+    "id": "islands",
+    "width": 1280,
+    "errors": []
+  },
+  {
+    "id": "river",
+    "width": 800,
+    "errors": []
+  },
+  {
+    "id": "river",
+    "width": 1280,
+    "errors": []
+  },
+  {
+    "id": "frontier",
+    "width": 800,
+    "errors": []
+  },
+  {
+    "id": "frontier",
+    "width": 1280,
+    "errors": []
+  },
+  {
+    "id": "coast",
+    "width": 800,
+    "errors": []
+  },
+  {
+    "id": "coast",
+    "width": 1280,
+    "errors": []
+  },
+  {
+    "id": "highlands",
+    "width": 800,
+    "errors": []
+  },
+  {
+    "id": "highlands",
+    "width": 1280,
+    "errors": []
+  },
+  {
+    "id": "plains96",
+    "width": 800,
+    "errors": []
+  },
+  {
+    "id": "plains96",
+    "width": 1280,
+    "errors": []
+  },
+  {
+    "id": "plains128",
+    "width": 800,
+    "errors": []
+  },
+  {
+    "id": "plains128",
+    "width": 1280,
+    "errors": []
+  }
+]

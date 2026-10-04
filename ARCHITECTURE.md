@@ -1729,3 +1729,6 @@ index.html visar Iron & Timber med undertiteln A Tribute to Warcraft II och samm
 fulla browser title. CSS gör en egen typografisk identitet med I/T-monogram,
 järnfärg och trä/guldaccent; inget rasterasset eller menyflöde ändras.
 Repo/package/remote/Pages/storagekeys/Save-ID:n behåller warcraft-2-tribute.
+
+
+RTS-156: terrainDetails återanvänder world-atlas och statiska tilebilder. Endast presentation tillförs; terrainFrame och map.obstacles är fortfarande gameplaykälla. Skogsgrafik ersätter rockvisual endast på Forest Pass. Ingen fog/navigationsändring.

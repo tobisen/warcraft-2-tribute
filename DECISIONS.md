@@ -1331,3 +1331,6 @@ Användaren accepterar Human-slicen för tillfället och godkänner de åtta nya
 ## 2026-10-04 – RTS-155: alla motiv i landreferenserna
 
 Senaste mandatet omfattar alla fem rasers fem landroller och byggnadsmotiv. Ranged-byggnaden får en synlig del i befintlig barracks, utan ny gameplaytyp. Elf-specialisten använder Wardens rustning/cape men behåller sin befintliga bågattack; Goblin-specialisten använder Engineer-kläder/verktyg men behåller granatattacken och namnet Grenadier. Alla övriga namn, stats och footprints består. Sjöfart finns inte i bilderna och lämnas oförändrad. Egen integer-pixelgrafik används, inga illustrationscrops. RTS-155 avslutas enligt detta mandat;156+ startas inte. Se [slutprotokoll](assets/sources/complete-references.md).
+
+
+RTS-156: befintliga pixelpaletten är stilunderlag; arena granskas först. Vägar är dekorativa jordspår, aldrig broar/vägbonus. Avbrutna spår på vatten innebär fortsatt blockerad landpassage. Forest Pass krona ligger helt inom redan blockerad bergscell.

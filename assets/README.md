@@ -198,3 +198,6 @@ Egen liten green/goggle/nose/ear-roster, verktyg/scrap/slingshot/grenade och lå
 Alla fem landroller för samtliga fem fraktioner har egna64×64-celler i befintliga atlasslots. Ankare är(32,44), siege(32,40); origin/logiska bodies bevaras. HP/cargo anpassas till silhuetterna. Base/barracks/forge är128px, farm64px; footprints och frame-ID:n bevaras. Ranged-byggnadens motiv integreras i befintlig barracks. Referenser är stilunderlag; inga illustrationscrops importeras.
 
 RTS-155 är Done enligt användarens mandat för alla motiv i de tio landreferenserna. Sjöassets saknar underlag och är oförändrade. [Slutligt protokoll](sources/complete-references.md), [före/efter](../artifacts/rts-155/complete/index.html). Tidigare [Human](sources/humans.md) och [fraktionspass](sources/faction-references.md) är historiska delpass.
+
+
+RTS-156: world-atlas256×256 med30 frames. Originalgräs/vatten/kust och sju nya väg-/dekor-/skogframes i world.mjs. Export via npm run assets:export. Faktisk browsergranskning och bilder i artifacts/rts-156.

@@ -27,9 +27,9 @@ avslutas efter denna fix; ingen senare roadmap-task startas.
   /tmp/w2t-bottom-bar; ingen ny CI-/Pages-verifiering hävdas.
 
 
-**RTS-155 – Ny kvalitetsnivå för sprites** — **Done enligt senaste referensmandatet**. Alla landmotiv i de tio referensbilderna är adapterade för samtliga fem raser. Se [protokoll](assets/sources/complete-references.md) och [före/efter](artifacts/rts-155/complete/index.html). Stanna före RTS-156.
+**RTS-156 – Förbättrad kartgrafik** — In Progress. Nytt mandat156–159; stanna efter159. RTS-155 avstämd: Human-worker/soldier/base och övriga landreferenser implementerade och visuellt granskade; unit435/78 och build/strict typecheck från0b0e338 återanvänds som historiska belägg. Återstående spritearbete gäller sjöfart utan referensunderlag, separat från156–159. Se [spriteavstämning](assets/sources/remaining-sprites.md).
 
-**Aktuell etapp:** RTS-151–154 färdiga. RTS-155 återöppnad för beställd Human-korrigering2026-10-04, nu avslutad enligt utökat mandat för alla landreferenser. Roadmap151–180 återställd; senare tasks Todo och inte implementerade. RTS-156 är pausad/inte startad; nytt assetmandat gäller inom RTS-155; inget mandat för senare tasks. Se [HANDOFF.md](HANDOFF.md) och [QUALITY_REVIEW.md](QUALITY_REVIEW.md). Tidigare stopp/fortsättningsmandat nedan är historik.
+**Aktuell etapp:** Användaren beställer156–159. Senaste mandat ersätter tidigare stopp; senare tasks startas inte.156 hanterar kartgrafik,157 attackljud,158 repliker/inspelningar,159 dekorativ värld. Saknat assetunderlag får inte markeras som färdigt; oberoende tasks fortsätter.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -4224,9 +4224,11 @@ Stanna efter denna leverans. RTS-156 och senare startas inte.
 
 ## RTS-156 – Förbättrad kartgrafik
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Förbättrad kartgrafik.
+
+**Leverans2026-10-04:** Detaljerad gräsyta, skum/vattenfleckar, ljus sand-/jordstrand, sammanhängande jordspår på fri mark, blommor/ormbunkar och skogskronor på Forest Pass befintliga blockerade bergsceller. Ingen walkability/ekonomi/kartgeometri ändras. Arenan granskades först; därefter alla nio kartor i Native800×600/1280×720. Revealed-map-fixture används uttryckligen för terränggranskning; vanliga fogregler ändras inte. [Bilder](artifacts/rts-156/after-arena-1280.png), före-arena och18 eftervyer i samma mapp. Riktade19/2, slutlig unit436/78 och build inklusive strict typecheck PASS; diffcheck PASS. Inga campaign-simuleringar. Sjöreferensbristen är separat dokumenterad i [spriteavstämningen](assets/sources/remaining-sprites.md).
 
 **Requirements:**
 

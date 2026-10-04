@@ -8,7 +8,7 @@
       "image": "assets/world-atlas.png",
       "data": "assets/world-atlas.json",
       "width": 256,
-      "height": 192
+      "height": 256
     },
     "buildings": {
       "image": "assets/buildings-atlas.png",
@@ -215,6 +215,76 @@
     "corner-water-sw": {
       "atlas": "world",
       "kind": "transition",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "road-n": {
+      "atlas": "world",
+      "kind": "decoration",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "road-e": {
+      "atlas": "world",
+      "kind": "decoration",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "road-s": {
+      "atlas": "world",
+      "kind": "decoration",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "road-w": {
+      "atlas": "world",
+      "kind": "decoration",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "flowers": {
+      "atlas": "world",
+      "kind": "decoration",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "fern": {
+      "atlas": "world",
+      "kind": "decoration",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "forest-rock": {
+      "atlas": "world",
+      "kind": "decoration",
       "width": 32,
       "height": 32,
       "anchor": {

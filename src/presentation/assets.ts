@@ -16,6 +16,7 @@ export function terrainFrame(column:number,row:number,mapId:MapId='arena'):'gras
 }
 export function terrainImageFrame(column:number,row:number,mapId:MapId='arena'):string {
  const frame=terrainFrame(column,row,mapId);
+ if(frame==='rock'&&mapId==='forest')return 'forest-rock';
  return frame==='water'&&(column*3+row*5)%7<3?'water-b':frame;
 }
 export function resourceFrame(type:'wood'|'gold',remaining:number,visible:boolean):string{return `${type}-${visible&&remaining<=0?'depleted':'available'}`;}
@@ -39,3 +40,13 @@ export function buildingFrame(kind:BuildingKind,owner:'player'|'enemy',remaining
  return `${factions[faction].artPrefix}${kind}-${owner}-${stage}`;
 }
 export function buildingOrigin(kind:BuildingKind){return kind==='farm'?{x:.5,y:.75}:{x:.5,y:.75};}
+
+/** Sparse flowers/ferns and connected dirt tracks only on free terrain. No collision or resources. */
+export function terrainDetails(column:number,row:number,mapId:MapId='arena'):string[]{
+ if(!terrainFrame(column,row,mapId).startsWith('grass'))return [];
+ const road=(x:number,y:number)=>x>=12&&x<=28&&y===14||x===28&&y>=10&&y<=14;
+ if(road(column,row))return ([[0,-1,'n'],[1,0,'e'],[0,1,'s'],[-1,0,'w']] as const)
+  .filter(([dx,dy])=>road(column+dx,row+dy)&&terrainFrame(column+dx,row+dy,mapId).startsWith('grass')).map(([, ,d])=>'road-'+d);
+ const hash=(Math.imul(column+9,73856093)^Math.imul(row+11,19349663))>>>0;
+ return hash%83===0?['flowers']:hash%101===0?['fern']:[];
+}

@@ -96,3 +96,7 @@ före155. HANDOFF.md och QUALITY_REVIEW.md redovisar kontroller och begränsning
 Nästa task155 är Todo och kräver nytt uppdrag; äldre fortsättningsmandat startar
 inte senare tasks. Full regression1146/145 PASS, slutlig unit428/75 och build med
 strict typecheck PASS. Ny CI-/Pages-build är inte separat verifierad här.
+
+## Mandat RTS-156–159
+
+Användaren beställer156–159 en task i taget, med docs/checks/commit/push efter verifierad task och HANDOFF efter159. Tidigare stopp före156 är ersatt. Grafik kräver browsergranskning; ljud kräver faktisk lyssning. Saknade inspelningar/underlag redovisas, oberoende arbete fortsätter vid assetblockering. Inga breda campaign-simuleringar för grafik/ljud. Ingen automatisk delegering.

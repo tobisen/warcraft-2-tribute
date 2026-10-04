@@ -54,7 +54,7 @@ import {archerConfig} from '../config/archer';
 import {catapultConfig} from '../config/catapult';
 import {canInteract} from '../gameplay/approach';
 import {motion,unitFrame,unitOrigin,unitOverlayOffsets,artAtlas,deathEffect,effectAlive,type Motion,type DeathEffect,type Action,type UnitArt} from '../presentation/animation';
-import { buildingFrame,buildingOrigin,terrainImageFrame,terrainEdges,resourceFrame,resourceOrigin } from '../presentation/assets';
+import { buildingFrame,buildingOrigin,terrainImageFrame,terrainEdges,terrainDetails,resourceFrame,resourceOrigin } from '../presentation/assets';
 import { createSession,sessionTransition,changeOptions,gameplayDelta,type MatchSession,type SessionAction } from '../gameplay/session';
 import { hotkeys,hotkeyButton,dispatchHotkey,commandGuide } from '../presentation/hotkeys';
 import { bindGroup,recallGroup,combineSelection,validGroup,type ControlGroups } from '../gameplay/controlGroups';
@@ -322,6 +322,7 @@ export class BootScene extends Phaser.Scene {
       for (let column = 0; column < Math.ceil(this.map.width / this.map.tileSize); column++) {
         const rect = tileFootprint(this.map, { column, row })!;
         this.add.image(rect.x,rect.y,'world',terrainImageFrame(column,row,this.map.id)).setOrigin(0).setDepth(-10);
+        for(const detail of terrainDetails(column,row,this.map.id))this.add.image(rect.x,rect.y,'world',detail).setOrigin(0).setDepth(-9.5);
         for(const edge of terrainEdges(column,row,this.map.id))this.add.image(rect.x,rect.y,'world',edge).setOrigin(0).setDepth(-9);
       }
     }
