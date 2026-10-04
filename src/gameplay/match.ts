@@ -1,3 +1,4 @@
+import {advanceBaseUpgrade} from './baseUpgrade';
 import {initializeOperation,operationOutcome,advanceCapture,controlsCapture,type CaptureState} from './operations';
 import {operationFor} from '../config/operations';
 import {prepareEnemyAbilities,advanceEnemyAbilities} from './enemyAbilities';
@@ -167,7 +168,8 @@ function advance(state: MatchState, delta: number): MatchState {
   cleaned=advanceEnemyRecovery(cleaned,delta);
   const enemyPolicy=advanceEnemyPolicy(cleaned,delta);
   const research=updateResearch(cleaned.research??createResearch(),cleaned.placement,delta,true,cleaned.factions?.player??defaultFactions.player);
-  const worker=cleaned.combat.baseHP>0?updateQueuedProduction(cleaned.gathering,cleaned.production,delta,{kind:'base'},
+  const baseStep=advanceBaseUpgrade(cleaned,delta);cleaned=baseStep.match;
+  const worker=cleaned.combat.baseHP>0?updateQueuedProduction(cleaned.gathering,cleaned.production,baseStep.productionSeconds,{kind:'base'},
     {map:cleaned.map,enemies:cleaned.combat.enemies}):{gathering:cleaned.gathering,production:cleaned.production};
   const soldier=cleaned.combat.baseHP>0?updateQueuedProduction(worker.gathering,cleaned.soldierProduction,delta,
     {kind:'barracks',bounds:cleaned.map,footprint:cleaned.placement.barracks,ready:barracksReady(cleaned.placement)},

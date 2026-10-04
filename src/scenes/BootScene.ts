@@ -1,3 +1,4 @@
+import {baseDevelopment,startBaseUpgrade,baseUpgradeReason} from '../gameplay/baseUpgrade';
 import {wildlifeHabitats,visibleWildlife,wildlifeDetails,type Habitat} from '../presentation/wildlife';
 import {combatAudioSnapshot,combatAudioCues,type CombatAudioSnapshot} from '../presentation/combatAudio';
 import {inspectBuildingAt,inspectedBuilding,savedBuildingSelection} from '../gameplay/buildingInspection';
@@ -335,6 +336,9 @@ export class BootScene extends Phaser.Scene {
         for(const edge of terrainEdges(column,row,this.map.id))this.add.image(rect.x,rect.y,'world',edge).setOrigin(0).setDepth(-9);
       }
     }
+    const upgradeButton=document.getElementById('upgrade-base') as HTMLButtonElement;
+    const upgrade=()=>{if(this.selectedBuilding==='base'&&this.gameplayActive()){this.applyMatch(startBaseUpgrade(this.currentMatch()));this.syncVisuals();}};
+    upgradeButton.addEventListener('click',upgrade);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>upgradeButton.removeEventListener('click',upgrade));
     this.baseVisual=this.add.image(this.gathering.base.x,this.gathering.base.y,'buildings',buildingFrame('base','player',0,5,this.factions.player)).setOrigin(.5,.75);
     this.baseLabel=this.add.text(this.gathering.base.x, this.gathering.base.y + 30, 'Base',
       { fontSize: '16px', color: '#ffffff' }).setOrigin(0.5, 0);
@@ -756,12 +760,14 @@ export class BootScene extends Phaser.Scene {
   }
 
   private syncVisuals(): void {
+    const development=baseDevelopment(this.currentMatch()),upgradeButton=document.getElementById('upgrade-base') as HTMLButtonElement;
+    upgradeButton.disabled=!!baseUpgradeReason(this.currentMatch());upgradeButton.textContent=development.remainingSeconds!==null?`Upgrading to level ${development.level+1}: ${Math.ceil(development.remainingSeconds)}s; training paused`:`Upgrade base to level ${Math.min(3,development.level+1)}`;
     const animalPoses=visibleWildlife(this.habitats,this.waves.elapsedSeconds,this.map,p=>isVisible(this.fog,'player',p)),animalIds=new Set(animalPoses.map(p=>p.id));
     for(const [id,image]of this.wildlifeVisuals)if(!animalIds.has(id))image.setVisible(false);
     for(const pose of animalPoses){let image=this.wildlifeVisuals.get(pose.id);if(!image){image=this.add.image(pose.position.x,pose.position.y,'world',pose.frame).setOrigin(.5,.75).setDepth(-.5);this.wildlifeVisuals.set(pose.id,image);}image.setPosition(pose.position.x,pose.position.y).setFrame(pose.frame).setFlipX(pose.flipX).setVisible(true);}
     for(const image of this.wildlifeProps)image.setVisible(isVisible(this.fog,'player',image)&&bodyFits(this.map,image,12));
     if(this.selectedBuilding&&!inspectedBuilding(this.currentMatch(),this.selectedBuilding))this.selectedBuilding=null;
-    this.baseVisual.setFrame(buildingFrame('base','player',0,5,this.factions.player,this.combat.baseHP)).setVisible(this.combat.baseHP>0);this.baseLabel.setVisible(this.combat.baseHP>0).setText(`${factions[this.factions.player].buildingNames.base} ${Math.ceil(this.combat.baseHP)} HP`);
+    this.baseVisual.setFrame(buildingFrame('base','player',0,5,this.factions.player,this.combat.baseHP,baseDevelopment(this.currentMatch()).level)).setVisible(this.combat.baseHP>0);this.baseLabel.setVisible(this.combat.baseHP>0).setText(`${factions[this.factions.player].buildingNames.base} · L${development.level} · ${Math.ceil(this.combat.baseHP)} HP`);
     if (!this.gameplayActive()) {
       this.unloadMode=null;this.attackMoveMode=false;
       this.cameraDrag = undefined;

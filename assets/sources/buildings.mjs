@@ -1,3 +1,4 @@
+import {baseLevelFrames} from './base-levels.mjs';
 import {settlement} from './settlement-complete.mjs';
 import {factionBase} from './faction-bases.mjs';
 import {humanBase} from './humans.mjs';
@@ -649,5 +650,5 @@ export function buildingFrames(Surface, p) {
             },
           });
         }
-  return frames;
+  return [...frames,...baseLevelFrames(Surface,p,frames)];
 }

@@ -104,3 +104,7 @@ Användaren beställer156–159 en task i taget, med docs/checks/commit/push eft
 ## Stopp efter RTS-159
 
 Aktuellt156–159-mandat avslutas efter159.156/159 är klara;157 kräver faktisk lyssning och158 egna/licensierade röstinspelningar/lyssning. Verifierade tekniska delcommits får inte tolkas som Done för saknade assets. HANDOFF.md styr överlämningen;160+ startas inte automatiskt. Ingen ny CI/Pages eller broad campaign-regression hävdas.
+
+## Mandat RTS-160–164
+
+Användaren ersätter stoppet efter159 med160–164, en task i taget, riktad/browser-verifiering och docs/commit/push till befintlig origin/main efter varje färdig task. Stanna efter164 med HANDOFF.159 accepteras som Done. Befintlig CSS och otrackade docs bevaras. Ingen automatisk delegering.

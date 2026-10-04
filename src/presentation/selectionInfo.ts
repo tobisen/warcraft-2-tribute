@@ -43,9 +43,10 @@ export function selectionInfo(m:MatchState,building:BuildingSelection,resourceId
   const production=kind==='base'?m.production:kind==='barracks'?m.soldierProduction:kind==='harbor'?m.navy?.production:undefined;
   if(production)stats.push(`Production: ${production.queue?.length??0} queued`);
   if(kind==='harbor')stats.push(`${f.naval.units.transport.name} · ${f.naval.units.warship.name}`);
+  if(kind==='base')stats.push(`Base level ${m.combat.baseDevelopment?.level??1}`,m.combat.baseDevelopment?.remainingSeconds!=null?`Upgrade: ${m.combat.baseDevelopment.remainingSeconds.toFixed(1)}s; worker training paused`:'Worker training active');
   if(kind==='forge'||kind==='base')stats.push(`Research: Attack ${m.research?.attack??0} / Defense ${m.research?.defense??0}`,m.research?.job?`${m.research.job.kind}: ${m.research.job.remainingSeconds.toFixed(1)}s remaining`:'Attack / Defense research requires a completed forge');
  }
- return {name,detail:team==='enemy'?'Visible enemy building · No orders or private production data':remaining>0?`Construction ${remaining.toFixed(1)}s remaining`:description,hp,maxHP,stats,portrait:kind==='outpost'?null:{atlas:'buildings',frame:buildingFrame(kind,team,remaining,5,f.id,hp)}};
+ return {name,detail:team==='enemy'?'Visible enemy building · No orders or private production data':remaining>0?`Construction ${remaining.toFixed(1)}s remaining`:description,hp,maxHP,stats,portrait:kind==='outpost'?null:{atlas:'buildings',frame:buildingFrame(kind,team,remaining,5,f.id,hp,kind==='base'&&team==='player'?m.combat.baseDevelopment?.level??1:1)}};
 }
 export function renderSelectionInfo(info:SelectionInfo):void {
  document.getElementById('selection-name')!.textContent=info.name;const detail=document.getElementById('selection-detail')!;detail.title=info.detail;detail.textContent=info.detail.length>65?'Details: hover to inspect':info.detail;

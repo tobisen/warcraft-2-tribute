@@ -4326,7 +4326,9 @@ Hantera save/load och restart.
 
 ## RTS-160 – Huvudbyggnad i tre nivåer
 
-**Status:** Todo.
+**Status:** Done.
+
+**Leverans:** Nivå 1→2 kostar80 wood/60 gold och20s;2→3 kostar120/100 och30s. Base-workerproduktion pausas, accepterad kö/rally/selection behålls och återstående tid återupptas exakt. Övrig produktion fortsätter. HP/footprint ändras inte.80 nya nivåframes återanvänder godkända fraktionsdelar; ingen särskild nivåreferens finns. Browser800×600/1280×720 och fysisk save/load verifierade; screenshots och browserlog i artifacts/rts-160. Riktade40 tester PASS; slutchecks redovisas i DEV_LOG.
 
 **Goal:** Huvudbyggnad i tre nivåer.
 

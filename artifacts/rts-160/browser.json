@@ -1,0 +1,166 @@
+[
+  {
+    "width": 800,
+    "saved": {
+      "development": {
+        "level": 1,
+        "remainingSeconds": 19
+      },
+      "queue": {
+        "remainingSeconds": 5,
+        "nextUnitNumber": 4,
+        "queue": [
+          {
+            "id": "base-job-1",
+            "kind": "worker",
+            "supply": 1,
+            "cost": {
+              "wood": 20,
+              "gold": 0
+            },
+            "durationSeconds": 5,
+            "remainingSeconds": 5
+          }
+        ],
+        "nextJobNumber": 2
+      },
+      "selection": "base",
+      "frame": "base-player-complete"
+    },
+    "restored": {
+      "development": {
+        "level": 1,
+        "remainingSeconds": 19
+      },
+      "queue": {
+        "remainingSeconds": 5,
+        "nextUnitNumber": 4,
+        "queue": [
+          {
+            "id": "base-job-1",
+            "kind": "worker",
+            "supply": 1,
+            "cost": {
+              "wood": 20,
+              "gold": 0
+            },
+            "durationSeconds": 5,
+            "remainingSeconds": 5
+          }
+        ],
+        "nextJobNumber": 2
+      },
+      "selection": "base",
+      "frame": "base-player-complete"
+    },
+    "final": {
+      "development": {
+        "level": 3,
+        "remainingSeconds": null
+      },
+      "queue": {
+        "remainingSeconds": 4.9,
+        "nextUnitNumber": 4,
+        "queue": [
+          {
+            "id": "base-job-1",
+            "kind": "worker",
+            "supply": 1,
+            "cost": {
+              "wood": 20,
+              "gold": 0
+            },
+            "durationSeconds": 5,
+            "remainingSeconds": 4.9
+          }
+        ],
+        "nextJobNumber": 2
+      },
+      "selection": "base",
+      "frame": "base-level3-player-complete"
+    },
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "saved": {
+      "development": {
+        "level": 1,
+        "remainingSeconds": 19
+      },
+      "queue": {
+        "remainingSeconds": 5,
+        "nextUnitNumber": 4,
+        "queue": [
+          {
+            "id": "base-job-1",
+            "kind": "worker",
+            "supply": 1,
+            "cost": {
+              "wood": 20,
+              "gold": 0
+            },
+            "durationSeconds": 5,
+            "remainingSeconds": 5
+          }
+        ],
+        "nextJobNumber": 2
+      },
+      "selection": "base",
+      "frame": "base-player-complete"
+    },
+    "restored": {
+      "development": {
+        "level": 1,
+        "remainingSeconds": 19
+      },
+      "queue": {
+        "remainingSeconds": 5,
+        "nextUnitNumber": 4,
+        "queue": [
+          {
+            "id": "base-job-1",
+            "kind": "worker",
+            "supply": 1,
+            "cost": {
+              "wood": 20,
+              "gold": 0
+            },
+            "durationSeconds": 5,
+            "remainingSeconds": 5
+          }
+        ],
+        "nextJobNumber": 2
+      },
+      "selection": "base",
+      "frame": "base-player-complete"
+    },
+    "final": {
+      "development": {
+        "level": 3,
+        "remainingSeconds": null
+      },
+      "queue": {
+        "remainingSeconds": 4.9,
+        "nextUnitNumber": 4,
+        "queue": [
+          {
+            "id": "base-job-1",
+            "kind": "worker",
+            "supply": 1,
+            "cost": {
+              "wood": 20,
+              "gold": 0
+            },
+            "durationSeconds": 5,
+            "remainingSeconds": 4.9
+          }
+        ],
+        "nextJobNumber": 2
+      },
+      "selection": "base",
+      "frame": "base-level3-player-complete"
+    },
+    "errors": []
+  }
+]

@@ -1337,3 +1337,7 @@ RTS-156: befintliga pixelpaletten är stilunderlag; arena granskas först. Väga
 
 
 RTS-159: dekorativa djur är aldrig gameplayunit eller visionobserver. Absoluttids-wander från befintlig sparad matchtid ger save/load utan ny schemaändring. Habitats/props skapas alltid från fast terräng; aktuella byggnader döljer dem så Save/Load inte ändrar deras framtida återkomst. Upp till48 djur, inga pathfinding/scouting/ekonomiregler.
+
+## RTS-160: huvudbyggnadsnivåer och produktion
+
+Uppgraderingen betalas vid start;20/30s pausar endast huvudbyggnadens workerproduktion. Nya köjobb får accepteras enligt vanliga regler men tickar inte under uppgraderingen. Kö, rally, selection och återstående produktionstid bevaras, även genom save/load. Slutförandeframens överskjutande tid går till produktion. HP och footprint ändras inte. Nivågrafik återanvänder godkända arkitekturdelar utan att hävda särskild godkänd nivåreferens. Save config34 migrerar äldre33 utan nivåfält till implicit nivå1.

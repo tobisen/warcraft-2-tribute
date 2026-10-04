@@ -14,7 +14,7 @@
       "image": "assets/buildings-atlas.png",
       "data": "assets/buildings-atlas.json",
       "width": 1024,
-      "height": 3200,
+      "height": 4480,
       "source": "assets/sources/buildings.mjs"
     },
     "units": {
@@ -4234,6 +4234,1446 @@
       "faction": "goblins",
       "owner": "enemy",
       "buildingType": "harbor",
+      "stage": "damaged"
+    },
+    "base-level2-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "foundation"
+    },
+    "base-level3-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "foundation"
+    },
+    "base-level2-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "building"
+    },
+    "base-level3-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "building"
+    },
+    "base-level2-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "complete"
+    },
+    "base-level3-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "complete"
+    },
+    "base-level2-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "damaged"
+    },
+    "base-level3-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "damaged"
+    },
+    "base-level2-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "foundation"
+    },
+    "base-level3-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "foundation"
+    },
+    "base-level2-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "building"
+    },
+    "base-level3-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "building"
+    },
+    "base-level2-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "complete"
+    },
+    "base-level3-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "complete"
+    },
+    "base-level2-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "damaged"
+    },
+    "base-level3-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "damaged"
+    },
+    "clans-base-level2-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "foundation"
+    },
+    "clans-base-level3-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "foundation"
+    },
+    "clans-base-level2-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "building"
+    },
+    "clans-base-level3-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "building"
+    },
+    "clans-base-level2-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "complete"
+    },
+    "clans-base-level3-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "complete"
+    },
+    "clans-base-level2-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "damaged"
+    },
+    "clans-base-level3-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "damaged"
+    },
+    "clans-base-level2-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "foundation"
+    },
+    "clans-base-level3-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "foundation"
+    },
+    "clans-base-level2-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "building"
+    },
+    "clans-base-level3-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "building"
+    },
+    "clans-base-level2-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "complete"
+    },
+    "clans-base-level3-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "complete"
+    },
+    "clans-base-level2-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "damaged"
+    },
+    "clans-base-level3-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "damaged"
+    },
+    "elves-base-level2-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "foundation"
+    },
+    "elves-base-level3-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "foundation"
+    },
+    "elves-base-level2-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "building"
+    },
+    "elves-base-level3-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "building"
+    },
+    "elves-base-level2-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "complete"
+    },
+    "elves-base-level3-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "complete"
+    },
+    "elves-base-level2-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "damaged"
+    },
+    "elves-base-level3-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "damaged"
+    },
+    "elves-base-level2-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "foundation"
+    },
+    "elves-base-level3-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "foundation"
+    },
+    "elves-base-level2-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "building"
+    },
+    "elves-base-level3-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "building"
+    },
+    "elves-base-level2-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "complete"
+    },
+    "elves-base-level3-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "complete"
+    },
+    "elves-base-level2-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "damaged"
+    },
+    "elves-base-level3-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "damaged"
+    },
+    "dwarves-base-level2-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "foundation"
+    },
+    "dwarves-base-level3-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "foundation"
+    },
+    "dwarves-base-level2-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "building"
+    },
+    "dwarves-base-level3-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "building"
+    },
+    "dwarves-base-level2-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "complete"
+    },
+    "dwarves-base-level3-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "complete"
+    },
+    "dwarves-base-level2-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "damaged"
+    },
+    "dwarves-base-level3-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "damaged"
+    },
+    "dwarves-base-level2-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "foundation"
+    },
+    "dwarves-base-level3-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "foundation"
+    },
+    "dwarves-base-level2-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "building"
+    },
+    "dwarves-base-level3-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "building"
+    },
+    "dwarves-base-level2-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "complete"
+    },
+    "dwarves-base-level3-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "complete"
+    },
+    "dwarves-base-level2-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "damaged"
+    },
+    "dwarves-base-level3-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "damaged"
+    },
+    "goblins-base-level2-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "foundation"
+    },
+    "goblins-base-level3-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "foundation"
+    },
+    "goblins-base-level2-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "building"
+    },
+    "goblins-base-level3-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "building"
+    },
+    "goblins-base-level2-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "complete"
+    },
+    "goblins-base-level3-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "complete"
+    },
+    "goblins-base-level2-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "damaged"
+    },
+    "goblins-base-level3-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 48,
+        "height": 48
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "player",
+      "buildingType": "base",
+      "stage": "damaged"
+    },
+    "goblins-base-level2-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "foundation"
+    },
+    "goblins-base-level3-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "foundation"
+    },
+    "goblins-base-level2-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "building"
+    },
+    "goblins-base-level3-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "building"
+    },
+    "goblins-base-level2-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "complete"
+    },
+    "goblins-base-level3-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "complete"
+    },
+    "goblins-base-level2-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "enemy",
+      "buildingType": "base",
+      "stage": "damaged"
+    },
+    "goblins-base-level3-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 96,
+        "height": 96
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "enemy",
+      "buildingType": "base",
       "stage": "damaged"
     },
     "worker-player-e-idle-0": {
