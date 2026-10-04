@@ -1,3 +1,4 @@
+import {manaFor,currentMana} from '../gameplay/mana';
 import {inspectedBuilding} from '../gameplay/buildingInspection';
 import {unitAvailability,technologyFor} from '../gameplay/productionPrerequisites';
 import {resourceStaffing} from '../gameplay/resourceStaffing';
@@ -10,7 +11,7 @@ import type {BuildingSelection} from '../gameplay/buildingSelection';
 import type {MatchState} from '../gameplay/match';
 import {artAtlas,motion,unitFrame,type UnitArt} from './animation';
 import {buildingFrame} from './assets';
-export interface SelectionInfo {name:string;detail:string;hp:number|null;maxHP:number|null;stats:string[];portrait:{atlas:'units'|'naval'|'buildings';frame:string}|null}
+export interface SelectionInfo {mana?:number;maxMana?:number;name:string;detail:string;hp:number|null;maxHP:number|null;stats:string[];portrait:{atlas:'units'|'naval'|'buildings';frame:string}|null}
 const empty=():SelectionInfo=>({name:'No selection',detail:'Click a unit, building or resource, or drag to select a group.',hp:null,maxHP:null,stats:[],portrait:null});
 /** Presentation only: reads selected player entities, only visible enemy buildings and known resources. Stats are baseline recipes. */
 export function selectionInfo(m:MatchState,building:BuildingSelection,resourceId:string|null=null):SelectionInfo {
@@ -28,7 +29,8 @@ export function selectionInfo(m:MatchState,building:BuildingSelection,resourceId
   if(u.kind==='worker')stats.push(`Cargo ${u.cargo.toFixed(1)} / ${faction.units.worker.capacity} ${u.cargoType??'wood'}`,`Gather ${faction.units.worker.gatherPerSecond}/s`);
   else if(role==='transport')stats.push(`Passengers ${u.kind==='ship'?(u.passengers?.length??0):0} / ${navyConfig.transport.capacity}`);
   else {const combat=u.kind==='ship'?faction.naval.units[u.role??'warship']:faction.units[role as 'soldier'|'archer'|'catapult'|'specialist'];if(combat.range!==undefined)stats.push(`Range ${combat.range} px`);if('damagePerSecond' in combat&&combat.damagePerSecond!==undefined)stats.push(`Damage ${combat.damagePerSecond}/s`);if(combat.damage!==undefined)stats.push(`Damage ${combat.damage}/hit`);}
-  return {name:u.kind==='ship'?faction.naval.units[role as 'transport'|'warship'].name:faction.unitNames[role as 'worker'|'soldier'|'archer'|'catapult'|'specialist'],detail:`${u.id} · ${u.order.kind}`,hp:u.hp??data.hp,maxHP:data.hp,stats,portrait:{atlas:artAtlas(role),frame:unitFrame(motion(undefined,u.position,'idle',0,role,'player',undefined,faction.id),0)}};
+  const mana=u.kind==='ship'?undefined:currentMana(u,faction.id),manaData=u.kind==='ship'?undefined:manaFor(u,faction.id);if(manaData)stats.push(`${manaData.role} · Mana regeneration ${manaData.regenerationPerSecond}/s`);
+  return {...(manaData?{mana,maxMana:manaData.max}:{}),name:u.kind==='ship'?faction.naval.units[role as 'transport'|'warship'].name:faction.unitNames[role as 'worker'|'soldier'|'archer'|'catapult'|'specialist'],detail:`${u.id} · ${u.order.kind}`,hp:u.hp??data.hp,maxHP:data.hp,stats,portrait:{atlas:artAtlas(role),frame:unitFrame(motion(undefined,u.position,'idle',0,role,'player',undefined,faction.id),0)}};
  }
  if(!building)return empty();
  const b=inspectedBuilding(m,building);if(!b)return empty();
@@ -51,7 +53,7 @@ export function selectionInfo(m:MatchState,building:BuildingSelection,resourceId
 }
 export function renderSelectionInfo(info:SelectionInfo):void {
  document.getElementById('selection-name')!.textContent=info.name;const detail=document.getElementById('selection-detail')!;detail.title=info.detail;detail.textContent=info.detail.length>65?'Details: hover to inspect':info.detail;
- document.getElementById('selection-health')!.textContent=info.hp===null?'':`HP ${Math.ceil(info.hp)} / ${info.maxHP}`;
+ document.getElementById('selection-health')!.textContent=info.hp===null?'':`HP ${Math.ceil(info.hp)} / ${info.maxHP}${info.mana!==undefined?` · Mana ${Math.floor(info.mana)} / ${info.maxMana}`:''}`;
  const health=document.getElementById('selection-health-bar') as HTMLProgressElement;health.hidden=info.hp===null;health.max=info.maxHP??1;health.value=info.hp??0;
  const stats=document.getElementById('selection-stats')!;stats.title=info.stats.join(' · ');stats.textContent=info.stats.filter(s=>s.startsWith('Cargo')||s.startsWith('Supply')||s.startsWith('Production:')||s.startsWith('Research:')||s.startsWith('Enemy')||s.startsWith('Workers:')).join(' · ');
  document.getElementById('selection-info')!.title=[info.name,info.detail,...info.stats].join(' · ');

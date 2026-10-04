@@ -42,7 +42,7 @@ export function updateEnemyProduction(state:EnemyProductionState,combat:CombatSt
   if(p.remainingSeconds===null)return {combat:c,state:{...next,wood:g.wood,gold:g.goldBalance??0,production:p,acceptedJobs,...(spent?{spent}:{})}};
   const step=Math.min(time,p.remainingSeconds);
   const result=updateQueuedProduction(g,p,step,roleBuilding((p.queue?.[0]?.kind??'soldier') as Exclude<UnitRole,'worker'>),{map,enemies:player.units});
-  const spawned:Enemy[]=result.gathering.units.slice(units.length).map(u=>({id:`enemy-produced-${u.id.slice(5)}`,kind:'unit',owner:'enemy',order:{kind:'idle'},...(state.roster?{role:u.kind==='soldier'?u.archetype??'soldier':'soldier',hp:u.hp!}: {hp:combatConfig.enemyHP}),position:{...u.position}}));
+  const spawned:Enemy[]=result.gathering.units.slice(units.length).map(u=>({id:`enemy-produced-${u.id.slice(5)}`,kind:'unit',owner:'enemy',order:{kind:'idle'},...(u.kind==='soldier'&&u.mana!==undefined?{mana:u.mana}:{}),...(state.roster?{role:u.kind==='soldier'?u.archetype??'soldier':'soldier',hp:u.hp!}: {hp:combatConfig.enemyHP}),position:{...u.position}}));
   c={...c,enemies:[...c.enemies,...spawned]};
   next={...next,wood:result.gathering.wood,gold:result.gathering.goldBalance??0,production:result.production,acceptedJobs,...(spent?{spent}:{})};
   time=Math.max(0,time-step);

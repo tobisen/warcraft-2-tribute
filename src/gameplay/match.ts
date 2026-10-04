@@ -1,3 +1,4 @@
+import {advanceMana} from './mana';
 import {updateRepair} from './repair';
 import {withGateRules} from './gates';import {enemyNavigationMap} from './map';
 import {updateTowers} from './towers';
@@ -147,6 +148,7 @@ function correctedNavigation(map:WorldMap,position:Position,half:number,route?:R
 function advance(state: MatchState, delta: number): MatchState {
   state=withGateRules(cleanDestroyed(state));
   const readyBefore=readyBuildings(state);
+  state=advanceMana(state,delta);
   state=updateRepair(state,delta);
   state=observeEnemyKnowledge(state);
   state=prepareEnemyNaval(state);

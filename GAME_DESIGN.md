@@ -1358,3 +1358,7 @@ Release0.2.0 samlar befintliga system utan nya mål eller balansjusteringar. Nat
 Välj workers och använd Repair [Z], följt av en egen skadad byggnad, eller högerklicka byggnaden. Varje worker återställer4HP/s inom24px, för0.5wood och0.1gold per HP. Upp till tre workers arbetar samtidigt per byggnad, övriga väntar. Stop eller en annan order avbryter; full HP, slut på resurser eller förstörd byggnad avslutar ordern. Reparation fortsätter efter save/load och fryser vid pause. Den ändrar inte byggtid eller produktion.
 
 Nivå2-tornens räckvidd är192px; alla befintliga siege-enheter har minst208px. Siege-skott gör1.5× skada mot torn, murar och portar. Vanliga byggnader/enheter har oförändrad skadeberäkning. Försvar behöver därför skyddas mot belägring även med tre reparerande workers.
+
+## RTS-165 – specialistmana
+
+Banner Guard, Raider, Marksman, Bulwark och Grenadier kompletteras med mana; namn, stridsprofil, kostnad, tid, supply och prerequisites bevaras. Max/initial/regeneration per gameplay-sekund: Humans100/60/1, Orcs80/40/1, Elves120/60/1.25, Dwarves100/50/0.8, Goblins80/40/1. Mana visas bredvid HP för en markerad specialist. Regeneration stannar vid max, paus, gameover eller död; transporterade specialister regenererar också. Mana används av spells166/167, inte av äldre gratis E-selfbuff. Äldre saves börjar med initial mana när fältet saknas.

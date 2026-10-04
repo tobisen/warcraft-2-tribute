@@ -80,7 +80,7 @@ export function updateProduction(gathering: GatheringState, production: Producti
   const common = { owner:'player' as const, id: `unit-${number}`, position, target: { ...position }, selected: false };
   const unit: Unit = building.kind === 'base'
     ? { ...common, kind: 'worker', hp:recipe.hp, cargo: 0, order: { kind: 'idle' } }
-    : { ...common, kind: 'soldier', ...(building.kind==='barracks'&&building.unitType&&building.unitType!=='soldier'?{archetype:building.unitType,...(building.unitType==='specialist'?{faction:gathering.faction??'crown'}:{})}:{}), cargo: 0, hp:recipe.hp, order: { kind: 'idle' } };
+    : { ...common, kind: 'soldier', ...(recipe.mana?{mana:recipe.mana.initial}:{}), ...(building.kind==='barracks'&&building.unitType&&building.unitType!=='soldier'?{archetype:building.unitType,...(building.unitType==='specialist'?{faction:gathering.faction??'crown'}:{})}:{}), cargo: 0, hp:recipe.hp, order: { kind: 'idle' } };
   return {
     gathering: { ...gathering, units: [...gathering.units, context && production.rally
       ? {...commandMappedMove([{...unit,selected:true}],production.rally,context.map)[0],selected:false} : unit] },

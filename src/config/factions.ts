@@ -1,3 +1,4 @@
+import {manaConfig,type ManaDefinition} from './mana';
 import {navyConfig} from './navy';
 import {text as uiText} from '../text';
 import {unitStats,soldierStats} from './unitDefaults';
@@ -23,6 +24,7 @@ export const isFactionId=(value:unknown):value is FactionId=>factionIds.some(id=
 export interface TechnologyState {baseLevel?:number;buildings:readonly BuildingRole[];research:Partial<Record<UpgradeRole,number>>}
 export interface UnitPrerequisites {baseLevel?:number;buildings?:readonly BuildingRole[];research?:Partial<Record<UpgradeRole,number>>}
 interface UnitData {
+  mana?:ManaDefinition;
   combatMode?:'melee'|'projectile';
   art?:'worker'|'soldier'|'archer'|'catapult'|'specialist';
   prerequisites?:UnitPrerequisites;
@@ -175,3 +177,6 @@ export function factionForTeam(match:{factions?:MatchFactions},team:keyof MatchF
 }
 
 export function factionsForPlayer(player:FactionId,enemy?:FactionId):MatchFactions {return {player,enemy:enemy??(player==='crown'?'clans':'crown')};}
+
+// RTS-165: mana complements the existing specialist role without replacing its combat recipe.
+for(const id of factionIds)factions[id].units.specialist.mana={...manaConfig[id]};

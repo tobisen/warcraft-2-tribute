@@ -108,3 +108,7 @@ Aktuellt156–159-mandat avslutas efter159.156/159 är klara;157 kräver faktisk
 ## Mandat RTS-160–164
 
 Användaren ersätter stoppet efter159 med160–164, en task i taget, riktad/browser-verifiering och docs/commit/push till befintlig origin/main efter varje färdig task. Stanna efter164 med HANDOFF.159 accepteras som Done. Befintlig CSS och otrackade docs bevaras. Ingen automatisk delegering.
+
+## Mandat RTS-165–169
+
+Användarens bifogade uppdrag beskriver165–173 men begär uttryckligt stopp och HANDOFF efter169 för ny chatt170–173. Genomför165–169 en task i taget, riktade tester/browser och slutlig unit/build/typecheck/diff samt docs/commit/push. Full regression vid etappgräns. Bevara CSS/docs. Öppna caster-/luftdesignfrågor tas upp före beroende kod. Ingen agentdelegering.

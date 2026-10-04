@@ -27,6 +27,7 @@ export interface Worker extends SelectableUnit {
   cargoType?: ResourceType;
 }
 export interface Soldier extends SelectableUnit {
+  mana?:number;
   ability?:AbilityState;
   faction?:FactionId;
   archetype?: 'archer'|'catapult'|'specialist';

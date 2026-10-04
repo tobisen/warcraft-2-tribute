@@ -2,6 +2,8 @@
 
 ## Current Focus
 
+**Nytt mandat RTS-165–169:**165 Done (committen med mana-slicen),166 nästa. Användarens bifogade uppdrag för165–173 anger etappstopp efter169 och ny chatt170–173.160–164 är verifierade och pushade;164 `874f761`. Befintliga ändringar bevaras.
+
 **UI-BUGFIX-BOTTOM-BAR – Horisontell bottom bar** — **Done** (2026-10-04).
 Separat beställd UI-bugfix; befintliga RTS-ID:n/statusar bevaras. Uppdraget
 avslutas efter denna fix; ingen senare roadmap-task startas.
@@ -4443,9 +4445,13 @@ Balansera försvar mot siege och expansion.
 
 ## RTS-165 – Magienheter och mana
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Magienheter och mana.
+
+**Implementation:** Fem befintliga specialister kompletterade med fraktionsmana och support/control-roll utan namn-/strids-/kostnadsbyte. Max/initial/regen i config/mana och fraktionsdefinitionerna. HP-raden visar aktuell/max mana; gameplay-tid, pause/gameover/dead och transports hanteras. Save38 migrerar37. Spells166/167 återstår separat; inga nya castposer eller nya referenser hävdas. [Assetinventering](assets/sources/magic-165.md).
+
+**Verifiering:** Riktade52/4 + fraktions18/4 PASS, slutlig unit445/80 och build med strict typecheck PASS. Chromium fem raser ×800×600/1280×720 fysisk produktion/selection, mana/regen/pause och Save/Load; screenshots i [artifacts/rts-165](artifacts/rts-165). Slutliga bilder visuellt granskade, fysisk selection och diffkontroll PASS.
 
 **Requirements:**
 
