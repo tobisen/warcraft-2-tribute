@@ -1337,3 +1337,7 @@ Blockerande unload är avsiktligt atomiskt: inga passagerare försvinner om hela
 Dismiss Unit/Delete är en explicit spelaråtgärd för levande egna markerade workers, combat-units och ships. Bekräftelsens count inkluderar passagerarna på valda transporter. Passagerare och deras last tas bort tillsammans med transporten; ingen landstigning eller refund sker. Carried wood/gold räknas som lost cargo, medan nod/saldo är oförändrade. Units removed är separat från deaths/kills.
 
 Modalen låser fokus och fryser matchtid, simulation och gameplay-input; Cancel/Escape återgår till samma selection/orders. Delete med UI-fokus/modifiers/repeat eller paus/avslutad match startar ingen action. Byggnader/enemyunits ingår inte. Befintliga order-/group-/target-/byggarreferenser städas; construction behåller betald progress och kan bemannas igen. Campaignens vanliga failure-/capturevillkor gäller även frivillig borttagning.
+
+## RTS-148 – Tydliga commands
+
+Orders/Build/Train/Research visas som rubriker för kontextens befintliga actions. Varje knapp visar sin hotkey och tooltip med full actionbeskrivning, aktuell cost och orsak om blocked. Hjälpvyn använder samma bindningar: H harbor, J transport, K warship, L unload och V specialist kompletterar tidigare13bindningar till18actions. Arrow/Home/Space-camera, Ctrl/Cmd-grupper och browser/textinput är fortsatt separata; modifiers/repeat/fokuserad UI utlöser inga gameplaykeys. Inga ekonomi-/combat-/produktionsregler ändras.

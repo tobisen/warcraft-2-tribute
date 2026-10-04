@@ -198,3 +198,11 @@ html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#
 #dismiss-dialog{color:#eadbbd;background:#192b28;border:2px solid #977a40;width:min(460px,calc(100vw - 48px));padding:24px;box-shadow:0 12px 50px #0009;}
 #dismiss-dialog::backdrop{background:#0009;}
 #dismiss-dialog button{margin:8px 8px 0 0;}
+
+/* RTS-148: preserve context actions, with clear headings in the scrollable panel. */
+#action-panel #gameplay-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:8px;}
+#action-panel [data-action-group]{min-width:0;display:flex;flex-direction:column;gap:4px;}
+#action-panel [data-action-group] h3{margin:0 0 3px;color:#d7bb73;font-size:12px;}
+#action-panel [data-action-group] .control{min-width:0;width:100%;}
+#action-panel [data-action-group] button{width:100%;}
+#action-panel #production-queue{grid-column:1 / -1;}

@@ -28,4 +28,4 @@ Senaste styrning efter publicerad RTS-065: användaren har godkänt fortsatt arb
 
 Granska diff, scope, acceptance criteria och belägg utan att ändra filer. Bedöm vilka integrationer/simuleringar som är relevanta; begär extra checks endast för en konkret otäckt risk. Skilj verifierat, ej kontrollerat och kända problem. Uppfyllda acceptance criteria kräver belägg, inte antaganden.
 
-RTS-147 är redan verifierad och pushad. Den stora körningen är pausad vid denna säkra gräns; RTS-148 är inte påbörjad. Tidigare stopp före RTS-148 kvarstår. Dessa regler har företräde framför äldre fortsätt-/checktext.
+Senaste mandat återupptar taskvis arbete genom RTS-150 med dessa effektivare checks och commit/push efter verifierad task. RTS-147 är färdig. Efter150 skriv slutrapport/överlämning och stanna före151. Tidigare paus före148 är upphävd. Denna styrning har företräde framför äldre etapptext.

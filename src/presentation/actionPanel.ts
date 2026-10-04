@@ -18,6 +18,12 @@ import type {MatchState} from '../gameplay/match';
 import {hotkeys} from './hotkeys';
 export const actionIds=['train-worker','train-soldier','train-archer','train-catapult','train-specialist','train-transport','train-ship','build-barracks','build-farm','build-forge','build-harbor','research-attack','research-defense','attack-move','unit-ability','unload-transport','stop-units','dismiss-units'] as const;
 type ActionId=typeof actionIds[number];
+export const actionGroups=['Orders','Build','Train','Research'] as const;
+export function actionGroup(id:ActionId):typeof actionGroups[number]{return id.startsWith('build-')?'Build':id.startsWith('train-')?'Train':id.startsWith('research-')?'Research':'Orders';}
+export function actionTooltip(id:ActionId,action:ActionPresentation,label:string):string{
+ const shortcut=hotkeys.find(h=>h.button===id);
+ return [label,shortcut?.label,action.cost?`Cost: ${action.cost}`:null,shortcut?`Key: ${shortcut.key}`:null,action.reason?`Unavailable: ${action.reason}`:null].filter(Boolean).join(' · ');
+}
 export interface ActionPresentation {visible:boolean;reason:string;cost?:string}
 export function affordabilityReason(balance:{wood:number;goldBalance?:number},cost:ResourceCost):string {
  const wood=balance.wood<cost.wood,gold=(balance.goldBalance??0)<cost.gold;return wood&&gold?uiText.notEnoughWoodAndGold:wood?uiText.notEnoughWood:gold?uiText.notEnoughGold:'';
@@ -49,13 +55,16 @@ export function actionPanel(m:MatchState,building:BuildingSelection,playing:bool
 /** Reparent existing controls once; callbacks and shutdown ownership remain in BootScene. */
 export function bindActionPanel():void{
  const fieldset=document.getElementById('gameplay-controls')!;document.getElementById('action-panel')!.append(fieldset);
- for(const id of actionIds){const button=document.getElementById(id)!;let wrapper=button.parentElement!;if(!wrapper.classList.contains('control')){wrapper=document.createElement('div');wrapper.className='control';button.before(wrapper);wrapper.append(button);}const reason=document.createElement('span');reason.id=`${id}-reason`;reason.className='action-reason';button.setAttribute('aria-describedby',reason.id);wrapper.append(reason);}
+ for(const group of actionGroups){const section=document.createElement('section'),heading=document.createElement('h3');section.dataset.actionGroup=group;section.setAttribute('aria-label',group);heading.textContent=group;section.append(heading);fieldset.append(section);}
+ for(const id of actionIds){const button=document.getElementById(id)!;let wrapper=button.parentElement!;if(!wrapper.classList.contains('control')){wrapper=document.createElement('div');wrapper.className='control';button.before(wrapper);wrapper.append(button);}const reason=document.createElement('span');reason.id=`${id}-reason`;reason.className='action-reason';button.setAttribute('aria-describedby',reason.id);wrapper.append(reason);fieldset.querySelector(`[data-action-group="${actionGroup(id)}"]`)!.append(wrapper);}
+ fieldset.append(document.getElementById('production-queue')!);
 }
 /** Called after authoritative gameplay disabled-state sync. */
 export function renderActionPanel(model:ReturnType<typeof actionPanel>):void{
  for(const id of actionIds){const button=document.getElementById(id) as HTMLButtonElement,action=model[id],wrapper=button.parentElement!,reason=document.getElementById(`${id}-reason`)!;wrapper.hidden=!action.visible;button.disabled=button.disabled||!action.visible||!!action.reason;reason.textContent=button.disabled?(action.reason||'Action unavailable'):'';
-  const hotkey=hotkeys.find(h=>h.button===id)?.key;button.title=[action.cost,hotkey?`[${hotkey}]`:null,reason.textContent].filter(Boolean).join(' · ');if(hotkey&&!button.textContent!.includes(`[${hotkey}]`))button.textContent+=` [${hotkey}]`;
+  const hotkey=hotkeys.find(h=>h.button===id)?.key;button.title=actionTooltip(id,{...action,reason:reason.textContent},button.textContent??'');if(hotkey&&!button.textContent!.includes(`[${hotkey}]`))button.textContent+=` [${hotkey}]`;
  }
+ for(const group of actionGroups)(document.querySelector(`[data-action-group="${group}"]`) as HTMLElement).hidden=!actionIds.some(id=>actionGroup(id)===group&&model[id].visible);
  const productionSelected=actionIds.some(id=>id.startsWith('train-')&&model[id].visible);document.getElementById('production-queue')!.hidden=!productionSelected;
  document.getElementById('action-hint')!.textContent=model['train-transport'].visible?'Ships spawn at a free harbor exit. Select a ship to command it.':productionSelected?'Right-click the world to set a production rally point.':Object.values(model).some(x=>x.visible)?'Right-click: move, gather (workers), attack (combat). Escape: cancel placement.':'Select a unit or production building for actions.';
 }

@@ -28,4 +28,4 @@ Senaste styrning efter publicerad RTS-065: användaren har godkänt fortsatt arb
 
 Kör tester för ändrade system under arbetet och relevanta integrationer. Fokusera browserkontroll på ändrat spelarflöde. Välj matchsimuleringar när ekonomi, combat, AI, navigation, mål eller gameplay-tid påverkas; UI/grafik/docs kräver normalt inte fullständiga matches. Förbered en enda slutkontroll av hela unit-testsuiten, typecheck/build och diff enligt AGENTS.md. Dela stora tasks under befintligt ID vid behov.
 
-RTS-147 är redan verifierad och pushad. Den stora körningen är pausad vid denna säkra gräns; RTS-148 är inte påbörjad. Tidigare stopp före RTS-148 kvarstår. Dessa regler har företräde framför äldre fortsätt-/checktext.
+Senaste mandat återupptar taskvis arbete genom RTS-150 med dessa effektivare checks och commit/push efter verifierad task. RTS-147 är färdig. Efter150 skriv slutrapport/överlämning och stanna före151. Tidigare paus före148 är upphävd. Denna styrning har företräde framför äldre etapptext.

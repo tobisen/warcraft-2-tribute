@@ -43,9 +43,10 @@ det aktuella uppdragets scope och non-goals.
 
 ## Effektiva checks och aktuellt stopp
 
-Senaste användarinstruktionen gäller framför äldre fortsätt-mandat: den stora
-körningen är pausad. Slutför endast påbörjad RTS-147, verifiera, commit:a och
-pusha, skriv en kort överlämning och stanna. Börja inte RTS-148.
+Senaste användarinstruktionen återupptar arbetet från aktuell status till och
+med RTS-150. RTS-001–147 är färdiga; återimplementera dem inte. Arbeta taskvis
+med commit/push efter verifierad task. Efter RTS-150: slutrapport och överlämning,
+stanna före RTS-151. Tidigare paus/stopp före148 är upphävt.
 
 - Under implementation: kör tester för ändrade system och berörda beroenden.
 - Före commit av kod: kör hela unit-testsuiten, typecheck, build och
@@ -57,11 +58,14 @@ pusha, skriv en kort överlämning och stanna. Börja inte RTS-148.
   Välj relevanta simuleringar när ekonomi, combat, AI, navigation,
   uppdragsmål eller gameplay-tid påverkas. UI-text, grafik och dokumentation
   kräver normalt inte fullständiga matchsimuleringar.
-- `npm test` kör idag även integrationer och breda matchsimuleringar. Kalla
-  därför inte dess resultat enbart unit-tests. Vid nästa kodtask ska den
-  faktiska unit-testmängden väljas utifrån testernas innehåll, utan att tyst
-  utelämna unit-tester; berörda integrationer väljs separat. Inför ingen
-  ny testuppdelning eller ändrade scripts som en del av ren instruktionstext.
+- `npm run test:unit` kör alla isolerade komponent-/asset-testfiler.
+  `scripts/test-integration-files.json` klassificerar sammansatta MatchState-,
+  Save/end-to-end- och matchgenomspelningsfiler separat; blandade filer ligger
+  helt i integrationurvalet. `node scripts/test-unit.mjs --list` visar båda
+  disjunkta urvalen och validerar manifestet. Alla testfiler i src/tests finns
+  i exakt ett urval. Klassificera nya/ändrade testfiler utifrån innehållet.
+  Berörda integrationer körs med riktade `npm test -- <fil...>`-kommandon.
+  `npm test` utan filurval förblir full regression, inklusive alla integrationer.
 - Behåll full regression (`npm test`, typecheck/build och diffkontroll) vid
   etappens slut. Dela stora återstående tasks i subtasks under samma ID vid behov.
 - Upprepa passerade checks endast efter nya relevanta ändringar, upptäckta fel

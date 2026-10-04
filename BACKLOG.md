@@ -2,9 +2,9 @@
 
 ## Current Focus
 
-**RTS-147 – Ta bort egna enheter** — **Done**. Körningen pausad; nästa task är RTS-148 (Todo), inte påbörjad.
+**RTS-149 – Lokala highscores** — **Todo**.
 
-**Aktuellt stopp:** den stora körningen är pausad enligt senaste användarinstruktionen. Slutför endast RTS-147 med riktade arbetschecks och fulla slutchecks en gång, commit/push och kort överlämning. Börja inte RTS-148. Äldre fortsätt-mandat nedan är historiskt.
+**Aktuell etapp:** användaren har återupptagit arbetet genom RTS-150 med effektivare verifiering och taskvis commit/push. Efter150 lämnas slutrapport/överlämning; stanna före151. Tidigare paus före148 är upphävd.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -3876,7 +3876,7 @@ Egen borttagning räknas separat i statistiken.
 
 ## RTS-148 – Tydligare snabbkommandon
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Gruppera actions visuellt:
 
@@ -3899,7 +3899,9 @@ Disabled actions visar varför de är blockerade.
 
 **Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
 
-**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+**Detaljplan:**148A gruppera befintliga knappwrappers i Orders/Build/Train/Research med kontextstyrd synlighet.148B en källa för alla action-hotkeys och fulla beskrivningar, dynamiska fraktions-/cost-/disabledtips och synkad guide; inga nya gameplayactions.148C återanvänd samma handlers/fokus/modifier/repeat/camera-skydd; verifiera keyboard/button och disabled reasons i riktade UI-/integrationstester och browser vid1280/1920.148D faktisk testinventering: separat unit-urval och explicit MatchState-integrationurval, npm test fortfarande fullregression/CI. Hela unit-urvalet, relevant UI-integration, build/typecheck/diff/docs före commit; inga fulla matcher för denna UI-task.
+
+**Slutverifiering:**424unit-tester/75filer PASS6.35s, build inklusive strict typecheck/diff/doclänkar PASS.22riktade UI-tester och14inputintegrationer PASS. Native1280/1920 grupper, alla18labels/tooltip/help, faktisk key/button/fokus/camera/disabled-flow PASS utan browsererrors; bilder granskade. Fullmatchsimuleringar ej körda eftersom gameplayregler är oförändrade. Fullregression kvar till150/CI. Review utan blockerande fynd, bundlevarning och uppskjuten lyssning kvar.
 
 ## RTS-149 – Lokala highscores
 

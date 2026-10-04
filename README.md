@@ -760,3 +760,9 @@ Vid eskort: skicka först stridsenheter genom passet och skydda den namngivna ku
 Markera egna enheter och välj **Dismiss Unit [DELETE]**, eller tryck Delete med fokus i spelvärlden. Bekräftelsen anger antalet som tas bort. En markerad transport inkluderar alla sina passagerare; last går förlorad. Cancel eller Escape bevarar enheterna och deras orders. Simulation och gameplay-input fryses under bekräftelsen.
 
 Borttagning frigör population utan återbetalning eller kill credit. Statistik visar den separat som Units removed. Byggnader och fiender kan inte dismissas. En borttagen byggare lämnar sin byggplats pausad för annan arbetare. Dismiss av Ridge Courier förlorar eskortuppdraget; sista banner-hållarens borttagning nollställer capturetid.
+
+## RTS-148 – Commands och verifiering
+
+Actions är grupperade under Orders, Build, Train och Research. Tangent visas på knappen; håll musen över för mekanik, cost och eventuell blockeringsorsak. Keys and commands visar samma bindningar. Nya keys: H harbor, J transport, K warship, L unload, V specialist. Fokus ska vara i spelvärlden; text/UI-fokus, modifiers och repeat ger inga gameplayorders.
+
+`npm run test:unit` kör hela urvalet av isolerade komponent-/asset-testfiler. `node scripts/test-unit.mjs --list` visar unit/integration-klassificeringen. Kör berörda integrationer med `npm test -- src/gameplay/orders.test.ts src/gameplay/controlGroups.test.ts` som exempel. `npm test` kör fortsatt full regression med alla integrationer och matchsimuleringar vid etappslut/CI. Build innehåller strict typecheck.

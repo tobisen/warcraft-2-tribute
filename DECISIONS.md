@@ -1266,3 +1266,7 @@ Frivillig borttagning räknas som removed, aldrig death/kill eller refund. En di
 ## Verifieringsstyrning efter RTS-147
 
 Användarens senaste styrning skiljer hela unit-testsuiten från relevanta integrationer och matchsimuleringar. Arbetschecks riktas mot ändrade system; slutchecks körs en gång på slutlig kod och full regression behålls vid etappgränsen. Simuleringar väljs när ekonomi/combat/AI/navigation/mål/tid påverkas, inte automatiskt för varje UI-/grafik-/docändring. Nuvarande npm test blandar dessa testtyper och får inte redovisas som enbart unit-tests; faktisk uppdelning ska bedömas vid nästa kodtask, inte införas spekulativt i instruktionstext. Build inkluderar strict typecheck. Stora tasks kan delas under befintligt ID. Etappöverlämning ska skilja verifierat/ej kontrollerat/kända problem. RTS-147 är redan levererad; tidigare paus/stopp före148 ligger kvar.
+
+## RTS-148 – En keykälla och effektivt testurval
+
+Återanvänd samma actionhandlers; grupper/headings och tooltip är presentation. Alla18actions får unik hotkey, utan modifier-/camera-/browserkonflikter. Group/cost/disabled state härleds från faktiskt selectionstate. Testuppdelning är filbaserad och explicit: isolerade komponent-/asset-tester unit, sammansatta/mixed MatchState/Save/fullmatch-filer integration. Alla143filer täcks av unionen; ingen assertion raderas eller migreras för att korta körning. Full npm test kvarstår för etappslut/CI. UI-task148 kör unit+relevanta inputintegrationer/nativeflow, inga kompletta matcher.
