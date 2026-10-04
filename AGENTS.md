@@ -47,19 +47,32 @@ Senaste användarinstruktionen gäller framför äldre fortsätt-mandat: den sto
 körningen är pausad. Slutför endast påbörjad RTS-147, verifiera, commit:a och
 pusha, skriv en kort överlämning och stanna. Börja inte RTS-148.
 
-- Under implementation: kör riktade beteende- och regressionstester för det
-  ändrade systemet och dess berörda beroenden.
-- Kör fulla slutchecks en gång på slutlig kod: `npm test`, `npm run build`
-  (inkluderar strict typecheck) och `git diff --check`. Kör inte separat
-  typecheck igen när samma build redan har verifierat den.
-- Lägg inte till breda matchsimuleringar, kampanjgenomspelningar eller omkörningar
-  utan konkret relevans för ändringen. Browserkontroll ska fokusera på taskens
-  nya spelarflöde och relevanta regressionsrisker.
-- Upprepa checks endast om efterföljande kodändringar, ett fel eller ett
-  konkret kvarstående fynd motiverar det. Vid fel: undersök orsaken och kör
-  först den berörda kontrollen; dölj inte misslyckade försök.
-- Gör review och uppdatera docs/backlog före commit. Redovisa faktiskt körda
-  checks, tidigare återanvänd evidens och ej genomförd verifiering var för sig.
+- Under implementation: kör tester för ändrade system och berörda beroenden.
+- Före commit av kod: kör hela unit-testsuiten, typecheck, build och
+  `git diff --check` en gång på slutlig kod. Nuvarande build inkluderar strict
+  typecheck; den kontrollen behöver inte köras separat en andra gång.
+- Kör integrationstester för berörda system. Browserkontrollen fokuserar på
+  ändrat spelarflöde och konkreta regressionsrisker.
+- Kör inte samtliga campaign- eller matchsimuleringar efter varje task.
+  Välj relevanta simuleringar när ekonomi, combat, AI, navigation,
+  uppdragsmål eller gameplay-tid påverkas. UI-text, grafik och dokumentation
+  kräver normalt inte fullständiga matchsimuleringar.
+- `npm test` kör idag även integrationer och breda matchsimuleringar. Kalla
+  därför inte dess resultat enbart unit-tests. Vid nästa kodtask ska den
+  faktiska unit-testmängden väljas utifrån testernas innehåll, utan att tyst
+  utelämna unit-tester; berörda integrationer väljs separat. Inför ingen
+  ny testuppdelning eller ändrade scripts som en del av ren instruktionstext.
+- Behåll full regression (`npm test`, typecheck/build och diffkontroll) vid
+  etappens slut. Dela stora återstående tasks i subtasks under samma ID vid behov.
+- Upprepa passerade checks endast efter nya relevanta ändringar, upptäckta fel
+  eller konkret osäkerhet. Dokumentera orsaken till extra verifiering.
+- Gör review och uppdatera docs/backlog före commit. Rapportera kort vad som
+  kördes och varför; skilj verifierat, ej kontrollerat och kända problem.
+  Markera inte acceptance criteria som uppfyllda utan belägg.
+- Vid etappgränsen: lämna aktuell status, nästa task och kvarstående problem
+  så att en ny session kan ta över. För en ren dokumentuppdatering kontrolleras
+  textens konsekvens och filreferenser; redan passerade kodchecks återanvänds
+  endast med tydlig upplysning om att ingen ny kodverifiering körts.
 
 ## Godkänd leverans i aktuell körning
 

@@ -25,6 +25,6 @@ Senaste styrning efter publicerad RTS-065: användaren har godkänt fortsatt arb
 
 ## Senaste styrning: effektiva checks och paus
 
-Kör fulla slutchecks en gång på slutlig kod: npm test, npm run build (inkluderar strict typecheck) och git diff --check. Dubblera inte typecheck eller breda simuleringar. Upprepa endast kontroller som nya kodändringar, fel eller konkreta fynd motiverar. Redovisa riktade checks, fullchecks, misslyckade försök och återanvänd evidens ärligt.
+Kör hela unit-testsuiten, typecheck, build och git diff --check en gång på slutlig kod, plus berörda integrationer och fokuserad browserkontroll. Build inkluderar strict typecheck. Följ AGENTS.md:s åtskillnad mellan unit-tests och nuvarande breda npm test. Kör full regression vid etappgräns; inte alla kampanj-/matchsimuleringar efter varje task. Upprepa passerade checks endast efter relevanta ändringar, fel eller konkret osäkerhet. Rapportera kontroller och varför de kördes, verifierat/ej kontrollerat/kända problem samt en kort etappöverlämning.
 
-Den stora körningen är pausad. Endast påbörjad RTS-147 får slutföras; efter verifierad commit/push och kort överlämning ska arbetet stanna. Börja inte RTS-148. Denna instruktion har företräde framför äldre etapp-/fortsätttext ovan.
+RTS-147 är redan verifierad och pushad. Den stora körningen är pausad vid denna säkra gräns; RTS-148 är inte påbörjad. Tidigare stopp före RTS-148 kvarstår. Dessa regler har företräde framför äldre fortsätt-/checktext.

@@ -26,6 +26,6 @@ Senaste styrning efter publicerad RTS-065: användaren har godkänt fortsatt arb
 
 ## Senaste styrning: effektiva checks och paus
 
-Kör riktade beteende-/regressionstester under arbetet. Undvik breda matchsimuleringar och fulla omkörningar utan konkret relevans. Lämna slutlig kod till en enda full slutcheck enligt AGENTS.md; repetera bara vid nya kodändringar, fel eller konkreta fynd.
+Kör tester för ändrade system under arbetet och relevanta integrationer. Fokusera browserkontroll på ändrat spelarflöde. Välj matchsimuleringar när ekonomi, combat, AI, navigation, mål eller gameplay-tid påverkas; UI/grafik/docs kräver normalt inte fullständiga matches. Förbered en enda slutkontroll av hela unit-testsuiten, typecheck/build och diff enligt AGENTS.md. Dela stora tasks under befintligt ID vid behov.
 
-Den stora körningen är pausad. Endast påbörjad RTS-147 får slutföras; efter verifierad commit/push och kort överlämning ska arbetet stanna. Börja inte RTS-148. Denna instruktion har företräde framför äldre etapp-/fortsätttext ovan.
+RTS-147 är redan verifierad och pushad. Den stora körningen är pausad vid denna säkra gräns; RTS-148 är inte påbörjad. Tidigare stopp före RTS-148 kvarstår. Dessa regler har företräde framför äldre fortsätt-/checktext.

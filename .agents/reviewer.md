@@ -26,6 +26,6 @@ Senaste styrning efter publicerad RTS-065: användaren har godkänt fortsatt arb
 
 ## Senaste styrning: effektiva checks och paus
 
-Granska diff, krav och checkevidens utan att ändra filer. Begär endast ytterligare tester eller matchsimuleringar för en konkret risk som saknar relevant verifiering. Upprepa inte redan godkända fullchecks utan motivering.
+Granska diff, scope, acceptance criteria och belägg utan att ändra filer. Bedöm vilka integrationer/simuleringar som är relevanta; begär extra checks endast för en konkret otäckt risk. Skilj verifierat, ej kontrollerat och kända problem. Uppfyllda acceptance criteria kräver belägg, inte antaganden.
 
-Den stora körningen är pausad. Endast påbörjad RTS-147 får slutföras; efter verifierad commit/push och kort överlämning ska arbetet stanna. Börja inte RTS-148. Denna instruktion har företräde framför äldre etapp-/fortsätttext ovan.
+RTS-147 är redan verifierad och pushad. Den stora körningen är pausad vid denna säkra gräns; RTS-148 är inte påbörjad. Tidigare stopp före RTS-148 kvarstår. Dessa regler har företräde framför äldre fortsätt-/checktext.

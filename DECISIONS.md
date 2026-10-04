@@ -1262,3 +1262,7 @@ Campaigncompletion är lokal progression; inget materiellt reward-system införs
 ## RTS-147 – Borttagning och bekräftelse
 
 Frivillig borttagning räknas som removed, aldrig death/kill eller refund. En dismissad transport tar sina embarked units med sig; alla räknas i bekräftelsen och removedstatistik, cargo bokförs som lost. Detta undviker osäkra automatiska landstigningar. Byggnader dismissas inte. Bekräftelsen fryser simulation/input, med Cancel som förvalt fokus och Escape som avbrytning. Ingen ny persistent state eller Save-version behövs. Kurirförlust och förlorad capturekontroll följer ordinarie missionsregler.
+
+## Verifieringsstyrning efter RTS-147
+
+Användarens senaste styrning skiljer hela unit-testsuiten från relevanta integrationer och matchsimuleringar. Arbetschecks riktas mot ändrade system; slutchecks körs en gång på slutlig kod och full regression behålls vid etappgränsen. Simuleringar väljs när ekonomi/combat/AI/navigation/mål/tid påverkas, inte automatiskt för varje UI-/grafik-/docändring. Nuvarande npm test blandar dessa testtyper och får inte redovisas som enbart unit-tests; faktisk uppdelning ska bedömas vid nästa kodtask, inte införas spekulativt i instruktionstext. Build inkluderar strict typecheck. Stora tasks kan delas under befintligt ID. Etappöverlämning ska skilja verifierat/ej kontrollerat/kända problem. RTS-147 är redan levererad; tidigare paus/stopp före148 ligger kvar.
