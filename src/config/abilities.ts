@@ -5,4 +5,5 @@ export const abilityConfig={
  clans:{label:uiText.fury,description:uiText.value25OutgoingDamage,durationSeconds:5,cooldownSeconds:20,attackMultiplier:1.25,defenseMultiplier:1},
  elves:{label:'True Shot',description:'+20% outgoing damage',durationSeconds:5,cooldownSeconds:20,attackMultiplier:1.2,defenseMultiplier:1},
  dwarves:{label:'Brace',description:'−35% incoming damage',durationSeconds:5,cooldownSeconds:25,attackMultiplier:1,defenseMultiplier:.65},
+ goblins:{label:'Overcharge',description:'+35% outgoing / +20% incoming damage',durationSeconds:4,cooldownSeconds:20,attackMultiplier:1.35,defenseMultiplier:1.2},
 } satisfies Record<FactionId,{label:string;description:string;durationSeconds:number;cooldownSeconds:number;attackMultiplier:number;defenseMultiplier:number}>;

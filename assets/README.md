@@ -187,3 +187,7 @@ Elves har egna leaf-cloaks/öron, verktyg, Warden-spear/leafshield, Longbow/quiv
 ## RTS-139 – Original Dwarf-pixelgrafik
 
 Dwarves har egna korta/breda skägg-/metal-/hammer-/shield-/crossbow-silhuetter och Cannon utan stonebasket. Stone-vaults, buttresses, Storehouse-crates, Foundry-furnace och Stone Dock; armored slab naval-hull och metallkabin. Två teamägare/åtta unit/fartygs-riktningar, samma native32/64px,8FPS och fyra buildingstages. Unit-atlas4096×4672/4672frames packas64kolumner för texturegränsen; byggatlas1024×2560/160, naval1024×6656/1664. Befintliga ID:n/anchors bevaras och PNG/JSON/manifest exporteras tillsammans. Samma egna repo-native källor/palett/villkor.
+
+## RTS-140 – Original Goblin-pixelgrafik
+
+Egen liten green/goggle/nose/ear-roster, verktyg/scrap/slingshot/grenade och låg rekyl-/flash-Mortar. Patchwork tin/bent timber, antenn, förrådsfat, Lab-vial/pipes och Junk Dock. Naval har jagged hull/metalpatch/drums och olika cannon/cargo-deck. Två ägare/åtta unit/fartygsriktningar och etablerade animationsfaser. Fem rosters:5840unitframes4096×5888,200buildingframes1024×3200,2080navalframes2048×4160. Naval packas32kolumner istället för16; metadata-ID:n/anchors/logiska bodies bevaras och alla dimensioner under8192. PNG/JSON/manifest exporterade tillsammans i samma originalpalett/källmodell.

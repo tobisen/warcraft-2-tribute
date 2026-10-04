@@ -1220,3 +1220,7 @@ Aktivera elves med134:s femrollsprofil och befintligt projectile-specialistsyste
 ## RTS-139 – Dwarf-försvar och atlaspackning
 
 Använd134:s dwarves-profiler, Brace som befintlig självbuff och multiplicativ mottagen skada tillsammans med Stone Plates. Inga nya aura/healing/spell-system. När fjärde rostern överstiger en smal atlas texturehöjd packas unitbilder i64kolumner/4096px bredd; båda dimensionerna hålls under8192 och alla frame-ID:n/ankare/logiska bodies bevaras. Bygg-/sjöatlasser expanderas bara inom samma gräns. Save28 håller historisk27 utan förändrat state men tillåter ingen då opublicerad dwarves-identitet.
+
+## RTS-140 – Explosiv Goblin-profil
+
+Använd134:s fem roller och befintlig projectile/splash-kod för Grenadier/Mortar; ingen ny friendly-fire-policy (tidigare fiendesplash-only bevaras). Overcharge kombinerar självbuffens attack- och received-damage-multiplikatorer, inklusive nackdelen. Femte rosters egna repo-native pixelkällor, samma lagfärger och logical bodies. Omfördela naval-atlas till32kolumner/2048px bredd för att hålla texture-dimensionerna under8192; frame-ID:n/ankare bevaras. Save29 tillåter goblins först efter28 och håller äldre matchstate/recept oförändrade.

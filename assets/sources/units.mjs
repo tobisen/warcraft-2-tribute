@@ -2,7 +2,7 @@
 export const directions=['e','se','s','sw','w','nw','n','ne'];
 export const animationSpec={idle:{frames:1,fps:1,loop:true},walk:{frames:4,fps:8,loop:true},attack:{frames:4,fps:8,loop:true},death:{frames:4,fps:8,loop:false},gather:{frames:4,fps:8,loop:true},build:{frames:4,fps:8,loop:true}};
 export function unitFrames(Surface,p){const frames=[];
- for(const faction of ['crown','clans','elves','dwarves'])for(const type of ['worker','soldier','archer','catapult','specialist'])for(const owner of ['player','enemy'])for(let dir=0;dir<8;dir++)for(const state of type==='worker'?Object.keys(animationSpec):['idle','walk','attack','death'])for(let frame=0;frame<animationSpec[state].frames;frame++){
+ for(const faction of ['crown','clans','elves','dwarves','goblins'])for(const type of ['worker','soldier','archer','catapult','specialist'])for(const owner of ['player','enemy'])for(let dir=0;dir<8;dir++)for(const state of type==='worker'?Object.keys(animationSpec):['idle','walk','attack','death'])for(let frame=0;frame<animationSpec[state].frames;frame++){
   const elf=faction==='elves',archer=type==='archer'||elf&&type==='specialist',guard=type==='soldier'||type==='specialist'&&!elf,orc=faction==='clans',skin=orc?p.leafHighlight:p.skin;
   const size=type==='catapult'?64:32,s=new Surface(size,size),cx=size/2,cy=type==='catapult'?40:22,angle=dir*Math.PI/4,dx=Math.round(Math.cos(angle)*3),dy=Math.round(Math.sin(angle)*2),team=owner==='player'?p.teamBlue:p.teamRed,light=owner==='player'?p.teamBlueLight:p.teamRedLight;
   const stride=state==='walk'?[0,2,0,-2][frame]:0,bob=state==='walk'?frame%2:0,swing=['attack','gather','build'].includes(state)?[0,-3,2,4][frame]:0;
@@ -109,6 +109,30 @@ export function unitFrames(Surface,p){const frames=[];
     else if(type==='archer'){s.line(hx-6,hy,hx+8,hy,p.barkLight);s.line(hx+3,hy-5,hx+3,hy+5,p.rockLight);s.line(hx-6,hy,hx+3,hy-5,p.barkDark);s.line(hx-6,hy,hx+3,hy+5,p.barkDark);s.pixel(hx+8,hy,p.rockHighlight);}
     else{s.line(hx,hy+3,hx,hy-10,p.barkLight);s.rect(hx-4,hy-12,9,5,type==='specialist'?p.gold:p.rockHighlight);const shield=cx-(dx>=0?11:-5);s.rect(shield,cy-10,8,type==='specialist'?14:10,p.ink);s.rect(shield+1,cy-9,6,type==='specialist'?12:8,team);s.line(shield+1,cy-9,shield+6,cy-9,p.rockHighlight);s.rect(shield+3,cy-6,2,4,p.goldLight);}
     if(type==='specialist'){s.rect(cx-7,cy-10-bob,4,4,p.gold);s.rect(cx+4,cy-10-bob,4,4,p.gold);s.rect(cx-1+dx,cy-20+dy-bob,2,4,team);}
+   }
+  }
+  if(faction==='goblins'){
+   // Original small green tinkerers, goggles, scrap weapons and explosive mortar.
+   s.data.fill(0);
+   if(type==='catapult'){
+    const ux=Math.cos(angle),uy=Math.sin(angle),kick=state==='attack'?[0,-2,-6,-3][frame]:0;
+    s.ellipse(cx,cy+9,20,5,p.earth);s.rect(cx-15,cy-1,30,8,p.barkDark);s.rect(cx-12,cy,24,3,team);
+    for(const x of [-14,14]){s.ellipse(cx+x,cy+5+stride/2,5,6,p.ink);s.ellipse(cx+x,cy+5+stride/2,3,4,p.rockDark);s.line(cx+x-2,cy+2+stride/2,cx+x+2,cy+8+stride/2,p.rockLight);}
+    s.ellipse(cx,cy-7,10,7,p.rockDark);s.ellipse(cx-2,cy-9,7,5,p.rock);
+    for(let n=-4;n<=4;n++)s.line(cx-uy*n,cy-10+ux*n,cx+ux*(12+kick)-uy*n,cy-18+uy*(12+kick)+ux*n,p.rockLight);
+    const mx=cx+ux*(13+kick),my=cy-18+uy*(13+kick);s.ellipse(mx,my,5,3,p.ink);s.line(mx-3,my-2,mx+2,my-2,p.goldDark);
+    s.rect(cx-12,cy-10,5,6,p.goldDark);s.rect(cx-11,cy-9,3,4,p.gold);
+    if(state==='attack'&&frame<2){s.ellipse(mx+ux*4,my-4+uy*4,5-frame*2,4-frame,p.goldLight);s.pixel(mx+ux*8,my-7+uy*8,p.foam);}
+   }else{
+    s.ellipse(cx,cy+5,9,3,p.earth);s.rect(cx-5-stride/2,cy,3,5,p.barkDark);s.rect(cx+2+stride/2,cy,3,5,p.barkDark);s.rect(cx-6-stride/2,cy+4,4,2,p.ink);s.rect(cx+2+stride/2,cy+4,4,2,p.ink);
+    s.rect(cx-6,cy-8-bob,12,10,p.barkDark);s.rect(cx-4,cy-7-bob,8,5,team);s.line(cx-4,cy-7-bob,cx+3,cy-7-bob,light);s.rect(cx-6,cy,12,2,p.goldDark);
+    s.rect(cx-5+dx,cy-17+dy-bob,10,9,p.leafHighlight);s.rect(cx-8+dx,cy-15+dy-bob,3,2,p.leaf);s.rect(cx+5+dx,cy-15+dy-bob,3,2,p.leaf);s.polygon([[cx-2+dx,cy-12+dy-bob],[cx+7+dx,cy-11+dy-bob],[cx+dx,cy-8+dy-bob]],p.leaf);
+    s.rect(cx-5+dx,cy-16+dy-bob,10,3,p.rockDark);s.rect(cx-4+dx,cy-16+dy-bob,3,2,p.goldLight);s.rect(cx+1+dx,cy-16+dy-bob,3,2,p.goldLight);s.pixel(cx+dx,cy-9+dy-bob,p.ink);
+    const hx=cx+dx*2+(dx>=0?6:-6),hy=cy-5+dy*2+swing;
+    if(type==='worker'){s.rect(cx-8,cy-9,4,10,p.rockDark);s.line(cx-7,cy-8,cx-7,cy-2,p.rockLight);s.line(hx,hy+3,hx+dx,hy-9,p.barkLight);s.rect(hx+dx-3,hy-10,7,3,p.rockLight);}
+    if(type==='soldier'){s.line(hx,hy+3,hx+dx*2,hy-10,p.rockHighlight);s.rect(hx-2,hy+1,5,2,p.barkLight);s.rect(cx-7,cy-10,3,7,p.rock);s.rect(cx+4,cy-10,3,7,p.rockDark);}
+    if(type==='archer'){s.line(hx,hy+5,hx,hy-3,p.barkLight);s.line(hx,hy-3,hx-4,hy-8,p.barkLight);s.line(hx,hy-3,hx+4,hy-8,p.barkLight);const pull=state==='attack'?[0,2,4,1][frame]:0;s.line(hx-4,hy-8,hx-pull,hy-5,p.barkDark);s.line(hx-pull,hy-5,hx+4,hy-8,p.barkDark);s.ellipse(hx-pull,hy-5,2,2,p.rockLight);}
+    if(type==='specialist'){s.rect(cx-7,cy-10,4,9,p.goldDark);s.rect(cx+4,cy-10,4,9,p.goldDark);s.rect(cx-4+dx,cy-19+dy-bob,8,3,p.rock);s.ellipse(hx,hy-1,4,4,p.ink);s.ellipse(hx-1,hy-2,2,2,p.rock);s.line(hx+1,hy-5,hx+3,hy-8,p.barkLight);s.pixel(hx+3,hy-8,p.goldLight);}
    }
   }
   if(state==='death'){

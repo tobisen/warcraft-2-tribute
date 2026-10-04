@@ -61,7 +61,7 @@ it('Elf naval recipes pay per role and spawn the proper HP/speed profile, also a
 it('Save27 accepts canonical Elf identities and rejects Elf IDs in older configuration versions',()=>{
  const m=createMatch('survival','normal',factionsForPlayer('elves'));
  const d=JSON.parse(encodeSave(m,{camera:{x:0,y:0},building:null}));
- expect(d.configVersion).toBe('tribute-config-28');expect(d.state.gathering.units[0].typeId).toBe('elves:unit:worker');expect(decodeSave(JSON.stringify(d)).ok).toBe(true);
+ expect(d.configVersion).toBe('tribute-config-29');expect(d.state.gathering.units[0].typeId).toBe('elves:unit:worker');expect(decodeSave(JSON.stringify(d)).ok).toBe(true);
  const forged=structuredClone(d);forged.state.gathering.units[0].typeId='crown:unit:worker';expect(decodeSave(JSON.stringify(forged)).ok).toBe(false);
  d.configVersion='tribute-config-26';expect(decodeSave(JSON.stringify(d)).ok).toBe(false);
  for(const faction of ['crown','clans'] as const){const old=JSON.parse(encodeSave(createMatch('survival','normal',factionsForPlayer(faction)),{camera:{x:0,y:0},building:null}));old.configVersion='tribute-config-26';expect(decodeSave(JSON.stringify(old)).ok).toBe(true);}

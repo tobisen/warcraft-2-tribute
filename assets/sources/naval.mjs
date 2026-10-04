@@ -2,7 +2,7 @@
 export const navalDirections=['e','se','s','sw','w','nw','n','ne'];
 export function navalFrames(Surface,p){
  const frames=[];
- for(const faction of ['crown','clans','elves','dwarves'])for(const owner of ['player','enemy'])for(const role of ['warship','transport'])for(let d=0;d<8;d++)for(const state of ['idle','walk','attack','death'])for(let frame=0;frame<(state==='idle'?1:4);frame++){
+ for(const faction of ['crown','clans','elves','dwarves','goblins'])for(const owner of ['player','enemy'])for(const role of ['warship','transport'])for(let d=0;d<8;d++)for(const state of ['idle','walk','attack','death'])for(let frame=0;frame<(state==='idle'?1:4);frame++){
   const s=new Surface(64,64),angle=d*Math.PI/4,team=owner==='player'?p.teamBlue:p.teamRed,light=owner==='player'?p.teamBlueLight:p.teamRedLight;
   const recoil=state==='attack'&&role==='warship'?[0,-1,-3,-1][frame]:0;
   const pt=(x,y)=>[Math.round(32+x*Math.cos(angle)-y*Math.sin(angle)),Math.round(40+(x*Math.sin(angle)+y*Math.cos(angle))*.65)];
@@ -43,10 +43,20 @@ export function navalFrames(Surface,p){
     else{poly([[-14,-4],[-8,-4],[-8,4],[-14,4]],p.barkDark);line(-13,-3,-9,3,p.gold);}
     if(state!=='death'||frame===0){const pennantWidth=state==='walk'?[11,9,13,10][frame]:11;s.rect(31,18,2,23,p.rockDark);s.rect(33,18,pennantWidth,8,team);s.line(34,19,32+pennantWidth,19,light);s.rect(36,21,4,3,p.gold);}
    }
+   if(faction==='goblins'){
+    // Jagged patched hull, exposed drums and a stitched pennant, with owner heraldry.
+    poly([[-22,-6],[-15,-11],[0,-9],[13,-12],[24,-2],[19,8],[5,10],[-12,8],[-21,11]],p.barkDark);
+    line(-19,-6,-8,-8,p.barkLight);line(-17,7,13,8,p.goldDark);
+    for(const x of [-10,2,13]){poly([[x,-5],[x+5,-5],[x+5,4],[x,4]],p.rockDark);line(x+1,-4,x+1,3,p.rockLight);}
+    const a=pt(-8,0);s.ellipse(a[0],a[1],4,5,p.goldDark);s.line(a[0]-3,a[1]-2,a[0]+3,a[1]-2,p.gold);
+    if(role==='warship'){line(6+recoil,0,25+recoil,0,p.ink);line(7+recoil,-1,24+recoil,-1,p.rockLight);const b=pt(12,4);s.ellipse(b[0],b[1],3,3,p.ink);s.pixel(b[0],b[1]-4,p.goldLight);}
+    else{const b=pt(11,0);s.rect(b[0]-4,b[1]-3,8,6,p.bark);s.line(b[0]-3,b[1]-2,b[0]+3,b[1]+2,p.gold);}
+    if(state!=='death'||frame===0){const w=state==='walk'?[12,9,14,10][frame]:12;s.rect(31,16,2,26,p.barkDark);s.rect(33,16,w,9,team);s.line(34,17,32+w,17,light);s.line(36,19,41,23,p.rockLight);s.line(41,19,36,23,p.rockLight);}
+   }
    if(state==='attack'&&role==='warship'&&frame<2){const a=pt(24,0);s.ellipse(a[0],a[1],frame===0?5:3,3,p.goldLight);s.pixel(a[0]+2,a[1],p.gold);}
    if(state==='death'&&frame>0){const limit=40-frame*3;for(let y=0;y<limit;y++)for(let x=0;x<64;x++)s.data[(y*64+x)*4+3]=0;}
   }
-  frames.push({id:`${faction==='crown'?'':faction+'-'}${role}-${owner}-${navalDirections[d]}-${state}-${frame}`,image:s,x:frames.length%16*64,y:Math.floor(frames.length/16)*64,anchor:{x:32,y:40},kind:'ship',faction,owner,role,direction:navalDirections[d],state,frame});
+  frames.push({id:`${faction==='crown'?'':faction+'-'}${role}-${owner}-${navalDirections[d]}-${state}-${frame}`,image:s,x:frames.length%32*64,y:Math.floor(frames.length/32)*64,anchor:{x:32,y:40},kind:'ship',faction,owner,role,direction:navalDirections[d],state,frame});
  }
  return frames;
 }

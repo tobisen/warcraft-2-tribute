@@ -1630,3 +1630,7 @@ elves är tredje stabila identiteten. Befintliga queue/prerequisite/selection/co
 ## RTS-139 – Dwarf-profiler och bredare unit-atlas
 
 dwarves använder samma roster/production/prerequisite/research/combat/naval/admission. Faktiska worker6s/speed140, Cannon12s och Ironclad10s fungerar utan nya produktionstyper; research10s och Brace25s cooldown valideras per config. Unit-atlas ompackad till64kolumner/4096×4672 för4672frames: stabila ID:n och32/64px frames/anchors oförändrade, endast metadata-positioner ändrade. Buildings1024×2560/160 och naval1024×6656/1664. Originala korta skägg/rustning/crossbow/cannon, stonevault/buttress/furnace och armored-hull-källor. Save28 migrerar27 utan äldre recept/stateändringar och avvisar dwarves i historisk27. Full NPC-roster/baseprofil ligger141.
+
+## RTS-140 – Goblin-profiler och fem rosters
+
+goblins aktiverar den femte datastyrda rostern. Tinkerer/Scrapper4s, Mortar8s, Grenadier7s och Hot Powder/Scrap Plating6s följer befintliga timers/admission. Grenadier är projectile-specialist med32px splash; Mortar64px. Overcharge använder självbuffen med1.35 outgoing/1.2 incoming,4s/20s cooldown. Inga nya order-, friendly-fire- eller explosionssystem. Unit-atlas4096×5888/5840frames, building1024×3200/200. Naval ompackad32kolumner2048×4160/2080 så ingen dimension över8192; samma frame-ID:n/anchors/nativebilder. Save29 migrerar28 utan äldre stateändringar och avvisar historiska goblins-ID:n. Full NPC-roster och valbara matchup-grund ligger141.

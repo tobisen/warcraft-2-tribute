@@ -12,7 +12,7 @@ function sheet(kind){
 }
 for(const atlas of ['units','naval'])it(`${atlas}: actual role/facing/motion/combat/death rasters are readable and palette-only`,()=>{
  const frame=sheet(atlas),directions=['e','se','s','sw','w','nw','n','ne'],types=atlas==='units'?['worker','soldier','archer','catapult']:['transport','warship'],colors=new Set(Object.values(palette));
- for(const faction of ['crown','clans','elves','dwarves'])for(const owner of ['player','enemy']){
+ for(const faction of ['crown','clans','elves','dwarves','goblins'])for(const owner of ['player','enemy']){
   const prefix=faction==='crown'?'':`${faction}-`,roles=[];
   const roster=atlas==='units'?[...types,'specialist']:types;
   for(const role of roster){

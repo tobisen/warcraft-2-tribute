@@ -718,3 +718,7 @@ Välj Elves för snabbare, lättare units med längre båg-/ballistaräckvidd. B
 ## RTS-139 – Dwarves
 
 Välj Dwarves för långsam, tålig armé och stark Cannon. Bygg Guard Hall45wood och Foundry45wood/15gold; välj Stone Hold för Stone Plates45wood/15gold (10s), träna Bulwark45wood/20gold (10s,2supply,140HP). Brace [E] reducerar inkommande skada35% i5s,25s cooldown. Stone Dock45/10 tränar Ironclad50/15 på10s eller Heavy Ferry45/10 på8s; fartyg120HP/85px/s. Egna originalpixelbilder, Save28 migrerar tidigare matcher. Full femfraktions-AI återstår141.
+
+## RTS-140 – Goblins
+
+Välj Goblins för snabb, billig och ömtålig armé med splashvapen. Bygg Scrap Yard35wood och Lab35wood/15gold; forska Hot Powder30wood/20gold (6s), träna Grenadier25wood/25gold (7s,2supply). Overcharge [E] ger+35% outgoing men+20% incoming damage i4s,20s cooldown. Mortar kräver Lab och har64px splash. Junk Dock35/10 tränar Powder Boat35/20 på6s eller Junk Ferry35/10 på8s;65HP/135px/s. Egna originalpixelbilder och Save29 som migrerar äldre matcher. Full femfraktions-AI/matchups hör till141.

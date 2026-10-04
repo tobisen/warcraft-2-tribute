@@ -11,7 +11,7 @@ import {barracksConfig,farmConfig,populationConfig} from './buildings';
 import {forgeConfig,upgradeConfig} from './upgrades';
 
 // Stable identity is independent of team ownership and presentation.
-export const factionIds=['crown','clans','elves','dwarves'] as const;
+export const factionIds=['crown','clans','elves','dwarves','goblins'] as const;
 export type FactionId=typeof factionIds[number];
 export type UnitRole='worker'|'soldier'|'archer'|'catapult'|'specialist';
 export type BuildingRole='base'|'barracks'|'farm'|'forge';
@@ -81,7 +81,7 @@ const upgrades:Record<UpgradeRole,UpgradeData>={
   defense:{name:'Defense −25 %',role:'defense',cost:upgradeConfig.cost,durationSeconds:upgradeConfig.durationSeconds,
     maxLevel:upgradeConfig.maxLevel,multiplier:upgradeConfig.defenseMultiplier},
 };
-const factionNames={crown:{label:uiText.crownAlliance,unitNames:{worker:uiText.worker,soldier:uiText.guard,archer:uiText.archer,catapult:uiText.catapult,specialist:'Banner Guard'},buildingNames:{base:uiText.keep,barracks:uiText.barracks,farm:uiText.farm,forge:uiText.forge}},clans:{label:uiText.ironClan,unitNames:{worker:uiText.clanWorker,soldier:uiText.axeWarrior,archer:uiText.hunter,catapult:uiText.stoneThrower,specialist:'Raider'},buildingNames:{base:uiText.stronghold,barracks:uiText.warHut,farm:uiText.cattlePen,forge:uiText.smithy}},elves:{label:'Elves',unitNames:{worker:'Grove Tender',soldier:'Warden',archer:'Longbow',catapult:'Ballista',specialist:'Marksman'},buildingNames:{base:'Grove Hall',barracks:'Ranger Lodge',farm:'Garden',forge:'Moon Workshop'}},dwarves:{label:'Dwarves',unitNames:{worker:'Miner',soldier:'Iron Guard',archer:'Crossbow',catapult:'Cannon',specialist:'Bulwark'},buildingNames:{base:'Stone Hold',barracks:'Guard Hall',farm:'Storehouse',forge:'Foundry'}}};
+const factionNames={crown:{label:uiText.crownAlliance,unitNames:{worker:uiText.worker,soldier:uiText.guard,archer:uiText.archer,catapult:uiText.catapult,specialist:'Banner Guard'},buildingNames:{base:uiText.keep,barracks:uiText.barracks,farm:uiText.farm,forge:uiText.forge}},clans:{label:uiText.ironClan,unitNames:{worker:uiText.clanWorker,soldier:uiText.axeWarrior,archer:uiText.hunter,catapult:uiText.stoneThrower,specialist:'Raider'},buildingNames:{base:uiText.stronghold,barracks:uiText.warHut,farm:uiText.cattlePen,forge:uiText.smithy}},elves:{label:'Elves',unitNames:{worker:'Grove Tender',soldier:'Warden',archer:'Longbow',catapult:'Ballista',specialist:'Marksman'},buildingNames:{base:'Grove Hall',barracks:'Ranger Lodge',farm:'Garden',forge:'Moon Workshop'}},dwarves:{label:'Dwarves',unitNames:{worker:'Miner',soldier:'Iron Guard',archer:'Crossbow',catapult:'Cannon',specialist:'Bulwark'},buildingNames:{base:'Stone Hold',barracks:'Guard Hall',farm:'Storehouse',forge:'Foundry'}},goblins:{label:'Goblins',unitNames:{worker:'Tinkerer',soldier:'Scrapper',archer:'Slinger',catapult:'Mortar',specialist:'Grenadier'},buildingNames:{base:'Workshop Hall',barracks:'Scrap Yard',farm:'Supply Shack',forge:'Lab'}}};
 function defineFaction(id:FactionId):FactionDefinition {
   return {id,...factionNames[id],artPrefix:id==='crown'?'':`${id}-`,naval:{harbor:{...navyConfig.harbor,cost:{...navyConfig.harbor.cost},name:'Harbor'},units:{warship:{...navyConfig.ship,cost:{...navyConfig.ship.cost},id:`${id}:naval:warship`,role:'warship',name:'Warship'},transport:{...navyConfig.ship,...navyConfig.transport,cost:{...navyConfig.transport.cost},id:`${id}:naval:transport`,role:'transport',name:'Transport'}}},roster:['worker','soldier','archer','catapult'],
     units:Object.fromEntries(Object.entries(units).map(([role,data])=>[role,{...data,cost:{...data.cost},id:`${id}:unit:${role}`,faction:id}])) as FactionDefinition['units'],
@@ -89,7 +89,7 @@ function defineFaction(id:FactionId):FactionDefinition {
     upgrades:Object.fromEntries(Object.entries(upgrades).map(([role,data])=>[role,{...data,cost:{...data.cost},id:`${id}:upgrade:${role}`,faction:id}])) as FactionDefinition['upgrades'],
   };
 }
-export const factions:Record<FactionId,FactionDefinition>={crown:defineFaction('crown'),clans:defineFaction('clans'),elves:defineFaction('elves'),dwarves:defineFaction('dwarves')};
+export const factions:Record<FactionId,FactionDefinition>={crown:defineFaction('crown'),clans:defineFaction('clans'),elves:defineFaction('elves'),dwarves:defineFaction('dwarves'),goblins:defineFaction('goblins')};
 factions.clans.units.soldier={...factions.clans.units.soldier,hp:66,cost:{wood:18,gold:6},durationSeconds:6};
 factions.clans.units.specialist={...factions.clans.units.specialist,cost:{wood:26,gold:12},durationSeconds:7,hp:80,speed:175,damagePerSecond:24,prerequisites:{buildings:['forge'],research:{attack:1}}};
 // RTS-136: completed Human roster, stable crown identity.
@@ -150,6 +150,22 @@ factions.dwarves.upgrades.defense={...factions.dwarves.upgrades.defense,name:'St
 factions.dwarves.naval.harbor={...factions.dwarves.naval.harbor,name:'Stone Dock',cost:{wood:45,gold:10},hp:200};
 factions.dwarves.naval.units.warship={...factions.dwarves.naval.units.warship,name:'Ironclad',cost:{wood:50,gold:15},durationSeconds:10,hp:120,speed:85};
 factions.dwarves.naval.units.transport={...factions.dwarves.naval.units.transport,name:'Heavy Ferry',cost:{wood:45,gold:10},hp:120,speed:85};
+// RTS-140: fast production and explosive fragile roster.
+factions.goblins.roster=['worker','soldier','archer','catapult','specialist'];
+factions.goblins.units.worker={...factions.goblins.units.worker,cost:{wood:18,gold:0},durationSeconds:4,hp:24,speed:180};
+factions.goblins.units.soldier={...factions.goblins.units.soldier,cost:{wood:16,gold:4},durationSeconds:4,hp:40,speed:180,damagePerSecond:16};
+factions.goblins.units.archer={...factions.goblins.units.archer,cost:{wood:18,gold:8},durationSeconds:5,hp:30,speed:175,range:144,aggroRange:184,damage:10,attackInterval:.8};
+factions.goblins.units.catapult={...factions.goblins.units.catapult,cost:{wood:35,gold:25},durationSeconds:8,hp:55,speed:95,range:208,aggroRange:248,damage:26,attackInterval:1.6,hitRadius:16,splashRadius:64,prerequisites:{buildings:['forge']}};
+factions.goblins.units.specialist={...factions.goblins.units.specialist,combatMode:'projectile',art:'specialist',cost:{wood:25,gold:25},durationSeconds:7,hp:35,speed:170,range:128,aggroRange:168,damagePerSecond:undefined,damage:20,attackInterval:1.5,projectileSpeed:180,projectileLifetime:3,hitRadius:16,splashRadius:32,prerequisites:{buildings:['forge'],research:{attack:1}}};
+factions.goblins.buildings.base={...factions.goblins.buildings.base,hp:200};
+factions.goblins.buildings.barracks={...factions.goblins.buildings.barracks,cost:{wood:35,gold:0},hp:90};
+factions.goblins.buildings.farm={...factions.goblins.buildings.farm,cost:{wood:18,gold:0},hp:60};
+factions.goblins.buildings.forge={...factions.goblins.buildings.forge,cost:{wood:35,gold:15},hp:90};
+factions.goblins.upgrades.attack={...factions.goblins.upgrades.attack,name:'Hot Powder',cost:{wood:30,gold:20},durationSeconds:6,multiplier:1.3};
+factions.goblins.upgrades.defense={...factions.goblins.upgrades.defense,name:'Scrap Plating',cost:{wood:30,gold:15},durationSeconds:6,multiplier:.85};
+factions.goblins.naval.harbor={...factions.goblins.naval.harbor,name:'Junk Dock',cost:{wood:35,gold:10},hp:130};
+factions.goblins.naval.units.warship={...factions.goblins.naval.units.warship,name:'Powder Boat',cost:{wood:35,gold:20},durationSeconds:6,hp:65,speed:135};
+factions.goblins.naval.units.transport={...factions.goblins.naval.units.transport,name:'Junk Ferry',cost:{wood:35,gold:10},hp:65,speed:135};
 export function productionFaction(g:{faction?:FactionId}):FactionDefinition {return factions[g.faction??defaultFactions.player];}
 
 export function factionForTeam(match:{factions?:MatchFactions},team:keyof MatchFactions):FactionDefinition {

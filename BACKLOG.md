@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-140 – Goblins** — **Todo**.
+**RTS-141 – Fraktionsval, AI och balans** — **Todo**.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -3663,7 +3663,7 @@ byggnader, research och assets.
 
 ## RTS-140 – Goblins
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Implementera den beslutade goblin-rostern,
 
@@ -3682,7 +3682,9 @@ byggnader, research och assets.
 
 **Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
 
-**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+**Detaljplan:**140A stabilt goblins-ID/fem roller och134-recept/build/research/naval/Overcharge/meny.140B egna compact/goggle/scrap/slingshot/mortar/grenade-unit-, corrugated/scrap/lab-building- och junk/powder-shipbilder; ompacka naval till32kolumner för dimensioner under8192.140C Save28→29 historisk ID-validering, snabb produktion/atomisk ekonomi/prerequisites/splash/buff/naval/Save-regressioner, andra fraktioner bevarade.140D betalt native build/research/Grenadier/combat/Save/restart och sjöflöde, full checks/review/docs. Full NPC-roster/matchups141.
+
+**Verifierat 2026-10-04:**1011tester/134filer PASS164.99s; typecheck/build/diff/doclänkar PASS. Native1280/1920 verklig gathering/build/Hot Powder/Grenadier/egen bild/movement/Save/combat/victory/restart och Junk Dock/Junk Ferry/landstigning/5wood/Save/restart PASS utan pageerrors. Atlasbilder/config/Save/UI-diff granskade; full NPC-roster/matchups141, ljudlyssning uppskjuten och bundlevarning kvar.
 
 ## RTS-141 – Fraktionsval, AI och balans
 
