@@ -26,5 +26,14 @@
   "teamBlueLight": "#7398c1",
   "teamRed": "#963e42",
   "teamRedLight": "#cf7770",
-  "skin": "#d0a479"
+  "skin": "#d0a479",
+  "humanBlueDark": "#142d69",
+  "humanBlueLight": "#4d8bdc",
+  "humanRedDark": "#581f2d",
+  "skinShadow": "#936145",
+  "skinLight": "#edc694",
+  "linenShadow": "#9e9476",
+  "linen": "#d0c5a5",
+  "linenLight": "#f1e6c8",
+  "metalLight": "#e5e9dc"
 }

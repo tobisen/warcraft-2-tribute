@@ -1,0 +1,482 @@
+[
+  {
+    "name": "worker-idle",
+    "width": 800,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 340,
+          "y": 300
+        },
+        "frame": "worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 2688,
+          "y": 0,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 440,
+          "y": 300
+        },
+        "frame": "soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 2688,
+          "y": 320,
+          "width": 32,
+          "height": 32
+        }
+      }
+    ],
+    "base": {
+      "frame": "base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "Worker"
+  },
+  {
+    "name": "soldier-idle",
+    "width": 800,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 340,
+          "y": 300
+        },
+        "frame": "worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 2688,
+          "y": 0,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 440,
+          "y": 300
+        },
+        "frame": "soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 2688,
+          "y": 320,
+          "width": 32,
+          "height": 32
+        }
+      }
+    ],
+    "base": {
+      "frame": "base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "Guard"
+  },
+  {
+    "name": "together-idle",
+    "width": 800,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 340,
+          "y": 300
+        },
+        "frame": "worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 2688,
+          "y": 0,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 440,
+          "y": 300
+        },
+        "frame": "soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 2688,
+          "y": 320,
+          "width": 32,
+          "height": 32
+        }
+      }
+    ],
+    "base": {
+      "frame": "base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "2 units selected"
+  },
+  {
+    "name": "base",
+    "width": 800,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 340,
+          "y": 300
+        },
+        "frame": "worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 2688,
+          "y": 0,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 440,
+          "y": 300
+        },
+        "frame": "soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 2688,
+          "y": 320,
+          "width": 32,
+          "height": 32
+        }
+      }
+    ],
+    "base": {
+      "frame": "base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "Keep"
+  },
+  {
+    "name": "together-movement",
+    "width": 800,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 372,
+          "y": 300
+        },
+        "frame": "worker-player-e-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 128,
+          "y": 0,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 472,
+          "y": 300
+        },
+        "frame": "soldier-player-e-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 1152,
+          "y": 320,
+          "width": 32,
+          "height": 32
+        }
+      }
+    ],
+    "base": {
+      "frame": "base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "2 units selected"
+  },
+  {
+    "name": "worker-idle",
+    "width": 1280,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 340,
+          "y": 300
+        },
+        "frame": "worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 2688,
+          "y": 0,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 440,
+          "y": 300
+        },
+        "frame": "soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 2688,
+          "y": 320,
+          "width": 32,
+          "height": 32
+        }
+      }
+    ],
+    "base": {
+      "frame": "base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "Worker"
+  },
+  {
+    "name": "soldier-idle",
+    "width": 1280,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 340,
+          "y": 300
+        },
+        "frame": "worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 2688,
+          "y": 0,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 440,
+          "y": 300
+        },
+        "frame": "soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 2688,
+          "y": 320,
+          "width": 32,
+          "height": 32
+        }
+      }
+    ],
+    "base": {
+      "frame": "base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "Guard"
+  },
+  {
+    "name": "together-idle",
+    "width": 1280,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 340,
+          "y": 300
+        },
+        "frame": "worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 2688,
+          "y": 0,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 440,
+          "y": 300
+        },
+        "frame": "soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 2688,
+          "y": 320,
+          "width": 32,
+          "height": 32
+        }
+      }
+    ],
+    "base": {
+      "frame": "base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "2 units selected"
+  },
+  {
+    "name": "base",
+    "width": 1280,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 340,
+          "y": 300
+        },
+        "frame": "worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 2688,
+          "y": 0,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 440,
+          "y": 300
+        },
+        "frame": "soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 2688,
+          "y": 320,
+          "width": 32,
+          "height": 32
+        }
+      }
+    ],
+    "base": {
+      "frame": "base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "Keep"
+  },
+  {
+    "name": "together-movement",
+    "width": 1280,
+    "units": [
+      {
+        "id": "unit-1",
+        "position": {
+          "x": 372,
+          "y": 300
+        },
+        "frame": "worker-player-e-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 128,
+          "y": 0,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "id": "unit-2",
+        "position": {
+          "x": 472,
+          "y": 300
+        },
+        "frame": "soldier-player-e-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "atlas": "units",
+        "cut": {
+          "x": 1152,
+          "y": 320,
+          "width": 32,
+          "height": 32
+        }
+      }
+    ],
+    "base": {
+      "frame": "base-player-complete",
+      "origin": 0.75,
+      "scale": 1
+    },
+    "pixelRendering": "pixelated",
+    "portraitSmoothing": false,
+    "selection": "2 units selected"
+  }
+]

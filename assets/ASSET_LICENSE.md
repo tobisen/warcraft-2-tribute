@@ -43,3 +43,10 @@ RTS-138: Elf leaf-/bow-/ballista-, root/canopy/garden/workshop- och naval-kompos
 RTS-139: Dwarf beard/armor/crossbow/cannon-, stonevault/foundry- och ironclad/ferrybilder i sources/units.mjs, buildings.mjs och naval.mjs är egna originalpixelkompositioner med samma projektvillkor. Ingen extern spelgrafik, rasterreferens eller inspelning tillförd.
 
 RTS-140: Goblin goggles/scrap/slingshot/grenade/mortar-, patchwork-tin/lab- och junkfleet-kompositioner i sources/units.mjs, buildings.mjs och naval.mjs är egna originalpixelkällor/exporter med samma projektvillkor. Inga externa rasterbilder, spelsprites eller inspelningar tillförda.
+
+
+RTS-155-korrigering: Human-worker/soldier/base i [sources/humans.mjs](sources/humans.mjs)
+är egna integer-pixelkompositioner enligt projektvillkoren. Användarens befintliga
+lokala stilreferenser har granskats, men inga illustrationscrops eller externa
+spel-spritefiler har importerats i atlaserna. [Protokollet](sources/humans.md)
+skiljer underlag, skapade assets, export och faktisk visuell verifiering.

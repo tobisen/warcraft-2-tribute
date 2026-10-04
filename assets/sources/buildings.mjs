@@ -1,3 +1,4 @@
+import {humanBase} from './humans.mjs';
 /** Original masonry, timber and heraldry; native pixels, shared team variants. */
 export function buildingFrames(Surface, p) {
   const frames = [];
@@ -626,6 +627,7 @@ export function buildingFrames(Surface, p) {
               s.rect(x, y, 3, 1, p.rockLight);
             }
           }
+          if (faction === "crown" && kind === "base") s.data = humanBase(Surface, p, owner, exportedStage).data;
           frames.push({
             id: `${faction === "crown" ? "" : faction + "-"}${kind}-${owner}-${exportedStage}`,
             image: s,

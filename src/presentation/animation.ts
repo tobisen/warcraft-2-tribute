@@ -21,3 +21,9 @@ export function deathEffect(previous:Motion,time:number,visible:boolean,removed:
 export function effectAlive(effect:DeathEffect,time:number,visible:boolean):boolean{return visible&&time<effect.expires;}
 
 export function artAtlas(type:UnitArt):'units'|'naval'{return type==='warship'||type==='transport'?'naval':'units';}
+
+/** Labels sit above the detailed Human silhouette, without changing its body or origin. */
+export function unitOverlayOffsets(type:UnitArt,faction:FactionId='crown'){
+ const detailed=faction==='crown'&&(type==='worker'||type==='soldier');
+ return {hp:detailed?48:type==='catapult'?39:29,cargo:detailed?68:48};
+}

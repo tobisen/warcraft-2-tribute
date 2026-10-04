@@ -1,10 +1,11 @@
+import {humanUnit} from './humans.mjs';
 /** Original miniature people and timber siege engine; eight authored directional poses. */
 export const directions=['e','se','s','sw','w','nw','n','ne'];
 export const animationSpec={idle:{frames:1,fps:1,loop:true},walk:{frames:4,fps:8,loop:true},attack:{frames:4,fps:8,loop:true},death:{frames:4,fps:8,loop:false},gather:{frames:4,fps:8,loop:true},build:{frames:4,fps:8,loop:true}};
 export function unitFrames(Surface,p){const frames=[];
  for(const faction of ['crown','clans','elves','dwarves','goblins'])for(const type of ['worker','soldier','archer','catapult','specialist'])for(const owner of ['player','enemy'])for(let dir=0;dir<8;dir++)for(const state of type==='worker'?Object.keys(animationSpec):['idle','walk','attack','death'])for(let frame=0;frame<animationSpec[state].frames;frame++){
   const elf=faction==='elves',archer=type==='archer'||elf&&type==='specialist',guard=type==='soldier'||type==='specialist'&&!elf,orc=faction==='clans',skin=orc?p.leafHighlight:p.skin;
-  const size=type==='catapult'?64:32,s=new Surface(size,size),cx=size/2,cy=type==='catapult'?40:22,angle=dir*Math.PI/4,dx=Math.round(Math.cos(angle)*3),dy=Math.round(Math.sin(angle)*2),team=owner==='player'?p.teamBlue:p.teamRed,light=owner==='player'?p.teamBlueLight:p.teamRedLight;
+  const human=faction==='crown'&&(type==='worker'||type==='soldier'),size=type==='catapult'||human?64:32,s=new Surface(size,size),cx=size/2,cy=type==='catapult'?40:human?44:22,angle=dir*Math.PI/4,dx=Math.round(Math.cos(angle)*3),dy=Math.round(Math.sin(angle)*2),team=owner==='player'?p.teamBlue:p.teamRed,light=owner==='player'?p.teamBlueLight:p.teamRedLight;
   const stride=state==='walk'?[0,2,0,-2][frame]:0,bob=state==='walk'?frame%2:0,swing=['attack','gather','build'].includes(state)?[0,-3,2,4][frame]:0;
   if(type==='catapult'){
    const vx=Math.round(Math.cos(angle)*15),vy=Math.round(Math.sin(angle)*10);s.ellipse(cx,cy+9,22,6,p.earth);
@@ -38,32 +39,6 @@ export function unitFrames(Surface,p){const frames=[];
    if(guard&&orc){s.line(handX,handY+2,handX+dx,handY-11+swing,p.barkLight);s.polygon([[handX+dx-6,handY-12+swing],[handX+dx+7,handY-12+swing],[handX+dx+5,handY-5+swing],[handX+dx-4,handY-6+swing]],p.rockHighlight);}
    if(guard&&!orc){s.line(handX,handY,handX+dx*2,handY-11+swing,p.rockHighlight);s.rect(handX-3,handY-1,6,2,p.gold);const shieldX=cx-(dx>=0?10:-6);s.polygon([[shieldX,cy-10],[shieldX+7,cy-10],[shieldX+8,cy-2],[shieldX+4,cy+2],[shieldX-1,cy-2]],p.ink);s.rect(shieldX+1,cy-9,5,7,team);s.pixel(shieldX+3,cy-6,p.goldLight);}
    if(archer){const bowX=handX+dx;s.line(bowX,handY-8,bowX+4,handY,p.barkLight);s.line(bowX+4,handY,bowX,handY+7,p.barkLight);s.line(bowX,handY-8,bowX,handY+7,p.rockLight);if(state==='attack'){const pull=[0,2,4,0][frame];s.line(bowX,handY-8,bowX-pull,handY,p.rockLight);s.line(bowX-pull,handY,bowX,handY+7,p.rockLight);s.line(bowX-pull-3,handY,bowX+8,handY,p.rockHighlight);}s.rect(cx-7,cy-13,3,10,p.barkDark);s.line(cx-6,cy-16,cx-6,cy-10,p.rockHighlight);}
-  }
-  if(faction==='crown' && (type==='worker'||type==='soldier')){
-   const crownHandX=cx+dx*2+(dx>=0?5:-5),crownHandY=cy-7+dy*2+swing;
-   if(type==='worker'){
-    s.rect(cx-6,cy-12-bob,12,9,p.ink);
-    s.rect(cx-5,cy-11-bob,10,7,p.rockDark);
-    s.rect(cx-4,cy-8-bob,8,5,team);
-    s.rect(cx-2,cy-17+dy-bob,4,5,p.goldDark);
-    s.pixel(cx,cy-17+dy-bob,p.goldLight);
-    s.rect(cx-7,cy-1,3,8,p.barkDark);s.rect(cx+4,cy-1,3,8,p.barkDark);
-    s.line(cx-3,cy-9,crownHandX,crownHandY,p.barkLight);s.line(cx+3,cy-9,crownHandX,crownHandY,p.barkLight);
-    s.rect(cx-8,cy-11-bob,3,4,p.goldDark);s.rect(cx+5,cy-11-bob,3,4,p.goldDark);
-    s.rect(cx-3,cy-14-bob,6,5,p.skin);s.rect(cx-2,cy-13-bob,4,2,p.rockHighlight);
-    const packX=cx+(dx>=0?-8:4);s.rect(packX,cy-3,5,6,p.ink);s.rect(packX+1,cy-2,3,3,p.goldDark);
-    s.line(cx-6,cy-18-bob,cx+6,cy-18-bob,p.goldLight);
-   }
-   if(type==='soldier'){
-    s.rect(cx-7,cy-12-bob,14,12,p.rockDark);s.rect(cx-5,cy-10-bob,10,9,team);s.rect(cx-3,cy-9-bob,6,5,p.goldDark);
-    s.rect(cx-9,cy-11-bob,3,8,p.rockLight);s.rect(cx+6,cy-11-bob,3,8,p.rockLight);
-    s.rect(cx-5+dx,cy-19+dy-bob,10,7,p.goldDark);s.rect(cx-4+dx,cy-19+dy-bob,8,3,p.goldLight);s.pixel(cx+dx,cy-20+dy-bob,p.gold);
-    s.rect(cx-2,cy-12-bob,4,4,p.skin);s.rect(cx-3,cy-13-bob,6,3,p.rockDark);s.pixel(cx,cy-15+dy-bob,p.goldLight);
-    const shieldX=cx-(dx>=0?10:-6);s.polygon([[shieldX,cy-10],[shieldX+8,cy-10],[shieldX+9,cy+2],[shieldX+4,cy+5],[shieldX-1,cy+1]],p.ink);
-    s.rect(shieldX+1,cy-8,6,8,team);s.line(shieldX+3,cy-6,shieldX+6,cy-6,p.goldLight);
-    const swordX=cx+dx*2+(dx>=0?8:-8);s.line(swordX,cy-7+dy,swordX+dx,cy-18+swing,p.barkLight);s.rect(swordX+dx-2,cy-16+swing,5,2,p.goldDark);
-    s.pixel(cx+dx,cy-15+dy-bob,p.gold);
-   }
   }
   if(type==='specialist'&&faction==='crown'){
     // Human banner escort: gold plate, broad kite shield and a tall pennant.
@@ -164,6 +139,7 @@ export function unitFrames(Surface,p){const frames=[];
   if(state==='death'){
    const dead=new Surface(size,size);for(let y=0;y<size;y++)for(let x=0;x<size;x++){const i=(y*size+x)*4;if(!s.data[i+3]||frame===3&&(x+y)%3===0)continue;const color='#'+[...s.data.subarray(i,i+3)].map(n=>n.toString(16).padStart(2,'0')).join('');const flat=frame/3;dead.pixel(cx+(x-cx)*(1-flat*.25),cy+(y-cy)*(1-flat*.8)+frame*2,color);}s.data=dead.data;
   }
+  if(human)s.data=humanUnit(Surface,p,type,owner,dir,state,frame).data;
   frames.push({id:`${faction==='crown'?'':faction+'-'}${type}-${owner}-${directions[dir]}-${state}-${frame}`,image:s,x:(frames.length%64)*64,y:Math.floor(frames.length/64)*64,anchor:{x:cx,y:cy},kind:'unit',faction,type,owner,direction:directions[dir],state,frame});
  }
  return frames;

@@ -53,7 +53,7 @@ import {audioEvents,type AudioSnapshot} from '../presentation/audioPolicy';
 import {archerConfig} from '../config/archer';
 import {catapultConfig} from '../config/catapult';
 import {canInteract} from '../gameplay/approach';
-import {motion,unitFrame,unitOrigin,artAtlas,deathEffect,effectAlive,type Motion,type DeathEffect,type Action,type UnitArt} from '../presentation/animation';
+import {motion,unitFrame,unitOrigin,unitOverlayOffsets,artAtlas,deathEffect,effectAlive,type Motion,type DeathEffect,type Action,type UnitArt} from '../presentation/animation';
 import { buildingFrame,buildingOrigin,terrainImageFrame,terrainEdges,resourceFrame,resourceOrigin } from '../presentation/assets';
 import { createSession,sessionTransition,changeOptions,gameplayDelta,type MatchSession,type SessionAction } from '../gameplay/session';
 import { hotkeys,hotkeyButton,dispatchHotkey,commandGuide } from '../presentation/hotkeys';
@@ -841,7 +841,7 @@ export class BootScene extends Phaser.Scene {
       if(enemy.kind==='ship')this.animateUnit(enemy.id,visual.body,enemy.position,'idle','transport','enemy');
       if(!enemy.footprint&&enemy.kind!=='ship'){const target=enemy.order?.kind==='defend'?this.gathering.units.find(u=>enemy.order?.kind==='defend'&&u.id===enemy.order.targetId)?.position:enemy.navigation?.targetId==='base'?this.gathering.base:undefined;const action:Action=enemy.navigation?.targetId&&enemy.navigation.targetId!=='explore-goal'&&enemy.navigation.status==='arrived'?'attack':enemy.work?.order.kind==='gather'?'gather':'idle';this.animateUnit(enemy.id,visual.body,enemy.position,action,enemy.kind==='worker'?'worker':enemy.role??'soldier','enemy',target);}
       visual.label.setPosition(enemy.position.x,enemy.position.y-(enemy.kind==='ship'?48:90)).setVisible(!!enemy.footprint||enemy.kind==='ship').setText(`${enemy.buildingType==='outpost'?uiText.resourceOutpost:''}${enemy.kind==='ship'?'Transport':enemy.buildingType==='harbor'?uiText.harbor:factions[this.factions.enemy].buildingNames[(enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base']} ${Math.ceil(enemy.hp)} HP`);
-      this.drawHP(enemy.position,enemy.hp,enemyMaximumHP(enemy,this.factions.enemy),enemy.footprint?64:24,enemy.footprint?70:29,0xcf7770);
+      this.drawHP(enemy.position,enemy.hp,enemyMaximumHP(enemy,this.factions.enemy),enemy.footprint?64:24,enemy.footprint?70:enemy.kind==='ship'?29:unitOverlayOffsets(enemy.kind==='worker'?'worker':enemy.role??'soldier',this.factions.enemy).hp,0xcf7770);
     }
     for (const unit of this.gathering.units) {
       if (!this.visuals.has(unit.id)) {
@@ -861,9 +861,9 @@ export class BootScene extends Phaser.Scene {
       const action:Action=unit.order.kind==='attack'&&enemy&&canInteract(this.map,unit.position,enemyBody(enemy),attackRange)?'attack':unit.order.kind==='gather'&&marker&&Math.hypot(marker.position.x-unit.position.x,marker.position.y-unit.position.y)<=gatheringConfig.nodeRadius+gatheringConfig.range?'gather':unit.order.kind==='build'&&unit.navigation?.status==='arrived'?'build':'idle';
       this.animateUnit(unit.id,visual.body,unit.position,action,unit.kind==='worker'?'worker':unit.archetype??'soldier','player',enemy?.position??marker?.position);
       visual.ring.setPosition(unit.position.x, unit.position.y).setVisible(unit.selected);
-      visual.cargo.setPosition(unit.position.x, unit.position.y - 48)
+      visual.cargo.setPosition(unit.position.x, unit.position.y - unitOverlayOffsets(unit.kind==='worker'?'worker':unit.archetype??'soldier',this.factions.player).cargo)
         .setVisible(unit.kind==='worker'&&unit.selected).setText(unit.kind==='worker'?`${unit.cargo.toFixed(1)}/${gatheringConfig.capacity} ${unit.cargoType??'wood'}`:'');
-      this.drawHP(unit.position,unit.hp??combatConfig.workerHP,unit.kind==='worker'?factions[this.factions.player].units.worker.hp:factions[this.factions.player].units[unit.archetype??'soldier'].hp,unit.kind==='soldier'&&unit.archetype==='catapult'?40:24,unit.kind==='soldier'&&unit.archetype==='catapult'?39:29,0x7398c1);
+      this.drawHP(unit.position,unit.hp??combatConfig.workerHP,unit.kind==='worker'?factions[this.factions.player].units.worker.hp:factions[this.factions.player].units[unit.archetype??'soldier'].hp,unit.kind==='soldier'&&unit.archetype==='catapult'?40:24,unitOverlayOffsets(unit.kind==='worker'?'worker':unit.archetype??'soldier',this.factions.player).hp,0x7398c1);
     }
     const publicHealth=[...warningSnapshot(this.currentMatch()),...visibleEnemies.map(e=>({id:e.id,hp:e.hp,position:{...e.position}}))].filter(p=>isVisible(this.fog,'player',p.position));
     for(const hit of hitEffects(this.hitSnapshot,publicHealth,this.visualTime,this.gameplayActive()))this.addImpact(hit);

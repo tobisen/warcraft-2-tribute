@@ -27,9 +27,9 @@ avslutas efter denna fix; ingen senare roadmap-task startas.
   /tmp/w2t-bottom-bar; ingen ny CI-/Pages-verifiering hävdas.
 
 
-**RTS-155 – Ny kvalitetsnivå för sprites** — **Done**. Första referenspasset är klart och dokumenterat; se nedan för detaljer om godkända Humans/building-referenser.
+**RTS-155 – Ny kvalitetsnivå för sprites** — **In Progress**. Human-worker, melee och base är korrigerade och visuellt granskade; användarens bedömning av det nya resultatet återstår. Se tasken och [granskningsprotokollet](assets/sources/humans.md).
 
-**Aktuell etapp:** RTS-151–155 färdiga enligt nytt uppdrag2026-10-04. Roadmap151–180 återställd; senare tasks Todo och inte implementerade. Nästa task är RTS-156, men inget fortsatt implementationsmandat efter155. Se [HANDOFF.md](HANDOFF.md) och [QUALITY_REVIEW.md](QUALITY_REVIEW.md). Tidigare stopp/fortsättningsmandat nedan är historik.
+**Aktuell etapp:** RTS-151–154 färdiga. RTS-155 återöppnad för beställd Human-korrigering2026-10-04. Roadmap151–180 återställd; senare tasks Todo och inte implementerade. RTS-156 är pausad/inte startad; inget fortsatt implementationsmandat efter denna korrigering. Se [HANDOFF.md](HANDOFF.md) och [QUALITY_REVIEW.md](QUALITY_REVIEW.md). Tidigare stopp/fortsättningsmandat nedan är historik.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -4140,7 +4140,7 @@ Titeln är en arbetstitel, inte juridiskt granskad för kommersiell release.
 
 ## RTS-155 – Ny kvalitetsnivå för sprites
 
-**Status:** Todo.
+**Status:** In Progress – Human-korrigering implementerad och visuellt granskad; slutlig användarbedömning återstår.
 
 **Goal:** Ny kvalitetsnivå för sprites.
 
@@ -4162,6 +4162,36 @@ Dela resterande assetarbete i subtasks per fraktion/assetgrupp.
 **Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
 
 **Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+**Korrigering2026-10-04:** Tidigare Current Focus/rapport om Done var inte
+belagd mot designmålet och motsade taskens Todo. Bifogad spelskärmbild och
+lokala godkända Human-/building-referenser granskade. Grundfel i källgrafiken;
+export och rätt runtime-frames var korrekta. Egna64px Human-worker/soldier och
+128px base med referensens kläder/material/heraldik, åtta riktningar och
+befintliga animationer. Nya större silhuetter krävde Human-specifika HP/cargo-
+offsets. Gameplay/footprints och separat bottom bar-fix bevaras.
+
+**Ny visuell evidens:** [Före/efter](artifacts/rts-155/index.html), samma karta/
+kamera/selection vid Native800×600 och1280×720. Worker och soldier separat och
+ tillsammans, porträtt, fysisk selection, verklig movement, explicit granskade
+ gather/build/attack/death-frames och base-stadier. Noll source/exportmismatchar,
+ noll förändrade rasters utanför denna Human-slice. Slutlig unit431/76, build
+ inklusive strict typecheck och diffcheck PASS. Inga campaign-/matchsimuleringar.
+ [Protokoll/begränsningar](assets/sources/humans.md). Inga tekniska PASS används
+ som ersättning för användarens visuella godkännande av det nya resultatet.
+
+**Subtasks inom155 (inga nya RTS-ID:n, inget mandat att starta resten):**
+
+| Slice | Status |
+| --- | --- |
+| Human-worker/melee/base | Korrigerad och visuellt granskad; användarbedömning återstår. |
+| Human övriga landunits/byggnader/sjöassets | Inte uppdaterade i denna korrigering. |
+| Orcs units/buildings/naval | Inte uppdaterade; eget stilunderlag och mandat krävs. |
+| Elves units/buildings/naval | Inte uppdaterade; eget stilunderlag och mandat krävs. |
+| Dwarves units/buildings/naval | Inte uppdaterade; eget stilunderlag och mandat krävs. |
+| Goblins units/buildings/naval | Inte uppdaterade; eget stilunderlag och mandat krävs. |
+
+Stanna efter denna leverans. RTS-156 och senare startas inte.
 
 ## Bugfix: HUD-layout – bottom bar horisontell layout och kompakt build-menu
 

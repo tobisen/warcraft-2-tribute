@@ -1307,3 +1307,19 @@ Synligt produktnamn och browser title blir Iron & Timber — A Tribute to Warcra
 Egen typografisk logotyp i befintlig meny; befintlig originalillustration återanvänds.
 Repo, package, remote, Pages och lokala storagekeys ändras inte. Titeln är inte
 juridiskt granskad för kommersiell release; inget sådant godkännande hävdas.
+
+
+## RTS-155 – Egen native-adaption och visuell evidens
+
+Det godkända lokala Human-underlaget ska bearbetas till separata spelassets,
+inte beskäras till godtyckliga animationsrutor. Human-worker/soldier använder
+64px-celler i befintliga64px-slots, med(32,44)-ankare och bevarade logiska bodies.
+Base håller128px och befintlig footprint48/96; referensens3×3-märkning inför
+inte ny gameplaygeometri. Referensens ljusa workerkläder/blå väst, stålrustning/
+plym/sköld och borgmaterial/heraldik styr egen integer-pixelkomposition.
+
+Rätt export/framekoppling bevisar bara teknisk korrekthet. Nya screenshots i
+samma native-scen, source/exportjämförelse och visuell granskning redovisas i
+[Human-protokollet](assets/sources/humans.md). Tidigare Done upphävs;155 hålls
+In Progress för användarens bedömning av korrigeringen. Inga andra fraktioner,
+nytt gameplay eller senare roadmaparbete startas av detta beslut.

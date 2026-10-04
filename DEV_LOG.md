@@ -2785,3 +2785,65 @@ BACKLOG.md och denna logg uppdaterad. Ingen ny RTS-ID eller gameplay-ändringar.
   blockerande fynd. Dokumentlänkar kontrollerade. Inga campaign-simuleringar
   eller ny CI-/Pages-kontroll. Historiska releasebelägg återanvänds inte som
   verifiering av denna fix. Commit/push enligt uppdraget; stanna därefter.
+
+
+## 2026-10-04 – RTS-155: Human-korrigering och faktisk visuell granskning
+
+- Nytt avgränsat mandat: korrigera/granska155, pausa senare tasks. main/origin
+  kontrollerade. Endast docs/ var otrackad före arbetet; Human/buildingreferenserna
+  i docs/art lästes, SHA-256 dokumenterades och filerna lämnas orörda/otrackade.
+  Bottom bar-commit879c1e6 är separat och dess CSS/DOM/actionbindning ändras inte.
+- Den bifogade skärmbilden visar enkla gamla assets. Tidigare Current Focus Done
+  motsade155 Todo och saknade designbelägg. Tasken återöppnas In Progress;
+  användarens bedömning av det nya resultatet återstår.
+- Faktisk orsak:32px generisk worker/soldier med små rektangulära övermålningar,
+  base fortfarande generisk tvåtornskomposition. Godkända lokala referenser visar
+  andra, tydligare kläder/silhuetter/material/heraldik. Audit mot HEAD879c1e6
+  visar noll source/exportmismatchar före korrigeringen; rätt typer/frames,
+  atlasrektanglar/ankare/skala och nearest-neighbor-rendering var korrekta.
+- Egen humans.mjs:64px worker med ljus skjorta/byxor, blå väst, hår/skägg/pung och
+  tvåhandsverktyg; soldier med stål, plym, blå tabard och guldkantad sköld/svärd.
+  Åtta riktningar, fyra walk/attack/death och worker gather/build; egna fallposer,
+  ingen illustration/crop eller nedskalad idlebild som animation.128px base med
+  flera torn/tak, masonry/timber/portal/trappor/torch/fanor samt bygg/damagedbilder.
+  Paletten utökas med materialnyanser. Source/PNG/metadata/manifest exporteras ihop.
+- Rendering: högre Human-silhuetter krävde HP48/cargo68 ovanför world-center.
+  Övriga fraktioners offsets, bodies, footprint/ranges/navigation/selection och
+  gameplay är bevarade. Atlasjämförelsen visar544 ändrade Human-unit- och8 baseframes,
+  noll ändrade andra frames och alla stabila ID:n bevarade. Ingen stale atlas eller
+  cache/mappingförklaring används för det tidigare designproblemet.
+- Browser i Chromium: samma Arena-fixture, kamera(120,180), worker(340,300),
+  soldier(440,300), base(400,450), Native800×600 och1280×720 före/efter. Fysiska
+  klick verifierar Worker/Guard/Keep selection. Movement genom faktisk update;
+  drawScale1/atlasrektanglar/origin/pixelated och portraitSmoothing=false PASS.
+  Gather/build/attack/death-poser väljs explicit ur laddade Phaser-frames och
+  verifieras vid screenshot; inte påstådd betald gameplay/deathregression.
+  Contact sheets visar alla åtta riktningar och animationsframes/base-stadier.
+  Före-bilder använder879c1e6:s atlaser och gamla labeloffsets via temporär routing.
+- Browserfixturen korrigerades under granskning: borttagna gamla units gav
+  transient dödsgrafik/HP-varning; fixture använder stabila unit-ID:n och nollställer
+  endast denna verifieringsstate. Phaser sys.sceneUpdate fryses mellan bilder;
+  en extra HUD-sync efter movement återställde idlepose och togs bort för att
+  fånga faktiskt walk-frame. Slutliga före/efterkörningar PASS utan pageerrors.
+  Inga debughookar/fixtureändringar skickas i appen.
+- Visuell granskning: worker/porträtt, soldier/porträtt, tillsammans, base,
+  movement och alla pose-/contact-sheetbilder i båda upplösningarna. HP/cargo är
+  ovanför silhuetten, inga klippta transparenta framekanter, tydligt olika typer
+  mot gräs. Källor/atlas/browser hålls skilda i protokollet; mer detaljerade bilder
+  ersätter tidigare enkla figurer. Referensillustrationen har fortsatt fler
+  mikrodetaljer än64px-adaptionen; ingen slutlig användarapproval hävdas.
+- Evidens incheckad i artifacts/rts-155, index.html jämför exakt samma spelvy.
+  source-export-audit.json och before-/after-rendering.json redovisar mätningar.
+  Reproducerbara scripts/check-human-art.mjs och audit-human-art.mjs med
+  extern Playwright/Chromium respektive repoegna källor/git-baseline.
+- Arbetscheck17 riktade asset/animation-tester i5filer PASS före sista overlay/
+  gångstegsändringarna. Slutlig npm run test:unit431tests/76filer PASS; npm run
+  build inklusive strict typecheck PASS; git diff --check PASS. Sista unit/build
+  kördes efter slutlig ryggvy/stridejustering; tidigare PASS återanvänds inte som
+  slutbelägg. Befintlig bundlevarning kvar. Inga campaign-/matchsimuleringar.
+- Diff/scope/inputägarskap/source-export/footprints granskade utan blockerande
+  tekniska fynd. Dokumentlänkar och referenshashar kontrollerade. BACKLOG/README/
+  DECISIONS/protokoll uppdaterade. Human-slicen implementerad och visuellt granskad;
+ 155 hålls In Progress för användarens bedömning, övriga artgrupper ej uppdaterade.
+  Ingen ny CI-/Pages-verifiering eller fysisk monitorgranskning. Commit/push enligt
+  mandatet, stanna därefter;156+ startas inte.

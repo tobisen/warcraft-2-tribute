@@ -1,0 +1,23 @@
+{
+  "baseline": "879c1e6",
+  "references": {
+    "human-reference.png": "22b087ac5c7c5888c72768bef2f59f3584840702a7cccf51b943fb0f6919167f",
+    "buildings-reference.png": "89084a6b543f82e9e1d6be33367fc10d37b25d99eee60f85b1b82ed47abf6117"
+  },
+  "atlases": {
+    "units": {
+      "beforeSourceExportMismatches": [],
+      "afterSourceExportMismatches": [],
+      "unrelatedRasterChanges": [],
+      "frameIdsPreserved": true,
+      "changedHumanFrames": 544
+    },
+    "buildings": {
+      "beforeSourceExportMismatches": [],
+      "afterSourceExportMismatches": [],
+      "unrelatedRasterChanges": [],
+      "frameIdsPreserved": true,
+      "changedHumanFrames": 8
+    }
+  }
+}

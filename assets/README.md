@@ -191,3 +191,15 @@ Dwarves har egna korta/breda skägg-/metal-/hammer-/shield-/crossbow-silhuetter 
 ## RTS-140 – Original Goblin-pixelgrafik
 
 Egen liten green/goggle/nose/ear-roster, verktyg/scrap/slingshot/grenade och låg rekyl-/flash-Mortar. Patchwork tin/bent timber, antenn, förrådsfat, Lab-vial/pipes och Junk Dock. Naval har jagged hull/metalpatch/drums och olika cannon/cargo-deck. Två ägare/åtta unit/fartygsriktningar och etablerade animationsfaser. Fem rosters:5840unitframes4096×5888,200buildingframes1024×3200,2080navalframes2048×4160. Naval packas32kolumner istället för16; metadata-ID:n/anchors/logiska bodies bevaras och alla dimensioner under8192. PNG/JSON/manifest exporterade tillsammans i samma originalpalett/källmodell.
+
+
+## RTS-155 – Korrigerad Human-referensslice
+
+Human-worker/soldier har egna64×64-celler, ankare(32,44), i befintliga64px
+atlasslots. Övriga units behåller tidigare storlekar. Normaliserat origin är
+oförändrat; Human HP/cargo-offsets anpassas till högre silhuett. Base är fortsatt
+128px/ankare(64,96), footprint48/96px. Se [källor och visuellt protokoll](sources/humans.md),
+[nya pixelkompositioner](sources/humans.mjs) och [före/efter](../artifacts/rts-155/index.html).
+Referenser används som stilunderlag, inga rastercrops importeras i atlasen.
+RTS-155 är In Progress för användarens visuella bedömning; andra artgrupper är
+inte färdiga genom denna Human-korrigering.

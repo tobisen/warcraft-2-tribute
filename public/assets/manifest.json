@@ -3958,11 +3958,11 @@
     },
     "worker-player-e-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -3974,11 +3974,11 @@
     },
     "worker-player-e-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -3990,11 +3990,11 @@
     },
     "worker-player-e-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4006,11 +4006,11 @@
     },
     "worker-player-e-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4022,11 +4022,11 @@
     },
     "worker-player-e-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4038,11 +4038,11 @@
     },
     "worker-player-e-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4054,11 +4054,11 @@
     },
     "worker-player-e-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4070,11 +4070,11 @@
     },
     "worker-player-e-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4086,11 +4086,11 @@
     },
     "worker-player-e-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4102,11 +4102,11 @@
     },
     "worker-player-e-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4118,11 +4118,11 @@
     },
     "worker-player-e-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4134,11 +4134,11 @@
     },
     "worker-player-e-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4150,11 +4150,11 @@
     },
     "worker-player-e-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4166,11 +4166,11 @@
     },
     "worker-player-e-gather-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4182,11 +4182,11 @@
     },
     "worker-player-e-gather-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4198,11 +4198,11 @@
     },
     "worker-player-e-gather-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4214,11 +4214,11 @@
     },
     "worker-player-e-gather-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4230,11 +4230,11 @@
     },
     "worker-player-e-build-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4246,11 +4246,11 @@
     },
     "worker-player-e-build-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4262,11 +4262,11 @@
     },
     "worker-player-e-build-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4278,11 +4278,11 @@
     },
     "worker-player-e-build-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4294,11 +4294,11 @@
     },
     "worker-player-se-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4310,11 +4310,11 @@
     },
     "worker-player-se-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4326,11 +4326,11 @@
     },
     "worker-player-se-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4342,11 +4342,11 @@
     },
     "worker-player-se-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4358,11 +4358,11 @@
     },
     "worker-player-se-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4374,11 +4374,11 @@
     },
     "worker-player-se-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4390,11 +4390,11 @@
     },
     "worker-player-se-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4406,11 +4406,11 @@
     },
     "worker-player-se-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4422,11 +4422,11 @@
     },
     "worker-player-se-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4438,11 +4438,11 @@
     },
     "worker-player-se-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4454,11 +4454,11 @@
     },
     "worker-player-se-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4470,11 +4470,11 @@
     },
     "worker-player-se-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4486,11 +4486,11 @@
     },
     "worker-player-se-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4502,11 +4502,11 @@
     },
     "worker-player-se-gather-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4518,11 +4518,11 @@
     },
     "worker-player-se-gather-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4534,11 +4534,11 @@
     },
     "worker-player-se-gather-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4550,11 +4550,11 @@
     },
     "worker-player-se-gather-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4566,11 +4566,11 @@
     },
     "worker-player-se-build-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4582,11 +4582,11 @@
     },
     "worker-player-se-build-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4598,11 +4598,11 @@
     },
     "worker-player-se-build-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4614,11 +4614,11 @@
     },
     "worker-player-se-build-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4630,11 +4630,11 @@
     },
     "worker-player-s-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4646,11 +4646,11 @@
     },
     "worker-player-s-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4662,11 +4662,11 @@
     },
     "worker-player-s-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4678,11 +4678,11 @@
     },
     "worker-player-s-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4694,11 +4694,11 @@
     },
     "worker-player-s-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4710,11 +4710,11 @@
     },
     "worker-player-s-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4726,11 +4726,11 @@
     },
     "worker-player-s-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4742,11 +4742,11 @@
     },
     "worker-player-s-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4758,11 +4758,11 @@
     },
     "worker-player-s-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4774,11 +4774,11 @@
     },
     "worker-player-s-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4790,11 +4790,11 @@
     },
     "worker-player-s-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4806,11 +4806,11 @@
     },
     "worker-player-s-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4822,11 +4822,11 @@
     },
     "worker-player-s-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4838,11 +4838,11 @@
     },
     "worker-player-s-gather-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4854,11 +4854,11 @@
     },
     "worker-player-s-gather-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4870,11 +4870,11 @@
     },
     "worker-player-s-gather-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4886,11 +4886,11 @@
     },
     "worker-player-s-gather-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4902,11 +4902,11 @@
     },
     "worker-player-s-build-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4918,11 +4918,11 @@
     },
     "worker-player-s-build-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4934,11 +4934,11 @@
     },
     "worker-player-s-build-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4950,11 +4950,11 @@
     },
     "worker-player-s-build-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4966,11 +4966,11 @@
     },
     "worker-player-sw-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4982,11 +4982,11 @@
     },
     "worker-player-sw-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -4998,11 +4998,11 @@
     },
     "worker-player-sw-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5014,11 +5014,11 @@
     },
     "worker-player-sw-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5030,11 +5030,11 @@
     },
     "worker-player-sw-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5046,11 +5046,11 @@
     },
     "worker-player-sw-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5062,11 +5062,11 @@
     },
     "worker-player-sw-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5078,11 +5078,11 @@
     },
     "worker-player-sw-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5094,11 +5094,11 @@
     },
     "worker-player-sw-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5110,11 +5110,11 @@
     },
     "worker-player-sw-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5126,11 +5126,11 @@
     },
     "worker-player-sw-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5142,11 +5142,11 @@
     },
     "worker-player-sw-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5158,11 +5158,11 @@
     },
     "worker-player-sw-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5174,11 +5174,11 @@
     },
     "worker-player-sw-gather-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5190,11 +5190,11 @@
     },
     "worker-player-sw-gather-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5206,11 +5206,11 @@
     },
     "worker-player-sw-gather-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5222,11 +5222,11 @@
     },
     "worker-player-sw-gather-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5238,11 +5238,11 @@
     },
     "worker-player-sw-build-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5254,11 +5254,11 @@
     },
     "worker-player-sw-build-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5270,11 +5270,11 @@
     },
     "worker-player-sw-build-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5286,11 +5286,11 @@
     },
     "worker-player-sw-build-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5302,11 +5302,11 @@
     },
     "worker-player-w-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5318,11 +5318,11 @@
     },
     "worker-player-w-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5334,11 +5334,11 @@
     },
     "worker-player-w-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5350,11 +5350,11 @@
     },
     "worker-player-w-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5366,11 +5366,11 @@
     },
     "worker-player-w-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5382,11 +5382,11 @@
     },
     "worker-player-w-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5398,11 +5398,11 @@
     },
     "worker-player-w-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5414,11 +5414,11 @@
     },
     "worker-player-w-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5430,11 +5430,11 @@
     },
     "worker-player-w-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5446,11 +5446,11 @@
     },
     "worker-player-w-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5462,11 +5462,11 @@
     },
     "worker-player-w-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5478,11 +5478,11 @@
     },
     "worker-player-w-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5494,11 +5494,11 @@
     },
     "worker-player-w-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5510,11 +5510,11 @@
     },
     "worker-player-w-gather-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5526,11 +5526,11 @@
     },
     "worker-player-w-gather-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5542,11 +5542,11 @@
     },
     "worker-player-w-gather-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5558,11 +5558,11 @@
     },
     "worker-player-w-gather-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5574,11 +5574,11 @@
     },
     "worker-player-w-build-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5590,11 +5590,11 @@
     },
     "worker-player-w-build-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5606,11 +5606,11 @@
     },
     "worker-player-w-build-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5622,11 +5622,11 @@
     },
     "worker-player-w-build-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5638,11 +5638,11 @@
     },
     "worker-player-nw-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5654,11 +5654,11 @@
     },
     "worker-player-nw-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5670,11 +5670,11 @@
     },
     "worker-player-nw-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5686,11 +5686,11 @@
     },
     "worker-player-nw-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5702,11 +5702,11 @@
     },
     "worker-player-nw-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5718,11 +5718,11 @@
     },
     "worker-player-nw-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5734,11 +5734,11 @@
     },
     "worker-player-nw-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5750,11 +5750,11 @@
     },
     "worker-player-nw-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5766,11 +5766,11 @@
     },
     "worker-player-nw-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5782,11 +5782,11 @@
     },
     "worker-player-nw-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5798,11 +5798,11 @@
     },
     "worker-player-nw-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5814,11 +5814,11 @@
     },
     "worker-player-nw-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5830,11 +5830,11 @@
     },
     "worker-player-nw-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5846,11 +5846,11 @@
     },
     "worker-player-nw-gather-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5862,11 +5862,11 @@
     },
     "worker-player-nw-gather-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5878,11 +5878,11 @@
     },
     "worker-player-nw-gather-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5894,11 +5894,11 @@
     },
     "worker-player-nw-gather-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5910,11 +5910,11 @@
     },
     "worker-player-nw-build-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5926,11 +5926,11 @@
     },
     "worker-player-nw-build-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5942,11 +5942,11 @@
     },
     "worker-player-nw-build-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5958,11 +5958,11 @@
     },
     "worker-player-nw-build-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5974,11 +5974,11 @@
     },
     "worker-player-n-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -5990,11 +5990,11 @@
     },
     "worker-player-n-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6006,11 +6006,11 @@
     },
     "worker-player-n-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6022,11 +6022,11 @@
     },
     "worker-player-n-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6038,11 +6038,11 @@
     },
     "worker-player-n-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6054,11 +6054,11 @@
     },
     "worker-player-n-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6070,11 +6070,11 @@
     },
     "worker-player-n-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6086,11 +6086,11 @@
     },
     "worker-player-n-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6102,11 +6102,11 @@
     },
     "worker-player-n-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6118,11 +6118,11 @@
     },
     "worker-player-n-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6134,11 +6134,11 @@
     },
     "worker-player-n-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6150,11 +6150,11 @@
     },
     "worker-player-n-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6166,11 +6166,11 @@
     },
     "worker-player-n-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6182,11 +6182,11 @@
     },
     "worker-player-n-gather-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6198,11 +6198,11 @@
     },
     "worker-player-n-gather-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6214,11 +6214,11 @@
     },
     "worker-player-n-gather-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6230,11 +6230,11 @@
     },
     "worker-player-n-gather-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6246,11 +6246,11 @@
     },
     "worker-player-n-build-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6262,11 +6262,11 @@
     },
     "worker-player-n-build-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6278,11 +6278,11 @@
     },
     "worker-player-n-build-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6294,11 +6294,11 @@
     },
     "worker-player-n-build-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6310,11 +6310,11 @@
     },
     "worker-player-ne-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6326,11 +6326,11 @@
     },
     "worker-player-ne-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6342,11 +6342,11 @@
     },
     "worker-player-ne-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6358,11 +6358,11 @@
     },
     "worker-player-ne-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6374,11 +6374,11 @@
     },
     "worker-player-ne-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6390,11 +6390,11 @@
     },
     "worker-player-ne-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6406,11 +6406,11 @@
     },
     "worker-player-ne-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6422,11 +6422,11 @@
     },
     "worker-player-ne-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6438,11 +6438,11 @@
     },
     "worker-player-ne-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6454,11 +6454,11 @@
     },
     "worker-player-ne-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6470,11 +6470,11 @@
     },
     "worker-player-ne-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6486,11 +6486,11 @@
     },
     "worker-player-ne-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6502,11 +6502,11 @@
     },
     "worker-player-ne-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6518,11 +6518,11 @@
     },
     "worker-player-ne-gather-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6534,11 +6534,11 @@
     },
     "worker-player-ne-gather-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6550,11 +6550,11 @@
     },
     "worker-player-ne-gather-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6566,11 +6566,11 @@
     },
     "worker-player-ne-gather-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6582,11 +6582,11 @@
     },
     "worker-player-ne-build-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6598,11 +6598,11 @@
     },
     "worker-player-ne-build-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6614,11 +6614,11 @@
     },
     "worker-player-ne-build-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6630,11 +6630,11 @@
     },
     "worker-player-ne-build-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6646,11 +6646,11 @@
     },
     "worker-enemy-e-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6662,11 +6662,11 @@
     },
     "worker-enemy-e-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6678,11 +6678,11 @@
     },
     "worker-enemy-e-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6694,11 +6694,11 @@
     },
     "worker-enemy-e-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6710,11 +6710,11 @@
     },
     "worker-enemy-e-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6726,11 +6726,11 @@
     },
     "worker-enemy-e-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6742,11 +6742,11 @@
     },
     "worker-enemy-e-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6758,11 +6758,11 @@
     },
     "worker-enemy-e-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6774,11 +6774,11 @@
     },
     "worker-enemy-e-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6790,11 +6790,11 @@
     },
     "worker-enemy-e-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6806,11 +6806,11 @@
     },
     "worker-enemy-e-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6822,11 +6822,11 @@
     },
     "worker-enemy-e-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6838,11 +6838,11 @@
     },
     "worker-enemy-e-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6854,11 +6854,11 @@
     },
     "worker-enemy-e-gather-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6870,11 +6870,11 @@
     },
     "worker-enemy-e-gather-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6886,11 +6886,11 @@
     },
     "worker-enemy-e-gather-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6902,11 +6902,11 @@
     },
     "worker-enemy-e-gather-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6918,11 +6918,11 @@
     },
     "worker-enemy-e-build-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6934,11 +6934,11 @@
     },
     "worker-enemy-e-build-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6950,11 +6950,11 @@
     },
     "worker-enemy-e-build-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6966,11 +6966,11 @@
     },
     "worker-enemy-e-build-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6982,11 +6982,11 @@
     },
     "worker-enemy-se-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -6998,11 +6998,11 @@
     },
     "worker-enemy-se-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7014,11 +7014,11 @@
     },
     "worker-enemy-se-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7030,11 +7030,11 @@
     },
     "worker-enemy-se-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7046,11 +7046,11 @@
     },
     "worker-enemy-se-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7062,11 +7062,11 @@
     },
     "worker-enemy-se-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7078,11 +7078,11 @@
     },
     "worker-enemy-se-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7094,11 +7094,11 @@
     },
     "worker-enemy-se-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7110,11 +7110,11 @@
     },
     "worker-enemy-se-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7126,11 +7126,11 @@
     },
     "worker-enemy-se-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7142,11 +7142,11 @@
     },
     "worker-enemy-se-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7158,11 +7158,11 @@
     },
     "worker-enemy-se-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7174,11 +7174,11 @@
     },
     "worker-enemy-se-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7190,11 +7190,11 @@
     },
     "worker-enemy-se-gather-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7206,11 +7206,11 @@
     },
     "worker-enemy-se-gather-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7222,11 +7222,11 @@
     },
     "worker-enemy-se-gather-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7238,11 +7238,11 @@
     },
     "worker-enemy-se-gather-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7254,11 +7254,11 @@
     },
     "worker-enemy-se-build-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7270,11 +7270,11 @@
     },
     "worker-enemy-se-build-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7286,11 +7286,11 @@
     },
     "worker-enemy-se-build-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7302,11 +7302,11 @@
     },
     "worker-enemy-se-build-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7318,11 +7318,11 @@
     },
     "worker-enemy-s-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7334,11 +7334,11 @@
     },
     "worker-enemy-s-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7350,11 +7350,11 @@
     },
     "worker-enemy-s-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7366,11 +7366,11 @@
     },
     "worker-enemy-s-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7382,11 +7382,11 @@
     },
     "worker-enemy-s-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7398,11 +7398,11 @@
     },
     "worker-enemy-s-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7414,11 +7414,11 @@
     },
     "worker-enemy-s-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7430,11 +7430,11 @@
     },
     "worker-enemy-s-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7446,11 +7446,11 @@
     },
     "worker-enemy-s-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7462,11 +7462,11 @@
     },
     "worker-enemy-s-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7478,11 +7478,11 @@
     },
     "worker-enemy-s-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7494,11 +7494,11 @@
     },
     "worker-enemy-s-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7510,11 +7510,11 @@
     },
     "worker-enemy-s-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7526,11 +7526,11 @@
     },
     "worker-enemy-s-gather-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7542,11 +7542,11 @@
     },
     "worker-enemy-s-gather-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7558,11 +7558,11 @@
     },
     "worker-enemy-s-gather-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7574,11 +7574,11 @@
     },
     "worker-enemy-s-gather-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7590,11 +7590,11 @@
     },
     "worker-enemy-s-build-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7606,11 +7606,11 @@
     },
     "worker-enemy-s-build-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7622,11 +7622,11 @@
     },
     "worker-enemy-s-build-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7638,11 +7638,11 @@
     },
     "worker-enemy-s-build-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7654,11 +7654,11 @@
     },
     "worker-enemy-sw-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7670,11 +7670,11 @@
     },
     "worker-enemy-sw-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7686,11 +7686,11 @@
     },
     "worker-enemy-sw-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7702,11 +7702,11 @@
     },
     "worker-enemy-sw-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7718,11 +7718,11 @@
     },
     "worker-enemy-sw-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7734,11 +7734,11 @@
     },
     "worker-enemy-sw-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7750,11 +7750,11 @@
     },
     "worker-enemy-sw-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7766,11 +7766,11 @@
     },
     "worker-enemy-sw-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7782,11 +7782,11 @@
     },
     "worker-enemy-sw-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7798,11 +7798,11 @@
     },
     "worker-enemy-sw-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7814,11 +7814,11 @@
     },
     "worker-enemy-sw-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7830,11 +7830,11 @@
     },
     "worker-enemy-sw-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7846,11 +7846,11 @@
     },
     "worker-enemy-sw-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7862,11 +7862,11 @@
     },
     "worker-enemy-sw-gather-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7878,11 +7878,11 @@
     },
     "worker-enemy-sw-gather-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7894,11 +7894,11 @@
     },
     "worker-enemy-sw-gather-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7910,11 +7910,11 @@
     },
     "worker-enemy-sw-gather-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7926,11 +7926,11 @@
     },
     "worker-enemy-sw-build-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7942,11 +7942,11 @@
     },
     "worker-enemy-sw-build-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7958,11 +7958,11 @@
     },
     "worker-enemy-sw-build-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7974,11 +7974,11 @@
     },
     "worker-enemy-sw-build-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -7990,11 +7990,11 @@
     },
     "worker-enemy-w-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8006,11 +8006,11 @@
     },
     "worker-enemy-w-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8022,11 +8022,11 @@
     },
     "worker-enemy-w-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8038,11 +8038,11 @@
     },
     "worker-enemy-w-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8054,11 +8054,11 @@
     },
     "worker-enemy-w-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8070,11 +8070,11 @@
     },
     "worker-enemy-w-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8086,11 +8086,11 @@
     },
     "worker-enemy-w-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8102,11 +8102,11 @@
     },
     "worker-enemy-w-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8118,11 +8118,11 @@
     },
     "worker-enemy-w-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8134,11 +8134,11 @@
     },
     "worker-enemy-w-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8150,11 +8150,11 @@
     },
     "worker-enemy-w-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8166,11 +8166,11 @@
     },
     "worker-enemy-w-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8182,11 +8182,11 @@
     },
     "worker-enemy-w-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8198,11 +8198,11 @@
     },
     "worker-enemy-w-gather-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8214,11 +8214,11 @@
     },
     "worker-enemy-w-gather-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8230,11 +8230,11 @@
     },
     "worker-enemy-w-gather-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8246,11 +8246,11 @@
     },
     "worker-enemy-w-gather-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8262,11 +8262,11 @@
     },
     "worker-enemy-w-build-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8278,11 +8278,11 @@
     },
     "worker-enemy-w-build-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8294,11 +8294,11 @@
     },
     "worker-enemy-w-build-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8310,11 +8310,11 @@
     },
     "worker-enemy-w-build-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8326,11 +8326,11 @@
     },
     "worker-enemy-nw-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8342,11 +8342,11 @@
     },
     "worker-enemy-nw-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8358,11 +8358,11 @@
     },
     "worker-enemy-nw-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8374,11 +8374,11 @@
     },
     "worker-enemy-nw-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8390,11 +8390,11 @@
     },
     "worker-enemy-nw-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8406,11 +8406,11 @@
     },
     "worker-enemy-nw-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8422,11 +8422,11 @@
     },
     "worker-enemy-nw-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8438,11 +8438,11 @@
     },
     "worker-enemy-nw-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8454,11 +8454,11 @@
     },
     "worker-enemy-nw-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8470,11 +8470,11 @@
     },
     "worker-enemy-nw-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8486,11 +8486,11 @@
     },
     "worker-enemy-nw-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8502,11 +8502,11 @@
     },
     "worker-enemy-nw-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8518,11 +8518,11 @@
     },
     "worker-enemy-nw-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8534,11 +8534,11 @@
     },
     "worker-enemy-nw-gather-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8550,11 +8550,11 @@
     },
     "worker-enemy-nw-gather-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8566,11 +8566,11 @@
     },
     "worker-enemy-nw-gather-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8582,11 +8582,11 @@
     },
     "worker-enemy-nw-gather-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8598,11 +8598,11 @@
     },
     "worker-enemy-nw-build-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8614,11 +8614,11 @@
     },
     "worker-enemy-nw-build-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8630,11 +8630,11 @@
     },
     "worker-enemy-nw-build-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8646,11 +8646,11 @@
     },
     "worker-enemy-nw-build-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8662,11 +8662,11 @@
     },
     "worker-enemy-n-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8678,11 +8678,11 @@
     },
     "worker-enemy-n-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8694,11 +8694,11 @@
     },
     "worker-enemy-n-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8710,11 +8710,11 @@
     },
     "worker-enemy-n-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8726,11 +8726,11 @@
     },
     "worker-enemy-n-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8742,11 +8742,11 @@
     },
     "worker-enemy-n-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8758,11 +8758,11 @@
     },
     "worker-enemy-n-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8774,11 +8774,11 @@
     },
     "worker-enemy-n-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8790,11 +8790,11 @@
     },
     "worker-enemy-n-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8806,11 +8806,11 @@
     },
     "worker-enemy-n-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8822,11 +8822,11 @@
     },
     "worker-enemy-n-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8838,11 +8838,11 @@
     },
     "worker-enemy-n-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8854,11 +8854,11 @@
     },
     "worker-enemy-n-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8870,11 +8870,11 @@
     },
     "worker-enemy-n-gather-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8886,11 +8886,11 @@
     },
     "worker-enemy-n-gather-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8902,11 +8902,11 @@
     },
     "worker-enemy-n-gather-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8918,11 +8918,11 @@
     },
     "worker-enemy-n-gather-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8934,11 +8934,11 @@
     },
     "worker-enemy-n-build-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8950,11 +8950,11 @@
     },
     "worker-enemy-n-build-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8966,11 +8966,11 @@
     },
     "worker-enemy-n-build-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8982,11 +8982,11 @@
     },
     "worker-enemy-n-build-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -8998,11 +8998,11 @@
     },
     "worker-enemy-ne-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9014,11 +9014,11 @@
     },
     "worker-enemy-ne-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9030,11 +9030,11 @@
     },
     "worker-enemy-ne-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9046,11 +9046,11 @@
     },
     "worker-enemy-ne-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9062,11 +9062,11 @@
     },
     "worker-enemy-ne-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9078,11 +9078,11 @@
     },
     "worker-enemy-ne-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9094,11 +9094,11 @@
     },
     "worker-enemy-ne-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9110,11 +9110,11 @@
     },
     "worker-enemy-ne-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9126,11 +9126,11 @@
     },
     "worker-enemy-ne-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9142,11 +9142,11 @@
     },
     "worker-enemy-ne-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9158,11 +9158,11 @@
     },
     "worker-enemy-ne-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9174,11 +9174,11 @@
     },
     "worker-enemy-ne-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9190,11 +9190,11 @@
     },
     "worker-enemy-ne-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9206,11 +9206,11 @@
     },
     "worker-enemy-ne-gather-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9222,11 +9222,11 @@
     },
     "worker-enemy-ne-gather-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9238,11 +9238,11 @@
     },
     "worker-enemy-ne-gather-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9254,11 +9254,11 @@
     },
     "worker-enemy-ne-gather-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9270,11 +9270,11 @@
     },
     "worker-enemy-ne-build-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9286,11 +9286,11 @@
     },
     "worker-enemy-ne-build-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9302,11 +9302,11 @@
     },
     "worker-enemy-ne-build-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9318,11 +9318,11 @@
     },
     "worker-enemy-ne-build-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9334,11 +9334,11 @@
     },
     "soldier-player-e-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9350,11 +9350,11 @@
     },
     "soldier-player-e-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9366,11 +9366,11 @@
     },
     "soldier-player-e-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9382,11 +9382,11 @@
     },
     "soldier-player-e-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9398,11 +9398,11 @@
     },
     "soldier-player-e-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9414,11 +9414,11 @@
     },
     "soldier-player-e-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9430,11 +9430,11 @@
     },
     "soldier-player-e-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9446,11 +9446,11 @@
     },
     "soldier-player-e-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9462,11 +9462,11 @@
     },
     "soldier-player-e-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9478,11 +9478,11 @@
     },
     "soldier-player-e-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9494,11 +9494,11 @@
     },
     "soldier-player-e-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9510,11 +9510,11 @@
     },
     "soldier-player-e-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9526,11 +9526,11 @@
     },
     "soldier-player-e-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9542,11 +9542,11 @@
     },
     "soldier-player-se-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9558,11 +9558,11 @@
     },
     "soldier-player-se-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9574,11 +9574,11 @@
     },
     "soldier-player-se-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9590,11 +9590,11 @@
     },
     "soldier-player-se-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9606,11 +9606,11 @@
     },
     "soldier-player-se-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9622,11 +9622,11 @@
     },
     "soldier-player-se-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9638,11 +9638,11 @@
     },
     "soldier-player-se-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9654,11 +9654,11 @@
     },
     "soldier-player-se-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9670,11 +9670,11 @@
     },
     "soldier-player-se-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9686,11 +9686,11 @@
     },
     "soldier-player-se-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9702,11 +9702,11 @@
     },
     "soldier-player-se-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9718,11 +9718,11 @@
     },
     "soldier-player-se-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9734,11 +9734,11 @@
     },
     "soldier-player-se-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9750,11 +9750,11 @@
     },
     "soldier-player-s-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9766,11 +9766,11 @@
     },
     "soldier-player-s-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9782,11 +9782,11 @@
     },
     "soldier-player-s-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9798,11 +9798,11 @@
     },
     "soldier-player-s-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9814,11 +9814,11 @@
     },
     "soldier-player-s-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9830,11 +9830,11 @@
     },
     "soldier-player-s-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9846,11 +9846,11 @@
     },
     "soldier-player-s-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9862,11 +9862,11 @@
     },
     "soldier-player-s-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9878,11 +9878,11 @@
     },
     "soldier-player-s-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9894,11 +9894,11 @@
     },
     "soldier-player-s-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9910,11 +9910,11 @@
     },
     "soldier-player-s-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9926,11 +9926,11 @@
     },
     "soldier-player-s-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9942,11 +9942,11 @@
     },
     "soldier-player-s-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9958,11 +9958,11 @@
     },
     "soldier-player-sw-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9974,11 +9974,11 @@
     },
     "soldier-player-sw-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -9990,11 +9990,11 @@
     },
     "soldier-player-sw-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10006,11 +10006,11 @@
     },
     "soldier-player-sw-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10022,11 +10022,11 @@
     },
     "soldier-player-sw-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10038,11 +10038,11 @@
     },
     "soldier-player-sw-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10054,11 +10054,11 @@
     },
     "soldier-player-sw-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10070,11 +10070,11 @@
     },
     "soldier-player-sw-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10086,11 +10086,11 @@
     },
     "soldier-player-sw-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10102,11 +10102,11 @@
     },
     "soldier-player-sw-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10118,11 +10118,11 @@
     },
     "soldier-player-sw-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10134,11 +10134,11 @@
     },
     "soldier-player-sw-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10150,11 +10150,11 @@
     },
     "soldier-player-sw-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10166,11 +10166,11 @@
     },
     "soldier-player-w-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10182,11 +10182,11 @@
     },
     "soldier-player-w-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10198,11 +10198,11 @@
     },
     "soldier-player-w-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10214,11 +10214,11 @@
     },
     "soldier-player-w-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10230,11 +10230,11 @@
     },
     "soldier-player-w-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10246,11 +10246,11 @@
     },
     "soldier-player-w-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10262,11 +10262,11 @@
     },
     "soldier-player-w-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10278,11 +10278,11 @@
     },
     "soldier-player-w-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10294,11 +10294,11 @@
     },
     "soldier-player-w-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10310,11 +10310,11 @@
     },
     "soldier-player-w-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10326,11 +10326,11 @@
     },
     "soldier-player-w-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10342,11 +10342,11 @@
     },
     "soldier-player-w-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10358,11 +10358,11 @@
     },
     "soldier-player-w-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10374,11 +10374,11 @@
     },
     "soldier-player-nw-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10390,11 +10390,11 @@
     },
     "soldier-player-nw-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10406,11 +10406,11 @@
     },
     "soldier-player-nw-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10422,11 +10422,11 @@
     },
     "soldier-player-nw-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10438,11 +10438,11 @@
     },
     "soldier-player-nw-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10454,11 +10454,11 @@
     },
     "soldier-player-nw-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10470,11 +10470,11 @@
     },
     "soldier-player-nw-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10486,11 +10486,11 @@
     },
     "soldier-player-nw-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10502,11 +10502,11 @@
     },
     "soldier-player-nw-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10518,11 +10518,11 @@
     },
     "soldier-player-nw-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10534,11 +10534,11 @@
     },
     "soldier-player-nw-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10550,11 +10550,11 @@
     },
     "soldier-player-nw-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10566,11 +10566,11 @@
     },
     "soldier-player-nw-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10582,11 +10582,11 @@
     },
     "soldier-player-n-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10598,11 +10598,11 @@
     },
     "soldier-player-n-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10614,11 +10614,11 @@
     },
     "soldier-player-n-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10630,11 +10630,11 @@
     },
     "soldier-player-n-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10646,11 +10646,11 @@
     },
     "soldier-player-n-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10662,11 +10662,11 @@
     },
     "soldier-player-n-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10678,11 +10678,11 @@
     },
     "soldier-player-n-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10694,11 +10694,11 @@
     },
     "soldier-player-n-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10710,11 +10710,11 @@
     },
     "soldier-player-n-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10726,11 +10726,11 @@
     },
     "soldier-player-n-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10742,11 +10742,11 @@
     },
     "soldier-player-n-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10758,11 +10758,11 @@
     },
     "soldier-player-n-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10774,11 +10774,11 @@
     },
     "soldier-player-n-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10790,11 +10790,11 @@
     },
     "soldier-player-ne-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10806,11 +10806,11 @@
     },
     "soldier-player-ne-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10822,11 +10822,11 @@
     },
     "soldier-player-ne-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10838,11 +10838,11 @@
     },
     "soldier-player-ne-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10854,11 +10854,11 @@
     },
     "soldier-player-ne-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10870,11 +10870,11 @@
     },
     "soldier-player-ne-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10886,11 +10886,11 @@
     },
     "soldier-player-ne-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10902,11 +10902,11 @@
     },
     "soldier-player-ne-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10918,11 +10918,11 @@
     },
     "soldier-player-ne-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10934,11 +10934,11 @@
     },
     "soldier-player-ne-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10950,11 +10950,11 @@
     },
     "soldier-player-ne-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10966,11 +10966,11 @@
     },
     "soldier-player-ne-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10982,11 +10982,11 @@
     },
     "soldier-player-ne-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -10998,11 +10998,11 @@
     },
     "soldier-enemy-e-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11014,11 +11014,11 @@
     },
     "soldier-enemy-e-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11030,11 +11030,11 @@
     },
     "soldier-enemy-e-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11046,11 +11046,11 @@
     },
     "soldier-enemy-e-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11062,11 +11062,11 @@
     },
     "soldier-enemy-e-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11078,11 +11078,11 @@
     },
     "soldier-enemy-e-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11094,11 +11094,11 @@
     },
     "soldier-enemy-e-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11110,11 +11110,11 @@
     },
     "soldier-enemy-e-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11126,11 +11126,11 @@
     },
     "soldier-enemy-e-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11142,11 +11142,11 @@
     },
     "soldier-enemy-e-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11158,11 +11158,11 @@
     },
     "soldier-enemy-e-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11174,11 +11174,11 @@
     },
     "soldier-enemy-e-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11190,11 +11190,11 @@
     },
     "soldier-enemy-e-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11206,11 +11206,11 @@
     },
     "soldier-enemy-se-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11222,11 +11222,11 @@
     },
     "soldier-enemy-se-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11238,11 +11238,11 @@
     },
     "soldier-enemy-se-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11254,11 +11254,11 @@
     },
     "soldier-enemy-se-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11270,11 +11270,11 @@
     },
     "soldier-enemy-se-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11286,11 +11286,11 @@
     },
     "soldier-enemy-se-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11302,11 +11302,11 @@
     },
     "soldier-enemy-se-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11318,11 +11318,11 @@
     },
     "soldier-enemy-se-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11334,11 +11334,11 @@
     },
     "soldier-enemy-se-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11350,11 +11350,11 @@
     },
     "soldier-enemy-se-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11366,11 +11366,11 @@
     },
     "soldier-enemy-se-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11382,11 +11382,11 @@
     },
     "soldier-enemy-se-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11398,11 +11398,11 @@
     },
     "soldier-enemy-se-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11414,11 +11414,11 @@
     },
     "soldier-enemy-s-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11430,11 +11430,11 @@
     },
     "soldier-enemy-s-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11446,11 +11446,11 @@
     },
     "soldier-enemy-s-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11462,11 +11462,11 @@
     },
     "soldier-enemy-s-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11478,11 +11478,11 @@
     },
     "soldier-enemy-s-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11494,11 +11494,11 @@
     },
     "soldier-enemy-s-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11510,11 +11510,11 @@
     },
     "soldier-enemy-s-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11526,11 +11526,11 @@
     },
     "soldier-enemy-s-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11542,11 +11542,11 @@
     },
     "soldier-enemy-s-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11558,11 +11558,11 @@
     },
     "soldier-enemy-s-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11574,11 +11574,11 @@
     },
     "soldier-enemy-s-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11590,11 +11590,11 @@
     },
     "soldier-enemy-s-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11606,11 +11606,11 @@
     },
     "soldier-enemy-s-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11622,11 +11622,11 @@
     },
     "soldier-enemy-sw-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11638,11 +11638,11 @@
     },
     "soldier-enemy-sw-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11654,11 +11654,11 @@
     },
     "soldier-enemy-sw-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11670,11 +11670,11 @@
     },
     "soldier-enemy-sw-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11686,11 +11686,11 @@
     },
     "soldier-enemy-sw-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11702,11 +11702,11 @@
     },
     "soldier-enemy-sw-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11718,11 +11718,11 @@
     },
     "soldier-enemy-sw-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11734,11 +11734,11 @@
     },
     "soldier-enemy-sw-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11750,11 +11750,11 @@
     },
     "soldier-enemy-sw-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11766,11 +11766,11 @@
     },
     "soldier-enemy-sw-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11782,11 +11782,11 @@
     },
     "soldier-enemy-sw-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11798,11 +11798,11 @@
     },
     "soldier-enemy-sw-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11814,11 +11814,11 @@
     },
     "soldier-enemy-sw-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11830,11 +11830,11 @@
     },
     "soldier-enemy-w-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11846,11 +11846,11 @@
     },
     "soldier-enemy-w-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11862,11 +11862,11 @@
     },
     "soldier-enemy-w-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11878,11 +11878,11 @@
     },
     "soldier-enemy-w-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11894,11 +11894,11 @@
     },
     "soldier-enemy-w-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11910,11 +11910,11 @@
     },
     "soldier-enemy-w-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11926,11 +11926,11 @@
     },
     "soldier-enemy-w-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11942,11 +11942,11 @@
     },
     "soldier-enemy-w-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11958,11 +11958,11 @@
     },
     "soldier-enemy-w-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11974,11 +11974,11 @@
     },
     "soldier-enemy-w-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -11990,11 +11990,11 @@
     },
     "soldier-enemy-w-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12006,11 +12006,11 @@
     },
     "soldier-enemy-w-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12022,11 +12022,11 @@
     },
     "soldier-enemy-w-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12038,11 +12038,11 @@
     },
     "soldier-enemy-nw-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12054,11 +12054,11 @@
     },
     "soldier-enemy-nw-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12070,11 +12070,11 @@
     },
     "soldier-enemy-nw-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12086,11 +12086,11 @@
     },
     "soldier-enemy-nw-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12102,11 +12102,11 @@
     },
     "soldier-enemy-nw-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12118,11 +12118,11 @@
     },
     "soldier-enemy-nw-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12134,11 +12134,11 @@
     },
     "soldier-enemy-nw-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12150,11 +12150,11 @@
     },
     "soldier-enemy-nw-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12166,11 +12166,11 @@
     },
     "soldier-enemy-nw-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12182,11 +12182,11 @@
     },
     "soldier-enemy-nw-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12198,11 +12198,11 @@
     },
     "soldier-enemy-nw-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12214,11 +12214,11 @@
     },
     "soldier-enemy-nw-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12230,11 +12230,11 @@
     },
     "soldier-enemy-nw-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12246,11 +12246,11 @@
     },
     "soldier-enemy-n-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12262,11 +12262,11 @@
     },
     "soldier-enemy-n-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12278,11 +12278,11 @@
     },
     "soldier-enemy-n-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12294,11 +12294,11 @@
     },
     "soldier-enemy-n-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12310,11 +12310,11 @@
     },
     "soldier-enemy-n-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12326,11 +12326,11 @@
     },
     "soldier-enemy-n-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12342,11 +12342,11 @@
     },
     "soldier-enemy-n-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12358,11 +12358,11 @@
     },
     "soldier-enemy-n-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12374,11 +12374,11 @@
     },
     "soldier-enemy-n-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12390,11 +12390,11 @@
     },
     "soldier-enemy-n-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12406,11 +12406,11 @@
     },
     "soldier-enemy-n-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12422,11 +12422,11 @@
     },
     "soldier-enemy-n-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12438,11 +12438,11 @@
     },
     "soldier-enemy-n-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12454,11 +12454,11 @@
     },
     "soldier-enemy-ne-idle-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12470,11 +12470,11 @@
     },
     "soldier-enemy-ne-walk-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12486,11 +12486,11 @@
     },
     "soldier-enemy-ne-walk-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12502,11 +12502,11 @@
     },
     "soldier-enemy-ne-walk-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12518,11 +12518,11 @@
     },
     "soldier-enemy-ne-walk-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12534,11 +12534,11 @@
     },
     "soldier-enemy-ne-attack-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12550,11 +12550,11 @@
     },
     "soldier-enemy-ne-attack-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12566,11 +12566,11 @@
     },
     "soldier-enemy-ne-attack-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12582,11 +12582,11 @@
     },
     "soldier-enemy-ne-attack-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12598,11 +12598,11 @@
     },
     "soldier-enemy-ne-death-0": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12614,11 +12614,11 @@
     },
     "soldier-enemy-ne-death-1": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12630,11 +12630,11 @@
     },
     "soldier-enemy-ne-death-2": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
@@ -12646,11 +12646,11 @@
     },
     "soldier-enemy-ne-death-3": {
       "atlas": "units",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "anchor": {
-        "x": 16,
-        "y": 22
+        "x": 32,
+        "y": 44
       },
       "kind": "unit",
       "faction": "crown",
