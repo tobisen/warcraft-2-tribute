@@ -1270,3 +1270,9 @@ Användarens senaste styrning skiljer hela unit-testsuiten från relevanta integ
 ## RTS-148 – En keykälla och effektivt testurval
 
 Återanvänd samma actionhandlers; grupper/headings och tooltip är presentation. Alla18actions får unik hotkey, utan modifier-/camera-/browserkonflikter. Group/cost/disabled state härleds från faktiskt selectionstate. Testuppdelning är filbaserad och explicit: isolerade komponent-/asset-tester unit, sammansatta/mixed MatchState/Save/fullmatch-filer integration. Alla143filer täcks av unionen; ingen assertion raderas eller migreras för att korta körning. Full npm test kvarstår för etappslut/CI. UI-task148 kör unit+relevanta inputintegrationer/nativeflow, inga kompletta matcher.
+
+## RTS-149 – Enkel lokal scoremodell och Save33
+
+Poäng är outcome+gameplaytid enligt modell1: victory10000+max(0,3600-floor(seconds)), defeat0. Uppdrag/karta, svårighet, speed, båda fraktioner, Save-config/ruleversion och modell ingår i partitionsnyckel. Produktens releaseversion är separat från regelversionen. Ingen statistikbonus eller global leaderboard.
+
+Scenen tilldelar nya matcher UUIDv4; Save33 bevarar det. Äldre Save32 saknar säkert match-ID och migrerar utan att uppfinna ett; dessa matcher blir inte highscore-registrerade. Första terminala resultatet perID gäller även efter load från tidigare gren. Top10 är presentation, inte pruning: alla ID:n behålls. Vid5000entries stoppas ny registrering utan att gamla dedup-ID:n glöms. Quota/blockerad storage redovisas med sessionfallback.

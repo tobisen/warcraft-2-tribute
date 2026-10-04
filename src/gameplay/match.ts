@@ -52,6 +52,7 @@ import { updateWaves, type WaveState } from './waves';
 
 export type MatchOutcome = 'playing' | 'defeat' | 'victory';
 export interface MatchState {
+  matchId?:string;
   capture?:CaptureState;
   campaignMission?:import('../config/campaign').CampaignMissionId;
   statLedger?:StatLedger;

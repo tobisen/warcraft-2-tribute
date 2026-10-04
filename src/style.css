@@ -206,3 +206,6 @@ html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#
 #action-panel [data-action-group] .control{min-width:0;width:100%;}
 #action-panel [data-action-group] button{width:100%;}
 #action-panel #production-queue{grid-column:1 / -1;}
+
+#home-highscores h3,#result-highscores-panel h3{font-size:16px;color:#d7bb73;}
+#home-highscores li,#result-highscores-panel li{font-size:14px;line-height:1.5;margin:8px 0;}

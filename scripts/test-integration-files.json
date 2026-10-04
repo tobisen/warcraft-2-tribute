@@ -37,6 +37,7 @@
   "src/gameplay/gameSpeed.test.ts",
   "src/gameplay/groupMovement.test.ts",
   "src/gameplay/highlands.test.ts",
+  "src/gameplay/highscoreSave.test.ts",
   "src/gameplay/humans.test.ts",
   "src/gameplay/islands.test.ts",
   "src/gameplay/largeMaps.test.ts",

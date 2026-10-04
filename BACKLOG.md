@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-149 – Lokala highscores** — **Todo**.
+**RTS-150 – Samlat speltest och release** — **Todo**.
 
 **Aktuell etapp:** användaren har återupptagit arbetet genom RTS-150 med effektivare verifiering och taskvis commit/push. Efter150 lämnas slutrapport/överlämning; stanna före151. Tidigare paus före148 är upphävd.
 
@@ -3905,7 +3905,7 @@ Disabled actions visar varför de är blockerade.
 
 ## RTS-149 – Lokala highscores
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Highscores per campaign-uppdrag och skirmish-karta.
 
@@ -3929,7 +3929,9 @@ Ingen backend eller global leaderboard i denna fas.
 
 **Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
 
-**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+**Detaljplan:**149A enkel scoremodell: victory10000+max(0,3600-floor(gameplayseconds)), defeat0 (utfall visas separat); ingen kill/production/refundbonus.149B fullmetadata/statistik och partitionsnyckel per campaign-ID eller skirmishmap, difficulty/speed/player/enemy/config/scoremodell.149C stabil UUID för faktisk ny match i scene, bevarad via Save33/load; restart skapar ny. Äldre Save32 migrerar utan påhittad identitet och visas som ej registrerbar tills ny match.149D strikt lokal store/validation, en entry per match-ID, inga bortglömda dedup-ID:n vid top-listning; storagefel/sessionfallback/capacity redovisas.149E huvudmeny- och resultathighscores med relevanta grupper/metadata, ingen backend. Riktade score/storage/Save/resultat/restartintegrationer och fokuserad native paidTutorial→resultat/lista/load/replay; unit/build/diff/docs före Done. Fullregression150, inga all-matchsimuleringar i149.
+
+**Slutverifiering:**431unit-tester/76filer PASS5.60s efter TS-target-rättning, build inklusive strict typecheck/diff/doclänkar PASS.36riktade score/Save/campaign/resultattester PASS; native två betalda Tutorial-segrar per1280/1920, listor, partial/ended Save/load/reload/dedup/replay-ID PASS utan browsererrors. Bilder och diff granskade utan blockerande fynd. Full regression150; bundlevarning/uppskjuten lyssning kvar.
 
 ## RTS-150 – Samlat speltest och release
 

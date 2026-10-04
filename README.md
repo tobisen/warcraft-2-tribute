@@ -766,3 +766,9 @@ Borttagning frigör population utan återbetalning eller kill credit. Statistik 
 Actions är grupperade under Orders, Build, Train och Research. Tangent visas på knappen; håll musen över för mekanik, cost och eventuell blockeringsorsak. Keys and commands visar samma bindningar. Nya keys: H harbor, J transport, K warship, L unload, V specialist. Fokus ska vara i spelvärlden; text/UI-fokus, modifiers och repeat ger inga gameplayorders.
 
 `npm run test:unit` kör hela urvalet av isolerade komponent-/asset-testfiler. `node scripts/test-unit.mjs --list` visar unit/integration-klassificeringen. Kör berörda integrationer med `npm test -- src/gameplay/orders.test.ts src/gameplay/controlGroups.test.ts` som exempel. `npm test` kör fortsatt full regression med alla integrationer och matchsimuleringar vid etappslut/CI. Build innehåller strict typecheck.
+
+## RTS-149 – Lokala highscores
+
+Local Highscores finns i huvudmenyn och på resultatvyn. Campaign grupperas per uppdrag, Skirmish per karta; svårighet, gameplayhastighet, båda fraktionerna, configversion och scoremodell separerar listorna. Seger ger `10000 + max(0, 3600 - floor(gameplaysekunder))`; förlust ger0. Statistik ger inga poängbonusar. Top10 visas per grupp.
+
+Nya matcher får ett UUID som Save33 bevarar. Första avslutade resultatet för ett match-ID registreras en gång även efter load eller upprepad resultatvisning. Replay/restart skapar en ny match. Äldre Saves migreras utan påhittad identitet och kan spelas vidare men inte registrera highscores. Lokal lagring behåller upp till5000 resultat inklusive dedup-ID:n; vid full lagring registreras inget nytt resultat. Storagefel visas och nya resultat behålls endast under sessionen. Inga globala eller manipulationssäkra resultat garanteras.

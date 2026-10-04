@@ -1341,3 +1341,9 @@ Modalen låser fokus och fryser matchtid, simulation och gameplay-input; Cancel/
 ## RTS-148 – Tydliga commands
 
 Orders/Build/Train/Research visas som rubriker för kontextens befintliga actions. Varje knapp visar sin hotkey och tooltip med full actionbeskrivning, aktuell cost och orsak om blocked. Hjälpvyn använder samma bindningar: H harbor, J transport, K warship, L unload och V specialist kompletterar tidigare13bindningar till18actions. Arrow/Home/Space-camera, Ctrl/Cmd-grupper och browser/textinput är fortsatt separata; modifiers/repeat/fokuserad UI utlöser inga gameplaykeys. Inga ekonomi-/combat-/produktionsregler ändras.
+
+## RTS-149 – Lokala resultatlistor
+
+Campaign-uppdrag och Skirmish-kartor har separata lokala highscores, ytterligare uppdelade efter svårighet, hastighet, spelar-/fiendefraktion och regelversion. Modell1: victory10000 plus högst3600 tidsbonus (hela gameplaysekunder dras av); defeat0. Förlust visas som förlust. Kills, produktion, dismiss och resurser ger inga scorebonusar. Matchstatistik sparas tillsammans med utfall/tid och profiler.
+
+Första terminala resultatet per match-ID gäller; load av en tidigare gren ger inte ett andra resultat. Ny replay/restart ger ny identitet. Äldre Saves saknar säker ID och är ej rankade. Top10 visas, alla dedup-ID:n behålls upp till5000entries. Detta är lokal spelhistorik utan backend eller garanti mot lokal manipulation.

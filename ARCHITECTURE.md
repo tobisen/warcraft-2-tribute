@@ -1688,3 +1688,9 @@ BootScene binder Dismiss/Confirm/Cancel till en native HTML-dialog med fokuslås
 Actionpanel grupperar samma befintliga DOM-knappar/handlers i Orders, Build, Train och Research. Synlighet beror på selection/byggnad; tomma grupper döljs. `actionGroup`/`actionTooltip` är rena presentationhelpers. Alla18actions finns i hotkeys med unik tangent och mekaniktext; tooltip kombinerar aktuell fraktionsknapp, cost, tangent och disabled reason. Guide härleds från samma config. Fokus/modifiers/repeat/paus/camera-skydd och kostnads-/orderhandlers bevaras.
 
 `npm run test:unit` väljer75 isolerade komponent-/asset-filer genom `scripts/test-unit.mjs`;68 sammansatta/mixed MatchState/Save/fullmatch-filer ligger explicit i `scripts/test-integration-files.json`. Inget test tas bort: unionen är alla143filer. Blandade filer tillhör helt integrationurvalet, och nya testfiler måste klassificeras efter innehåll. Riktade integrationer körs med filargument; npm test förblir fullregression/CI, inklusive paidmatches.
+
+## RTS-149 – Score och matchidentitet
+
+`gameplay/highscores.ts` beräknar poäng från utfall/gameplaytid, tar en MatchStats-snapshot, validerar strikt lokalt schema och registrerar en gång per UUID. Partitionsnyckeln innehåller campaign-ID/skirmishkarta, faktisk karta, difficulty, speed, båda fraktioner, config och scoremodell. Top10-visning raderar inga dedup-ID:n;5000 entries är lagringsgräns. Storagefel har tydlig sessionfallback.
+
+BootScene skapar UUID endast för verklig ny match och bevarar det via currentMatch/applyMatch/Save33. Ren createMatch förblir deterministisk. Save32 migrerar utan identitet; äldre matchers gameplay/progression bevaras utan fiktiva highscores. Presentation i `presentation/highscores.ts` använder textContent och grupperade listor från huvudmeny/resultat. Resultatpanelen kan behålla öppen undersida efter ended→ended-load. `highscoreSave.test.ts` klassas integration; score/storage-tester unit.

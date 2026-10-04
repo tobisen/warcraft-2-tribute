@@ -1,14 +1,15 @@
 import type {SessionPhase} from '../gameplay/session';
-export type ResultPage='summary'|'statistics';
-export function resultNavigation(page:ResultPage,action:'statistics'|'back'|'escape'):ResultPage {
- return action==='statistics'?'statistics':action==='back'||action==='escape'?'summary':page;
+export type ResultPage='summary'|'statistics'|'highscores';
+export function resultNavigation(page:ResultPage,action:'statistics'|'highscores'|'back'|'escape'):ResultPage {
+ return action==='highscores'?'highscores':action==='statistics'?'statistics':action==='back'||action==='escape'?'summary':page;
 }
 let phase:SessionPhase='menu',page:ResultPage='summary';
 const el=(id:string)=>document.getElementById(id)!;
 function syncPage():void {
- const statistics=page==='statistics';
+ const statistics=page==='statistics',scores=page==='highscores';
+ el('result-highscores-panel').hidden=!scores;
  const details=el('match-results').querySelector<HTMLElement>('[data-result-statistics]');if(details)details.hidden=!statistics;
- el('result-statistics').hidden=statistics;el('result-back').hidden=!statistics;
+ el('result-statistics').hidden=statistics;el('result-highscores').hidden=scores;el('result-back').hidden=page==='summary';
 }
 export function syncResultScreen(next:SessionPhase):void {
  const entered=phase!=='ended'&&next==='ended';phase=next;
@@ -24,7 +25,8 @@ export function syncResultScreen(next:SessionPhase):void {
 export function bindResultScreen():void {
  el('result-play-again').addEventListener('click',()=>{if(phase==='ended')el('restart-match').click();});
  el('result-main-menu').addEventListener('click',()=>{if(phase==='ended')el('new-match').click();});
- const navigate=(action:'statistics'|'back'|'escape')=>{if(phase!=='ended')return;page=resultNavigation(page,action);syncPage();el(page==='statistics'?'result-back':'result-statistics').focus();};
+ const navigate=(action:'statistics'|'highscores'|'back'|'escape')=>{if(phase!=='ended')return;page=resultNavigation(page,action);syncPage();el(page==='summary'?'result-statistics':'result-back').focus();};
+ el('result-highscores').addEventListener('click',()=>navigate('highscores'));
  el('result-statistics').addEventListener('click',()=>navigate('statistics'));el('result-back').addEventListener('click',()=>navigate('back'));
  window.addEventListener('keydown',event=>{
   if(phase!=='ended'||event.ctrlKey||event.metaKey||event.altKey)return;
