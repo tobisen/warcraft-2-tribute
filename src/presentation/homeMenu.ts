@@ -29,7 +29,7 @@ export function syncHomeMenu(nextPhase:SessionPhase):void{
  syncPauseMenu(phase);
 }
 export function bindHomeMenu():void{
- element('home-peoples').textContent=homePeoples.map(p=>p.label).join(' · ')+' — artwork. Playable factions: Humans (Crown Alliance), Orcs (Iron Clan) and Elves.';
+ element('home-peoples').textContent=homePeoples.map(p=>p.label).join(' · ')+' — artwork. Playable factions: Humans (Crown Alliance), Orcs (Iron Clan) Elves and Dwarves.';
  bindActionPanel();bindCameraSettings();bindPauseMenu();bindFullscreen();
  const open=(page:HomePage)=>{if(phase!=='menu')return;current=page;if(page==='campaign'||page==='skirmish'){const select=element('scenario-select') as HTMLSelectElement;if(!homeScenarios[page].includes(select.value as never)){select.value=homeScenarios[page][0];select.dispatchEvent(new Event('change'));}}syncHomeMenu(phase);(page==='home'?element('menu-campaign'):element('menu-back')).focus();};
  for(const page of ['campaign','skirmish','load','settings','changelog'] as const)element(`menu-${page}`).addEventListener('click',()=>open(page));

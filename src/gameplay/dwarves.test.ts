@@ -1,0 +1,64 @@
+import {expect,it} from 'vitest';
+import {factions,factionsForPlayer} from '../config/factions';
+import {createMatch} from './match';
+import {enqueueProduction,updateQueuedProduction} from './productionQueue';
+import {updateGathering} from './gathering';
+import {useAbility,advanceAbilities} from './abilities';
+import {updateCombat} from './combat';
+import {startResearch,updateResearch} from './research';
+import {placeHarbor,trainShip,updateNavy} from './navy';
+import {encodeSave,decodeSave} from './save';
+import {matchLabels} from '../presentation/hud';
+
+it('Dwarves have slower paid workers, armored buildings and a genuinely heavy siege profile',()=>{
+ const f=factions.dwarves,m=createMatch('tutorial','beginner',factionsForPlayer('dwarves'));
+ expect(matchLabels(m).health).toBe('Stone Hold: 300 / 300 HP');expect(m.gathering.units[0].hp).toBe(40);
+ const worker={...m.gathering.units[0],position:{x:200,y:200},target:{x:400,y:200},order:{kind:'move' as const}};
+ expect(updateGathering({...m.gathering,units:[worker]},1).units[0].position.x).toBe(340);
+ m.gathering.wood=100;m.gathering.goldBalance=50;const base={kind:'base' as const};
+ const start=enqueueProduction(m.gathering,m.production,base);expect(start.gathering.wood).toBe(78);
+ expect(updateQueuedProduction(start.gathering,start.production,5.99,base).gathering.units).toHaveLength(3);
+ expect(updateQueuedProduction(start.gathering,start.production,6,base).gathering.units.at(-1)).toMatchObject({hp:40,selected:false});
+ expect(f.buildings.barracks).toMatchObject({hp:160,cost:{wood:45,gold:0}});expect(f.buildings.farm).toMatchObject({hp:110,cost:{wood:22,gold:0}});
+ expect(f.units.archer).toMatchObject({hp:55,speed:115,damage:16,attackInterval:1.2});
+ expect(f.units.catapult).toMatchObject({hp:110,speed:60,range:240,damage:30,hitRadius:16,splashRadius:48,durationSeconds:12});
+});
+it('ten-second Stone Plates research unlocks Bulwark and Brace compounds actual incoming defense',()=>{
+ const m=createMatch('tutorial','beginner',factionsForPlayer('dwarves'));m.gathering.wood=200;m.gathering.goldBalance=100;
+ m.placement.forge={id:'forge',owner:'player',hp:160,footprint:{x:608,y:384,width:64,height:64},construction:{remainingSeconds:0,builderId:null}};
+ const research=startResearch(m.gathering,m.research!,m.placement,'defense');expect(research.gathering).toMatchObject({wood:155,goldBalance:85});
+ expect(startResearch(research.gathering,research.research,m.placement,'defense').gathering).toBe(research.gathering);
+ expect(updateResearch(research.research,m.placement,9.99,true,'dwarves').defense).toBe(0);
+ const finished=updateResearch(research.research,m.placement,10,true,'dwarves');expect(finished.defense).toBe(1);
+ const b={kind:'barracks' as const,footprint:{x:512,y:384,width:64,height:64},unitType:'specialist' as const};
+ expect(enqueueProduction(research.gathering,m.soldierProduction,{...b,technology:{buildings:['forge' as const],research:{attack:1}}}).production).toBe(m.soldierProduction);
+ const start=enqueueProduction(research.gathering,m.soldierProduction,{...b,technology:{buildings:['forge' as const],research:{defense:finished.defense}}});
+ expect(start.gathering).toMatchObject({wood:110,goldBalance:65});expect(updateQueuedProduction(start.gathering,start.production,9.99,b).gathering.units).toHaveLength(3);
+ const done=updateQueuedProduction(start.gathering,start.production,10,b),unit=done.gathering.units.at(-1)!;if(unit.kind!=='soldier')throw Error('Bulwark must fight');
+ expect(unit).toMatchObject({hp:140,archetype:'specialist',selected:false});
+ const fighter={...unit,position:{x:200,y:200},selected:true,order:{kind:'attack' as const,enemyId:'enemy-1'}};
+ const g=useAbility({...done.gathering,units:[fighter]});expect(g.units[0]).toMatchObject({ability:{activeSeconds:5,cooldownSeconds:25}});
+ const result=updateCombat(g,{baseHP:300,upgrades:{attack:1,defense:1},enemies:[{id:'enemy-1',position:{x:224,y:200},hp:100}]},1);
+ expect(result.gathering.units[0].hp).toBeCloseTo(140-6*.65*.65);expect(result.combat.enemies[0].hp).toBeCloseTo(100-14*1.25);
+ expect(advanceAbilities(g,5).units[0]).toMatchObject({ability:{activeSeconds:0,cooldownSeconds:20},order:fighter.order});
+});
+it('Ironclad and Heavy Ferry pay their distinct recipes and honor ten/eight-second production',()=>{
+ let m=createMatch('mission-outpost','easy',factionsForPlayer('dwarves'));m.gathering.wood=200;m.gathering.goldBalance=100;
+ m.gathering.units=m.gathering.units.map(u=>({...u,selected:u.id==='unit-1'}));m.placement={...m.placement,active:true,kind:'harbor'};
+ m=placeHarbor(m,{x:192,y:416});expect(m.gathering).toMatchObject({wood:155,goldBalance:90});expect(m.navy!.harbor!.hp).toBe(200);m=updateNavy(m,100);
+ m=trainShip(m,'warship');expect(m.gathering).toMatchObject({wood:105,goldBalance:75});expect(updateNavy(m,9.99).navy!.ships).toHaveLength(0);m=updateNavy(m,10);
+ expect(m.navy!.ships[0]).toMatchObject({hp:120,selected:false});m=trainShip(m,'transport');expect(m.gathering).toMatchObject({wood:60,goldBalance:65});m=updateNavy(m,8);
+ expect(m.navy!.ships[1]).toMatchObject({role:'transport',hp:120});expect(factions.dwarves.naval.units.transport.speed).toBe(85);
+ expect(decodeSave(encodeSave(m,{camera:{x:0,y:0},building:'harbor'})).ok).toBe(true);
+});
+it('Save28 accepts paid twelve-second Cannon jobs and Brace timers, never historical dwarf identities',()=>{
+ const m=createMatch('survival','normal',factionsForPlayer('dwarves'));m.gathering.wood=100;m.gathering.goldBalance=50;
+ const b={kind:'barracks' as const,footprint:{x:512,y:384,width:64,height:64},unitType:'catapult' as const,technology:{buildings:['forge' as const],research:{}}};
+ const start=enqueueProduction(m.gathering,m.soldierProduction,b);m.gathering=start.gathering;m.soldierProduction=start.production;
+ const json=encodeSave(m,{camera:{x:0,y:0},building:null});expect(decodeSave(json).ok).toBe(true);
+ const done=updateQueuedProduction(m.gathering,m.soldierProduction,12,b);m.gathering={...done.gathering,units:done.gathering.units.map(u=>({...u,selected:u.kind==='soldier'}))};m.soldierProduction=done.production;m.production.nextUnitNumber=done.production.nextUnitNumber;
+ m.gathering=useAbility(m.gathering);const d=JSON.parse(encodeSave(m,{camera:{x:0,y:0},building:null}));
+ expect(d.state.gathering.units.at(-1)).toMatchObject({typeId:'dwarves:unit:catapult',ability:{activeSeconds:5,cooldownSeconds:25}});expect(decodeSave(JSON.stringify(d)).ok).toBe(true);
+ d.configVersion='tribute-config-27';expect(decodeSave(JSON.stringify(d)).ok).toBe(false);
+ const old=JSON.parse(encodeSave(createMatch('survival','normal',factionsForPlayer('elves')),{camera:{x:0,y:0},building:null}));old.configVersion='tribute-config-27';expect(decodeSave(JSON.stringify(old)).ok).toBe(true);
+});

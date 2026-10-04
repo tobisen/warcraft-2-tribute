@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-139 – Dwarves** — **Todo**.
+**RTS-140 – Goblins** — **Todo**.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -3638,7 +3638,7 @@ byggnader, research och assets.
 
 ## RTS-139 – Dwarves
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Implementera den beslutade dwarf-rostern,
 
@@ -3657,7 +3657,9 @@ byggnader, research och assets.
 
 **Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
 
-**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+**Detaljplan:**139A stabilt dwarves-ID/fem roller, alla134-recept/building/research/naval/Brace och meny.139B egna kompakt rustning/skägg/sköld/crossbow/cannon-, stone/metal-building- och ironclad/ferry-pixelbilder; ompacka unit-atlas till4096px bredd för att hålla båda dimensioner under8192.139C Save27→28 med historisk faction-validering, betald ekonomi/prerequisite/timing/försvar/projektil/naval/Save-regressioner, andra fraktioner bevarade.139D native betald ekonomi/build/research/Bulwark/combat/Save/restart, full checks/review/docs. Full NPC-roster och matchup141.
+
+**Verifierat 2026-10-04:**1006tester/133filer PASS169.43s; typecheck/build/diff/doclänkar PASS. Native1280/1920 verklig gathering/build/Stone Plates/Bulwark/movement/Save/combat/victory/restart och separat Stone Dock/Heavy Ferry/landstigning/5wood/Save/restart PASS utan pageerrors. Spritebilder och diff granskade. Full AI141; ljudlyssning och bundlevarning oförändrade.
 
 ## RTS-140 – Goblins
 

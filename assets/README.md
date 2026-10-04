@@ -183,3 +183,7 @@ Original32px Raider i sources/units.mjs med bar hud/huvud, lätt läderrustning 
 ## RTS-138 – Original woodland-roster
 
 Elves har egna leaf-cloaks/öron, verktyg, Warden-spear/leafshield, Longbow/quiver, Marksman-guld/vit headband och Ballista med riktad bult. Building-källan ger root/pillar/canopy, Garden, Moon Workshop och River Dock; fyra separata bygg/damagefaser. Naval har carved leaf-prow/sails och transportcanopy. Två lagägare/åtta unit- och fartygsriktningar; samma anchors/palett/animationer. Export:3504unitframes2048×7040,120buildingframes1024×1920,1248navalframes1024×4992. PNG/metadatamanifest exporterade tillsammans, alla dimensioner under8192px. Egna repo-native kompositioner utan externa rasterreferenser.
+
+## RTS-139 – Original Dwarf-pixelgrafik
+
+Dwarves har egna korta/breda skägg-/metal-/hammer-/shield-/crossbow-silhuetter och Cannon utan stonebasket. Stone-vaults, buttresses, Storehouse-crates, Foundry-furnace och Stone Dock; armored slab naval-hull och metallkabin. Två teamägare/åtta unit/fartygs-riktningar, samma native32/64px,8FPS och fyra buildingstages. Unit-atlas4096×4672/4672frames packas64kolumner för texturegränsen; byggatlas1024×2560/160, naval1024×6656/1664. Befintliga ID:n/anchors bevaras och PNG/JSON/manifest exporteras tillsammans. Samma egna repo-native källor/palett/villkor.

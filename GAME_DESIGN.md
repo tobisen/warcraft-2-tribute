@@ -1159,7 +1159,7 @@ Shattered Coast128×128 har västlig spelarö, nordöstlig landkust, sydlig kont
 
 ## RTS-134 – Fem fraktioner: beslutad design inför135–141
 
-Detta är måldesign, inte redan implementerat gameplay. Humans/Orcs kompletteras136/137; Elves/Dwarves/Goblins införs138–140; matchups/AI verifieras141. Nuvarande runtime har fortfarande bara Crown och Clans. Behåll `crown` för Humans och `clans` för Orcs; nya ID:n är `elves`, `dwarves`, `goblins`. Presentation och teamägare är separata från dessa stabila identiteter. Äldre matchers redan betalda jobb/costs/tider bevaras vid migration, inga gratis specialistupplåsningar.
+Detta är måldesign, inte redan implementerat gameplay. Humans/Orcs kompletteras136/137; Elves/Dwarves/Goblins införs138–140; matchups/AI verifieras141. Vid designleveransen134 hade runtime bara Crown och Clans; senare fraktionsavsnitt anger faktiskt tillgänglig roster. Behåll `crown` för Humans och `clans` för Orcs; nya ID:n är `elves`, `dwarves`, `goblins`. Presentation och teamägare är separata från dessa stabila identiteter. Äldre matchers redan betalda jobb/costs/tider bevaras vid migration, inga gratis specialistupplåsningar.
 
 | Fraktion | Styrka och spelstil | Svaghet | Specialist |
 | --- | --- | --- | --- |
@@ -1256,3 +1256,7 @@ Orcs har hela femrolls-roster enligt134. Raider är snabb offensiv melee med ege
 ## RTS-138 – Spelbara Elves
 
 Välj Elves: Grove Tender, Warden, Longbow, Ballista och Marksman. Lättare HP och högre fart, längre ranged/siege-range enligt134. Moon Workshop45wood/10gold låser upp Ballista; True Aim40/15,8s låser dessutom upp Marksman30/20,8s/2supply/50HP/170px/s/range200/16damage. True Shot ger+20% outgoing i5s,20s cooldown och bevarar orders. Woven Guard35/15,8s reducerar mottagen skada20%. Grove Hall220HP, Ranger Lodge110, Garden70, Moon Workshop110; River Dock140HP, Swift Sail45/15 och Grove Ferry40/10, båda80HP/125px/s. Alla använder befintlig ekonomi/leverans/produktion och egna woodland-/leaf-/bow-/ballista-/root-/canopybilder. Full fraktions-AI hör till141; ingen sådan färdigmarkering här.
+
+## RTS-139 – Spelbara Dwarves
+
+Dwarves har Miner40HP/140px/s (22wood,6s), Iron Guard85HP/120px/s/17DPS, Crossbow55HP/115px/s/16damage/1.2s och Cannon110HP/60px/s/30damage/2s/range240. Bulwark140HP/100px/s/14DPS kostar45/20, tar10s/2supply och kräver Foundry+Stone Plates. Stone Hold300HP, Guard Hall160 och45wood, Storehouse110 och22wood, Foundry160 och45/15. Forged Shot/Stone Plates45/15,10s; defense0.65 och Brace0.65 multipliceras medan buffen är aktiv (5s,25s cooldown). Stone Dock200HP45/10, Ironclad120HP/85px/s50/15/10s, Heavy Ferry45/10/8s. Egna kompakta armored/beard/hammer/shield/crossbow/cannon och stone/metalbilder, gamla order/input/Save-regler kvar. NPC-roster/full matchup141.

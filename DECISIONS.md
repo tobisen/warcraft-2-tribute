@@ -1216,3 +1216,7 @@ Stone Thrower träning ändras10→11s. Save26:s25-migration identifierar och va
 ## RTS-138 – Stabil Elf-identitet
 
 Aktivera elves med134:s femrollsprofil och befintligt projectile-specialistsystem. True Shot är samma självbuffmodell, inget nytt spell-/mana-system. Ge alla factionbilder datastyrt artPrefix och egna kompositioner i befintliga repo-native pixelkällor; återanvänd inte soldat-alias för Marksman. Ballista får beslutad16px hitRadius och egen bult/riktning utan gammal stenbasket. Save27 migrerar26 med oförändrat historiskt state; elves i historisk26 avvisas. Full NPC-roster/baseprofil och valbara matchups ligger141.
+
+## RTS-139 – Dwarf-försvar och atlaspackning
+
+Använd134:s dwarves-profiler, Brace som befintlig självbuff och multiplicativ mottagen skada tillsammans med Stone Plates. Inga nya aura/healing/spell-system. När fjärde rostern överstiger en smal atlas texturehöjd packas unitbilder i64kolumner/4096px bredd; båda dimensionerna hålls under8192 och alla frame-ID:n/ankare/logiska bodies bevaras. Bygg-/sjöatlasser expanderas bara inom samma gräns. Save28 håller historisk27 utan förändrat state men tillåter ingen då opublicerad dwarves-identitet.

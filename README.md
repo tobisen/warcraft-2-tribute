@@ -714,3 +714,7 @@ Välj Orcs · Iron Clan (stabilt clans-ID). Peon35HP/155px/s, Axe Warrior20DPS, 
 ## RTS-138 – Elves
 
 Välj Elves för snabbare, lättare units med längre båg-/ballistaräckvidd. Bygg Ranger Lodge och Moon Workshop45wood/10gold, forska True Aim40wood/15gold vid Grove Hall och träna Marksman30wood/20gold (8s,2supply). True Shot [E] ger+20% utgående skada i5s. River Dock och Swift Sail/Grove Ferry använder egna woodlandbilder och80HP/125px/s. Save27 bevarar äldre matcher; full femfraktions-AI återstår i141. Test/typecheck/build-kommandon är oförändrade.
+
+## RTS-139 – Dwarves
+
+Välj Dwarves för långsam, tålig armé och stark Cannon. Bygg Guard Hall45wood och Foundry45wood/15gold; välj Stone Hold för Stone Plates45wood/15gold (10s), träna Bulwark45wood/20gold (10s,2supply,140HP). Brace [E] reducerar inkommande skada35% i5s,25s cooldown. Stone Dock45/10 tränar Ironclad50/15 på10s eller Heavy Ferry45/10 på8s; fartyg120HP/85px/s. Egna originalpixelbilder, Save28 migrerar tidigare matcher. Full femfraktions-AI återstår141.

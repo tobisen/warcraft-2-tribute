@@ -1626,3 +1626,7 @@ Save26 migrerar25: äldre clans:unit:catapult-jobb ska ha40/20 och10s, får kont
 ## RTS-138 – Elf-profiler och woodland-assets
 
 elves är tredje stabila identiteten. Befintliga queue/prerequisite/selection/combat/naval-system använder femrolls-roster och134:s recept. Marksman är projectile-specialist; True Shot återanvänder självbuffens timers. BootScene:s initiala spriteval använder nu config artPrefix för alla fraktioner. Egna unit/building/naval-källor exporterade tillsammans: units2048×7040/3504frames, buildings1024×1920/120frames, naval1024×4992/1248frames. Befintliga ankare, native32/64px unitbilder och logiska footprints bevaras. Save27 migrerar26 utan state-/receptförändringar men avvisar ny elves-identitet i äldre config. Defaultmotståndare Humans; NPC-grundarmé/base fortfarande generiska till141.
+
+## RTS-139 – Dwarf-profiler och bredare unit-atlas
+
+dwarves använder samma roster/production/prerequisite/research/combat/naval/admission. Faktiska worker6s/speed140, Cannon12s och Ironclad10s fungerar utan nya produktionstyper; research10s och Brace25s cooldown valideras per config. Unit-atlas ompackad till64kolumner/4096×4672 för4672frames: stabila ID:n och32/64px frames/anchors oförändrade, endast metadata-positioner ändrade. Buildings1024×2560/160 och naval1024×6656/1664. Originala korta skägg/rustning/crossbow/cannon, stonevault/buttress/furnace och armored-hull-källor. Save28 migrerar27 utan äldre recept/stateändringar och avvisar dwarves i historisk27. Full NPC-roster/baseprofil ligger141.

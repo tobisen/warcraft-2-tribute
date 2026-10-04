@@ -1,7 +1,7 @@
 /** Original masonry, timber and heraldry; native pixels, shared team variants. */
 export function buildingFrames(Surface,p){
  const frames=[];
- for(const faction of ['crown','clans','elves'])for(const owner of ['player','enemy'])for(const kind of ['base','barracks','farm','forge','harbor'])for(const exportedStage of ['foundation','building','complete','damaged']){
+ for(const faction of ['crown','clans','elves','dwarves'])for(const owner of ['player','enemy'])for(const kind of ['base','barracks','farm','forge','harbor'])for(const exportedStage of ['foundation','building','complete','damaged']){
   const stage=exportedStage==='damaged'?'complete':exportedStage;
   const size=kind==='farm'?64:128,s=new Surface(size,size),cx=size/2,ground=kind==='farm'?48:96,team=owner==='player'?p.teamBlue:p.teamRed,light=owner==='player'?p.teamBlueLight:p.teamRedLight;
   const width=kind==='farm'?48:kind==='base'?56:64,left=cx-width/2,top=ground-24;
@@ -83,6 +83,26 @@ export function buildingFrames(Surface,p){
    }
    if(kind==='farm'){s.rect(left+2,ground+7,width-4,13,p.barkDark);for(let x=left+5;x<left+width-4;x+=7){s.line(x,ground+9,x,ground+18,p.leaf);s.pixel(x,ground+10,p.goldLight);s.pixel(x+1,ground+16,p.leafHighlight);}}
    if(kind==='harbor'){s.rect(32,ground-1,64,25,p.barkDark);for(let x=34;x<95;x+=6)s.rect(x,ground+1,3,22,p.barkLight);s.line(32,ground+10,95,ground+10,p.leafDark);for(const x of [33,91]){s.rect(x,ground-8,3,31,p.bark);s.ellipse(x,ground-10,5,3,p.leaf);}}
+  }
+  if(faction==='dwarves'){
+   // Low stone vaults, buttresses, metal roofs and a furnace, not woodland silhouettes.
+   s.data.fill(0);s.ellipse(cx,ground+14,width/2+8,7,p.earth);s.rect(left-3,ground-2,width+6,16,p.rockDark);
+   for(let x=left;x<left+width;x+=10)s.rect(x,ground,8,10,p.rock);
+   if(stage!=='foundation'){
+    s.rect(left,top-15,width,39,p.rockDark);for(let y=top-12;y<ground+7;y+=9)for(let x=left+3;x<left+width-4;x+=11)s.rect(x,y,9,7,p.rockLight);
+    s.rect(cx-8,ground-16,16,29,p.ink);s.rect(cx-6,ground-14,12,25,p.barkDark);
+    for(const x of [left-5,left+width-4]){s.rect(x,top-18,9,49,p.rockDark);s.rect(x+2,top-16,3,43,p.rock);}
+    if(stage==='building'){s.rect(left-7,top-25,width+14,3,p.barkLight);s.line(left-5,top-25,left-5,ground+10,p.bark);s.line(left+width+4,top-25,left+width+4,ground+10,p.bark);}
+    else{
+     s.polygon([[left-8,top-17],[left+6,top-33],[left+width-6,top-33],[left+width+8,top-17]],p.rockDark);s.line(left+7,top-30,left+width-7,top-30,p.rockHighlight);s.rect(left-5,top-19,width+10,4,p.goldDark);
+     s.rect(cx-11,top-30,22,9,team);s.line(cx-9,top-28,cx+8,top-28,light);s.rect(cx-2,top-29,4,6,p.gold);
+     if(kind==='base'){s.rect(left+2,top-36,10,8,p.rock);s.rect(left+width-12,top-36,10,8,p.rock);}
+     if(kind==='barracks'){s.rect(left+4,ground-13,10,13,p.rockDark);s.rect(left+6,ground-11,6,8,team);s.line(left+9,ground-10,left+9,ground-5,p.goldLight);}
+     if(kind==='forge'){s.rect(left+width-15,top-45,10,27,p.rockDark);s.rect(left+width-13,top-43,3,23,p.rockLight);s.rect(cx-5,ground-9,10,17,p.goldDark);s.rect(cx-3,ground-7,6,12,p.goldLight);s.rect(left+3,ground-2,14,4,p.rockHighlight);}
+    }
+   }
+   if(kind==='farm'){s.rect(left+3,ground+7,width-6,10,p.barkDark);for(let x=left+6;x<left+width-5;x+=9){s.rect(x,ground+7,7,8,p.goldDark);s.line(x,ground+9,x+6,ground+9,p.gold);}}
+   if(kind==='harbor'){s.rect(30,ground-1,68,25,p.rockDark);for(let x=32;x<98;x+=11)s.rect(x,ground+1,9,21,p.rock);s.line(31,ground+8,96,ground+8,p.rockHighlight);for(const x of [33,91]){s.rect(x,ground-8,4,31,p.rockDark);s.rect(x,ground-8,4,3,p.gold);}}
   }
   if(exportedStage==='damaged'){
    // Static broken roof beams, masonry cracks and ground rubble; no simulation.

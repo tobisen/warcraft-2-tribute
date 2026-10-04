@@ -2,7 +2,7 @@
 export const navalDirections=['e','se','s','sw','w','nw','n','ne'];
 export function navalFrames(Surface,p){
  const frames=[];
- for(const faction of ['crown','clans','elves'])for(const owner of ['player','enemy'])for(const role of ['warship','transport'])for(let d=0;d<8;d++)for(const state of ['idle','walk','attack','death'])for(let frame=0;frame<(state==='idle'?1:4);frame++){
+ for(const faction of ['crown','clans','elves','dwarves'])for(const owner of ['player','enemy'])for(const role of ['warship','transport'])for(let d=0;d<8;d++)for(const state of ['idle','walk','attack','death'])for(let frame=0;frame<(state==='idle'?1:4);frame++){
   const s=new Surface(64,64),angle=d*Math.PI/4,team=owner==='player'?p.teamBlue:p.teamRed,light=owner==='player'?p.teamBlueLight:p.teamRedLight;
   const recoil=state==='attack'&&role==='warship'?[0,-1,-3,-1][frame]:0;
   const pt=(x,y)=>[Math.round(32+x*Math.cos(angle)-y*Math.sin(angle)),Math.round(40+(x*Math.sin(angle)+y*Math.cos(angle))*.65)];
@@ -32,6 +32,16 @@ export function navalFrames(Surface,p){
     line(-18,-8,-8,-10,p.goldDark);line(-18,8,-8,10,p.gold);
     if(state!=='death'||frame===0){const flutter=state==='walk'?frame%2:0;s.polygon([[32,16],[20+flutter,22],[22,32],[31,36]],p.leafDark);s.polygon([[34,16],[45-flutter,22],[42,32],[34,36]],team);s.line(34,19,42,25,p.goldLight);s.line(22,24,29,32,p.leafHighlight);s.polygon([[34,12],[40,15],[34,18],[28,15]],p.leaf);}
     if(role==='transport'){poly([[-10,-5],[-5,-8],[0,-5],[-5,-2]],p.leaf);poly([[-10,5],[-5,8],[0,5],[-5,2]],p.leaf);}
+   }
+   if(faction==='dwarves'){
+    // Armored slab sides, low metal cabin and square heraldic pennant.
+    poly([[-21,-9],[-14,-12],[12,-12],[23,-5],[23,5],[12,12],[-14,12],[-21,9]],p.rockDark);
+    line(-18,-9,12,-9,p.rockHighlight);line(-18,9,12,9,p.rock);
+    for(const x of [-13,-4,5]){const a=pt(x,-9),b=pt(x,9);s.pixel(a[0],a[1],p.gold);s.pixel(b[0],b[1],p.goldDark);}
+    poly([[-8,-5],[5,-5],[5,5],[-8,5]],p.rock);line(-7,-4,4,-4,p.rockHighlight);
+    if(role==='warship'){for(const y of [-2,0,2])line(4,y,24+recoil,y,p.rock);const a=pt(24+recoil,0);s.ellipse(a[0],a[1],2,2,p.ink);}
+    else{poly([[-14,-4],[-8,-4],[-8,4],[-14,4]],p.barkDark);line(-13,-3,-9,3,p.gold);}
+    if(state!=='death'||frame===0){const pennantWidth=state==='walk'?[11,9,13,10][frame]:11;s.rect(31,18,2,23,p.rockDark);s.rect(33,18,pennantWidth,8,team);s.line(34,19,32+pennantWidth,19,light);s.rect(36,21,4,3,p.gold);}
    }
    if(state==='attack'&&role==='warship'&&frame<2){const a=pt(24,0);s.ellipse(a[0],a[1],frame===0?5:3,3,p.goldLight);s.pixel(a[0]+2,a[1],p.gold);}
    if(state==='death'&&frame>0){const limit=40-frame*3;for(let y=0;y<limit;y++)for(let x=0;x<64;x++)s.data[(y*64+x)*4+3]=0;}

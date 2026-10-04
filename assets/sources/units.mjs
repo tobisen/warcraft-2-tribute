@@ -2,7 +2,7 @@
 export const directions=['e','se','s','sw','w','nw','n','ne'];
 export const animationSpec={idle:{frames:1,fps:1,loop:true},walk:{frames:4,fps:8,loop:true},attack:{frames:4,fps:8,loop:true},death:{frames:4,fps:8,loop:false},gather:{frames:4,fps:8,loop:true},build:{frames:4,fps:8,loop:true}};
 export function unitFrames(Surface,p){const frames=[];
- for(const faction of ['crown','clans','elves'])for(const type of ['worker','soldier','archer','catapult','specialist'])for(const owner of ['player','enemy'])for(let dir=0;dir<8;dir++)for(const state of type==='worker'?Object.keys(animationSpec):['idle','walk','attack','death'])for(let frame=0;frame<animationSpec[state].frames;frame++){
+ for(const faction of ['crown','clans','elves','dwarves'])for(const type of ['worker','soldier','archer','catapult','specialist'])for(const owner of ['player','enemy'])for(let dir=0;dir<8;dir++)for(const state of type==='worker'?Object.keys(animationSpec):['idle','walk','attack','death'])for(let frame=0;frame<animationSpec[state].frames;frame++){
   const elf=faction==='elves',archer=type==='archer'||elf&&type==='specialist',guard=type==='soldier'||type==='specialist'&&!elf,orc=faction==='clans',skin=orc?p.leafHighlight:p.skin;
   const size=type==='catapult'?64:32,s=new Surface(size,size),cx=size/2,cy=type==='catapult'?40:22,angle=dir*Math.PI/4,dx=Math.round(Math.cos(angle)*3),dy=Math.round(Math.sin(angle)*2),team=owner==='player'?p.teamBlue:p.teamRed,light=owner==='player'?p.teamBlueLight:p.teamRedLight;
   const stride=state==='walk'?[0,2,0,-2][frame]:0,bob=state==='walk'?frame%2:0,swing=['attack','gather','build'].includes(state)?[0,-3,2,4][frame]:0;
@@ -84,10 +84,37 @@ export function unitFrames(Surface,p){const frames=[];
    const boltX=cx+vx,boltY=cy-14+vy+kick;s.line(cx-vx/2,cy-14-vy/2+kick,boltX,boltY,p.barkLight);s.ellipse(boltX,boltY,3,2,p.rockHighlight);s.pixel(boltX+Math.sign(vx)*3,boltY+Math.sign(vy),p.goldLight);
    s.ellipse(cx-17,cy+3,4,6,p.leafDark);s.ellipse(cx+17,cy+3,4,6,p.leafDark);s.rect(cx-4,cy-8,8,3,team);
   }
+  if(faction==='dwarves'){
+   // Original short, broad armor and beard; heavy cannon replaces the stone basket.
+   s.data.fill(0);
+   if(type==='catapult'){
+    const ux=Math.cos(angle),uy=Math.sin(angle),kick=state==='attack'?[0,-3,-5,-1][frame]:0;
+    s.ellipse(cx,cy+10,22,6,p.earth);s.rect(cx-15,cy-1,30,9,p.rockDark);s.rect(cx-12,cy,24,3,team);
+    for(const x of [-15,15]){s.ellipse(cx+x,cy+6+stride/2,5,7,p.ink);s.ellipse(cx+x,cy+6+stride/2,3,5,p.rock);s.line(cx+x-2,cy+3+stride/2,cx+x+2,cy+9+stride/2,p.goldDark);}
+    s.ellipse(cx,cy-7,10,8,p.rockDark);s.ellipse(cx-2,cy-9,7,5,p.rockLight);
+    for(let n=-3;n<=3;n++)s.line(cx+ux*2-uy*n,cy-9+uy*2+ux*n,cx+ux*(21+kick)-uy*n,cy-9+uy*(21+kick)+ux*n,p.rock);
+    s.line(cx+ux*3,cy-12+uy*3,cx+ux*(20+kick),cy-12+uy*(20+kick),p.rockHighlight);
+    const muzzleX=cx+ux*(22+kick),muzzleY=cy-9+uy*(22+kick);s.ellipse(muzzleX,muzzleY,3,3,p.ink);s.pixel(muzzleX+ux*3,muzzleY+uy*3,p.goldDark);
+    if(state==='attack'&&frame===0)s.ellipse(muzzleX+ux*5,muzzleY+uy*5,4,3,p.goldLight);
+   }else{
+    s.ellipse(cx,cy+5,11,3,p.earth);s.rect(cx-7-stride/2,cy,5,5,p.barkDark);s.rect(cx+2+stride/2,cy,5,5,p.barkDark);
+    s.rect(cx-8-stride/2,cy+4,6,2,p.ink);s.rect(cx+2+stride/2,cy+4,6,2,p.ink);
+    s.rect(cx-8,cy-8-bob,16,10,type==='worker'?p.barkDark:p.rockDark);s.rect(cx-6,cy-7-bob,12,7,type==='specialist'?p.goldDark:p.rock);
+    s.rect(cx-4,cy-7-bob,8,4,team);s.line(cx-4,cy-7-bob,cx+3,cy-7-bob,light);s.rect(cx-8,cy+1,16,2,p.goldDark);
+    s.rect(cx-5+dx,cy-15+dy-bob,10,7,p.skin);s.rect(cx-6+dx,cy-17+dy-bob,12,4,p.rockDark);s.rect(cx-5+dx,cy-17+dy-bob,10,2,p.rockHighlight);
+    s.polygon([[cx-5+dx,cy-10+dy-bob],[cx+5+dx,cy-10+dy-bob],[cx+3+dx,cy-3+dy-bob],[cx+dx,cy],[cx-3+dx,cy-3+dy-bob]],p.goldDark);s.line(cx+dx,cy-9+dy-bob,cx+dx,cy-1+dy-bob,p.gold);
+    s.pixel(cx+dx+(dx>=0?2:-2),cy-12+dy-bob,p.ink);
+    const hx=cx+dx*2+(dx>=0?7:-7),hy=cy-5+dy*2+swing;
+    if(type==='worker'){s.line(hx,hy+6,hx+dx,hy-10,p.barkLight);s.line(hx+dx-5,hy-10,hx+dx+5,hy-10,p.rockHighlight);s.line(hx+dx+5,hy-10,hx+dx+7,hy-7,p.rock);}
+    else if(type==='archer'){s.line(hx-6,hy,hx+8,hy,p.barkLight);s.line(hx+3,hy-5,hx+3,hy+5,p.rockLight);s.line(hx-6,hy,hx+3,hy-5,p.barkDark);s.line(hx-6,hy,hx+3,hy+5,p.barkDark);s.pixel(hx+8,hy,p.rockHighlight);}
+    else{s.line(hx,hy+3,hx,hy-10,p.barkLight);s.rect(hx-4,hy-12,9,5,type==='specialist'?p.gold:p.rockHighlight);const shield=cx-(dx>=0?11:-5);s.rect(shield,cy-10,8,type==='specialist'?14:10,p.ink);s.rect(shield+1,cy-9,6,type==='specialist'?12:8,team);s.line(shield+1,cy-9,shield+6,cy-9,p.rockHighlight);s.rect(shield+3,cy-6,2,4,p.goldLight);}
+    if(type==='specialist'){s.rect(cx-7,cy-10-bob,4,4,p.gold);s.rect(cx+4,cy-10-bob,4,4,p.gold);s.rect(cx-1+dx,cy-20+dy-bob,2,4,team);}
+   }
+  }
   if(state==='death'){
    const dead=new Surface(size,size);for(let y=0;y<size;y++)for(let x=0;x<size;x++){const i=(y*size+x)*4;if(!s.data[i+3]||frame===3&&(x+y)%3===0)continue;const color='#'+[...s.data.subarray(i,i+3)].map(n=>n.toString(16).padStart(2,'0')).join('');const flat=frame/3;dead.pixel(cx+(x-cx)*(1-flat*.25),cy+(y-cy)*(1-flat*.8)+frame*2,color);}s.data=dead.data;
   }
-  frames.push({id:`${faction==='crown'?'':faction+'-'}${type}-${owner}-${directions[dir]}-${state}-${frame}`,image:s,x:(frames.length%32)*64,y:Math.floor(frames.length/32)*64,anchor:{x:cx,y:cy},kind:'unit',faction,type,owner,direction:directions[dir],state,frame});
+  frames.push({id:`${faction==='crown'?'':faction+'-'}${type}-${owner}-${directions[dir]}-${state}-${frame}`,image:s,x:(frames.length%64)*64,y:Math.floor(frames.length/64)*64,anchor:{x:cx,y:cy},kind:'unit',faction,type,owner,direction:directions[dir],state,frame});
  }
  return frames;
 }

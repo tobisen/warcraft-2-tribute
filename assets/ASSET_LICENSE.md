@@ -39,3 +39,5 @@ RTS-136: Human Banner Guard med fana, guldrustning och sköld är en egen origin
 RTS-137: Orc Raider/tvåyxor/lätt rustning i sources/units.mjs är egen originalpixelkomposition och följer samma projektvillkor. Ingen extern spelgrafik eller inspelning har importerats.
 
 RTS-138: Elf leaf-/bow-/ballista-, root/canopy/garden/workshop- och naval-kompositioner i sources/units.mjs, buildings.mjs och naval.mjs är egna originalpixelkällor/exporter med samma projektvillkor. Inga externa bilder, sprites eller inspelningar importerade.
+
+RTS-139: Dwarf beard/armor/crossbow/cannon-, stonevault/foundry- och ironclad/ferrybilder i sources/units.mjs, buildings.mjs och naval.mjs är egna originalpixelkompositioner med samma projektvillkor. Ingen extern spelgrafik, rasterreferens eller inspelning tillförd.

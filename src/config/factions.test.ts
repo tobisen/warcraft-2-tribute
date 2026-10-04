@@ -19,7 +19,7 @@ it('implemented factions define all shared roles with distinct, globally unique 
       expect(ids.has(type.id)).toBe(false);ids.add(type.id);
     }
   }
-  expect(ids.size).toBe(33);
+  expect(ids.size).toBe(44);
 });
 it('catalog values preserve current baseline and costs do not alias the other faction',()=>{
   for(const f of [factions.crown]){
