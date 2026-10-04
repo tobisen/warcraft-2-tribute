@@ -58,6 +58,7 @@
   "src/gameplay/productionQueue.test.ts",
   "src/gameplay/rally.test.ts",
   "src/gameplay/releaseMatrix.test.ts",
+  "src/gameplay/repair.test.ts",
   "src/gameplay/research.test.ts",
   "src/gameplay/resourceQueue.test.ts",
   "src/gameplay/resourceSelection.test.ts",

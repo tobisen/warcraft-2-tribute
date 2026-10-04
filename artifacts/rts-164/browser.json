@@ -1,0 +1,40 @@
+[
+  {
+    "width": 800,
+    "progress": {
+      "hp": 211.86206573276004,
+      "wood": 94.06896713361998,
+      "gold": 58.81379342672404,
+      "order": {
+        "kind": "repair",
+        "buildingId": "base"
+      },
+      "frame": "worker-player-se-build-2"
+    },
+    "stopped": {
+      "hp": 211.86206573276004,
+      "wood": 94.06896713361998,
+      "order": "idle"
+    },
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "progress": {
+      "hp": 211.86206573276004,
+      "wood": 94.06896713361998,
+      "gold": 58.81379342672404,
+      "order": {
+        "kind": "repair",
+        "buildingId": "base"
+      },
+      "frame": "worker-player-se-build-2"
+    },
+    "stopped": {
+      "hp": 211.86206573276004,
+      "wood": 94.06896713361998,
+      "order": "idle"
+    },
+    "errors": []
+  }
+]

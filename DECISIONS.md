@@ -1345,3 +1345,9 @@ Uppgraderingen betalas vid start;20/30s pausar endast huvudbyggnadens workerprod
 ## RTS-163: portpassage och placeringssäkerhet
 
 Portens fysiska footprint tas bort vid öppning, men en härledd och ej sparad enemyPassageBlocks-vy behåller ägarens spärr för motståndarlaget. Befintliga lag är player/enemy; egna workers och stridsenheter delar passage. Route-revision ändras vid toggle/förstörelse. Projektiler använder fysiska öppningen enligt befintliga stridsregler. Stängning över kropp eller som bryter nödvändig connectivity/spawn spärras. Alla fortification-placeringar skyddar befintliga enheters åtkomst till resurser, leveranser och byggnader, även combat units.32 forts är den explicita gemensamma gränsen. Grafik använder godkända masonry/timber-delar; ingen särskild illustrativ mur/portreferens påstås finnas.
+
+## RTS-164: betald reparation och siege-counter
+
+Reparation betalas kontinuerligt för faktiskt återställd HP, aldrig för gångtid eller väntan.4HP/s,0.5wood/0.1gold per HP, max tre workers per byggnad; deterministisk worker-ID-ordning ger stabil fördelning. Extra workers väntar. Ordern avslutas vid full HP eller slut på endera resursen; ny skada kräver ny order. Byggtid, uppgradering och produktionskö ändras inte av reparation. Befintlig build-animation återanvänds.
+
+Tier2-torn får192px räckvidd så minsta siege-räckvidden208 kan användas som counter. Siege-projektiler får1.5× skada endast mot tower/wall/gate. Vanliga byggnader/enheter och tidigare sparade projektiler utan multiplikator behåller skadan. Bonusen sparas på skottet; Save37 migrerar36. Alla fem siege-profiler kan besegra nivå2-torn med tre kontinuerligt omordrade repairers i riktade tester; Elf-counter tar längre tid eftersom lägre skada/smal splash lämnar repairers vid liv. Detta är avgränsad försvarsbalans, inte belägg för mänsklig helmatchbalans.

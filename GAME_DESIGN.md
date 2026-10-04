@@ -1352,3 +1352,9 @@ Första terminala resultatet per match-ID gäller; load av en tidigare gren ger 
 ## RTS-150 – Slutetappens avgränsning
 
 Release0.2.0 samlar befintliga system utan nya mål eller balansjusteringar. Native genomspelning och full regression verifierar kampanjens betalda ekonomi/mål och befintlig femfraktions-/kartfunktion. Lokala scores och Save/restart ingår i användarflödet. Faktisk ljudlyssning/matchlyssning är uppskjutna enligt användaren; teknisk ljudkontroll får inte beskrivas som en lyssningsgranskning eller garanti om mixkvalitet. RTS-151 startas inte.
+
+## RTS-164 – reparera eget försvar
+
+Välj workers och använd Repair [Z], följt av en egen skadad byggnad, eller högerklicka byggnaden. Varje worker återställer4HP/s inom24px, för0.5wood och0.1gold per HP. Upp till tre workers arbetar samtidigt per byggnad, övriga väntar. Stop eller en annan order avbryter; full HP, slut på resurser eller förstörd byggnad avslutar ordern. Reparation fortsätter efter save/load och fryser vid pause. Den ändrar inte byggtid eller produktion.
+
+Nivå2-tornens räckvidd är192px; alla befintliga siege-enheter har minst208px. Siege-skott gör1.5× skada mot torn, murar och portar. Vanliga byggnader/enheter har oförändrad skadeberäkning. Försvar behöver därför skyddas mot belägring även med tre reparerande workers.

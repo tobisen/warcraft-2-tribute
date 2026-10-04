@@ -7,11 +7,11 @@ import type { WorldMap } from './map';
 import { segmentFits } from './navigation';
 export interface Projectile {
  owner?:'enemy';marine?:true;id:string; shooterId?:string; targetId:string; position:Position; destination:Position;
- shooterFootprint?:Footprint;splashRadius?:number;targetFootprint?:Footprint;
+ defenseMultiplier?:number;shooterFootprint?:Footprint;splashRadius?:number;targetFootprint?:Footprint;
  speed:number; remainingLife:number; damage:number; hitRadius:number;
 }
 /** Fixed aim point: no homing. Impact consumes the projectile even on a miss. */
-export function advanceProjectiles(projectiles:readonly Projectile[], enemies:readonly Enemy[], delta:number,
+export function advanceProjectiles(projectiles:readonly Projectile[], enemies:readonly (Enemy&{fortification?:true})[], delta:number,
  map?:WorldMap, visible:(enemy:Enemy,projectile:Projectile)=>boolean=()=>true) {
  const alive:Projectile[]=[], damage=new Map<string,number>();
  for(const p of projectiles){
@@ -30,10 +30,10 @@ export function advanceProjectiles(projectiles:readonly Projectile[], enemies:re
     for(const victim of enemies){
       if(!visible(victim,p)||victim.hp<=0)continue;
       const distance=victim.footprint?footprintDistance(p.destination,victim.footprint):Math.hypot(victim.position.x-p.destination.x,victim.position.y-p.destination.y);
-      if(distance<=p.splashRadius)damage.set(victim.id,(damage.get(victim.id)??0)+p.damage);
+      if(distance<=p.splashRadius)damage.set(victim.id,(damage.get(victim.id)??0)+p.damage*(victim.fortification?p.defenseMultiplier??1:1));
     }
    }else if(enemy&&Math.hypot(enemy.position.x-p.destination.x,enemy.position.y-p.destination.y)<=p.hitRadius)
-    damage.set(enemy.id,(damage.get(enemy.id)??0)+p.damage);
+    damage.set(enemy.id,(damage.get(enemy.id)??0)+p.damage*(enemy.fortification?p.defenseMultiplier??1:1));
   }else if(p.remainingLife>time)alive.push({...p,position,remainingLife:p.remainingLife-time});
  }
  return {projectiles:alive,damage};

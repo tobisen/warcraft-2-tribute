@@ -27,7 +27,7 @@ avslutas efter denna fix; ingen senare roadmap-task startas.
   /tmp/w2t-bottom-bar; ingen ny CI-/Pages-verifiering hävdas.
 
 
-**Aktuellt mandat RTS-160–164:** RTS-159 accepteras som Done och implementationen har inventerats.160 Done (`7d7290c`),161 Done (`b7439ae`),162 Done (`4658a0d`),163 aktuell, därefter164 en task i taget med checks/browser/docs/commit/push. Stanna efter164 och uppdatera HANDOFF.157 lyssning och158 inspelningar kvarstår enligt historisk överlämning; återstående sprites dokumenteras separat.
+**Aktuellt mandat RTS-160–164:** RTS-159 accepteras som Done och implementationen har inventerats.160 Done (`7d7290c`),161 Done (`b7439ae`),162 Done (`4658a0d`),163 Done (`efbdd7d`),164 Done (committen med denna överlämning). Etappen är avslutad; RTS-165 är nästa Todo och kräver nytt mandat. Stanna efter164 och uppdatera HANDOFF.157 lyssning och158 inspelningar kvarstår enligt historisk överlämning; återstående sprites dokumenteras separat.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -4418,9 +4418,13 @@ Placering får inte skapa otillåtna instängningar.
 
 ## RTS-164 – Reparation och försvarsbalans
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Reparation och försvarsbalans.
+
+**Implementation:** Workers reparerar egna skadade byggnader med4HP/s,0.5wood+0.1gold per faktisk återställd HP. Max tre arbetande workers per byggnad; ytterligare workers väntar utan kostnad. Z/Repair och högerklick återanvänder navigation, avbrott och bygganimation. Full HP, förstörelse, död worker och tom bank stoppar ordern; pause fryser den. Last, selection och save/load bevaras; Save37 migrerar36. Uppgraderade torn har192px räckvidd (tidigare208), så alla fem befintliga siege-profiler kan skjuta utifrån. Siege gör1.5× skada mot tower/wall/gate, oförändrad skada mot vanliga byggnader/enheter.
+
+**Verifiering:**77 riktade tester/8 filer PASS. Chromium800×600/1280×720 fysisk repair/Stop/Save/Load, full HP och siege-counter PASS; screenshots visuellt granskade i [artifacts/rts-164](artifacts/rts-164). Kontrollerad matchfixture använder befintlig enemy-outpost som spotter och normala fogregler. Ingen ny grafiktillgång behövs. Slutlig unit445/80 och full regression1193/155 PASS; build med strict typecheck PASS. Initiala två tidsgränsfel korrigerades genom att undvika onödig AI-bygg-BFS, utan höjda deadlines. Diff/länkkontroll före commit redovisas i DEV_LOG.
 
 **Requirements:**
 

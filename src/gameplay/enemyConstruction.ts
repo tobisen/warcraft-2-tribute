@@ -48,7 +48,8 @@ export function prepareEnemyConstruction(m:MatchState):MatchState {
  for(const builder of available)for(const point of maps[m.map.id??'arena'].enemyBuildSites??config.candidates){
   g={...g,units:g.units.map(u=>({...u,selected:u.id===builder.id}))};
   const rect={...point,width:64,height:64};if(m.gathering.units.some(u=>overlaps(rect,unitBody(u.position,(u.kind==='worker'?unitStats:combatUnitStats(u)).size))))continue;
-  if(approachRoute(enemyNavigationMap(m.map),builder.position,buildingFootprint(point,kind),24).status==='blocked')continue;
+  // Ordinary placement already checks reachability; only open gates need the enemy-only view.
+  if(m.map.enemyPassageBlocks?.length&&approachRoute(enemyNavigationMap(m.map),builder.position,buildingFootprint(point,kind),24).status==='blocked')continue;
   const placed=placeBuilding(beginPlacement(p,kind),point,g.wood,[],{map:m.map,gathering:g,enemies:[...m.gathering.units,...m.combat.enemies.filter(e=>!e.footprint&&e.kind!=='worker')]});
   if(!placed.gathering||placed.wood===g.wood)continue;
   p=placed.placement;const footprint=kind==='barracks'?p.barracks!:kind==='forge'?p.forge!.footprint:p.farms![0].footprint,construction=kind==='barracks'?p.construction!:kind==='forge'?p.forge!.construction:p.farms![0].construction;
