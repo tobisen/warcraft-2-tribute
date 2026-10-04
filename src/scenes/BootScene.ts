@@ -1,4 +1,4 @@
-import {spellDefinition,spellIds,type SpellId} from '../config/spells';
+import {spellDefinition,spellForSlot,spellSlots,type SpellId} from '../config/spells';
 import {castSpell,selectedSpellCaster,spellCasterReason,spellTargetAt,spellTargetReason} from '../gameplay/spells';
 import {orderRepair} from '../gameplay/repair';
 import {toggleGate,gateToggleReason} from '../gameplay/gates';import {defenseConfig} from '../config/defenses';
@@ -491,7 +491,7 @@ export class BootScene extends Phaser.Scene {
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       this.soldierButton.removeEventListener('click', trainSoldier);
     });
-    for(const id of spellIds){const button=document.getElementById(`cast-${id}`) as HTMLButtonElement,begin=()=>{const caster=selectedSpellCaster(this.currentMatch(),id);if(!caster||spellCasterReason(this.currentMatch(),caster.id,id))return;this.placement=cancelPlacement(this.placement);this.unloadMode=null;this.attackMoveMode=false;this.repairMode=false;this.spellMode=this.spellMode===id?null:id;this.spellFeedback='';this.syncVisuals();};button.addEventListener('click',begin);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>button.removeEventListener('click',begin));}
+    for(const slot of spellSlots){const button=document.getElementById(`cast-${slot}`) as HTMLButtonElement,begin=()=>{const id=spellForSlot(this.factions.player,slot);if(!id)return;const caster=selectedSpellCaster(this.currentMatch(),id);if(!caster||spellCasterReason(this.currentMatch(),caster.id,id))return;this.placement=cancelPlacement(this.placement);this.unloadMode=null;this.attackMoveMode=false;this.repairMode=false;this.spellMode=this.spellMode===id?null:id;this.spellFeedback='';this.syncVisuals();};button.addEventListener('click',begin);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>button.removeEventListener('click',begin));}
     const abilityButton=document.querySelector<HTMLButtonElement>('#unit-ability')!;
     const activateAbility=()=>{this.gathering=useAbility(this.gathering,this.gameplayActive());this.syncVisuals();};
     abilityButton.addEventListener('click',activateAbility);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>abilityButton.removeEventListener('click',activateAbility));
@@ -893,7 +893,7 @@ export class BootScene extends Phaser.Scene {
       if(enemy.kind==='ship')this.animateUnit(enemy.id,visual.body,enemy.position,'idle','transport','enemy');
       if(!enemy.footprint&&enemy.kind!=='ship'){const target=enemy.order?.kind==='defend'?this.gathering.units.find(u=>enemy.order?.kind==='defend'&&u.id===enemy.order.targetId)?.position:enemy.navigation?.targetId==='base'?this.gathering.base:undefined;const action:Action=enemy.navigation?.targetId&&enemy.navigation.targetId!=='explore-goal'&&enemy.navigation.status==='arrived'?'attack':enemy.work?.order.kind==='gather'?'gather':'idle';this.animateUnit(enemy.id,visual.body,enemy.position,action,enemy.kind==='worker'?'worker':enemy.role??'soldier','enemy',target);}
       visual.label.setPosition(enemy.position.x,enemy.position.y-(enemy.kind==='ship'?48:90)).setVisible(!!enemy.footprint||enemy.kind==='ship').setText(`${enemy.buildingType==='outpost'?uiText.resourceOutpost:''}${enemy.kind==='ship'?'Transport':enemy.buildingType==='harbor'?uiText.harbor:factions[this.factions.enemy].buildingNames[(enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base']} ${Math.ceil(enemy.hp)} HP`);
-      if(enemy.spellEffects?.length){const color=enemy.spellEffects.some(e=>spellDefinition(e.spell,e.sourceFaction).kind==='debuff')?0xc18ce5:0x86dbe6;this.hpBars?.lineStyle(2,color,.9).strokeCircle(enemy.position.x,enemy.position.y,18);}
+      for(const kind of ['buff','debuff'])if(enemy.spellEffects?.some(e=>spellDefinition(e.spell,e.sourceFaction).kind===kind))this.hpBars?.lineStyle(2,kind==='buff'?0x86dbe6:0xc18ce5,.9).strokeCircle(enemy.position.x,enemy.position.y,kind==='buff'?18:21);
       this.drawHP(enemy.position,enemy.hp,enemyMaximumHP(enemy,this.factions.enemy),enemy.footprint?64:24,enemy.footprint?70:enemy.kind==='ship'?29:unitOverlayOffsets(enemy.kind==='worker'?'worker':enemy.role??'soldier',this.factions.enemy).hp,0xcf7770);
     }
     for (const unit of this.gathering.units) {
@@ -916,7 +916,7 @@ export class BootScene extends Phaser.Scene {
       visual.ring.setPosition(unit.position.x, unit.position.y).setVisible(unit.selected);
       visual.cargo.setPosition(unit.position.x, unit.position.y - unitOverlayOffsets(unit.kind==='worker'?'worker':unit.archetype??'soldier',this.factions.player).cargo)
         .setVisible(unit.kind==='worker'&&unit.selected).setText(unit.kind==='worker'?`${unit.cargo.toFixed(1)}/${gatheringConfig.capacity} ${unit.cargoType??'wood'}`:'');
-      if(unit.kind==='soldier'&&unit.spellEffects?.length){const color=unit.spellEffects.some(e=>spellDefinition(e.spell,e.sourceFaction).kind==='debuff')?0xc18ce5:0x86dbe6;this.hpBars?.lineStyle(2,color,.9).strokeCircle(unit.position.x,unit.position.y,18);}
+      if(unit.kind==='soldier')for(const kind of ['buff','debuff'])if(unit.spellEffects?.some(e=>spellDefinition(e.spell,e.sourceFaction).kind===kind))this.hpBars?.lineStyle(2,kind==='buff'?0x86dbe6:0xc18ce5,.9).strokeCircle(unit.position.x,unit.position.y,kind==='buff'?18:21);
       this.drawHP(unit.position,unit.hp??combatConfig.workerHP,unit.kind==='worker'?factions[this.factions.player].units.worker.hp:factions[this.factions.player].units[unit.archetype??'soldier'].hp,unit.kind==='soldier'&&unit.archetype==='catapult'?40:24,unitOverlayOffsets(unit.kind==='worker'?'worker':unit.archetype??'soldier',this.factions.player).hp,0x7398c1);
     }
     const publicHealth=[...warningSnapshot(this.currentMatch()),...visibleEnemies.map(e=>({id:e.id,hp:e.hp,position:{...e.position}}))].filter(p=>isVisible(this.fog,'player',p.position));
@@ -925,7 +925,7 @@ export class BootScene extends Phaser.Scene {
     for(const [id,e] of this.impacts){if(!impactAlive(e.impact,this.visualTime,p=>isVisible(this.fog,'player',p))){e.visual.destroy();this.impacts.delete(id);}else e.visual.setFrame(impactFrame(e.impact,this.visualTime));}
     for(const [id,d] of this.deaths){if(!effectAlive(d.effect,this.visualTime,isVisible(this.fog,'player',d.effect.motion.position))){d.visual.destroy();this.deaths.delete(id);}else d.visual.setFrame(unitFrame(d.effect.motion,this.visualTime));}
     if(this.fogOverlay)drawFog(this.fogOverlay,this.fog,this.fogPreview??'player');
-    for(const id of spellIds){const button=document.getElementById(`cast-${id}`) as HTMLButtonElement,caster=selectedSpellCaster(this.currentMatch(),id);button.disabled=!caster||!!spellCasterReason(this.currentMatch(),caster.id,id);button.textContent=spellDefinition(id,this.factions.player).name;button.setAttribute('aria-pressed',String(this.spellMode===id));}
+    for(const slot of spellSlots){const id=spellForSlot(this.factions.player,slot),button=document.getElementById(`cast-${slot}`) as HTMLButtonElement,caster=id?selectedSpellCaster(this.currentMatch(),id):undefined;button.disabled=!id||!caster||!!spellCasterReason(this.currentMatch(),caster.id,id);button.textContent=id?spellDefinition(id,this.factions.player).name:'Unavailable';button.setAttribute('aria-pressed',String(!!id&&this.spellMode===id));}
     for(const shortcut of hotkeys){const button=document.getElementById(shortcut.button)!;button.textContent=`${button.textContent?.replace(/\s+\[[A-Z0-9]+\]$/,'')} [${shortcut.key}]`;button.title=shortcut.label;}
     renderActionPanel(actionPanel(this.currentMatch(),this.selectedBuilding,this.gameplayActive()));
 

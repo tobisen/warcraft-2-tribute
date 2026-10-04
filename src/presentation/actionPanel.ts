@@ -1,5 +1,5 @@
 import {selectedSpellCaster,spellCasterReason} from '../gameplay/spells';
-import {spellDefinition,type SpellId} from '../config/spells';
+import {spellDefinition,spellDescription,spellForSlot,type SpellSlot} from '../config/spells';
 import {gateToggleReason} from '../gameplay/gates';
 import {towerUpgradeReason} from '../gameplay/towers';import {defenseConfig} from '../config/defenses';
 import {baseDevelopment,baseUpgradeReason} from '../gameplay/baseUpgrade';
@@ -39,7 +39,7 @@ export function actionPanel(m:MatchState,building:BuildingSelection,playing:bool
  const faction=factionForTeam(m,'player'),population=matchPopulation(m);
  const result={} as Record<ActionId,ActionPresentation>;
  for(const id of actionIds){let visible=false,reason='',cost;
-  if(id.startsWith('cast-')){const spell=id.slice(5) as SpellId,caster=selectedSpellCaster(m,spell);visible=!!caster;const cfg=spellDefinition(spell,faction.id);cost=`${cfg.manaCost} mana · Range ${cfg.range}px · Cooldown ${cfg.cooldown}s`;reason=caster?spellCasterReason(m,caster.id,spell)??'':'Select a specialist';}
+  if(id.startsWith('cast-')){const spell=spellForSlot(faction.id,id.slice(5) as SpellSlot),caster=spell?selectedSpellCaster(m,spell):undefined;visible=!!caster;if(spell){const cfg=spellDefinition(spell,faction.id);cost=`${cfg.manaCost} mana · Range ${cfg.range}px · Cooldown ${cfg.cooldown}s · ${spellDescription(spell,faction.id)}`;reason=caster?spellCasterReason(m,caster.id,spell)??'':'Select a specialist';}}
   else if(id==='repair-building'){visible=worker;cost='0.5 wood + 0.1 gold per restored HP';reason=m.gathering.wood<=0||(m.gathering.goldBalance??0)<=0?'Not enough wood or gold':'';}
   else if(id==='toggle-gate'){visible=!!building?.startsWith('gate-');reason=gateToggleReason(m,building??'')??'';}
   else if(id==='build-wall'||id==='build-gate'){visible=worker;cost=costLabel(defenseConfig[id==='build-wall'?'wall':'gate'].cost);reason=m.placement.active?'Finish or cancel placement':affordabilityReason(m.gathering,defenseConfig[id==='build-wall'?'wall':'gate'].cost);}

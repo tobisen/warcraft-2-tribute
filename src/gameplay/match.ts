@@ -1,3 +1,4 @@
+import {prepareEnemySpells,untilSpellBoundary} from './enemySpells';
 import {advanceSpells} from './spells';
 import {advanceMana} from './mana';
 import {updateRepair} from './repair';
@@ -197,7 +198,7 @@ function advance(state: MatchState, delta: number): MatchState {
   updated=advanceSpells(updated,delta);updated=advanceEnemyAbilities(updated,delta);updated.gathering=advanceAbilities(updated.gathering,delta);updated.fog=matchFog(updated);const taught=updateTutorial(updated);if(taught!==updated){updated=taught;updated.fog=matchFog(updated);}return resolveOutcome(advanceCapture(state,updated,delta));
 }
 
-/** Split only at wave boundaries, retaining delta-based gameplay rather than a fixed timestep. */
+/** Split at existing gameplay and spell/AI boundaries, retaining delta-based gameplay rather than a fixed timestep. */
 export function updateMatch(state: MatchState, deltaSeconds: number): MatchState {
   if (state.paused||state.outcome !== 'playing') return state;
   const cleaned=advanceCapture(state,updateTutorial(cleanDestroyed(state)),0);
@@ -216,9 +217,9 @@ export function updateMatch(state: MatchState, deltaSeconds: number): MatchState
     const capture=operationFor(current.scenario);
     const untilObjective=definition.victory==='timer'?Math.max(0,definition.holdSeconds!-current.waves.elapsedSeconds):capture?.kind==='capture'&&controlsCapture(current)?Math.max(0,capture.holdSeconds-(current.capture?.holdSeconds??0)):Infinity;
     const untilService=(Math.floor((current.waves.elapsedSeconds+1e-9)/trafficConfig.resourceWindowSeconds)+1)*trafficConfig.resourceWindowSeconds-current.waves.elapsedSeconds;
-    current=prepareEnemyAbilities(current);
+    current=prepareEnemySpells(current);current=prepareEnemyAbilities(current);
     const untilAbility=Math.min(Infinity,...current.combat.enemies.flatMap(e=>[e.ability?.activeSeconds??0,e.ability?.cooldownSeconds??0].filter(t=>t>1e-9)),...current.gathering.units.flatMap(u=>u.kind==='soldier'&&(u.ability?.activeSeconds??0)>1e-9?[u.ability!.activeSeconds]:[]));
-    const step = Math.min(current.enemyPolicy?.research.job?.remainingSeconds??Infinity,untilAbility,remaining, untilWave,untilObjective,untilService,current.research?.job?.remainingSeconds??Infinity);
+    const step = Math.min(untilSpellBoundary(current),current.enemyPolicy?.research.job?.remainingSeconds??Infinity,untilAbility,remaining, untilWave,untilObjective,untilService,current.research?.job?.remainingSeconds??Infinity);
     current = advance(current, step);
     remaining = Math.max(0, remaining - step);
   }

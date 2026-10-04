@@ -1,0 +1,1748 @@
+[
+  {
+    "faction": "crown",
+    "width": 800,
+    "loadout": [
+      {
+        "slot": "heal",
+        "id": "heal",
+        "cfg": {
+          "name": "Heal",
+          "kind": "heal",
+          "targetTeam": "ally",
+          "targetType": "ground-combat",
+          "manaCost": 20,
+          "range": 160,
+          "cooldown": 6,
+          "duration": 0,
+          "healHP": 25
+        }
+      },
+      {
+        "slot": "ward",
+        "id": "ward",
+        "cfg": {
+          "name": "Ward",
+          "kind": "buff",
+          "targetTeam": "ally",
+          "targetType": "ground-combat",
+          "manaCost": 25,
+          "range": 160,
+          "cooldown": 8,
+          "duration": 6,
+          "defenseMultiplier": 0.75
+        }
+      },
+      {
+        "slot": "hex",
+        "id": "hex",
+        "cfg": {
+          "name": "Hex",
+          "kind": "debuff",
+          "targetTeam": "enemy",
+          "targetType": "ground-combat",
+          "manaCost": 20,
+          "range": 192,
+          "cooldown": 8,
+          "duration": 5,
+          "attackMultiplier": 0.75
+        }
+      }
+    ],
+    "ai": {
+      "own": [
+        {
+          "id": "unit-4",
+          "kind": "soldier",
+          "owner": "player",
+          "hp": 100,
+          "archetype": "specialist",
+          "mana": 35.1,
+          "cargo": 0,
+          "selected": true,
+          "autoDisabled": true,
+          "position": {
+            "x": 400,
+            "y": 240
+          },
+          "target": {
+            "x": 400,
+            "y": 240
+          },
+          "order": {
+            "kind": "idle"
+          },
+          "spellCooldowns": {
+            "heal": 5.9,
+            "ward": 7.9,
+            "hex": 7.9
+          }
+        },
+        {
+          "id": "unit-5",
+          "kind": "soldier",
+          "owner": "player",
+          "hp": 43,
+          "cargo": 0,
+          "selected": false,
+          "autoDisabled": true,
+          "position": {
+            "x": 460,
+            "y": 300
+          },
+          "target": {
+            "x": 460,
+            "y": 300
+          },
+          "order": {
+            "kind": "idle"
+          },
+          "spellEffects": [
+            {
+              "spell": "ward",
+              "sourceFaction": "crown",
+              "remainingSeconds": 5.9
+            }
+          ]
+        }
+      ],
+      "enemy": [
+        {
+          "id": "enemy-produced-1",
+          "kind": "unit",
+          "owner": "enemy",
+          "role": "specialist",
+          "hp": 100,
+          "mana": 80.1,
+          "position": {
+            "x": 550,
+            "y": 240
+          },
+          "order": {
+            "kind": "muster",
+            "destination": {
+              "x": 928,
+              "y": 144
+            }
+          },
+          "spellCooldowns": {
+            "heal": 5.9
+          }
+        },
+        {
+          "id": "enemy-produced-2",
+          "kind": "unit",
+          "owner": "enemy",
+          "role": "soldier",
+          "hp": 43,
+          "position": {
+            "x": 542.000001,
+            "y": 300
+          },
+          "order": {
+            "kind": "muster",
+            "destination": {
+              "x": 896,
+              "y": 320
+            }
+          },
+          "spellEffects": [
+            {
+              "spell": "hex",
+              "sourceFaction": "crown",
+              "remainingSeconds": 4.9
+            }
+          ]
+        }
+      ],
+      "mode": null,
+      "time": 0.1
+    },
+    "panels": [
+      {
+        "id": "bottom-bar",
+        "width": 800,
+        "scrollWidth": 800,
+        "height": 158,
+        "scrollHeight": 158
+      },
+      {
+        "id": "context-actions",
+        "width": 166,
+        "scrollWidth": 166,
+        "height": 116,
+        "scrollHeight": 116
+      },
+      {
+        "id": "selection-info",
+        "width": 232,
+        "scrollWidth": 232,
+        "height": 78,
+        "scrollHeight": 78
+      }
+    ],
+    "errors": []
+  },
+  {
+    "faction": "crown",
+    "width": 1280,
+    "loadout": [
+      {
+        "slot": "heal",
+        "id": "heal",
+        "cfg": {
+          "name": "Heal",
+          "kind": "heal",
+          "targetTeam": "ally",
+          "targetType": "ground-combat",
+          "manaCost": 20,
+          "range": 160,
+          "cooldown": 6,
+          "duration": 0,
+          "healHP": 25
+        }
+      },
+      {
+        "slot": "ward",
+        "id": "ward",
+        "cfg": {
+          "name": "Ward",
+          "kind": "buff",
+          "targetTeam": "ally",
+          "targetType": "ground-combat",
+          "manaCost": 25,
+          "range": 160,
+          "cooldown": 8,
+          "duration": 6,
+          "defenseMultiplier": 0.75
+        }
+      },
+      {
+        "slot": "hex",
+        "id": "hex",
+        "cfg": {
+          "name": "Hex",
+          "kind": "debuff",
+          "targetTeam": "enemy",
+          "targetType": "ground-combat",
+          "manaCost": 20,
+          "range": 192,
+          "cooldown": 8,
+          "duration": 5,
+          "attackMultiplier": 0.75
+        }
+      }
+    ],
+    "ai": {
+      "own": [
+        {
+          "id": "unit-4",
+          "kind": "soldier",
+          "owner": "player",
+          "hp": 100,
+          "archetype": "specialist",
+          "mana": 35.1,
+          "cargo": 0,
+          "selected": true,
+          "autoDisabled": true,
+          "position": {
+            "x": 400,
+            "y": 240
+          },
+          "target": {
+            "x": 400,
+            "y": 240
+          },
+          "order": {
+            "kind": "idle"
+          },
+          "spellCooldowns": {
+            "heal": 5.9,
+            "ward": 7.9,
+            "hex": 7.9
+          }
+        },
+        {
+          "id": "unit-5",
+          "kind": "soldier",
+          "owner": "player",
+          "hp": 43,
+          "cargo": 0,
+          "selected": false,
+          "autoDisabled": true,
+          "position": {
+            "x": 460,
+            "y": 300
+          },
+          "target": {
+            "x": 460,
+            "y": 300
+          },
+          "order": {
+            "kind": "idle"
+          },
+          "spellEffects": [
+            {
+              "spell": "ward",
+              "sourceFaction": "crown",
+              "remainingSeconds": 5.9
+            }
+          ]
+        }
+      ],
+      "enemy": [
+        {
+          "id": "enemy-produced-1",
+          "kind": "unit",
+          "owner": "enemy",
+          "role": "specialist",
+          "hp": 100,
+          "mana": 80.1,
+          "position": {
+            "x": 550,
+            "y": 240
+          },
+          "order": {
+            "kind": "muster",
+            "destination": {
+              "x": 928,
+              "y": 144
+            }
+          },
+          "spellCooldowns": {
+            "heal": 5.9
+          }
+        },
+        {
+          "id": "enemy-produced-2",
+          "kind": "unit",
+          "owner": "enemy",
+          "role": "soldier",
+          "hp": 43,
+          "position": {
+            "x": 542.000001,
+            "y": 300
+          },
+          "order": {
+            "kind": "muster",
+            "destination": {
+              "x": 896,
+              "y": 320
+            }
+          },
+          "spellEffects": [
+            {
+              "spell": "hex",
+              "sourceFaction": "crown",
+              "remainingSeconds": 4.9
+            }
+          ]
+        }
+      ],
+      "mode": null,
+      "time": 0.1
+    },
+    "panels": [
+      {
+        "id": "bottom-bar",
+        "width": 1280,
+        "scrollWidth": 1280,
+        "height": 158,
+        "scrollHeight": 158
+      },
+      {
+        "id": "context-actions",
+        "width": 316,
+        "scrollWidth": 316,
+        "height": 116,
+        "scrollHeight": 116
+      },
+      {
+        "id": "selection-info",
+        "width": 442,
+        "scrollWidth": 442,
+        "height": 101,
+        "scrollHeight": 101
+      }
+    ],
+    "errors": []
+  },
+  {
+    "faction": "clans",
+    "width": 800,
+    "loadout": [
+      {
+        "slot": "heal",
+        "cfg": null
+      },
+      {
+        "slot": "ward",
+        "id": "rally",
+        "cfg": {
+          "name": "War Cry",
+          "kind": "buff",
+          "targetTeam": "ally",
+          "targetType": "ground-combat",
+          "manaCost": 25,
+          "range": 160,
+          "cooldown": 10,
+          "duration": 5,
+          "attackMultiplier": 1.3
+        }
+      },
+      {
+        "slot": "hex",
+        "id": "intimidate",
+        "cfg": {
+          "name": "Intimidate",
+          "kind": "debuff",
+          "targetTeam": "enemy",
+          "targetType": "ground-combat",
+          "manaCost": 20,
+          "range": 160,
+          "cooldown": 10,
+          "duration": 5,
+          "attackMultiplier": 0.7
+        }
+      }
+    ],
+    "ai": {
+      "own": [
+        {
+          "id": "unit-4",
+          "kind": "soldier",
+          "owner": "player",
+          "hp": 80,
+          "archetype": "specialist",
+          "mana": 35.1,
+          "cargo": 0,
+          "selected": true,
+          "autoDisabled": true,
+          "position": {
+            "x": 400,
+            "y": 240
+          },
+          "target": {
+            "x": 400,
+            "y": 240
+          },
+          "order": {
+            "kind": "idle"
+          },
+          "spellCooldowns": {
+            "rally": 9.9,
+            "intimidate": 9.9
+          }
+        },
+        {
+          "id": "unit-5",
+          "kind": "soldier",
+          "owner": "player",
+          "hp": 19.8,
+          "cargo": 0,
+          "selected": false,
+          "autoDisabled": true,
+          "position": {
+            "x": 460,
+            "y": 300
+          },
+          "target": {
+            "x": 460,
+            "y": 300
+          },
+          "order": {
+            "kind": "idle"
+          },
+          "spellEffects": [
+            {
+              "spell": "rally",
+              "sourceFaction": "clans",
+              "remainingSeconds": 4.9
+            },
+            {
+              "spell": "intimidate",
+              "sourceFaction": "clans",
+              "remainingSeconds": 4.9
+            }
+          ]
+        }
+      ],
+      "enemy": [
+        {
+          "id": "enemy-produced-1",
+          "kind": "unit",
+          "owner": "enemy",
+          "role": "specialist",
+          "hp": 80,
+          "mana": 60.1,
+          "position": {
+            "x": 550,
+            "y": 240
+          },
+          "order": {
+            "kind": "muster",
+            "destination": {
+              "x": 928,
+              "y": 144
+            }
+          },
+          "spellCooldowns": {
+            "intimidate": 9.9
+          }
+        },
+        {
+          "id": "enemy-produced-2",
+          "kind": "unit",
+          "owner": "enemy",
+          "role": "soldier",
+          "hp": 19.8,
+          "position": {
+            "x": 542.000001,
+            "y": 300
+          },
+          "order": {
+            "kind": "muster",
+            "destination": {
+              "x": 896,
+              "y": 320
+            }
+          },
+          "spellEffects": [
+            {
+              "spell": "intimidate",
+              "sourceFaction": "clans",
+              "remainingSeconds": 4.9
+            }
+          ]
+        }
+      ],
+      "mode": null,
+      "time": 0.1
+    },
+    "panels": [
+      {
+        "id": "bottom-bar",
+        "width": 800,
+        "scrollWidth": 800,
+        "height": 158,
+        "scrollHeight": 158
+      },
+      {
+        "id": "context-actions",
+        "width": 166,
+        "scrollWidth": 166,
+        "height": 116,
+        "scrollHeight": 116
+      },
+      {
+        "id": "selection-info",
+        "width": 232,
+        "scrollWidth": 232,
+        "height": 78,
+        "scrollHeight": 78
+      }
+    ],
+    "errors": []
+  },
+  {
+    "faction": "clans",
+    "width": 1280,
+    "loadout": [
+      {
+        "slot": "heal",
+        "cfg": null
+      },
+      {
+        "slot": "ward",
+        "id": "rally",
+        "cfg": {
+          "name": "War Cry",
+          "kind": "buff",
+          "targetTeam": "ally",
+          "targetType": "ground-combat",
+          "manaCost": 25,
+          "range": 160,
+          "cooldown": 10,
+          "duration": 5,
+          "attackMultiplier": 1.3
+        }
+      },
+      {
+        "slot": "hex",
+        "id": "intimidate",
+        "cfg": {
+          "name": "Intimidate",
+          "kind": "debuff",
+          "targetTeam": "enemy",
+          "targetType": "ground-combat",
+          "manaCost": 20,
+          "range": 160,
+          "cooldown": 10,
+          "duration": 5,
+          "attackMultiplier": 0.7
+        }
+      }
+    ],
+    "ai": {
+      "own": [
+        {
+          "id": "unit-4",
+          "kind": "soldier",
+          "owner": "player",
+          "hp": 80,
+          "archetype": "specialist",
+          "mana": 35.1,
+          "cargo": 0,
+          "selected": true,
+          "autoDisabled": true,
+          "position": {
+            "x": 400,
+            "y": 240
+          },
+          "target": {
+            "x": 400,
+            "y": 240
+          },
+          "order": {
+            "kind": "idle"
+          },
+          "spellCooldowns": {
+            "rally": 9.9,
+            "intimidate": 9.9
+          }
+        },
+        {
+          "id": "unit-5",
+          "kind": "soldier",
+          "owner": "player",
+          "hp": 19.8,
+          "cargo": 0,
+          "selected": false,
+          "autoDisabled": true,
+          "position": {
+            "x": 460,
+            "y": 300
+          },
+          "target": {
+            "x": 460,
+            "y": 300
+          },
+          "order": {
+            "kind": "idle"
+          },
+          "spellEffects": [
+            {
+              "spell": "rally",
+              "sourceFaction": "clans",
+              "remainingSeconds": 4.9
+            },
+            {
+              "spell": "intimidate",
+              "sourceFaction": "clans",
+              "remainingSeconds": 4.9
+            }
+          ]
+        }
+      ],
+      "enemy": [
+        {
+          "id": "enemy-produced-1",
+          "kind": "unit",
+          "owner": "enemy",
+          "role": "specialist",
+          "hp": 80,
+          "mana": 60.1,
+          "position": {
+            "x": 550,
+            "y": 240
+          },
+          "order": {
+            "kind": "muster",
+            "destination": {
+              "x": 928,
+              "y": 144
+            }
+          },
+          "spellCooldowns": {
+            "intimidate": 9.9
+          }
+        },
+        {
+          "id": "enemy-produced-2",
+          "kind": "unit",
+          "owner": "enemy",
+          "role": "soldier",
+          "hp": 19.8,
+          "position": {
+            "x": 542.000001,
+            "y": 300
+          },
+          "order": {
+            "kind": "muster",
+            "destination": {
+              "x": 896,
+              "y": 320
+            }
+          },
+          "spellEffects": [
+            {
+              "spell": "intimidate",
+              "sourceFaction": "clans",
+              "remainingSeconds": 4.9
+            }
+          ]
+        }
+      ],
+      "mode": null,
+      "time": 0.1
+    },
+    "panels": [
+      {
+        "id": "bottom-bar",
+        "width": 1280,
+        "scrollWidth": 1280,
+        "height": 158,
+        "scrollHeight": 158
+      },
+      {
+        "id": "context-actions",
+        "width": 316,
+        "scrollWidth": 316,
+        "height": 116,
+        "scrollHeight": 116
+      },
+      {
+        "id": "selection-info",
+        "width": 442,
+        "scrollWidth": 442,
+        "height": 101,
+        "scrollHeight": 101
+      }
+    ],
+    "errors": []
+  },
+  {
+    "faction": "elves",
+    "width": 800,
+    "loadout": [
+      {
+        "slot": "heal",
+        "id": "renew",
+        "cfg": {
+          "name": "Renew",
+          "kind": "heal",
+          "targetTeam": "ally",
+          "targetType": "ground-combat",
+          "manaCost": 25,
+          "range": 192,
+          "cooldown": 8,
+          "duration": 0,
+          "healHP": 30
+        }
+      },
+      {
+        "slot": "ward",
+        "cfg": null
+      },
+      {
+        "slot": "hex",
+        "id": "wither",
+        "cfg": {
+          "name": "Wither",
+          "kind": "debuff",
+          "targetTeam": "enemy",
+          "targetType": "ground-combat",
+          "manaCost": 25,
+          "range": 224,
+          "cooldown": 10,
+          "duration": 4,
+          "attackMultiplier": 0.65
+        }
+      }
+    ],
+    "ai": {
+      "own": [
+        {
+          "id": "unit-4",
+          "kind": "soldier",
+          "owner": "player",
+          "hp": 50,
+          "archetype": "specialist",
+          "mana": 70.125,
+          "cargo": 0,
+          "selected": true,
+          "autoDisabled": true,
+          "position": {
+            "x": 400,
+            "y": 240
+          },
+          "target": {
+            "x": 400,
+            "y": 240
+          },
+          "order": {
+            "kind": "idle"
+          },
+          "spellCooldowns": {
+            "renew": 7.9,
+            "wither": 9.9
+          },
+          "attackCooldown": 0
+        },
+        {
+          "id": "unit-5",
+          "kind": "soldier",
+          "owner": "player",
+          "hp": 45,
+          "cargo": 0,
+          "selected": false,
+          "autoDisabled": true,
+          "position": {
+            "x": 460,
+            "y": 300
+          },
+          "target": {
+            "x": 460,
+            "y": 300
+          },
+          "order": {
+            "kind": "idle"
+          }
+        }
+      ],
+      "enemy": [
+        {
+          "id": "enemy-produced-1",
+          "kind": "unit",
+          "owner": "enemy",
+          "role": "specialist",
+          "hp": 50,
+          "mana": 95.125,
+          "position": {
+            "x": 550,
+            "y": 240
+          },
+          "order": {
+            "kind": "muster",
+            "destination": {
+              "x": 928,
+              "y": 144
+            }
+          },
+          "spellCooldowns": {
+            "renew": 7.9
+          },
+          "attackCooldown": 0
+        },
+        {
+          "id": "enemy-produced-2",
+          "kind": "unit",
+          "owner": "enemy",
+          "role": "soldier",
+          "hp": 45,
+          "position": {
+            "x": 542.000001,
+            "y": 300
+          },
+          "order": {
+            "kind": "muster",
+            "destination": {
+              "x": 896,
+              "y": 320
+            }
+          },
+          "spellEffects": [
+            {
+              "spell": "wither",
+              "sourceFaction": "elves",
+              "remainingSeconds": 3.9
+            }
+          ]
+        }
+      ],
+      "mode": null,
+      "time": 0.1
+    },
+    "panels": [
+      {
+        "id": "bottom-bar",
+        "width": 800,
+        "scrollWidth": 800,
+        "height": 158,
+        "scrollHeight": 158
+      },
+      {
+        "id": "context-actions",
+        "width": 166,
+        "scrollWidth": 166,
+        "height": 116,
+        "scrollHeight": 116
+      },
+      {
+        "id": "selection-info",
+        "width": 232,
+        "scrollWidth": 232,
+        "height": 78,
+        "scrollHeight": 78
+      }
+    ],
+    "errors": []
+  },
+  {
+    "faction": "elves",
+    "width": 1280,
+    "loadout": [
+      {
+        "slot": "heal",
+        "id": "renew",
+        "cfg": {
+          "name": "Renew",
+          "kind": "heal",
+          "targetTeam": "ally",
+          "targetType": "ground-combat",
+          "manaCost": 25,
+          "range": 192,
+          "cooldown": 8,
+          "duration": 0,
+          "healHP": 30
+        }
+      },
+      {
+        "slot": "ward",
+        "cfg": null
+      },
+      {
+        "slot": "hex",
+        "id": "wither",
+        "cfg": {
+          "name": "Wither",
+          "kind": "debuff",
+          "targetTeam": "enemy",
+          "targetType": "ground-combat",
+          "manaCost": 25,
+          "range": 224,
+          "cooldown": 10,
+          "duration": 4,
+          "attackMultiplier": 0.65
+        }
+      }
+    ],
+    "ai": {
+      "own": [
+        {
+          "id": "unit-4",
+          "kind": "soldier",
+          "owner": "player",
+          "hp": 50,
+          "archetype": "specialist",
+          "mana": 70.125,
+          "cargo": 0,
+          "selected": true,
+          "autoDisabled": true,
+          "position": {
+            "x": 400,
+            "y": 240
+          },
+          "target": {
+            "x": 400,
+            "y": 240
+          },
+          "order": {
+            "kind": "idle"
+          },
+          "spellCooldowns": {
+            "renew": 7.9,
+            "wither": 9.9
+          },
+          "attackCooldown": 0
+        },
+        {
+          "id": "unit-5",
+          "kind": "soldier",
+          "owner": "player",
+          "hp": 45,
+          "cargo": 0,
+          "selected": false,
+          "autoDisabled": true,
+          "position": {
+            "x": 460,
+            "y": 300
+          },
+          "target": {
+            "x": 460,
+            "y": 300
+          },
+          "order": {
+            "kind": "idle"
+          }
+        }
+      ],
+      "enemy": [
+        {
+          "id": "enemy-produced-1",
+          "kind": "unit",
+          "owner": "enemy",
+          "role": "specialist",
+          "hp": 50,
+          "mana": 95.125,
+          "position": {
+            "x": 550,
+            "y": 240
+          },
+          "order": {
+            "kind": "muster",
+            "destination": {
+              "x": 928,
+              "y": 144
+            }
+          },
+          "spellCooldowns": {
+            "renew": 7.9
+          },
+          "attackCooldown": 0
+        },
+        {
+          "id": "enemy-produced-2",
+          "kind": "unit",
+          "owner": "enemy",
+          "role": "soldier",
+          "hp": 45,
+          "position": {
+            "x": 542.000001,
+            "y": 300
+          },
+          "order": {
+            "kind": "muster",
+            "destination": {
+              "x": 896,
+              "y": 320
+            }
+          },
+          "spellEffects": [
+            {
+              "spell": "wither",
+              "sourceFaction": "elves",
+              "remainingSeconds": 3.9
+            }
+          ]
+        }
+      ],
+      "mode": null,
+      "time": 0.1
+    },
+    "panels": [
+      {
+        "id": "bottom-bar",
+        "width": 1280,
+        "scrollWidth": 1280,
+        "height": 158,
+        "scrollHeight": 158
+      },
+      {
+        "id": "context-actions",
+        "width": 316,
+        "scrollWidth": 316,
+        "height": 116,
+        "scrollHeight": 116
+      },
+      {
+        "id": "selection-info",
+        "width": 442,
+        "scrollWidth": 442,
+        "height": 101,
+        "scrollHeight": 101
+      }
+    ],
+    "errors": []
+  },
+  {
+    "faction": "dwarves",
+    "width": 800,
+    "loadout": [
+      {
+        "slot": "heal",
+        "id": "mend",
+        "cfg": {
+          "name": "Mend",
+          "kind": "heal",
+          "targetTeam": "ally",
+          "targetType": "ground-combat",
+          "manaCost": 15,
+          "range": 128,
+          "cooldown": 8,
+          "duration": 0,
+          "healHP": 20
+        }
+      },
+      {
+        "slot": "ward",
+        "id": "rune",
+        "cfg": {
+          "name": "Rune Shield",
+          "kind": "buff",
+          "targetTeam": "ally",
+          "targetType": "ground-combat",
+          "manaCost": 30,
+          "range": 160,
+          "cooldown": 12,
+          "duration": 6,
+          "defenseMultiplier": 0.6
+        }
+      },
+      {
+        "slot": "hex",
+        "cfg": null
+      }
+    ],
+    "ai": {
+      "own": [
+        {
+          "id": "unit-4",
+          "kind": "soldier",
+          "owner": "player",
+          "hp": 140,
+          "archetype": "specialist",
+          "mana": 55.08,
+          "cargo": 0,
+          "selected": true,
+          "autoDisabled": true,
+          "position": {
+            "x": 400,
+            "y": 240
+          },
+          "target": {
+            "x": 400,
+            "y": 240
+          },
+          "order": {
+            "kind": "idle"
+          },
+          "spellCooldowns": {
+            "mend": 7.9,
+            "rune": 11.9
+          }
+        },
+        {
+          "id": "unit-5",
+          "kind": "soldier",
+          "owner": "player",
+          "hp": 45.5,
+          "cargo": 0,
+          "selected": false,
+          "autoDisabled": true,
+          "position": {
+            "x": 460,
+            "y": 300
+          },
+          "target": {
+            "x": 460,
+            "y": 300
+          },
+          "order": {
+            "kind": "idle"
+          },
+          "spellEffects": [
+            {
+              "spell": "rune",
+              "sourceFaction": "dwarves",
+              "remainingSeconds": 5.9
+            }
+          ]
+        }
+      ],
+      "enemy": [
+        {
+          "id": "enemy-produced-1",
+          "kind": "unit",
+          "owner": "enemy",
+          "role": "specialist",
+          "hp": 140,
+          "mana": 85.08,
+          "position": {
+            "x": 550,
+            "y": 240
+          },
+          "order": {
+            "kind": "muster",
+            "destination": {
+              "x": 928,
+              "y": 144
+            }
+          },
+          "spellCooldowns": {
+            "mend": 7.9
+          }
+        },
+        {
+          "id": "enemy-produced-2",
+          "kind": "unit",
+          "owner": "enemy",
+          "role": "soldier",
+          "hp": 45.5,
+          "position": {
+            "x": 542.000001,
+            "y": 300
+          },
+          "order": {
+            "kind": "muster",
+            "destination": {
+              "x": 896,
+              "y": 320
+            }
+          }
+        }
+      ],
+      "mode": null,
+      "time": 0.1
+    },
+    "panels": [
+      {
+        "id": "bottom-bar",
+        "width": 800,
+        "scrollWidth": 800,
+        "height": 158,
+        "scrollHeight": 158
+      },
+      {
+        "id": "context-actions",
+        "width": 166,
+        "scrollWidth": 166,
+        "height": 116,
+        "scrollHeight": 116
+      },
+      {
+        "id": "selection-info",
+        "width": 232,
+        "scrollWidth": 232,
+        "height": 78,
+        "scrollHeight": 78
+      }
+    ],
+    "errors": []
+  },
+  {
+    "faction": "dwarves",
+    "width": 1280,
+    "loadout": [
+      {
+        "slot": "heal",
+        "id": "mend",
+        "cfg": {
+          "name": "Mend",
+          "kind": "heal",
+          "targetTeam": "ally",
+          "targetType": "ground-combat",
+          "manaCost": 15,
+          "range": 128,
+          "cooldown": 8,
+          "duration": 0,
+          "healHP": 20
+        }
+      },
+      {
+        "slot": "ward",
+        "id": "rune",
+        "cfg": {
+          "name": "Rune Shield",
+          "kind": "buff",
+          "targetTeam": "ally",
+          "targetType": "ground-combat",
+          "manaCost": 30,
+          "range": 160,
+          "cooldown": 12,
+          "duration": 6,
+          "defenseMultiplier": 0.6
+        }
+      },
+      {
+        "slot": "hex",
+        "cfg": null
+      }
+    ],
+    "ai": {
+      "own": [
+        {
+          "id": "unit-4",
+          "kind": "soldier",
+          "owner": "player",
+          "hp": 140,
+          "archetype": "specialist",
+          "mana": 55.08,
+          "cargo": 0,
+          "selected": true,
+          "autoDisabled": true,
+          "position": {
+            "x": 400,
+            "y": 240
+          },
+          "target": {
+            "x": 400,
+            "y": 240
+          },
+          "order": {
+            "kind": "idle"
+          },
+          "spellCooldowns": {
+            "mend": 7.9,
+            "rune": 11.9
+          }
+        },
+        {
+          "id": "unit-5",
+          "kind": "soldier",
+          "owner": "player",
+          "hp": 45.5,
+          "cargo": 0,
+          "selected": false,
+          "autoDisabled": true,
+          "position": {
+            "x": 460,
+            "y": 300
+          },
+          "target": {
+            "x": 460,
+            "y": 300
+          },
+          "order": {
+            "kind": "idle"
+          },
+          "spellEffects": [
+            {
+              "spell": "rune",
+              "sourceFaction": "dwarves",
+              "remainingSeconds": 5.9
+            }
+          ]
+        }
+      ],
+      "enemy": [
+        {
+          "id": "enemy-produced-1",
+          "kind": "unit",
+          "owner": "enemy",
+          "role": "specialist",
+          "hp": 140,
+          "mana": 85.08,
+          "position": {
+            "x": 550,
+            "y": 240
+          },
+          "order": {
+            "kind": "muster",
+            "destination": {
+              "x": 928,
+              "y": 144
+            }
+          },
+          "spellCooldowns": {
+            "mend": 7.9
+          }
+        },
+        {
+          "id": "enemy-produced-2",
+          "kind": "unit",
+          "owner": "enemy",
+          "role": "soldier",
+          "hp": 45.5,
+          "position": {
+            "x": 542.000001,
+            "y": 300
+          },
+          "order": {
+            "kind": "muster",
+            "destination": {
+              "x": 896,
+              "y": 320
+            }
+          }
+        }
+      ],
+      "mode": null,
+      "time": 0.1
+    },
+    "panels": [
+      {
+        "id": "bottom-bar",
+        "width": 1280,
+        "scrollWidth": 1280,
+        "height": 158,
+        "scrollHeight": 158
+      },
+      {
+        "id": "context-actions",
+        "width": 316,
+        "scrollWidth": 316,
+        "height": 116,
+        "scrollHeight": 116
+      },
+      {
+        "id": "selection-info",
+        "width": 442,
+        "scrollWidth": 442,
+        "height": 101,
+        "scrollHeight": 101
+      }
+    ],
+    "errors": []
+  },
+  {
+    "faction": "goblins",
+    "width": 800,
+    "loadout": [
+      {
+        "slot": "heal",
+        "cfg": null
+      },
+      {
+        "slot": "ward",
+        "id": "overclock",
+        "cfg": {
+          "name": "Overclock",
+          "kind": "buff",
+          "targetTeam": "ally",
+          "targetType": "ground-combat",
+          "manaCost": 25,
+          "range": 160,
+          "cooldown": 12,
+          "duration": 5,
+          "attackMultiplier": 1.4,
+          "defenseMultiplier": 1.2
+        }
+      },
+      {
+        "slot": "hex",
+        "id": "corrode",
+        "cfg": {
+          "name": "Corrode",
+          "kind": "debuff",
+          "targetTeam": "enemy",
+          "targetType": "ground-combat",
+          "manaCost": 20,
+          "range": 192,
+          "cooldown": 10,
+          "duration": 5,
+          "defenseMultiplier": 1.25
+        }
+      }
+    ],
+    "ai": {
+      "own": [
+        {
+          "id": "unit-4",
+          "kind": "soldier",
+          "owner": "player",
+          "hp": 35,
+          "archetype": "specialist",
+          "mana": 35.1,
+          "cargo": 0,
+          "selected": true,
+          "autoDisabled": true,
+          "position": {
+            "x": 400,
+            "y": 240
+          },
+          "target": {
+            "x": 400,
+            "y": 240
+          },
+          "order": {
+            "kind": "idle"
+          },
+          "spellCooldowns": {
+            "overclock": 11.9,
+            "corrode": 9.9
+          },
+          "attackCooldown": 0
+        },
+        {
+          "id": "unit-5",
+          "kind": "soldier",
+          "owner": "player",
+          "hp": 12,
+          "cargo": 0,
+          "selected": false,
+          "autoDisabled": true,
+          "position": {
+            "x": 460,
+            "y": 300
+          },
+          "target": {
+            "x": 460,
+            "y": 300
+          },
+          "order": {
+            "kind": "idle"
+          },
+          "spellEffects": [
+            {
+              "spell": "overclock",
+              "sourceFaction": "goblins",
+              "remainingSeconds": 4.9
+            },
+            {
+              "spell": "corrode",
+              "sourceFaction": "goblins",
+              "remainingSeconds": 4.9
+            }
+          ]
+        }
+      ],
+      "enemy": [
+        {
+          "id": "enemy-produced-1",
+          "kind": "unit",
+          "owner": "enemy",
+          "role": "specialist",
+          "hp": 35,
+          "mana": 60.1,
+          "position": {
+            "x": 550,
+            "y": 240
+          },
+          "order": {
+            "kind": "muster",
+            "destination": {
+              "x": 928,
+              "y": 144
+            }
+          },
+          "spellCooldowns": {
+            "corrode": 9.9
+          },
+          "attackCooldown": 0
+        },
+        {
+          "id": "enemy-produced-2",
+          "kind": "unit",
+          "owner": "enemy",
+          "role": "soldier",
+          "hp": 12,
+          "position": {
+            "x": 542.000001,
+            "y": 300
+          },
+          "order": {
+            "kind": "muster",
+            "destination": {
+              "x": 896,
+              "y": 320
+            }
+          },
+          "spellEffects": [
+            {
+              "spell": "corrode",
+              "sourceFaction": "goblins",
+              "remainingSeconds": 4.9
+            }
+          ]
+        }
+      ],
+      "mode": null,
+      "time": 0.1
+    },
+    "panels": [
+      {
+        "id": "bottom-bar",
+        "width": 800,
+        "scrollWidth": 800,
+        "height": 158,
+        "scrollHeight": 158
+      },
+      {
+        "id": "context-actions",
+        "width": 166,
+        "scrollWidth": 166,
+        "height": 116,
+        "scrollHeight": 116
+      },
+      {
+        "id": "selection-info",
+        "width": 232,
+        "scrollWidth": 232,
+        "height": 78,
+        "scrollHeight": 78
+      }
+    ],
+    "errors": []
+  },
+  {
+    "faction": "goblins",
+    "width": 1280,
+    "loadout": [
+      {
+        "slot": "heal",
+        "cfg": null
+      },
+      {
+        "slot": "ward",
+        "id": "overclock",
+        "cfg": {
+          "name": "Overclock",
+          "kind": "buff",
+          "targetTeam": "ally",
+          "targetType": "ground-combat",
+          "manaCost": 25,
+          "range": 160,
+          "cooldown": 12,
+          "duration": 5,
+          "attackMultiplier": 1.4,
+          "defenseMultiplier": 1.2
+        }
+      },
+      {
+        "slot": "hex",
+        "id": "corrode",
+        "cfg": {
+          "name": "Corrode",
+          "kind": "debuff",
+          "targetTeam": "enemy",
+          "targetType": "ground-combat",
+          "manaCost": 20,
+          "range": 192,
+          "cooldown": 10,
+          "duration": 5,
+          "defenseMultiplier": 1.25
+        }
+      }
+    ],
+    "ai": {
+      "own": [
+        {
+          "id": "unit-4",
+          "kind": "soldier",
+          "owner": "player",
+          "hp": 35,
+          "archetype": "specialist",
+          "mana": 35.1,
+          "cargo": 0,
+          "selected": true,
+          "autoDisabled": true,
+          "position": {
+            "x": 400,
+            "y": 240
+          },
+          "target": {
+            "x": 400,
+            "y": 240
+          },
+          "order": {
+            "kind": "idle"
+          },
+          "spellCooldowns": {
+            "overclock": 11.9,
+            "corrode": 9.9
+          },
+          "attackCooldown": 0
+        },
+        {
+          "id": "unit-5",
+          "kind": "soldier",
+          "owner": "player",
+          "hp": 12,
+          "cargo": 0,
+          "selected": false,
+          "autoDisabled": true,
+          "position": {
+            "x": 460,
+            "y": 300
+          },
+          "target": {
+            "x": 460,
+            "y": 300
+          },
+          "order": {
+            "kind": "idle"
+          },
+          "spellEffects": [
+            {
+              "spell": "overclock",
+              "sourceFaction": "goblins",
+              "remainingSeconds": 4.9
+            },
+            {
+              "spell": "corrode",
+              "sourceFaction": "goblins",
+              "remainingSeconds": 4.9
+            }
+          ]
+        }
+      ],
+      "enemy": [
+        {
+          "id": "enemy-produced-1",
+          "kind": "unit",
+          "owner": "enemy",
+          "role": "specialist",
+          "hp": 35,
+          "mana": 60.1,
+          "position": {
+            "x": 550,
+            "y": 240
+          },
+          "order": {
+            "kind": "muster",
+            "destination": {
+              "x": 928,
+              "y": 144
+            }
+          },
+          "spellCooldowns": {
+            "corrode": 9.9
+          },
+          "attackCooldown": 0
+        },
+        {
+          "id": "enemy-produced-2",
+          "kind": "unit",
+          "owner": "enemy",
+          "role": "soldier",
+          "hp": 12,
+          "position": {
+            "x": 542.000001,
+            "y": 300
+          },
+          "order": {
+            "kind": "muster",
+            "destination": {
+              "x": 896,
+              "y": 320
+            }
+          },
+          "spellEffects": [
+            {
+              "spell": "corrode",
+              "sourceFaction": "goblins",
+              "remainingSeconds": 4.9
+            }
+          ]
+        }
+      ],
+      "mode": null,
+      "time": 0.1
+    },
+    "panels": [
+      {
+        "id": "bottom-bar",
+        "width": 1280,
+        "scrollWidth": 1280,
+        "height": 158,
+        "scrollHeight": 158
+      },
+      {
+        "id": "context-actions",
+        "width": 316,
+        "scrollWidth": 316,
+        "height": 116,
+        "scrollHeight": 116
+      },
+      {
+        "id": "selection-info",
+        "width": 442,
+        "scrollWidth": 442,
+        "height": 101,
+        "scrollHeight": 101
+      }
+    ],
+    "errors": []
+  }
+]

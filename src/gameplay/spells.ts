@@ -1,4 +1,4 @@
-import {spellDefinition,spellIds,type SpellId} from '../config/spells';
+import {factionSpells,spellDefinition,spellIds,type SpellId} from '../config/spells';
 import {factions,defaultFactions,type FactionId} from '../config/factions';
 import {entityVisible} from './visibility';
 import {enemyMaximumHP} from './enemyUnits';
@@ -15,6 +15,7 @@ export function spellCasterReason(m:MatchState,casterId:string,id:SpellId,team:'
  if(m.paused||m.outcome!=='playing')return 'Match is paused or ended';
  const caster=combatant(m,casterId,team),faction=teamFaction(m,team),cfg=spellDefinition(id,faction);
  if(!caster||caster.hp<=0||('archetype'in caster?caster.archetype!=='specialist':!('role'in caster)||caster.role!=='specialist'))return 'Select a living own specialist';
+ if(!factionSpells[faction].includes(id))return 'Spell unavailable to this faction';
  if((caster.spellCooldowns?.[id]??0)>1e-9)return `Cooldown ${(caster.spellCooldowns![id]!).toFixed(1)}s`;
  if((caster.mana??factions[faction].units.specialist.mana!.initial)+1e-9<cfg.manaCost)return `Needs ${cfg.manaCost} mana`;
  return null;

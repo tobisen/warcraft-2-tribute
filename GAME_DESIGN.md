@@ -1368,3 +1368,17 @@ Banner Guard, Raider, Marksman, Bulwark och Grenadier kompletteras med mana; nam
 Välj en specialist: Heal[F2] kostar20mana, range160 och cooldown6s; återställer25HP upp till max. Ward[F3] kostar25mana, range160 och cooldown8s; en egen markstridsenhet tar0.75× skada i6s. Hex[F4] kostar20mana, range192 och cooldown8s; en synlig fientlig markstridsenhet gör0.75× attackskada i5s.
 
 Range-cirkeln och grön/röd markör visar targeting. Escape/högerklick avbryter utan kostnad; invalid/fullHP/fog/range/feltyp ger feedback utan cooldown. Aktiva buffs har cyan ring, debuffs lila; selection-tooltip visar namn och återstående tid. En buff och en debuff kan samexistera; samma kanal ersätts och får ny duration. Pause/save/load bevarar mana och tid. Ingen ny castpose ingår.
+
+## RTS-167 – aktuella fraktionsspells
+
+Detta ersätter166:s gemensamma utbud för fyra raser, med bevarade historiska Save-effekter. Befintliga specialistnamn och stridsprofiler består. F2 heal, F3 buff och F4 debuff; tomma slots döljs.
+
+| Ras | Spell | Mana / range / cooldown | Verkan |
+| --- | --- | --- | --- |
+| Humans | Heal / Ward / Hex |20/160/6;25/160/8;20/192/8|25HP; inkommande0.75×/6s; attack0.75×/5s|
+| Orcs | War Cry / Intimidate |25/160/10;20/160/10|attack1.3×/5s; attack0.7×/5s|
+| Elves | Renew / Wither |25/192/8;25/224/10|30HP; attack0.65×/4s|
+| Dwarves | Mend / Rune Shield |15/128/8;30/160/12|20HP; inkommande0.6×/6s|
+| Goblins | Overclock / Corrode |25/160/12;20/192/10|attack1.4× OCH inkommande1.2×/5s; fienden tar1.25×/5s|
+
+Effektens namn/tid visas i selection. Cyan buff och lila debuff kan visas samtidigt. Kanaler stackar inte; refresh ersätter samma kanal och startar ny tid. Pause/save/load/restart bevarar eller återställer effekter enligt matchflödet. AI använder heal under70%HP och annars synliga meningsfulla stridsmål, med samma regler och högst två beslut/s. Ingen ny castanimation levereras.

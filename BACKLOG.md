@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**Nytt mandat RTS-165–169:**165 Done (`838f729`),166 Done (denna taskcommit); nästa167. Användarens bifogade uppdrag för165–173 anger etappstopp efter169 och ny chatt170–173.160–164 är verifierade och pushade;164 `874f761`. Befintliga ändringar bevaras.
+**Nytt mandat RTS-165–169:**165 Done (`838f729`),166 Done (`2cd36a6`),167 Done (denna taskcommit);168 kräver luftroster/referenser. Användarens bifogade uppdrag för165–173 anger etappstopp efter169 och ny chatt170–173.160–164 är verifierade och pushade;164 `874f761`. Befintliga ändringar bevaras.
 
 **UI-BUGFIX-BOTTOM-BAR – Horisontell bottom bar** — **Done** (2026-10-04).
 Separat beställd UI-bugfix; befintliga RTS-ID:n/statusar bevaras. Uppdraget
@@ -4494,7 +4494,9 @@ Hantera avbruten targeting och ogiltiga mål.
 
 ## RTS-167 – Fraktionsmagi, effekter och AI
 
-**Status:** Todo.
+**Status:** Done.
+
+**Verifiering:** Fem skilda spell-loadouts konkretiserar134-rollerna; offensiv/defensiv/support/alkemi. Gemensam caster/target/fog/mana/range-validering även för AI, max två beslut/s, heal vid skada, debuff av synlig stridsenhet och buff endast nära synligt stridshot. En buff+en debuff, refresh ersätter kanal, exakta tidsgränser för expiry och Save40/39-migration bevarar äldre spells utan omtolkning.78 riktade tester/7filer och95 strids-/AI-/profiltester/6filer PASS; unit446/80 och build med strict typecheck PASS. Faktisk browser fem raser ×native800/1280, fysisk cast, status/ringar, mana/cooldown, faktisk AI-update, Save/Load/expiry/restart och HUD-scrollmått.20 bilder och browser.json i artifacts/rts-167; fem native800-effectbilder och Goblin1280-AI visuellt granskade. Ingen ny castpose eller mänsklig helmatchbalans hävdas.
 
 **Goal:** Fraktionsmagi, effekter och AI.
 

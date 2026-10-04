@@ -24,3 +24,7 @@ forge och research, men betalar riktig träning med faktiska recipes.
 ## RTS-166: spells
 
 Befintliga godkända sprites återanvänds. Range/targetmarkörer och cyan buff-/lila debuffringar är Phaser-vektorgrafik; inga nya rasterassets eller casting-animationer hävdas. Faktisk native800/1280-granskning och screenshots finns i artifacts/rts-166.
+
+## RTS-167: fraktionsutbud
+
+Fem godkända specialistassets återanvänds. Separata buff-/debuffringar visar samtidigt aktiva kanaler och selection visar namn/tid; inga casting-poser eller nya inspelningar hävdas. Fem raser ×native800/1280, faktisk AI/Save/Load/restart och20 screenshots i artifacts/rts-167.

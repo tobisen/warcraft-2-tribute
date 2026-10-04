@@ -1746,3 +1746,7 @@ Fraktionsdefinitionernas valfria mana-data kompletterar specialistrollen. gamepl
 ## RTS-166 – spells och effekter
 
 config/spells.ts anger mana/range/cooldown/måltyper och effekter. gameplay/spells.ts validerar casts och uppdaterar ren MatchState; Soldier/Enemy har valfria cooldowns/effekter. Befintlig combat adapterar multiplikatorer; match tickar timers med gameplay-delta inklusive passagerare. BootScene håller endast targetinginput/Phaser-markörer, actionPanel och commandFeedback presenterar tillgänglighet. Save39 validerar effekter/cooldowns och migrerar38; inga nya scener eller debug-API införs.
+
+## RTS-167 – fraktionsutbud och AI
+
+config/spells.ts innehåller globalt stabila IDs, factionSpells och presentationens tre slots. Äldre definitioner bevaras för Save39→40. enemySpells.ts använder samma castSpell och validering; beslutsklocka härleds från sparad waves.elapsedSeconds. updateMatch delar vid liveffektens slut och0.5s-beslut endast när enemy-caster finns. Grundnavigation, projektilsystem, fog och befintliga Enemy-abilities återanvänds. SelectionStats/ringar visar aktiva kanaler utan ytterligare sprites.
