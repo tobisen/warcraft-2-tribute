@@ -8,7 +8,7 @@
       "image": "assets/world-atlas.png",
       "data": "assets/world-atlas.json",
       "width": 256,
-      "height": 256
+      "height": 384
     },
     "buildings": {
       "image": "assets/buildings-atlas.png",
@@ -290,6 +290,216 @@
       "anchor": {
         "x": 0,
         "y": 0
+      }
+    },
+    "critter-deer-idle-0": {
+      "atlas": "world",
+      "kind": "wildlife",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 24
+      }
+    },
+    "critter-deer-idle-1": {
+      "atlas": "world",
+      "kind": "wildlife",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 24
+      }
+    },
+    "critter-deer-walk-0": {
+      "atlas": "world",
+      "kind": "wildlife",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 24
+      }
+    },
+    "critter-deer-walk-1": {
+      "atlas": "world",
+      "kind": "wildlife",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 24
+      }
+    },
+    "critter-deer-walk-2": {
+      "atlas": "world",
+      "kind": "wildlife",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 24
+      }
+    },
+    "critter-deer-walk-3": {
+      "atlas": "world",
+      "kind": "wildlife",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 24
+      }
+    },
+    "critter-rabbit-idle-0": {
+      "atlas": "world",
+      "kind": "wildlife",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 24
+      }
+    },
+    "critter-rabbit-idle-1": {
+      "atlas": "world",
+      "kind": "wildlife",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 24
+      }
+    },
+    "critter-rabbit-walk-0": {
+      "atlas": "world",
+      "kind": "wildlife",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 24
+      }
+    },
+    "critter-rabbit-walk-1": {
+      "atlas": "world",
+      "kind": "wildlife",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 24
+      }
+    },
+    "critter-rabbit-walk-2": {
+      "atlas": "world",
+      "kind": "wildlife",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 24
+      }
+    },
+    "critter-rabbit-walk-3": {
+      "atlas": "world",
+      "kind": "wildlife",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 24
+      }
+    },
+    "critter-fox-idle-0": {
+      "atlas": "world",
+      "kind": "wildlife",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 24
+      }
+    },
+    "critter-fox-idle-1": {
+      "atlas": "world",
+      "kind": "wildlife",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 24
+      }
+    },
+    "critter-fox-walk-0": {
+      "atlas": "world",
+      "kind": "wildlife",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 24
+      }
+    },
+    "critter-fox-walk-1": {
+      "atlas": "world",
+      "kind": "wildlife",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 24
+      }
+    },
+    "critter-fox-walk-2": {
+      "atlas": "world",
+      "kind": "wildlife",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 24
+      }
+    },
+    "critter-fox-walk-3": {
+      "atlas": "world",
+      "kind": "wildlife",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 24
+      }
+    },
+    "detail-log": {
+      "atlas": "world",
+      "kind": "wildlife",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 24
+      }
+    },
+    "detail-mushrooms": {
+      "atlas": "world",
+      "kind": "wildlife",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 24
+      }
+    },
+    "detail-reeds": {
+      "atlas": "world",
+      "kind": "wildlife",
+      "width": 32,
+      "height": 32,
+      "anchor": {
+        "x": 16,
+        "y": 24
       }
     },
     "grass-a": {

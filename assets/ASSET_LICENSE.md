@@ -57,3 +57,6 @@ RTS-155 slutligt landreferenspass: [roster-complete.mjs](sources/roster-complete
 
 
 RTS-157: melee/bow/siege/buildingHit är egna deterministiska synteskompositioner i scripts/export-audio.py enligt samma projektvillkor. Ingen extern Foley- eller röstinspelning används.
+
+
+RTS-159: hjort/kanin/räv och stock/svamp/gräsdetaljer i sources/wildlife.mjs är original integer-pixelkompositioner enligt projektvillkoren. Ingen extern djurbild eller spelasset importerad.

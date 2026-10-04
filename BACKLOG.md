@@ -27,9 +27,9 @@ avslutas efter denna fix; ingen senare roadmap-task startas.
   /tmp/w2t-bottom-bar; ingen ny CI-/Pages-verifiering hävdas.
 
 
-**RTS-158 – Fler humoristiska enhetskommentarer** — Nästa oberoende arbete.156 Done;157 teknisk del verifierad, faktisk lyssning återstår. Stoppa efter159.155 avstämd; [återstående sprites](assets/sources/remaining-sprites.md).
+**Stopp efter RTS-159.**156 och159 Done.157 In Progress: teknisk attackljudsdel verifierad, faktisk lyssning återstår.158 In Progress: dialog/routing verifierad,380 egna/licensierade inspelningar saknas. Se [HANDOFF.md](HANDOFF.md).160+ startas inte utan nytt mandat.155 Human är redan implementerad/visuellt granskad/typecheckad; [återstående sprites](assets/sources/remaining-sprites.md).
 
-**Aktuell etapp:** Användaren beställer156–159. Senaste mandat ersätter tidigare stopp; senare tasks startas inte.156 hanterar kartgrafik,157 attackljud,158 repliker/inspelningar,159 dekorativ värld. Saknat assetunderlag får inte markeras som färdigt; oberoende tasks fortsätter.
+**Aktuell etapp:** Uppdrag156–159 avslutas efter159. Oberoende kartgrafik och värld är klara; ljudlyssning/inspelningar hålls uttryckligen öppna. Taskvisa koddelar är verifierade och commit/push levereras. Ingen senare task startas.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -4300,9 +4300,11 @@ Rapportera saknade röstassets tydligt.
 
 ## RTS-159 – Levande värld
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Levande värld.
+
+**Leverans2026-10-04:** Egna32px hjort/kanin/räv med idle/wander, stock/svamp/gräsdetaljer. Dekorativt, högst48 djur, inga gameplay-entiteter/observers/occupancy/selection eller jakt/ekonomi. Synlighetsfilter följer playerfog och aktuell byggnadskarta. Deterministiska statiska habitats och befintlig sparad matchtid ger exakt Save/Load-pose, pause och restart utan Saveversionändring. [Protokoll](assets/sources/wildlife-159.md), [spelvy](artifacts/rts-159/idle-800.png), kontakt-/browserdata i samma mapp. Riktade10/3; slutlig unit444/80, build/strict typecheck, Save/visibility38/3, resourceSelection7/1 och diffcheck PASS. Faktisk browser800/1280 med fysisk Save/Load/restart, fog/input och visuell granskning PASS. Inga campaign-simuleringar. Stanna efter159;157/158 asset-/lyssningsbrister är fortfarande öppna.
 
 **Requirements:**
 

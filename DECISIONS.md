@@ -1334,3 +1334,6 @@ Senaste mandatet omfattar alla fem rasers fem landroller och byggnadsmotiv. Rang
 
 
 RTS-156: befintliga pixelpaletten är stilunderlag; arena granskas först. Vägar är dekorativa jordspår, aldrig broar/vägbonus. Avbrutna spår på vatten innebär fortsatt blockerad landpassage. Forest Pass krona ligger helt inom redan blockerad bergscell.
+
+
+RTS-159: dekorativa djur är aldrig gameplayunit eller visionobserver. Absoluttids-wander från befintlig sparad matchtid ger save/load utan ny schemaändring. Habitats/props skapas alltid från fast terräng; aktuella byggnader döljer dem så Save/Load inte ändrar deras framtida återkomst. Upp till48 djur, inga pathfinding/scouting/ekonomiregler.

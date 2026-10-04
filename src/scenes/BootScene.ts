@@ -1,3 +1,4 @@
+import {wildlifeHabitats,visibleWildlife,wildlifeDetails,type Habitat} from '../presentation/wildlife';
 import {combatAudioSnapshot,combatAudioCues,type CombatAudioSnapshot} from '../presentation/combatAudio';
 import {inspectBuildingAt,inspectedBuilding,savedBuildingSelection} from '../gameplay/buildingInspection';
 import {highscoreStore,renderHighscorePanels} from '../presentation/highscores';
@@ -85,7 +86,7 @@ import { allowsProduction, baseFootprint, type BuildingSelection } from '../game
 import { dragCamera, type CameraDrag } from '../presentation/camera';
 import { commandGroupMove } from '../gameplay/groupMovement';
 import { arenaConfig } from '../config/arena';
-import { tileFootprint, type WorldMap } from '../gameplay/map';
+import {createMap,bodyFits, tileFootprint, type WorldMap } from '../gameplay/map';
 import { matchLabels, productionLabel } from '../presentation/hud';
 import Phaser from 'phaser';
 import { createMatch, updateMatch, type MatchOutcome, type MatchState } from '../gameplay/match';
@@ -201,6 +202,9 @@ export class BootScene extends Phaser.Scene {
   private hpBars?:Phaser.GameObjects.Graphics;
   private impacts=new Map<number,{impact:Impact;visual:Phaser.GameObjects.Image}>();
   private nextImpact=1;
+  private habitats:Habitat[]=[];
+  private wildlifeVisuals=new Map<string,Phaser.GameObjects.Image>();
+  private wildlifeProps:Phaser.GameObjects.Image[]=[];
   private audioSnapshot?:AudioSnapshot;
   private combatSoundSnapshot?:CombatAudioSnapshot;
   private visualTime=0;
@@ -219,7 +223,7 @@ export class BootScene extends Phaser.Scene {
   create(): void {
     this.audioSnapshot=undefined;this.combatSoundSnapshot=undefined;gameAudio.setPhase('menu');gameAudio.reset();
     this.warningState=createWarningState();this.warningVisual=this.add.graphics().setDepth(9);
-    this.visualTime=0;this.extraResourceVisuals.clear();this.hitSnapshot=undefined;this.motions.clear();this.deaths.clear();this.impacts.clear();this.nextImpact=1;
+    this.habitats=[];this.wildlifeVisuals.clear();this.wildlifeProps=[];this.visualTime=0;this.extraResourceVisuals.clear();this.hitSnapshot=undefined;this.motions.clear();this.deaths.clear();this.impacts.clear();this.nextImpact=1;
     this.hpBars=this.add.graphics().setDepth(7);
     this.operationGraphics=this.add.graphics().setDepth(6);this.operationLabels=[];
     const loaded=this.pendingLoad;this.pendingLoad=undefined;
@@ -320,8 +324,11 @@ export class BootScene extends Phaser.Scene {
       this.restartButton.removeEventListener('click', restart);
     });
     this.enemyVisuals.clear();
+    this.habitats=wildlifeHabitats(this.map);
+    const sceneryMap=createMap(this.map.id);
     for (let row = 0; row < Math.ceil(this.map.height / this.map.tileSize); row++) {
       for (let column = 0; column < Math.ceil(this.map.width / this.map.tileSize); column++) {
+        const detail=wildlifeDetails(column,row,sceneryMap);if(detail)this.wildlifeProps.push(this.add.image((column+.5)*this.map.tileSize,(row+.5)*this.map.tileSize,'world',detail).setOrigin(.5,.75).setDepth(-1));
         const rect = tileFootprint(this.map, { column, row })!;
         this.add.image(rect.x,rect.y,'world',terrainImageFrame(column,row,this.map.id)).setOrigin(0).setDepth(-10);
         for(const detail of terrainDetails(column,row,this.map.id))this.add.image(rect.x,rect.y,'world',detail).setOrigin(0).setDepth(-9.5);
@@ -749,6 +756,10 @@ export class BootScene extends Phaser.Scene {
   }
 
   private syncVisuals(): void {
+    const animalPoses=visibleWildlife(this.habitats,this.waves.elapsedSeconds,this.map,p=>isVisible(this.fog,'player',p)),animalIds=new Set(animalPoses.map(p=>p.id));
+    for(const [id,image]of this.wildlifeVisuals)if(!animalIds.has(id))image.setVisible(false);
+    for(const pose of animalPoses){let image=this.wildlifeVisuals.get(pose.id);if(!image){image=this.add.image(pose.position.x,pose.position.y,'world',pose.frame).setOrigin(.5,.75).setDepth(-.5);this.wildlifeVisuals.set(pose.id,image);}image.setPosition(pose.position.x,pose.position.y).setFrame(pose.frame).setFlipX(pose.flipX).setVisible(true);}
+    for(const image of this.wildlifeProps)image.setVisible(isVisible(this.fog,'player',image)&&bodyFits(this.map,image,12));
     if(this.selectedBuilding&&!inspectedBuilding(this.currentMatch(),this.selectedBuilding))this.selectedBuilding=null;
     this.baseVisual.setFrame(buildingFrame('base','player',0,5,this.factions.player,this.combat.baseHP)).setVisible(this.combat.baseHP>0);this.baseLabel.setVisible(this.combat.baseHP>0).setText(`${factions[this.factions.player].buildingNames.base} ${Math.ceil(this.combat.baseHP)} HP`);
     if (!this.gameplayActive()) {

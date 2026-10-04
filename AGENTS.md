@@ -100,3 +100,7 @@ strict typecheck PASS. Ny CI-/Pages-build är inte separat verifierad här.
 ## Mandat RTS-156–159
 
 Användaren beställer156–159 en task i taget, med docs/checks/commit/push efter verifierad task och HANDOFF efter159. Tidigare stopp före156 är ersatt. Grafik kräver browsergranskning; ljud kräver faktisk lyssning. Saknade inspelningar/underlag redovisas, oberoende arbete fortsätter vid assetblockering. Inga breda campaign-simuleringar för grafik/ljud. Ingen automatisk delegering.
+
+## Stopp efter RTS-159
+
+Aktuellt156–159-mandat avslutas efter159.156/159 är klara;157 kräver faktisk lyssning och158 egna/licensierade röstinspelningar/lyssning. Verifierade tekniska delcommits får inte tolkas som Done för saknade assets. HANDOFF.md styr överlämningen;160+ startas inte automatiskt. Ingen ny CI/Pages eller broad campaign-regression hävdas.

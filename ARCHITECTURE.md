@@ -1735,3 +1735,6 @@ RTS-156: terrainDetails återanvänder world-atlas och statiska tilebilder. Enda
 
 
 RTS-157: combatAudio är ren presentationspolicy för synliga snapshots och dämpade cues. BootScene syncAudio adapterar kamerans mitt till appägda GameAudio; den äldre generiska impact/cannon-cuen används inte dubbelt i scenen. Gameplaystate ändras inte.
+
+
+RTS-159: wildlife.ts är ren dekorativ presentationslogik. Statiska habitats och sparad waves.elapsedSeconds producerar poser; BootScene adapterar bilder/fog/aktuella obstacles. Inga MatchState/Save/collision/observerfält tillförs. WildlifeSave är ett sammansatt integrationstest.

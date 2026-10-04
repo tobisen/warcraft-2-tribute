@@ -1,3 +1,4 @@
+import {wildlifeFrames} from './wildlife.mjs';
 /** Original hand-authored pixel composition; all colors come from the local project palette. */
 export function worldFrames(Surface,p){
  const terrain=(kind,variant=0)=>{const s=new Surface(32,32);s.rect(0,0,32,32,kind==='water'?p.water:p.grass);
@@ -52,7 +53,7 @@ export function worldFrames(Surface,p){
  // A canopy confined to the existing blocked rock cell: forest silhouette cannot claim free ground.
  const forest=terrain('rock');forest.rect(14,20,5,10,p.bark);for(const [x,y,r]of [[10,11,8],[22,10,8],[16,6,8],[17,17,9]]){forest.ellipse(x,y,r,6,p.leafDark);forest.ellipse(x-1,y-2,r-2,4,p.leaf);forest.line(x-3,y-4,x+1,y-5,p.leafLight);}add('forest-rock',forest);
  return [
-  ...edges,...corners,...details,
+  ...edges,...corners,...details,...wildlifeFrames(Surface,p),
   {id:'grass-a',image:terrain('grass'),x:0,y:0,anchor:{x:0,y:0},kind:'terrain'},
   {id:'grass-b',image:terrain('grass',1),x:32,y:0,anchor:{x:0,y:0},kind:'terrain'},
   {id:'grass-c',image:terrain('grass',2),x:128,y:0,anchor:{x:0,y:0},kind:'terrain'},

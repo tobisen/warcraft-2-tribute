@@ -68,5 +68,6 @@
   "src/gameplay/statLedger.test.ts",
   "src/gameplay/transport.test.ts",
   "src/gameplay/tutorial.test.ts",
-  "src/gameplay/visibility.test.ts"
+  "src/gameplay/visibility.test.ts",
+  "src/presentation/wildlifeSave.test.ts"
 ]

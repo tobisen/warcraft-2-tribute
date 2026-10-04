@@ -206,3 +206,6 @@ RTS-156: world-atlas256×256 med30 frames. Originalgräs/vatten/kust och sju nya
 RTS-157:15 lokala ljudfiler; export med PYTHONPATH till optional soundfile-miljö. Nya melee/bow/siege/buildingHit är egna synteseffekter. Faktisk lyssning återstår; se sources/attack-audio.md och artifacts/rts-157/battle-preview.wav.
 
 RTS-158: utökad originaldialog med aktivitet/ras/rollvariation och lokal speech-fallback.380 inspelnings-ID:n saknar samtliga recording/license. Se sources/unit-voices-158.md; texter är inte röstassets.
+
+
+RTS-159: worldatlas256×384/51 frames. wildlife.mjs innehåller egna32px djur/props; inga rasterreferenser. Två idle- och fyra gångposer. Se sources/wildlife-159.md och artifacts/rts-159. Kart-/djurgranskning är separat från kvarstående attackljudslyssning och saknade röstinspelningar.
