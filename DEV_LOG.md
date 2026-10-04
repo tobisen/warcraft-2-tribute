@@ -2908,3 +2908,11 @@ Implementerat kostnader80/60→120/100, tider20→30s, köpaus/exakt återupptag
 Riktade40 tester PASS. Browser native800×600/1280×720: start, pausad kö, fysisk save/load bevarar nivå/kö/selection, nivå2/3 och maxnivåknapp; screenshots granskade i artifacts/rts-160 och browser.json. Inga kampanjsimuleringar. Ingen separat godkänd nivå2/3-referens, CI/Pages ej granskade. Slutlig unit/build/diff nedan.
 
 Slutchecks: första unitkörningen upptäckte tre föråldrade assertions för config33; ändrade dem till34 och körde om unit/build på slutlig kod. Riktade40 PASS, slutlig unit444/80 PASS, build med strict typecheck PASS, diffcheck PASS. Ingen full campaign-regression i160.
+
+## RTS-161 – gemensamt tech tree
+
+Återanvänder fraktionsdefinitionerna och unitAvailability. Building/upgrade-definitioner anger prerequisites; samma evaluator används i placement, research, actions och tech tree. Nivåkrav stöds för senare försvarsuppgraderingar utan att hitta på nya lås för dagens roster. Byggnadsnamn och saknade requirements visas; accepterade köjobb behåller sina recipes efter kravförlust. RTS-160 commit/push7d7290c.
+
+Riktade20 tester PASS. Browser native800/1280: tech tree, research-tooltip Complete Forge, upplåsning av färdig Forge, fysisk forskningsstart och spärr under pågående jobb; screenshots granskade i artifacts/rts-161. Ingen ny grafik eller kampanjsimulering. Slutlig unit/build/diff redovisas efter finalkontroll.
+
+Slutlig unit445/80 PASS, build inklusive strict typecheck PASS. Diffcheck hittade en blankrad med whitespace i index.html; rättad och diffcheck PASS. Därefter endast docs/whitespace ändrade, kodchecks återanvänds. Ingen full campaign-regression.

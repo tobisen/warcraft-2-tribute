@@ -1,3 +1,4 @@
+import {buildingAvailability} from './productionPrerequisites';
 import {productionFaction} from '../config/factions';
 import {text as uiText} from '../text';
 import {navyConfig} from '../config/navy';
@@ -22,7 +23,7 @@ export interface Footprint extends Position {
   height: number;
 }
 export interface PlacementContext {
-  map: WorldMap; gathering: GatheringState; enemies: readonly import('./spawning').PositionedBody[];
+  technology?:import('../config/factions').TechnologyState; map: WorldMap; gathering: GatheringState; enemies: readonly import('./spawning').PositionedBody[];
 }
 export interface ConstructionJob {remainingSeconds:number;builderId:string|null}
 export interface Farm {owner?:'player';hp?:number;id:`farm-${number}`;footprint:Footprint;construction:ConstructionJob}
@@ -70,6 +71,7 @@ export function cancelPlacement(state: PlacementState): PlacementState {
 
 export function placementError(state: PlacementState, point: Position, wood: number, obstacles: Footprint[], context?: PlacementContext): string | null {
   const kind=state.kind??'barracks';
+  if(context?.technology){const locked=buildingAvailability(productionFaction(context.gathering),kind,context.technology);if(locked)return locked;}
   if(kind==='harbor')return uiText.harborUsesCoastRules;
   if(kind==='forge'&&state.forge)return uiText.forgeExists;
   if (kind==='barracks'&&state.barracks) return uiText.barracksExists;

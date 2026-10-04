@@ -1,0 +1,12 @@
+[
+  {
+    "width": 800,
+    "tree": "Keep: level 1 / 3\nBarracks ← Available\nFarm ← Available\nForge ← Available\nHarbor ← Available\nWorker @ Keep ← Available\nGuard @ Barracks ← Complete Barracks\nArcher @ Barracks ← Complete Barracks\nCatapult @ Barracks ← Complete Barracks (needs Forge)\nBanner Guard @ Barracks ← Complete Barracks (needs Forge)\nTempered Arms ← Available\nPlate Craft ← Available",
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "tree": "Keep: level 1 / 3\nBarracks ← Available\nFarm ← Available\nForge ← Available\nHarbor ← Available\nWorker @ Keep ← Available\nGuard @ Barracks ← Complete Barracks\nArcher @ Barracks ← Complete Barracks\nCatapult @ Barracks ← Complete Barracks (needs Forge)\nBanner Guard @ Barracks ← Complete Barracks (needs Forge)\nTempered Arms ← Available\nPlate Craft ← Available",
+    "errors": []
+  }
+]

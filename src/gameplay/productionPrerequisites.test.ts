@@ -42,3 +42,13 @@ it('technology requires completed live buildings and completed levels for each o
  expect(technologyFor(m,'enemy').buildings).toContain('forge');expect(technologyFor(m,'enemy').research.defense).toBe(1);
  m.combat.enemies.at(-1)!.hp=0;expect(technologyFor(m,'enemy').buildings).not.toContain('forge');
 });
+
+it('shared requirements list all missing dependencies and only completed base levels count',async()=>{
+ const {missingPrerequisites,buildingAvailability,researchAvailability,techTree}=await import('./productionPrerequisites');
+ const f=factions.crown,m=createMatch();
+ expect(missingPrerequisites(f,{baseLevel:3,buildings:['forge'],research:{attack:1}},technologyFor(m,'player'))).toEqual(['Upgrade Keep to level 3','Complete Forge','Research attack 1']);
+ expect(buildingAvailability(f,'forge',{buildings:[],research:{}})).toBe('Complete Keep');
+ expect(researchAvailability(f,'defense',technologyFor(m,'player'))).toBe('Complete Forge');
+ m.combat.baseDevelopment={level:1,remainingSeconds:1};expect(technologyFor(m,'player').baseLevel).toBe(1);
+ expect(techTree(m).join('\n')).toContain('Complete Forge');
+});

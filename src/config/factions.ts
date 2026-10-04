@@ -20,8 +20,8 @@ export interface MatchFactions {player:FactionId;enemy:FactionId}
 export const defaultFactions:Readonly<MatchFactions>={player:'crown',enemy:'clans'};
 export const isFactionId=(value:unknown):value is FactionId=>factionIds.some(id=>id===value);
 
-export interface TechnologyState {buildings:readonly BuildingRole[];research:Partial<Record<UpgradeRole,number>>}
-export interface UnitPrerequisites {buildings?:readonly BuildingRole[];research?:Partial<Record<UpgradeRole,number>>}
+export interface TechnologyState {baseLevel?:number;buildings:readonly BuildingRole[];research:Partial<Record<UpgradeRole,number>>}
+export interface UnitPrerequisites {baseLevel?:number;buildings?:readonly BuildingRole[];research?:Partial<Record<UpgradeRole,number>>}
 interface UnitData {
   combatMode?:'melee'|'projectile';
   art?:'worker'|'soldier'|'archer'|'catapult'|'specialist';
@@ -34,10 +34,12 @@ interface UnitData {
   capacity?:number;gatherPerSecond?:number;
 }
 interface BuildingData {
+  prerequisites?:UnitPrerequisites;
   role:BuildingRole;cost:ResourceCost;hp:number;size:number;placeable:boolean;
   constructionSeconds:number;constructionRange:number;populationCapacity:number;
 }
 interface UpgradeData {
+  prerequisites?:UnitPrerequisites;
   name:string;role:UpgradeRole;cost:ResourceCost;durationSeconds:number;maxLevel:number;multiplier:number;
 }
 export type UnitDefinition=UnitData&{id:`${FactionId}:unit:${UnitRole}`;faction:FactionId};
@@ -67,18 +69,18 @@ const units={
 const buildings:Record<BuildingRole,BuildingData>={
   base:{role:'base',cost:{wood:0,gold:0},hp:combatConfig.baseHP,size:gatheringConfig.baseSize,
     placeable:false,constructionSeconds:0,constructionRange:0,populationCapacity:populationConfig.baseCap},
-  barracks:{role:'barracks',cost:costs.barracks,hp:combatConfig.barracksHP,
+  barracks:{role:'barracks',prerequisites:{buildings:['base']},cost:costs.barracks,hp:combatConfig.barracksHP,
     size:barracksConfig.tileSize*barracksConfig.footprintTiles,placeable:true,
     constructionSeconds:barracksConfig.constructionSeconds,constructionRange:barracksConfig.constructionRange,populationCapacity:0},
-  farm:{role:'farm',cost:costs.farm,hp:combatConfig.farmHP,size:farmConfig.tileSize*farmConfig.footprintTiles,
+  farm:{role:'farm',prerequisites:{buildings:['base']},cost:costs.farm,hp:combatConfig.farmHP,size:farmConfig.tileSize*farmConfig.footprintTiles,
     placeable:true,constructionSeconds:farmConfig.constructionSeconds,constructionRange:farmConfig.constructionRange,populationCapacity:farmConfig.supply},
-  forge:{role:'forge',cost:costs.forge,hp:forgeConfig.hp,size:forgeConfig.tileSize*forgeConfig.footprintTiles,
+  forge:{role:'forge',prerequisites:{buildings:['base']},cost:costs.forge,hp:forgeConfig.hp,size:forgeConfig.tileSize*forgeConfig.footprintTiles,
     placeable:true,constructionSeconds:forgeConfig.constructionSeconds,constructionRange:forgeConfig.constructionRange,populationCapacity:0},
 };
 const upgrades:Record<UpgradeRole,UpgradeData>={
-  attack:{name:'Attack +25 %',role:'attack',cost:upgradeConfig.cost,durationSeconds:upgradeConfig.durationSeconds,
+  attack:{name:'Attack +25 %',role:'attack',prerequisites:{buildings:['forge']},cost:upgradeConfig.cost,durationSeconds:upgradeConfig.durationSeconds,
     maxLevel:upgradeConfig.maxLevel,multiplier:upgradeConfig.attackMultiplier},
-  defense:{name:'Defense −25 %',role:'defense',cost:upgradeConfig.cost,durationSeconds:upgradeConfig.durationSeconds,
+  defense:{name:'Defense −25 %',role:'defense',prerequisites:{buildings:['forge']},cost:upgradeConfig.cost,durationSeconds:upgradeConfig.durationSeconds,
     maxLevel:upgradeConfig.maxLevel,multiplier:upgradeConfig.defenseMultiplier},
 };
 const factionNames={crown:{label:uiText.crownAlliance,unitNames:{worker:uiText.worker,soldier:uiText.guard,archer:uiText.archer,catapult:uiText.catapult,specialist:'Banner Guard'},buildingNames:{base:uiText.keep,barracks:uiText.barracks,farm:uiText.farm,forge:uiText.forge}},clans:{label:uiText.ironClan,unitNames:{worker:uiText.clanWorker,soldier:uiText.axeWarrior,archer:uiText.hunter,catapult:uiText.stoneThrower,specialist:'Raider'},buildingNames:{base:uiText.stronghold,barracks:uiText.warHut,farm:uiText.cattlePen,forge:uiText.smithy}},elves:{label:'Elves',unitNames:{worker:'Grove Tender',soldier:'Warden',archer:'Longbow',catapult:'Ballista',specialist:'Marksman'},buildingNames:{base:'Grove Hall',barracks:'Ranger Lodge',farm:'Garden',forge:'Moon Workshop'}},dwarves:{label:'Dwarves',unitNames:{worker:'Miner',soldier:'Iron Guard',archer:'Crossbow',catapult:'Cannon',specialist:'Bulwark'},buildingNames:{base:'Stone Hold',barracks:'Guard Hall',farm:'Storehouse',forge:'Foundry'}},goblins:{label:'Goblins',unitNames:{worker:'Tinkerer',soldier:'Scrapper',archer:'Slinger',catapult:'Mortar',specialist:'Grenadier'},buildingNames:{base:'Workshop Hall',barracks:'Scrap Yard',farm:'Supply Shack',forge:'Lab'}}};

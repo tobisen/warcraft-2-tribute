@@ -1,6 +1,6 @@
 import {baseDevelopment,baseUpgradeReason} from '../gameplay/baseUpgrade';
 import {baseUpgradeConfig} from '../config/baseUpgrade';
-import {technologyFor,unitAvailability} from '../gameplay/productionPrerequisites';
+import {technologyFor,unitAvailability,buildingAvailability,researchAvailability} from '../gameplay/productionPrerequisites';
 import {text as uiText} from '../text';
 import type {ResourceCost} from '../config/economy';
 import {factionForTeam} from '../config/factions';
@@ -36,7 +36,7 @@ export function actionPanel(m:MatchState,building:BuildingSelection,playing:bool
  const result={} as Record<ActionId,ActionPresentation>;
  for(const id of actionIds){let visible=false,reason='',cost;
   if(id==='upgrade-base'){visible=base;const b=baseDevelopment(m);cost=b.level<3?costLabel(baseUpgradeConfig[(b.level+1) as 2|3].cost):undefined;reason=baseUpgradeReason(m)??'';}
-  else if(id.startsWith('build-')){visible=worker;const kind=id.slice(6) as 'barracks'|'farm'|'forge'|'harbor';const recipe=kind==='harbor'?faction.naval.harbor.cost:faction.buildings[kind].cost;cost=costLabel(recipe);reason=m.placement.active?'Finish or cancel placement':kind==='barracks'&&m.placement.barracks||kind==='forge'&&m.placement.forge||kind==='harbor'&&m.navy?.harbor?'Already built':kind==='farm'&&(m.placement.farms?.length??0)>=farmConfig.maxCount?'Farm limit reached':affordabilityReason(m.gathering,recipe);}
+  else if(id.startsWith('build-')){visible=worker;const kind=id.slice(6) as 'barracks'|'farm'|'forge'|'harbor';const recipe=kind==='harbor'?faction.naval.harbor.cost:faction.buildings[kind].cost;cost=costLabel(recipe);reason=buildingAvailability(faction,kind,technologyFor(m,'player'))??(m.placement.active?'Finish or cancel placement':kind==='barracks'&&m.placement.barracks||kind==='forge'&&m.placement.forge||kind==='harbor'&&m.navy?.harbor?'Already built':kind==='farm'&&(m.placement.farms?.length??0)>=farmConfig.maxCount?'Farm limit reached':affordabilityReason(m.gathering,recipe));}
   else if(id.startsWith('train-')){
    const role=id==='train-ship'?'warship':id.slice(6) as 'worker'|'soldier'|'archer'|'catapult'|'specialist'|'transport',naval=role==='transport'||role==='warship';
    visible=(role==='worker'?base:naval?harbor:barracks)&&(naval||faction.roster.includes(role as 'worker'|'soldier'|'archer'|'catapult'|'specialist'));
@@ -46,7 +46,7 @@ export function actionPanel(m:MatchState,building:BuildingSelection,playing:bool
    const prerequisite=naval?null:unitAvailability(faction,role,technologyFor(m,'player'));
    reason=remaining>0?'Construction unfinished':prerequisite??(production&&productionJobCount(production)>=queueConfig.maxJobs?'Queue full':!hasPopulation(population,recipe.supply)?uiText.populationLimitReached:affordabilityReason(m.gathering,recipe.cost));
   }
-  else if(id.startsWith('research-')){visible=base||building==='forge';const kind=id==='research-attack'?'attack':'defense';cost=costLabel(faction.upgrades[kind].cost);reason=!forgeReady(m.placement)?'Build and complete a forge':m.research?.job?'Research in progress':(m.research?.[kind]??0)>=faction.upgrades[kind].maxLevel?'Already researched':affordabilityReason(m.gathering,faction.upgrades[kind].cost);}
+  else if(id.startsWith('research-')){visible=base||building==='forge';const kind=id==='research-attack'?'attack':'defense';cost=costLabel(faction.upgrades[kind].cost);reason=researchAvailability(faction,kind,technologyFor(m,'player'))??(m.research?.job?'Research in progress':(m.research?.[kind]??0)>=faction.upgrades[kind].maxLevel?'Already researched':affordabilityReason(m.gathering,faction.upgrades[kind].cost));}
   else if(id==='attack-move')visible=combat;
   else if(id==='unit-ability'){visible=combat;reason=!land.some(abilityReady)?'Ability cooling down':'';}
   else if(id==='unload-transport'){visible=!!transport;reason=!transport?.passengers?.length?'Transport is empty':'';}

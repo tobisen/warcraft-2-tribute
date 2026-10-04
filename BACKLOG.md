@@ -27,9 +27,7 @@ avslutas efter denna fix; ingen senare roadmap-task startas.
   /tmp/w2t-bottom-bar; ingen ny CI-/Pages-verifiering hävdas.
 
 
-**Stopp efter RTS-159.**156 och159 Done.157 In Progress: teknisk attackljudsdel verifierad, faktisk lyssning återstår.158 In Progress: dialog/routing verifierad,380 egna/licensierade inspelningar saknas. Se [HANDOFF.md](HANDOFF.md).160+ startas inte utan nytt mandat.155 Human är redan implementerad/visuellt granskad/typecheckad; [återstående sprites](assets/sources/remaining-sprites.md).
-
-**Aktuell etapp:** Uppdrag156–159 avslutas efter159. Oberoende kartgrafik och värld är klara; ljudlyssning/inspelningar hålls uttryckligen öppna. Taskvisa koddelar är verifierade och commit/push levereras. Ingen senare task startas.
+**Aktuellt mandat RTS-160–164:** RTS-159 accepteras som Done och implementationen har inventerats.160 Done (`7d7290c`),161 aktuell, därefter162–164 en task i taget med checks/browser/docs/commit/push. Stanna efter164 och uppdatera HANDOFF.157 lyssning och158 inspelningar kvarstår enligt historisk överlämning; återstående sprites dokumenteras separat.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -4349,7 +4347,9 @@ Definiera produktionens beteende under uppgradering.
 
 ## RTS-161 – Prerequisites och tech tree
 
-**Status:** Todo.
+**Status:** Done.
+
+**Leverans:** Gemensam evaluator för byggnads-, enhets-, research- och basnivåkrav från befintliga fraktionsdefinitioner. Byggnader kräver levande base; research färdig Forge, avancerade enheter befintliga forge/research-krav. Färdiga krav härleds från faktisk match, aldrig selection eller pågående jobb. Tech tree visar produktionsbyggnad och låsorsak med fraktionsnamn. Köjobb fortsätter efter prerequisite-förlust. Browser800/1280 och riktade20 tester verifierade; artifacts/rts-161.
 
 **Goal:** Prerequisites och tech tree.
 

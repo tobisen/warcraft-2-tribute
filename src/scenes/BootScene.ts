@@ -1,3 +1,4 @@
+import {techTree,buildingAvailability} from '../gameplay/productionPrerequisites';
 import {baseDevelopment,startBaseUpgrade,baseUpgradeReason} from '../gameplay/baseUpgrade';
 import {wildlifeHabitats,visibleWildlife,wildlifeDetails,type Habitat} from '../presentation/wildlife';
 import {combatAudioSnapshot,combatAudioCues,type CombatAudioSnapshot} from '../presentation/combatAudio';
@@ -363,6 +364,7 @@ export class BootScene extends Phaser.Scene {
       if (!this.gathering.units.some(u=>u.kind==='worker' && u.selected)) return;
       this.unloadMode=null;this.attackMoveMode=false;
       if(kind==='harbor'&&this.navy?.harbor)return;
+      if(buildingAvailability(factions[this.factions.player],kind,technologyFor(this.currentMatch(),'player')))return;
       this.placement = beginPlacement(this.placement,kind);
       this.drag = undefined;
       this.dragBox.setVisible(false);
@@ -604,7 +606,7 @@ export class BootScene extends Phaser.Scene {
         if(!placementVisible(this.fog,buildingFootprint(world,this.placement.kind??'barracks'))){this.syncVisuals();return;}
         if(this.placement.kind==='harbor'){this.applyMatch(placeHarbor(this.currentMatch(),world));this.syncVisuals();return;}
         const result = placeBuilding(this.placement, world, this.gathering.wood, placementObstacles(this.gathering),
-          {map:this.map,gathering:this.gathering,enemies:this.combat.enemies});
+          {technology:technologyFor(this.currentMatch(),'player'),map:this.map,gathering:this.gathering,enemies:this.combat.enemies});
         if (result.map) this.map = result.map;
         this.placement = result.placement;
         this.gathering = 'gathering' in result && result.gathering ? result.gathering : { ...this.gathering, wood: result.wood };
@@ -727,7 +729,7 @@ export class BootScene extends Phaser.Scene {
     if(!this.placement.barracks&&this.barracksVisual){this.barracksVisual.destroy();this.barracksVisual=undefined;}
     const rect = buildingFootprint(this.previewPoint,this.placement.kind??'barracks');
     const error = this.placement.active ? !placementVisible(this.fog,rect)?uiText.theSiteMustBeVisible:this.placement.kind==='harbor'?harborPlacementError(this.currentMatch(),this.previewPoint):placementError(this.placement, this.previewPoint, this.gathering.wood, placementObstacles(this.gathering),
-      {map:this.map,gathering:this.gathering,enemies:this.combat.enemies}) : null;
+      {technology:technologyFor(this.currentMatch(),'player'),map:this.map,gathering:this.gathering,enemies:this.combat.enemies}) : null;
     this.placementFeedbackError=error;
     this.placementPreview.setPosition(rect.x, rect.y)
       .setFillStyle(error ? 0xe05b5b : 0x7bd389, 0.4).setVisible(this.placement.active);
@@ -760,6 +762,7 @@ export class BootScene extends Phaser.Scene {
   }
 
   private syncVisuals(): void {
+    document.getElementById('tech-tree-text')!.textContent=techTree(this.currentMatch()).join('\n');
     const development=baseDevelopment(this.currentMatch()),upgradeButton=document.getElementById('upgrade-base') as HTMLButtonElement;
     upgradeButton.disabled=!!baseUpgradeReason(this.currentMatch());upgradeButton.textContent=development.remainingSeconds!==null?`Upgrading to level ${development.level+1}: ${Math.ceil(development.remainingSeconds)}s; training paused`:`Upgrade base to level ${Math.min(3,development.level+1)}`;
     const animalPoses=visibleWildlife(this.habitats,this.waves.elapsedSeconds,this.map,p=>isVisible(this.fog,'player',p)),animalIds=new Set(animalPoses.map(p=>p.id));
