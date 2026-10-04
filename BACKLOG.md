@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-142 – Campaign-struktur och progression** — **Done**.
+**RTS-143 – Utöka campaign till minst åtta uppdrag** — **Done**.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -3741,7 +3741,7 @@ Spara progression lokalt; replay av avklarade uppdrag är möjligt.
 
 ## RTS-143 – Utöka campaign till minst åtta uppdrag
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Räkna in fungerande befintliga uppdrag.
 
@@ -3764,7 +3764,7 @@ Implementera nya måltyper först när ett uppdrag behöver dem.
 
 **Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
 
-**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+**Detaljplan:**143A inventera de fem verkliga campaign-missions/scenarios och befintliga kartor/rosters/goaltyper.143B dokumentera åtta ordnade uppdrag under samma stabila fem första mission-ID:n, berättelse, player/enemy-faction, befintlig karta, initial ekonomi och exakt mål/failure för vart och ett.143C skilj återanvända tutorial/waves/enemy-base/timer från de tre nya missionmål som först implementeras vid användning i145: escort, rescue och capture.143D verifiera planens count/ID:n/fem fraktioner/kartreferenser/dependencies mot kod och dokument, uppdatera docs och commit/push. Inga nya uppdrag blir tillgängliga eller påstås spelbara i denna planeringsleverans.144 verifierar/färdigställer1–4;145 implementerar/färdigställer5–8;146 samlad genomgång.
 
 ## RTS-144 – Campaign, första halvan
 

@@ -734,3 +734,7 @@ Matchsimulationerna i `npm test` körs med högst två Vitest-workers så CPU-tu
 Öppna **Campaign**, läs briefing/objektiv och starta **Tutorial – First Steps**. Seger låser upp nästa operation: Forest Watch → The Siege → The Outpost → The Crossing. Menyn visar Available, Locked och Completed · Replay. Återspela avklarade uppdrag via missionknappen; Play Again startar samma uppdrag med friskt matchstate. Resultatvyn visar debriefing.
 
 Framsteg sparas i den här browsern, separat från matchens lokala Save. Save/load bevarar campaign-uppdraget och dess pågående state; gamla Saves ger ingen påhittad completion. Vid storagefel visas att progression bara finns för sessionen. Skirmish och Survival påverkar inte campaignprogression.142 återanvänder fem befintliga uppdrag; längre campaign följer143–145.
+
+## RTS-143 – Nästa campaign-etapp
+
+Planen omfattar åtta uppdrag: de fem befintliga plus Ridge Convoy, Valley Rescue och Coastal Banner. Alla fem fraktioner introduceras och större operationer använder Highland Crossroads, Frontier Valley och Shattered Coast. Se [GAME_DESIGN.md](GAME_DESIGN.md) för berättelse, fraktionspar, ekonomi och konkreta mål. Detta är en plan: runtime-menyn har ännu fem nivåer; första/andra halvan levereras i RTS-144–145 och kedjan verifieras i RTS-146.
