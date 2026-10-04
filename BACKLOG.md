@@ -4138,6 +4138,34 @@ Dela resterande assetarbete i subtasks per fraktion/assetgrupp.
 
 **Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
 
+## Bugfix: HUD-layout – bottom bar horisontell layout och kompakt build-menu
+
+**Status:** Done.
+
+**Goal:** Förbättra bygg-/actionmenyn så att panelerna ligger bredvid varandra och inte skapar vertikal scroll vid 800×600.
+
+**Summary:** CSS-baserad layout-fix för bottom bar utan gameplay-ändringar. Konverterade bottom bar från flex-rad till 3-kolumn grid (portrait | selection-info | actions). Utökade action-grid från 3 till 4 kolumner för kompaktare ikonlayout. Dolde gruppöverskrifter för att spara plats. Lägg till responsiva justeringar för mindre viewports (3 kolumner vid 800×600).
+
+**Requirements:**
+
+- Bottom bar paneler sitter horisontellt bredvid varandra utan vertikal scroll.
+- Byggnadsalternativ visas som kompakta ikonknappar i multi-kolumn grid, inte vertikal lista.
+- Alla tillgängliga byggalternativ rymms samtidigt vid 800×600, 1280×720, 1920×1080 och 2048×1332.
+- Namn, kostnader och hotkeys visas i tooltips.
+- Tydliga disabled-, selected- och hover-states bevaras.
+- HUD-interaktion ger inte orders till spelvärlden.
+- Native Size, Fit to Window och fullscreen-beteende bevaras.
+
+**Non-goals:** Gameplay-ändringar, nytt asset-arbete, ny RTS-ID.
+
+**Acceptance Criteria:** Panelerna sitter horisontellt. Ingen vertikal eller horisontell scroll i byggnadsmenyn. Alla åtgärder synliga vid samtliga testade viewport-storlekar. Hotkeyar och status i tooltips. Disabled-state visar orsak. HUD-klick döljer världsorder.
+
+**Dependencies:** Ingen.
+
+**Verification:** `npm run typecheck` PASS, `npm run build` PASS, `npm test` 1146/1146 tests PASS (145 files), `git diff --check` PASS. Manuel layout-verifiering vid 800×600, 1280×720, 1920×1080, 2048×1332 med worker-markering, byggalternativ synliga, hover/disabled-states fungerar. Ingen berörning av display-modes eller HUD-event-guards i BootScene.
+
+**Docs:** Denna note i BACKLOG.md, motsvarande post i DEV_LOG.md.
+
 ## RTS-156 – Förbättrad kartgrafik
 
 **Status:** Todo.

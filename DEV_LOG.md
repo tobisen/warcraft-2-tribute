@@ -2714,3 +2714,27 @@ Runtime/css/index oförändrade sedan dessa checks; efterföljande status-/över
 nästa task, commits151–153, nya/återanvända belägg och begränsningar. Ingen senarefeature,
 ny releaseversion eller verifierad ny CI-/Pages-publicering påstås. Sista taskcommit/push
 följer enligt nytt uppdrag; faktisk hash och pushresultat rapporteras till användaren.
+
+## 2026-10-04 – Bugfix: HUD-layout – bottom bar horisontell layout och kompakt build-menu
+
+CSS-baserad layout-fix utan gameplay-ändringar. Bottom bar konverterad från flex-rad till
+3-kolumn grid (portrait | selection-info | actions). Action-grid utökat från 3 till 4
+kolumner för kompaktare ikonlayout. Gruppöverskrifter dolda för att spara plats. Responsiva
+justeringar för mindre viewports: 3 kolumner vid 800×600.
+
+Ändringar:
+- `src/style.css`: `#bottom-bar` display:grid med grid-template-columns:128px auto 1fr;
+  `#selection-portrait/info/action-panel` explicit grid-positioning; `#action-panel
+  #gameplay-controls` repeat(4,minmax(0,1fr)); `#action-panel [data-action-group] h3`
+  display:none; containerquery för 900px max-width med 64px-portrait, 3-kolumn-grid.
+
+Verifiering:
+- `npm run typecheck` PASS.
+- `npm run build` PASS (strict typecheck inkluderad).
+- `npm test` 1146/1146 tester PASS (145 filer) – alla integrationer och matchsimuleringar.
+- `git diff --check` PASS.
+- Ingen beröring av BootScene HUD-event-guards eller display-modes.
+- Layout-test manuell: panelerna sitter horisontellt, alla byggalternativ synliga vid
+  testad viewports (800×600, 1280×720, 1920×1080), hover/disabled-states fungerar.
+
+BACKLOG.md och denna logg uppdaterad. Ingen ny RTS-ID eller gameplay-ändringar.

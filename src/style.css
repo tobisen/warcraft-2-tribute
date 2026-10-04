@@ -83,8 +83,10 @@ summary {cursor:pointer;color:#f4d87a;}
 
 /* RTS-098 read-only selection panel, using original atlas portraits. */
 #app:not([data-phase='menu']){grid-template-rows:48px auto minmax(0,1fr) 170px;}
-#bottom-bar{grid-column:1 / -1;grid-row:4;display:flex;align-items:center;gap:20px;height:170px;padding:12px 20px;background:#192b28;border-top:2px solid #977a40;font:14px system-ui,sans-serif;overflow:auto;}
-#selection-portrait{flex:none;width:128px;height:128px;background:#101917;border:2px solid #795d32;}
+#bottom-bar{grid-column:1 / -1;grid-row:4;display:grid;grid-template-columns:128px auto 1fr;align-items:start;gap:20px;height:170px;padding:12px 20px;background:#192b28;border-top:2px solid #977a40;font:14px system-ui,sans-serif;align-content:start;}
+#selection-portrait{width:128px;height:128px;background:#101917;border:2px solid #795d32;grid-row:1;grid-column:1;}
+#selection-info{grid-column:2;grid-row:1;flex:1;min-width:0;max-width:none;overflow:auto;max-height:144px;align-self:start;}
+#action-panel{grid-column:3;grid-row:1;width:100%;flex:none;max-height:144px;overflow:auto;min-width:0;}
 #selection-info h2{font:22px Georgia;color:#f4d87a;margin:0 0 8px;}
 #selection-info p{margin:6px 0;}
 #selection-health-bar{width:220px;height:10px;accent-color:#7bd389;}
@@ -92,10 +94,8 @@ summary {cursor:pointer;color:#f4d87a;}
 #selection-status{display:none;}
 
 /* RTS-099 contextual actions share their existing controls and handlers. */
-#selection-info{flex:1;min-width:0;max-width:640px;}
 #selection-info p{font-size:12px;line-height:1.4;}
-#action-panel{margin-left:auto;width:460px;flex:none;max-height:144px;overflow:auto;}
-#action-panel #gameplay-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px 8px;}
+#action-panel #gameplay-controls{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px 8px;}
 #action-panel #production-controls{display:contents;}
 #action-panel .control{margin:0;gap:2px;}
 #action-panel button{font:12px system-ui,sans-serif;min-height:32px;padding:4px;text-align:left;}
@@ -200,9 +200,9 @@ html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#
 #dismiss-dialog button{margin:8px 8px 0 0;}
 
 /* RTS-148: preserve context actions, with clear headings in the scrollable panel. */
-#action-panel #gameplay-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:8px;}
+#action-panel #gameplay-controls{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:start;gap:8px;}
 #action-panel [data-action-group]{min-width:0;display:flex;flex-direction:column;gap:4px;}
-#action-panel [data-action-group] h3{margin:0 0 3px;color:#d7bb73;font-size:12px;}
+#action-panel [data-action-group] h3{margin:0 0 3px;color:#d7bb73;font-size:12px;display:none;}
 #action-panel [data-action-group] .control{min-width:0;width:100%;}
 #action-panel [data-action-group] button{width:100%;}
 #action-panel #production-queue{grid-column:1 / -1;}
@@ -221,9 +221,12 @@ html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#
 #selection-info{max-height:144px;overflow:auto;align-self:flex-start;}
 #selection-health-bar{max-width:100%;}
 @container(max-width:900px){
- #bottom-bar{gap:12px;padding:12px;}
+ #bottom-bar{gap:12px;padding:12px;grid-template-columns:64px auto 1fr;height:auto;align-items:stretch;}
  #selection-portrait{width:64px;height:64px;}
- #action-panel{width:320px;}
+ #selection-info{grid-column:2;max-height:100px;}
+ #action-panel{grid-column:3;max-height:150px;}
+ #action-panel #gameplay-controls{grid-template-columns:repeat(3,minmax(0,1fr));}
+ #action-panel [data-action-group] h3{display:none;}
 }
 
 /* RTS-154: original typographic working-title identity, iron tones and timber gold. */
