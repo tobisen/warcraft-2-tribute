@@ -4274,9 +4274,11 @@ Lyssna igenom större strider.
 
 ## RTS-158 – Fler humoristiska enhetskommentarer
 
-**Status:** Todo.
+**Status:** In Progress – dialog/routing verifierad; egna/licensierade inspelningar och lyssning saknas.
 
 **Goal:** Fler humoristiska enhetskommentarer.
+
+**Verifierad del2026-10-04:**380 egna engelska repliker, fem raser/sju roller, select/move/attack/work/repeat. Tredje klicket inom8s får repeat; cooldown/variation/separat röstvolym/pause/mute återanvänds. Lokal English speechSynthesis är fallback, inte inspelningar. [Manus och saknade assets](assets/sources/unit-voices-158.md) listar exakt380 recording/license-null. Unit441/79, build/strict typecheck och browsercanvas-routing med uttrycklig speech-mock PASS; diffcheck PASS. Röstlyssning och inspelningsdelen är blockerad av saknade filer/metadata. Tasken är inte Done;159 är oberoende och fortsätter.
 
 **Requirements:**
 

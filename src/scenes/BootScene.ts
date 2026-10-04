@@ -15,7 +15,7 @@ import {selectWorldTarget} from '../gameplay/resourceSelection';
 import type {StatLedger} from '../gameplay/statLedger';
 import {syncResultScreen} from '../presentation/resultScreen';
 import {getPreferences,updatePreferences} from '../presentation/preferences';
-import {voiceSpeaker,voiceOrders,orderedSpeaker} from '../presentation/voicePolicy';
+import {voiceSpeaker,voiceOrders,orderedSpeaker,voiceOrderAction} from '../presentation/voicePolicy';
 import {audioFiles} from '../config/audio';
 import {matchAudioSnapshot} from '../presentation/audioSnapshot';
 import {renderTutorial} from '../presentation/tutorial';
@@ -291,7 +291,7 @@ export class BootScene extends Phaser.Scene {
     this.orderVisuals.clear();
     this.farmVisuals.clear();
     this.stopButton = document.querySelector<HTMLButtonElement>('#stop-units')!;
-    const stop = () => { const before=voiceOrders(this.allSelectable());this.attackMoveMode=false; this.gathering.units = stopSelected(this.gathering.units, this.gameplayActive());if(this.gameplayActive())this.navy=stopShips(this.navy);gameAudio.say(orderedSpeaker(before,this.allSelectable()),'order',this.factions.player); this.syncVisuals(); };
+    const stop = () => { const before=voiceOrders(this.allSelectable());this.attackMoveMode=false; this.gathering.units = stopSelected(this.gathering.units, this.gameplayActive());if(this.gameplayActive())this.navy=stopShips(this.navy);gameAudio.say(orderedSpeaker(before,this.allSelectable()),voiceOrderAction(orderedSpeaker(before,this.allSelectable())),this.factions.player); this.syncVisuals(); };
     this.stopButton.addEventListener('click', stop);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.stopButton.removeEventListener('click', stop));
     this.selectedResource=null;
@@ -563,7 +563,7 @@ export class BootScene extends Phaser.Scene {
     if(!this.gameplayActive())return;
     const before=voiceOrders(this.allSelectable());
     this.processDown(pointer);
-    gameAudio.say(orderedSpeaker(before,this.allSelectable()),'order',this.factions.player);
+    gameAudio.say(orderedSpeaker(before,this.allSelectable()),voiceOrderAction(orderedSpeaker(before,this.allSelectable())),this.factions.player);
   }
 
   private processDown(pointer: Phaser.Input.Pointer): void {

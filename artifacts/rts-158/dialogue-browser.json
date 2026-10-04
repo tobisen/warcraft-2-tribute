@@ -1,0 +1,54 @@
+{
+  "actions": [
+    {
+      "role": "worker",
+      "action": "select",
+      "faction": "crown"
+    },
+    {
+      "role": "worker",
+      "action": "select",
+      "faction": "crown"
+    },
+    {
+      "role": "worker",
+      "action": "repeat",
+      "faction": "crown"
+    },
+    {
+      "role": "worker",
+      "action": "move",
+      "faction": "crown"
+    },
+    {
+      "role": "worker",
+      "action": "work",
+      "faction": "crown"
+    },
+    {
+      "role": "soldier",
+      "action": "select",
+      "faction": "crown"
+    },
+    {
+      "role": "soldier",
+      "action": "attack",
+      "faction": "crown"
+    }
+  ],
+  "texts": [
+    "My hammer has seniority. For crown and lunch break.",
+    "Payroll says I am essential. Royal standards, ordinary wages.",
+    "Yes, I am still billable. His Majesty only asked once.",
+    "The boots voted against this. The kingdom is larger on foot.",
+    "Measure twice. Complain three times. By appointment to the payroll.",
+    "Armor polished. Courage pending. For crown and lunch break.",
+    "Presenting my steel rebuttal. A royal objection."
+  ],
+  "status": {
+    "available": true,
+    "speaking": false
+  },
+  "mode": "Text routing with speech mock only; real recordings and listening missing.",
+  "errors": []
+}

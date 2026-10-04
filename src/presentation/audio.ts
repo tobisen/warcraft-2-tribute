@@ -13,7 +13,7 @@ type AudioName=Sound|'music';
 export class GameAudio {
  settings:AudioSettings={...defaultAudio};
  readonly voices=new UnitVoices(()=>this.settings);
- say(unit:VoiceUnit|undefined,action:VoiceAction,faction:FactionId):void{if(unit)this.voices.speak(voiceRole(unit),action,faction);}
+ say(unit:VoiceUnit|undefined,action:VoiceAction,faction:FactionId):void{if(unit){if(action==='select')this.voices.select(voiceRole(unit),faction,unit.id);else this.voices.speak(voiceRole(unit),action,faction);}}
  private context?:AudioContext;
  private effectGain?:GainNode;
  private musicGain?:GainNode;

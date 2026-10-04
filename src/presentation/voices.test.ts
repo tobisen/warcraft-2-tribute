@@ -38,3 +38,12 @@ it('voice gain is independent of effects and a changed voice/master gain cancels
  settings.music=0;lane.onSettingsChange();expect(cancel).not.toHaveBeenCalled();settings.voices=.2;lane.onSettingsChange();expect(cancel).toHaveBeenCalledTimes(1);
  time=3;expect(lane.speak('soldier','order','crown')).toBe(true);settings.voices=0;lane.onSettingsChange();expect(cancel).toHaveBeenCalledTimes(2);time=6;expect(lane.speak('soldier','select','crown')).toBe(false);
 });
+it('provides distinct faction/role dialogue for every activity without treating text as recordings',async()=>{
+ const {dialogue}=await import('../config/voices'),{voiceOrderAction}=await import('./voicePolicy');
+ for(const role of ['worker','soldier','archer','specialist','catapult','transport','warship'] as const)for(const action of ['select','move','attack','work','repeat'] as const){const variants=['crown','clans','elves','dwarves','goblins'].map(f=>dialogue(role,action,f as 'crown'));expect(new Set(variants.map(v=>v[0])).size).toBe(5);for(const lines of variants){expect(lines.length).toBeGreaterThanOrEqual(2);expect(new Set(lines).size).toBe(lines.length);}}
+ const u=unit('unit-1');expect(voiceOrderAction({...u,order:{kind:'gather'}})).toBe('work');expect(voiceOrderAction({...u,order:{kind:'attack'}})).toBe('attack');expect(voiceOrderAction({...u,order:{kind:'move'}})).toBe('move');expect(voiceRole({...u,kind:'soldier',archetype:'specialist'})).toBe('specialist');
+});
+it('third click on the same unit uses repeat dialogue; cooldown still drops rapid speech',()=>{
+ let time=0;const spoken:any[]=[];vi.stubGlobal('speechSynthesis',{speaking:false,pending:false,getVoices:()=>[{localService:true,lang:'en-US',name:'Local'}],speak:(u:any)=>spoken.push(u),cancel:vi.fn()});vi.stubGlobal('SpeechSynthesisUtterance',class{constructor(public text:string){}});
+ const lane=new UnitVoices(()=>defaultAudio,()=>time);lane.setPhase('playing');expect(lane.select('worker','dwarves','one')).toBe(true);spoken[0].onend();time=1;expect(lane.select('worker','dwarves','one')).toBe(false);time=3;expect(lane.select('worker','dwarves','one')).toBe(true);expect(spoken[1].text).toContain('still billable');spoken[1].onend();time=6;expect(lane.select('worker','dwarves','two')).toBe(true);expect(spoken[2].text).toContain('Payroll');
+});

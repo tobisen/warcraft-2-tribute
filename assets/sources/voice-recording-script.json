@@ -1,0 +1,3425 @@
+{
+  "status": "Dialogue script only; every recording and license entry is missing.",
+  "entries": [
+    {
+      "id": "crown-worker-select-0",
+      "faction": "crown",
+      "role": "worker",
+      "action": "select",
+      "text": "My hammer has seniority. For crown and lunch break.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-worker-select-1",
+      "faction": "crown",
+      "role": "worker",
+      "action": "select",
+      "text": "Payroll says I am essential. Royal standards, ordinary wages.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-worker-select-2",
+      "faction": "crown",
+      "role": "worker",
+      "action": "select",
+      "text": "Wood today, complaints tomorrow. For crown and lunch break.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-worker-move-0",
+      "faction": "crown",
+      "role": "worker",
+      "action": "move",
+      "text": "The boots voted against this. The kingdom is larger on foot.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-worker-move-1",
+      "faction": "crown",
+      "role": "worker",
+      "action": "move",
+      "text": "A scenic route to overtime. The kingdom is larger on foot.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-worker-attack-0",
+      "faction": "crown",
+      "role": "worker",
+      "action": "attack",
+      "text": "This was not in my contract. A royal objection.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-worker-attack-1",
+      "faction": "crown",
+      "role": "worker",
+      "action": "attack",
+      "text": "The hammer has a second job. A royal objection.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-worker-work-0",
+      "faction": "crown",
+      "role": "worker",
+      "action": "work",
+      "text": "Measure twice. Complain three times. By appointment to the payroll.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-worker-work-1",
+      "faction": "crown",
+      "role": "worker",
+      "action": "work",
+      "text": "Splinters are our local currency. By appointment to the payroll.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-worker-repeat-0",
+      "faction": "crown",
+      "role": "worker",
+      "action": "repeat",
+      "text": "Yes, I am still billable. His Majesty only asked once.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-worker-repeat-1",
+      "faction": "crown",
+      "role": "worker",
+      "action": "repeat",
+      "text": "Every click adds a minute of paperwork. His Majesty only asked once.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-soldier-select-0",
+      "faction": "crown",
+      "role": "soldier",
+      "action": "select",
+      "text": "Armor polished. Courage pending. For crown and lunch break.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-soldier-select-1",
+      "faction": "crown",
+      "role": "soldier",
+      "action": "select",
+      "text": "I brought the pointy argument. Royal standards, ordinary wages.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-soldier-select-2",
+      "faction": "crown",
+      "role": "soldier",
+      "action": "select",
+      "text": "Standing heroically is tiring. For crown and lunch break.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-soldier-move-0",
+      "faction": "crown",
+      "role": "soldier",
+      "action": "move",
+      "text": "Heavy boots, light planning. The kingdom is larger on foot.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-soldier-move-1",
+      "faction": "crown",
+      "role": "soldier",
+      "action": "move",
+      "text": "The shield gets the window seat. The kingdom is larger on foot.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-soldier-attack-0",
+      "faction": "crown",
+      "role": "soldier",
+      "action": "attack",
+      "text": "Presenting my steel rebuttal. A royal objection.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-soldier-attack-1",
+      "faction": "crown",
+      "role": "soldier",
+      "action": "attack",
+      "text": "We tried the polite option. A royal objection.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-soldier-work-0",
+      "faction": "crown",
+      "role": "soldier",
+      "action": "work",
+      "text": "Guarding the people with useful skills. By appointment to the payroll.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-soldier-work-1",
+      "faction": "crown",
+      "role": "soldier",
+      "action": "work",
+      "text": "I am a very expensive fence. By appointment to the payroll.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-soldier-repeat-0",
+      "faction": "crown",
+      "role": "soldier",
+      "action": "repeat",
+      "text": "The armor cannot nod any harder. His Majesty only asked once.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-soldier-repeat-1",
+      "faction": "crown",
+      "role": "soldier",
+      "action": "repeat",
+      "text": "My attention is fully armored. His Majesty only asked once.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-archer-select-0",
+      "faction": "crown",
+      "role": "archer",
+      "action": "select",
+      "text": "The bow has strong opinions. For crown and lunch break.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-archer-select-1",
+      "faction": "crown",
+      "role": "archer",
+      "action": "select",
+      "text": "Please stand beyond my elbow. Royal standards, ordinary wages.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-archer-select-2",
+      "faction": "crown",
+      "role": "archer",
+      "action": "select",
+      "text": "Accuracy beats enthusiasm. For crown and lunch break.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-archer-move-0",
+      "faction": "crown",
+      "role": "archer",
+      "action": "move",
+      "text": "Mind the arrows on the way past. The kingdom is larger on foot.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-archer-move-1",
+      "faction": "crown",
+      "role": "archer",
+      "action": "move",
+      "text": "Walking is bad for my aim. The kingdom is larger on foot.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-archer-attack-0",
+      "faction": "crown",
+      "role": "archer",
+      "action": "attack",
+      "text": "Special delivery, point first. A royal objection.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-archer-attack-1",
+      "faction": "crown",
+      "role": "archer",
+      "action": "attack",
+      "text": "Let us settle this at a distance. A royal objection.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-archer-work-0",
+      "faction": "crown",
+      "role": "archer",
+      "action": "work",
+      "text": "Keeping the worksite arrow-free. By appointment to the payroll.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-archer-work-1",
+      "faction": "crown",
+      "role": "archer",
+      "action": "work",
+      "text": "The bow is supervising. By appointment to the payroll.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-archer-repeat-0",
+      "faction": "crown",
+      "role": "archer",
+      "action": "repeat",
+      "text": "I heard you three arrows ago. His Majesty only asked once.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-archer-repeat-1",
+      "faction": "crown",
+      "role": "archer",
+      "action": "repeat",
+      "text": "Repeated clicking does not improve accuracy. His Majesty only asked once.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-specialist-select-0",
+      "faction": "crown",
+      "role": "specialist",
+      "action": "select",
+      "text": "Expertise is expensive. For crown and lunch break.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-specialist-select-1",
+      "faction": "crown",
+      "role": "specialist",
+      "action": "select",
+      "text": "I brought the advanced argument. Royal standards, ordinary wages.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-specialist-move-0",
+      "faction": "crown",
+      "role": "specialist",
+      "action": "move",
+      "text": "Expertise coming through. The kingdom is larger on foot.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-specialist-move-1",
+      "faction": "crown",
+      "role": "specialist",
+      "action": "move",
+      "text": "My cape requires turning space. The kingdom is larger on foot.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-specialist-attack-0",
+      "faction": "crown",
+      "role": "specialist",
+      "action": "attack",
+      "text": "Time for the expensive solution. A royal objection.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-specialist-attack-1",
+      "faction": "crown",
+      "role": "specialist",
+      "action": "attack",
+      "text": "Special training, ordinary paperwork. A royal objection.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-specialist-work-0",
+      "faction": "crown",
+      "role": "specialist",
+      "action": "work",
+      "text": "Consulting is mostly standing nearby. By appointment to the payroll.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-specialist-work-1",
+      "faction": "crown",
+      "role": "specialist",
+      "action": "work",
+      "text": "The specialist fee includes supervision. By appointment to the payroll.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-specialist-repeat-0",
+      "faction": "crown",
+      "role": "specialist",
+      "action": "repeat",
+      "text": "Special does not mean endlessly available. His Majesty only asked once.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-specialist-repeat-1",
+      "faction": "crown",
+      "role": "specialist",
+      "action": "repeat",
+      "text": "That consultation will be invoiced. His Majesty only asked once.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-catapult-select-0",
+      "faction": "crown",
+      "role": "catapult",
+      "action": "select",
+      "text": "Subtlety weighs several tons. For crown and lunch break.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-catapult-select-1",
+      "faction": "crown",
+      "role": "catapult",
+      "action": "select",
+      "text": "I specialize in urgent deliveries. Royal standards, ordinary wages.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-catapult-select-2",
+      "faction": "crown",
+      "role": "catapult",
+      "action": "select",
+      "text": "Wheels checked. Brakes optional. For crown and lunch break.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-catapult-move-0",
+      "faction": "crown",
+      "role": "catapult",
+      "action": "move",
+      "text": "Please allow a wide turning circle. The kingdom is larger on foot.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-catapult-move-1",
+      "faction": "crown",
+      "role": "catapult",
+      "action": "move",
+      "text": "The wheels are holding a committee. The kingdom is larger on foot.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-catapult-attack-0",
+      "faction": "crown",
+      "role": "catapult",
+      "action": "attack",
+      "text": "One boulder, strongly expressed. A royal objection.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-catapult-attack-1",
+      "faction": "crown",
+      "role": "catapult",
+      "action": "attack",
+      "text": "Your complaint is now airborne. A royal objection.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-catapult-work-0",
+      "faction": "crown",
+      "role": "catapult",
+      "action": "work",
+      "text": "Waiting for load-bearing instructions. By appointment to the payroll.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-catapult-work-1",
+      "faction": "crown",
+      "role": "catapult",
+      "action": "work",
+      "text": "I lift morale and large rocks. By appointment to the payroll.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-catapult-repeat-0",
+      "faction": "crown",
+      "role": "catapult",
+      "action": "repeat",
+      "text": "The wheels heard the first click. His Majesty only asked once.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-catapult-repeat-1",
+      "faction": "crown",
+      "role": "catapult",
+      "action": "repeat",
+      "text": "We do not offer faster shipping. His Majesty only asked once.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-transport-select-0",
+      "faction": "crown",
+      "role": "transport",
+      "action": "select",
+      "text": "Passengers, mind the dramatic waves. For crown and lunch break.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-transport-select-1",
+      "faction": "crown",
+      "role": "transport",
+      "action": "select",
+      "text": "No refunds for wet boots. Royal standards, ordinary wages.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-transport-select-2",
+      "faction": "crown",
+      "role": "transport",
+      "action": "select",
+      "text": "The manifest says mostly heroes. For crown and lunch break.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-transport-move-0",
+      "faction": "crown",
+      "role": "transport",
+      "action": "move",
+      "text": "Next stop: drier socks. The kingdom is larger on foot.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-transport-move-1",
+      "faction": "crown",
+      "role": "transport",
+      "action": "move",
+      "text": "The tide approved this route. The kingdom is larger on foot.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-transport-attack-0",
+      "faction": "crown",
+      "role": "transport",
+      "action": "attack",
+      "text": "I transport arguments, not win them. A royal objection.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-transport-attack-1",
+      "faction": "crown",
+      "role": "transport",
+      "action": "attack",
+      "text": "Please use the armed boat. A royal objection.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-transport-work-0",
+      "faction": "crown",
+      "role": "transport",
+      "action": "work",
+      "text": "Boarding passes, approximately. By appointment to the payroll.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-transport-work-1",
+      "faction": "crown",
+      "role": "transport",
+      "action": "work",
+      "text": "Cargo first, heroic speeches later. By appointment to the payroll.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-transport-repeat-0",
+      "faction": "crown",
+      "role": "transport",
+      "action": "repeat",
+      "text": "Please stop ringing the ships bell. His Majesty only asked once.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-transport-repeat-1",
+      "faction": "crown",
+      "role": "transport",
+      "action": "repeat",
+      "text": "Your reservation is already confirmed. His Majesty only asked once.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-warship-select-0",
+      "faction": "crown",
+      "role": "warship",
+      "action": "select",
+      "text": "The cannon handles customer service. For crown and lunch break.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-warship-select-1",
+      "faction": "crown",
+      "role": "warship",
+      "action": "select",
+      "text": "Hull intact. Confidence inflated. Royal standards, ordinary wages.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-warship-select-2",
+      "faction": "crown",
+      "role": "warship",
+      "action": "select",
+      "text": "We take nautical disputes seriously. For crown and lunch break.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-warship-move-0",
+      "faction": "crown",
+      "role": "warship",
+      "action": "move",
+      "text": "All hands, mostly on deck. The kingdom is larger on foot.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-warship-move-1",
+      "faction": "crown",
+      "role": "warship",
+      "action": "move",
+      "text": "Navigation by confident guessing. The kingdom is larger on foot.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-warship-attack-0",
+      "faction": "crown",
+      "role": "warship",
+      "action": "attack",
+      "text": "A broadside of customer feedback. A royal objection.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-warship-attack-1",
+      "faction": "crown",
+      "role": "warship",
+      "action": "attack",
+      "text": "The cannon has the final word. A royal objection.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-warship-work-0",
+      "faction": "crown",
+      "role": "warship",
+      "action": "work",
+      "text": "Keeping the harbor bureaucrats afloat. By appointment to the payroll.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-warship-work-1",
+      "faction": "crown",
+      "role": "warship",
+      "action": "work",
+      "text": "Naval security, with dramatic hats. By appointment to the payroll.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-warship-repeat-0",
+      "faction": "crown",
+      "role": "warship",
+      "action": "repeat",
+      "text": "The captain has acknowledged the bell. His Majesty only asked once.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "crown-warship-repeat-1",
+      "faction": "crown",
+      "role": "warship",
+      "action": "repeat",
+      "text": "That is enough nautical enthusiasm. His Majesty only asked once.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-worker-select-0",
+      "faction": "clans",
+      "role": "worker",
+      "action": "select",
+      "text": "My hammer has seniority. Big muscles, small meetings.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-worker-select-1",
+      "faction": "clans",
+      "role": "worker",
+      "action": "select",
+      "text": "Payroll says I am essential. The clan respects a loud answer.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-worker-select-2",
+      "faction": "clans",
+      "role": "worker",
+      "action": "select",
+      "text": "Wood today, complaints tomorrow. Big muscles, small meetings.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-worker-move-0",
+      "faction": "clans",
+      "role": "worker",
+      "action": "move",
+      "text": "The boots voted against this. Boots first. Plans later.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-worker-move-1",
+      "faction": "clans",
+      "role": "worker",
+      "action": "move",
+      "text": "A scenic route to overtime. Boots first. Plans later.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-worker-attack-0",
+      "faction": "clans",
+      "role": "worker",
+      "action": "attack",
+      "text": "This was not in my contract. Diplomacy is a sturdy axe.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-worker-attack-1",
+      "faction": "clans",
+      "role": "worker",
+      "action": "attack",
+      "text": "The hammer has a second job. Diplomacy is a sturdy axe.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-worker-work-0",
+      "faction": "clans",
+      "role": "worker",
+      "action": "work",
+      "text": "Measure twice. Complain three times. A bigger hammer fixes most things.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-worker-work-1",
+      "faction": "clans",
+      "role": "worker",
+      "action": "work",
+      "text": "Splinters are our local currency. A bigger hammer fixes most things.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-worker-repeat-0",
+      "faction": "clans",
+      "role": "worker",
+      "action": "repeat",
+      "text": "Yes, I am still billable. Still here. Still loud.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-worker-repeat-1",
+      "faction": "clans",
+      "role": "worker",
+      "action": "repeat",
+      "text": "Every click adds a minute of paperwork. Still here. Still loud.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-soldier-select-0",
+      "faction": "clans",
+      "role": "soldier",
+      "action": "select",
+      "text": "Armor polished. Courage pending. Big muscles, small meetings.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-soldier-select-1",
+      "faction": "clans",
+      "role": "soldier",
+      "action": "select",
+      "text": "I brought the pointy argument. The clan respects a loud answer.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-soldier-select-2",
+      "faction": "clans",
+      "role": "soldier",
+      "action": "select",
+      "text": "Standing heroically is tiring. Big muscles, small meetings.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-soldier-move-0",
+      "faction": "clans",
+      "role": "soldier",
+      "action": "move",
+      "text": "Heavy boots, light planning. Boots first. Plans later.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-soldier-move-1",
+      "faction": "clans",
+      "role": "soldier",
+      "action": "move",
+      "text": "The shield gets the window seat. Boots first. Plans later.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-soldier-attack-0",
+      "faction": "clans",
+      "role": "soldier",
+      "action": "attack",
+      "text": "Presenting my steel rebuttal. Diplomacy is a sturdy axe.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-soldier-attack-1",
+      "faction": "clans",
+      "role": "soldier",
+      "action": "attack",
+      "text": "We tried the polite option. Diplomacy is a sturdy axe.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-soldier-work-0",
+      "faction": "clans",
+      "role": "soldier",
+      "action": "work",
+      "text": "Guarding the people with useful skills. A bigger hammer fixes most things.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-soldier-work-1",
+      "faction": "clans",
+      "role": "soldier",
+      "action": "work",
+      "text": "I am a very expensive fence. A bigger hammer fixes most things.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-soldier-repeat-0",
+      "faction": "clans",
+      "role": "soldier",
+      "action": "repeat",
+      "text": "The armor cannot nod any harder. Still here. Still loud.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-soldier-repeat-1",
+      "faction": "clans",
+      "role": "soldier",
+      "action": "repeat",
+      "text": "My attention is fully armored. Still here. Still loud.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-archer-select-0",
+      "faction": "clans",
+      "role": "archer",
+      "action": "select",
+      "text": "The bow has strong opinions. Big muscles, small meetings.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-archer-select-1",
+      "faction": "clans",
+      "role": "archer",
+      "action": "select",
+      "text": "Please stand beyond my elbow. The clan respects a loud answer.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-archer-select-2",
+      "faction": "clans",
+      "role": "archer",
+      "action": "select",
+      "text": "Accuracy beats enthusiasm. Big muscles, small meetings.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-archer-move-0",
+      "faction": "clans",
+      "role": "archer",
+      "action": "move",
+      "text": "Mind the arrows on the way past. Boots first. Plans later.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-archer-move-1",
+      "faction": "clans",
+      "role": "archer",
+      "action": "move",
+      "text": "Walking is bad for my aim. Boots first. Plans later.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-archer-attack-0",
+      "faction": "clans",
+      "role": "archer",
+      "action": "attack",
+      "text": "Special delivery, point first. Diplomacy is a sturdy axe.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-archer-attack-1",
+      "faction": "clans",
+      "role": "archer",
+      "action": "attack",
+      "text": "Let us settle this at a distance. Diplomacy is a sturdy axe.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-archer-work-0",
+      "faction": "clans",
+      "role": "archer",
+      "action": "work",
+      "text": "Keeping the worksite arrow-free. A bigger hammer fixes most things.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-archer-work-1",
+      "faction": "clans",
+      "role": "archer",
+      "action": "work",
+      "text": "The bow is supervising. A bigger hammer fixes most things.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-archer-repeat-0",
+      "faction": "clans",
+      "role": "archer",
+      "action": "repeat",
+      "text": "I heard you three arrows ago. Still here. Still loud.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-archer-repeat-1",
+      "faction": "clans",
+      "role": "archer",
+      "action": "repeat",
+      "text": "Repeated clicking does not improve accuracy. Still here. Still loud.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-specialist-select-0",
+      "faction": "clans",
+      "role": "specialist",
+      "action": "select",
+      "text": "Expertise is expensive. Big muscles, small meetings.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-specialist-select-1",
+      "faction": "clans",
+      "role": "specialist",
+      "action": "select",
+      "text": "I brought the advanced argument. The clan respects a loud answer.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-specialist-move-0",
+      "faction": "clans",
+      "role": "specialist",
+      "action": "move",
+      "text": "Expertise coming through. Boots first. Plans later.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-specialist-move-1",
+      "faction": "clans",
+      "role": "specialist",
+      "action": "move",
+      "text": "My cape requires turning space. Boots first. Plans later.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-specialist-attack-0",
+      "faction": "clans",
+      "role": "specialist",
+      "action": "attack",
+      "text": "Time for the expensive solution. Diplomacy is a sturdy axe.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-specialist-attack-1",
+      "faction": "clans",
+      "role": "specialist",
+      "action": "attack",
+      "text": "Special training, ordinary paperwork. Diplomacy is a sturdy axe.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-specialist-work-0",
+      "faction": "clans",
+      "role": "specialist",
+      "action": "work",
+      "text": "Consulting is mostly standing nearby. A bigger hammer fixes most things.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-specialist-work-1",
+      "faction": "clans",
+      "role": "specialist",
+      "action": "work",
+      "text": "The specialist fee includes supervision. A bigger hammer fixes most things.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-specialist-repeat-0",
+      "faction": "clans",
+      "role": "specialist",
+      "action": "repeat",
+      "text": "Special does not mean endlessly available. Still here. Still loud.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-specialist-repeat-1",
+      "faction": "clans",
+      "role": "specialist",
+      "action": "repeat",
+      "text": "That consultation will be invoiced. Still here. Still loud.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-catapult-select-0",
+      "faction": "clans",
+      "role": "catapult",
+      "action": "select",
+      "text": "Subtlety weighs several tons. Big muscles, small meetings.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-catapult-select-1",
+      "faction": "clans",
+      "role": "catapult",
+      "action": "select",
+      "text": "I specialize in urgent deliveries. The clan respects a loud answer.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-catapult-select-2",
+      "faction": "clans",
+      "role": "catapult",
+      "action": "select",
+      "text": "Wheels checked. Brakes optional. Big muscles, small meetings.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-catapult-move-0",
+      "faction": "clans",
+      "role": "catapult",
+      "action": "move",
+      "text": "Please allow a wide turning circle. Boots first. Plans later.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-catapult-move-1",
+      "faction": "clans",
+      "role": "catapult",
+      "action": "move",
+      "text": "The wheels are holding a committee. Boots first. Plans later.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-catapult-attack-0",
+      "faction": "clans",
+      "role": "catapult",
+      "action": "attack",
+      "text": "One boulder, strongly expressed. Diplomacy is a sturdy axe.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-catapult-attack-1",
+      "faction": "clans",
+      "role": "catapult",
+      "action": "attack",
+      "text": "Your complaint is now airborne. Diplomacy is a sturdy axe.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-catapult-work-0",
+      "faction": "clans",
+      "role": "catapult",
+      "action": "work",
+      "text": "Waiting for load-bearing instructions. A bigger hammer fixes most things.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-catapult-work-1",
+      "faction": "clans",
+      "role": "catapult",
+      "action": "work",
+      "text": "I lift morale and large rocks. A bigger hammer fixes most things.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-catapult-repeat-0",
+      "faction": "clans",
+      "role": "catapult",
+      "action": "repeat",
+      "text": "The wheels heard the first click. Still here. Still loud.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-catapult-repeat-1",
+      "faction": "clans",
+      "role": "catapult",
+      "action": "repeat",
+      "text": "We do not offer faster shipping. Still here. Still loud.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-transport-select-0",
+      "faction": "clans",
+      "role": "transport",
+      "action": "select",
+      "text": "Passengers, mind the dramatic waves. Big muscles, small meetings.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-transport-select-1",
+      "faction": "clans",
+      "role": "transport",
+      "action": "select",
+      "text": "No refunds for wet boots. The clan respects a loud answer.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-transport-select-2",
+      "faction": "clans",
+      "role": "transport",
+      "action": "select",
+      "text": "The manifest says mostly heroes. Big muscles, small meetings.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-transport-move-0",
+      "faction": "clans",
+      "role": "transport",
+      "action": "move",
+      "text": "Next stop: drier socks. Boots first. Plans later.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-transport-move-1",
+      "faction": "clans",
+      "role": "transport",
+      "action": "move",
+      "text": "The tide approved this route. Boots first. Plans later.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-transport-attack-0",
+      "faction": "clans",
+      "role": "transport",
+      "action": "attack",
+      "text": "I transport arguments, not win them. Diplomacy is a sturdy axe.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-transport-attack-1",
+      "faction": "clans",
+      "role": "transport",
+      "action": "attack",
+      "text": "Please use the armed boat. Diplomacy is a sturdy axe.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-transport-work-0",
+      "faction": "clans",
+      "role": "transport",
+      "action": "work",
+      "text": "Boarding passes, approximately. A bigger hammer fixes most things.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-transport-work-1",
+      "faction": "clans",
+      "role": "transport",
+      "action": "work",
+      "text": "Cargo first, heroic speeches later. A bigger hammer fixes most things.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-transport-repeat-0",
+      "faction": "clans",
+      "role": "transport",
+      "action": "repeat",
+      "text": "Please stop ringing the ships bell. Still here. Still loud.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-transport-repeat-1",
+      "faction": "clans",
+      "role": "transport",
+      "action": "repeat",
+      "text": "Your reservation is already confirmed. Still here. Still loud.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-warship-select-0",
+      "faction": "clans",
+      "role": "warship",
+      "action": "select",
+      "text": "The cannon handles customer service. Big muscles, small meetings.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-warship-select-1",
+      "faction": "clans",
+      "role": "warship",
+      "action": "select",
+      "text": "Hull intact. Confidence inflated. The clan respects a loud answer.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-warship-select-2",
+      "faction": "clans",
+      "role": "warship",
+      "action": "select",
+      "text": "We take nautical disputes seriously. Big muscles, small meetings.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-warship-move-0",
+      "faction": "clans",
+      "role": "warship",
+      "action": "move",
+      "text": "All hands, mostly on deck. Boots first. Plans later.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-warship-move-1",
+      "faction": "clans",
+      "role": "warship",
+      "action": "move",
+      "text": "Navigation by confident guessing. Boots first. Plans later.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-warship-attack-0",
+      "faction": "clans",
+      "role": "warship",
+      "action": "attack",
+      "text": "A broadside of customer feedback. Diplomacy is a sturdy axe.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-warship-attack-1",
+      "faction": "clans",
+      "role": "warship",
+      "action": "attack",
+      "text": "The cannon has the final word. Diplomacy is a sturdy axe.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-warship-work-0",
+      "faction": "clans",
+      "role": "warship",
+      "action": "work",
+      "text": "Keeping the harbor bureaucrats afloat. A bigger hammer fixes most things.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-warship-work-1",
+      "faction": "clans",
+      "role": "warship",
+      "action": "work",
+      "text": "Naval security, with dramatic hats. A bigger hammer fixes most things.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-warship-repeat-0",
+      "faction": "clans",
+      "role": "warship",
+      "action": "repeat",
+      "text": "The captain has acknowledged the bell. Still here. Still loud.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "clans-warship-repeat-1",
+      "faction": "clans",
+      "role": "warship",
+      "action": "repeat",
+      "text": "That is enough nautical enthusiasm. Still here. Still loud.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-worker-select-0",
+      "faction": "elves",
+      "role": "worker",
+      "action": "select",
+      "text": "My hammer has seniority. Ancient wisdom, fresh complaints.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-worker-select-1",
+      "faction": "elves",
+      "role": "worker",
+      "action": "select",
+      "text": "Payroll says I am essential. The trees are listening.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-worker-select-2",
+      "faction": "elves",
+      "role": "worker",
+      "action": "select",
+      "text": "Wood today, complaints tomorrow. Ancient wisdom, fresh complaints.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-worker-move-0",
+      "faction": "elves",
+      "role": "worker",
+      "action": "move",
+      "text": "The boots voted against this. Mind the centuries-old flowers.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-worker-move-1",
+      "faction": "elves",
+      "role": "worker",
+      "action": "move",
+      "text": "A scenic route to overtime. Mind the centuries-old flowers.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-worker-attack-0",
+      "faction": "elves",
+      "role": "worker",
+      "action": "attack",
+      "text": "This was not in my contract. A very refined disagreement.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-worker-attack-1",
+      "faction": "elves",
+      "role": "worker",
+      "action": "attack",
+      "text": "The hammer has a second job. A very refined disagreement.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-worker-work-0",
+      "faction": "elves",
+      "role": "worker",
+      "action": "work",
+      "text": "Measure twice. Complain three times. Sustainably annoyed.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-worker-work-1",
+      "faction": "elves",
+      "role": "worker",
+      "action": "work",
+      "text": "Splinters are our local currency. Sustainably annoyed.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-worker-repeat-0",
+      "faction": "elves",
+      "role": "worker",
+      "action": "repeat",
+      "text": "Yes, I am still billable. Patience is not an endless resource.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-worker-repeat-1",
+      "faction": "elves",
+      "role": "worker",
+      "action": "repeat",
+      "text": "Every click adds a minute of paperwork. Patience is not an endless resource.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-soldier-select-0",
+      "faction": "elves",
+      "role": "soldier",
+      "action": "select",
+      "text": "Armor polished. Courage pending. Ancient wisdom, fresh complaints.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-soldier-select-1",
+      "faction": "elves",
+      "role": "soldier",
+      "action": "select",
+      "text": "I brought the pointy argument. The trees are listening.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-soldier-select-2",
+      "faction": "elves",
+      "role": "soldier",
+      "action": "select",
+      "text": "Standing heroically is tiring. Ancient wisdom, fresh complaints.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-soldier-move-0",
+      "faction": "elves",
+      "role": "soldier",
+      "action": "move",
+      "text": "Heavy boots, light planning. Mind the centuries-old flowers.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-soldier-move-1",
+      "faction": "elves",
+      "role": "soldier",
+      "action": "move",
+      "text": "The shield gets the window seat. Mind the centuries-old flowers.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-soldier-attack-0",
+      "faction": "elves",
+      "role": "soldier",
+      "action": "attack",
+      "text": "Presenting my steel rebuttal. A very refined disagreement.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-soldier-attack-1",
+      "faction": "elves",
+      "role": "soldier",
+      "action": "attack",
+      "text": "We tried the polite option. A very refined disagreement.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-soldier-work-0",
+      "faction": "elves",
+      "role": "soldier",
+      "action": "work",
+      "text": "Guarding the people with useful skills. Sustainably annoyed.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-soldier-work-1",
+      "faction": "elves",
+      "role": "soldier",
+      "action": "work",
+      "text": "I am a very expensive fence. Sustainably annoyed.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-soldier-repeat-0",
+      "faction": "elves",
+      "role": "soldier",
+      "action": "repeat",
+      "text": "The armor cannot nod any harder. Patience is not an endless resource.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-soldier-repeat-1",
+      "faction": "elves",
+      "role": "soldier",
+      "action": "repeat",
+      "text": "My attention is fully armored. Patience is not an endless resource.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-archer-select-0",
+      "faction": "elves",
+      "role": "archer",
+      "action": "select",
+      "text": "The bow has strong opinions. Ancient wisdom, fresh complaints.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-archer-select-1",
+      "faction": "elves",
+      "role": "archer",
+      "action": "select",
+      "text": "Please stand beyond my elbow. The trees are listening.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-archer-select-2",
+      "faction": "elves",
+      "role": "archer",
+      "action": "select",
+      "text": "Accuracy beats enthusiasm. Ancient wisdom, fresh complaints.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-archer-move-0",
+      "faction": "elves",
+      "role": "archer",
+      "action": "move",
+      "text": "Mind the arrows on the way past. Mind the centuries-old flowers.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-archer-move-1",
+      "faction": "elves",
+      "role": "archer",
+      "action": "move",
+      "text": "Walking is bad for my aim. Mind the centuries-old flowers.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-archer-attack-0",
+      "faction": "elves",
+      "role": "archer",
+      "action": "attack",
+      "text": "Special delivery, point first. A very refined disagreement.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-archer-attack-1",
+      "faction": "elves",
+      "role": "archer",
+      "action": "attack",
+      "text": "Let us settle this at a distance. A very refined disagreement.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-archer-work-0",
+      "faction": "elves",
+      "role": "archer",
+      "action": "work",
+      "text": "Keeping the worksite arrow-free. Sustainably annoyed.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-archer-work-1",
+      "faction": "elves",
+      "role": "archer",
+      "action": "work",
+      "text": "The bow is supervising. Sustainably annoyed.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-archer-repeat-0",
+      "faction": "elves",
+      "role": "archer",
+      "action": "repeat",
+      "text": "I heard you three arrows ago. Patience is not an endless resource.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-archer-repeat-1",
+      "faction": "elves",
+      "role": "archer",
+      "action": "repeat",
+      "text": "Repeated clicking does not improve accuracy. Patience is not an endless resource.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-specialist-select-0",
+      "faction": "elves",
+      "role": "specialist",
+      "action": "select",
+      "text": "Expertise is expensive. Ancient wisdom, fresh complaints.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-specialist-select-1",
+      "faction": "elves",
+      "role": "specialist",
+      "action": "select",
+      "text": "I brought the advanced argument. The trees are listening.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-specialist-move-0",
+      "faction": "elves",
+      "role": "specialist",
+      "action": "move",
+      "text": "Expertise coming through. Mind the centuries-old flowers.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-specialist-move-1",
+      "faction": "elves",
+      "role": "specialist",
+      "action": "move",
+      "text": "My cape requires turning space. Mind the centuries-old flowers.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-specialist-attack-0",
+      "faction": "elves",
+      "role": "specialist",
+      "action": "attack",
+      "text": "Time for the expensive solution. A very refined disagreement.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-specialist-attack-1",
+      "faction": "elves",
+      "role": "specialist",
+      "action": "attack",
+      "text": "Special training, ordinary paperwork. A very refined disagreement.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-specialist-work-0",
+      "faction": "elves",
+      "role": "specialist",
+      "action": "work",
+      "text": "Consulting is mostly standing nearby. Sustainably annoyed.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-specialist-work-1",
+      "faction": "elves",
+      "role": "specialist",
+      "action": "work",
+      "text": "The specialist fee includes supervision. Sustainably annoyed.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-specialist-repeat-0",
+      "faction": "elves",
+      "role": "specialist",
+      "action": "repeat",
+      "text": "Special does not mean endlessly available. Patience is not an endless resource.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-specialist-repeat-1",
+      "faction": "elves",
+      "role": "specialist",
+      "action": "repeat",
+      "text": "That consultation will be invoiced. Patience is not an endless resource.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-catapult-select-0",
+      "faction": "elves",
+      "role": "catapult",
+      "action": "select",
+      "text": "Subtlety weighs several tons. Ancient wisdom, fresh complaints.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-catapult-select-1",
+      "faction": "elves",
+      "role": "catapult",
+      "action": "select",
+      "text": "I specialize in urgent deliveries. The trees are listening.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-catapult-select-2",
+      "faction": "elves",
+      "role": "catapult",
+      "action": "select",
+      "text": "Wheels checked. Brakes optional. Ancient wisdom, fresh complaints.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-catapult-move-0",
+      "faction": "elves",
+      "role": "catapult",
+      "action": "move",
+      "text": "Please allow a wide turning circle. Mind the centuries-old flowers.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-catapult-move-1",
+      "faction": "elves",
+      "role": "catapult",
+      "action": "move",
+      "text": "The wheels are holding a committee. Mind the centuries-old flowers.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-catapult-attack-0",
+      "faction": "elves",
+      "role": "catapult",
+      "action": "attack",
+      "text": "One boulder, strongly expressed. A very refined disagreement.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-catapult-attack-1",
+      "faction": "elves",
+      "role": "catapult",
+      "action": "attack",
+      "text": "Your complaint is now airborne. A very refined disagreement.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-catapult-work-0",
+      "faction": "elves",
+      "role": "catapult",
+      "action": "work",
+      "text": "Waiting for load-bearing instructions. Sustainably annoyed.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-catapult-work-1",
+      "faction": "elves",
+      "role": "catapult",
+      "action": "work",
+      "text": "I lift morale and large rocks. Sustainably annoyed.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-catapult-repeat-0",
+      "faction": "elves",
+      "role": "catapult",
+      "action": "repeat",
+      "text": "The wheels heard the first click. Patience is not an endless resource.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-catapult-repeat-1",
+      "faction": "elves",
+      "role": "catapult",
+      "action": "repeat",
+      "text": "We do not offer faster shipping. Patience is not an endless resource.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-transport-select-0",
+      "faction": "elves",
+      "role": "transport",
+      "action": "select",
+      "text": "Passengers, mind the dramatic waves. Ancient wisdom, fresh complaints.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-transport-select-1",
+      "faction": "elves",
+      "role": "transport",
+      "action": "select",
+      "text": "No refunds for wet boots. The trees are listening.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-transport-select-2",
+      "faction": "elves",
+      "role": "transport",
+      "action": "select",
+      "text": "The manifest says mostly heroes. Ancient wisdom, fresh complaints.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-transport-move-0",
+      "faction": "elves",
+      "role": "transport",
+      "action": "move",
+      "text": "Next stop: drier socks. Mind the centuries-old flowers.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-transport-move-1",
+      "faction": "elves",
+      "role": "transport",
+      "action": "move",
+      "text": "The tide approved this route. Mind the centuries-old flowers.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-transport-attack-0",
+      "faction": "elves",
+      "role": "transport",
+      "action": "attack",
+      "text": "I transport arguments, not win them. A very refined disagreement.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-transport-attack-1",
+      "faction": "elves",
+      "role": "transport",
+      "action": "attack",
+      "text": "Please use the armed boat. A very refined disagreement.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-transport-work-0",
+      "faction": "elves",
+      "role": "transport",
+      "action": "work",
+      "text": "Boarding passes, approximately. Sustainably annoyed.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-transport-work-1",
+      "faction": "elves",
+      "role": "transport",
+      "action": "work",
+      "text": "Cargo first, heroic speeches later. Sustainably annoyed.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-transport-repeat-0",
+      "faction": "elves",
+      "role": "transport",
+      "action": "repeat",
+      "text": "Please stop ringing the ships bell. Patience is not an endless resource.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-transport-repeat-1",
+      "faction": "elves",
+      "role": "transport",
+      "action": "repeat",
+      "text": "Your reservation is already confirmed. Patience is not an endless resource.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-warship-select-0",
+      "faction": "elves",
+      "role": "warship",
+      "action": "select",
+      "text": "The cannon handles customer service. Ancient wisdom, fresh complaints.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-warship-select-1",
+      "faction": "elves",
+      "role": "warship",
+      "action": "select",
+      "text": "Hull intact. Confidence inflated. The trees are listening.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-warship-select-2",
+      "faction": "elves",
+      "role": "warship",
+      "action": "select",
+      "text": "We take nautical disputes seriously. Ancient wisdom, fresh complaints.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-warship-move-0",
+      "faction": "elves",
+      "role": "warship",
+      "action": "move",
+      "text": "All hands, mostly on deck. Mind the centuries-old flowers.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-warship-move-1",
+      "faction": "elves",
+      "role": "warship",
+      "action": "move",
+      "text": "Navigation by confident guessing. Mind the centuries-old flowers.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-warship-attack-0",
+      "faction": "elves",
+      "role": "warship",
+      "action": "attack",
+      "text": "A broadside of customer feedback. A very refined disagreement.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-warship-attack-1",
+      "faction": "elves",
+      "role": "warship",
+      "action": "attack",
+      "text": "The cannon has the final word. A very refined disagreement.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-warship-work-0",
+      "faction": "elves",
+      "role": "warship",
+      "action": "work",
+      "text": "Keeping the harbor bureaucrats afloat. Sustainably annoyed.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-warship-work-1",
+      "faction": "elves",
+      "role": "warship",
+      "action": "work",
+      "text": "Naval security, with dramatic hats. Sustainably annoyed.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-warship-repeat-0",
+      "faction": "elves",
+      "role": "warship",
+      "action": "repeat",
+      "text": "The captain has acknowledged the bell. Patience is not an endless resource.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "elves-warship-repeat-1",
+      "faction": "elves",
+      "role": "warship",
+      "action": "repeat",
+      "text": "That is enough nautical enthusiasm. Patience is not an endless resource.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-worker-select-0",
+      "faction": "dwarves",
+      "role": "worker",
+      "action": "select",
+      "text": "My hammer has seniority. Beard checked. Tools counted.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-worker-select-1",
+      "faction": "dwarves",
+      "role": "worker",
+      "action": "select",
+      "text": "Payroll says I am essential. Short stature, long invoice.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-worker-select-2",
+      "faction": "dwarves",
+      "role": "worker",
+      "action": "select",
+      "text": "Wood today, complaints tomorrow. Beard checked. Tools counted.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-worker-move-0",
+      "faction": "dwarves",
+      "role": "worker",
+      "action": "move",
+      "text": "The boots voted against this. Uphill costs another ale.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-worker-move-1",
+      "faction": "dwarves",
+      "role": "worker",
+      "action": "move",
+      "text": "A scenic route to overtime. Uphill costs another ale.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-worker-attack-0",
+      "faction": "dwarves",
+      "role": "worker",
+      "action": "attack",
+      "text": "This was not in my contract. Solid steel, solid point.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-worker-attack-1",
+      "faction": "dwarves",
+      "role": "worker",
+      "action": "attack",
+      "text": "The hammer has a second job. Solid steel, solid point.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-worker-work-0",
+      "faction": "dwarves",
+      "role": "worker",
+      "action": "work",
+      "text": "Measure twice. Complain three times. Craftsmanship before lunchtime.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-worker-work-1",
+      "faction": "dwarves",
+      "role": "worker",
+      "action": "work",
+      "text": "Splinters are our local currency. Craftsmanship before lunchtime.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-worker-repeat-0",
+      "faction": "dwarves",
+      "role": "worker",
+      "action": "repeat",
+      "text": "Yes, I am still billable. The beard heard you.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-worker-repeat-1",
+      "faction": "dwarves",
+      "role": "worker",
+      "action": "repeat",
+      "text": "Every click adds a minute of paperwork. The beard heard you.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-soldier-select-0",
+      "faction": "dwarves",
+      "role": "soldier",
+      "action": "select",
+      "text": "Armor polished. Courage pending. Beard checked. Tools counted.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-soldier-select-1",
+      "faction": "dwarves",
+      "role": "soldier",
+      "action": "select",
+      "text": "I brought the pointy argument. Short stature, long invoice.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-soldier-select-2",
+      "faction": "dwarves",
+      "role": "soldier",
+      "action": "select",
+      "text": "Standing heroically is tiring. Beard checked. Tools counted.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-soldier-move-0",
+      "faction": "dwarves",
+      "role": "soldier",
+      "action": "move",
+      "text": "Heavy boots, light planning. Uphill costs another ale.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-soldier-move-1",
+      "faction": "dwarves",
+      "role": "soldier",
+      "action": "move",
+      "text": "The shield gets the window seat. Uphill costs another ale.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-soldier-attack-0",
+      "faction": "dwarves",
+      "role": "soldier",
+      "action": "attack",
+      "text": "Presenting my steel rebuttal. Solid steel, solid point.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-soldier-attack-1",
+      "faction": "dwarves",
+      "role": "soldier",
+      "action": "attack",
+      "text": "We tried the polite option. Solid steel, solid point.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-soldier-work-0",
+      "faction": "dwarves",
+      "role": "soldier",
+      "action": "work",
+      "text": "Guarding the people with useful skills. Craftsmanship before lunchtime.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-soldier-work-1",
+      "faction": "dwarves",
+      "role": "soldier",
+      "action": "work",
+      "text": "I am a very expensive fence. Craftsmanship before lunchtime.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-soldier-repeat-0",
+      "faction": "dwarves",
+      "role": "soldier",
+      "action": "repeat",
+      "text": "The armor cannot nod any harder. The beard heard you.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-soldier-repeat-1",
+      "faction": "dwarves",
+      "role": "soldier",
+      "action": "repeat",
+      "text": "My attention is fully armored. The beard heard you.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-archer-select-0",
+      "faction": "dwarves",
+      "role": "archer",
+      "action": "select",
+      "text": "The bow has strong opinions. Beard checked. Tools counted.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-archer-select-1",
+      "faction": "dwarves",
+      "role": "archer",
+      "action": "select",
+      "text": "Please stand beyond my elbow. Short stature, long invoice.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-archer-select-2",
+      "faction": "dwarves",
+      "role": "archer",
+      "action": "select",
+      "text": "Accuracy beats enthusiasm. Beard checked. Tools counted.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-archer-move-0",
+      "faction": "dwarves",
+      "role": "archer",
+      "action": "move",
+      "text": "Mind the arrows on the way past. Uphill costs another ale.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-archer-move-1",
+      "faction": "dwarves",
+      "role": "archer",
+      "action": "move",
+      "text": "Walking is bad for my aim. Uphill costs another ale.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-archer-attack-0",
+      "faction": "dwarves",
+      "role": "archer",
+      "action": "attack",
+      "text": "Special delivery, point first. Solid steel, solid point.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-archer-attack-1",
+      "faction": "dwarves",
+      "role": "archer",
+      "action": "attack",
+      "text": "Let us settle this at a distance. Solid steel, solid point.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-archer-work-0",
+      "faction": "dwarves",
+      "role": "archer",
+      "action": "work",
+      "text": "Keeping the worksite arrow-free. Craftsmanship before lunchtime.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-archer-work-1",
+      "faction": "dwarves",
+      "role": "archer",
+      "action": "work",
+      "text": "The bow is supervising. Craftsmanship before lunchtime.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-archer-repeat-0",
+      "faction": "dwarves",
+      "role": "archer",
+      "action": "repeat",
+      "text": "I heard you three arrows ago. The beard heard you.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-archer-repeat-1",
+      "faction": "dwarves",
+      "role": "archer",
+      "action": "repeat",
+      "text": "Repeated clicking does not improve accuracy. The beard heard you.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-specialist-select-0",
+      "faction": "dwarves",
+      "role": "specialist",
+      "action": "select",
+      "text": "Expertise is expensive. Beard checked. Tools counted.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-specialist-select-1",
+      "faction": "dwarves",
+      "role": "specialist",
+      "action": "select",
+      "text": "I brought the advanced argument. Short stature, long invoice.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-specialist-move-0",
+      "faction": "dwarves",
+      "role": "specialist",
+      "action": "move",
+      "text": "Expertise coming through. Uphill costs another ale.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-specialist-move-1",
+      "faction": "dwarves",
+      "role": "specialist",
+      "action": "move",
+      "text": "My cape requires turning space. Uphill costs another ale.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-specialist-attack-0",
+      "faction": "dwarves",
+      "role": "specialist",
+      "action": "attack",
+      "text": "Time for the expensive solution. Solid steel, solid point.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-specialist-attack-1",
+      "faction": "dwarves",
+      "role": "specialist",
+      "action": "attack",
+      "text": "Special training, ordinary paperwork. Solid steel, solid point.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-specialist-work-0",
+      "faction": "dwarves",
+      "role": "specialist",
+      "action": "work",
+      "text": "Consulting is mostly standing nearby. Craftsmanship before lunchtime.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-specialist-work-1",
+      "faction": "dwarves",
+      "role": "specialist",
+      "action": "work",
+      "text": "The specialist fee includes supervision. Craftsmanship before lunchtime.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-specialist-repeat-0",
+      "faction": "dwarves",
+      "role": "specialist",
+      "action": "repeat",
+      "text": "Special does not mean endlessly available. The beard heard you.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-specialist-repeat-1",
+      "faction": "dwarves",
+      "role": "specialist",
+      "action": "repeat",
+      "text": "That consultation will be invoiced. The beard heard you.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-catapult-select-0",
+      "faction": "dwarves",
+      "role": "catapult",
+      "action": "select",
+      "text": "Subtlety weighs several tons. Beard checked. Tools counted.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-catapult-select-1",
+      "faction": "dwarves",
+      "role": "catapult",
+      "action": "select",
+      "text": "I specialize in urgent deliveries. Short stature, long invoice.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-catapult-select-2",
+      "faction": "dwarves",
+      "role": "catapult",
+      "action": "select",
+      "text": "Wheels checked. Brakes optional. Beard checked. Tools counted.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-catapult-move-0",
+      "faction": "dwarves",
+      "role": "catapult",
+      "action": "move",
+      "text": "Please allow a wide turning circle. Uphill costs another ale.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-catapult-move-1",
+      "faction": "dwarves",
+      "role": "catapult",
+      "action": "move",
+      "text": "The wheels are holding a committee. Uphill costs another ale.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-catapult-attack-0",
+      "faction": "dwarves",
+      "role": "catapult",
+      "action": "attack",
+      "text": "One boulder, strongly expressed. Solid steel, solid point.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-catapult-attack-1",
+      "faction": "dwarves",
+      "role": "catapult",
+      "action": "attack",
+      "text": "Your complaint is now airborne. Solid steel, solid point.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-catapult-work-0",
+      "faction": "dwarves",
+      "role": "catapult",
+      "action": "work",
+      "text": "Waiting for load-bearing instructions. Craftsmanship before lunchtime.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-catapult-work-1",
+      "faction": "dwarves",
+      "role": "catapult",
+      "action": "work",
+      "text": "I lift morale and large rocks. Craftsmanship before lunchtime.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-catapult-repeat-0",
+      "faction": "dwarves",
+      "role": "catapult",
+      "action": "repeat",
+      "text": "The wheels heard the first click. The beard heard you.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-catapult-repeat-1",
+      "faction": "dwarves",
+      "role": "catapult",
+      "action": "repeat",
+      "text": "We do not offer faster shipping. The beard heard you.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-transport-select-0",
+      "faction": "dwarves",
+      "role": "transport",
+      "action": "select",
+      "text": "Passengers, mind the dramatic waves. Beard checked. Tools counted.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-transport-select-1",
+      "faction": "dwarves",
+      "role": "transport",
+      "action": "select",
+      "text": "No refunds for wet boots. Short stature, long invoice.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-transport-select-2",
+      "faction": "dwarves",
+      "role": "transport",
+      "action": "select",
+      "text": "The manifest says mostly heroes. Beard checked. Tools counted.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-transport-move-0",
+      "faction": "dwarves",
+      "role": "transport",
+      "action": "move",
+      "text": "Next stop: drier socks. Uphill costs another ale.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-transport-move-1",
+      "faction": "dwarves",
+      "role": "transport",
+      "action": "move",
+      "text": "The tide approved this route. Uphill costs another ale.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-transport-attack-0",
+      "faction": "dwarves",
+      "role": "transport",
+      "action": "attack",
+      "text": "I transport arguments, not win them. Solid steel, solid point.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-transport-attack-1",
+      "faction": "dwarves",
+      "role": "transport",
+      "action": "attack",
+      "text": "Please use the armed boat. Solid steel, solid point.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-transport-work-0",
+      "faction": "dwarves",
+      "role": "transport",
+      "action": "work",
+      "text": "Boarding passes, approximately. Craftsmanship before lunchtime.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-transport-work-1",
+      "faction": "dwarves",
+      "role": "transport",
+      "action": "work",
+      "text": "Cargo first, heroic speeches later. Craftsmanship before lunchtime.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-transport-repeat-0",
+      "faction": "dwarves",
+      "role": "transport",
+      "action": "repeat",
+      "text": "Please stop ringing the ships bell. The beard heard you.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-transport-repeat-1",
+      "faction": "dwarves",
+      "role": "transport",
+      "action": "repeat",
+      "text": "Your reservation is already confirmed. The beard heard you.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-warship-select-0",
+      "faction": "dwarves",
+      "role": "warship",
+      "action": "select",
+      "text": "The cannon handles customer service. Beard checked. Tools counted.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-warship-select-1",
+      "faction": "dwarves",
+      "role": "warship",
+      "action": "select",
+      "text": "Hull intact. Confidence inflated. Short stature, long invoice.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-warship-select-2",
+      "faction": "dwarves",
+      "role": "warship",
+      "action": "select",
+      "text": "We take nautical disputes seriously. Beard checked. Tools counted.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-warship-move-0",
+      "faction": "dwarves",
+      "role": "warship",
+      "action": "move",
+      "text": "All hands, mostly on deck. Uphill costs another ale.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-warship-move-1",
+      "faction": "dwarves",
+      "role": "warship",
+      "action": "move",
+      "text": "Navigation by confident guessing. Uphill costs another ale.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-warship-attack-0",
+      "faction": "dwarves",
+      "role": "warship",
+      "action": "attack",
+      "text": "A broadside of customer feedback. Solid steel, solid point.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-warship-attack-1",
+      "faction": "dwarves",
+      "role": "warship",
+      "action": "attack",
+      "text": "The cannon has the final word. Solid steel, solid point.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-warship-work-0",
+      "faction": "dwarves",
+      "role": "warship",
+      "action": "work",
+      "text": "Keeping the harbor bureaucrats afloat. Craftsmanship before lunchtime.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-warship-work-1",
+      "faction": "dwarves",
+      "role": "warship",
+      "action": "work",
+      "text": "Naval security, with dramatic hats. Craftsmanship before lunchtime.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-warship-repeat-0",
+      "faction": "dwarves",
+      "role": "warship",
+      "action": "repeat",
+      "text": "The captain has acknowledged the bell. The beard heard you.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "dwarves-warship-repeat-1",
+      "faction": "dwarves",
+      "role": "warship",
+      "action": "repeat",
+      "text": "That is enough nautical enthusiasm. The beard heard you.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-worker-select-0",
+      "faction": "goblins",
+      "role": "worker",
+      "action": "select",
+      "text": "My hammer has seniority. Warranty void if victorious.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-worker-select-1",
+      "faction": "goblins",
+      "role": "worker",
+      "action": "select",
+      "text": "Payroll says I am essential. Innovation with optional insurance.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-worker-select-2",
+      "faction": "goblins",
+      "role": "worker",
+      "action": "select",
+      "text": "Wood today, complaints tomorrow. Warranty void if victorious.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-worker-move-0",
+      "faction": "goblins",
+      "role": "worker",
+      "action": "move",
+      "text": "The boots voted against this. Testing the portable version.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-worker-move-1",
+      "faction": "goblins",
+      "role": "worker",
+      "action": "move",
+      "text": "A scenic route to overtime. Testing the portable version.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-worker-attack-0",
+      "faction": "goblins",
+      "role": "worker",
+      "action": "attack",
+      "text": "This was not in my contract. An explosive peer review.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-worker-attack-1",
+      "faction": "goblins",
+      "role": "worker",
+      "action": "attack",
+      "text": "The hammer has a second job. An explosive peer review.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-worker-work-0",
+      "faction": "goblins",
+      "role": "worker",
+      "action": "work",
+      "text": "Measure twice. Complain three times. One more gear should fix it.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-worker-work-1",
+      "faction": "goblins",
+      "role": "worker",
+      "action": "work",
+      "text": "Splinters are our local currency. One more gear should fix it.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-worker-repeat-0",
+      "faction": "goblins",
+      "role": "worker",
+      "action": "repeat",
+      "text": "Yes, I am still billable. The button passed its stress test.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-worker-repeat-1",
+      "faction": "goblins",
+      "role": "worker",
+      "action": "repeat",
+      "text": "Every click adds a minute of paperwork. The button passed its stress test.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-soldier-select-0",
+      "faction": "goblins",
+      "role": "soldier",
+      "action": "select",
+      "text": "Armor polished. Courage pending. Warranty void if victorious.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-soldier-select-1",
+      "faction": "goblins",
+      "role": "soldier",
+      "action": "select",
+      "text": "I brought the pointy argument. Innovation with optional insurance.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-soldier-select-2",
+      "faction": "goblins",
+      "role": "soldier",
+      "action": "select",
+      "text": "Standing heroically is tiring. Warranty void if victorious.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-soldier-move-0",
+      "faction": "goblins",
+      "role": "soldier",
+      "action": "move",
+      "text": "Heavy boots, light planning. Testing the portable version.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-soldier-move-1",
+      "faction": "goblins",
+      "role": "soldier",
+      "action": "move",
+      "text": "The shield gets the window seat. Testing the portable version.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-soldier-attack-0",
+      "faction": "goblins",
+      "role": "soldier",
+      "action": "attack",
+      "text": "Presenting my steel rebuttal. An explosive peer review.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-soldier-attack-1",
+      "faction": "goblins",
+      "role": "soldier",
+      "action": "attack",
+      "text": "We tried the polite option. An explosive peer review.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-soldier-work-0",
+      "faction": "goblins",
+      "role": "soldier",
+      "action": "work",
+      "text": "Guarding the people with useful skills. One more gear should fix it.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-soldier-work-1",
+      "faction": "goblins",
+      "role": "soldier",
+      "action": "work",
+      "text": "I am a very expensive fence. One more gear should fix it.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-soldier-repeat-0",
+      "faction": "goblins",
+      "role": "soldier",
+      "action": "repeat",
+      "text": "The armor cannot nod any harder. The button passed its stress test.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-soldier-repeat-1",
+      "faction": "goblins",
+      "role": "soldier",
+      "action": "repeat",
+      "text": "My attention is fully armored. The button passed its stress test.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-archer-select-0",
+      "faction": "goblins",
+      "role": "archer",
+      "action": "select",
+      "text": "The bow has strong opinions. Warranty void if victorious.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-archer-select-1",
+      "faction": "goblins",
+      "role": "archer",
+      "action": "select",
+      "text": "Please stand beyond my elbow. Innovation with optional insurance.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-archer-select-2",
+      "faction": "goblins",
+      "role": "archer",
+      "action": "select",
+      "text": "Accuracy beats enthusiasm. Warranty void if victorious.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-archer-move-0",
+      "faction": "goblins",
+      "role": "archer",
+      "action": "move",
+      "text": "Mind the arrows on the way past. Testing the portable version.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-archer-move-1",
+      "faction": "goblins",
+      "role": "archer",
+      "action": "move",
+      "text": "Walking is bad for my aim. Testing the portable version.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-archer-attack-0",
+      "faction": "goblins",
+      "role": "archer",
+      "action": "attack",
+      "text": "Special delivery, point first. An explosive peer review.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-archer-attack-1",
+      "faction": "goblins",
+      "role": "archer",
+      "action": "attack",
+      "text": "Let us settle this at a distance. An explosive peer review.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-archer-work-0",
+      "faction": "goblins",
+      "role": "archer",
+      "action": "work",
+      "text": "Keeping the worksite arrow-free. One more gear should fix it.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-archer-work-1",
+      "faction": "goblins",
+      "role": "archer",
+      "action": "work",
+      "text": "The bow is supervising. One more gear should fix it.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-archer-repeat-0",
+      "faction": "goblins",
+      "role": "archer",
+      "action": "repeat",
+      "text": "I heard you three arrows ago. The button passed its stress test.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-archer-repeat-1",
+      "faction": "goblins",
+      "role": "archer",
+      "action": "repeat",
+      "text": "Repeated clicking does not improve accuracy. The button passed its stress test.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-specialist-select-0",
+      "faction": "goblins",
+      "role": "specialist",
+      "action": "select",
+      "text": "Expertise is expensive. Warranty void if victorious.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-specialist-select-1",
+      "faction": "goblins",
+      "role": "specialist",
+      "action": "select",
+      "text": "I brought the advanced argument. Innovation with optional insurance.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-specialist-move-0",
+      "faction": "goblins",
+      "role": "specialist",
+      "action": "move",
+      "text": "Expertise coming through. Testing the portable version.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-specialist-move-1",
+      "faction": "goblins",
+      "role": "specialist",
+      "action": "move",
+      "text": "My cape requires turning space. Testing the portable version.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-specialist-attack-0",
+      "faction": "goblins",
+      "role": "specialist",
+      "action": "attack",
+      "text": "Time for the expensive solution. An explosive peer review.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-specialist-attack-1",
+      "faction": "goblins",
+      "role": "specialist",
+      "action": "attack",
+      "text": "Special training, ordinary paperwork. An explosive peer review.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-specialist-work-0",
+      "faction": "goblins",
+      "role": "specialist",
+      "action": "work",
+      "text": "Consulting is mostly standing nearby. One more gear should fix it.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-specialist-work-1",
+      "faction": "goblins",
+      "role": "specialist",
+      "action": "work",
+      "text": "The specialist fee includes supervision. One more gear should fix it.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-specialist-repeat-0",
+      "faction": "goblins",
+      "role": "specialist",
+      "action": "repeat",
+      "text": "Special does not mean endlessly available. The button passed its stress test.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-specialist-repeat-1",
+      "faction": "goblins",
+      "role": "specialist",
+      "action": "repeat",
+      "text": "That consultation will be invoiced. The button passed its stress test.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-catapult-select-0",
+      "faction": "goblins",
+      "role": "catapult",
+      "action": "select",
+      "text": "Subtlety weighs several tons. Warranty void if victorious.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-catapult-select-1",
+      "faction": "goblins",
+      "role": "catapult",
+      "action": "select",
+      "text": "I specialize in urgent deliveries. Innovation with optional insurance.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-catapult-select-2",
+      "faction": "goblins",
+      "role": "catapult",
+      "action": "select",
+      "text": "Wheels checked. Brakes optional. Warranty void if victorious.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-catapult-move-0",
+      "faction": "goblins",
+      "role": "catapult",
+      "action": "move",
+      "text": "Please allow a wide turning circle. Testing the portable version.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-catapult-move-1",
+      "faction": "goblins",
+      "role": "catapult",
+      "action": "move",
+      "text": "The wheels are holding a committee. Testing the portable version.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-catapult-attack-0",
+      "faction": "goblins",
+      "role": "catapult",
+      "action": "attack",
+      "text": "One boulder, strongly expressed. An explosive peer review.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-catapult-attack-1",
+      "faction": "goblins",
+      "role": "catapult",
+      "action": "attack",
+      "text": "Your complaint is now airborne. An explosive peer review.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-catapult-work-0",
+      "faction": "goblins",
+      "role": "catapult",
+      "action": "work",
+      "text": "Waiting for load-bearing instructions. One more gear should fix it.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-catapult-work-1",
+      "faction": "goblins",
+      "role": "catapult",
+      "action": "work",
+      "text": "I lift morale and large rocks. One more gear should fix it.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-catapult-repeat-0",
+      "faction": "goblins",
+      "role": "catapult",
+      "action": "repeat",
+      "text": "The wheels heard the first click. The button passed its stress test.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-catapult-repeat-1",
+      "faction": "goblins",
+      "role": "catapult",
+      "action": "repeat",
+      "text": "We do not offer faster shipping. The button passed its stress test.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-transport-select-0",
+      "faction": "goblins",
+      "role": "transport",
+      "action": "select",
+      "text": "Passengers, mind the dramatic waves. Warranty void if victorious.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-transport-select-1",
+      "faction": "goblins",
+      "role": "transport",
+      "action": "select",
+      "text": "No refunds for wet boots. Innovation with optional insurance.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-transport-select-2",
+      "faction": "goblins",
+      "role": "transport",
+      "action": "select",
+      "text": "The manifest says mostly heroes. Warranty void if victorious.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-transport-move-0",
+      "faction": "goblins",
+      "role": "transport",
+      "action": "move",
+      "text": "Next stop: drier socks. Testing the portable version.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-transport-move-1",
+      "faction": "goblins",
+      "role": "transport",
+      "action": "move",
+      "text": "The tide approved this route. Testing the portable version.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-transport-attack-0",
+      "faction": "goblins",
+      "role": "transport",
+      "action": "attack",
+      "text": "I transport arguments, not win them. An explosive peer review.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-transport-attack-1",
+      "faction": "goblins",
+      "role": "transport",
+      "action": "attack",
+      "text": "Please use the armed boat. An explosive peer review.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-transport-work-0",
+      "faction": "goblins",
+      "role": "transport",
+      "action": "work",
+      "text": "Boarding passes, approximately. One more gear should fix it.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-transport-work-1",
+      "faction": "goblins",
+      "role": "transport",
+      "action": "work",
+      "text": "Cargo first, heroic speeches later. One more gear should fix it.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-transport-repeat-0",
+      "faction": "goblins",
+      "role": "transport",
+      "action": "repeat",
+      "text": "Please stop ringing the ships bell. The button passed its stress test.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-transport-repeat-1",
+      "faction": "goblins",
+      "role": "transport",
+      "action": "repeat",
+      "text": "Your reservation is already confirmed. The button passed its stress test.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-warship-select-0",
+      "faction": "goblins",
+      "role": "warship",
+      "action": "select",
+      "text": "The cannon handles customer service. Warranty void if victorious.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-warship-select-1",
+      "faction": "goblins",
+      "role": "warship",
+      "action": "select",
+      "text": "Hull intact. Confidence inflated. Innovation with optional insurance.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-warship-select-2",
+      "faction": "goblins",
+      "role": "warship",
+      "action": "select",
+      "text": "We take nautical disputes seriously. Warranty void if victorious.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-warship-move-0",
+      "faction": "goblins",
+      "role": "warship",
+      "action": "move",
+      "text": "All hands, mostly on deck. Testing the portable version.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-warship-move-1",
+      "faction": "goblins",
+      "role": "warship",
+      "action": "move",
+      "text": "Navigation by confident guessing. Testing the portable version.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-warship-attack-0",
+      "faction": "goblins",
+      "role": "warship",
+      "action": "attack",
+      "text": "A broadside of customer feedback. An explosive peer review.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-warship-attack-1",
+      "faction": "goblins",
+      "role": "warship",
+      "action": "attack",
+      "text": "The cannon has the final word. An explosive peer review.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-warship-work-0",
+      "faction": "goblins",
+      "role": "warship",
+      "action": "work",
+      "text": "Keeping the harbor bureaucrats afloat. One more gear should fix it.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-warship-work-1",
+      "faction": "goblins",
+      "role": "warship",
+      "action": "work",
+      "text": "Naval security, with dramatic hats. One more gear should fix it.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-warship-repeat-0",
+      "faction": "goblins",
+      "role": "warship",
+      "action": "repeat",
+      "text": "The captain has acknowledged the bell. The button passed its stress test.",
+      "recording": null,
+      "license": null
+    },
+    {
+      "id": "goblins-warship-repeat-1",
+      "faction": "goblins",
+      "role": "warship",
+      "action": "repeat",
+      "text": "That is enough nautical enthusiasm. The button passed its stress test.",
+      "recording": null,
+      "license": null
+    }
+  ]
+}
