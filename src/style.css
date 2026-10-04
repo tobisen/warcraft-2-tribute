@@ -217,18 +217,6 @@ html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#
  #home-brand h1{font-size:38px;}
  .home-crest,#home-brand .home-subtitle{display:none;}
 }
-/* RTS-153: keep long building information reachable at small logical sizes. */
-#selection-info{max-height:144px;overflow:auto;align-self:flex-start;}
-#selection-health-bar{max-width:100%;}
-@container(max-width:900px){
- #bottom-bar{gap:12px;padding:12px;grid-template-columns:64px auto 1fr;height:auto;align-items:stretch;}
- #selection-portrait{width:64px;height:64px;}
- #selection-info{grid-column:2;max-height:100px;}
- #action-panel{grid-column:3;max-height:150px;}
- #action-panel #gameplay-controls{grid-template-columns:repeat(3,minmax(0,1fr));}
- #action-panel [data-action-group] h3{display:none;}
-}
-
 /* RTS-154: original typographic working-title identity, iron tones and timber gold. */
 #home-brand h1{font-weight:700;font-variant:small-caps;letter-spacing:.025em;color:#e1e7df;text-shadow:0 3px 0 #13221f,0 5px 14px #000;}
 #home-brand .brand-amp{color:#d6ae62;font-weight:400;font-style:italic;}
@@ -236,3 +224,33 @@ html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#
 #home-brand .home-crest{color:#dfe5df;border-color:#8d9b91;background:linear-gradient(135deg,#314039,#152722);font-size:30px;letter-spacing:.04em;}
 #home-brand .home-crest span{color:#d6ae62;font-size:22px;padding:0 3px;}
 @container(max-width:900px){#home-brand .tribute-title{margin:0 0 14px;font-size:11px;}}
+
+/* UI-BUGFIX-BOTTOM-BAR: one explicit row, sized for the 800px logical workspace. */
+#app:not([data-phase='menu']):not([data-phase='ended']){grid-template-rows:48px auto minmax(0,1fr) 160px;overflow:visible;}
+#bottom-bar{grid-template-columns:minmax(0,1.4fr) 88px minmax(148px,1fr) minmax(120px,.8fr) 134px;grid-template-rows:1fr;gap:8px;height:160px;padding:8px;align-items:start;}
+#bottom-bar>*{min-width:0;grid-row:1;}
+#selection-info{grid-column:1;display:block;max-height:none;overflow:visible;align-self:start;font-size:11px;}
+#selection-portrait{float:left;width:48px;height:48px;margin:0 8px 4px 0;}
+#selection-info h2{font-size:16px;line-height:1.2;margin:0 0 4px;overflow-wrap:anywhere;}
+#selection-info p{font-size:11px;line-height:1.25;margin:4px 0;overflow-wrap:anywhere;}
+#selection-health-bar{width:100%;height:6px;}
+#action-panel,#action-panel #gameplay-controls{display:contents;}
+#action-panel #action-hint{display:none;}
+#action-panel [data-action-group='Orders']{grid-column:2;grid-row:1;}
+#context-actions{grid-column:3;grid-row:1;min-width:0;display:grid;gap:6px;}
+#action-panel [data-action-group]{display:grid;grid-template-columns:repeat(3,44px);gap:4px;min-width:0;}
+#action-panel [data-action-group='Orders']{grid-template-columns:repeat(2,42px);}
+#action-panel .control{display:block;min-width:0;}
+#action-panel .action-reason{display:none;}
+#action-panel [data-action-group] button{position:relative;display:flex;justify-content:center;align-items:center;width:100%;height:40px;min-height:40px;padding:2px;font-size:0;}
+#action-panel button[data-icon]::before{display:block;}
+#action-panel button::after{content:attr(data-hotkey);position:absolute;right:2px;bottom:1px;font:9px system-ui;color:#ffe8a3;background:#172422;}
+#production-queue{grid-column:4;grid-row:1;display:grid;grid-template-columns:minmax(0,1fr);gap:4px;max-height:none;overflow:visible;margin:0;font:11px system-ui;}
+#production-queue button{height:42px;min-height:42px;padding:3px;font:10px system-ui;}
+#production-queue button>span{flex:1;}
+#minimap-overlay{grid-column:5;grid-row:1;align-self:start;justify-self:start;width:134px;margin:0;box-shadow:none;border-width:2px;}
+#minimap-overlay #minimap{width:130px;height:100px;}
+#selection-icons{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:2px;max-height:none;overflow:visible;clear:both;}
+#selection-icons canvas{width:100%;height:auto;min-width:0;}
+
+#action-panel button[aria-pressed='true']{background:#31543b;border-color:#f4d87a;box-shadow:inset 0 0 0 2px #936d2e;opacity:1;}

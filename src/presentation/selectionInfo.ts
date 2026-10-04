@@ -48,8 +48,9 @@ export function selectionInfo(m:MatchState,building:BuildingSelection,resourceId
  return {name,detail:team==='enemy'?'Visible enemy building · No orders or private production data':remaining>0?`Construction ${remaining.toFixed(1)}s remaining`:description,hp,maxHP,stats,portrait:kind==='outpost'?null:{atlas:'buildings',frame:buildingFrame(kind,team,remaining,5,f.id,hp)}};
 }
 export function renderSelectionInfo(info:SelectionInfo):void {
- document.getElementById('selection-name')!.textContent=info.name;document.getElementById('selection-detail')!.textContent=info.detail;
+ document.getElementById('selection-name')!.textContent=info.name;const detail=document.getElementById('selection-detail')!;detail.title=info.detail;detail.textContent=info.detail.length>65?'Details: hover to inspect':info.detail;
  document.getElementById('selection-health')!.textContent=info.hp===null?'':`HP ${Math.ceil(info.hp)} / ${info.maxHP}`;
  const health=document.getElementById('selection-health-bar') as HTMLProgressElement;health.hidden=info.hp===null;health.max=info.maxHP??1;health.value=info.hp??0;
- document.getElementById('selection-stats')!.textContent=info.stats.length?info.stats.join(' · '):'';
+ const stats=document.getElementById('selection-stats')!;stats.title=info.stats.join(' · ');stats.textContent=info.stats.filter(s=>s.startsWith('Cargo')||s.startsWith('Supply')||s.startsWith('Production:')||s.startsWith('Research:')||s.startsWith('Enemy')||s.startsWith('Workers:')).join(' · ');
+ document.getElementById('selection-info')!.title=[info.name,info.detail,...info.stats].join(' · ');
 }

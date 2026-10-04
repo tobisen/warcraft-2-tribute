@@ -2,6 +2,31 @@
 
 ## Current Focus
 
+**UI-BUGFIX-BOTTOM-BAR – Horisontell bottom bar** — **Done** (2026-10-04).
+Separat beställd UI-bugfix; befintliga RTS-ID:n/statusar bevaras. Uppdraget
+avslutas efter denna fix; ingen senare roadmap-task startas.
+
+- Grundorsak verifierad i ursprunglig browser-DOM: actiongrupper var vertikala
+  flexkolumner; workerpanelen hade scrollHeight323/clientHeight150 vid800×600.
+  Kön låg på separat rad och automatiska selectionbredden pressade actions.
+- En explicit CSS Grid-rad: selection | orders | build/train/research | kö,
+  med en femte reserverad minimapkolumn.160px hög, min-width:0, kompakta
+  ikonknappar i flerkolumnsgrid. Långa beskrivningar/kostnader/spärrar i tooltips;
+  inga interna scrollområden eller klippning som layoutlösning.
+- Verifierat i Chromium:800×600,1280×720,1920×1080 Native samt800×600 Fit i
+  1920×1080-fönster. Worker med alla fyra byggval och tillräcklig bank, bas med
+  tillgänglig research och full3-jobbskö, samt aktiv research/full kö:12 fall.
+  Screenshots visuellt granskade; panel-/knappmått visar ingen scroll/överlapp.
+- Browserregression i [scripts/check-bottom-bar.mjs](scripts/check-bottom-bar.mjs):
+  fysisk bygg-/research-/köinput, Escape, bibehållen selection, disabled,
+  hover/selected och tooltips. Extern Playwright/Chromium via miljövariabler;
+  W2T_UI_URL anger dev-server, W2T_SCREENSHOTS anger artefaktkatalog.
+- Ny verifiering: riktade UI/selection-tests36/6 och unit428/75 PASS;
+  build inklusive strict typecheck PASS; git diff --check PASS.
+  Inga campaign-/matchsimuleringar. Screenshots/mätningar lokalt i
+  /tmp/w2t-bottom-bar; ingen ny CI-/Pages-verifiering hävdas.
+
+
 **RTS-155 – Ny kvalitetsnivå för sprites** — **Done**. Första referenspasset är klart och dokumenterat; se nedan för detaljer om godkända Humans/building-referenser.
 
 **Aktuell etapp:** RTS-151–155 färdiga enligt nytt uppdrag2026-10-04. Roadmap151–180 återställd; senare tasks Todo och inte implementerade. Nästa task är RTS-156, men inget fortsatt implementationsmandat efter155. Se [HANDOFF.md](HANDOFF.md) och [QUALITY_REVIEW.md](QUALITY_REVIEW.md). Tidigare stopp/fortsättningsmandat nedan är historik.

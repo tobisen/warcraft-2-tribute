@@ -2738,3 +2738,50 @@ Verifiering:
   testad viewports (800×600, 1280×720, 1920×1080), hover/disabled-states fungerar.
 
 BACKLOG.md och denna logg uppdaterad. Ingen ny RTS-ID eller gameplay-ändringar.
+
+
+## 2026-10-04 – UI-BUGFIX-BOTTOM-BAR
+
+- Separat UI-bugfix enligt användarens mandat, utan ändrade RTS-ID:n eller
+  gameplayregler. Branch main, befintlig origin kontrollerad. Otrackade docs/
+  fanns före arbetet och lämnas orörda/utanför commit.
+- Undersökte HUD-bindningen och faktisk browser-DOM. Ursprungsworker vid800×600:
+  Build var display:flex/flex-direction:column med289px höjd; actionpanelen
+  scrollHeight323/clientHeight150. Kön var ett barn på egen rad i fieldset;
+  selection hade auto-kolumn och långa beskrivningar. Ursprungsbild:
+  /tmp/w2t-bottom-bar/before-worker.png.
+- Reparentade befintliga kontroller med samma handlers: selection/portrait,
+  Orders, gemensam Build/Train/Research-yta, kö och minimap får explicita
+  kolumner på samma rad. Ingen flex-wrap på huvudraden. CSS Grid/min-width:0,
+  160px totalhöjd,32px befintliga atlasikoner i40px knappar. Disabled,
+  hover/fokus och markerat placeringsläge behålls, även när knappen spärras.
+  Köikoner/progress/status ryms; namn/kostnad/hotkey/spärr och längre
+  selectiondata nås via tooltips/tillgängliga knappetiketter.
+- Ny browserregression: scripts/check-bottom-bar.mjs, körd med extern
+  W2T_PLAYWRIGHT_MODULE/W2T_BROWSER_EXECUTABLE.12 layoutfall PASS:
+  tre Native-upplösningar800×600/1280×720/1920×1080 samt800×600 Fit på1920×1080,
+  vardera worker med alla fyra finansierade byggval, bas med research/full kö,
+  och aktiv research/full kö. Screenshots och metrics.json i
+  /tmp/w2t-bottom-bar. Visuell granskning av båda selectiontyperna vid samtliga
+  tre Native-storlekar samt Fit; inga klippta/överlappande kontroller.
+  scrollWidth≤clientWidth och scrollHeight≤clientHeight (+1px avrundning),
+  samma y-position och disjunkta panelrektanglar verifierade. Vid800×600
+  får spelvärlden392px höjd efter48px top bar och160px bottom bar.
+- Browserinput PASS: build farm via fysisk knapp, selected-state, Escape,
+  bevarad worker-selection, full kö via tre produktionsklick, researchstart,
+  disabled forskningsalternativ och fysisk köavbrytning. Tooltipkostnad/hotkey
+  och hover kontrollerade; inga pageerrors. Hoverkontrollen justerades till att
+  invänta100ms CSS-transition. En tillfällig originalmodul-interception fungerade
+  inte; grundorsaken verifierades därefter med separat Vite-server som läste HEAD.
+- Checks på slutlig kod: npm test -- src/gameplay/buildingSelection.test.ts
+  src/presentation/actionPanel.test.ts src/presentation/selectionCollection.test.ts
+  src/presentation/selectionInfo.test.ts src/presentation/hud.test.ts
+  src/presentation/hotkeys.test.ts:36 tests/6 filer PASS. npm run test:unit:
+  428 tests/75 filer PASS. npm run build (inkluderar strict typecheck):PASS,
+  endast befintlig bundle-storleksvarning. git diff --check:PASS.
+  Slutchecks upprepades efter sista CSS-ändringen för kompakta knappar/selected
+  och bibehållen sidopanel för missions-/commandfeedback.
+- Diff granskad mot scope, DOM/inputägarskap och acceptance criteria; inga
+  blockerande fynd. Dokumentlänkar kontrollerade. Inga campaign-simuleringar
+  eller ny CI-/Pages-kontroll. Historiska releasebelägg återanvänds inte som
+  verifiering av denna fix. Commit/push enligt uppdraget; stanna därefter.

@@ -54,15 +54,18 @@ export function actionPanel(m:MatchState,building:BuildingSelection,playing:bool
 }
 /** Reparent existing controls once; callbacks and shutdown ownership remain in BootScene. */
 export function bindActionPanel():void{
- const fieldset=document.getElementById('gameplay-controls')!;document.getElementById('action-panel')!.append(fieldset);
- for(const group of actionGroups){const section=document.createElement('section'),heading=document.createElement('h3');section.dataset.actionGroup=group;section.setAttribute('aria-label',group);heading.textContent=group;section.append(heading);fieldset.append(section);}
+ const fieldset=document.getElementById('gameplay-controls')!,bar=document.getElementById('bottom-bar')!;document.getElementById('action-panel')!.append(fieldset);
+ const actions=document.createElement('section');actions.id='context-actions';actions.setAttribute('aria-label','Build, train and research');fieldset.append(actions);
+ document.getElementById('selection-info')!.prepend(document.getElementById('selection-portrait')!);
+ bar.append(document.getElementById('minimap-overlay')!);
+ for(const group of actionGroups){const section=document.createElement('section'),heading=document.createElement('h3');section.dataset.actionGroup=group;section.setAttribute('aria-label',group);heading.textContent=group;section.append(heading);(group==='Orders'?fieldset:actions).append(section);}
  for(const id of actionIds){const button=document.getElementById(id)!;let wrapper=button.parentElement!;if(!wrapper.classList.contains('control')){wrapper=document.createElement('div');wrapper.className='control';button.before(wrapper);wrapper.append(button);}const reason=document.createElement('span');reason.id=`${id}-reason`;reason.className='action-reason';button.setAttribute('aria-describedby',reason.id);wrapper.append(reason);fieldset.querySelector(`[data-action-group="${actionGroup(id)}"]`)!.append(wrapper);}
- fieldset.append(document.getElementById('production-queue')!);
+ bar.append(document.getElementById('production-queue')!);
 }
 /** Called after authoritative gameplay disabled-state sync. */
 export function renderActionPanel(model:ReturnType<typeof actionPanel>):void{
  for(const id of actionIds){const button=document.getElementById(id) as HTMLButtonElement,action=model[id],wrapper=button.parentElement!,reason=document.getElementById(`${id}-reason`)!;wrapper.hidden=!action.visible;button.disabled=button.disabled||!action.visible||!!action.reason;reason.textContent=button.disabled?(action.reason||'Action unavailable'):'';
-  const hotkey=hotkeys.find(h=>h.button===id)?.key;button.title=actionTooltip(id,{...action,reason:reason.textContent},button.textContent??'');if(hotkey&&!button.textContent!.includes(`[${hotkey}]`))button.textContent+=` [${hotkey}]`;
+  const hotkey=hotkeys.find(h=>h.button===id)?.key;button.title=actionTooltip(id,{...action,reason:reason.textContent},button.textContent??'');button.setAttribute('aria-label',button.title);if(hotkey){button.dataset.hotkey=hotkey;if(!button.textContent!.includes(`[${hotkey}]`))button.textContent+=` [${hotkey}]`;}
  }
  for(const group of actionGroups)(document.querySelector(`[data-action-group="${group}"]`) as HTMLElement).hidden=!actionIds.some(id=>actionGroup(id)===group&&model[id].visible);
  const productionSelected=actionIds.some(id=>id.startsWith('train-')&&model[id].visible);document.getElementById('production-queue')!.hidden=!productionSelected;
