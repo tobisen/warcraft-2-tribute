@@ -33,3 +33,5 @@ describe('HUD feedback', () => {
   });
 
 });
+
+it.each(['mission-escort','mission-rescue','mission-capture'] as const)('names %s instead of showing non-existent incoming waves',scenario=>{const label=matchLabels(createMatch(scenario)).wave;expect(label).toContain('mission objective');expect(label).not.toMatch(/Wave|next in/);});

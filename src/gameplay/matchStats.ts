@@ -1,3 +1,4 @@
+import {operationFor} from '../config/operations';
 import {enemyStartingBudget} from '../config/enemyNaval';
 import {passengerUnits} from './navy';
 import {mapResourceTotals} from '../config/maps';
@@ -25,9 +26,10 @@ export function matchStats(m:MatchState):MatchStats {
   const gathered=bank?.extracted?.[type]??0,carried=[...m.combat.enemies,...(m.enemyNaval?.passengers??[])].reduce((n,e)=>n+(e.work&&(e.work.cargoType??'wood')===type?e.work.cargo:0),0),lost=bank?.lostCargo?.[type]??0;
   return {gathered,delivered:nonnegative(gathered-carried-lost),spent:bank?.spent?.[type]??(bank?nonnegative(budget[type]-bank[type]):0)};
  };
- const playerAdded=nonnegative(Math.max(m.production.nextUnitNumber,m.soldierProduction.nextUnitNumber)-4+(m.navy?m.navy.production.nextUnitNumber-1:0)),playerLost=nonnegative(3+playerAdded-[...m.gathering.units,...passengerUnits(m.navy)].filter(u=>(u.hp??1)>0).length-(m.navy?.ships.filter(s=>s.hp>0).length??0)-(m.statLedger?.player.removed??0));
+ const operation=operationFor(m.scenario),initialPlayers=operation?.kind==='escort'?4:3,initialGuards=operation?.guards.length??0;
+ const playerAdded=nonnegative(Math.max(m.production.nextUnitNumber,m.soldierProduction.nextUnitNumber)-(initialPlayers+1)+(m.navy?m.navy.production.nextUnitNumber-1:0)),playerLost=nonnegative(initialPlayers+playerAdded-[...m.gathering.units,...passengerUnits(m.navy)].filter(u=>(u.hp??1)>0).length-(m.navy?.ships.filter(s=>s.hp>0).length??0)-(m.statLedger?.player.removed??0));
  const initialEnemyWorkers=bank?.extracted?enemyEconomyConfig.workerCount:0;
- const enemyAdded=(m.enemyNaval?.production.nextUnitNumber??1)-1+(m.waves.nextEnemyNumber-1)+(bank?.production.nextUnitNumber??1)-1+(m.enemyRecovery?m.enemyRecovery.production.nextUnitNumber-enemyEconomyConfig.workerCount-1:0);
- const enemyLost=nonnegative(initialEnemyWorkers+enemyAdded-m.combat.enemies.filter(e=>!e.footprint&&e.hp>0).length-(m.enemyNaval?.passengers.length??0)-(m.statLedger?.enemy.removed??0));
+ const enemyAdded=(m.enemyNaval?.production.nextUnitNumber??1)-1+(m.waves.nextEnemyNumber-1-initialGuards)+(bank?.production.nextUnitNumber??1)-1+(m.enemyRecovery?m.enemyRecovery.production.nextUnitNumber-enemyEconomyConfig.workerCount-1:0);
+ const enemyLost=nonnegative(initialGuards+initialEnemyWorkers+enemyAdded-m.combat.enemies.filter(e=>!e.footprint&&e.hp>0).length-(m.enemyNaval?.passengers.length??0)-(m.statLedger?.enemy.removed??0));
  return {seconds:m.waves.elapsedSeconds,player:{wood:playerResource('wood'),gold:playerResource('gold'),added:playerAdded,lost:playerLost,killed:enemyLost,built:m.statLedger?.player.built??0,destroyed:m.statLedger?.player.destroyed??0,removed:m.statLedger?.player.removed??0},enemy:{wood:enemyResource('wood'),gold:enemyResource('gold'),added:nonnegative(enemyAdded),lost:enemyLost,killed:playerLost,built:m.statLedger?.enemy.built??0,destroyed:m.statLedger?.enemy.destroyed??0,removed:m.statLedger?.enemy.removed??0}};
 }

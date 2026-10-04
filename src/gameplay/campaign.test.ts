@@ -6,7 +6,7 @@ import {encodeSave,decodeSave} from './save';
 import {campaignDebrief} from '../presentation/campaign';
 const view={camera:{x:0,y:0},building:null};
 const pair={player:'elves',enemy:'dwarves'} as const;
-it('the five existing missions unlock in order only after actual campaign victory and remain replayable',()=>{
+it('the eight missions unlock in order only after actual campaign victory and remain replayable',()=>{
  let progress=freshCampaignProgress();
  for(let i=0;i<campaignMissions.length;i++){
   const mission=campaignMissions[i];

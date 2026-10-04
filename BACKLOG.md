@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-145 – Campaign, andra halvan** — **Todo**.
+**RTS-146 – Campaign-verifiering** — **Todo**.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -3793,7 +3793,7 @@ Successiv introduktion av systemen och rimlig svårighetskurva.
 
 ## RTS-145 – Campaign, andra halvan
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Färdigställ uppdrag 5–8 med större operationer,
 
@@ -3812,7 +3812,9 @@ fler fraktioner och land-/sjöstrid.
 
 **Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
 
-**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+**Detaljplan:**145A återanvänd The Crossing, bind Goblins→Humans och verifiera verklig betald harbor/transport/landstigning/base-victory.145B Ridge Convoy påHighlands: namngiven initial Orc-courier, två ändliga Dwarf-guards, courier levande inom64px från(1504,544) och båda guards döda; courier-död eller basdöd ger defeat.145C Valley Rescue påFrontier: två namngivna Orc-guards döda och levande egen Elven combat-enhet inom64px från(1088,640).145D Coastal Banner påCoast: betald Human landstigning, zon(1600,384)/64px med egen levande landcombat och ingen fiendelandcombat oavbrutet30s; frånvaro/contest nollställer.145E åtta briefing/mål/debrief/progress i ordning, synliga målmarkörer/status utan fogläcka, restart och strikt Save/load/migration med målstatus. Alla initialcourier/guards explicitconfig och korrekta initialstats/supply, inga gratis producerade units/rewards. Befintliga rörelse/strid/ekonomi/sjö/presentation återanvänds. Relevanta mål-/failure-/Save-/tidsstegs-/paid-regressionstester, fullsvit/typecheck/build/native/diff/docs krävs före Done; fullkedja och fördjupad blockeringstest146.
+
+**Slutverifiering:** fullsvit1111tester/141filer PASS488.46s; strict typecheck/build/diff/doclänkar PASS. Native sammanhängande betald1–8-kedja utan admissionfixture PASS i1280×720 och1920×1080, med progression, verkliga mål/landstigning, Save/load/replay och utan browsererrors. Riktade goal/Save/paid/regressionstester PASS. Initialcourier/guards separata från produktion; inga rewards eller nya assets. Bundlevarning kvar och ljudlyssning uppskjuten. Fördjupad målstatus/failure/blockeringstest följer146.
 
 ## RTS-146 – Campaign-verifiering
 

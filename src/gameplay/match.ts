@@ -1,3 +1,5 @@
+import {initializeOperation,operationOutcome,advanceCapture,controlsCapture,type CaptureState} from './operations';
+import {operationFor} from '../config/operations';
 import {prepareEnemyAbilities,advanceEnemyAbilities} from './enemyAbilities';
 import {enemyUnitStats} from './enemyUnits';
 import {enemySize} from './enemyBody';
@@ -50,6 +52,7 @@ import { updateWaves, type WaveState } from './waves';
 
 export type MatchOutcome = 'playing' | 'defeat' | 'victory';
 export interface MatchState {
+  capture?:CaptureState;
   campaignMission?:import('../config/campaign').CampaignMissionId;
   statLedger?:StatLedger;
   speed?:GameSpeed;
@@ -112,16 +115,18 @@ export function createMatch(scenario:MatchScenario='survival',difficulty:Difficu
   if(scenario==='tutorial')state.tutorial=createTutorial();
   state.map.obstacles.push(...placementObstacles(state.gathering));
   if(scenarioConfig[scenario].enemyBase&&scenario!=='siege-test'){addEnemyWorkers(state);state.enemyConstruction=createEnemyConstruction();state.enemyPolicy=createEnemyPolicy();state.enemyRecovery=createEnemyRecovery();state.enemyKnowledge=createEnemyKnowledge();}
+  initializeOperation(state);
   state.fog=matchFog(state);
   return state;
 }
 
 function resolveOutcome(state: MatchState): MatchState {
   const definition=scenarioConfig[state.scenario??'survival'];
-  const victory=definition.victory==='tutorial'?state.tutorial?.step===6:definition.victory==='enemy-base'? !state.combat.enemies.some(e=>e.kind==='base'&&e.hp>0)
+  const operation=operationOutcome(state);
+  const victory=definition.victory==='operation'?operation==='victory':definition.victory==='tutorial'?state.tutorial?.step===6:definition.victory==='enemy-base'? !state.combat.enemies.some(e=>e.kind==='base'&&e.hp>0)
     :definition.victory==='timer'?state.waves.elapsedSeconds+1e-10>=definition.holdSeconds!
     :state.waves.nextWave===scenarioWaves(state.scenario??'survival',state.difficulty??'normal').length&&state.combat.enemies.every(e=>e.kind==='base');
-  const outcome:MatchOutcome=state.combat.baseHP<=0?'defeat':victory?'victory':'playing';
+  const outcome:MatchOutcome=state.combat.baseHP<=0||operation==='defeat'?'defeat':victory?'victory':'playing';
   return outcome === 'playing' ? state
     : { ...state, outcome, placement: { ...state.placement, active: false } };
 }
@@ -178,13 +183,13 @@ function advance(state: MatchState, delta: number): MatchState {
   updated=updateEnemyExploration(updated);
   const separated=separateBodies(updated.map,[...updated.gathering.units.map(u=>({id:`player:${u.id}`,position:u.position,half:(u.kind==='worker'?workerStats(state.gathering.faction):combatUnitStats(u,state.gathering.faction)).size/2})),...updated.combat.enemies.filter(e=>e.kind!=='ship'&&!e.footprint).map(e=>({id:`enemy:${e.id}`,position:e.position,half:enemySize(e)/2}))],delta);
   if(separated.size){updated.gathering={...updated.gathering,units:updated.gathering.units.map(u=>{const position=separated.get(`player:${u.id}`);return position?{...u,position,navigation:correctedNavigation(updated.map,position,(u.kind==='worker'?workerStats(state.gathering.faction):combatUnitStats(u,state.gathering.faction)).size/2,u.navigation)}:u;})};updated.combat={...updated.combat,enemies:updated.combat.enemies.map(e=>{const position=separated.get(`enemy:${e.id}`);return position?{...e,position,navigation:correctedNavigation(updated.map,position,enemySize(e)/2,e.navigation)}:e;})};}
-  updated=advanceEnemyAbilities(updated,delta);updated.gathering=advanceAbilities(updated.gathering,delta);updated.fog=matchFog(updated);const taught=updateTutorial(updated);if(taught!==updated){updated=taught;updated.fog=matchFog(updated);}return resolveOutcome(updated);
+  updated=advanceEnemyAbilities(updated,delta);updated.gathering=advanceAbilities(updated.gathering,delta);updated.fog=matchFog(updated);const taught=updateTutorial(updated);if(taught!==updated){updated=taught;updated.fog=matchFog(updated);}return resolveOutcome(advanceCapture(state,updated,delta));
 }
 
 /** Split only at wave boundaries, retaining delta-based gameplay rather than a fixed timestep. */
 export function updateMatch(state: MatchState, deltaSeconds: number): MatchState {
   if (state.paused||state.outcome !== 'playing') return state;
-  const cleaned=updateTutorial(cleanDestroyed(state));
+  const cleaned=advanceCapture(state,updateTutorial(cleanDestroyed(state)),0);
   let current = resolveOutcome(cleaned);
   if(cleaned.fog&&(deltaSeconds<=0||current.outcome!=='playing'))current={...current,fog:matchFog(cleaned)};
   let remaining = Math.max(0, deltaSeconds);
@@ -197,7 +202,8 @@ export function updateMatch(state: MatchState, deltaSeconds: number): MatchState
       continue;
     }
     const definition=scenarioConfig[current.scenario??'survival'];
-    const untilObjective=definition.victory==='timer'?Math.max(0,definition.holdSeconds!-current.waves.elapsedSeconds):Infinity;
+    const capture=operationFor(current.scenario);
+    const untilObjective=definition.victory==='timer'?Math.max(0,definition.holdSeconds!-current.waves.elapsedSeconds):capture?.kind==='capture'&&controlsCapture(current)?Math.max(0,capture.holdSeconds-(current.capture?.holdSeconds??0)):Infinity;
     const untilService=(Math.floor((current.waves.elapsedSeconds+1e-9)/trafficConfig.resourceWindowSeconds)+1)*trafficConfig.resourceWindowSeconds-current.waves.elapsedSeconds;
     current=prepareEnemyAbilities(current);
     const untilAbility=Math.min(Infinity,...current.combat.enemies.flatMap(e=>[e.ability?.activeSeconds??0,e.ability?.cooldownSeconds??0].filter(t=>t>1e-9)),...current.gathering.units.flatMap(u=>u.kind==='soldier'&&(u.ability?.activeSeconds??0)>1e-9?[u.ability!.activeSeconds]:[]));

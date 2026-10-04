@@ -1246,3 +1246,11 @@ De nya målen i145 är avgränsade: levande courier till zon plus två döda gua
 ## RTS-144 – Fasta profiler gäller nya campaign-starter
 
 143:s berättelsepar införs för första fyra operationerna, med befintliga mål, kartor och förråd. Preset-visning ändrar inte Skirmish-preferenser. En äldre campaign-Save behåller faktisk identitet även vid restart; nya starter följer berättelseprofilen. Ingen Save-versionhöjning behövs för preset-/briefingdata utan nytt matchstate. Inga nya obligatoriska research-/rangedmål eller ändrad scripted-wave-roster i144.
+
+## RTS-145 – Konkreta escort/rescue/capture-regler
+
+De tre nya målen införs vid första behov i uppdrag6–8, med configens stabila ID:n och143:s zoner/radie/förråd. Escort använder initialcourier `unit-4`, vanlig egen worker; ingen extra neutral-ownership-modell. Initialguards `enemy-1`/`enemy-2` använder respektive verklig soldierprofil och ankrar attack-move vid authored spawn. Båda ska dö före escort/rescue-vinst. Ingen gratis produktion/reward eller kontinuerlig enemy-ekonomi i dessa tre missions.
+
+Capture sparar endast kontinuerlig holdtid. Egen levande landcombat och inga enemy landcombat inom inklusive64px-kanten krävs, före/efter steget; inträde börjar räkna nästa steg och avbrott nollställer.30s är gameplaytid, paus/game over fryser den. Workers/ships/cargo räknas inte. Basdöd har företräde; courier-död ger ytterligare escort-defeat. Starting-statistik/supply omfattar initialcourier/guards separat från betald produktion.
+
+Save32 migrerar äldre format stegvis utan nya entities eller omskrivna äldre fraktionspar. Nya operations/capture kan inte maskeras som config31; strikt state/config/timeline-validering. Målzon/camp/banner använder uttryckligt enkel namngiven markör med befintlig pixelgrafik; ingen ny flagg-/camp-animation behövs i denna slice.

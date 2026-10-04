@@ -1,3 +1,5 @@
+import {operationFor} from '../config/operations';
+import {controlsCapture} from './operations';
 import {campaignMission} from '../config/campaign';
 import {enemyMaximumHP} from './enemyUnits';
 import {enemySize} from './enemyBody';
@@ -124,9 +126,10 @@ export function decodeSave(json:string):LoadResult {
    for(const p of (((old.combat as Data).projectiles as Data[]|undefined)??[]))ensure(p.owner===undefined,'legacy projectile owner');
    doc.configVersion='tribute-config-30';
   }
-  if(doc.schemaVersion===2&&doc.configVersion==='tribute-config-30'){ensure(!Object.hasOwn(doc.state as Data,'campaignMission'),'legacy campaign run');doc.configVersion=saveConfig.configVersion;}
+  if(doc.schemaVersion===2&&doc.configVersion==='tribute-config-30'){ensure(!Object.hasOwn(doc.state as Data,'campaignMission'),'legacy campaign run');doc.configVersion='tribute-config-31';}
+  if(doc.schemaVersion===2&&doc.configVersion==='tribute-config-31'){const old=doc.state as Data;ensure(!Object.hasOwn(old,'capture')&&!operationFor(old.scenario),'legacy operation');doc.configVersion=saveConfig.configVersion;}
   if(doc.schemaVersion!==saveConfig.schemaVersion||doc.configVersion!==saveConfig.configVersion)return {ok:false,error:'Unsupported save version',code:'version'};ensure(isMapId(doc.map),'map');const mapId=doc.map,definition=maps[mapId],configuredMap=createMap(mapId),resources=mapResources(mapId),totals=mapResourceTotals(mapId);checkTree(doc,configuredMap);
-  const s=r(doc.state,'match',['campaignMission','statLedger','tutorial','speed','enemyNaval','navy','factions','map','gathering','combat','placement','production','soldierProduction','waves','outcome','paused','research','scenario','difficulty','enemyProduction','enemyAI','enemyConstruction','enemyPolicy','enemyRecovery','enemyKnowledge','fog','controlGroups']);
+  const s=r(doc.state,'match',['capture','campaignMission','statLedger','tutorial','speed','enemyNaval','navy','factions','map','gathering','combat','placement','production','soldierProduction','waves','outcome','paused','research','scenario','difficulty','enemyProduction','enemyAI','enemyConstruction','enemyPolicy','enemyRecovery','enemyKnowledge','fog','controlGroups']);
   optional(s.campaignMission,v=>{const mission=campaignMission(v);ensure(!!mission&&mission.scenario===s.scenario&&scenarioConfig[mission.scenario].map===doc.map,'campaign mission identity');});
   ensure(isGameSpeed(s.speed),'game speed');
   const factionData=r(s.factions,'factions',['player','enemy']);ensure(isFactionId(factionData.player)&&isFactionId(factionData.enemy),'faction identity');const playerFaction=factions[factionData.player];
@@ -191,6 +194,13 @@ num(e.hp,'enemy HP',Number.MIN_VALUE,enemyMaximumHP(e as unknown as Enemy,factio
    if(Number(t.step)>=3)ensure(tutorialDeliveredWood(s as unknown as MatchState)+1e-6>=tutorialConfig.deliveredWood,'tutorial delivered');
    if(Number(t.step)>=4)ensure(p.barracks!==null&&Number((p.construction as Data).remainingSeconds)===0,'tutorial barracks');
   }else ensure(s.tutorial===undefined,'unexpected tutorial');
+  const operation=operationFor(scenario);
+  if(operation){
+   ensure(s.enemyProduction===undefined&&s.enemyAI===undefined&&s.enemyConstruction===undefined&&s.enemyPolicy===undefined&&s.enemyRecovery===undefined&&s.enemyKnowledge===undefined&&s.enemyNaval===undefined&&waves.nextWave===0&&waves.nextEnemyNumber===operation.guards.length+1,'finite operation threats');
+   for(const value of enemies){const e=value as Data,guard=operation.guards.find(g=>g.id===e.id);ensure(!!guard&&e.kind==='unit'&&e.role==='soldier'&&e.work===undefined&&e.order!==undefined&&(e.order as Data).kind==='attack-move'&&samePosition((e.order as Data).destination as Position,guard.position),'operation guard identity');}
+   if(operation.kind==='escort'){const courier=units.find(v=>(v as Data).id===operation.courier.id) as Data|undefined;ensure(!courier||courier.kind==='worker','courier identity');ensure(Number(prod.nextUnitNumber)>=5&&Number(army.nextUnitNumber)>=5,'initial courier counter');}
+  }
+  if(operation?.kind==='capture'){const capture=r(s.capture,'capture',['holdSeconds']);num(capture.holdSeconds,'capture time',0,operation.holdSeconds);ensure(Number(capture.holdSeconds)===0||controlsCapture(s as unknown as MatchState),'uncontested capture');ensure(Number(capture.holdSeconds)<=Number(waves.elapsedSeconds)+1e-9,'capture timeline');}else ensure(s.capture===undefined,'unexpected capture');
   if(s.statLedger!==undefined){const ledger=r(s.statLedger,'stat ledger',['player','enemy','playerBaseLost','legacy']);for(const team of ['player','enemy']){const counts=r(ledger[team],'team ledger',['built','destroyed','removed']);for(const key of ['built','destroyed','removed'])integer(counts[key],'stat count',0,1000000);}ensure(typeof ledger.playerBaseLost==='boolean'&&typeof ledger.legacy==='boolean','stat ledger flags');}
   const view=r(doc.view,'view',['camera','building']),camera=position(view.camera,'camera');ensure(camera.x<configuredMap.width&&camera.y<configuredMap.height,'camera bounds');choice(view.building,'building selection',[null,'base','barracks','harbor']);
   for(const value of enemies)delete (value as Data).typeId;for(const value of units)delete (value as Data).typeId;for(const ship of ((s.navy as Data|undefined)?.ships as Data[]|undefined)??[])delete ship.typeId;

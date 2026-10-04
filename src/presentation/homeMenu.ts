@@ -7,7 +7,7 @@ import {bindActionPanel} from './actionPanel';
 import {text as uiText} from '../text';
 import type {SessionPhase} from '../gameplay/session';
 export type HomePage='home'|'campaign'|'skirmish'|'load'|'settings'|'changelog';
-export const homeScenarios={campaign:['tutorial','mission-waves','mission-base','mission-outpost','mission-sea'],skirmish:['skirmish','survival']} as const;
+export const homeScenarios={campaign:['tutorial','mission-waves','mission-base','mission-outpost','mission-sea','mission-escort','mission-rescue','mission-capture'],skirmish:['skirmish','survival']} as const;
 let current:HomePage='home',phase:SessionPhase='menu';
 export const currentHomePage=()=>current;
 const element=(id:string)=>document.getElementById(id)!;
