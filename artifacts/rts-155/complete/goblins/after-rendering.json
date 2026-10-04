@@ -1,0 +1,1782 @@
+[
+  {
+    "name": "roster-idle",
+    "width": 800,
+    "selection": "No selection",
+    "smoothing": true,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 320,
+          "y": 300
+        },
+        "frame": "goblins-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 4672,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 375,
+          "y": 300
+        },
+        "frame": "goblins-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 4992,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 430,
+          "y": 300
+        },
+        "frame": "goblins-archer-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 5184,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 485,
+          "y": 300
+        },
+        "frame": "goblins-specialist-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 5632,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 540,
+          "y": 300
+        },
+        "frame": "goblins-catapult-player-s-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 640,
+          "y": 5440,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "archer",
+    "width": 800,
+    "selection": "Slinger",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 320,
+          "y": 300
+        },
+        "frame": "goblins-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 4672,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 375,
+          "y": 300
+        },
+        "frame": "goblins-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 4992,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 430,
+          "y": 300
+        },
+        "frame": "goblins-archer-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 5184,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 485,
+          "y": 300
+        },
+        "frame": "goblins-specialist-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 5632,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 540,
+          "y": 300
+        },
+        "frame": "goblins-catapult-player-s-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 640,
+          "y": 5440,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "specialist",
+    "width": 800,
+    "selection": "Grenadier",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 320,
+          "y": 300
+        },
+        "frame": "goblins-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 4672,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 375,
+          "y": 300
+        },
+        "frame": "goblins-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 4992,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 430,
+          "y": 300
+        },
+        "frame": "goblins-archer-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 5184,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 485,
+          "y": 300
+        },
+        "frame": "goblins-specialist-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 5632,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 540,
+          "y": 300
+        },
+        "frame": "goblins-catapult-player-s-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 640,
+          "y": 5440,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "catapult",
+    "width": 800,
+    "selection": "Mortar",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 320,
+          "y": 300
+        },
+        "frame": "goblins-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 4672,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 375,
+          "y": 300
+        },
+        "frame": "goblins-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 4992,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 430,
+          "y": 300
+        },
+        "frame": "goblins-archer-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 5184,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 485,
+          "y": 300
+        },
+        "frame": "goblins-specialist-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 5632,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 540,
+          "y": 300
+        },
+        "frame": "goblins-catapult-player-s-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 640,
+          "y": 5440,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "movement",
+    "width": 800,
+    "selection": "5 units selected",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 350.52793894418323,
+          "y": 319.0799618401145
+        },
+        "frame": "goblins-worker-player-se-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1472,
+          "y": 4672,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 405.52793894418323,
+          "y": 319.0799618401145
+        },
+        "frame": "goblins-soldier-player-se-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1984,
+          "y": 4992,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 459.6799406401781,
+          "y": 318.54996290011127
+        },
+        "frame": "goblins-archer-player-se-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3008,
+          "y": 5184,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 513.8319423361729,
+          "y": 318.01996396010804
+        },
+        "frame": "goblins-specialist-player-se-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 960,
+          "y": 5632,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 556.1119677760967,
+          "y": 310.06997986006036
+        },
+        "frame": "goblins-catapult-player-se-walk-1",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 4032,
+          "y": 5376,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "attack",
+    "width": 800,
+    "selection": "5 units selected",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 350.52793894418323,
+          "y": 319.0799618401145
+        },
+        "frame": "goblins-worker-player-se-attack-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1792,
+          "y": 4672,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 405.52793894418323,
+          "y": 319.0799618401145
+        },
+        "frame": "goblins-soldier-player-se-attack-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2304,
+          "y": 4992,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 459.6799406401781,
+          "y": 318.54996290011127
+        },
+        "frame": "goblins-archer-player-se-attack-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3328,
+          "y": 5184,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 513.8319423361729,
+          "y": 318.01996396010804
+        },
+        "frame": "goblins-specialist-player-se-attack-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1280,
+          "y": 5632,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 556.1119677760967,
+          "y": 310.06997986006036
+        },
+        "frame": "goblins-catapult-player-se-attack-2",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 256,
+          "y": 5440,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "death",
+    "width": 800,
+    "selection": "5 units selected",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 350.52793894418323,
+          "y": 319.0799618401145
+        },
+        "frame": "goblins-worker-player-se-death-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2048,
+          "y": 4672,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 405.52793894418323,
+          "y": 319.0799618401145
+        },
+        "frame": "goblins-soldier-player-se-death-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2560,
+          "y": 4992,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 459.6799406401781,
+          "y": 318.54996290011127
+        },
+        "frame": "goblins-archer-player-se-death-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3584,
+          "y": 5184,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 513.8319423361729,
+          "y": 318.01996396010804
+        },
+        "frame": "goblins-specialist-player-se-death-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1536,
+          "y": 5632,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 556.1119677760967,
+          "y": 310.06997986006036
+        },
+        "frame": "goblins-catapult-player-se-death-2",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 512,
+          "y": 5440,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "barracks",
+    "width": 800,
+    "selection": "Scrap Yard",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 350.52793894418323,
+          "y": 319.0799618401145
+        },
+        "frame": "goblins-worker-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1344,
+          "y": 4672,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 405.52793894418323,
+          "y": 319.0799618401145
+        },
+        "frame": "goblins-soldier-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1856,
+          "y": 4992,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 459.6799406401781,
+          "y": 318.54996290011127
+        },
+        "frame": "goblins-archer-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2880,
+          "y": 5184,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 513.8319423361729,
+          "y": 318.01996396010804
+        },
+        "frame": "goblins-specialist-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 832,
+          "y": 5632,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 556.1119677760967,
+          "y": 310.06997986006036
+        },
+        "frame": "goblins-catapult-player-se-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 3904,
+          "y": 5376,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "farm",
+    "width": 800,
+    "selection": "Supply Shack",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 350.52793894418323,
+          "y": 319.0799618401145
+        },
+        "frame": "goblins-worker-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1344,
+          "y": 4672,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 405.52793894418323,
+          "y": 319.0799618401145
+        },
+        "frame": "goblins-soldier-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1856,
+          "y": 4992,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 459.6799406401781,
+          "y": 318.54996290011127
+        },
+        "frame": "goblins-archer-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2880,
+          "y": 5184,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 513.8319423361729,
+          "y": 318.01996396010804
+        },
+        "frame": "goblins-specialist-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 832,
+          "y": 5632,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 556.1119677760967,
+          "y": 310.06997986006036
+        },
+        "frame": "goblins-catapult-player-se-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 3904,
+          "y": 5376,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "forge",
+    "width": 800,
+    "selection": "Lab",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 350.52793894418323,
+          "y": 319.0799618401145
+        },
+        "frame": "goblins-worker-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1344,
+          "y": 4672,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 405.52793894418323,
+          "y": 319.0799618401145
+        },
+        "frame": "goblins-soldier-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1856,
+          "y": 4992,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 459.6799406401781,
+          "y": 318.54996290011127
+        },
+        "frame": "goblins-archer-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2880,
+          "y": 5184,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 513.8319423361729,
+          "y": 318.01996396010804
+        },
+        "frame": "goblins-specialist-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 832,
+          "y": 5632,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 556.1119677760967,
+          "y": 310.06997986006036
+        },
+        "frame": "goblins-catapult-player-se-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 3904,
+          "y": 5376,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "roster-idle",
+    "width": 1280,
+    "selection": "No selection",
+    "smoothing": true,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 320,
+          "y": 300
+        },
+        "frame": "goblins-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 4672,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 375,
+          "y": 300
+        },
+        "frame": "goblins-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 4992,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 430,
+          "y": 300
+        },
+        "frame": "goblins-archer-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 5184,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 485,
+          "y": 300
+        },
+        "frame": "goblins-specialist-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 5632,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 540,
+          "y": 300
+        },
+        "frame": "goblins-catapult-player-s-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 640,
+          "y": 5440,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "archer",
+    "width": 1280,
+    "selection": "Slinger",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 320,
+          "y": 300
+        },
+        "frame": "goblins-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 4672,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 375,
+          "y": 300
+        },
+        "frame": "goblins-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 4992,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 430,
+          "y": 300
+        },
+        "frame": "goblins-archer-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 5184,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 485,
+          "y": 300
+        },
+        "frame": "goblins-specialist-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 5632,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 540,
+          "y": 300
+        },
+        "frame": "goblins-catapult-player-s-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 640,
+          "y": 5440,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "specialist",
+    "width": 1280,
+    "selection": "Grenadier",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 320,
+          "y": 300
+        },
+        "frame": "goblins-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 4672,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 375,
+          "y": 300
+        },
+        "frame": "goblins-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 4992,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 430,
+          "y": 300
+        },
+        "frame": "goblins-archer-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 5184,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 485,
+          "y": 300
+        },
+        "frame": "goblins-specialist-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 5632,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 540,
+          "y": 300
+        },
+        "frame": "goblins-catapult-player-s-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 640,
+          "y": 5440,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "catapult",
+    "width": 1280,
+    "selection": "Mortar",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 320,
+          "y": 300
+        },
+        "frame": "goblins-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 4672,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 375,
+          "y": 300
+        },
+        "frame": "goblins-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 4992,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 430,
+          "y": 300
+        },
+        "frame": "goblins-archer-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 5184,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 485,
+          "y": 300
+        },
+        "frame": "goblins-specialist-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 5632,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 540,
+          "y": 300
+        },
+        "frame": "goblins-catapult-player-s-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 640,
+          "y": 5440,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "movement",
+    "width": 1280,
+    "selection": "5 units selected",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 350.52793894418323,
+          "y": 319.0799618401145
+        },
+        "frame": "goblins-worker-player-se-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1472,
+          "y": 4672,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 405.52793894418323,
+          "y": 319.0799618401145
+        },
+        "frame": "goblins-soldier-player-se-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1984,
+          "y": 4992,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 459.6799406401781,
+          "y": 318.54996290011127
+        },
+        "frame": "goblins-archer-player-se-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3008,
+          "y": 5184,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 513.8319423361729,
+          "y": 318.01996396010804
+        },
+        "frame": "goblins-specialist-player-se-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 960,
+          "y": 5632,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 556.1119677760967,
+          "y": 310.06997986006036
+        },
+        "frame": "goblins-catapult-player-se-walk-1",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 4032,
+          "y": 5376,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "attack",
+    "width": 1280,
+    "selection": "5 units selected",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 350.52793894418323,
+          "y": 319.0799618401145
+        },
+        "frame": "goblins-worker-player-se-attack-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1792,
+          "y": 4672,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 405.52793894418323,
+          "y": 319.0799618401145
+        },
+        "frame": "goblins-soldier-player-se-attack-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2304,
+          "y": 4992,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 459.6799406401781,
+          "y": 318.54996290011127
+        },
+        "frame": "goblins-archer-player-se-attack-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3328,
+          "y": 5184,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 513.8319423361729,
+          "y": 318.01996396010804
+        },
+        "frame": "goblins-specialist-player-se-attack-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1280,
+          "y": 5632,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 556.1119677760967,
+          "y": 310.06997986006036
+        },
+        "frame": "goblins-catapult-player-se-attack-2",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 256,
+          "y": 5440,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "death",
+    "width": 1280,
+    "selection": "5 units selected",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 350.52793894418323,
+          "y": 319.0799618401145
+        },
+        "frame": "goblins-worker-player-se-death-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2048,
+          "y": 4672,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 405.52793894418323,
+          "y": 319.0799618401145
+        },
+        "frame": "goblins-soldier-player-se-death-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2560,
+          "y": 4992,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 459.6799406401781,
+          "y": 318.54996290011127
+        },
+        "frame": "goblins-archer-player-se-death-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3584,
+          "y": 5184,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 513.8319423361729,
+          "y": 318.01996396010804
+        },
+        "frame": "goblins-specialist-player-se-death-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1536,
+          "y": 5632,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 556.1119677760967,
+          "y": 310.06997986006036
+        },
+        "frame": "goblins-catapult-player-se-death-2",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 512,
+          "y": 5440,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "barracks",
+    "width": 1280,
+    "selection": "Scrap Yard",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 350.52793894418323,
+          "y": 319.0799618401145
+        },
+        "frame": "goblins-worker-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1344,
+          "y": 4672,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 405.52793894418323,
+          "y": 319.0799618401145
+        },
+        "frame": "goblins-soldier-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1856,
+          "y": 4992,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 459.6799406401781,
+          "y": 318.54996290011127
+        },
+        "frame": "goblins-archer-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2880,
+          "y": 5184,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 513.8319423361729,
+          "y": 318.01996396010804
+        },
+        "frame": "goblins-specialist-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 832,
+          "y": 5632,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 556.1119677760967,
+          "y": 310.06997986006036
+        },
+        "frame": "goblins-catapult-player-se-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 3904,
+          "y": 5376,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "farm",
+    "width": 1280,
+    "selection": "Supply Shack",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 350.52793894418323,
+          "y": 319.0799618401145
+        },
+        "frame": "goblins-worker-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1344,
+          "y": 4672,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 405.52793894418323,
+          "y": 319.0799618401145
+        },
+        "frame": "goblins-soldier-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1856,
+          "y": 4992,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 459.6799406401781,
+          "y": 318.54996290011127
+        },
+        "frame": "goblins-archer-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2880,
+          "y": 5184,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 513.8319423361729,
+          "y": 318.01996396010804
+        },
+        "frame": "goblins-specialist-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 832,
+          "y": 5632,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 556.1119677760967,
+          "y": 310.06997986006036
+        },
+        "frame": "goblins-catapult-player-se-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 3904,
+          "y": 5376,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "forge",
+    "width": 1280,
+    "selection": "Lab",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 350.52793894418323,
+          "y": 319.0799618401145
+        },
+        "frame": "goblins-worker-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1344,
+          "y": 4672,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 405.52793894418323,
+          "y": 319.0799618401145
+        },
+        "frame": "goblins-soldier-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1856,
+          "y": 4992,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 459.6799406401781,
+          "y": 318.54996290011127
+        },
+        "frame": "goblins-archer-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2880,
+          "y": 5184,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 513.8319423361729,
+          "y": 318.01996396010804
+        },
+        "frame": "goblins-specialist-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 832,
+          "y": 5632,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 556.1119677760967,
+          "y": 310.06997986006036
+        },
+        "frame": "goblins-catapult-player-se-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 3904,
+          "y": 5376,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  }
+]

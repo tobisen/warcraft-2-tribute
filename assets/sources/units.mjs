@@ -1,3 +1,4 @@
+import {rosterUnit} from './roster-complete.mjs';
 import {factionUnit} from './faction-people.mjs';
 import {humanUnit} from './humans.mjs';
 /** Original miniature people and timber siege engine; eight authored directional poses. */
@@ -6,7 +7,7 @@ export const animationSpec={idle:{frames:1,fps:1,loop:true},walk:{frames:4,fps:8
 export function unitFrames(Surface,p){const frames=[];
  for(const faction of ['crown','clans','elves','dwarves','goblins'])for(const type of ['worker','soldier','archer','catapult','specialist'])for(const owner of ['player','enemy'])for(let dir=0;dir<8;dir++)for(const state of type==='worker'?Object.keys(animationSpec):['idle','walk','attack','death'])for(let frame=0;frame<animationSpec[state].frames;frame++){
   const elf=faction==='elves',archer=type==='archer'||elf&&type==='specialist',guard=type==='soldier'||type==='specialist'&&!elf,orc=faction==='clans',skin=orc?p.leafHighlight:p.skin;
-  const detailed=type==='worker'||type==='soldier',human=faction==='crown'&&detailed,size=type==='catapult'||detailed?64:32,s=new Surface(size,size),cx=size/2,cy=type==='catapult'?40:detailed?44:22,angle=dir*Math.PI/4,dx=Math.round(Math.cos(angle)*3),dy=Math.round(Math.sin(angle)*2),team=owner==='player'?p.teamBlue:p.teamRed,light=owner==='player'?p.teamBlueLight:p.teamRedLight;
+  const detailed=type==='worker'||type==='soldier',human=faction==='crown'&&detailed,size=64,s=new Surface(size,size),cx=size/2,cy=type==='catapult'?40:44,angle=dir*Math.PI/4,dx=Math.round(Math.cos(angle)*3),dy=Math.round(Math.sin(angle)*2),team=owner==='player'?p.teamBlue:p.teamRed,light=owner==='player'?p.teamBlueLight:p.teamRedLight;
   const stride=state==='walk'?[0,2,0,-2][frame]:0,bob=state==='walk'?frame%2:0,swing=['attack','gather','build'].includes(state)?[0,-3,2,4][frame]:0;
   if(type==='catapult'){
    const vx=Math.round(Math.cos(angle)*15),vy=Math.round(Math.sin(angle)*10);s.ellipse(cx,cy+9,22,6,p.earth);
@@ -140,6 +141,7 @@ export function unitFrames(Surface,p){const frames=[];
   if(state==='death'){
    const dead=new Surface(size,size);for(let y=0;y<size;y++)for(let x=0;x<size;x++){const i=(y*size+x)*4;if(!s.data[i+3]||frame===3&&(x+y)%3===0)continue;const color='#'+[...s.data.subarray(i,i+3)].map(n=>n.toString(16).padStart(2,'0')).join('');const flat=frame/3;dead.pixel(cx+(x-cx)*(1-flat*.25),cy+(y-cy)*(1-flat*.8)+frame*2,color);}s.data=dead.data;
   }
+  if(!detailed)s.data=rosterUnit(Surface,p,faction,type,owner,dir,state,frame).data;
   if(detailed&&!human)s.data=factionUnit(Surface,p,faction,type,owner,dir,state,frame).data;
   if(human)s.data=humanUnit(Surface,p,type,owner,dir,state,frame).data;
   frames.push({id:`${faction==='crown'?'':faction+'-'}${type}-${owner}-${directions[dir]}-${state}-${frame}`,image:s,x:(frames.length%64)*64,y:Math.floor(frames.length/64)*64,anchor:{x:cx,y:cy},kind:'unit',faction,type,owner,direction:directions[dir],state,frame});

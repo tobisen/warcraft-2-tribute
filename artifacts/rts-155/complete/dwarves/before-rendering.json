@@ -1,0 +1,1782 @@
+[
+  {
+    "name": "roster-idle",
+    "width": 800,
+    "selection": "No selection",
+    "smoothing": true,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 320,
+          "y": 300
+        },
+        "frame": "dwarves-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 3520,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 375,
+          "y": 300
+        },
+        "frame": "dwarves-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 3840,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 430,
+          "y": 300
+        },
+        "frame": "dwarves-archer-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 4032,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 485,
+          "y": 300
+        },
+        "frame": "dwarves-specialist-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 640,
+          "y": 4480,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 540,
+          "y": 300
+        },
+        "frame": "dwarves-catapult-player-s-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 4224,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "archer",
+    "width": 800,
+    "selection": "Crossbow",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 320,
+          "y": 300
+        },
+        "frame": "dwarves-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 3520,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 375,
+          "y": 300
+        },
+        "frame": "dwarves-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 3840,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 430,
+          "y": 300
+        },
+        "frame": "dwarves-archer-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 4032,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 485,
+          "y": 300
+        },
+        "frame": "dwarves-specialist-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 640,
+          "y": 4480,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 540,
+          "y": 300
+        },
+        "frame": "dwarves-catapult-player-s-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 4224,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "specialist",
+    "width": 800,
+    "selection": "Bulwark",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 320,
+          "y": 300
+        },
+        "frame": "dwarves-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 3520,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 375,
+          "y": 300
+        },
+        "frame": "dwarves-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 3840,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 430,
+          "y": 300
+        },
+        "frame": "dwarves-archer-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 4032,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 485,
+          "y": 300
+        },
+        "frame": "dwarves-specialist-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 640,
+          "y": 4480,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 540,
+          "y": 300
+        },
+        "frame": "dwarves-catapult-player-s-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 4224,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "catapult",
+    "width": 800,
+    "selection": "Cannon",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 320,
+          "y": 300
+        },
+        "frame": "dwarves-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 3520,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 375,
+          "y": 300
+        },
+        "frame": "dwarves-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 3840,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 430,
+          "y": 300
+        },
+        "frame": "dwarves-archer-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 4032,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 485,
+          "y": 300
+        },
+        "frame": "dwarves-specialist-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 640,
+          "y": 4480,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 540,
+          "y": 300
+        },
+        "frame": "dwarves-catapult-player-s-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 4224,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "movement",
+    "width": 800,
+    "selection": "5 units selected",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 343.7439525121424,
+          "y": 314.83997032008904
+        },
+        "frame": "dwarves-worker-player-se-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 448,
+          "y": 3520,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 395.351959296122,
+          "y": 312.71997456007625
+        },
+        "frame": "dwarves-soldier-player-se-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 960,
+          "y": 3840,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 449.5039609921171,
+          "y": 312.18997562007314
+        },
+        "frame": "dwarves-archer-player-se-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1984,
+          "y": 4032,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 501.9599660801018,
+          "y": 310.5999788000636
+        },
+        "frame": "dwarves-specialist-player-se-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 4032,
+          "y": 4416,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 550.175979648061,
+          "y": 306.35998728003824
+        },
+        "frame": "dwarves-catapult-player-se-walk-1",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 3008,
+          "y": 4224,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "attack",
+    "width": 800,
+    "selection": "5 units selected",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 343.7439525121424,
+          "y": 314.83997032008904
+        },
+        "frame": "dwarves-worker-player-se-attack-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 768,
+          "y": 3520,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 395.351959296122,
+          "y": 312.71997456007625
+        },
+        "frame": "dwarves-soldier-player-se-attack-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1280,
+          "y": 3840,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 449.5039609921171,
+          "y": 312.18997562007314
+        },
+        "frame": "dwarves-archer-player-se-attack-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2304,
+          "y": 4032,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 501.9599660801018,
+          "y": 310.5999788000636
+        },
+        "frame": "dwarves-specialist-player-se-attack-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 256,
+          "y": 4480,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 550.175979648061,
+          "y": 306.35998728003824
+        },
+        "frame": "dwarves-catapult-player-se-attack-2",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 3328,
+          "y": 4224,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "death",
+    "width": 800,
+    "selection": "5 units selected",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 343.7439525121424,
+          "y": 314.83997032008904
+        },
+        "frame": "dwarves-worker-player-se-death-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1024,
+          "y": 3520,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 395.351959296122,
+          "y": 312.71997456007625
+        },
+        "frame": "dwarves-soldier-player-se-death-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1536,
+          "y": 3840,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 449.5039609921171,
+          "y": 312.18997562007314
+        },
+        "frame": "dwarves-archer-player-se-death-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2560,
+          "y": 4032,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 501.9599660801018,
+          "y": 310.5999788000636
+        },
+        "frame": "dwarves-specialist-player-se-death-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 512,
+          "y": 4480,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 550.175979648061,
+          "y": 306.35998728003824
+        },
+        "frame": "dwarves-catapult-player-se-death-2",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 3584,
+          "y": 4224,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "barracks",
+    "width": 800,
+    "selection": "Guard Hall",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 343.7439525121424,
+          "y": 314.83997032008904
+        },
+        "frame": "dwarves-worker-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 320,
+          "y": 3520,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 395.351959296122,
+          "y": 312.71997456007625
+        },
+        "frame": "dwarves-soldier-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 832,
+          "y": 3840,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 449.5039609921171,
+          "y": 312.18997562007314
+        },
+        "frame": "dwarves-archer-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1856,
+          "y": 4032,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 501.9599660801018,
+          "y": 310.5999788000636
+        },
+        "frame": "dwarves-specialist-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3904,
+          "y": 4416,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 550.175979648061,
+          "y": 306.35998728003824
+        },
+        "frame": "dwarves-catapult-player-se-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 2880,
+          "y": 4224,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "farm",
+    "width": 800,
+    "selection": "Storehouse",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 343.7439525121424,
+          "y": 314.83997032008904
+        },
+        "frame": "dwarves-worker-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 320,
+          "y": 3520,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 395.351959296122,
+          "y": 312.71997456007625
+        },
+        "frame": "dwarves-soldier-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 832,
+          "y": 3840,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 449.5039609921171,
+          "y": 312.18997562007314
+        },
+        "frame": "dwarves-archer-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1856,
+          "y": 4032,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 501.9599660801018,
+          "y": 310.5999788000636
+        },
+        "frame": "dwarves-specialist-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3904,
+          "y": 4416,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 550.175979648061,
+          "y": 306.35998728003824
+        },
+        "frame": "dwarves-catapult-player-se-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 2880,
+          "y": 4224,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "forge",
+    "width": 800,
+    "selection": "Foundry",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 343.7439525121424,
+          "y": 314.83997032008904
+        },
+        "frame": "dwarves-worker-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 320,
+          "y": 3520,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 395.351959296122,
+          "y": 312.71997456007625
+        },
+        "frame": "dwarves-soldier-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 832,
+          "y": 3840,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 449.5039609921171,
+          "y": 312.18997562007314
+        },
+        "frame": "dwarves-archer-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1856,
+          "y": 4032,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 501.9599660801018,
+          "y": 310.5999788000636
+        },
+        "frame": "dwarves-specialist-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3904,
+          "y": 4416,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 550.175979648061,
+          "y": 306.35998728003824
+        },
+        "frame": "dwarves-catapult-player-se-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 2880,
+          "y": 4224,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "roster-idle",
+    "width": 1280,
+    "selection": "No selection",
+    "smoothing": true,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 320,
+          "y": 300
+        },
+        "frame": "dwarves-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 3520,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 375,
+          "y": 300
+        },
+        "frame": "dwarves-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 3840,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 430,
+          "y": 300
+        },
+        "frame": "dwarves-archer-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 4032,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 485,
+          "y": 300
+        },
+        "frame": "dwarves-specialist-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 640,
+          "y": 4480,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 540,
+          "y": 300
+        },
+        "frame": "dwarves-catapult-player-s-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 4224,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "archer",
+    "width": 1280,
+    "selection": "Crossbow",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 320,
+          "y": 300
+        },
+        "frame": "dwarves-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 3520,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 375,
+          "y": 300
+        },
+        "frame": "dwarves-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 3840,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 430,
+          "y": 300
+        },
+        "frame": "dwarves-archer-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 4032,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 485,
+          "y": 300
+        },
+        "frame": "dwarves-specialist-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 640,
+          "y": 4480,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 540,
+          "y": 300
+        },
+        "frame": "dwarves-catapult-player-s-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 4224,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "specialist",
+    "width": 1280,
+    "selection": "Bulwark",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 320,
+          "y": 300
+        },
+        "frame": "dwarves-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 3520,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 375,
+          "y": 300
+        },
+        "frame": "dwarves-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 3840,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 430,
+          "y": 300
+        },
+        "frame": "dwarves-archer-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 4032,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 485,
+          "y": 300
+        },
+        "frame": "dwarves-specialist-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 640,
+          "y": 4480,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 540,
+          "y": 300
+        },
+        "frame": "dwarves-catapult-player-s-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 4224,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "catapult",
+    "width": 1280,
+    "selection": "Cannon",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 320,
+          "y": 300
+        },
+        "frame": "dwarves-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 3520,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 375,
+          "y": 300
+        },
+        "frame": "dwarves-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 3840,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 430,
+          "y": 300
+        },
+        "frame": "dwarves-archer-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 4032,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 485,
+          "y": 300
+        },
+        "frame": "dwarves-specialist-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 640,
+          "y": 4480,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 540,
+          "y": 300
+        },
+        "frame": "dwarves-catapult-player-s-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 4224,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "movement",
+    "width": 1280,
+    "selection": "5 units selected",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 343.7439525121424,
+          "y": 314.83997032008904
+        },
+        "frame": "dwarves-worker-player-se-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 448,
+          "y": 3520,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 395.351959296122,
+          "y": 312.71997456007625
+        },
+        "frame": "dwarves-soldier-player-se-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 960,
+          "y": 3840,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 449.5039609921171,
+          "y": 312.18997562007314
+        },
+        "frame": "dwarves-archer-player-se-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1984,
+          "y": 4032,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 501.9599660801018,
+          "y": 310.5999788000636
+        },
+        "frame": "dwarves-specialist-player-se-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 4032,
+          "y": 4416,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 550.175979648061,
+          "y": 306.35998728003824
+        },
+        "frame": "dwarves-catapult-player-se-walk-1",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 3008,
+          "y": 4224,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "attack",
+    "width": 1280,
+    "selection": "5 units selected",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 343.7439525121424,
+          "y": 314.83997032008904
+        },
+        "frame": "dwarves-worker-player-se-attack-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 768,
+          "y": 3520,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 395.351959296122,
+          "y": 312.71997456007625
+        },
+        "frame": "dwarves-soldier-player-se-attack-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1280,
+          "y": 3840,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 449.5039609921171,
+          "y": 312.18997562007314
+        },
+        "frame": "dwarves-archer-player-se-attack-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2304,
+          "y": 4032,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 501.9599660801018,
+          "y": 310.5999788000636
+        },
+        "frame": "dwarves-specialist-player-se-attack-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 256,
+          "y": 4480,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 550.175979648061,
+          "y": 306.35998728003824
+        },
+        "frame": "dwarves-catapult-player-se-attack-2",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 3328,
+          "y": 4224,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "death",
+    "width": 1280,
+    "selection": "5 units selected",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 343.7439525121424,
+          "y": 314.83997032008904
+        },
+        "frame": "dwarves-worker-player-se-death-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1024,
+          "y": 3520,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 395.351959296122,
+          "y": 312.71997456007625
+        },
+        "frame": "dwarves-soldier-player-se-death-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1536,
+          "y": 3840,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 449.5039609921171,
+          "y": 312.18997562007314
+        },
+        "frame": "dwarves-archer-player-se-death-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2560,
+          "y": 4032,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 501.9599660801018,
+          "y": 310.5999788000636
+        },
+        "frame": "dwarves-specialist-player-se-death-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 512,
+          "y": 4480,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 550.175979648061,
+          "y": 306.35998728003824
+        },
+        "frame": "dwarves-catapult-player-se-death-2",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 3584,
+          "y": 4224,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "barracks",
+    "width": 1280,
+    "selection": "Guard Hall",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 343.7439525121424,
+          "y": 314.83997032008904
+        },
+        "frame": "dwarves-worker-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 320,
+          "y": 3520,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 395.351959296122,
+          "y": 312.71997456007625
+        },
+        "frame": "dwarves-soldier-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 832,
+          "y": 3840,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 449.5039609921171,
+          "y": 312.18997562007314
+        },
+        "frame": "dwarves-archer-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1856,
+          "y": 4032,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 501.9599660801018,
+          "y": 310.5999788000636
+        },
+        "frame": "dwarves-specialist-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3904,
+          "y": 4416,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 550.175979648061,
+          "y": 306.35998728003824
+        },
+        "frame": "dwarves-catapult-player-se-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 2880,
+          "y": 4224,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "farm",
+    "width": 1280,
+    "selection": "Storehouse",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 343.7439525121424,
+          "y": 314.83997032008904
+        },
+        "frame": "dwarves-worker-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 320,
+          "y": 3520,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 395.351959296122,
+          "y": 312.71997456007625
+        },
+        "frame": "dwarves-soldier-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 832,
+          "y": 3840,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 449.5039609921171,
+          "y": 312.18997562007314
+        },
+        "frame": "dwarves-archer-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1856,
+          "y": 4032,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 501.9599660801018,
+          "y": 310.5999788000636
+        },
+        "frame": "dwarves-specialist-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3904,
+          "y": 4416,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 550.175979648061,
+          "y": 306.35998728003824
+        },
+        "frame": "dwarves-catapult-player-se-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 2880,
+          "y": 4224,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "forge",
+    "width": 1280,
+    "selection": "Foundry",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 343.7439525121424,
+          "y": 314.83997032008904
+        },
+        "frame": "dwarves-worker-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 320,
+          "y": 3520,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 395.351959296122,
+          "y": 312.71997456007625
+        },
+        "frame": "dwarves-soldier-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 832,
+          "y": 3840,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 449.5039609921171,
+          "y": 312.18997562007314
+        },
+        "frame": "dwarves-archer-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1856,
+          "y": 4032,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 501.9599660801018,
+          "y": 310.5999788000636
+        },
+        "frame": "dwarves-specialist-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3904,
+          "y": 4416,
+          "width": 32,
+          "height": 32
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 550.175979648061,
+          "y": 306.35998728003824
+        },
+        "frame": "dwarves-catapult-player-se-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 2880,
+          "y": 4224,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  }
+]

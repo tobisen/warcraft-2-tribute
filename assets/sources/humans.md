@@ -1,8 +1,7 @@
 # RTS-155 – Human-korrigering och visuell granskning
 
 Human-slicen (worker, melee/soldier och huvudbyggnad) är korrigerad och granskad
-2026-10-04. RTS-155 är fortsatt **In Progress** för användarens bedömning av det
-nya visuella resultatet; tekniska PASS ersätter inte designgodkännande.
+2026-10-04. Detta protokoll beskriver det historiska Human-delpasset. Användaren accepterade resultatet för tillfället; tekniska PASS ersätter inte designgodkännande.
 Ingen senare RTS-task eller ytterligare fraktion uppdateras i denna korrigering.
 
 ## Underlag och konstaterad orsak
@@ -91,10 +90,4 @@ Inga fullständiga campaign-/matchsimuleringar kördes. Bundlevarningen kvarstå
 Den nya64px-adaptionen har färre mikrodetaljer än den stora referensillustrationen.
 Detta är ett eget spelassetpass som använder referensens identitetsdrag, inte en
 pixelidentisk kopia. Användaren accepterade dessa nya bilder som tillräckligt bra för tillfället
-2026-10-04. RTS-155 hålls öppen för återstående assetgrupper. Human-ranged/siege/specialist,
-övriga byggnader/sjöassets är inte uppdaterade och har fortfarande äldre skala/stil.
-Worker/melee/base för de fyra andra fraktionerna har därefter adapterats enligt
-[det nya fraktionsprotokollet](faction-references.md). Human-bilder/audit här är
-historisk evidens från c5b3c71; den nya auditen visar att Human-rastren bevarats. De ska inte utges som färdiga genom detta pass.
-Ingen senare task startas. Ingen ny CI-/Pages- eller fysisk monitorgranskning
-påstås verifierad. Referensfilerna finns lokalt men är fortsatt otrackade.
+2026-10-04. Worker/melee/base för de andra fraktionerna adapterades därefter enligt [fraktionsprotokollet](faction-references.md). Alla återstående landmotiv är nu implementerade enligt [slutprotokollet](complete-references.md). Human-bilder/audit här är historisk evidens från c5b3c71. Den slutliga auditen bevarar dessa worker/melee/base-rasters. Sjöunderlag saknas; sjöassets är oförändrade. RTS-155 är Done enligt senaste referensmandatet, RTS-156 startas inte. Ingen ny CI-/Pages- eller fysisk monitorgranskning hävdas. Referensfilerna är lokala och otrackade.

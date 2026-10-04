@@ -27,9 +27,9 @@ avslutas efter denna fix; ingen senare roadmap-task startas.
   /tmp/w2t-bottom-bar; ingen ny CI-/Pages-verifiering hävdas.
 
 
-**RTS-155 – Ny kvalitetsnivå för sprites** — **In Progress**. Human-worker, melee och base är korrigerade och accepterade av användaren för tillfället. Worker/melee/base för Orcs, Elves, Dwarves och Goblins är implementerade från de nya referenserna. Se [protokoll och kvarvarande assetgrupper](assets/sources/faction-references.md). Se tasken och [granskningsprotokollet](assets/sources/humans.md).
+**RTS-155 – Ny kvalitetsnivå för sprites** — **Done enligt senaste referensmandatet**. Alla landmotiv i de tio referensbilderna är adapterade för samtliga fem raser. Se [protokoll](assets/sources/complete-references.md) och [före/efter](artifacts/rts-155/complete/index.html). Stanna före RTS-156.
 
-**Aktuell etapp:** RTS-151–154 färdiga. RTS-155 återöppnad för beställd Human-korrigering2026-10-04, nu accepterad för tillfället och utökad med nya fraktionsreferenser och worker/melee/base-slices. Roadmap151–180 återställd; senare tasks Todo och inte implementerade. RTS-156 är pausad/inte startad; nytt assetmandat gäller inom RTS-155; inget mandat för senare tasks. Se [HANDOFF.md](HANDOFF.md) och [QUALITY_REVIEW.md](QUALITY_REVIEW.md). Tidigare stopp/fortsättningsmandat nedan är historik.
+**Aktuell etapp:** RTS-151–154 färdiga. RTS-155 återöppnad för beställd Human-korrigering2026-10-04, nu avslutad enligt utökat mandat för alla landreferenser. Roadmap151–180 återställd; senare tasks Todo och inte implementerade. RTS-156 är pausad/inte startad; nytt assetmandat gäller inom RTS-155; inget mandat för senare tasks. Se [HANDOFF.md](HANDOFF.md) och [QUALITY_REVIEW.md](QUALITY_REVIEW.md). Tidigare stopp/fortsättningsmandat nedan är historik.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -4140,7 +4140,7 @@ Titeln är en arbetstitel, inte juridiskt granskad för kommersiell release.
 
 ## RTS-155 – Ny kvalitetsnivå för sprites
 
-**Status:** In Progress – Human accepterad för tillfället; worker/melee/base för övriga fyra fraktioner implementerade. Övriga assetgrupper återstår.
+**Status:** Done enligt senaste mandatet: alla landmotiv i de tillförda referenserna är adapterade och visuellt granskade. Sjöassets saknar referensunderlag och är oförändrade.
 
 **Goal:** Ny kvalitetsnivå för sprites.
 
@@ -4182,16 +4182,15 @@ kamera/selection vid Native800×600 och1280×720. Worker och soldier separat och
 
 **Nytt underlag2026-10-04:** Användaren accepterar Human-resultatet för tillfället och ber att de åtta nya fraktionsbilderna används. Se [inventering och exakt omfattning](assets/sources/faction-references.md). Orcs/Elves/Dwarves är identifierade. Användaren har uttryckligen bekräftat teknikerreferensen för Goblins och att alla namn behålls. Worker/melee/base har nu egna64px/128px speladaptioner för dessa fyra fraktioner. Sjöreferenser saknas. [Före/efter](artifacts/rts-155/factions/index.html) och [käll-/atlasaudit](artifacts/rts-155/factions/source-export-audit.json) skiljer källgrafik, export och runtime åt. Slutlig unit433/77 och build inklusive strict typecheck PASS; browserkontroll före/efter för fyra fraktioner vid Native800×600 och1280×720 PASS. Slutliga bilder och kontaktblad visuellt granskade; diff-/länkkontroll PASS. Ingen campaign-/matchsimulering.
 
-**Subtasks inom155 (inga nya RTS-ID:n):**
+**Slutligt mandat2026-10-04:** Användaren ber att alla saker i samtliga rasers referensbilder används, därefter commit/push. Ranged/specialist/siege och barracks/farm/forge är nu adapterade för alla fem raser. Referensens separata ranged-byggnad bearbetas till en synlig ranged-del av befintlig barracks; ingen ny byggnadstyp/gameplay införs. Befintliga namn, combat och footprints bevaras. Sjöfart finns inte i underlaget och ingår inte i detta referensmandat.
+
+**Slutlig evidens:** [Före/efter i samma spelvy](artifacts/rts-155/complete/index.html), Native800×600 och1280×720 för samtliga fem raser: roster, selection/porträtt, faktisk movement, attack/death-poser, alla riktningar/lag och byggnadsstadier. Slutliga bilder visuellt granskade. Audit3120 unitframes/120 buildingframes: noll source/exportmismatchar, noll orelaterade rasterändringar; frame-ID:n bevarade. Slutlig unit435/78 och build inklusive strict typecheck PASS; diff-/länkkontroll PASS. Ingen campaign-/matchsimulering, CI/Pages eller slutlig användarapproval av den nya grafiken hävdas. [Mapping och begränsningar](assets/sources/complete-references.md).
 
 | Slice | Status |
 | --- | --- |
-| Human-worker/melee/base | Korrigerad, visuellt granskad och accepterad av användaren för tillfället. |
-| Human övriga landunits/byggnader/sjöassets | Inte uppdaterade i denna korrigering. |
-| Orcs units/buildings/naval | Worker/melee/base implementerade och visuellt granskade. Övriga landassets återstår; sjöunderlag saknas. |
-| Elves units/buildings/naval | Worker/melee/base implementerade och visuellt granskade. Övriga landassets återstår; sjöunderlag saknas. |
-| Dwarves units/buildings/naval | Worker/melee/base implementerade och visuellt granskade. Övriga landassets återstår; sjöunderlag saknas. |
-| Goblins units/buildings/naval | Teknikerreferensen bekräftad, namn behålls. Worker/melee/base implementerade och visuellt granskade. Övriga landassets återstår; sjöunderlag saknas. |
+| Humans, Orcs, Elves, Dwarves, Goblins: fem landroller och fyra befintliga landbyggnader | Referensadaptioner implementerade och visuellt granskade; Goblins använder teknikerbilderna med namnen kvar. |
+| Separata ranged-byggnadsmotiv | Integrerade i respektive barracks, utan ny gameplaytyp. |
+| Sjöassets | Oförändrade; inga sjömotiv i referenserna. |
 
 Stanna efter denna leverans. RTS-156 och senare startas inte.
 

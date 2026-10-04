@@ -1,3 +1,4 @@
+import {settlement} from './settlement-complete.mjs';
 import {factionBase} from './faction-bases.mjs';
 import {humanBase} from './humans.mjs';
 /** Original masonry, timber and heraldry; native pixels, shared team variants. */
@@ -628,6 +629,7 @@ export function buildingFrames(Surface, p) {
               s.rect(x, y, 3, 1, p.rockLight);
             }
           }
+          if (["barracks","farm","forge"].includes(kind)) s.data = settlement(Surface,p,faction,kind,owner,exportedStage).data;
           if (faction !== "crown" && kind === "base") s.data = factionBase(Surface, p, faction, owner, exportedStage).data;
           if (faction === "crown" && kind === "base") s.data = humanBase(Surface, p, owner, exportedStage).data;
           frames.push({

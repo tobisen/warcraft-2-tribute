@@ -12,6 +12,6 @@ it('naval sprites keep role/team/facing and have bounded fog-safe sinking frames
 });
 
 it('keeps labels above all detailed land silhouettes without changing unrelated roles',()=>{
- for(const type of ['worker','soldier'] as const){expect(unitOverlayOffsets(type,'crown')).toEqual({hp:48,cargo:68});for(const faction of ['clans','dwarves','goblins'] as const)expect(unitOverlayOffsets(type,faction)).toEqual({hp:48,cargo:68});expect(unitOverlayOffsets(type,'elves')).toEqual({hp:48,cargo:68});}
- expect(unitOverlayOffsets('catapult','crown')).toEqual({hp:39,cargo:48});
+ for(const type of ['worker','soldier','archer','specialist'] as const){expect(unitOverlayOffsets(type,'crown')).toEqual({hp:48,cargo:68});for(const faction of ['clans','dwarves','goblins'] as const)expect(unitOverlayOffsets(type,faction)).toEqual({hp:48,cargo:68});expect(unitOverlayOffsets(type,'elves')).toEqual({hp:48,cargo:68});}
+ expect(unitOverlayOffsets('catapult','crown')).toEqual({hp:48,cargo:48});
 });

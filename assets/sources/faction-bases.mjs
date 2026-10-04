@@ -50,3 +50,5 @@ export function factionBase(Surface,p,faction,owner,stage){
  if(stage==='damaged'){poly(s,[[51,29],[59,32],[65,43],[54,47],[49,40]],c.ink);s.line(52,35,60,43,c.barkLight);s.line(46,74,50,80,c.ink);s.line(50,80,47,86,c.ink);s.line(97,93,92,98,c.ink);for(const x of [38,45,105]){s.rect(x,110,5,3,c.rockDark);s.pixel(x,110,c.rockLight);}}
  return s;
 }
+
+export const buildingParts={timber,horn,roof,banner,torch,entry,window,copper,chimney,greenery};

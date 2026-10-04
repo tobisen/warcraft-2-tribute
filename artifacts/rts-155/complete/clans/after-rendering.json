@@ -1,0 +1,1782 @@
+[
+  {
+    "name": "roster-idle",
+    "width": 800,
+    "selection": "No selection",
+    "smoothing": true,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 320,
+          "y": 300
+        },
+        "frame": "clans-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 1152,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 375,
+          "y": 300
+        },
+        "frame": "clans-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 1472,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 430,
+          "y": 300
+        },
+        "frame": "clans-archer-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 640,
+          "y": 1728,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 485,
+          "y": 300
+        },
+        "frame": "clans-specialist-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 2112,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 540,
+          "y": 300
+        },
+        "frame": "clans-catapult-player-s-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 1920,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "archer",
+    "width": 800,
+    "selection": "Hunter",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 320,
+          "y": 300
+        },
+        "frame": "clans-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 1152,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 375,
+          "y": 300
+        },
+        "frame": "clans-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 1472,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 430,
+          "y": 300
+        },
+        "frame": "clans-archer-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 640,
+          "y": 1728,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 485,
+          "y": 300
+        },
+        "frame": "clans-specialist-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 2112,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 540,
+          "y": 300
+        },
+        "frame": "clans-catapult-player-s-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 1920,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "specialist",
+    "width": 800,
+    "selection": "Raider",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 320,
+          "y": 300
+        },
+        "frame": "clans-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 1152,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 375,
+          "y": 300
+        },
+        "frame": "clans-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 1472,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 430,
+          "y": 300
+        },
+        "frame": "clans-archer-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 640,
+          "y": 1728,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 485,
+          "y": 300
+        },
+        "frame": "clans-specialist-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 2112,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 540,
+          "y": 300
+        },
+        "frame": "clans-catapult-player-s-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 1920,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "catapult",
+    "width": 800,
+    "selection": "Stone Thrower",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 320,
+          "y": 300
+        },
+        "frame": "clans-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 1152,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 375,
+          "y": 300
+        },
+        "frame": "clans-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 1472,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 430,
+          "y": 300
+        },
+        "frame": "clans-archer-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 640,
+          "y": 1728,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 485,
+          "y": 300
+        },
+        "frame": "clans-specialist-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 2112,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 540,
+          "y": 300
+        },
+        "frame": "clans-catapult-player-s-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 1920,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "movement",
+    "width": 800,
+    "selection": "5 units selected",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 346.28794742415766,
+          "y": 316.4299671400986
+        },
+        "frame": "clans-worker-player-se-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2496,
+          "y": 1152,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 402.1359457281628,
+          "y": 316.9599660801018
+        },
+        "frame": "clans-soldier-player-se-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3008,
+          "y": 1472,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 452.8959542081375,
+          "y": 314.3099713800859
+        },
+        "frame": "clans-archer-player-se-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 4032,
+          "y": 1664,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 514.6799406401781,
+          "y": 318.54996290011127
+        },
+        "frame": "clans-specialist-player-se-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1984,
+          "y": 2112,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 552.7199745600765,
+          "y": 307.9499841000477
+        },
+        "frame": "clans-catapult-player-se-walk-1",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 960,
+          "y": 1920,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "attack",
+    "width": 800,
+    "selection": "5 units selected",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 346.28794742415766,
+          "y": 316.4299671400986
+        },
+        "frame": "clans-worker-player-se-attack-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2816,
+          "y": 1152,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 402.1359457281628,
+          "y": 316.9599660801018
+        },
+        "frame": "clans-soldier-player-se-attack-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3328,
+          "y": 1472,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 452.8959542081375,
+          "y": 314.3099713800859
+        },
+        "frame": "clans-archer-player-se-attack-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 256,
+          "y": 1728,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 514.6799406401781,
+          "y": 318.54996290011127
+        },
+        "frame": "clans-specialist-player-se-attack-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2304,
+          "y": 2112,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 552.7199745600765,
+          "y": 307.9499841000477
+        },
+        "frame": "clans-catapult-player-se-attack-2",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 1280,
+          "y": 1920,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "death",
+    "width": 800,
+    "selection": "5 units selected",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 346.28794742415766,
+          "y": 316.4299671400986
+        },
+        "frame": "clans-worker-player-se-death-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3072,
+          "y": 1152,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 402.1359457281628,
+          "y": 316.9599660801018
+        },
+        "frame": "clans-soldier-player-se-death-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3584,
+          "y": 1472,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 452.8959542081375,
+          "y": 314.3099713800859
+        },
+        "frame": "clans-archer-player-se-death-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 512,
+          "y": 1728,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 514.6799406401781,
+          "y": 318.54996290011127
+        },
+        "frame": "clans-specialist-player-se-death-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2560,
+          "y": 2112,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 552.7199745600765,
+          "y": 307.9499841000477
+        },
+        "frame": "clans-catapult-player-se-death-2",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 1536,
+          "y": 1920,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "barracks",
+    "width": 800,
+    "selection": "War Hut",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 346.28794742415766,
+          "y": 316.4299671400986
+        },
+        "frame": "clans-worker-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2368,
+          "y": 1152,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 402.1359457281628,
+          "y": 316.9599660801018
+        },
+        "frame": "clans-soldier-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2880,
+          "y": 1472,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 452.8959542081375,
+          "y": 314.3099713800859
+        },
+        "frame": "clans-archer-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3904,
+          "y": 1664,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 514.6799406401781,
+          "y": 318.54996290011127
+        },
+        "frame": "clans-specialist-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1856,
+          "y": 2112,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 552.7199745600765,
+          "y": 307.9499841000477
+        },
+        "frame": "clans-catapult-player-se-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 832,
+          "y": 1920,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "farm",
+    "width": 800,
+    "selection": "Cattle Pen",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 346.28794742415766,
+          "y": 316.4299671400986
+        },
+        "frame": "clans-worker-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2368,
+          "y": 1152,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 402.1359457281628,
+          "y": 316.9599660801018
+        },
+        "frame": "clans-soldier-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2880,
+          "y": 1472,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 452.8959542081375,
+          "y": 314.3099713800859
+        },
+        "frame": "clans-archer-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3904,
+          "y": 1664,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 514.6799406401781,
+          "y": 318.54996290011127
+        },
+        "frame": "clans-specialist-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1856,
+          "y": 2112,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 552.7199745600765,
+          "y": 307.9499841000477
+        },
+        "frame": "clans-catapult-player-se-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 832,
+          "y": 1920,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "forge",
+    "width": 800,
+    "selection": "Smithy",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 346.28794742415766,
+          "y": 316.4299671400986
+        },
+        "frame": "clans-worker-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2368,
+          "y": 1152,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 402.1359457281628,
+          "y": 316.9599660801018
+        },
+        "frame": "clans-soldier-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2880,
+          "y": 1472,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 452.8959542081375,
+          "y": 314.3099713800859
+        },
+        "frame": "clans-archer-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3904,
+          "y": 1664,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 514.6799406401781,
+          "y": 318.54996290011127
+        },
+        "frame": "clans-specialist-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1856,
+          "y": 2112,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 552.7199745600765,
+          "y": 307.9499841000477
+        },
+        "frame": "clans-catapult-player-se-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 832,
+          "y": 1920,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "roster-idle",
+    "width": 1280,
+    "selection": "No selection",
+    "smoothing": true,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 320,
+          "y": 300
+        },
+        "frame": "clans-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 1152,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 375,
+          "y": 300
+        },
+        "frame": "clans-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 1472,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 430,
+          "y": 300
+        },
+        "frame": "clans-archer-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 640,
+          "y": 1728,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 485,
+          "y": 300
+        },
+        "frame": "clans-specialist-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 2112,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 540,
+          "y": 300
+        },
+        "frame": "clans-catapult-player-s-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 1920,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "archer",
+    "width": 1280,
+    "selection": "Hunter",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 320,
+          "y": 300
+        },
+        "frame": "clans-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 1152,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 375,
+          "y": 300
+        },
+        "frame": "clans-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 1472,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 430,
+          "y": 300
+        },
+        "frame": "clans-archer-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 640,
+          "y": 1728,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 485,
+          "y": 300
+        },
+        "frame": "clans-specialist-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 2112,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 540,
+          "y": 300
+        },
+        "frame": "clans-catapult-player-s-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 1920,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "specialist",
+    "width": 1280,
+    "selection": "Raider",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 320,
+          "y": 300
+        },
+        "frame": "clans-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 1152,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 375,
+          "y": 300
+        },
+        "frame": "clans-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 1472,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 430,
+          "y": 300
+        },
+        "frame": "clans-archer-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 640,
+          "y": 1728,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 485,
+          "y": 300
+        },
+        "frame": "clans-specialist-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 2112,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 540,
+          "y": 300
+        },
+        "frame": "clans-catapult-player-s-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 1920,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "catapult",
+    "width": 1280,
+    "selection": "Stone Thrower",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 320,
+          "y": 300
+        },
+        "frame": "clans-worker-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 1152,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 375,
+          "y": 300
+        },
+        "frame": "clans-soldier-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3712,
+          "y": 1472,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 430,
+          "y": 300
+        },
+        "frame": "clans-archer-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 640,
+          "y": 1728,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 485,
+          "y": 300
+        },
+        "frame": "clans-specialist-player-s-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2688,
+          "y": 2112,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 540,
+          "y": 300
+        },
+        "frame": "clans-catapult-player-s-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 1664,
+          "y": 1920,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "movement",
+    "width": 1280,
+    "selection": "5 units selected",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 346.28794742415766,
+          "y": 316.4299671400986
+        },
+        "frame": "clans-worker-player-se-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2496,
+          "y": 1152,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 402.1359457281628,
+          "y": 316.9599660801018
+        },
+        "frame": "clans-soldier-player-se-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3008,
+          "y": 1472,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 452.8959542081375,
+          "y": 314.3099713800859
+        },
+        "frame": "clans-archer-player-se-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 4032,
+          "y": 1664,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 514.6799406401781,
+          "y": 318.54996290011127
+        },
+        "frame": "clans-specialist-player-se-walk-1",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1984,
+          "y": 2112,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 552.7199745600765,
+          "y": 307.9499841000477
+        },
+        "frame": "clans-catapult-player-se-walk-1",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 960,
+          "y": 1920,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "attack",
+    "width": 1280,
+    "selection": "5 units selected",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 346.28794742415766,
+          "y": 316.4299671400986
+        },
+        "frame": "clans-worker-player-se-attack-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2816,
+          "y": 1152,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 402.1359457281628,
+          "y": 316.9599660801018
+        },
+        "frame": "clans-soldier-player-se-attack-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3328,
+          "y": 1472,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 452.8959542081375,
+          "y": 314.3099713800859
+        },
+        "frame": "clans-archer-player-se-attack-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 256,
+          "y": 1728,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 514.6799406401781,
+          "y": 318.54996290011127
+        },
+        "frame": "clans-specialist-player-se-attack-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2304,
+          "y": 2112,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 552.7199745600765,
+          "y": 307.9499841000477
+        },
+        "frame": "clans-catapult-player-se-attack-2",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 1280,
+          "y": 1920,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "death",
+    "width": 1280,
+    "selection": "5 units selected",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 346.28794742415766,
+          "y": 316.4299671400986
+        },
+        "frame": "clans-worker-player-se-death-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3072,
+          "y": 1152,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 402.1359457281628,
+          "y": 316.9599660801018
+        },
+        "frame": "clans-soldier-player-se-death-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3584,
+          "y": 1472,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 452.8959542081375,
+          "y": 314.3099713800859
+        },
+        "frame": "clans-archer-player-se-death-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 512,
+          "y": 1728,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 514.6799406401781,
+          "y": 318.54996290011127
+        },
+        "frame": "clans-specialist-player-se-death-2",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2560,
+          "y": 2112,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 552.7199745600765,
+          "y": 307.9499841000477
+        },
+        "frame": "clans-catapult-player-se-death-2",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 1536,
+          "y": 1920,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "barracks",
+    "width": 1280,
+    "selection": "War Hut",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 346.28794742415766,
+          "y": 316.4299671400986
+        },
+        "frame": "clans-worker-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2368,
+          "y": 1152,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 402.1359457281628,
+          "y": 316.9599660801018
+        },
+        "frame": "clans-soldier-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2880,
+          "y": 1472,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 452.8959542081375,
+          "y": 314.3099713800859
+        },
+        "frame": "clans-archer-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3904,
+          "y": 1664,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 514.6799406401781,
+          "y": 318.54996290011127
+        },
+        "frame": "clans-specialist-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1856,
+          "y": 2112,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 552.7199745600765,
+          "y": 307.9499841000477
+        },
+        "frame": "clans-catapult-player-se-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 832,
+          "y": 1920,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "farm",
+    "width": 1280,
+    "selection": "Cattle Pen",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 346.28794742415766,
+          "y": 316.4299671400986
+        },
+        "frame": "clans-worker-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2368,
+          "y": 1152,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 402.1359457281628,
+          "y": 316.9599660801018
+        },
+        "frame": "clans-soldier-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2880,
+          "y": 1472,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 452.8959542081375,
+          "y": 314.3099713800859
+        },
+        "frame": "clans-archer-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3904,
+          "y": 1664,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 514.6799406401781,
+          "y": 318.54996290011127
+        },
+        "frame": "clans-specialist-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1856,
+          "y": 2112,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 552.7199745600765,
+          "y": 307.9499841000477
+        },
+        "frame": "clans-catapult-player-se-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 832,
+          "y": 1920,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  },
+  {
+    "name": "forge",
+    "width": 1280,
+    "selection": "Smithy",
+    "smoothing": false,
+    "pixelRendering": "pixelated",
+    "units": [
+      {
+        "type": "worker",
+        "position": {
+          "x": 346.28794742415766,
+          "y": 316.4299671400986
+        },
+        "frame": "clans-worker-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2368,
+          "y": 1152,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "soldier",
+        "position": {
+          "x": 402.1359457281628,
+          "y": 316.9599660801018
+        },
+        "frame": "clans-soldier-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 2880,
+          "y": 1472,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "archer",
+        "position": {
+          "x": 452.8959542081375,
+          "y": 314.3099713800859
+        },
+        "frame": "clans-archer-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 3904,
+          "y": 1664,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "specialist",
+        "position": {
+          "x": 514.6799406401781,
+          "y": 318.54996290011127
+        },
+        "frame": "clans-specialist-player-se-idle-0",
+        "origin": 0.6875,
+        "scale": 1,
+        "cut": {
+          "x": 1856,
+          "y": 2112,
+          "width": 64,
+          "height": 64
+        }
+      },
+      {
+        "type": "catapult",
+        "position": {
+          "x": 552.7199745600765,
+          "y": 307.9499841000477
+        },
+        "frame": "clans-catapult-player-se-idle-0",
+        "origin": 0.625,
+        "scale": 1,
+        "cut": {
+          "x": 832,
+          "y": 1920,
+          "width": 64,
+          "height": 64
+        }
+      }
+    ]
+  }
+]

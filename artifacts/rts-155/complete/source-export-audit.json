@@ -1,0 +1,31 @@
+{
+  "baseline": "987eaad",
+  "references": {
+    "ChatGPT-bild 4 okt. 2026 18_20_24-8.png": "6c8c0e98620060fd97814e5688b0af941d4a53f711ac093d359113c23b9eb3cf",
+    "human-reference.png": "22b087ac5c7c5888c72768bef2f59f3584840702a7cccf51b943fb0f6919167f",
+    "ChatGPT-bild 4 okt. 2026 18_20_19-1.png": "6761c8d37b37d39edd0fdc6ea85ad15852f3f688e89b1c88ca6c9bcd3f2c63c3",
+    "ChatGPT-bild 4 okt. 2026 18_20_19-2.png": "c0ee1daf75a2f5abe7758948f282bc0a3a312592383f54cb4a42ed1853a4f444",
+    "ChatGPT-bild 4 okt. 2026 18_20_22-5.png": "15d9c17ccdd4163160ed4a6576ee9183d76f450f1aba4ef251873ed8ac186328",
+    "ChatGPT-bild 4 okt. 2026 18_20_24-7.png": "fcbae64895349f584b4b935a5e658827f90614672092477403179e1020fd9fa1",
+    "ChatGPT-bild 4 okt. 2026 18_20_20-3.png": "861ad2aa03735684c57178caa0a62f8e3d51dd52ac1abe0ff99ed56d987b8f9d",
+    "ChatGPT-bild 4 okt. 2026 18_20_21-4.png": "e6b1a6a0f5e25040945b95992eed8ec3ed4e05c00b86a7adaad6bea87cbd3367",
+    "ChatGPT-bild 4 okt. 2026 18_20_23-6.png": "594acb373616ac04fcee5ed26ff2fc590a04ba053f71db9a784d3420d0b41dea",
+    "buildings-reference.png": "89084a6b543f82e9e1d6be33367fc10d37b25d99eee60f85b1b82ed47abf6117"
+  },
+  "atlases": {
+    "units": {
+      "beforeSourceExportMismatches": [],
+      "afterSourceExportMismatches": [],
+      "unrelatedRasterChanges": [],
+      "frameIdsPreserved": true,
+      "changedFactionFrames": 3120
+    },
+    "buildings": {
+      "beforeSourceExportMismatches": [],
+      "afterSourceExportMismatches": [],
+      "unrelatedRasterChanges": [],
+      "frameIdsPreserved": true,
+      "changedFactionFrames": 120
+    }
+  }
+}

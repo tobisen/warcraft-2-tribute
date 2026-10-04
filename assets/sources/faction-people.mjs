@@ -11,7 +11,8 @@ export function factionColors(p,faction,owner){
 const poly=(s,points,color)=>s.polygon(points,color);
 function band(s,a,b,w,color){for(let i=-Math.floor(w/2);i<=Math.floor(w/2);i++)s.line(a[0]+i,a[1],b[0]+i,b[1],color);}
 function crest(s,x,y,c,faction){
- if(faction==='elves'){s.line(x,y-4,x,y+5,c.gold);for(const dy of [-2,1]){s.line(x,y+dy,x-3,y+dy-3,c.goldLight);s.line(x,y+dy,x+3,y+dy-3,c.gold);}}
+ if(faction==='crown'){s.rect(x-1,y-3,3,7,c.gold);s.pixel(x+1,y-5,c.goldLight);s.line(x-1,y,x-4,y-3,c.gold);s.line(x+1,y+1,x+4,y-1,c.goldLight);s.line(x,y+3,x-3,y+6,c.gold);s.pixel(x+3,y+5,c.goldLight);}
+ else if(faction==='elves'){s.line(x,y-4,x,y+5,c.gold);for(const dy of [-2,1]){s.line(x,y+dy,x-3,y+dy-3,c.goldLight);s.line(x,y+dy,x+3,y+dy-3,c.gold);}}
  else if(faction==='clans'){s.ellipse(x,y-1,3,3,c.ink);s.rect(x-2,y+1,5,3,c.ink);s.pixel(x-1,y-1,c.teamLight);s.pixel(x+1,y-1,c.teamLight);}
  else {s.ellipse(x,y,4,4,c.gold);s.ellipse(x,y,2,2,c.clothDark);for(const [dx,dy]of [[-5,0],[5,0],[0,-5],[0,5]])s.rect(x+dx-1,y+dy-1,3,3,c.goldLight);}
 }
@@ -76,3 +77,5 @@ export function factionUnit(Surface,p,faction,type,owner,direction,state,frame){
  return s;
 }
 export {crest};
+
+export const peopleParts={head,band,guardShield};

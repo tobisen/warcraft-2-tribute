@@ -124,7 +124,4 @@ samtliga levande spriteposer. Passerade tester ersätter inte estetisk bedömnin
 
 Human-referensslicen är accepterad av användaren för tillfället. Worker/melee/base
 för Orcs, Elves, Dwarves och Goblins är implementerade och visuellt granskade mot referenserna.
-RTS-155 kvarstår In Progress: ranged/specialist/siege och övriga byggnader är
-inte uppdaterade i detta pass. Sjöreferenser saknas fortfarande. Ingen ny
-fraktion, enhetstyp, byggnadstyp eller förmåga införs. Bottom bar-fixen är separat.
-RTS-156 och senare startas inte. Ingen ny CI-/Pages-/kampanjverifiering påstås.
+Detta delpass (987eaad) ändrade endast worker/melee/base. Återstående landmotiv är därefter adapterade enligt [slutprotokollet](complete-references.md); RTS-155 är Done enligt det senaste referensmandatet. Sjöreferenser saknas fortfarande och sjöassets är oförändrade. Ingen ny fraktion, enhetstyp, byggnadstyp eller förmåga införs. Bottom bar-fixen är separat. RTS-156 och senare startas inte. Ingen ny CI-/Pages-/kampanjverifiering hävdas.
