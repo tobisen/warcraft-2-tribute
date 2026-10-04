@@ -2,9 +2,9 @@
 
 ## Current Focus
 
-**RTS-150 – Samlat speltest och release** — **Done**. Etappen avslutad; stopp föreRTS-151.
+**RTS-152 – Alla byggnader kan inspekteras** — **Todo**.
 
-**Aktuell etapp:** avslutad genom RTS-150 med effektivare verifiering och taskvis commit/push. Slutrapport/överlämning dokumenterad; stopp före151. Följande äldre fortsättningsmandat är historik och startar ingen ny task.
+**Aktuell etapp:** återställ roadmap RTS-151–180 enligt nytt uppdrag 2026-10-04, genomför endast151–154 taskvis med checks/commit/push. Nästa steg: implementera komplett byggnadsinspektion efter151:s inventering. Stanna efter154; nästa task155. Äldre stopp och fortsättningsmandat nedan är historik.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -3966,3 +3966,684 @@ Verifiera GitHub Pages och publicera efter godkända checks.
 **Slutverifiering/publicering:** releasekandidat53267ef pushad och GitHub full npm test/build/deploy completed success [run37199039458](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37199039458). Faktisk [Pages](https://tobisen.github.io/warcraft-2-tribute/) visar0.2.0/Build53267ef. Publik native1280/1920 release/changelog/highscoremeny/åtta campaignkort, canvas/grafik, fysisk selection/move och Save33/load/restart-ID PASS utan HTTP-/browsererrors; bilder granskade. Task150 Done enligt uppdaterat lyssningsundantag.
 
 **Överlämning:**148/6906f4a grupper/keys,149/e22a444 scores/Save33 och150/53267ef release0.2.0 verifierade/levererade. Alla tasks genom150 klara. Full regression1142/145 PASS652.08s, strict typecheck/build/diff/docs PASS; aktuell paidCampaign1–8 och femfraktions-/storkarts-/rendering-/Saveflöden PASS båda upplösningarna. Kvar: faktisk ljud-/matchlyssning uppskjuten av användaren; bundlevarning och mindre närliggande etikettöverlapp oförändrade. Ingen garanti om identisk balans för alla profiler/svårigheter. RTS-151 ej definierad eller påbörjad; nästa etapp kräver nytt uppdrag. Slutlig dokumentcommit ändrar endast Markdown/roller och återanvänder uttryckligen dessa kodchecks; publicerad kodbuild förblir53267ef.
+
+## Ny beställd roadmap RTS-151–180 (2026-10-04)
+
+Historik001–150 bevaras. Senare tasks är planering, inte implementationsmandat. Karteditor och JSON-import/export ligger efter180. Redan levererade system inventeras och återanvänds före varje senare task.
+
+## RTS-151 – Speltest och kvalitetsinventering
+
+**Status:** Done.
+
+**Goal:** Speltest och kvalitetsinventering.
+
+**Requirements:**
+
+Granska version 150 och dokumentera konkreta brister i:
+gameplay, sprites, terräng, ljud, kontroller och byggnadsinformation.
+Skilj observerade problem från antaganden.
+Prioritera fynd och koppla dem till relevanta tasks.
+Ingen bred refaktorering eller nya features i denna task.
+
+**Non-goals:** Ingen bred refaktorering, nya features eller balansändringar.
+
+**Acceptance Criteria:** Inventering med reproduktion, prioritet, evidens och taskkoppling för samtliga sex områden; observerat skiljs från antaget.
+
+**Dependencies:** RTS-150. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Browserinventering i faktisk spelstorlek; kontrollera aktuell kod och releasebelägg. Ljudlyssning redovisas separat. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+**Verifiering:** Ny browserinventering1280/1920 av femfraktionsflöden, sex upplösningar, selection/move/betald leverans/minimap/Save-load/restart och tekniskt audio. Se QUALITY_REVIEW.md för observerat/antaget och prioritering.431unit/76filer PASS5.72s; build inklusive strict typecheck PASS; faktisk lyssning ej utförd. Ingen runtime ändrad.
+
+## RTS-152 – Alla byggnader kan inspekteras
+
+**Status:** Todo.
+
+**Goal:** Alla byggnader kan inspekteras.
+
+**Requirements:**
+
+Alla egna byggnader kan klickas och visar:
+namn, beskrivning, HP, funktion och relevanta actions.
+Visa produktion, research och prerequisites där relevant.
+Passiva byggnader, exempelvis farms, förklarar sin nytta.
+Synliga fiendebyggnader kan inspekteras med begränsad information.
+Ingen kontroll över fienden eller läckage av dold information.
+Bevara befintlig unit- och resource-selection.
+
+**Non-goals:** Ingen kontroll över fienden, dold information, nya byggnader eller gameplayregler.
+
+**Acceptance Criteria:** Alla levande egna byggnader, inklusive varje farm och forge, kan inspekteras. Synliga enemybyggnader visar endast publika data; dold/död selection rensas. Unit/resource-selection och produktionsorders bevaras.
+
+**Dependencies:** RTS-151. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Selection/prioritet, byggnadsmodeller, fog/död/fiendeorder-skydd; relevanta integrationer och browserklick. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+## RTS-153 – Upplösning utan automatisk uppförstoring
+
+**Status:** Todo.
+
+**Goal:** Upplösning utan automatisk uppförstoring.
+
+**Requirements:**
+
+Separera renderingsupplösning från visningsstorlek.
+800x600 ska kunna visas som 800x600 CSS-pixlar, centrerat,
+utan automatisk förstoring till hela fönstret.
+Erbjud Native Size och Fit to Window som separata val.
+Behåll befintliga upplösningar upp till 2048x1332.
+Skala ned när fönstret är för litet; bevara proportionerna.
+Ingen oavsiktlig utjämning av pixelgrafik.
+Verifiera input, selection, HUD och minimap efter byte.
+Definiera fullscreen-beteende för båda visningslägena.
+Spara inställningen lokalt.
+
+**Non-goals:** Ingen ändring av gameplay, tillgängliga upplösningar eller pixelgrafik.
+
+**Acceptance Criteria:** Native800×600 håller800×600CSS vid tillräckligt fönster. Fit förstorar proportionerligt. Båda skalar ned vid behov, sparas lokalt och fungerar i fullscreen. Input/HUD/minimap verifieras efter byte.
+
+**Dependencies:** RTS-152. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Geometri/persistens/migration/inputmapping; browser i flera fönsterstorlekar, fullscreen och båda lägena. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+## RTS-154 – Ny titel och huvudmeny
+
+**Status:** Todo.
+
+**Goal:** Ny titel och huvudmeny.
+
+**Requirements:**
+
+Använd arbetstiteln:
+Iron & Timber — A Tribute to Warcraft II
+Uppdatera synlig titel, browser title och relevant dokumentation.
+Behåll repo-namn, GitHub-remote och Pages-adress.
+Använd egen typografisk logotyp och visuell identitet.
+Återanvänd befintlig meny; detta är ingen fullständig menyombyggnad.
+Titeln är en arbetstitel, inte juridiskt granskad för kommersiell release.
+
+**Non-goals:** Ingen full menyombyggnad, byte av repo/remote/Pages eller juridisk granskning.
+
+**Acceptance Criteria:** Egen typografisk identitet visar Iron & Timber och undertiteln A Tribute to Warcraft II; browser title och relevanta docs synkade; befintliga menyflöden fungerar.
+
+**Dependencies:** RTS-153. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Text/menyregression, browsergranskning i Native/Fit; unit/build och full regression vid etappslut. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+## RTS-155 – Ny kvalitetsnivå för sprites
+
+**Status:** Todo.
+
+**Goal:** Ny kvalitetsnivå för sprites.
+
+**Requirements:**
+
+Förbättra först worker, melee-unit och huvudbyggnad som referens.
+Tydliga silhuetter, konsekvent skala, lagfärger och animationer.
+Granska i faktisk spelstorlek innan resten uppdateras.
+Använd användarens godkända Humans-design om den finns tillgänglig.
+Om referensen saknas: dokumentera behovet; hitta inte på dess innehåll.
+Dela resterande assetarbete i subtasks per fraktion/assetgrupp.
+
+**Non-goals:** Inga andra roadmap-features; återimplementera inte fungerande system.
+
+**Acceptance Criteria:** Förbättra först worker, melee-unit och huvudbyggnad som referens. Tydliga silhuetter, konsekvent skala, lagfärger och animationer. Granska i faktisk spelstorlek innan resten uppdateras. Använd användarens godkända Humans-design om den finns tillgänglig. Om referensen saknas: dokumentera behovet; hitta inte på dess innehåll. Dela resterande assetarbete i subtasks per fraktion/assetgrupp.
+
+**Dependencies:** RTS-154. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+## RTS-156 – Förbättrad kartgrafik
+
+**Status:** Todo.
+
+**Goal:** Förbättrad kartgrafik.
+
+**Requirements:**
+
+Förbättra terrängövergångar, kust, vatten, skog,
+vägar och dekorationer.
+Walkability ska vara tydlig.
+Verifiera stilen på en referenskarta innan övriga uppdateras.
+
+**Non-goals:** Inga andra roadmap-features; återimplementera inte fungerande system.
+
+**Acceptance Criteria:** Förbättra terrängövergångar, kust, vatten, skog, vägar och dekorationer. Walkability ska vara tydlig. Verifiera stilen på en referenskarta innan övriga uppdateras.
+
+**Dependencies:** RTS-155. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+## RTS-157 – Tydliga attackljud
+
+**Status:** Todo.
+
+**Goal:** Tydliga attackljud.
+
+**Requirements:**
+
+Ljud för melee, bågar, siege, fartyg, träffar och byggnadsskada.
+Koppla ljud till rätt gameplay-händelse.
+Hantera avstånd och begränsa samtidiga upprepningar.
+Lyssna igenom större strider.
+
+**Non-goals:** Inga andra roadmap-features; återimplementera inte fungerande system.
+
+**Acceptance Criteria:** Ljud för melee, bågar, siege, fartyg, träffar och byggnadsskada. Koppla ljud till rätt gameplay-händelse. Hantera avstånd och begränsa samtidiga upprepningar. Lyssna igenom större strider.
+
+**Dependencies:** RTS-156. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+## RTS-158 – Fler humoristiska enhetskommentarer
+
+**Status:** Todo.
+
+**Goal:** Fler humoristiska enhetskommentarer.
+
+**Requirements:**
+
+Engelska repliker för selection, move, attack, arbete
+och upprepade klick.
+Personlighet per ras/unit-typ, variation och cooldown.
+Egna/licensierade inspelningar och separat röstvolym.
+Rapportera saknade röstassets tydligt.
+
+**Non-goals:** Inga andra roadmap-features; återimplementera inte fungerande system.
+
+**Acceptance Criteria:** Engelska repliker för selection, move, attack, arbete och upprepade klick. Personlighet per ras/unit-typ, variation och cooldown. Egna/licensierade inspelningar och separat röstvolym. Rapportera saknade röstassets tydligt.
+
+**Dependencies:** RTS-157. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+## RTS-159 – Levande värld
+
+**Status:** Todo.
+
+**Goal:** Levande värld.
+
+**Requirements:**
+
+Neutrala djur och miljödetaljer med enkel idle-/wander-logik.
+Djur blockerar inte viktiga vägar eller byggplatser.
+Ingen scouting genom fog of war.
+Första versionen är dekorativ utan jakt eller ny ekonomi.
+Hantera save/load och restart.
+
+**Non-goals:** Inga andra roadmap-features; återimplementera inte fungerande system.
+
+**Acceptance Criteria:** Neutrala djur och miljödetaljer med enkel idle-/wander-logik. Djur blockerar inte viktiga vägar eller byggplatser. Ingen scouting genom fog of war. Första versionen är dekorativ utan jakt eller ny ekonomi. Hantera save/load och restart.
+
+**Dependencies:** RTS-158. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+## RTS-160 – Huvudbyggnad i tre nivåer
+
+**Status:** Todo.
+
+**Goal:** Huvudbyggnad i tre nivåer.
+
+**Requirements:**
+
+Kostnad, uppgraderingstid och tydlig visuell förändring.
+Definiera produktionens beteende under uppgradering.
+
+**Non-goals:** Inga andra roadmap-features; återimplementera inte fungerande system.
+
+**Acceptance Criteria:** Kostnad, uppgraderingstid och tydlig visuell förändring. Definiera produktionens beteende under uppgradering.
+
+**Dependencies:** RTS-159. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+## RTS-161 – Prerequisites och tech tree
+
+**Status:** Todo.
+
+**Goal:** Prerequisites och tech tree.
+
+**Requirements:**
+
+Stegvis upplåsning av buildings, units och research.
+Begripligt tech tree och förklaring av låsta actions.
+Återanvänd befintligt prerequisite-system.
+
+**Non-goals:** Inga andra roadmap-features; återimplementera inte fungerande system.
+
+**Acceptance Criteria:** Stegvis upplåsning av buildings, units och research. Begripligt tech tree och förklaring av låsta actions. Återanvänd befintligt prerequisite-system.
+
+**Dependencies:** RTS-160. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+## RTS-162 – Försvarstorn
+
+**Status:** Todo.
+
+**Goal:** Försvarstorn.
+
+**Requirements:**
+
+Tydliga målregler och uppgraderingar.
+Verifiera fog of war, projektiler och AI-targeting.
+
+**Non-goals:** Inga andra roadmap-features; återimplementera inte fungerande system.
+
+**Acceptance Criteria:** Tydliga målregler och uppgraderingar. Verifiera fog of war, projektiler och AI-targeting.
+
+**Dependencies:** RTS-161. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+## RTS-163 – Murar och portar
+
+**Status:** Todo.
+
+**Goal:** Murar och portar.
+
+**Requirements:**
+
+Placering, förstörelse och öppning/stängning.
+Navigation uppdateras korrekt.
+Placering får inte skapa otillåtna instängningar.
+
+**Non-goals:** Inga andra roadmap-features; återimplementera inte fungerande system.
+
+**Acceptance Criteria:** Placering, förstörelse och öppning/stängning. Navigation uppdateras korrekt. Placering får inte skapa otillåtna instängningar.
+
+**Dependencies:** RTS-162. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+## RTS-164 – Reparation och försvarsbalans
+
+**Status:** Todo.
+
+**Goal:** Reparation och försvarsbalans.
+
+**Requirements:**
+
+Workers reparerar egna byggnader för resurser.
+Balansera försvar mot siege och expansion.
+
+**Non-goals:** Inga andra roadmap-features; återimplementera inte fungerande system.
+
+**Acceptance Criteria:** Workers reparerar egna byggnader för resurser. Balansera försvar mot siege och expansion.
+
+**Dependencies:** RTS-163. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+## RTS-165 – Magienheter och mana
+
+**Status:** Todo.
+
+**Goal:** Magienheter och mana.
+
+**Requirements:**
+
+En magienhet per fraktion med tydlig roll.
+Mana, regeneration och UI integreras i befintliga system.
+
+**Non-goals:** Inga andra roadmap-features; återimplementera inte fungerande system.
+
+**Acceptance Criteria:** En magienhet per fraktion med tydlig roll. Mana, regeneration och UI integreras i befintliga system.
+
+**Dependencies:** RTS-164. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+## RTS-166 – Spell-system
+
+**Status:** Todo.
+
+**Goal:** Spell-system.
+
+**Requirements:**
+
+Targeting, räckvidd, mana-kostnad och cooldown.
+Första spells: healing, buff eller debuff.
+Hantera avbruten targeting och ogiltiga mål.
+
+**Non-goals:** Inga andra roadmap-features; återimplementera inte fungerande system.
+
+**Acceptance Criteria:** Targeting, räckvidd, mana-kostnad och cooldown. Första spells: healing, buff eller debuff. Hantera avbruten targeting och ogiltiga mål.
+
+**Dependencies:** RTS-165. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+## RTS-167 – Fraktionsmagi, effekter och AI
+
+**Status:** Todo.
+
+**Goal:** Fraktionsmagi, effekter och AI.
+
+**Requirements:**
+
+Olika spells per fraktion.
+Tydliga effekter och varaktighet.
+AI använder spells genom enkla, testbara regler.
+
+**Non-goals:** Inga andra roadmap-features; återimplementera inte fungerande system.
+
+**Acceptance Criteria:** Olika spells per fraktion. Tydliga effekter och varaktighet. AI använder spells genom enkla, testbara regler.
+
+**Dependencies:** RTS-166. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+## RTS-168 – Flygande enheter och anti-air
+
+**Status:** Todo.
+
+**Goal:** Flygande enheter och anti-air.
+
+**Requirements:**
+
+Luftnavigation och tydliga mark-/sjö-/luft-targetingregler.
+Silhuetter och skuggor visar flyghöjd.
+
+**Non-goals:** Inga andra roadmap-features; återimplementera inte fungerande system.
+
+**Acceptance Criteria:** Luftnavigation och tydliga mark-/sjö-/luft-targetingregler. Silhuetter och skuggor visar flyghöjd.
+
+**Dependencies:** RTS-167. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+## RTS-169 – Balans för mark, sjö, luft och magi
+
+**Status:** Todo.
+
+**Goal:** Balans för mark, sjö, luft och magi.
+
+**Requirements:**
+
+Verifiera counters, kostnader och kombinerade arméer.
+Bevara användbara roller för olika enhetstyper.
+
+**Non-goals:** Inga andra roadmap-features; återimplementera inte fungerande system.
+
+**Acceptance Criteria:** Verifiera counters, kostnader och kombinerade arméer. Bevara användbara roller för olika enhetstyper.
+
+**Dependencies:** RTS-168. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+## RTS-170 – Hold Position, Patrol och köade orders
+
+**Status:** Todo.
+
+**Goal:** Hold Position, Patrol och köade orders.
+
+**Requirements:**
+
+Shift lägger orders i kö.
+Definiera avbrott, target loss och autoattack.
+Visa aktuella orders.
+
+**Non-goals:** Inga andra roadmap-features; återimplementera inte fungerande system.
+
+**Acceptance Criteria:** Shift lägger orders i kö. Definiera avbrott, target loss och autoattack. Visa aktuella orders.
+
+**Dependencies:** RTS-169. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+## RTS-171 – Formationer och gruppnavigation
+
+**Status:** Todo.
+
+**Goal:** Formationer och gruppnavigation.
+
+**Requirements:**
+
+Förbättra destinationer, separation och trängsel.
+Anpassa formationer vid passager och combat.
+
+**Non-goals:** Inga andra roadmap-features; återimplementera inte fungerande system.
+
+**Acceptance Criteria:** Förbättra destinationer, separation och trängsel. Anpassa formationer vid passager och combat.
+
+**Dependencies:** RTS-170. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+## RTS-172 – AI-personligheter
+
+**Status:** Todo.
+
+**Goal:** AI-personligheter.
+
+**Requirements:**
+
+Defensiv, offensiv och ekonomisk AI via config.
+Personlighet och svårighet är separata val.
+
+**Non-goals:** Inga andra roadmap-features; återimplementera inte fungerande system.
+
+**Acceptance Criteria:** Defensiv, offensiv och ekonomisk AI via config. Personlighet och svårighet är separata val.
+
+**Dependencies:** RTS-171. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+## RTS-173 – AI med kombinerade arméer
+
+**Status:** Todo.
+
+**Goal:** AI med kombinerade arméer.
+
+**Requirements:**
+
+AI använder siege, magi och relevanta luft-/sjöenheter.
+Verifiera targeting och resursanvändning.
+
+**Non-goals:** Inga andra roadmap-features; återimplementera inte fungerande system.
+
+**Acceptance Criteria:** AI använder siege, magi och relevanta luft-/sjöenheter. Verifiera targeting och resursanvändning.
+
+**Dependencies:** RTS-172. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+## RTS-174 – Flera AI-spelare
+
+**Status:** Todo.
+
+**Goal:** Flera AI-spelare.
+
+**Requirements:**
+
+Ownership och relationer för flera spelare.
+Verifiera targeting, fog of war, minimap och statistik.
+
+**Non-goals:** Inga andra roadmap-features; återimplementera inte fungerande system.
+
+**Acceptance Criteria:** Ownership och relationer för flera spelare. Verifiera targeting, fog of war, minimap och statistik.
+
+**Dependencies:** RTS-173. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+## RTS-175 – Lag och allierad AI
+
+**Status:** Todo.
+
+**Goal:** Lag och allierad AI.
+
+**Requirements:**
+
+Fasta lag, tydliga färger och definierad delning av vision.
+Allierade attackerar inte varandra automatiskt.
+
+**Non-goals:** Inga andra roadmap-features; återimplementera inte fungerande system.
+
+**Acceptance Criteria:** Fasta lag, tydliga färger och definierad delning av vision. Allierade attackerar inte varandra automatiskt.
+
+**Dependencies:** RTS-174. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+## RTS-176 – Lagmatchers resultat
+
+**Status:** Todo.
+
+**Goal:** Lagmatchers resultat.
+
+**Requirements:**
+
+Seger/förlust, utslagna spelare och lagstatistik.
+Hantera fortsatt match efter förstörd allierad bas.
+
+**Non-goals:** Inga andra roadmap-features; återimplementera inte fungerande system.
+
+**Acceptance Criteria:** Seger/förlust, utslagna spelare och lagstatistik. Hantera fortsatt match efter förstörd allierad bas.
+
+**Dependencies:** RTS-175. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+## RTS-177 – Design för längre uppdrag
+
+**Status:** Todo.
+
+**Goal:** Design för längre uppdrag.
+
+**Requirements:**
+
+Utvalda uppdrag siktar på cirka 20–40 minuter vid normalt tempo.
+Flera delmål, expansioner och förändrade situationer.
+Förläng inte genom enbart mer HP eller väntetid.
+Speltiden verifieras genom speltest.
+
+**Non-goals:** Inga andra roadmap-features; återimplementera inte fungerande system.
+
+**Acceptance Criteria:** Utvalda uppdrag siktar på cirka 20–40 minuter vid normalt tempo. Flera delmål, expansioner och förändrade situationer. Förläng inte genom enbart mer HP eller väntetid. Speltiden verifieras genom speltest.
+
+**Dependencies:** RTS-176. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+## RTS-178 – Implementera längre uppdrag
+
+**Status:** Todo.
+
+**Goal:** Implementera längre uppdrag.
+
+**Requirements:**
+
+Flerfasuppdrag med tydliga mål, briefings och uppdateringar.
+Delmål fungerar korrekt efter save/load.
+
+**Non-goals:** Inga andra roadmap-features; återimplementera inte fungerande system.
+
+**Acceptance Criteria:** Flerfasuppdrag med tydliga mål, briefings och uppdateringar. Delmål fungerar korrekt efter save/load.
+
+**Dependencies:** RTS-177. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+## RTS-179 – Campaign- och presentationsgranskning
+
+**Status:** Todo.
+
+**Goal:** Campaign- och presentationsgranskning.
+
+**Requirements:**
+
+Speltesta tempo, Beginner, grafik, ljud och längre matcher.
+Åtgärda prioriterade problem.
+Skilj automatiska simuleringar från mänskligt speltest.
+
+**Non-goals:** Inga andra roadmap-features; återimplementera inte fungerande system.
+
+**Acceptance Criteria:** Speltesta tempo, Beginner, grafik, ljud och längre matcher. Åtgärda prioriterade problem. Skilj automatiska simuleringar från mänskligt speltest.
+
+**Dependencies:** RTS-178. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+## RTS-180 – Samlad release
+
+**Status:** Todo.
+
+**Goal:** Samlad release.
+
+**Requirements:**
+
+Verifiera gameplay, campaign, save/load, restart,
+visningsstorlekar, fullscreen och GitHub Pages.
+Uppdatera releaseversion, changelog och docs.
+Publicera efter godkända kontroller.
+
+**Non-goals:** Inga andra roadmap-features; återimplementera inte fungerande system.
+
+**Acceptance Criteria:** Verifiera gameplay, campaign, save/load, restart, visningsstorlekar, fullscreen och GitHub Pages. Uppdatera releaseversion, changelog och docs. Publicera efter godkända kontroller.
+
+**Dependencies:** RTS-179. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.

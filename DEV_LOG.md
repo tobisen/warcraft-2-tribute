@@ -2617,3 +2617,22 @@ Klart:148/6906f4a commands/keys/testurval,149/e22a444 lokala highscores/Save33 o
 Kvar/ej kontrollerat: faktisk ljudlyssning och matchlyssning uppskjutna av användaren. Tekniskt audio11decode/mute/pause och asset/engine-regression verifierade, ingen mixgaranti. Känd bundlevarning och mindre närliggande nod-/lastetikettöverlapp kvar; inga blockerande fynd. Balansbelägg gäller redovisade flöden, inte identisk winrate på alla svårigheter/fraktionspar. Nästa task är RTS-151 i en ny definierad etapp; ingen sådan task är påbörjad här. Stopp före151.
 
 Slutlig docscommit uppdaterar status/överlämning/agenternas etappgräns. Endast Markdown/rollfiler ändras efter verifierad kodpublicering; textkonsistens, lokala länkar och git diff --check kontrolleras. Tidigare kodchecks återanvänds uttryckligen, inga tester för enbart docs. Pages-code/build förblir53267ef eftersom docs-only-push är undantagen enligt150:s verifierade workflow.
+
+## 2026-10-04 – RTS-151: återställd roadmap och kvalitetsinventering
+
+Nytt uppdrag ersätter stopp före151. Ren main/origin git@github.com:tobisen/warcraft-2-tribute.git;
+HEAD0d9cf64, publicerad runtime53267ef. Roadmap151–180 återställd från användarens
+lista utan att ändra001–150;151–154 detaljerade och senare mål/kriterier planerade.
+AGENTS senaste mandat uppdaterat, äldre rolltexter lästa som historik enligt nytt uppdrag.
+QUALITY_REVIEW.md skiljer observation/kodfynd/antagande/ej lyssnat och kopplar prioriteringar.
+Ny browser1280/1920 med fem fraktioner/stora kartor, selection/move/betald leverans,
+minimap/fokus, Save/load/restart, sex upplösningar och11audio-decode/mute/pause.
+431unit/76filer PASS5.72s, npm run build inklusive strict typecheck PASS.
+Chromium krävde sandboxeskalering för MachPort-start; första startfel följt av lyckad kontroll.
+Ingen ny gameplaykod eller bred simulation; RTS-150:s ljudundantag/kända bundlevarning kvar.
+Review: scope/historik och källhänvisningar kontrollerade; inga blockerande fynd i docs.
+
+151 browser: första matrisen missade exakt move-endpoint i sista Goblin1920-fallet;
+separat omkörning av samma fall passerade med endpoint600/240 och hela flödet.
+Det är en intermittent kontroll; ingen runtimeorsak fastställd, ingen kodändring.
+Diffkontroll PASS. Roadmap-ID:n151–180 finns exakt en gång; docsreferenser kontrollerade.

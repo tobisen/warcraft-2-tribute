@@ -84,3 +84,7 @@ Efter avslutad och publicerad RTS-065 har användaren sagt ”fortsätt gärna�
 ## Avslutad etapp genom RTS-150
 
 RTS-148–150 är verifierade och levererade;0.2.0/Build53267ef publicerad och kontrollerad på Pages. Aktuell körning är avslutad och stannar föreRTS-151. Ingen151-task är definierad eller påbörjad. Se slutlig BACKLOG/DEV_LOG-överlämning för checks, återanvända belägg, uppskjuten faktisk ljud-/matchlyssning och kända begränsningar. Rena Markdown/rollpushar kör text/länk/diffchecks; kod/config/assets/workflow kör fortsatt relevant unit/integration och full regression vid etappslut/CI.
+
+## Nytt mandat 2026-10-04
+
+Nytt uppdrag ersätter tidigare stopp före151: återställ roadmap151–180, genomför endast151–154 en task i taget med verifiering, docs och commit/push. Stanna efter154 och lämna över med nästa task155. Ingen automatisk agentdelegering. Historiska releasebelägg ska skiljas från ny verifiering.
