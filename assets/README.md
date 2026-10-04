@@ -201,3 +201,6 @@ RTS-155 är Done enligt användarens mandat för alla motiv i de tio landreferen
 
 
 RTS-156: world-atlas256×256 med30 frames. Originalgräs/vatten/kust och sju nya väg-/dekor-/skogframes i world.mjs. Export via npm run assets:export. Faktisk browsergranskning och bilder i artifacts/rts-156.
+
+
+RTS-157:15 lokala ljudfiler; export med PYTHONPATH till optional soundfile-miljö. Nya melee/bow/siege/buildingHit är egna synteseffekter. Faktisk lyssning återstår; se sources/attack-audio.md och artifacts/rts-157/battle-preview.wav.

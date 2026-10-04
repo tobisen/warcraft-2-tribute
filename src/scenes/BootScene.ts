@@ -1,3 +1,4 @@
+import {combatAudioSnapshot,combatAudioCues,type CombatAudioSnapshot} from '../presentation/combatAudio';
 import {inspectBuildingAt,inspectedBuilding,savedBuildingSelection} from '../gameplay/buildingInspection';
 import {highscoreStore,renderHighscorePanels} from '../presentation/highscores';
 import {dismissProposal,dismissUnits,type DismissProposal} from '../gameplay/dismiss';
@@ -201,6 +202,7 @@ export class BootScene extends Phaser.Scene {
   private impacts=new Map<number,{impact:Impact;visual:Phaser.GameObjects.Image}>();
   private nextImpact=1;
   private audioSnapshot?:AudioSnapshot;
+  private combatSoundSnapshot?:CombatAudioSnapshot;
   private visualTime=0;
   private hitSnapshot?:HealthSample[];
   private motions=new Map<string,Motion>();
@@ -215,7 +217,7 @@ export class BootScene extends Phaser.Scene {
   preload():void {for(const key of ['world','buildings','units','ui','naval'])if(!this.textures.exists(key))this.load.atlas(key,`${import.meta.env.BASE_URL}assets/${key}-atlas.png`,`${import.meta.env.BASE_URL}assets/${key}-atlas.json`);}
 
   create(): void {
-    this.audioSnapshot=undefined;gameAudio.setPhase('menu');gameAudio.reset();
+    this.audioSnapshot=undefined;this.combatSoundSnapshot=undefined;gameAudio.setPhase('menu');gameAudio.reset();
     this.warningState=createWarningState();this.warningVisual=this.add.graphics().setDepth(9);
     this.visualTime=0;this.extraResourceVisuals.clear();this.hitSnapshot=undefined;this.motions.clear();this.deaths.clear();this.impacts.clear();this.nextImpact=1;
     this.hpBars=this.add.graphics().setDepth(7);
@@ -922,7 +924,10 @@ export class BootScene extends Phaser.Scene {
   private syncAudio(visibleEnemies:typeof this.combat.enemies):void {
     const next=matchAudioSnapshot(this.currentMatch(),visibleEnemies);
     const wasPlaying=this.session.phase==='playing'||this.audioSnapshot?.outcome==='playing'&&this.outcome!=='playing';
-    for(const event of audioEvents(this.audioSnapshot,next,!!wasPlaying)){if(event==='victory'||event==='defeat'){gameAudio.setPhase('ended');gameAudio.play(event,true);}else gameAudio.play(event);}
+    for(const event of audioEvents(this.audioSnapshot,next,!!wasPlaying)){if(event==='victory'||event==='defeat'){gameAudio.setPhase('ended');gameAudio.play(event,true);}else if(event!=='impact'&&event!=='cannon')gameAudio.play(event);}
+    const combatNext=combatAudioSnapshot(this.currentMatch()),camera=this.cameras.main;
+    for(const cue of combatAudioCues(this.combatSoundSnapshot,combatNext,{x:camera.scrollX+camera.width/2,y:camera.scrollY+camera.height/2},this.gameplayActive()))gameAudio.play(cue.sound,false,cue.gain);
+    this.combatSoundSnapshot=combatNext;
     this.audioSnapshot=next;
   }
 

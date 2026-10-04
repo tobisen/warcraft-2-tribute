@@ -54,3 +54,6 @@ skiljer underlag, skapade assets, export och faktisk visuell verifiering.
 RTS-155 fraktionspass: faction-people.mjs och faction-bases.mjs är originalkompositioner i integer-pixel-kod, baserade på användarens lokala stilreferenser (identifierade/hashade i sources/faction-references.md). Referensillustrationerna är inte importerade, nedskalade eller beskurna in i runtime-atlaserna. Goblins följer teknikerreferensen enligt uttrycklig instruktion; fraktionsnamnet behålls.
 
 RTS-155 slutligt landreferenspass: [roster-complete.mjs](sources/roster-complete.mjs) och [settlement-complete.mjs](sources/settlement-complete.mjs) är egna integer-pixelkompositioner enligt projektvillkoren. De lokala referenserna används som stilunderlag, inte importerade rastercrops. [Provenance/mapping](sources/complete-references.md) och auditen redovisar källor/exporter.
+
+
+RTS-157: melee/bow/siege/buildingHit är egna deterministiska synteskompositioner i scripts/export-audio.py enligt samma projektvillkor. Ingen extern Foley- eller röstinspelning används.

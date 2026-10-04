@@ -1732,3 +1732,6 @@ Repo/package/remote/Pages/storagekeys/Save-ID:n behåller warcraft-2-tribute.
 
 
 RTS-156: terrainDetails återanvänder world-atlas och statiska tilebilder. Endast presentation tillförs; terrainFrame och map.obstacles är fortfarande gameplaykälla. Skogsgrafik ersätter rockvisual endast på Forest Pass. Ingen fog/navigationsändring.
+
+
+RTS-157: combatAudio är ren presentationspolicy för synliga snapshots och dämpade cues. BootScene syncAudio adapterar kamerans mitt till appägda GameAudio; den äldre generiska impact/cannon-cuen används inte dubbelt i scenen. Gameplaystate ändras inte.

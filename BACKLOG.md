@@ -27,7 +27,7 @@ avslutas efter denna fix; ingen senare roadmap-task startas.
   /tmp/w2t-bottom-bar; ingen ny CI-/Pages-verifiering hävdas.
 
 
-**RTS-156 – Förbättrad kartgrafik** — In Progress. Nytt mandat156–159; stanna efter159. RTS-155 avstämd: Human-worker/soldier/base och övriga landreferenser implementerade och visuellt granskade; unit435/78 och build/strict typecheck från0b0e338 återanvänds som historiska belägg. Återstående spritearbete gäller sjöfart utan referensunderlag, separat från156–159. Se [spriteavstämning](assets/sources/remaining-sprites.md).
+**RTS-158 – Fler humoristiska enhetskommentarer** — Nästa oberoende arbete.156 Done;157 teknisk del verifierad, faktisk lyssning återstår. Stoppa efter159.155 avstämd; [återstående sprites](assets/sources/remaining-sprites.md).
 
 **Aktuell etapp:** Användaren beställer156–159. Senaste mandat ersätter tidigare stopp; senare tasks startas inte.156 hanterar kartgrafik,157 attackljud,158 repliker/inspelningar,159 dekorativ värld. Saknat assetunderlag får inte markeras som färdigt; oberoende tasks fortsätter.
 
@@ -4249,9 +4249,11 @@ Verifiera stilen på en referenskarta innan övriga uppdateras.
 
 ## RTS-157 – Tydliga attackljud
 
-**Status:** Todo.
+**Status:** In Progress – teknisk del implementerad/verifierad; faktisk lyssning återstår.
 
 **Goal:** Tydliga attackljud.
+
+**Verifierad del2026-10-04:** Nya egna melee/bow/siege/buildingHit-WAV/OGG, befintliga cannon/impact. Public visibility-filtrerad shot/cooldown/HP-policy, avstånd256–1400px, familjcoalescing och befintligt max6/cooldown. Ingen gameplayändring. Riktade7/3 och7/2, unit439/79, build/strict typecheck och diffcheck PASS. Faktisk Chromium-stridsfixture med landstrid och navalcombat PASS:180 accepterade cues, mixpeak0.352,15 filer dekodade. [Lyssningsklipp](artifacts/rts-157/battle-preview.wav), [protokoll](assets/sources/attack-audio.md). Faktisk lyssning är efterfrågad men ännu inte utförd; tekniska belägg ersätter den inte. Tasken är inte Done. Oberoende158/159 fortsätter enligt mandat.
 
 **Requirements:**
 

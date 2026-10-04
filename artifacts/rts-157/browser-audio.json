@@ -1,0 +1,921 @@
+{
+  "cues": [
+    {
+      "name": "bow",
+      "gain": 1,
+      "time": 0.016000000000000014
+    },
+    {
+      "name": "siege",
+      "gain": 1,
+      "time": 0.016000000000000014
+    },
+    {
+      "name": "warning",
+      "gain": 1,
+      "time": 0.042666666666666686
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 0.042666666666666686
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 0.22399999999999998
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 0.22399999999999998
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 0.3946666666666667
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 0.45866666666666667
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 0.56
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 0.6933333333333332
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 0.7253333333333333
+    },
+    {
+      "name": "buildingHit",
+      "gain": 0.9772231364667125,
+      "time": 0.896
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 0.896
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 0.928
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 1.0613333333333332
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 1.1626666666666665
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 1.2266666666666666
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 1.392
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 1.392
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 1.5626666666666669
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 1.6266666666666665
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 1.7280000000000002
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 1.8613333333333335
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 1.8933333333333335
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 2.058666666666667
+    },
+    {
+      "name": "bow",
+      "gain": 1,
+      "time": 2.058666666666667
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 2.090666666666667
+    },
+    {
+      "name": "siege",
+      "gain": 1,
+      "time": 2.16
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 2.24
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 2.3253333333333335
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 2.4053333333333335
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 2.56
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 2.576
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 2.7413333333333334
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 2.7946666666666666
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 2.912
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 3.024
+    },
+    {
+      "name": "bow",
+      "gain": 1,
+      "time": 3.0613333333333337
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 3.0773333333333333
+    },
+    {
+      "name": "warning",
+      "gain": 1,
+      "time": 3.1093333333333333
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 3.2746666666666666
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 3.2746666666666666
+    },
+    {
+      "name": "bow",
+      "gain": 1,
+      "time": 3.3600000000000003
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 3.4453333333333336
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 3.5093333333333336
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 3.610666666666667
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 3.744
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 3.7760000000000002
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 3.941333333333333
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 3.978666666666667
+    },
+    {
+      "name": "bow",
+      "gain": 1,
+      "time": 4.058666666666666
+    },
+    {
+      "name": "siege",
+      "gain": 1,
+      "time": 4.058666666666666
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 4.128
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 4.229333333333333
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 4.293333333333333
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 4.458666666666667
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 4.474666666666667
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 4.624
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 4.709333333333333
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 4.794666666666666
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 4.944
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 4.96
+    },
+    {
+      "name": "bow",
+      "gain": 1,
+      "time": 5.061333333333333
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 5.125333333333333
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 5.1786666666666665
+    },
+    {
+      "name": "buildingHit",
+      "gain": 0.9772231364667125,
+      "time": 5.210666666666667
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 5.290666666666667
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 5.4079999999999995
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 5.461333333333333
+    },
+    {
+      "name": "bow",
+      "gain": 1,
+      "time": 5.557333333333333
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 5.626666666666666
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 5.658666666666666
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 5.792
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 5.893333333333333
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 5.957333333333333
+    },
+    {
+      "name": "bow",
+      "gain": 1,
+      "time": 6.058666666666666
+    },
+    {
+      "name": "siege",
+      "gain": 1,
+      "time": 6.058666666666666
+    },
+    {
+      "name": "warning",
+      "gain": 1,
+      "time": 6.128
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 6.144
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 6.277333333333333
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 6.325333333333333
+    },
+    {
+      "name": "siege",
+      "gain": 1,
+      "time": 6.373333333333333
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 6.512
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 6.528
+    },
+    {
+      "name": "bow",
+      "gain": 1,
+      "time": 6.661333333333333
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 6.709333333333333
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 6.778666666666666
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 6.874666666666666
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 7.008
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 7.04
+    },
+    {
+      "name": "bow",
+      "gain": 1,
+      "time": 7.061333333333333
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 7.210666666666667
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 7.242666666666667
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 7.3759999999999994
+    },
+    {
+      "name": "buildingHit",
+      "gain": 0.9772231364667125,
+      "time": 7.4079999999999995
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 7.477333333333333
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 7.541333333333333
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 7.706666666666667
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 7.728
+    },
+    {
+      "name": "bow",
+      "gain": 1,
+      "time": 7.76
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 7.877333333333333
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 7.957333333333333
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 8.042666666666666
+    },
+    {
+      "name": "bow",
+      "gain": 1,
+      "time": 8.058666666666666
+    },
+    {
+      "name": "siege",
+      "gain": 1,
+      "time": 8.058666666666666
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 8.208
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 8.224
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 8.373333333333333
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 8.458666666666666
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 8.544
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 8.693333333333333
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 8.709333333333333
+    },
+    {
+      "name": "bow",
+      "gain": 1,
+      "time": 8.858666666666666
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 8.874666666666666
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 8.927999999999999
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 9.04
+    },
+    {
+      "name": "bow",
+      "gain": 1,
+      "time": 9.061333333333334
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 9.157333333333334
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 9.210666666666667
+    },
+    {
+      "name": "warning",
+      "gain": 1,
+      "time": 9.226666666666667
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 9.376
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 9.392
+    },
+    {
+      "name": "buildingHit",
+      "gain": 0.9772231364667125,
+      "time": 9.509333333333332
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 9.541333333333332
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 9.626666666666667
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 9.706666666666667
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 9.861333333333333
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 9.877333333333333
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 10.144
+    },
+    {
+      "name": "siege",
+      "gain": 1,
+      "time": 10.144
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 10.144
+    },
+    {
+      "name": "bow",
+      "gain": 1,
+      "time": 10.144
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 10.325333333333333
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 10.373333333333333
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 10.490666666666666
+    },
+    {
+      "name": "siege",
+      "gain": 1,
+      "time": 10.56
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 10.624
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 10.677333333333333
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 10.842666666666666
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 10.858666666666666
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 11.008
+    },
+    {
+      "name": "bow",
+      "gain": 1,
+      "time": 11.061333333333334
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 11.093333333333334
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 11.173333333333334
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 11.328
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 11.344
+    },
+    {
+      "name": "cannon",
+      "gain": 0.8348579850039798,
+      "time": 11.509333333333332
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 11.525333333333332
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 11.557333333333332
+    },
+    {
+      "name": "buildingHit",
+      "gain": 0.9772231364667125,
+      "time": 11.610666666666667
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 11.706666666666667
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 11.808
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 11.893333333333333
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 12.042666666666666
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 12.058666666666666
+    },
+    {
+      "name": "siege",
+      "gain": 1,
+      "time": 12.058666666666666
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 12.224
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 12.277333333333333
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 12.389333333333333
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 12.506666666666666
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 12.56
+    },
+    {
+      "name": "siege",
+      "gain": 1,
+      "time": 12.655999999999999
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 12.725333333333333
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 12.757333333333333
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 12.890666666666666
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 12.991999999999999
+    },
+    {
+      "name": "cannon",
+      "gain": 0.8348579850039798,
+      "time": 13.024
+    },
+    {
+      "name": "warning",
+      "gain": 1,
+      "time": 13.04
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 13.173333333333334
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 13.242666666666667
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 13.344
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 13.477333333333332
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 13.509333333333332
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 13.674666666666667
+    },
+    {
+      "name": "buildingHit",
+      "gain": 0.9772231364667125,
+      "time": 13.706666666666667
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 13.706666666666667
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 13.84
+    },
+    {
+      "name": "melee",
+      "gain": 1,
+      "time": 13.941333333333333
+    },
+    {
+      "name": "impact",
+      "gain": 1,
+      "time": 14.005333333333333
+    },
+    {
+      "name": "siege",
+      "gain": 1,
+      "time": 14.058666666666666
+    }
+  ],
+  "status": {
+    "state": "running",
+    "loaded": 15,
+    "music": true,
+    "effects": 3,
+    "phase": "playing",
+    "settings": {
+      "master": 0.8,
+      "effects": 0.8,
+      "music": 0,
+      "voices": 0,
+      "muted": false
+    }
+  },
+  "peak": 0.3517729640007019,
+  "errors": [],
+  "listening": "Not performed; technical capture is not auditory review."
+}

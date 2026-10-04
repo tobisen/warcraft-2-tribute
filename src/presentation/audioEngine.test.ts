@@ -20,7 +20,8 @@ it('the engine caps concurrent sources, cleans gains/reset, mutes, pauses and le
   createBufferSource(){const node={buffer:null,playbackRate:{value:1},connect:vi.fn(),disconnect:vi.fn(),start:vi.fn(),stop:vi.fn(),onended:null};sources.push(node);return node;}
  }
  vi.stubGlobal('AudioContext',FakeContext);vi.stubGlobal('fetch',vi.fn(async()=>({ok:true,arrayBuffer:async()=>new ArrayBuffer(0)})));
- const engine=new GameAudio();await engine.unlock();expect(engine.status.loaded).toBe(11);expect(engine.status.music).toBe(true);expect(gains[1].gain.value).toBeCloseTo(defaultAudio.master*defaultAudio.music*audioConfig.menuMusicGain);engine.setPhase('playing');await Promise.resolve();expect(engine.status.music).toBe(true);expect(gains[1].gain.value).toBeCloseTo(defaultAudio.master*defaultAudio.music);
+ const engine=new GameAudio();await engine.unlock();expect(engine.status.loaded).toBe(15);expect(engine.status.music).toBe(true);expect(gains[1].gain.value).toBeCloseTo(defaultAudio.master*defaultAudio.music*audioConfig.menuMusicGain);engine.setPhase('playing');await Promise.resolve();expect(engine.status.music).toBe(true);expect(gains[1].gain.value).toBeCloseTo(defaultAudio.master*defaultAudio.music);
+ engine.play('bow',false,.25);expect(gains.at(-1).gain.value).toBeCloseTo(effectMix.bow.gain*.25);engine.reset();await engine.unlock();
  for(const sound of ['gather','build','train','impact'] as Sound[])engine.play(sound);
  expect(engine.status.effects).toBe(4);engine.play('cannon');expect(engine.status.effects).toBe(4);
  engine.play('warning');expect(engine.status.effects).toBe(5);context.currentTime=2;engine.play('warning');expect(engine.status.effects).toBe(6);engine.play('warning');expect(engine.status.effects).toBe(6);

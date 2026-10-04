@@ -90,6 +90,38 @@
       "duration": 0.35,
       "loop": false,
       "volume": 1
+    },
+    "melee": {
+      "ogg": "audio/melee.ogg",
+      "fallback": "audio/melee.wav",
+      "master": "assets/audio/melee.wav",
+      "duration": 0.22,
+      "loop": false,
+      "volume": 1
+    },
+    "bow": {
+      "ogg": "audio/bow.ogg",
+      "fallback": "audio/bow.wav",
+      "master": "assets/audio/bow.wav",
+      "duration": 0.2,
+      "loop": false,
+      "volume": 1
+    },
+    "siege": {
+      "ogg": "audio/siege.ogg",
+      "fallback": "audio/siege.wav",
+      "master": "assets/audio/siege.wav",
+      "duration": 0.5,
+      "loop": false,
+      "volume": 1
+    },
+    "buildingHit": {
+      "ogg": "audio/buildingHit.ogg",
+      "fallback": "audio/buildingHit.wav",
+      "master": "assets/audio/buildingHit.wav",
+      "duration": 0.38,
+      "loop": false,
+      "volume": 1
     }
   }
 }
