@@ -22,3 +22,9 @@ Aktuell körning: användaren har godkänt commit/push efter färdig task enligt
 Ny godkänd etapp: verifiera befintlig Pages först, implementera sedan RTS-061–065 autonomt och taskvis enligt AGENTS.md. RTS-066–090 ligger utanför denna etapp.
 
 Senaste styrning efter publicerad RTS-065: användaren har godkänt fortsatt arbete. Följ nästa Current Focus och samma taskvisa checks/dokumentation/commit/push; tidigare etappstopp gäller inte längre. Rollernas ansvar är oförändrat.
+
+## Senaste styrning: effektiva checks och paus
+
+Kör fulla slutchecks en gång på slutlig kod: npm test, npm run build (inkluderar strict typecheck) och git diff --check. Dubblera inte typecheck eller breda simuleringar. Upprepa endast kontroller som nya kodändringar, fel eller konkreta fynd motiverar. Redovisa riktade checks, fullchecks, misslyckade försök och återanvänd evidens ärligt.
+
+Den stora körningen är pausad. Endast påbörjad RTS-147 får slutföras; efter verifierad commit/push och kort överlämning ska arbetet stanna. Börja inte RTS-148. Denna instruktion har företräde framför äldre etapp-/fortsätttext ovan.

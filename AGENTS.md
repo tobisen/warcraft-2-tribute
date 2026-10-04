@@ -41,6 +41,26 @@ innebär inte att agenter ska startas eller att arbete ska delegeras automatiskt
 Gör commit eller push endast när det ingår i användarens uppdrag. Respektera
 det aktuella uppdragets scope och non-goals.
 
+## Effektiva checks och aktuellt stopp
+
+Senaste användarinstruktionen gäller framför äldre fortsätt-mandat: den stora
+körningen är pausad. Slutför endast påbörjad RTS-147, verifiera, commit:a och
+pusha, skriv en kort överlämning och stanna. Börja inte RTS-148.
+
+- Under implementation: kör riktade beteende- och regressionstester för det
+  ändrade systemet och dess berörda beroenden.
+- Kör fulla slutchecks en gång på slutlig kod: `npm test`, `npm run build`
+  (inkluderar strict typecheck) och `git diff --check`. Kör inte separat
+  typecheck igen när samma build redan har verifierat den.
+- Lägg inte till breda matchsimuleringar, kampanjgenomspelningar eller omkörningar
+  utan konkret relevans för ändringen. Browserkontroll ska fokusera på taskens
+  nya spelarflöde och relevanta regressionsrisker.
+- Upprepa checks endast om efterföljande kodändringar, ett fel eller ett
+  konkret kvarstående fynd motiverar det. Vid fel: undersök orsaken och kör
+  först den berörda kontrollen; dölj inte misslyckade försök.
+- Gör review och uppdatera docs/backlog före commit. Redovisa faktiskt körda
+  checks, tidigare återanvänd evidens och ej genomförd verifiering var för sig.
+
 ## Godkänd leverans i aktuell körning
 
 Användaren har uttryckligen godkänt commit och push till befintlig remote efter varje färdig task. Kontrollera branch/remote/arbetskatalog; bevara andra ändringar. Kör tester, typecheck, build och git diff --check, granska och uppdatera docs/backlog före commit. Pusha utan force, history rewrite eller amend av pushade commits. Rapportera hash/push. Vid kvarstående check- eller pushfel: stanna vid task-gränsen. Pages-publicering är godkänd inom RTS-060 efter releasekontroller; Den tidigare körningen stannade vid RTS-060. Användaren har nu godkänt autonom implementation av RTS-061–065 efter verifierad Pages-publicering, med commit/push efter varje klar task. RTS-066–090 förblir planerade.

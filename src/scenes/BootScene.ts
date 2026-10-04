@@ -1,3 +1,5 @@
+import {dismissProposal,dismissUnits,type DismissProposal} from '../gameplay/dismiss';
+import {dismissMessage} from '../presentation/dismiss';
 import {renderOperation,operationMarkers} from '../presentation/operations';
 import type {CaptureState} from '../gameplay/operations';
 import {campaignMissionForScenario,campaignPreset,type CampaignMissionId} from '../config/campaign';
@@ -102,6 +104,7 @@ import {
 } from '../gameplay/selection';
 
 export class BootScene extends Phaser.Scene {
+  private pendingDismiss?:DismissProposal;
   private capture?:CaptureState;
   private operationGraphics?:Phaser.GameObjects.Graphics;
   private operationLabels:Phaser.GameObjects.Text[]=[];
@@ -463,7 +466,15 @@ export class BootScene extends Phaser.Scene {
     saveButton.addEventListener('click',save);loadButton.addEventListener('click',load);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{saveButton.removeEventListener('click',save);loadButton.removeEventListener('click',load);});
     for(const [id,action] of [['start-match','start'],['pause-match','pause'],['resume-match','resume'],['new-match','new-match']] as const){const button=document.getElementById(id)!;const handler=()=>this.sessionAction(action);button.addEventListener('click',handler);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>button.removeEventListener('click',handler));}
     document.getElementById('command-guide-text')!.textContent=commandGuide;
+    const dismissButton=document.getElementById('dismiss-units') as HTMLButtonElement,dialog=document.getElementById('dismiss-dialog') as HTMLDialogElement,cancelDismiss=document.getElementById('dismiss-cancel')!,confirmDismiss=document.getElementById('dismiss-confirm')!;
+    const closeDismiss=()=>{this.pendingDismiss=undefined;dialog.close();this.skipGameplayFrame=true;this.syncVisuals();this.game.canvas.focus();};
+    const requestDismiss=()=>{const proposal=dismissProposal(this.currentMatch());if(!proposal||this.pendingDismiss)return;this.pendingDismiss=proposal;this.drag=undefined;this.cameraDrag=undefined;this.dragBox.setVisible(false);document.getElementById('dismiss-message')!.textContent=dismissMessage(proposal);dialog.showModal();this.syncVisuals();};
+    const confirm=()=>{const proposal=this.pendingDismiss;if(!proposal)return;closeDismiss();this.applyMatch(dismissUnits(this.currentMatch(),proposal.ids));if(this.outcome!=='playing')this.session=sessionTransition(this.session,'end');this.syncVisuals();};
+    const cancelDialog=(event:Event)=>{event.preventDefault();closeDismiss();};
+    dismissButton.addEventListener('click',requestDismiss);cancelDismiss.addEventListener('click',closeDismiss);confirmDismiss.addEventListener('click',confirm);dialog.addEventListener('cancel',cancelDialog);
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{dismissButton.removeEventListener('click',requestDismiss);cancelDismiss.removeEventListener('click',closeDismiss);confirmDismiss.removeEventListener('click',confirm);dialog.removeEventListener('cancel',cancelDialog);this.pendingDismiss=undefined;dialog.close();});
     const actionKey=(event:KeyboardEvent)=>{
+      if(this.pendingDismiss)return;
       const menuContext={...keyboardContext(event,this.session.phase==='playing'||this.session.phase==='paused'),ctrlKey:event.ctrlKey,metaKey:event.metaKey};
       if(!event.ctrlKey&&!event.metaKey&&gameplayKeyAllowed(menuContext)&&(event.key.toLowerCase()==='p'||event.key==='Escape'&&(this.session.phase==='paused'||!this.placement.active&&!this.attackMoveMode&&!this.unloadMode))){event.preventDefault();this.sessionAction(this.session.phase==='paused'?'resume':'pause');return;}
       const context={...keyboardContext(event,this.gameplayActive()),ctrlKey:event.ctrlKey,metaKey:event.metaKey};
@@ -485,8 +496,9 @@ export class BootScene extends Phaser.Scene {
     });
   }
 
-  private gameplayActive():boolean{return this.session.phase==='playing'&&this.outcome==='playing'&&!this.restartPending;}
+  private gameplayActive():boolean{return this.session.phase==='playing'&&this.outcome==='playing'&&!this.restartPending&&!this.pendingDismiss;}
   private sessionAction(action:SessionAction):void {
+    if(this.pendingDismiss)return;
     if(action==='start'&&this.session.phase==='menu'&&!this.restartPending){
       const mission=currentHomePage()==='campaign'?campaignMissionForScenario(this.session.options.scenario):undefined;
       if(currentHomePage()==='campaign'&&!mission)return;
@@ -741,6 +753,7 @@ export class BootScene extends Phaser.Scene {
     this.attackMoveButton.setAttribute('aria-pressed',String(this.attackMoveMode));
     this.attackMoveButton.textContent=this.attackMoveMode?uiText.attackMoveClickADestinationEscapeCancels:'Attack-move';
     this.stopButton.disabled = !this.gameplayActive() || !this.allSelectable().some(u=>u.selected);
+    (document.getElementById('dismiss-units') as HTMLButtonElement).disabled=!dismissProposal(this.currentMatch());
     this.hpBars?.clear();
     const visibleEnemies=this.combat.enemies.filter(e=>entityVisible(this.fog,'player',e));
     const markers = orderMarkers(this.gathering, {...this.combat,enemies:visibleEnemies}, this.outcome==='playing',this.placement.barracks,this.placement.farms,this.placement.forge?.footprint,this.navy?.harbor?.footprint);
@@ -854,7 +867,7 @@ export class BootScene extends Phaser.Scene {
     for(const [id,e] of this.impacts){if(!impactAlive(e.impact,this.visualTime,p=>isVisible(this.fog,'player',p))){e.visual.destroy();this.impacts.delete(id);}else e.visual.setFrame(impactFrame(e.impact,this.visualTime));}
     for(const [id,d] of this.deaths){if(!effectAlive(d.effect,this.visualTime,isVisible(this.fog,'player',d.effect.motion.position))){d.visual.destroy();this.deaths.delete(id);}else d.visual.setFrame(unitFrame(d.effect.motion,this.visualTime));}
     if(this.fogOverlay)drawFog(this.fogOverlay,this.fog,this.fogPreview??'player');
-    for(const shortcut of hotkeys){const button=document.getElementById(shortcut.button)!;button.textContent=`${button.textContent?.replace(/\s+\[[A-Z]\]$/,'')} [${shortcut.key}]`;button.title=shortcut.label;}
+    for(const shortcut of hotkeys){const button=document.getElementById(shortcut.button)!;button.textContent=`${button.textContent?.replace(/\s+\[[A-Z]+\]$/,'')} [${shortcut.key}]`;button.title=shortcut.label;}
     renderActionPanel(actionPanel(this.currentMatch(),this.selectedBuilding,this.gameplayActive()));
     renderTutorial(this.currentMatch());
     renderOperation(this.currentMatch());
@@ -883,7 +896,7 @@ export class BootScene extends Phaser.Scene {
     if(this.restartPending)return;
     this.cameraInput?.update(delta/1000);
     const previousShots=this.combat.projectiles??[];
-    const dt=gameplayDelta(this.session.phase,delta/1000,this.skipGameplayFrame,this.session.options.speed??1);this.visualTime+=dt;
+    const dt=gameplayDelta(this.pendingDismiss?'paused':this.session.phase,delta/1000,this.skipGameplayFrame,this.session.options.speed??1);this.visualTime+=dt;
     const match = updateMatch(this.currentMatch(),dt);
     this.skipGameplayFrame=false;
     this.applyMatch(match);

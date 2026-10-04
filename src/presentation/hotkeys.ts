@@ -1,6 +1,7 @@
 import {text as uiText} from '../text';
 import { gameplayKeyAllowed,type KeyContext } from './keyboard';
 export const hotkeys=[
+ {key:'DELETE',button:'dismiss-units',label:'Dismiss selected own units. Confirmation includes transport passengers; no refund or kill credit.'},
  {key:'E',button:'unit-ability',label:uiText.factionAbilitySelectedCombatUnitsThatAreReady},
  {key:'S',button:'stop-units',label:uiText.stopSelectedUnits},
  {key:'A',button:'attack-move',label:uiText.attackMoveSelectACombatUnitThenClick},

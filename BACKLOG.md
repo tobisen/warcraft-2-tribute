@@ -2,7 +2,9 @@
 
 ## Current Focus
 
-**RTS-147 – Ta bort egna enheter** — **Todo**.
+**RTS-147 – Ta bort egna enheter** — **Done**. Körningen pausad; nästa task är RTS-148 (Todo), inte påbörjad.
+
+**Aktuellt stopp:** den stora körningen är pausad enligt senaste användarinstruktionen. Slutför endast RTS-147 med riktade arbetschecks och fulla slutchecks en gång, commit/push och kort överlämning. Börja inte RTS-148. Äldre fortsätt-mandat nedan är historiskt.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -3844,7 +3846,7 @@ Speltesta nivåerna för blockerande lägen och svårighet.
 
 ## RTS-147 – Ta bort egna enheter
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Inför en tydlig “Dismiss Unit”-action för egna units.
 
@@ -3868,7 +3870,9 @@ Egen borttagning räknas separat i statistiken.
 
 **Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
 
-**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+**Detaljplan:**147A ren proposal/confirmation för levande markerade egna landunits/ships; byggnader/enemy förbjudna. Transportens passagerare räknas tydligt som berörda och tas bort tillsammans med transporten.147B återanvänd befintlig cleanDestroyed-transaktion för cargo loss, build/resurs/target/navigation/group-referenser och supply; incrementera removed separat före cleanup, inga refunds/kills.147C Dismiss Unit/Delete öppnar fokuslåst bekräftelse med antal och cargo/passagerarvarning; simulation/gameplay-input fryses tills confirm/cancel/Escape. Confirm lägger inga andra orders; cancel bevarar exakt state. Delete ignoreras i UI-input/modifiers/repeat/paus/gameover.147D grupp/worker/combat/ship-cargo/byggare/kurir/capture/Save och inputtester, nativeconfirm/cancel/group/Save vid båda upplösningar, fullsvit/typecheck/build/review/docs. Ingen rivning eller framtida highscores.
+
+**Slutverifiering:**26 riktade tester/4filer PASS549ms; en full slutkörning1132tester/143filer PASS483.26s. npm run build inklusive strict typecheck PASS; git diff --check och doclänkar PASS. Native1280/1920 gathering/cargo, Delete/cancel/Escape/freeze, confirm/grupp, byggnadsspärr, Save/load/restart PASS utan browsererrors. Review utan blockerande fynd. Befintlig bundlevarning kvar; ingen extra bred matchgenomspelning. Agent-/rollregler uppdaterade. Körningen stannar efter denna tasks commit/push;148 ej påbörjad.
 
 ## RTS-148 – Tydligare snabbkommandon
 

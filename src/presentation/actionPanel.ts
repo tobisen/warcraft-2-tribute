@@ -16,7 +16,7 @@ import {forgeReady} from '../gameplay/research';
 import type {BuildingSelection} from '../gameplay/buildingSelection';
 import type {MatchState} from '../gameplay/match';
 import {hotkeys} from './hotkeys';
-export const actionIds=['train-worker','train-soldier','train-archer','train-catapult','train-specialist','train-transport','train-ship','build-barracks','build-farm','build-forge','build-harbor','research-attack','research-defense','attack-move','unit-ability','unload-transport','stop-units'] as const;
+export const actionIds=['train-worker','train-soldier','train-archer','train-catapult','train-specialist','train-transport','train-ship','build-barracks','build-farm','build-forge','build-harbor','research-attack','research-defense','attack-move','unit-ability','unload-transport','stop-units','dismiss-units'] as const;
 type ActionId=typeof actionIds[number];
 export interface ActionPresentation {visible:boolean;reason:string;cost?:string}
 export function affordabilityReason(balance:{wood:number;goldBalance?:number},cost:ResourceCost):string {

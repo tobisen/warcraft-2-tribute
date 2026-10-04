@@ -1676,3 +1676,9 @@ Save32 migrerar31 och tidigare utan ändrade gamla mission-/fraktionsidentiteter
 ## RTS-146 – Campaign-regressionsverifiering
 
 `src/gameplay/campaignVerification.test.ts` kompletterar paidEarly/paidLate och operations-test med explicita objective-fixtures: alla åtta saved defeats, delvis guardclear, capture pause/load/reset och faktisk eskort-goal följd av idempotent lokal registration över upprepade endedSave-load. Fixtures redovisas separat från den sammanhängande betalda native1–8-kedjan. Testerna kontrollerar bank/cargo/statistik-integritet, inte att en fabricerad outcome är betald spelvinst. Ingen ny runtime-state, Save-version eller rewardadapter krävs.
+
+## RTS-147 – Dismiss-transaktion och modal
+
+`src/gameplay/dismiss.ts` härleder en proposal med stabila own-ID:n/count/passagerarantal. Confirm validerar levande own-ID:n, inkrementerar befintlig statLedger.player.removed och återanvänder updateMatch(delta0)/cleanDestroyed för body-, cargo-, builder-, target-, controlgroup- och outcome-cleanup. Produktionscounters/bank bevaras; härledd resourceService/traffic/supply tappar borttagna units utan ny persistent registry. Ingen Save-versionhöjning: dialog/proposal är scene/UI-state och befintlig Save32 lagrar cleaned match/removedstatistik.
+
+BootScene binder Dismiss/Confirm/Cancel till en native HTML-dialog med fokuslåsning. Pending proposal blockerar gameplayActive och använder noll gameplay/animation-delta tills confirm/cancel; första återupptagna frame ignoreras. Listener/dialog-state städas vid scene shutdown. `src/presentation/dismiss.ts` härleder count/cargo/refundtext; hotkey/actionpanel återanvänder samma knapphandler.

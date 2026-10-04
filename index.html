@@ -78,6 +78,7 @@
       <button id="unit-ability" type="button" disabled data-ui-text="ability">Ability</button>
       <p id="ability-status" role="status"></p>
       <button id="stop-units" type="button" disabled>Stop</button>
+      <button id="dismiss-units" type="button" disabled>Dismiss Unit</button>
       </fieldset>
       <p id="tutorial-objective" role="status" hidden></p>
       <p id="command-feedback" role="status"></p>
@@ -91,6 +92,7 @@
 
     </section>
     <div id="game"></div>
+    <dialog id="dismiss-dialog" aria-labelledby="dismiss-heading"><h2 id="dismiss-heading">Dismiss Unit</h2><p id="dismiss-message"></p><button id="dismiss-cancel" type="button" autofocus>Cancel</button><button id="dismiss-confirm" type="button">Confirm Dismiss</button></dialog>
     <aside id="minimap-overlay" hidden aria-label="World overview"><canvas id="minimap" width="200" height="150" aria-label="Minimap – click to move the camera"></canvas></aside>
     <section id="bottom-bar" hidden aria-label="Selection information"><canvas id="selection-portrait" width="128" height="128" aria-label="Selected entity portrait"></canvas><div id="selection-info"><h2 id="selection-name"></h2><p id="selection-detail"></p><p id="selection-health"></p><progress id="selection-health-bar" max="1" value="0"></progress><p id="selection-stats"></p><div id="selection-icons" hidden aria-label="Selected group units"></div></div><section id="action-panel" aria-label="Selected entity actions"><p id="action-hint"></p></section></section>
     <section id="result-screen" hidden aria-label="Match result"><div id="result-card"><div id="result-content"></div><nav aria-label="Result actions"><button id="result-play-again" type="button">Play Again</button><button id="result-main-menu" type="button">Main Menu</button><button id="result-statistics" type="button">View Statistics</button><button id="result-back" type="button" hidden>Back to Result</button></nav><div id="result-save"></div></div></section>

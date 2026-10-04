@@ -1258,3 +1258,7 @@ Save32 migrerar äldre format stegvis utan nya entities eller omskrivna äldre f
 ## RTS-146 – Verifieringsscope och rewards
 
 Campaigncompletion är lokal progression; inget materiellt reward-system införs. Upprepad completion/load/resultatvisning ska därför både vara idempotent i progressionstore och lämna matchbank/cargo/statistik oförändrade. Objective-fixtures används för isolerade failure/partial-Save-regler, verkliga paid-tester/nativekedja för spelbarhet. Genomspelad svårighet redovisas explicit: allaNormal i gameplaytester, TutorialBeginner/övrigaNormal i native. Fasta tvåguards i de nya tre operationerna förblir authored hot, inte skalad AI-ekonomi. Ingen ytterligare balansering eller ny objective-arkitektur behövs för denna verifiering.
+
+## RTS-147 – Borttagning och bekräftelse
+
+Frivillig borttagning räknas som removed, aldrig death/kill eller refund. En dismissad transport tar sina embarked units med sig; alla räknas i bekräftelsen och removedstatistik, cargo bokförs som lost. Detta undviker osäkra automatiska landstigningar. Byggnader dismissas inte. Bekräftelsen fryser simulation/input, med Cancel som förvalt fokus och Escape som avbrytning. Ingen ny persistent state eller Save-version behövs. Kurirförlust och förlorad capturekontroll följer ordinarie missionsregler.

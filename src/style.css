@@ -194,3 +194,7 @@ html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#
 
 #campaign-overview ol { display: grid; gap: .4rem; padding-left: 1.5rem; }
 #campaign-briefing { white-space: pre-line; line-height: 1.5; }
+
+#dismiss-dialog{color:#eadbbd;background:#192b28;border:2px solid #977a40;width:min(460px,calc(100vw - 48px));padding:24px;box-shadow:0 12px 50px #0009;}
+#dismiss-dialog::backdrop{background:#0009;}
+#dismiss-dialog button{margin:8px 8px 0 0;}

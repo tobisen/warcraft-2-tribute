@@ -754,3 +754,9 @@ Välj/flytta courier manuellt efter att armén säkrat passagen. Vid banner-zone
 Hela kedjan1–8 har genomspelats med betald ekonomi i1280×720 och1920×1080. NativeTutorial kördes påBeginner, övriga sju påNormal; automatiska paid-tester täcker alla åtta påNormal. Detta är ingen garanti om identisk balans på alla svårigheter. De tre nya operationerna har två fasta fraktionsvakterna vardera, utan skalande AI-ekonomi eller vågor.
 
 Vid eskort: skicka först stridsenheter genom passet och skydda den namngivna kuriren. Vid rescue: båda namngivna guards måste dö och egen combat-enhet nå zonen. PåCoast: transportera en betald armé, välj fri landstigningsyta och håll zonen30s utan avbrott. Blockerad strand avvisar hela unload och behåller passagerarna; välj en annan synlig strand. Ships/workers/passagerare håller inte zonen. Save/load ska bevara delvis holdtid; paus ger ingen tid och frånvaro/contest nollställer den. Completion ger endast lokal upplåsning, inga resurser eller units.
+
+## RTS-147 – Dismiss Unit
+
+Markera egna enheter och välj **Dismiss Unit [DELETE]**, eller tryck Delete med fokus i spelvärlden. Bekräftelsen anger antalet som tas bort. En markerad transport inkluderar alla sina passagerare; last går förlorad. Cancel eller Escape bevarar enheterna och deras orders. Simulation och gameplay-input fryses under bekräftelsen.
+
+Borttagning frigör population utan återbetalning eller kill credit. Statistik visar den separat som Units removed. Byggnader och fiender kan inte dismissas. En borttagen byggare lämnar sin byggplats pausad för annan arbetare. Dismiss av Ridge Courier förlorar eskortuppdraget; sista banner-hållarens borttagning nollställer capturetid.
