@@ -748,3 +748,9 @@ De första fyra operationerna har fasta berättelseprofiler: Humans → Orcs, Or
 Campaign har nu åtta operationer. Efter The Outpost: The Crossing(Goblins, betald transport/landstigning) → Ridge Convoy(Orcs, skydda Ridge Courier och slå ut båda passvakterna) → Valley Rescue(Elves, slå ut båda camp guards och nå rescue-zonen med combat-enhet) → Coastal Banner(Humans, landstig och håll kustzonen oavbrutet30s). Briefingarna och målstatus visar platser och villkor.
 
 Välj/flytta courier manuellt efter att armén säkrat passagen. Vid banner-zonen måste minst en levande egen landcombat-enhet stanna kvar; enemy combatants eller egen frånvaro nollställer tiden. Workers, ships och embarked units räknas inte. Courier-/basdöd ger defeat där tillämpligt; Save/load/restart bevarar eller återställer målstatus enligt matchflödet. Nya Saves använder config32; äldre Saves och tidigare progression bevaras. Målsymbolerna är enkla namngivna ringar med befintlig grafik.
+
+## RTS-146 – Kampanjens verifierade flöde
+
+Hela kedjan1–8 har genomspelats med betald ekonomi i1280×720 och1920×1080. NativeTutorial kördes påBeginner, övriga sju påNormal; automatiska paid-tester täcker alla åtta påNormal. Detta är ingen garanti om identisk balans på alla svårigheter. De tre nya operationerna har två fasta fraktionsvakterna vardera, utan skalande AI-ekonomi eller vågor.
+
+Vid eskort: skicka först stridsenheter genom passet och skydda den namngivna kuriren. Vid rescue: båda namngivna guards måste dö och egen combat-enhet nå zonen. PåCoast: transportera en betald armé, välj fri landstigningsyta och håll zonen30s utan avbrott. Blockerad strand avvisar hela unload och behåller passagerarna; välj en annan synlig strand. Ships/workers/passagerare håller inte zonen. Save/load ska bevara delvis holdtid; paus ger ingen tid och frånvaro/contest nollställer den. Completion ger endast lokal upplåsning, inga resurser eller units.

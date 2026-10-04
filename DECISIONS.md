@@ -1254,3 +1254,7 @@ De tre nya målen införs vid första behov i uppdrag6–8, med configens stabil
 Capture sparar endast kontinuerlig holdtid. Egen levande landcombat och inga enemy landcombat inom inklusive64px-kanten krävs, före/efter steget; inträde börjar räkna nästa steg och avbrott nollställer.30s är gameplaytid, paus/game over fryser den. Workers/ships/cargo räknas inte. Basdöd har företräde; courier-död ger ytterligare escort-defeat. Starting-statistik/supply omfattar initialcourier/guards separat från betald produktion.
 
 Save32 migrerar äldre format stegvis utan nya entities eller omskrivna äldre fraktionspar. Nya operations/capture kan inte maskeras som config31; strikt state/config/timeline-validering. Målzon/camp/banner använder uttryckligt enkel namngiven markör med befintlig pixelgrafik; ingen ny flagg-/camp-animation behövs i denna slice.
+
+## RTS-146 – Verifieringsscope och rewards
+
+Campaigncompletion är lokal progression; inget materiellt reward-system införs. Upprepad completion/load/resultatvisning ska därför både vara idempotent i progressionstore och lämna matchbank/cargo/statistik oförändrade. Objective-fixtures används för isolerade failure/partial-Save-regler, verkliga paid-tester/nativekedja för spelbarhet. Genomspelad svårighet redovisas explicit: allaNormal i gameplaytester, TutorialBeginner/övrigaNormal i native. Fasta tvåguards i de nya tre operationerna förblir authored hot, inte skalad AI-ekonomi. Ingen ytterligare balansering eller ny objective-arkitektur behövs för denna verifiering.

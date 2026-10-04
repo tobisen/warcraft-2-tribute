@@ -1672,3 +1672,7 @@ MatchState har valfritt `campaignMission`; Save31 migrerar30 utan att skapa hist
 Save32 migrerar31 och tidigare utan ändrade gamla mission-/fraktionsidentiteter eller nya initialunits. Strikt validering binder nya finite guards/courier/capture till scenario, counter, profil och faktisk hold/timeline/control. Nytt målstate tillåts inte i äldre/andra scenarios. Matchstatistik räknar initialcourier/guards separat från producerade enheter; population räknar courier som vanlig worker.
 
 `src/presentation/operations.ts` härleder status och markerdata från faktiskt matchstate. BootScene ritar namngivna ringar/zoner med befintlig pixelgrafik och fog; målzonen visas efter exploration och levande guards endast när synliga. En enkel zonmarkör ersätter ingen ny läger-/flagganimation. Home-menu/scenario-select/campaign-config innehåller åtta operationer med samma fem stabila äldre ID:n och tre nya.
+
+## RTS-146 – Campaign-regressionsverifiering
+
+`src/gameplay/campaignVerification.test.ts` kompletterar paidEarly/paidLate och operations-test med explicita objective-fixtures: alla åtta saved defeats, delvis guardclear, capture pause/load/reset och faktisk eskort-goal följd av idempotent lokal registration över upprepade endedSave-load. Fixtures redovisas separat från den sammanhängande betalda native1–8-kedjan. Testerna kontrollerar bank/cargo/statistik-integritet, inte att en fabricerad outcome är betald spelvinst. Ingen ny runtime-state, Save-version eller rewardadapter krävs.

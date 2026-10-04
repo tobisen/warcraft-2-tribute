@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-146 – Campaign-verifiering** — **Todo**.
+**RTS-147 – Ta bort egna enheter** — **Todo**.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -3818,7 +3818,7 @@ fler fraktioner och land-/sjöstrid.
 
 ## RTS-146 – Campaign-verifiering
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Verifiera victory/defeat, måltriggers, progression och replay.
 
@@ -3838,7 +3838,9 @@ Speltesta nivåerna för blockerande lägen och svårighet.
 
 **Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
 
-**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+**Detaljplan:**146A återanvänd145:s verkliga betalda fullkedja1–8 i båda upplösningarna som speltestbas; redovisa difficulty och förenklingar utan att hävda alla svårigheter genomspelade.146B verifiera samtliga mål/failure, partial/ended Save/load, paus/replay och exakt en progressionregistrering utan ekonomi-/statistikrewards i riktade regressionsfall.146C native paidCoast: sparad delvis capturetid, paus utan framsteg, load, frånvaro/reset och ny full30s; inga injicerade objective-enheter/bank.146D dokumentera blockeringslägen och faktisk grundbalans; 145:s fullsvit återanvänds endast för oförändrad runtime, kompletterad med nya riktade tester; typecheck/build/diff/granskning och Pages-status. Inga nya uppdrag/balanssystem eller framtida kommandon.
+
+**Slutverifiering:**59 riktade tester/3filer PASS1.50s(13nya fall); oförändrad runtime återanvänder145:s1111/141fullpass488.46s. Typecheck/build/diff/doclänkar PASS. Verklig fullkedja1–8 i båda upplösningarna från145 plus ny nativepaidCoast partialcapture/pause/Save-load/absence-reset/ny30s/victory PASS i1280/1920 utan browsererrors. NativeTutorialBeginner, övrigaNormal; paidgameplay allaNormal. Inga materiella rewards/runtimeändringar. Bundlevarning/uppskjuten lyssning kvar.
 
 ## RTS-147 – Ta bort egna enheter
 
