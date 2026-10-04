@@ -43,10 +43,7 @@ det aktuella uppdragets scope och non-goals.
 
 ## Effektiva checks och aktuellt stopp
 
-Senaste användarinstruktionen återupptar arbetet från aktuell status till och
-med RTS-150. RTS-001–147 är färdiga; återimplementera dem inte. Arbeta taskvis
-med commit/push efter verifierad task. Efter RTS-150: slutrapport och överlämning,
-stanna före RTS-151. Tidigare paus/stopp före148 är upphävt.
+Senaste uppdraget genom RTS-150 är avslutat. RTS-001–150 är färdiga; återimplementera dem inte. Taskvis commit/push är levererad. Slutrapport och överlämning finns i BACKLOG/DEV_LOG; stanna före RTS-151. Tidigare paus före148 ersattes av denna nu avslutade etapp.
 
 - Under implementation: kör tester för ändrade system och berörda beroenden.
 - Före commit av kod: kör hela unit-testsuiten, typecheck, build och
@@ -83,3 +80,7 @@ stanna före RTS-151. Tidigare paus/stopp före148 är upphävt.
 Användaren har uttryckligen godkänt commit och push till befintlig remote efter varje färdig task. Kontrollera branch/remote/arbetskatalog; bevara andra ändringar. Kör tester, typecheck, build och git diff --check, granska och uppdatera docs/backlog före commit. Pusha utan force, history rewrite eller amend av pushade commits. Rapportera hash/push. Vid kvarstående check- eller pushfel: stanna vid task-gränsen. Pages-publicering är godkänd inom RTS-060 efter releasekontroller; Den tidigare körningen stannade vid RTS-060. Användaren har nu godkänt autonom implementation av RTS-061–065 efter verifierad Pages-publicering, med commit/push efter varje klar task. RTS-066–090 förblir planerade.
 
 Efter avslutad och publicerad RTS-065 har användaren sagt ”fortsätt gärna”. Fortsätt därför med återstående roadmap i ordning, en task åt gången, med samma godkända commit/push/checks. Tidigare stopp vid RTS-065 är upphävt. Detaljera varje aktuell task före implementation. Ta upp öppna fraktions-/förmågebeslut innan beroende kod byggs; fortsätt oberoende arbete under tiden.
+
+## Avslutad etapp genom RTS-150
+
+RTS-148–150 är verifierade och levererade;0.2.0/Build53267ef publicerad och kontrollerad på Pages. Aktuell körning är avslutad och stannar föreRTS-151. Ingen151-task är definierad eller påbörjad. Se slutlig BACKLOG/DEV_LOG-överlämning för checks, återanvända belägg, uppskjuten faktisk ljud-/matchlyssning och kända begränsningar. Rena Markdown/rollpushar kör text/länk/diffchecks; kod/config/assets/workflow kör fortsatt relevant unit/integration och full regression vid etappslut/CI.

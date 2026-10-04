@@ -2,7 +2,7 @@
 
 ## Inriktning
 
-RTS-001–149 är implementerade; RTS-150 verifierar release0.2.0. Fem spelbara fraktioner, nio kartval och åtta campaign-operationer med lokala resultat/progression ingår. Slicebeskrivningarna visar historiken; senare taskavsnitt anger aktuella regler. Ursprunglig MVP nedan är ursprungsplanen, inte nuvarande featuregräns.
+RTS-001–150 är klara; release0.2.0 är verifierad och publicerad. Fem spelbara fraktioner, nio kartval och åtta campaign-operationer med lokala resultat/progression ingår. Slicebeskrivningarna visar historiken; senare taskavsnitt anger aktuella regler. Ursprunglig MVP nedan är ursprungsplanen, inte nuvarande featuregräns.
 
 
 Ett browserbaserat singleplayer-RTS inspirerat av Warcraft 2, Age of Empires 2

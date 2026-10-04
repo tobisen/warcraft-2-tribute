@@ -2,7 +2,7 @@
 
 ## Status och teknik
 
-Implementerat genom RTS-149; RTS-150 verifierar release0.2.0. Fem fraktioner, åtta campaign-operationer, stora kartor, Save33, dismissal, grupperade commands och lokala highscores kompletterar följande historiska systembeskrivningar: archer/projectiles, catapult/splash och Forge/research, FIFO/refund, target-HP/destruktion, workerbygge, farms, population, kamera,
+Implementerat och verifierat genom RTS-150; release0.2.0 är publicerad. Fem fraktioner, åtta campaign-operationer, stora kartor, Save33, dismissal, grupperade commands och lokala highscores kompletterar följande historiska systembeskrivningar: archer/projectiles, catapult/splash och Forge/research, FIFO/refund, target-HP/destruktion, workerbygge, farms, population, kamera,
 byggnadsselection, rally, Stop, gold och
 atomiska kostnader ovanpå etapp 1:s HUD, handgjorda karta och navigation för
 move/work/combat, separata gruppmål och säkra placement/spawn-regler.

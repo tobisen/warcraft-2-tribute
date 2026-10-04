@@ -2,9 +2,9 @@
 
 ## Current Focus
 
-**RTS-150 – Samlat speltest och release** — **In Progress**.
+**RTS-150 – Samlat speltest och release** — **Done**. Etappen avslutad; stopp föreRTS-151.
 
-**Aktuell etapp:** användaren har återupptagit arbetet genom RTS-150 med effektivare verifiering och taskvis commit/push. Efter150 lämnas slutrapport/överlämning; stanna före151. Tidigare paus före148 är upphävd.
+**Aktuell etapp:** avslutad genom RTS-150 med effektivare verifiering och taskvis commit/push. Slutrapport/överlämning dokumenterad; stopp före151. Följande äldre fortsättningsmandat är historik och startar ingen ny task.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -3935,9 +3935,9 @@ Ingen backend eller global leaderboard i denna fas.
 
 ## RTS-150 – Samlat speltest och release
 
-**Status:** In Progress.
+**Status:** Done.
 
-**Goal:** Verifiera fem fraktioner, stora kartor, campaign,
+**Goal:** Samlad verifiering av fem fraktioner, kartor och campaign samt publicerad release0.2.0.
 
 **Requirements:**
 
@@ -3953,7 +3953,7 @@ Verifiera GitHub Pages och publicera efter godkända checks.
 
 **Acceptance criteria:** Verifiera fem fraktioner, stora kartor, campaign, resultatvy, highscores, upplösningar och save/load. Granska grafik och ljud. Uppdatera changelog och releaseversion. Verifiera GitHub Pages och publicera efter godkända checks. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
 
-**Tester:** Samlat browser-/gameplaytest av fem fraktioner, stora kartor, campaign/resultat/highscores/upplösningar/Save-load; grafikgranskning, faktisk lyssning, releaseversion/changelog och publicerad Pages-build. För implementation: relevanta tester, typecheck, build och git diff --check.
+**Tester:** Samlat browser-/gameplaytest av fem fraktioner, stora kartor, campaign/resultat/highscores/upplösningar/Save-load; grafikgranskning, tekniska audiochecks (faktisk lyssning uppskjuten av användaren), releaseversion/changelog och publicerad Pages-build. För implementation: relevanta tester, typecheck, build och git diff --check.
 
 **Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
 
@@ -3961,4 +3961,8 @@ Verifiera GitHub Pages och publicera efter godkända checks.
 
 **Acceptance-förtydligande:** faktisk lyssning och matchlyssning är uppskjutna av användaren och får inte markeras verifierade. Teknisk audioverifiering och grafisk granskning ingår; kvarstående lyssning anges i överlämningen.
 
-**RTS-150 releasekandidat:** full npm test1142tester/145filer PASS652.08s (hela unit+integration), en build inklusive strict typecheck/diff/doclänkar/packageidentitet PASS. Native aktuell full paidCampaign1–8 och femfraktions-/storkarts-/Save-restart-/sex-resolutionflöde PASS1280/1920 utan browsererrors. Teknisk audio11filer decode/mute/pause PASS; lyssning ej kontrollerad enligt användaren. Review utan blockerande fynd. Publicering återstår;150 fortfarande In Progress och151 inte påbörjad.
+**Historisk RTS-150-kandidatkontroll före publicering:** full npm test1142tester/145filer PASS652.08s (hela unit+integration), en build inklusive strict typecheck/diff/doclänkar/packageidentitet PASS. Native aktuell full paidCampaign1–8 och femfraktions-/storkarts-/Save-restart-/sex-resolutionflöde PASS1280/1920 utan browsererrors. Teknisk audio11filer decode/mute/pause PASS; lyssning ej kontrollerad enligt användaren. Review utan blockerande fynd. Publicering återstår;150 fortfarande In Progress och151 inte påbörjad.
+
+**Slutverifiering/publicering:** releasekandidat53267ef pushad och GitHub full npm test/build/deploy completed success [run37199039458](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37199039458). Faktisk [Pages](https://tobisen.github.io/warcraft-2-tribute/) visar0.2.0/Build53267ef. Publik native1280/1920 release/changelog/highscoremeny/åtta campaignkort, canvas/grafik, fysisk selection/move och Save33/load/restart-ID PASS utan HTTP-/browsererrors; bilder granskade. Task150 Done enligt uppdaterat lyssningsundantag.
+
+**Överlämning:**148/6906f4a grupper/keys,149/e22a444 scores/Save33 och150/53267ef release0.2.0 verifierade/levererade. Alla tasks genom150 klara. Full regression1142/145 PASS652.08s, strict typecheck/build/diff/docs PASS; aktuell paidCampaign1–8 och femfraktions-/storkarts-/rendering-/Saveflöden PASS båda upplösningarna. Kvar: faktisk ljud-/matchlyssning uppskjuten av användaren; bundlevarning och mindre närliggande etikettöverlapp oförändrade. Ingen garanti om identisk balans för alla profiler/svårigheter. RTS-151 ej definierad eller påbörjad; nästa etapp kräver nytt uppdrag. Slutlig dokumentcommit ändrar endast Markdown/roller och återanvänder uttryckligen dessa kodchecks; publicerad kodbuild förblir53267ef.
