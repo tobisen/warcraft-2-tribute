@@ -2916,3 +2916,11 @@ Slutchecks: första unitkörningen upptäckte tre föråldrade assertions för c
 Riktade20 tester PASS. Browser native800/1280: tech tree, research-tooltip Complete Forge, upplåsning av färdig Forge, fysisk forskningsstart och spärr under pågående jobb; screenshots granskade i artifacts/rts-161. Ingen ny grafik eller kampanjsimulering. Slutlig unit/build/diff redovisas efter finalkontroll.
 
 Slutlig unit445/80 PASS, build inklusive strict typecheck PASS. Diffcheck hittade en blankrad med whitespace i index.html; rättad och diffcheck PASS. Därefter endast docs/whitespace ändrade, kodchecks återanvänds. Ingen full campaign-regression.
+
+## RTS-162 – byggbara försvarstorn
+
+Återanvänder placement-route/spawnkontroller, worker-konstruktion, playerTargets/AI, fog, befintliga projektiler och stridsskador.50/20,8s,160HP;176px/10damage/1.2s. Tier2 kräver bas2/Forge,40/30 och10s,208px/16damage. Armerat på aktuell nivå under upgrade. Skott lämnar egen footprint men stoppas av andra hinder, fast aim kan missa rörligt mål. Nybyggen skjuter först efter faktisk färdigtid; uppgraderingsskada/räckvidd börjar efter färdigtid. Destruction tar bort kolliderande footprint/konstruktionsreferenser. Minimap, vision, stats och befintliga bow-cues återanvänds. Strikt Save35/34-migration.
+
+58 riktade tester PASS (torn, construction, AI-defense, save, UI, atlas, combatAudio). Browser native800/1280: fysisk workerselection/build/placering, konstruktion, tornselection/spärr, uppgradering och save, synlig projektil/impact; screenshots granskade artifacts/rts-162. Browser upptäckte återaktiveringsfel för ny knapp; rättat/verifierat. Separat godkänd tornreferens saknas; originalpixeldelar från godkända huvudbyggnaden används, inga illustrativa cropframes. Actual audio-listening/CI/Pages ej utfört. Ingen bred campaign-regression i162; slutchecks nedan.
+
+Slutlig unit445/80 PASS, build inklusive strict typecheck PASS, git diff --check PASS. Befintlig src/style.css är byte-identisk med starten; otrackade docs bevarade. RTS-161 commit/push b7439ae.

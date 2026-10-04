@@ -1,3 +1,4 @@
+import {placeTower,towerPlacementError,upgradeTower,towerUpgradeReason} from '../gameplay/towers';
 import {techTree,buildingAvailability} from '../gameplay/productionPrerequisites';
 import {baseDevelopment,startBaseUpgrade,baseUpgradeReason} from '../gameplay/baseUpgrade';
 import {wildlifeHabitats,visibleWildlife,wildlifeDetails,type Habitat} from '../presentation/wildlife';
@@ -147,6 +148,7 @@ export class BootScene extends Phaser.Scene {
   private attackMoveMode=false;
   private attackMoveButton!:HTMLButtonElement;
   private stopButton!: HTMLButtonElement;
+  private defenseVisuals=new Map<string,Phaser.GameObjects.Image>();
   private selectedBuilding: BuildingSelection = null;
   private selectedResource:string|null=null;
   private rallyMarker!: Phaser.GameObjects.Arc;
@@ -347,7 +349,7 @@ export class BootScene extends Phaser.Scene {
     this.goldVisual=this.add.image(this.gathering.gold!.position.x,this.gathering.gold!.position.y,'world','gold-available').setOrigin(resourceOrigin.x,resourceOrigin.y);
     this.add.text(this.gathering.gold!.position.x, this.gathering.gold!.position.y+26, 'Gold',
       {fontSize:'16px',color:'#ffffff'}).setOrigin(.5,0);
-    this.visuals.clear();
+    this.visuals.clear();this.defenseVisuals.clear();
     this.drag = undefined;
     this.dragBox = this.add.rectangle(0, 0, 0, 0, 0xffdc73, 0.1)
       .setOrigin(0).setStrokeStyle(1, 0xffdc73).setVisible(false).setDepth(60);
@@ -359,18 +361,20 @@ export class BootScene extends Phaser.Scene {
     this.buildButton = document.querySelector<HTMLButtonElement>('#build-barracks')!;
     this.placementStatus = document.querySelector<HTMLElement>('#placement-status')!;
     this.buildButton.textContent = `Build ${factions[this.factions.player].buildingNames.barracks} – ${costLabel(factions[this.factions.player].buildings.barracks.cost)}`;
-    const begin = (kind:'harbor'|'barracks'|'farm'|'forge'='barracks') => {
+    const begin = (kind:'harbor'|'barracks'|'farm'|'forge'|'tower'='barracks') => {
       if (!this.gameplayActive()) return;
       if (!this.gathering.units.some(u=>u.kind==='worker' && u.selected)) return;
       this.unloadMode=null;this.attackMoveMode=false;
       if(kind==='harbor'&&this.navy?.harbor)return;
-      if(buildingAvailability(factions[this.factions.player],kind,technologyFor(this.currentMatch(),'player')))return;
+      if(buildingAvailability(factions[this.factions.player],kind==='tower'?'base':kind,technologyFor(this.currentMatch(),'player')))return;
       this.placement = beginPlacement(this.placement,kind);
       this.drag = undefined;
       this.dragBox.setVisible(false);
       this.previewPoint = this.worldPoint(this.input.activePointer);
       this.syncVisuals();
     };
+    const towerBuild=()=>begin('tower'),towerUpgrade=()=>{if(this.gameplayActive()&&this.selectedBuilding)this.applyMatch(upgradeTower(this.currentMatch(),this.selectedBuilding));this.syncVisuals();};
+    for(const [id,handler] of [['build-tower',towerBuild],['upgrade-tower',towerUpgrade]] as const){document.getElementById(id)!.addEventListener('click',handler);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>document.getElementById(id)!.removeEventListener('click',handler));}
     const cancel = (event?:KeyboardEvent) => {
       if(event&&!gameplayKeyAllowed(keyboardContext(event,this.gameplayActive())))return;
       if (!this.gameplayActive()) return;
@@ -604,6 +608,7 @@ export class BootScene extends Phaser.Scene {
         this.placement = cancelPlacement(this.placement);
       } else if (pointer.button === 0) {
         if(!placementVisible(this.fog,buildingFootprint(world,this.placement.kind??'barracks'))){this.syncVisuals();return;}
+        if(this.placement.kind==='tower'){this.applyMatch(placeTower(this.currentMatch(),world));this.syncVisuals();return;}
         if(this.placement.kind==='harbor'){this.applyMatch(placeHarbor(this.currentMatch(),world));this.syncVisuals();return;}
         const result = placeBuilding(this.placement, world, this.gathering.wood, placementObstacles(this.gathering),
           {technology:technologyFor(this.currentMatch(),'player'),map:this.map,gathering:this.gathering,enemies:this.combat.enemies});
@@ -628,6 +633,7 @@ export class BootScene extends Phaser.Scene {
       }
       const transport=this.navy?.ships.find(s=>s.role==='transport'&&Math.abs(world.x-s.position.x)<=navyConfig.ship.size/2&&Math.abs(world.y-s.position.y)<=navyConfig.ship.size/2);if(transport&&this.gathering.units.some(u=>u.selected)){this.applyMatch(loadTransport(this.currentMatch(),transport.id));this.syncVisuals();return;}
       const harbor=this.navy?.harbor;if(harbor&&harbor.construction.remainingSeconds>0&&world.x>=harbor.footprint.x&&world.x<=harbor.footprint.x+64&&world.y>=harbor.footprint.y&&world.y<=harbor.footprint.y+64){this.applyMatch(resumeHarbor(this.currentMatch()));this.syncVisuals();return;}
+      const tower=this.placement.defenses?.find(t=>t.construction.remainingSeconds>0&&world.x>=t.footprint.x&&world.x<=t.footprint.x+32&&world.y>=t.footprint.y&&world.y<=t.footprint.y+32);if(tower){const result=resumeConstruction(this.gathering,this.placement,this.map,tower.id);this.gathering=result.gathering;this.placement=result.placement;this.syncVisuals();return;}
       const forge=this.placement.forge;
       if(forge&&forge.construction.remainingSeconds>0&&world.x>=forge.footprint.x&&world.x<=forge.footprint.x+forge.footprint.width&&world.y>=forge.footprint.y&&world.y<=forge.footprint.y+forge.footprint.height){const result=resumeConstruction(this.gathering,this.placement,this.map,'forge');this.gathering=result.gathering;this.placement=result.placement;this.syncVisuals();return;}
       const farm=this.placement.farms?.find(f=>f.construction.remainingSeconds>0 && world.x>=f.footprint.x && world.x<=f.footprint.x+f.footprint.width && world.y>=f.footprint.y && world.y<=f.footprint.y+f.footprint.height);
@@ -728,7 +734,7 @@ export class BootScene extends Phaser.Scene {
 
     if(!this.placement.barracks&&this.barracksVisual){this.barracksVisual.destroy();this.barracksVisual=undefined;}
     const rect = buildingFootprint(this.previewPoint,this.placement.kind??'barracks');
-    const error = this.placement.active ? !placementVisible(this.fog,rect)?uiText.theSiteMustBeVisible:this.placement.kind==='harbor'?harborPlacementError(this.currentMatch(),this.previewPoint):placementError(this.placement, this.previewPoint, this.gathering.wood, placementObstacles(this.gathering),
+    const error = this.placement.active ? !placementVisible(this.fog,rect)?uiText.theSiteMustBeVisible:this.placement.kind==='tower'?towerPlacementError(this.currentMatch(),this.previewPoint):this.placement.kind==='harbor'?harborPlacementError(this.currentMatch(),this.previewPoint):placementError(this.placement, this.previewPoint, this.gathering.wood, placementObstacles(this.gathering),
       {technology:technologyFor(this.currentMatch(),'player'),map:this.map,gathering:this.gathering,enemies:this.combat.enemies}) : null;
     this.placementFeedbackError=error;
     this.placementPreview.setPosition(rect.x, rect.y)
@@ -762,6 +768,10 @@ export class BootScene extends Phaser.Scene {
   }
 
   private syncVisuals(): void {
+    const liveDefenses=new Set<string>((this.placement.defenses??[]).map(t=>t.id));for(const [id,image]of this.defenseVisuals)if(!liveDefenses.has(id)){image.destroy();this.defenseVisuals.delete(id);}
+    for(const t of this.placement.defenses??[]){let image=this.defenseVisuals.get(t.id);if(!image){image=this.add.image(t.footprint.x+16,t.footprint.y+16,'buildings').setOrigin(.5,.75);this.defenseVisuals.set(t.id,image);}image.setFrame(buildingFrame('tower','player',t.construction.remainingSeconds,8,this.factions.player,t.hp,t.level));}
+    (document.getElementById('build-tower') as HTMLButtonElement).disabled=!this.gameplayActive()||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected)||this.placement.active||this.gathering.wood<50||(this.gathering.goldBalance??0)<20;
+    (document.getElementById('upgrade-tower') as HTMLButtonElement).disabled=!!towerUpgradeReason(this.currentMatch(),this.selectedBuilding??'');
     document.getElementById('tech-tree-text')!.textContent=techTree(this.currentMatch()).join('\n');
     const development=baseDevelopment(this.currentMatch()),upgradeButton=document.getElementById('upgrade-base') as HTMLButtonElement;
     upgradeButton.disabled=!!baseUpgradeReason(this.currentMatch());upgradeButton.textContent=development.remainingSeconds!==null?`Upgrading to level ${development.level+1}: ${Math.ceil(development.remainingSeconds)}s; training paused`:`Upgrade base to level ${Math.min(3,development.level+1)}`;

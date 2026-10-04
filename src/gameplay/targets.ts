@@ -7,7 +7,7 @@ import { unitBody } from './spawning';
 import type { GatheringState } from './gathering';
 import type { CombatState } from './combat';
 import type { PlacementState, Footprint } from './placement';
-export interface PlayerTarget {id:string;kind:'ship'|'harbor'|'soldier'|'worker'|'base'|'barracks'|'farm'|'forge';owner:'player';hp:number;footprint:Footprint}
+export interface PlayerTarget {id:string;kind:'tower'|'ship'|'harbor'|'soldier'|'worker'|'base'|'barracks'|'farm'|'forge';owner:'player';hp:number;footprint:Footprint}
 export function playerTargets(g:GatheringState,c:CombatState,p?:PlacementState,navy?:NavyState):PlayerTarget[] {
   const targets:PlayerTarget[]=g.units.flatMap(u=>u.hp!==undefined&&u.hp>0 ? [{id:u.id,kind:u.kind,owner:'player',hp:u.hp,
     footprint:unitBody(u.position,u.kind==='soldier'?combatUnitStats(u).size:unitStats.size)}]:[]);
@@ -17,5 +17,6 @@ export function playerTargets(g:GatheringState,c:CombatState,p?:PlacementState,n
   if(p?.barracks&&(p.barracksHP??combatConfig.barracksHP)>0)targets.push({id:'barracks',kind:'barracks',owner:'player',hp:p.barracksHP??combatConfig.barracksHP,footprint:p.barracks});
   if(p?.forge&&p.forge.hp>0)targets.push({id:'forge',kind:'forge',owner:'player',hp:p.forge.hp,footprint:p.forge.footprint});
   for(const farm of p?.farms??[])if((farm.hp??combatConfig.farmHP)>0)targets.push({id:farm.id,kind:'farm',owner:'player',hp:farm.hp??combatConfig.farmHP,footprint:farm.footprint});
+  for(const t of p?.defenses??[])if(t.hp>0)targets.push({id:t.id,kind:t.kind,owner:t.owner,hp:t.hp,footprint:t.footprint});
   return targets;
 }

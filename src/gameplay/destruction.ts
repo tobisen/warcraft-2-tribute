@@ -28,14 +28,15 @@ export function cleanDestroyed(state:MatchState):MatchState {
   const barDead=state.placement.barracks!==null&&state.placement.barracksHP!==undefined&&state.placement.barracksHP<=0;
   const harborDead=!!state.navy?.harbor&&state.navy.harbor.hp<=0;
   const forgeDead=!!state.placement.forge&&state.placement.forge.hp<=0;
+  const deadDefenses=(state.placement.defenses??[]).filter(t=>t.hp<=0);
   const deadFarms=(state.placement.farms??[]).filter(f=>f.hp!==undefined&&f.hp<=0);
-  const deadSites=new Set<string>([...(harborDead?['harbor']:[]),...(forgeDead?['forge']:[]),...(barDead?['barracks']:[]),...deadFarms.map(f=>f.id)]);
+  const deadSites=new Set<string>([...(harborDead?['harbor']:[]),...(forgeDead?['forge']:[]),...(barDead?['barracks']:[]),...deadFarms.map(f=>f.id),...deadDefenses.map(t=>t.id)]);
   state={...state,statLedger:recordBuildingDeaths(state,deadSites.size,(state.combat.destroyedEnemyFootprints?.length??0)+state.combat.enemies.filter(e=>e.hp<=0&&e.footprint).length)};
-  const removed:Footprint[]=[...(harborDead?[state.navy!.harbor!.footprint]:[]),...(forgeDead?[state.placement.forge!.footprint]:[]),...(state.combat.destroyedEnemyFootprints??[]),...state.combat.enemies.filter(e=>e.hp<=0&&e.footprint).map(e=>e.footprint!),...(baseDead?[baseFootprint(gathering.base)]:[]),...(barDead?[state.placement.barracks!]:[]),...deadFarms.map(f=>f.footprint)];
+  const removed:Footprint[]=[...deadDefenses.map(t=>t.footprint),...(harborDead?[state.navy!.harbor!.footprint]:[]),...(forgeDead?[state.placement.forge!.footprint]:[]),...(state.combat.destroyedEnemyFootprints??[]),...state.combat.enemies.filter(e=>e.hp<=0&&e.footprint).map(e=>e.footprint!),...(baseDead?[baseFootprint(gathering.base)]:[]),...(barDead?[state.placement.barracks!]:[]),...deadFarms.map(f=>f.footprint)];
   const obstacles=state.map.obstacles.filter(o=>!removed.some(f=>equalFoot(o,f)));
   const alive=new Set(gathering.units.map(u=>u.id));
   const paused=(job:ConstructionJob|undefined)=>job?.builderId&&!alive.has(job.builderId)?{...job,builderId:null}:job;
-  let placement=state.placement;
+  let placement=state.placement.defenses?{...state.placement,defenses:state.placement.defenses.filter(t=>t.hp>0).map(t=>({...t,construction:paused(t.construction)!}))}:state.placement;
   if(forgeDead||paused(placement.forge?.construction)!==placement.forge?.construction||barDead||deadFarms.length||paused(placement.construction)!==placement.construction||(placement.farms??[]).some(f=>paused(f.construction)!==f.construction)) {
     placement={...placement,...(forgeDead?{forge:undefined}:placement.forge?{forge:{...placement.forge,construction:paused(placement.forge.construction)!}}:{}),...(barDead?{barracks:null,barracksHP:undefined,barracksOwner:undefined,construction:undefined}:{construction:paused(placement.construction)}),
       ...(placement.farms?{farms:placement.farms.filter(f=>!deadFarms.includes(f)).map(f=>({...f,construction:paused(f.construction)!}))}:{})};

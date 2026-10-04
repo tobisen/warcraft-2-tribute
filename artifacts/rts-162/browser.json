@@ -1,0 +1,54 @@
+[
+  {
+    "width": 800,
+    "defenses": [
+      {
+        "id": "tower-1",
+        "kind": "tower",
+        "owner": "player",
+        "footprint": {
+          "x": 480,
+          "y": 384,
+          "width": 32,
+          "height": 32
+        },
+        "hp": 160,
+        "construction": {
+          "remainingSeconds": 0,
+          "builderId": null
+        },
+        "level": 2,
+        "upgradeRemaining": null,
+        "cooldown": 0.5999999999999999,
+        "readyAfter": 0
+      }
+    ],
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "defenses": [
+      {
+        "id": "tower-1",
+        "kind": "tower",
+        "owner": "player",
+        "footprint": {
+          "x": 480,
+          "y": 384,
+          "width": 32,
+          "height": 32
+        },
+        "hp": 160,
+        "construction": {
+          "remainingSeconds": 0,
+          "builderId": null
+        },
+        "level": 2,
+        "upgradeRemaining": null,
+        "cooldown": 0.5999999999999999,
+        "readyAfter": 0
+      }
+    ],
+    "errors": []
+  }
+]

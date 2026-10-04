@@ -27,7 +27,7 @@ avslutas efter denna fix; ingen senare roadmap-task startas.
   /tmp/w2t-bottom-bar; ingen ny CI-/Pages-verifiering hävdas.
 
 
-**Aktuellt mandat RTS-160–164:** RTS-159 accepteras som Done och implementationen har inventerats.160 Done (`7d7290c`),161 aktuell, därefter162–164 en task i taget med checks/browser/docs/commit/push. Stanna efter164 och uppdatera HANDOFF.157 lyssning och158 inspelningar kvarstår enligt historisk överlämning; återstående sprites dokumenteras separat.
+**Aktuellt mandat RTS-160–164:** RTS-159 accepteras som Done och implementationen har inventerats.160 Done (`7d7290c`),161 Done (`b7439ae`),162 aktuell, därefter163–164 en task i taget med checks/browser/docs/commit/push. Stanna efter164 och uppdatera HANDOFF.157 lyssning och158 inspelningar kvarstår enligt historisk överlämning; återstående sprites dokumenteras separat.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -4371,7 +4371,9 @@ Begripligt tech tree och förklaring av låsta actions.
 
 ## RTS-162 – Försvarstorn
 
-**Status:** Todo.
+**Status:** Done.
+
+**Leverans:** Workerbyggda32px-torn,50 wood/20 gold,160HP,8s konstruktion. Närmaste synliga hostile unit inom176px, stabil ID-tie-break; fasta projektilmål och befintlig hinder/impact-logik. AI kan välja/skada/förstöra torn; navigation/fog/minimap/statistik uppdateras. Uppgradering40/30,10s, kräver färdig basnivå2/Forge:208px,16 skada mot10. Torn fortsätter skjuta på aktuell nivå under uppgradering. Strikt Save35 och34-migration.80 tornframes återanvänder godkända base-delar, men separat tornreferens saknas. Browser800/1280 och riktade58 tests PASS; artifacts/rts-162.
 
 **Goal:** Försvarstorn.
 

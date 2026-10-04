@@ -7,12 +7,13 @@ import { unitStats,workerStats } from '../config/unit';
 import type { GatheringState, Unit } from './gathering';
 import type { PlacementState, ConstructionJob, Footprint } from './placement';
 import type { WorldMap } from './map';
-type SiteId = 'harbor'|'outpost'|'barracks'|'forge'|`farm-${number}`;
+type SiteId = `tower-${number}`| 'harbor'|'outpost'|'barracks'|'forge'|`farm-${number}`;
 export function barracksReady(placement:PlacementState):boolean {
   return placement.barracks!==null && (!placement.construction || placement.construction.remainingSeconds===0);
 }
 export function resumeConstruction(gathering:GatheringState,placement:PlacementState,map:WorldMap,id:SiteId='barracks') {
-  const farm=id==='forge'?placement.forge:placement.farms?.find(f=>f.id===id);
+  const tower=placement.defenses?.find(t=>t.id===id);
+  const farm=tower??(id==='forge'?placement.forge:placement.farms?.find(f=>f.id===id));
   const rect=id==='barracks'?placement.barracks:farm?.footprint;
   const job=id==='barracks'?placement.construction:farm?.construction;
   if (!rect || !job || job.remainingSeconds<=0) return {gathering,placement};
@@ -21,7 +22,7 @@ export function resumeConstruction(gathering:GatheringState,placement:PlacementS
   if (!builder || approachRoute(map,builder.position,rect,barracksConfig.constructionRange).status==='blocked') return {gathering,placement};
   const updated={...job,builderId:builder.id};
   return {placement:id==='barracks'?{...placement,construction:updated}
-      :id==='forge'?{...placement,forge:{...placement.forge!,construction:updated}}:{...placement,farms:placement.farms!.map(f=>f.id===id?{...f,construction:updated}:f)},
+      :tower?{...placement,defenses:placement.defenses!.map(t=>t.id===id?{...t,construction:updated}:t)}:id==='forge'?{...placement,forge:{...placement.forge!,construction:updated}}:{...placement,farms:placement.farms!.map(f=>f.id===id?{...f,construction:updated}:f)},
     gathering:{...gathering,units:gathering.units.map((u):Unit=>u.id===builder.id&&u.kind==='worker'
       ? {...u,navigation:undefined,order:{kind:'build',buildingId:id}}
       : u.order.kind==='build'&&u.order.buildingId===id?{...u,navigation:undefined,target:{...u.position},order:{kind:'idle'}}:u)}};

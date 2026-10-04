@@ -14,7 +14,7 @@
       "image": "assets/buildings-atlas.png",
       "data": "assets/buildings-atlas.json",
       "width": 1024,
-      "height": 4480,
+      "height": 5760,
       "source": "assets/sources/buildings.mjs"
     },
     "units": {
@@ -5674,6 +5674,1446 @@
       "faction": "goblins",
       "owner": "enemy",
       "buildingType": "base",
+      "stage": "damaged"
+    },
+    "tower-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "foundation"
+    },
+    "tower-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "building"
+    },
+    "tower-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "complete"
+    },
+    "tower-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "damaged"
+    },
+    "tower-level2-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "foundation"
+    },
+    "tower-level2-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "building"
+    },
+    "tower-level2-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "complete"
+    },
+    "tower-level2-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "damaged"
+    },
+    "tower-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "foundation"
+    },
+    "tower-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "building"
+    },
+    "tower-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "complete"
+    },
+    "tower-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "damaged"
+    },
+    "tower-level2-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "foundation"
+    },
+    "tower-level2-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "building"
+    },
+    "tower-level2-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "complete"
+    },
+    "tower-level2-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "damaged"
+    },
+    "clans-tower-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "foundation"
+    },
+    "clans-tower-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "building"
+    },
+    "clans-tower-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "complete"
+    },
+    "clans-tower-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "damaged"
+    },
+    "clans-tower-level2-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "foundation"
+    },
+    "clans-tower-level2-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "building"
+    },
+    "clans-tower-level2-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "complete"
+    },
+    "clans-tower-level2-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "damaged"
+    },
+    "clans-tower-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "foundation"
+    },
+    "clans-tower-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "building"
+    },
+    "clans-tower-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "complete"
+    },
+    "clans-tower-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "damaged"
+    },
+    "clans-tower-level2-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "foundation"
+    },
+    "clans-tower-level2-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "building"
+    },
+    "clans-tower-level2-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "complete"
+    },
+    "clans-tower-level2-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "damaged"
+    },
+    "elves-tower-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "foundation"
+    },
+    "elves-tower-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "building"
+    },
+    "elves-tower-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "complete"
+    },
+    "elves-tower-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "damaged"
+    },
+    "elves-tower-level2-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "foundation"
+    },
+    "elves-tower-level2-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "building"
+    },
+    "elves-tower-level2-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "complete"
+    },
+    "elves-tower-level2-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "damaged"
+    },
+    "elves-tower-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "foundation"
+    },
+    "elves-tower-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "building"
+    },
+    "elves-tower-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "complete"
+    },
+    "elves-tower-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "damaged"
+    },
+    "elves-tower-level2-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "foundation"
+    },
+    "elves-tower-level2-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "building"
+    },
+    "elves-tower-level2-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "complete"
+    },
+    "elves-tower-level2-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "damaged"
+    },
+    "dwarves-tower-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "foundation"
+    },
+    "dwarves-tower-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "building"
+    },
+    "dwarves-tower-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "complete"
+    },
+    "dwarves-tower-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "damaged"
+    },
+    "dwarves-tower-level2-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "foundation"
+    },
+    "dwarves-tower-level2-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "building"
+    },
+    "dwarves-tower-level2-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "complete"
+    },
+    "dwarves-tower-level2-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "damaged"
+    },
+    "dwarves-tower-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "foundation"
+    },
+    "dwarves-tower-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "building"
+    },
+    "dwarves-tower-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "complete"
+    },
+    "dwarves-tower-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "damaged"
+    },
+    "dwarves-tower-level2-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "foundation"
+    },
+    "dwarves-tower-level2-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "building"
+    },
+    "dwarves-tower-level2-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "complete"
+    },
+    "dwarves-tower-level2-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "damaged"
+    },
+    "goblins-tower-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "foundation"
+    },
+    "goblins-tower-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "building"
+    },
+    "goblins-tower-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "complete"
+    },
+    "goblins-tower-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "damaged"
+    },
+    "goblins-tower-level2-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "foundation"
+    },
+    "goblins-tower-level2-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "building"
+    },
+    "goblins-tower-level2-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "complete"
+    },
+    "goblins-tower-level2-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "player",
+      "buildingType": "tower",
+      "stage": "damaged"
+    },
+    "goblins-tower-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "foundation"
+    },
+    "goblins-tower-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "building"
+    },
+    "goblins-tower-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "complete"
+    },
+    "goblins-tower-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "damaged"
+    },
+    "goblins-tower-level2-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "foundation"
+    },
+    "goblins-tower-level2-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "building"
+    },
+    "goblins-tower-level2-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "enemy",
+      "buildingType": "tower",
+      "stage": "complete"
+    },
+    "goblins-tower-level2-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 0.5,
+        "y": 0.75
+      },
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "enemy",
+      "buildingType": "tower",
       "stage": "damaged"
     },
     "worker-player-e-idle-0": {

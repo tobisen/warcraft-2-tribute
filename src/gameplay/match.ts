@@ -1,3 +1,4 @@
+import {updateTowers} from './towers';
 import {advanceBaseUpgrade} from './baseUpgrade';
 import {initializeOperation,operationOutcome,advanceCapture,controlsCapture,type CaptureState} from './operations';
 import {operationFor} from '../config/operations';
@@ -158,12 +159,13 @@ function advance(state: MatchState, delta: number): MatchState {
   state=updateEnemyGathering({...state,gathering},delta,gateFor,services);const enemyBuilding=updateEnemyConstruction(state,delta,gateFor);state=enemyBuilding.match;gathering=state.gathering;
   state=updateEnemyExpansion(state,delta,gateFor);gathering=state.gathering;
   state=updateEnemyNaval(state,delta);gathering=state.gathering;
+  state=updateTowers(state,delta);gathering=state.gathering;
   const building = updateConstruction(gathering,state.placement,state.map,delta,gateFor);
   state={...state,statLedger:recordCompletions(readyBefore,{...state,gathering:building.gathering,placement:building.placement})};
   let combat=state.research&&(state.research.attack||state.research.defense||state.combat.upgrades)?{...state.combat,upgrades:{attack:state.research.attack,defense:state.research.defense}}:state.combat;
   if(state.enemyPolicy&&(state.enemyPolicy.research.attack||state.enemyPolicy.research.defense||combat.enemyUpgrades))combat={...combat,enemyUpgrades:{attack:state.enemyPolicy.research.attack,defense:state.enemyPolicy.research.defense}};
   const vision=state.fog?matchFog({...state,gathering:building.gathering,combat,placement:building.placement}):undefined;
-  const fight=updateCombat(building.gathering,combat,delta,state.map,building.placement,vision?(e=>entityVisible(vision,'player',e)):undefined,vision?((t)=>entityVisible(vision,'enemy',{position:{x:t.footprint.x+t.footprint.width/2,y:t.footprint.y+t.footprint.height/2},...(t.kind==='ship'||t.kind==='worker'||t.kind==='soldier'?{}:{footprint:t.footprint})})):undefined,vision?(e=>entityVisible(vision,'player',e)):undefined,gateFor,state.navy,vision?(e=>entityVisible(vision,'player',e)):undefined,state.factions?.enemy??defaultFactions.enemy);
+  const fight=updateCombat(building.gathering,combat,delta,state.map,building.placement,vision?(e=>entityVisible(vision,'player',e)):undefined,vision?((t)=>entityVisible(vision,'enemy',{position:{x:t.footprint.x+t.footprint.width/2,y:t.footprint.y+t.footprint.height/2},...(t.kind==='ship'||t.kind==='worker'||t.kind==='soldier'?{}:{footprint:t.footprint})})):undefined,vision?(e=>entityVisible(vision,'player',e)):undefined,gateFor,state.navy,vision?(e=>entityVisible(vision,'player',e)):undefined,state.factions?.enemy??defaultFactions.enemy,vision?e=>entityVisible(vision,'player',e):undefined);
   let cleaned=cleanDestroyed({...state,...(fight.navy?{navy:fight.navy}:{}),gathering:fight.gathering,combat:fight.combat,placement:fight.placement??building.placement});
   cleaned=advanceEnemyRecovery(cleaned,delta);
   const enemyPolicy=advanceEnemyPolicy(cleaned,delta);

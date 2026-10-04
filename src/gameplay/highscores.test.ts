@@ -1,3 +1,4 @@
+import {saveConfig as currentSaveConfig} from '../config/save';
 import {expect,it} from 'vitest';
 import {createMatch} from './match';
 import {scoreFor,resultScore,scorePartition,validHighscore,createHighscoreStore,highscoreKey,rankedScores} from './highscores';
@@ -8,7 +9,7 @@ it('scoring is outcome/time only, floors gameplay seconds, caps long matches and
  const m=ended();const score=resultScore(m)!.score;m.statLedger!.player.removed=3;m.production.nextUnitNumber=20;expect(resultScore(m)!.score).toBe(score);expect(resultScore({...m,outcome:'playing'})).toBeNull();expect(resultScore({...m,matchId:undefined})).toBeNull();
 });
 it('separates campaign/map, difficulty, speed, factions and rules/version while retaining all metadata and statistics',()=>{
- const s=resultScore(ended())!;expect(validHighscore(s)).toBe(true);expect(s.stats.seconds).toBe(s.seconds);expect(s.config).toBe('tribute-config-34');
+ const s=resultScore(ended())!;expect(validHighscore(s)).toBe(true);expect(s.stats.seconds).toBe(s.seconds);expect(s.config).toBe(currentSaveConfig.configVersion);
  for(const patch of [{goal:'forest',map:'forest'},{difficulty:'hard'},{speed:.75},{player:'elves'},{enemy:'dwarves'},{config:'tribute-config-32'}])expect(scorePartition({...s,...patch})).not.toBe(scorePartition(s));
  const campaign={...createMatch('tutorial'),campaignMission:'first-steps' as const,matchId:id(2),outcome:'victory' as const};expect(resultScore(campaign)).toMatchObject({kind:'campaign',goal:'first-steps',map:'arena'});expect(resultScore({...createMatch('survival'),matchId:id(3),outcome:'defeat'})).toBeNull();
 });

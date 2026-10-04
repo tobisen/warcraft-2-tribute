@@ -1,3 +1,4 @@
+import {towerFrames} from './towers.mjs';
 import {baseLevelFrames} from './base-levels.mjs';
 import {settlement} from './settlement-complete.mjs';
 import {factionBase} from './faction-bases.mjs';
@@ -650,5 +651,6 @@ export function buildingFrames(Surface, p) {
             },
           });
         }
-  return [...frames,...baseLevelFrames(Surface,p,frames)];
+  const bases=[...frames,...baseLevelFrames(Surface,p,frames)];
+  return [...bases,...towerFrames(Surface,p,bases.length)];
 }

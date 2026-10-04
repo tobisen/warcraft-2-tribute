@@ -1,3 +1,4 @@
+import {towerShots} from './towers';
 import {enemyUnitStats,enemyRangedStats,enemySoldier} from './enemyUnits';
 import {factions,type FactionId} from '../config/factions';
 import {enemyBody,enemySize} from './enemyBody';
@@ -77,7 +78,7 @@ function combatApproach(map: WorldMap, position: Position, target: Footprint, ta
 const unitFootprint=(position:Position,size:number):Footprint=>({x:position.x-size/2,
   y:position.y-size/2,width:size,height:size});
 
-export function updateCombat(gathering: GatheringState, combat: CombatState, deltaSeconds: number, map?: WorldMap, placement?:PlacementState, visible?:EnemyVisibility,playerVisible:(target:PlayerTarget,enemy:Enemy)=>boolean=()=>true,projectileVisible?:(enemy:Enemy,projectile:Projectile)=>boolean,gateFor?:GateFor,navy?:NavyState,navalVisible:(enemy:Enemy)=>boolean=()=>true,enemyFaction:FactionId='clans') {
+export function updateCombat(gathering: GatheringState, combat: CombatState, deltaSeconds: number, map?: WorldMap, placement?:PlacementState, visible?:EnemyVisibility,playerVisible:(target:PlayerTarget,enemy:Enemy)=>boolean=()=>true,projectileVisible?:(enemy:Enemy,projectile:Projectile)=>boolean,gateFor?:GateFor,navy?:NavyState,navalVisible:(enemy:Enemy)=>boolean=()=>true,enemyFaction:FactionId='clans',towerVisible:(e:Enemy)=>boolean=()=>!visible) {
   const delta = Math.max(0, deltaSeconds);
   const damage = new Map<string, number>();
   const player=factions[gathering.faction??'crown'],opponent=factions[enemyFaction];
@@ -85,7 +86,8 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
   const defenseMultiplier=combat.upgrades?.defense?player.upgrades.defense.multiplier:1;
   let nextProjectileNumber=combat.nextProjectileNumber??1;
   const naval=prepareNavalCombat(navy,combat.enemies,delta,map,nextProjectileNumber,attackMultiplier,navalVisible,player.naval.units.warship);nextProjectileNumber=naval.nextProjectileNumber;
-  const shots:{projectile:Projectile;time:number}[]=[...naval.shots];
+  const towers=towerShots(placement,combat.enemies,delta,nextProjectileNumber,towerVisible);placement=towers.placement;nextProjectileNumber=towers.next;
+  const shots:{projectile:Projectile;time:number}[]=[...naval.shots,...towers.shots];
   let units = (delta>0?acquireTargets(gathering.units,combat.enemies,map,visible,gathering.faction):gathering.units).map(unit => {
     if(unit.kind==='soldier'&&unit.attackMoveTarget&&unit.order.kind==='move') {
       const moved=map?updateMappedMove(unit,map,delta,gateFor?.(`player:${unit.id}`),gathering.faction):{...unit,position:moveTowards(unit.position,unit.target,combatUnitStats(unit,gathering.faction).speed,delta)};
@@ -122,7 +124,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
   // Both sides attack from the same live snapshot, so lethal blows are simultaneous.
   const playerDamage = new Map<string, number>();
   const originalTargets=playerTargets(gathering,combat,placement,navy);
-  const priority={ship:0,harbor:2,soldier:0,worker:1,barracks:2,farm:2,forge:2,base:3};
+  const priority={tower:2,ship:0,harbor:2,soldier:0,worker:1,barracks:2,farm:2,forge:2,base:3};
   const enemyGathering={...gathering,faction:enemyFaction};
   const movingEnemies = combat.enemies.filter(e => e.hp > 0).map(enemy => {
     const stats=enemyUnitStats(enemy,enemyFaction),ranged=enemyRangedStats(enemy,enemyFaction);
@@ -186,7 +188,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
   for(const shot of shots)advanceShot([shot.projectile],shot.time,shot.projectile.owner);
   units=units.map(unit=>unit.hp!==undefined?{...unit,hp:Math.max(0,unit.hp-(playerDamage.get(unit.id)??0)*(unit.kind==='soldier'?defenseMultiplier*abilityEffects(gathering,unit).defenseMultiplier:1))}:unit);
   const surviving=removeDeadUnits({...gathering,units});units=surviving.units;
-  const nextPlacement=placement?{...placement,
+  const nextPlacement=placement?{...placement,...(placement.defenses?{defenses:placement.defenses.map(t=>({...t,hp:Math.max(0,t.hp-(playerDamage.get(t.id)??0))}))}:{}),
     ...(placement.forge?{forge:{...placement.forge,hp:Math.max(0,placement.forge.hp-(playerDamage.get('forge')??0))}}:{}),
     ...(placement.barracks?{barracksHP:Math.max(0,(placement.barracksHP??combatConfig.barracksHP)-(playerDamage.get('barracks')??0))}:{}),
     ...(placement.farms?{farms:placement.farms.map(f=>({...f,hp:Math.max(0,(f.hp??combatConfig.farmHP)-(playerDamage.get(f.id)??0))}))}:{})}:undefined;

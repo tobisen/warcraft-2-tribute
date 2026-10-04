@@ -7,7 +7,7 @@ import type { WorldMap } from './map';
 import { segmentFits } from './navigation';
 export interface Projectile {
  owner?:'enemy';marine?:true;id:string; shooterId?:string; targetId:string; position:Position; destination:Position;
- splashRadius?:number;targetFootprint?:Footprint;
+ shooterFootprint?:Footprint;splashRadius?:number;targetFootprint?:Footprint;
  speed:number; remainingLife:number; damage:number; hitRadius:number;
 }
 /** Fixed aim point: no homing. Impact consumes the projectile even on a miss. */
@@ -23,7 +23,7 @@ export function advanceProjectiles(projectiles:readonly Projectile[], enemies:re
   const position=moveTowards(p.position,p.destination,p.speed,time);
   const footprint=p.targetFootprint??enemy?.footprint;
   const shotMap=map&&p.marine?marineFlightMap(map):map;
-  const flightMap=shotMap&&footprint?{...shotMap,obstacles:shotMap.obstacles.filter(o=>!(o.x===footprint.x&&o.y===footprint.y&&o.width===footprint.width&&o.height===footprint.height))}:shotMap;
+  const flightMap=shotMap&&(footprint||p.shooterFootprint)?{...shotMap,obstacles:shotMap.obstacles.filter(o=>![footprint,p.shooterFootprint].some(f=>f&&o.x===f.x&&o.y===f.y&&o.width===f.width&&o.height===f.height))}:shotMap;
   if(flightMap&&!segmentFits(flightMap,p.position,position,0))continue;
   if(travel<=time+1e-9){
    if(p.splashRadius){

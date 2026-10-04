@@ -7,6 +7,7 @@ export function readyBuildings(m:MatchState):{player:Set<string>;enemy:Set<strin
  return {player:new Set([
   ...(p.barracks&&(p.barracksHP??1)>0&&p.construction?.remainingSeconds===0?['barracks']:[]),
   ...(p.forge&&p.forge.hp>0&&p.forge.construction.remainingSeconds===0?['forge']:[]),
+  ...(p.defenses??[]).filter(t=>t.hp>0&&t.construction.remainingSeconds===0).map(t=>t.id),
   ...(p.farms??[]).filter(f=>(f.hp??1)>0&&f.construction.remainingSeconds===0).map(f=>f.id),
   ...(m.navy?.harbor&&m.navy.harbor.hp>0&&m.navy.harbor.construction.remainingSeconds===0?['harbor']:[]),
  ]),enemy:new Set(m.combat.enemies.filter(e=>e.buildingType&&e.hp>0&&e.construction?.remainingSeconds===0).map(e=>e.id))};

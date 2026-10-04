@@ -16,7 +16,7 @@ import type { SelectableUnit } from './selection';
 
 export type ResourceType = 'wood' | 'gold';
 export type WorkerOrder = { kind: 'idle' } | { kind: 'move' }
-  | { kind: 'gather' | 'deliver'; nodeId: string } | {kind:'build';buildingId:'harbor'|'outpost'|'barracks'|'forge'|`farm-${number}`};
+  | { kind: 'gather' | 'deliver'; nodeId: string } | {kind:'build';buildingId:`tower-${number}`|'harbor'|'outpost'|'barracks'|'forge'|`farm-${number}`};
 export interface Worker extends SelectableUnit {
   navigation?: RouteState;
   kind: 'worker';

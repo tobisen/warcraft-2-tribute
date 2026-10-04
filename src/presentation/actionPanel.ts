@@ -1,3 +1,4 @@
+import {towerUpgradeReason} from '../gameplay/towers';import {defenseConfig} from '../config/defenses';
 import {baseDevelopment,baseUpgradeReason} from '../gameplay/baseUpgrade';
 import {baseUpgradeConfig} from '../config/baseUpgrade';
 import {technologyFor,unitAvailability,buildingAvailability,researchAvailability} from '../gameplay/productionPrerequisites';
@@ -18,10 +19,10 @@ import {forgeReady} from '../gameplay/research';
 import type {BuildingSelection} from '../gameplay/buildingSelection';
 import type {MatchState} from '../gameplay/match';
 import {hotkeys} from './hotkeys';
-export const actionIds=['upgrade-base','train-worker','train-soldier','train-archer','train-catapult','train-specialist','train-transport','train-ship','build-barracks','build-farm','build-forge','build-harbor','research-attack','research-defense','attack-move','unit-ability','unload-transport','stop-units','dismiss-units'] as const;
+export const actionIds=['build-tower','upgrade-tower','upgrade-base','train-worker','train-soldier','train-archer','train-catapult','train-specialist','train-transport','train-ship','build-barracks','build-farm','build-forge','build-harbor','research-attack','research-defense','attack-move','unit-ability','unload-transport','stop-units','dismiss-units'] as const;
 type ActionId=typeof actionIds[number];
 export const actionGroups=['Orders','Build','Train','Research'] as const;
-export function actionGroup(id:ActionId):typeof actionGroups[number]{return id.startsWith('build-')?'Build':id.startsWith('train-')?'Train':id.startsWith('research-')||id==='upgrade-base'?'Research':'Orders';}
+export function actionGroup(id:ActionId):typeof actionGroups[number]{return id.startsWith('build-')?'Build':id.startsWith('train-')?'Train':id.startsWith('research-')||id.startsWith('upgrade-')?'Research':'Orders';}
 export function actionTooltip(id:ActionId,action:ActionPresentation,label:string):string{
  const shortcut=hotkeys.find(h=>h.button===id);
  return [label,shortcut?.label,action.cost?`Cost: ${action.cost}`:null,shortcut?`Key: ${shortcut.key}`:null,action.reason?`Unavailable: ${action.reason}`:null].filter(Boolean).join(' · ');
@@ -35,7 +36,9 @@ export function actionPanel(m:MatchState,building:BuildingSelection,playing:bool
  const faction=factionForTeam(m,'player'),population=matchPopulation(m);
  const result={} as Record<ActionId,ActionPresentation>;
  for(const id of actionIds){let visible=false,reason='',cost;
-  if(id==='upgrade-base'){visible=base;const b=baseDevelopment(m);cost=b.level<3?costLabel(baseUpgradeConfig[(b.level+1) as 2|3].cost):undefined;reason=baseUpgradeReason(m)??'';}
+  if(id==='upgrade-tower'){visible=!!building?.startsWith('tower-');cost=costLabel(defenseConfig.upgrade.cost);reason=towerUpgradeReason(m,building??'')??'';}
+  else if(id==='build-tower'){visible=worker;cost=costLabel(defenseConfig.tower.cost);reason=m.placement.active?'Finish or cancel placement':affordabilityReason(m.gathering,defenseConfig.tower.cost);}
+  else if(id==='upgrade-base'){visible=base;const b=baseDevelopment(m);cost=b.level<3?costLabel(baseUpgradeConfig[(b.level+1) as 2|3].cost):undefined;reason=baseUpgradeReason(m)??'';}
   else if(id.startsWith('build-')){visible=worker;const kind=id.slice(6) as 'barracks'|'farm'|'forge'|'harbor';const recipe=kind==='harbor'?faction.naval.harbor.cost:faction.buildings[kind].cost;cost=costLabel(recipe);reason=buildingAvailability(faction,kind,technologyFor(m,'player'))??(m.placement.active?'Finish or cancel placement':kind==='barracks'&&m.placement.barracks||kind==='forge'&&m.placement.forge||kind==='harbor'&&m.navy?.harbor?'Already built':kind==='farm'&&(m.placement.farms?.length??0)>=farmConfig.maxCount?'Farm limit reached':affordabilityReason(m.gathering,recipe));}
   else if(id.startsWith('train-')){
    const role=id==='train-ship'?'warship':id.slice(6) as 'worker'|'soldier'|'archer'|'catapult'|'specialist'|'transport',naval=role==='transport'||role==='warship';
