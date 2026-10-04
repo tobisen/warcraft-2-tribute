@@ -1292,3 +1292,11 @@ Inspektion ger aldrig enemyorders eller tillgång till privat produktion/researc
 Aktuell vision krävs för enemydata; ingen remembered-HP i fog. Farm/forge/enemy
 är transient UI-selection och återställs vid Load; ingen ny Saveversion behövs.
 Forskning kan nås från forge och den befintliga basvyn med samma admissionregler.
+
+## RTS-153 – Native som default och explicit Fit
+
+Renderingsupplösning väljs oberoende av visningsstorlek. Native förstorar aldrig;
+Fit kan förstora eller förminska proportionellt. Båda centrerar/skalar ned vid
+utrymmesbrist. Fullscreen är större tillgänglig visningsyta, inte ny rendering
+eller nytt mode. Default Native1280×720; äldre adaptToWindow=true migreras Fit,
+false migreras Native med bevarat preset. Ingen automatiskt fönsterstor upplösning.

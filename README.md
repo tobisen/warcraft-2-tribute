@@ -651,13 +651,15 @@ Produktversionen kommer från src/config/release.ts. Separat build-ID visas
 i changelog och versionsetikettens tooltip: local i dev, HEAD-hash vid build
 eller unknown om git saknas. Saveconfig är oberoende av releaseversion.
 
-Settings → Display: välj800×600,1024×768,1280×720,1600×900,1920×1080 eller
-2048×1332. Avmarkera Adapt resolution to window för att använda preset.
-Canvas och HUD skalas tillsammans utan sträckning, med centrerad letterbox;
-fullscreen är separat. Fönsteranpassning är default och skalar minimum800×600
-ned i mindre fönster. Valet sparas lokalt och ändrar inte kartstorlek eller
-match-Save. Ett högt preset på liten skärm ger mindre text; välj lägre preset
-eller fönsteranpassning vid behov.
+Settings → Display: välj renderingsupplösning800×600,1024×768,1280×720,
+1600×900,1920×1080 eller2048×1332. Native Size (default) visar den valda
+upplösningen i CSS-pixlar utan förstoring, centrerat; Fit to Window skalar
+proportionellt till fönstret. Båda skalar ned när utrymmet är för litet.
+HUD/canvas/minimap följer samma skala med pixelated canvas. Fullscreen behåller
+upplösning och visningsläge: Native lämnar marginaler, Fit fyller proportionellt.
+Inställningarna sparas lokalt; äldre Adapt to Window migreras till Fit/Native.
+Kartstorlek och match-Save ändras inte. Hög upplösning på liten skärm ger liten
+text; välj lägre upplösning vid behov.
 
 Startsidan har original fantasyillustration med fem folk och diskreta embers
 (med reduced-motion-stöd). Crown Alliance/Iron Clan är fortfarande de enda

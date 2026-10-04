@@ -2,9 +2,9 @@
 
 ## Current Focus
 
-**RTS-153 – Upplösning utan automatisk uppförstoring** — **Todo**.
+**RTS-154 – Ny titel och huvudmeny** — **Todo**.
 
-**Aktuell etapp:** återställ roadmap RTS-151–180 enligt nytt uppdrag 2026-10-04, genomför endast151–154 taskvis med checks/commit/push. Nästa steg: separera vald renderingsupplösning från Native/Fit-visningsstorlek. Stanna efter154; nästa task155. Äldre stopp och fortsättningsmandat nedan är historik.
+**Aktuell etapp:** återställ roadmap RTS-151–180 enligt nytt uppdrag 2026-10-04, genomför endast151–154 taskvis med checks/commit/push. Nästa steg: ny arbetstitel/typografisk identitet i befintlig meny; full regression och överlämning efter154. Stanna efter154; nästa task155. Äldre stopp och fortsättningsmandat nedan är historik.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -4027,7 +4027,7 @@ Bevara befintlig unit- och resource-selection.
 
 ## RTS-153 – Upplösning utan automatisk uppförstoring
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Upplösning utan automatisk uppförstoring.
 
@@ -4053,6 +4053,8 @@ Spara inställningen lokalt.
 **Tests:** Geometri/persistens/migration/inputmapping; browser i flera fönsterstorlekar, fullscreen och båda lägena. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
 
 **Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+**Verifiering:**435unit/76filer PASS5.91s, build inklusive strict typecheck PASS.10riktade display/preference/viewport-tester och18input/selection/minimap/fokus-tester PASS. Browser48 geometrier, API-fullscreen båda lägen, reload/persistens samt fysisk selection/move/building/minimap/Home/HUD i Native800/Fit800/stort nedskalat preset PASS utan browsererrors. Pekaravrundning vid nedskalning tolereras inom en fysisk pixel; faktisk monitor-fullscreen inte mänskligt testad.
 
 ## RTS-154 – Ny titel och huvudmeny
 

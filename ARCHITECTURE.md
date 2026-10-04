@@ -1711,3 +1711,14 @@ unitAvailability-prerequisites för egna byggnader. Fiendevy visar ingen kö,
 research, resursbank eller actions. Dold/död byggnad rensas vid sync.
 Save33 behålls; forge/farm/enemy-inspektion är transient och sparas som null,
 samma princip som resource-selection. Gameplaystate och äldre producentval bevaras.
+
+## RTS-153 – Fast renderingsgeometri och CSS-visningsläge
+
+DisplaySettings har resolution och mode(native/fit). displayGeometry håller
+presetmåtten fasta; Native cappar CSS-skala till1, Fit använder tillgänglig
+bredd/höjd. Samma policy gäller resize/fullscreenchange. app har logiska mått,
+centrerad proportionerlig transform och containerqueries för menyns logiska
+storlek. Canvas ResizeObserver läser clientWidth/clientHeight utan CSS-transform;
+Phaser scale.refresh/clientPoint bevarar inputmapping. Pixelated rendering kvar.
+Preferences-v1 läser äldre adaptToWindow som modefallback; ny state skriver endast
+resolution/mode och ändrar inte andra preferenser eller match-Save.

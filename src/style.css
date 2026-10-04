@@ -57,7 +57,7 @@ summary {cursor:pointer;color:#f4d87a;}
 #app[data-phase='menu'] #audio-controls summary{display:none;}
 #app[data-phase='menu'] #audio-controls label{display:flex;justify-content:space-between;}
 #app[data-phase='menu'] #match-results{grid-column:1 / -1;}
-@media(max-width:900px){#app[data-phase='menu'] #match-menu{grid-template-columns:1fr;gap:24px;width:min(600px,calc(var(--display-width) * 0.94));}#home-brand h1{font-size:38px}.home-crest{display:none}.home-subtitle{display:none;}}
+@container(max-width:900px){#app[data-phase='menu'] #match-menu{grid-template-columns:1fr;gap:24px;width:min(600px,calc(var(--display-width) * 0.94));}#home-brand h1{font-size:38px}.home-crest{display:none}.home-subtitle{display:none;}}
 #app[data-phase='menu']{grid-template-columns:1fr;}
 #map-description,#difficulty-description{font:13px/1.5 system-ui,sans-serif;color:#aebcaf;margin:8px 0;}
 #app[data-phase='menu'] #home-content{max-height:calc(calc(var(--display-height) * 1) - 64px);overflow:auto;}
@@ -190,7 +190,7 @@ html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#
 .home-embers i:nth-child(2){left:44%;top:85%;animation-delay:2s;}.home-embers i:nth-child(3){left:64%;top:78%;animation-delay:5s;}
 @keyframes home-ember{0%,100%{opacity:0;transform:translateY(0);}40%{opacity:.45;}80%{opacity:0;transform:translateY(-28px);}}
 @media(prefers-reduced-motion:reduce){.home-embers i{animation:none;}#home-navigation button{transition:none;}}
-@media(max-width:900px){#app[data-phase='menu'] #match-menu{gap:20px;}#home-brand h1{font-size:34px;margin:10px 0;}#home-peoples{font-size:11px;}#home-audio-toggle{margin-top:6px;}#home-navigation{padding:14px;}#home-navigation h2{font-size:20px;margin-bottom:8px;}#home-navigation button{font-size:15px;padding:7px 10px;margin:6px 0;}}
+@container(max-width:900px){#app[data-phase='menu'] #match-menu{gap:20px;}#home-brand h1{font-size:34px;margin:10px 0;}#home-peoples{font-size:11px;}#home-audio-toggle{margin-top:6px;}#home-navigation{padding:14px;}#home-navigation h2{font-size:20px;margin-bottom:8px;}#home-navigation button{font-size:15px;padding:7px 10px;margin:6px 0;}}
 
 #campaign-overview ol { display: grid; gap: .4rem; padding-left: 1.5rem; }
 #campaign-briefing { white-space: pre-line; line-height: 1.5; }
@@ -209,3 +209,11 @@ html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#
 
 #home-highscores h3,#result-highscores-panel h3{font-size:16px;color:#d7bb73;}
 #home-highscores li,#result-highscores-panel li{font-size:14px;line-height:1.5;margin:8px 0;}
+
+/* Logical layout stays usable when a small rendering resolution fits a large window. */
+#app{container-type:size;}
+@container(max-width:900px){
+ #app[data-phase='menu'] #match-menu{grid-template-columns:1fr;gap:24px;width:min(600px,94%);}
+ #home-brand h1{font-size:38px;}
+ .home-crest,#home-brand .home-subtitle{display:none;}
+}

@@ -2652,3 +2652,20 @@ rättades för fraktionsnamn och full navy/enemyconstruction; dessa var testhelp
 Ingen ny betald matchgenomspelning; fixture redovisas separat. Review av diff,
 producerhandler-skydd, synlighet, Savekompatibilitet och docs utan blockerande fynd.
 Bundlevarningen och faktisk lyssning kvarstår.
+
+## 2026-10-04 – RTS-153: Native Size och Fit to Window
+
+152/b8291ca pushad origin/main. Vald upplösning är fast renderingslayout; CSS
+skalas separat. Native(default) cappar1; Fit fyller proportionellt. Båda centrerar
+/skalar ned. Fullscreenchange/resize behåller preset/mode, preferences migrerar
+äldre adaptflagga. Containerqueries följer logisk menystorlek, pixelated canvas kvar.
+435unit/76filer PASS5.91s; build inklusive strict typecheck PASS;10riktade display/
+preferences/viewport-tester och18selection/input/minimap/fokus-tester PASS.
+Browser48geometrier(six presets × four windows × two modes), fullscreen API båda,
+persistens/reload och faktisk selection/move/building/minimap/Home/HUD i800Native,
+800Fit vid1920/640 och2048Native nedskalat till1280 PASS utan browsererrors.
+Helper rättad: Home-fokus före offcamera baseklick och målkoordinattolerans3worldpx
+vid nedskalning(cirka en fysisk pixel; observerat1.36worldpx), ingen runtimefix behövdes.
+Screenshots granskade, review geometri/migration/input/CSS och docs utan blockerande fynd.
+Ingen full matchsimulation för layouttasken; full regression efter154. Bundlevarning kvar;
+headlessfullscreen är API-/layoutbelägg, ingen mänsklig faktisk monitorcheck.
