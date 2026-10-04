@@ -1,3 +1,4 @@
+import {legacyEnemyFixture} from './testHelpers/legacyEnemyFixture';
 import {matchFog} from './matchFog';
 import {expect,it} from 'vitest';
 import {createMatch} from './match';
@@ -21,7 +22,7 @@ it('ground, ship and embarked identities are stable and wrong, missing or unknow
  expect(m.gathering.units[0]).not.toHaveProperty('typeId');
 });
 it('config23 migrates all owned identities including embarked units, preserving match state',()=>{
- const m=afloat(),d=JSON.parse(encodeSave(m,view));d.configVersion='tribute-config-23';
+ const m=afloat(),d=JSON.parse(encodeSave(m,view));d.configVersion='tribute-config-23';legacyEnemyFixture(d);
  for(const unit of d.state.gathering.units)delete unit.typeId;
  for(const ship of d.state.navy.ships){delete ship.typeId;for(const unit of ship.passengers)delete unit.typeId;}
  const loaded=decodeSave(JSON.stringify(d));expect(loaded.ok).toBe(true);if(loaded.ok){expect(loaded.match.gathering).toEqual(m.gathering);expect(loaded.match.navy).toEqual(m.navy);expect(loaded.match.statLedger).toEqual(m.statLedger);}

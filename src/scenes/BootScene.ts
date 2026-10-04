@@ -1,3 +1,4 @@
+import {enemyMaximumHP} from '../gameplay/enemyUnits';
 import {technologyFor} from '../gameplay/productionPrerequisites';
 import {selectWorldTarget} from '../gameplay/resourceSelection';
 import type {StatLedger} from '../gameplay/statLedger';
@@ -96,7 +97,7 @@ import {
 
 export class BootScene extends Phaser.Scene {
   private statLedger?:StatLedger;
-  private factions:MatchFactions=factionsForPlayer(getPreferences().game.faction);
+  private factions:MatchFactions=factionsForPlayer(getPreferences().game.faction,getPreferences().game.enemyFaction);
   private controlGroups:ControlGroups={};
   private fog!:FogState;
   private fogOverlay?:Phaser.GameObjects.Graphics;
@@ -106,7 +107,7 @@ export class BootScene extends Phaser.Scene {
   private enemyProduction?:EnemyProductionState;
   private scenario:MatchScenario=initialScenario(new URLSearchParams(window.location.search).get('scenario'));
   private difficulty:Difficulty=initialDifficulty(new URLSearchParams(window.location.search).get('difficulty')??getPreferences().game.difficulty);
-  private session:MatchSession=createSession({scenario:this.scenario,difficulty:this.difficulty,map:scenarioConfig[this.scenario].map,faction:this.factions.player,speed:getPreferences().game.speed});
+  private session:MatchSession=createSession({scenario:this.scenario,difficulty:this.difficulty,map:scenarioConfig[this.scenario].map,faction:this.factions.player,enemyFaction:getPreferences().game.enemyFaction,speed:getPreferences().game.speed});
   private skipGameplayFrame=true;
   private scenarioSelect!:HTMLSelectElement;
   private research:ResearchState=createResearch();
@@ -232,9 +233,13 @@ export class BootScene extends Phaser.Scene {
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>difficultySelect.removeEventListener('change',changeDifficulty));
 
     const factionSelect=document.querySelector<HTMLSelectElement>('#faction-select')!;
-    const changeFaction=()=>{if(this.session.phase!=='menu'||!isFactionId(factionSelect.value))return;this.session=changeOptions(this.session,{faction:factionSelect.value});this.factions=factionsForPlayer(factionSelect.value);this.saveGamePreferences();this.syncSession();};
+    const changeFaction=()=>{if(this.session.phase!=='menu'||!isFactionId(factionSelect.value))return;this.session=changeOptions(this.session,{faction:factionSelect.value});this.factions=factionsForPlayer(factionSelect.value,this.session.options.enemyFaction);this.saveGamePreferences();this.syncSession();};
     factionSelect.addEventListener('change',changeFaction);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>factionSelect.removeEventListener('change',changeFaction));
+    const enemyFactionSelect=document.querySelector<HTMLSelectElement>('#enemy-faction-select')!;
+    const changeEnemyFaction=()=>{if(this.session.phase!=='menu'||enemyFactionSelect.value!==''&&!isFactionId(enemyFactionSelect.value))return;const enemyFaction=isFactionId(enemyFactionSelect.value)?enemyFactionSelect.value:undefined;this.session=changeOptions(this.session,{enemyFaction});this.factions=factionsForPlayer(this.session.options.faction??defaultFactions.player,enemyFaction);this.saveGamePreferences();this.syncSession();};
+    enemyFactionSelect.addEventListener('change',changeEnemyFaction);
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>enemyFactionSelect.removeEventListener('change',changeEnemyFaction));
 
     this.minimap=bindMinimap(document.querySelector<HTMLCanvasElement>('#minimap')!,()=>({data:visibleMinimapData(this.currentMatch()),scroll:{x:this.cameras.main.scrollX,y:this.cameras.main.scrollY},viewport:{width:this.cameras.main.width,height:this.cameras.main.height}}),point=>this.cameras.main.setScroll(point.x,point.y),()=>this.gameplayActive());
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.minimap?.destroy());
@@ -442,7 +447,7 @@ export class BootScene extends Phaser.Scene {
     const saveButton=document.getElementById('save-match') as HTMLButtonElement;
     const loadButton=document.getElementById('load-match') as HTMLButtonElement;
     const save=()=>{if(this.session.phase==='menu'||this.restartPending)return;const result=storeSave(()=>window.localStorage,this.currentMatch(),{camera:{x:this.cameras.main.scrollX,y:this.cameras.main.scrollY},building:this.selectedBuilding});document.getElementById('save-status')!.textContent=result.ok?uiText.savedLocallyInSlot1:uiText.couldNotSaveLocallyCheckBrowserStorage;};
-    const load=()=>{if(this.restartPending)return;const result=readSave(()=>window.localStorage);if(!result.ok){document.getElementById('save-status')!.textContent=result.code==='missing'?result.error:result.code==='version'?uiText.thisSaveUsesAnUnsupportedFormatOrGame:uiText.couldNotReadTheSaveTheActiveMatch;return;}this.awaitingLoadedResume=result.match.outcome==='playing';this.pendingLoad={match:{...result.match,paused:true},view:result.view};this.scenario=result.match.scenario!;this.difficulty=result.match.difficulty!;this.session={options:{scenario:this.scenario,difficulty:this.difficulty,map:result.match.map.id??'arena',faction:result.match.factions?.player??defaultFactions.player,speed:result.match.speed??1},phase:result.match.outcome==='playing'?'paused':'ended'};this.skipGameplayFrame=true;this.restartPending=true;this.restartButton.disabled=true;gameAudio.setPhase(this.session.phase);document.getElementById('save-status')!.textContent=result.match.outcome==='playing'?uiText.loadedPausedNoGameplayTimePassesUntilResume:uiText.loadedCompletedMatch;this.scene.restart();};
+    const load=()=>{if(this.restartPending)return;const result=readSave(()=>window.localStorage);if(!result.ok){document.getElementById('save-status')!.textContent=result.code==='missing'?result.error:result.code==='version'?uiText.thisSaveUsesAnUnsupportedFormatOrGame:uiText.couldNotReadTheSaveTheActiveMatch;return;}this.awaitingLoadedResume=result.match.outcome==='playing';this.pendingLoad={match:{...result.match,paused:true},view:result.view};this.scenario=result.match.scenario!;this.difficulty=result.match.difficulty!;this.session={options:{scenario:this.scenario,difficulty:this.difficulty,map:result.match.map.id??'arena',faction:result.match.factions?.player??defaultFactions.player,enemyFaction:result.match.factions?.enemy??defaultFactions.enemy,speed:result.match.speed??1},phase:result.match.outcome==='playing'?'paused':'ended'};this.skipGameplayFrame=true;this.restartPending=true;this.restartButton.disabled=true;gameAudio.setPhase(this.session.phase);document.getElementById('save-status')!.textContent=result.match.outcome==='playing'?uiText.loadedPausedNoGameplayTimePassesUntilResume:uiText.loadedCompletedMatch;this.scene.restart();};
     saveButton.addEventListener('click',save);loadButton.addEventListener('click',load);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{saveButton.removeEventListener('click',save);loadButton.removeEventListener('click',load);});
     for(const [id,action] of [['start-match','start'],['pause-match','pause'],['resume-match','resume'],['new-match','new-match']] as const){const button=document.getElementById(id)!;const handler=()=>this.sessionAction(action);button.addEventListener('click',handler);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>button.removeEventListener('click',handler));}
     document.getElementById('command-guide-text')!.textContent=commandGuide;
@@ -472,13 +477,13 @@ export class BootScene extends Phaser.Scene {
   private sessionAction(action:SessionAction):void {
     const next=sessionTransition(this.session,action);if(next===this.session||this.restartPending)return;
     this.session=action==='new-match'?changeOptions(next,getPreferences().game):next;gameAudio.setPhase(next.phase);
-    if(action==='start')this.factions=factionsForPlayer(next.options.faction??defaultFactions.player);
+    if(action==='start')this.factions=factionsForPlayer(next.options.faction??defaultFactions.player,next.options.enemyFaction);
     if(action==='start'||action==='restart'){this.awaitingLoadedResume=false;this.scenario=next.options.scenario;this.difficulty=next.options.difficulty;this.skipGameplayFrame=true;this.restartPending=true;this.restartButton.disabled=true;this.scene.restart();return;}
     if(action==='resume'){this.skipGameplayFrame=true;if(this.awaitingLoadedResume){document.getElementById('save-status')!.textContent=uiText.loadedMatchResumed;this.awaitingLoadedResume=false;}}
     if(action==='pause'||action==='new-match'){this.placement=cancelPlacement(this.placement);this.unloadMode=null;this.attackMoveMode=false;this.drag=undefined;this.cameraDrag=undefined;this.dragBox.setVisible(false);}
     this.syncVisuals();
   }
-  private saveGamePreferences():void {if(this.session.phase==='menu')updatePreferences({game:{difficulty:this.session.options.difficulty,faction:this.session.options.faction??defaultFactions.player,speed:this.session.options.speed??1}});}
+  private saveGamePreferences():void {if(this.session.phase==='menu')updatePreferences({game:{difficulty:this.session.options.difficulty,faction:this.session.options.faction??defaultFactions.player,enemyFaction:this.session.options.enemyFaction,speed:this.session.options.speed??1}});}
 
   private syncSession():void {
     gameAudio.setPhase(this.session.phase);
@@ -490,7 +495,7 @@ export class BootScene extends Phaser.Scene {
     const details=matchSettingDetails(this.session.options);document.getElementById('map-description')!.textContent=details.map;document.getElementById('difficulty-description')!.textContent=details.difficulty;
     const summary=document.getElementById('match-options-summary')!;summary.textContent=matchSettingsSummary(this.session.options);summary.hidden=!menu;
     const mapSelect=document.querySelector<HTMLSelectElement>('#map-select')!;mapSelect.disabled=!menu||this.session.options.scenario!=='skirmish';mapSelect.value=this.session.options.map;
-    const factionSelect=document.querySelector<HTMLSelectElement>('#faction-select')!;factionSelect.disabled=!menu;factionSelect.value=this.session.options.faction??defaultFactions.player;
+    const factionSelect=document.querySelector<HTMLSelectElement>('#faction-select')!;factionSelect.disabled=!menu;factionSelect.value=this.session.options.faction??defaultFactions.player;const enemyFactionSelect=document.querySelector<HTMLSelectElement>('#enemy-faction-select')!;enemyFactionSelect.disabled=!menu;enemyFactionSelect.value=this.session.options.enemyFaction??'';
     this.scenarioSelect.disabled=!menu;this.scenarioSelect.value=this.session.options.scenario==='siege-test'?'survival':this.session.options.scenario;
     const speed=document.querySelector<HTMLSelectElement>('#speed-select')!;speed.disabled=!menu;speed.value=String(this.session.options.speed??1);
     const difficulty=document.querySelector<HTMLSelectElement>('#difficulty-select')!;difficulty.disabled=!menu;difficulty.value=this.session.options.difficulty;
@@ -789,16 +794,16 @@ export class BootScene extends Phaser.Scene {
     for(const shot of visibleShots){if(!this.projectileVisuals.has(shot.id))this.projectileVisuals.set(shot.id,this.add.graphics().setDepth(effectConfig.projectileDepth));drawProjectile(this.projectileVisuals.get(shot.id)!,shot);}
     for (const enemy of visibleEnemies) {
       if (!this.enemyVisuals.has(enemy.id)) this.enemyVisuals.set(enemy.id, {
-        body: enemy.footprint?this.add.image(enemy.position.x,enemy.position.y,'buildings',buildingFrame((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base','enemy',enemy.construction?.remainingSeconds??0,enemy.buildingType==='outpost'?10:5,this.factions.enemy)).setOrigin(buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').x,buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').y):enemy.kind==='ship'?this.add.image(enemy.position.x,enemy.position.y,'naval',`${factions[this.factions.enemy].artPrefix}transport-enemy-s-idle-0`).setOrigin(.5,40/64):this.add.image(enemy.position.x,enemy.position.y,'units',`${factions[this.factions.enemy].artPrefix}${enemy.kind==='worker'?'worker':'soldier'}-enemy-s-idle-0`).setOrigin(.5,22/32),
+        body: enemy.footprint?this.add.image(enemy.position.x,enemy.position.y,'buildings',buildingFrame((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base','enemy',enemy.construction?.remainingSeconds??0,enemy.buildingType==='outpost'?10:5,this.factions.enemy)).setOrigin(buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').x,buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').y):enemy.kind==='ship'?this.add.image(enemy.position.x,enemy.position.y,'naval',`${factions[this.factions.enemy].artPrefix}transport-enemy-s-idle-0`).setOrigin(.5,40/64):this.add.image(enemy.position.x,enemy.position.y,'units',`${factions[this.factions.enemy].artPrefix}${enemy.kind==='worker'?'worker':enemy.role??'soldier'}-enemy-s-idle-0`).setOrigin(unitOrigin(enemy.kind==='worker'?'worker':enemy.role??'soldier').x,unitOrigin(enemy.kind==='worker'?'worker':enemy.role??'soldier').y),
         label: this.add.text(0, 0, '', { fontSize: '14px', color: '#ffffff' }).setOrigin(0.5, 0),
       });
       const visual = this.enemyVisuals.get(enemy.id)!;
       visual.body.setPosition(enemy.position.x, enemy.position.y);
       if(enemy.footprint)visual.body.setFrame(buildingFrame(enemy.buildingType==='outpost'?'base':enemy.buildingType??'base','enemy',enemy.construction?.remainingSeconds??0,enemy.buildingType==='outpost'?10:5,this.factions.enemy,enemy.hp));
       if(enemy.kind==='ship')this.animateUnit(enemy.id,visual.body,enemy.position,'idle','transport','enemy');
-      if(!enemy.footprint&&enemy.kind!=='ship'){const target=enemy.order?.kind==='defend'?this.gathering.units.find(u=>enemy.order?.kind==='defend'&&u.id===enemy.order.targetId)?.position:enemy.navigation?.targetId==='base'?this.gathering.base:undefined;const action:Action=enemy.navigation?.targetId&&enemy.navigation.targetId!=='explore-goal'&&enemy.navigation.status==='arrived'?'attack':enemy.work?.order.kind==='gather'?'gather':'idle';this.animateUnit(enemy.id,visual.body,enemy.position,action,enemy.kind==='worker'?'worker':'soldier','enemy',target);}
+      if(!enemy.footprint&&enemy.kind!=='ship'){const target=enemy.order?.kind==='defend'?this.gathering.units.find(u=>enemy.order?.kind==='defend'&&u.id===enemy.order.targetId)?.position:enemy.navigation?.targetId==='base'?this.gathering.base:undefined;const action:Action=enemy.navigation?.targetId&&enemy.navigation.targetId!=='explore-goal'&&enemy.navigation.status==='arrived'?'attack':enemy.work?.order.kind==='gather'?'gather':'idle';this.animateUnit(enemy.id,visual.body,enemy.position,action,enemy.kind==='worker'?'worker':enemy.role??'soldier','enemy',target);}
       visual.label.setPosition(enemy.position.x,enemy.position.y-(enemy.kind==='ship'?48:90)).setVisible(!!enemy.footprint||enemy.kind==='ship').setText(`${enemy.buildingType==='outpost'?uiText.resourceOutpost:''}${enemy.kind==='ship'?'Transport':enemy.buildingType==='harbor'?uiText.harbor:factions[this.factions.enemy].buildingNames[(enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base']} ${Math.ceil(enemy.hp)} HP`);
-      this.drawHP(enemy.position,enemy.hp,enemy.kind==='ship'?factions[this.factions.enemy].naval.units.transport.hp:enemy.buildingType==='harbor'?factions[this.factions.enemy].naval.harbor.hp:enemy.kind==='base'||enemy.buildingType==='outpost'?combatConfig.baseHP:enemy.buildingType==='barracks'?factions[this.factions.enemy].buildings.barracks.hp:enemy.buildingType==='forge'?factions[this.factions.enemy].buildings.forge.hp:enemy.buildingType==='farm'?factions[this.factions.enemy].buildings.farm.hp:enemy.kind==='worker'?factions[this.factions.enemy].units.worker.hp:combatConfig.enemyHP,enemy.footprint?64:24,enemy.footprint?70:29,0xcf7770);
+      this.drawHP(enemy.position,enemy.hp,enemyMaximumHP(enemy,this.factions.enemy),enemy.footprint?64:24,enemy.footprint?70:29,0xcf7770);
     }
     for (const unit of this.gathering.units) {
       if (!this.visuals.has(unit.id)) {

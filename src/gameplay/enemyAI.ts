@@ -1,3 +1,5 @@
+import {enemySoldier} from './enemyUnits';
+import type {FactionId} from '../config/factions';
 import { updateEnemyDefense,type PlayerVisibility } from './enemyDefense';
 import { enemyAIConfig,type EnemyAISettings } from '../config/enemyAI';
 import { commandGroupMove } from './groupMovement';
@@ -9,10 +11,10 @@ export interface EnemyGroup {id:string;status:'muster'|'ready'|'attack';members:
 export interface Defender {id:string;groupId?:string;destination?:Position}
 export interface EnemyAIState {reserve:string[];defenders:Defender[];threatId:string|null;elapsedSeconds:number;nextGroupNumber:number;groups:EnemyGroup[];lastDispatchSeconds:number|null}
 export const createEnemyAI=():EnemyAIState=>({reserve:[],defenders:[],threatId:null,elapsedSeconds:0,nextGroupNumber:1,groups:[],lastDispatchSeconds:null});
-export function updateEnemyAI(state:EnemyAIState,combat:CombatState,map:WorldMap,playerBase:Position,delta:number,playerUnits:Unit[]=[],settings:EnemyAISettings=enemyAIConfig,visible?:PlayerVisibility){
+export function updateEnemyAI(state:EnemyAIState,combat:CombatState,map:WorldMap,playerBase:Position,delta:number,playerUnits:Unit[]=[],settings:EnemyAISettings=enemyAIConfig,visible?:PlayerVisibility,faction:FactionId='clans'){
  const elapsedSeconds=state.elapsedSeconds+Math.max(0,delta),alive=new Set(combat.enemies.filter(e=>e.hp>0&&e.kind!=='base').map(e=>e.id));
  let groups=state.groups.map(g=>({...g,members:g.members.filter(id=>alive.has(id)),destinations:Object.fromEntries(Object.entries(g.destinations).filter(([id])=>alive.has(id)))})).filter(g=>g.members.length);
- const defense=updateEnemyDefense({...state,groups},combat,map,playerBase,playerUnits,settings,visible);groups=defense.state.groups;
+ const defense=updateEnemyDefense({...state,groups},combat,map,playerBase,playerUnits,settings,visible,faction);groups=defense.state.groups;
  let enemies=defense.combat.enemies,nextGroupNumber=state.nextGroupNumber,lastDispatchSeconds=state.lastDispatchSeconds;
  const assigned=new Set([...groups.flatMap(g=>g.members),...defense.protectedIds]);
  const recruits=enemies.filter(e=>e.hp>0&&e.id.startsWith('enemy-produced-')&&!e.navalLanding&&!assigned.has(e.id)).sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}));
@@ -20,7 +22,7 @@ export function updateEnemyAI(state:EnemyAIState,combat:CombatState,map:WorldMap
   let group=groups.find(g=>g.status==='muster'&&g.members.length<settings.groupSize);
   if(!group){group={id:`enemy-group-${nextGroupNumber++}`,status:'muster',members:[],destinations:{},startedAt:elapsedSeconds};groups.push(group);}
   const members=[...group.members,recruit.id];
-  const units:Unit[]=members.map(id=>{const e=enemies.find(e=>e.id===id)!;return {kind:'soldier',id,hp:e.hp,cargo:0,selected:true,position:e.position,target:e.position,order:{kind:'idle'}};});
+  const units:Unit[]=members.map(id=>{const e=enemies.find(e=>e.id===id)!;return {...enemySoldier(e,faction),selected:true};});
   const orders=commandGroupMove(units,settings.muster,map);
   const destinations=Object.fromEntries(orders.map(u=>[u.id,{...u.target}]));
   enemies=enemies.map(e=>{const u=orders.find(u=>u.id===e.id);return u?{...e,navigation:u.navigation,order:{kind:'muster' as const,destination:{...u.target}}}:e;});

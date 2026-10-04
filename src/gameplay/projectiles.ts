@@ -6,7 +6,7 @@ import type { Footprint } from './placement';
 import type { WorldMap } from './map';
 import { segmentFits } from './navigation';
 export interface Projectile {
- marine?:true;id:string; shooterId?:string; targetId:string; position:Position; destination:Position;
+ owner?:'enemy';marine?:true;id:string; shooterId?:string; targetId:string; position:Position; destination:Position;
  splashRadius?:number;targetFootprint?:Footprint;
  speed:number; remainingLife:number; damage:number; hitRadius:number;
 }

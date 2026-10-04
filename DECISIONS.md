@@ -1224,3 +1224,9 @@ Använd134:s dwarves-profiler, Brace som befintlig självbuff och multiplicativ 
 ## RTS-140 – Explosiv Goblin-profil
 
 Använd134:s fem roller och befintlig projectile/splash-kod för Grenadier/Mortar; ingen ny friendly-fire-policy (tidigare fiendesplash-only bevaras). Overcharge kombinerar självbuffens attack- och received-damage-multiplikatorer, inklusive nackdelen. Femte rosters egna repo-native pixelkällor, samma lagfärger och logical bodies. Omfördela naval-atlas till32kolumner/2048px bredd för att hålla texture-dimensionerna under8192; frame-ID:n/ankare bevaras. Save29 tillåter goblins först efter28 och håller äldre matchstate/recept oförändrade.
+
+## RTS-141 – Fraktions-AI och äldre profiler
+
+Tillåt separat motståndarval och alla 25 player/enemy-par. Återanvänd befintlig produktionskö/prerequisites/projektil/splash/självbuff via små NPC-adaptrar. AI:n sparar till nästa upplåsta rosterroll; den väljer inte ständigt billigaste tillgängliga recept. Balansvärden ligger i config: nya roster-matcher använder 120 s ekonomigrace, äldre matcher behåller 20 s. Stats ändras inte för att göra NPC-enheter svagare än egna motsvarigheter.
+
+Save30 skiljer ny roster från historisk generisk army och markerar tidigare bygg-/basprofil utan att läka skadad HP eller ändra betalda jobb. Type-ID:n i wireformat binder NPC-roll till matchens fraktions-ID. Ändliga scripted raiders och diagnostiskt Siege test behåller sina befintliga generiska profiler. Befintlig tvåpassagerar-invasion väljer en-supply-roller; inga nya transport-/AI-ekonomiregler införs.

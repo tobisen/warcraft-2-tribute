@@ -5,7 +5,7 @@ import type {FactionId} from '../config/factions';
 import type { Difficulty } from '../config/difficulty';
 import type { MatchScenario } from '../config/scenarios';
 export type SessionPhase='menu'|'playing'|'paused'|'ended';
-export interface MatchOptions {scenario:MatchScenario;difficulty:Difficulty;map:MapId;faction?:FactionId;speed?:GameSpeed}
+export interface MatchOptions {scenario:MatchScenario;difficulty:Difficulty;map:MapId;faction?:FactionId;enemyFaction?:FactionId;speed?:GameSpeed}
 export interface MatchSession {phase:SessionPhase;options:MatchOptions}
 export type SessionAction='start'|'pause'|'resume'|'restart'|'new-match'|'end';
 export function createSession(options:MatchOptions):MatchSession{if(!validMatchOptions(options))throw Error('Invalid match settings');return {phase:'menu',options:{...options}};}

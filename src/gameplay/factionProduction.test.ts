@@ -1,3 +1,4 @@
+import {legacyEnemyFixture} from './testHelpers/legacyEnemyFixture';
 import {describe,it,expect} from 'vitest';
 import {createMatch,updateMatch} from './match';
 import {factionsForPlayer,factions} from '../config/factions';
@@ -28,12 +29,12 @@ describe('shared faction production recipes',()=>{
  });
  it('migrates old paid clan jobs, keeps their timer/refund and rejects forged recipe data',()=>{
   const m=ready('clans'),r=enqueueProduction(m.gathering,m.soldierProduction,bar);m.gathering=r.gathering;m.soldierProduction=r.production;
-  const d=JSON.parse(encodeSave(m,view));d.configVersion='tribute-config-2';delete d.state.statLedger;delete d.state.enemyConstruction;delete d.state.enemyPolicy;delete d.state.enemyRecovery;delete d.state.enemyKnowledge;d.state.combat.enemies=d.state.combat.enemies.filter((e:any)=>e.kind!=='worker');delete d.state.enemyProduction.extracted;delete d.state.enemyProduction.spent;delete d.state.enemyProduction.lostCargo;Object.assign(d.state.soldierProduction.queue[0],{cost:{wood:20,gold:5},durationSeconds:5,remainingSeconds:3});d.state.soldierProduction.remainingSeconds=3;const json=JSON.stringify(d),loaded=decodeSave(json);expect(loaded.ok).toBe(true);if(!loaded.ok)return;
+  const d=JSON.parse(encodeSave(m,view));d.configVersion='tribute-config-2';legacyEnemyFixture(d);delete d.state.statLedger;delete d.state.enemyConstruction;delete d.state.enemyPolicy;delete d.state.enemyRecovery;delete d.state.enemyKnowledge;d.state.combat.enemies=d.state.combat.enemies.filter((e:any)=>e.kind!=='worker');delete d.state.enemyProduction.extracted;delete d.state.enemyProduction.spent;delete d.state.enemyProduction.lostCargo;Object.assign(d.state.soldierProduction.queue[0],{cost:{wood:20,gold:5},durationSeconds:5,remainingSeconds:3});d.state.soldierProduction.remainingSeconds=3;const json=JSON.stringify(d),loaded=decodeSave(json);expect(loaded.ok).toBe(true);if(!loaded.ok)return;
   expect(loaded.match.soldierProduction.queue![0]).toMatchObject({legacyRecipe:true,cost:{wood:20,gold:5},remainingSeconds:3});expect(decodeSave(encodeSave(loaded.match,view)).ok).toBe(true);const refunded=cancelProduction(loaded.match.gathering,loaded.match.soldierProduction,'barracks-job-1');expect(refunded.gathering.wood).toBe(m.gathering.wood+10);expect(refunded.gathering.goldBalance).toBe(m.gathering.goldBalance!+2.5);expect(JSON.stringify(d)).toBe(json);
   for(const change of [(x:any)=>x.cost.wood=0,(x:any)=>x.durationSeconds=1]){const bad=JSON.parse(json);change(bad.state.soldierProduction.queue[0]);expect(decodeSave(JSON.stringify(bad)).ok).toBe(false);}
  });
  it('enemy faction pays its own finite recipe budget and adjusted difficulty duration',()=>{
-  const m=ready('crown');const r=updateEnemyProduction(m.enemyProduction!,m.combat,m.gathering,m.map,0,'clans');expect(r.state.wood).toBe(26);expect(r.state.gold).toBe(2);expect(r.state.production.queue).toHaveLength(3);expect(r.state.production.remainingSeconds).toBe(6);
+  const m=ready('crown');const r=updateEnemyProduction({...m.enemyProduction!,roster:undefined},m.combat,m.gathering,m.map,0,'clans');expect(r.state.wood).toBe(26);expect(r.state.gold).toBe(2);expect(r.state.production.queue).toHaveLength(3);expect(r.state.production.remainingSeconds).toBe(6);
   const roundtrip=decodeSave(encodeSave({...m,enemyProduction:r.state},view));expect(roundtrip.ok).toBe(true);
  });
 });

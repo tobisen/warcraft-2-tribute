@@ -1,3 +1,4 @@
+import {legacyEnemyFixture} from './testHelpers/legacyEnemyFixture';
 import {encodeSave,decodeSave} from './save';
 import {expect,it} from 'vitest';
 import {createMatch,updateMatch} from './match';
@@ -22,7 +23,7 @@ it('paid carrier cargo dies once when real cannon damage sinks the transport',()
 it('naval saves strictly validate identities/phase/cargo/recipes; old14 gets no free budget',()=>{
  let m=createMatch('skirmish','easy',factionsForPlayer('clans'),'islands');for(let i=0;i<1800&&m.enemyNaval!.phase!=='sailing';i++)m=updateMatch(m,.2);const json=encodeSave(m,{camera:{x:0,y:0},building:null});expect(decodeSave(json).ok).toBe(true);
  for(const mutate of [(d:any)=>d.state.enemyNaval.passengers.push(d.state.enemyNaval.passengers[0]),(d:any)=>d.state.enemyNaval.phase='waiting',(d:any)=>d.state.enemyNaval.production.nextUnitNumber=1,(d:any)=>d.state.enemyProduction.wood+=1,(d:any)=>d.configVersion='tribute-config-14']){const d=JSON.parse(json);mutate(d);expect(decodeSave(JSON.stringify(d)).ok).toBe(false);}
- const old=createMatch('skirmish','normal',factionsForPlayer('crown'),'islands');delete old.enemyNaval;old.enemyProduction!.wood-=120;old.enemyProduction!.gold-=30;const d=JSON.parse(encodeSave(old,{camera:{x:0,y:0},building:null}));d.configVersion='tribute-config-14';delete d.state.statLedger;const loaded=decodeSave(JSON.stringify(d));expect(loaded.ok).toBe(true);if(loaded.ok){expect(loaded.match.enemyNaval).toBeUndefined();expect(loaded.match.enemyProduction!.wood).toBe(difficultyProfiles.normal.budget.wood);}
+ const old=createMatch('skirmish','normal',factionsForPlayer('crown'),'islands');delete old.enemyNaval;old.enemyProduction!.wood-=120;old.enemyProduction!.gold-=30;const d=JSON.parse(encodeSave(old,{camera:{x:0,y:0},building:null}));d.configVersion='tribute-config-14';legacyEnemyFixture(d);delete d.state.statLedger;const loaded=decodeSave(JSON.stringify(d));expect(loaded.ok).toBe(true);if(loaded.ok){expect(loaded.match.enemyNaval).toBeUndefined();expect(loaded.match.enemyProduction!.wood).toBe(difficultyProfiles.normal.budget.wood);}
 },30000);
 it('naval simulation freezes on pause/end and a restart starts with a fresh empty fleet',()=>{
  const m=createMatch('skirmish','hard',factionsForPlayer('clans'),'islands');expect(updateMatch({...m,paused:true},100)).toEqual({...m,paused:true});expect(updateMatch({...m,outcome:'defeat'},100)).toEqual({...m,outcome:'defeat'});expect(createMatch('skirmish','hard',factionsForPlayer('clans'),'islands').enemyNaval!.passengers).toEqual([]);

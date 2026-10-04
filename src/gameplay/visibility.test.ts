@@ -55,7 +55,7 @@ describe('shared fog information contract',()=>{
   f=updateFog(f,[]);expect(knownResource(f,{x:650,y:180})).toBe(true);expect(placementVisible(f,{x:608,y:160,width:64,height:64})).toBe(false);
  });
  it('actual match update clears hidden explicit target and restart resets both teams/markers',()=>{
-  let s=createMatch('skirmish');s.gathering.units.push({...soldier(),position:{x:500,y:500},order:{kind:'attack',enemyId:'enemy-base'}});s=updateMatch(s,.1);expect(s.gathering.units.find(u=>u.id==='unit-4')!.order.kind).toBe('idle');expect(s.combat.enemies[0].hp).toBe(240);expect(visibleMinimapData(createMatch('skirmish')).markers.some(m=>m.owner==='enemy')).toBe(false);
+  let s=createMatch('skirmish');s.gathering.units.push({...soldier(),position:{x:500,y:500},order:{kind:'attack',enemyId:'enemy-base'}});s=updateMatch(s,.1);expect(s.gathering.units.find(u=>u.id==='unit-4')!.order.kind).toBe('idle');expect(s.combat.enemies[0].hp).toBe(260);expect(visibleMinimapData(createMatch('skirmish')).markers.some(m=>m.owner==='enemy')).toBe(false);
  });
 });
 

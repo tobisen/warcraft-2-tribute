@@ -1,3 +1,4 @@
+import {legacyEnemyFixture} from './testHelpers/legacyEnemyFixture';
 import {expect,it} from 'vitest';
 import {maps,mapResources,mapResourceTotals} from '../config/maps';
 import {createMatch,updateMatch} from './match';
@@ -27,7 +28,7 @@ it('all three crossings independently connect siege-sized bodies and closing all
 it('strict save preserves the new authored map and migrates21 without rewriting existing maps',()=>{
  const m=createMatch('skirmish','beginner',undefined,'highlands'),view={camera:{x:1700,y:1800},building:null},json=encodeSave(m,view),loaded=decodeSave(json);expect(loaded.ok).toBe(true);if(loaded.ok){expect(loaded.match.gathering.extraNodes).toEqual(m.gathering.extraNodes);expect(loaded.view).toEqual(view);}
  for(const mutate of [(d:any)=>d.configVersion='tribute-config-21',(d:any)=>d.state.gathering.extraNodes[2].remaining=251,(d:any)=>d.state.map.obstacles.pop(),(d:any)=>d.map='plains96']){const d=JSON.parse(json);mutate(d);expect(decodeSave(JSON.stringify(d)).ok).toBe(false);}
- const old=createMatch('skirmish','beginner',undefined,'plains128'),d=JSON.parse(encodeSave(old,{camera:{x:2000,y:2200},building:null}));d.configVersion='tribute-config-21';const migrated=decodeSave(JSON.stringify(d));expect(migrated.ok).toBe(true);if(migrated.ok){expect(migrated.match.map).toEqual(old.map);expect(migrated.match.statLedger).toEqual(old.statLedger);}
+ const old=createMatch('skirmish','beginner',undefined,'plains128'),d=JSON.parse(encodeSave(old,{camera:{x:2000,y:2200},building:null}));d.configVersion='tribute-config-21';legacyEnemyFixture(d);const migrated=decodeSave(JSON.stringify(d));expect(migrated.ok).toBe(true);if(migrated.ok){expect(migrated.match.map).toEqual(old.map);expect(migrated.match.statLedger).toEqual(old.statLedger);}
 });
 for(const faction of ['crown','clans'] as const)it(`${faction}: paid finite-resource highlands skirmish reaches victory`,()=>{
  const result=releasePlaythrough('skirmish','normal',undefined,{map:'highlands',faction,abilities:true}),m=result.match;

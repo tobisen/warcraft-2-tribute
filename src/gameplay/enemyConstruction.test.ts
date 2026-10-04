@@ -1,3 +1,4 @@
+import {legacyEnemyFixture} from './testHelpers/legacyEnemyFixture';
 import {updateEnemyProduction} from './enemyProduction';
 import {expect,it} from 'vitest';
 import {createMatch,updateMatch} from './match';
@@ -38,14 +39,14 @@ it('saves construction/cargo/timers, freezes on pause and restart resets the who
  const m=prepareEnemyConstruction(createMatch('skirmish'));m.paused=true;const r=decodeSave(encodeSave(m,view));expect(r.ok).toBe(true);if(!r.ok)return;expect(r.match.enemyConstruction).toEqual(m.enemyConstruction);expect(r.match.combat.enemies).toEqual(m.combat.enemies);expect(updateMatch(r.match,100)).toBe(r.match);expect(createMatch('skirmish').combat.enemies.some(e=>e.buildingType)).toBe(false);
 });
 it('config five migrates without free buildings or changing existing base production',()=>{
- const m=createMatch('skirmish');delete m.enemyConstruction;delete m.enemyPolicy;delete m.enemyRecovery;delete m.enemyKnowledge;const d=JSON.parse(encodeSave(m,view));d.configVersion='tribute-config-5';delete d.state.statLedger;const r=decodeSave(JSON.stringify(d));expect(r.ok).toBe(true);if(!r.ok)return;expect(r.match.enemyConstruction).toBeUndefined();const next=updateMatch(r.match,6);expect(next.combat.enemies.some(e=>e.buildingType)).toBe(false);expect(next.combat.enemies.some(e=>e.id.startsWith('enemy-produced-'))).toBe(true);
+ const m=createMatch('skirmish');delete m.enemyConstruction;delete m.enemyPolicy;delete m.enemyRecovery;delete m.enemyKnowledge;const d=JSON.parse(encodeSave(m,view));d.configVersion='tribute-config-5';legacyEnemyFixture(d);delete d.state.statLedger;const r=decodeSave(JSON.stringify(d));expect(r.ok).toBe(true);if(!r.ok)return;expect(r.match.enemyConstruction).toBeUndefined();const next=updateMatch(r.match,6);expect(next.combat.enemies.some(e=>e.buildingType)).toBe(false);expect(next.combat.enemies.some(e=>e.id.startsWith('enemy-produced-'))).toBe(true);
 });
 
 it('saves farm money near supply limit while paid production continues; completed farm permits more jobs',()=>{
  const m=prepareEnemyConstruction(createMatch('skirmish','hard'));const bar=m.combat.enemies.find(e=>e.buildingType==='barracks')!;bar.construction={remainingSeconds:0,builderId:null};m.enemyProduction!.wood=100;m.enemyProduction!.gold=50;
  m.combat.enemies.push(...Array.from({length:5},(_,i)=>({id:`enemy-produced-${i+1}`,kind:'unit' as const,owner:'enemy' as const,hp:36,position:{x:700+i*30,y:500}})));
  const blocked=updateEnemyProduction(m.enemyProduction!,m.combat,m.gathering,m.map,0,'clans',{site:bar,population:enemyPopulation(m),reserveForFarm:1});expect(blocked.state.acceptedJobs).toBe(0);expect(blocked.state.wood).toBe(100);
- const open=updateEnemyProduction(m.enemyProduction!,m.combat,m.gathering,m.map,0,'clans',{site:bar,population:{...enemyPopulation(m),cap:13}});expect(open.state.production.queue).toHaveLength(3);expect(open.state.acceptedJobs).toBe(3);expect(open.state.wood).toBe(46);
+ const open=updateEnemyProduction({...m.enemyProduction!,roster:undefined},m.combat,m.gathering,m.map,0,'clans',{site:bar,population:{...enemyPopulation(m),cap:13}});expect(open.state.production.queue).toHaveLength(3);expect(open.state.acceptedJobs).toBe(3);expect(open.state.wood).toBe(46);
 });
 it('rejects invalid building size, construction references, and spoofed new model in an old save',()=>{
  const json=encodeSave(prepareEnemyConstruction(createMatch('skirmish')),view);

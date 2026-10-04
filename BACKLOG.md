@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-141 – Fraktionsval, AI och balans** — **Todo**.
+**RTS-141 – Fraktionsval, AI och balans** — **Done**.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -3688,7 +3688,7 @@ byggnader, research och assets.
 
 ## RTS-141 – Fraktionsval, AI och balans
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Alla fem fraktioner fungerar som spelare och AI-motståndare.
 
@@ -3710,7 +3710,9 @@ eller tillfälliga assets utan tydlig redovisning.
 
 **Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
 
-**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+**Detaljplan:**141A val av player/enemy bland fem stabila fraktioner, alla25kombinationer möjliga, restart/Save bevarar identitet och UI ger inga orders.141B NPC-profil för faktiskt betalda melee/ranged/siege/specialist från full roster med completed prerequisites/research, rätt kostnad/tid/supply/HP/fart/range/projectile/splash; korrekta building/base/naval-recept och profiler. Behåll konfigurerade svårighets-/grupp-/ekonomi-/navalinvasionregler, inga ny avancerad AI-ekonomi.141C återanvänd combat/projektil/buff/navigation och assetroller för NPC, fog/own-target-policy/gameover/reset.141D kontrollerad Save30-migration som bevarar gamla betalda jobs/skadad HP/legacyprofiler utan healing/refund, stabila NPC-typ-ID:n och korrekta verifierade timers.141E fraktions-/roster-/atomic-economy/prerequisite/supply/combat/Save/matchup-regressioner, native betald spelare mot nya NPC-profiler, dokumenterade reproducibla balansresultat/begränsningar och fulla checks/review/docs innan Done.
+
+**Konkreta acceptance criteria:** Alla25identitetskombinationer initialiseras/sparas/återställs; AI tränar faktiskt varje tillgänglig combatroll när dess betalda prerequisites är avslutade och använder egna profiler. Army/ships/workers räknas med faktisk supply; inga gratis units/research eller överdebitering. Ny NPC-ranged/siege/specialist använder rätt projektil/splash och visuell roll, HP/fart/attack/defense kommer från vald faction. Aktiva timers/research/AI/jobb överlever Save/load; äldre matchstate ändras inte retroaktivt. Native input/menu/matchflöde utan fångade runtime-fel. Initial balans dokumenteras med miljö/scenario/mätning utan obestyrkt löfte om lika win-rate. Fullsvit/typecheck/build/diff/doclänkar passerar.
 
 ## RTS-142 – Campaign-struktur och progression
 

@@ -9,7 +9,7 @@ import { arenaConfig } from '../config/arena';
 import { waveSchedule } from '../config/waves';
 import { canReachFootprint } from './approach';
 import { bodyFits, overlaps, replaceObstacles, type WorldMap } from './map';
-import { spawnCandidates, hasSpawnExit, unitBody } from './spawning';
+import { spawnCandidates, hasSpawnExit, unitBody, otherBodySize } from './spawning';
 import type { Unit } from './gathering';
 import { soldierStats, combatUnitStats, unitStats } from '../config/unit';
 import { barracksConfig, farmConfig, worldConfig } from '../config/buildings';
@@ -22,7 +22,7 @@ export interface Footprint extends Position {
   height: number;
 }
 export interface PlacementContext {
-  map: WorldMap; gathering: GatheringState; enemies: readonly {position:Position}[];
+  map: WorldMap; gathering: GatheringState; enemies: readonly import('./spawning').PositionedBody[];
 }
 export interface ConstructionJob {remainingSeconds:number;builderId:string|null}
 export interface Farm {owner?:'player';hp?:number;id:`farm-${number}`;footprint:Footprint;construction:ConstructionJob}
@@ -86,7 +86,7 @@ export function placementError(state: PlacementState, point: Position, wood: num
   if (context) {
     if(context.map.obstacles.some(o=>overlaps(rect,o)))return uiText.overlapsTerrainOrABuilding;
     if(context.gathering.units.some(u=>overlaps(rect,unitBody(u.position,u.kind==='worker'?unitStats.size:combatUnitStats(u).size)))
-      || context.enemies.some(e=>overlaps(rect,unitBody(e.position,soldierStats.size))))return uiText.overlapsAUnit;
+      || context.enemies.some(e=>overlaps(rect,unitBody(e.position,otherBodySize(e)))))return uiText.overlapsAUnit;
     const after=replaceObstacles(context.map,[...context.map.obstacles,rect]);
     const [base,...nodes]=placementObstacles(context.gathering);
     for(const worker of context.gathering.units.filter((u):u is Extract<Unit,{kind:'worker'}>=>u.kind==='worker')) {

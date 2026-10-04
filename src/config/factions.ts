@@ -172,4 +172,4 @@ export function factionForTeam(match:{factions?:MatchFactions},team:keyof MatchF
   return factions[(match.factions??defaultFactions)[team]];
 }
 
-export function factionsForPlayer(player:FactionId):MatchFactions {return {player,enemy:player==='crown'?'clans':'crown'};}
+export function factionsForPlayer(player:FactionId,enemy?:FactionId):MatchFactions {return {player,enemy:enemy??(player==='crown'?'clans':'crown')};}

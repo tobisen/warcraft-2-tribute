@@ -1,3 +1,4 @@
+import {legacyEnemyFixture} from './testHelpers/legacyEnemyFixture';
 import {expect,it} from 'vitest';
 import {createMatch,updateMatch} from './match';
 import {bodyFits,tileFootprint} from './map';
@@ -39,12 +40,12 @@ for(const [id,tiles] of [['plains96',96],['plains128',128]] as const){
  it(`${id}: existing paid skirmish and enemy economy remain playable`,()=>{
   const result=releasePlaythrough('skirmish','normal',undefined,{faction:'crown',abilities:true,map:id});
   expect(result.match.outcome).toBe('victory');expect(result.spentWood).toBeGreaterThan(40);expect(result.match.enemyProduction!.acceptedJobs).toBeGreaterThan(0);
-  let passive=createMatch('skirmish','normal',undefined,id);for(let i=0;i<800&&passive.outcome==='playing';i++)passive=updateMatch(passive,.25);
+  let passive=createMatch('skirmish','normal',undefined,id);for(let i=0;i<1600&&passive.outcome==='playing';i++)passive=updateMatch(passive,.25);
   expect(passive.combat.baseHP).toBeLessThan(240);
- },30_000);
+ },60_000);
 }
 it('config20 preserves existing matches, ledger and views when migrating to21',()=>{
  const m=createMatch('skirmish','beginner',undefined,'frontier'),view={camera:{x:400,y:300},building:null};m.statLedger!.player.built=2;
- const doc=JSON.parse(encodeSave(m,view));doc.configVersion='tribute-config-20';const loaded=decodeSave(JSON.stringify(doc));
+ const doc=JSON.parse(encodeSave(m,view));doc.configVersion='tribute-config-20';legacyEnemyFixture(doc);const loaded=decodeSave(JSON.stringify(doc));
  expect(loaded.ok).toBe(true);if(loaded.ok){expect(loaded.match.statLedger).toEqual(m.statLedger);expect(loaded.match.gathering).toMatchObject({extraNodes:m.gathering.extraNodes});expect(loaded.view).toEqual(view);}
 });

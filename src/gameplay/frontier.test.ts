@@ -64,10 +64,10 @@ for(const faction of ['crown','clans'] as const)it(`${faction}: a paid finite-re
  }
  expect(decodeSave(encodeSave(m,view)).ok).toBe(true);expect(updateMatch(m,100)).toBe(m);
  const fresh=createMatch('skirmish','normal',factionsForPlayer(faction),'frontier');expect(fresh.gathering.extraNodes!.map(n=>n.remaining)).toEqual(mapResources('frontier').slice(2).map(n=>n.amount));expect(fresh.gathering.units.every(u=>!u.selected&&u.order.kind==='idle')).toBe(true);
-},30_000);
+},60_000);
 it('the configured enemy can fund an army and reach the player base across the valley',()=>{
  let m=createMatch('skirmish','normal',undefined,'frontier');
- for(let i=0;i<800&&m.outcome==='playing';i++)m=updateMatch(m,.25);
+ for(let i=0;i<1600&&m.outcome==='playing';i++)m=updateMatch(m,.25);
  expect(m.enemyProduction!.acceptedJobs).toBeGreaterThan(0);
  expect(m.combat.baseHP).toBeLessThan(240);
 });

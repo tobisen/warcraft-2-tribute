@@ -722,3 +722,9 @@ Välj Dwarves för långsam, tålig armé och stark Cannon. Bygg Guard Hall45woo
 ## RTS-140 – Goblins
 
 Välj Goblins för snabb, billig och ömtålig armé med splashvapen. Bygg Scrap Yard35wood och Lab35wood/15gold; forska Hot Powder30wood/20gold (6s), träna Grenadier25wood/25gold (7s,2supply). Overcharge [E] ger+35% outgoing men+20% incoming damage i4s,20s cooldown. Mortar kräver Lab och har64px splash. Junk Dock35/10 tränar Powder Boat35/20 på6s eller Junk Ferry35/10 på8s;65HP/135px/s. Egna originalpixelbilder och Save29 som migrerar äldre matcher. Full femfraktions-AI/matchups hör till141.
+
+## RTS-141 – Välj motståndare
+
+Startmenyn har Enemy faction för alla fem fraktioner, även samma som din egen. Automatic opponent använder tidigare standardval. Ny Skirmish/basmission har betald fraktionsarmé med egna roller, forskning, projektiler och självbuff. Bygg supply och en tillräcklig armé; den tidigare fyrsoldatsstrategin räcker inte alltid. Land-AI har längre förberedelse före första gruppanfall, men reagerar när dess bas hotas. Äldre Save migreras till config30 med befintliga profiler, HP och betalda timers bevarade. Scripted waves och diagnostiskt Siege test behåller generiska raiders; sjö-AI:s enda tvåpassagerar-invasion är fortsatt begränsad.
+
+Matchsimulationerna i `npm test` körs med högst två Vitest-workers så CPU-tunga spelgenomgångar inte konkurrerar med obegränsat många tester om sina deadlines. `vitest.config.ts` styr enbart testkonkurrensen.

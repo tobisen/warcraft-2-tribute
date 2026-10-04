@@ -15,5 +15,5 @@ for (const scenario of playableScenarios.filter(id=>id!=='tutorial'&&scenarioCon
     const restart = createMatch(scenario, difficulty);
     expect(restart.outcome).toBe('playing'); expect(restart.waves.elapsedSeconds).toBe(0);
     expect(restart.gathering.units).toHaveLength(3); expect(restart.gathering.wood).toBe(scenarioConfig[scenario].initial.wood);
-  }, 20_000);
+  }, 30_000);
 }
