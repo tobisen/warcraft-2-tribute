@@ -1,3 +1,4 @@
+import {inspectedBuilding} from '../gameplay/buildingInspection';
 import type {MatchState} from '../gameplay/match';
 import type {BuildingSelection} from '../gameplay/buildingSelection';
 import type {Position} from '../gameplay/movement';
@@ -11,5 +12,5 @@ export function cameraFocus(points:readonly Position[],world:{width:number;heigh
 }
 export function selectionFocusPoints(m:MatchState,building:BuildingSelection):Position[]{
  const points=[...m.gathering.units,...(m.navy?.ships??[])].filter(u=>u.selected).map(u=>({...u.position}));if(points.length)return points;
- if(building==='base'&&m.combat.baseHP>0)return [{...m.gathering.base}];const footprint=building==='barracks'?m.placement.barracks:building==='harbor'?m.navy?.harbor?.footprint:undefined;return footprint?[{x:footprint.x+footprint.width/2,y:footprint.y+footprint.height/2}]:[];
+ const footprint=inspectedBuilding(m,building)?.footprint;return footprint?[{x:footprint.x+footprint.width/2,y:footprint.y+footprint.height/2}]:[];
 }

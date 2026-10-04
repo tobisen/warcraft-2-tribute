@@ -2,9 +2,9 @@
 
 ## Current Focus
 
-**RTS-152 – Alla byggnader kan inspekteras** — **Todo**.
+**RTS-153 – Upplösning utan automatisk uppförstoring** — **Todo**.
 
-**Aktuell etapp:** återställ roadmap RTS-151–180 enligt nytt uppdrag 2026-10-04, genomför endast151–154 taskvis med checks/commit/push. Nästa steg: implementera komplett byggnadsinspektion efter151:s inventering. Stanna efter154; nästa task155. Äldre stopp och fortsättningsmandat nedan är historik.
+**Aktuell etapp:** återställ roadmap RTS-151–180 enligt nytt uppdrag 2026-10-04, genomför endast151–154 taskvis med checks/commit/push. Nästa steg: separera vald renderingsupplösning från Native/Fit-visningsstorlek. Stanna efter154; nästa task155. Äldre stopp och fortsättningsmandat nedan är historik.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -3999,7 +3999,7 @@ Ingen bred refaktorering eller nya features i denna task.
 
 ## RTS-152 – Alla byggnader kan inspekteras
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Alla byggnader kan inspekteras.
 
@@ -4022,6 +4022,8 @@ Bevara befintlig unit- och resource-selection.
 **Tests:** Selection/prioritet, byggnadsmodeller, fog/död/fiendeorder-skydd; relevanta integrationer och browserklick. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
 
 **Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+**Verifiering:**31riktade tester/5filer PASS;32selection/Save-integrationstester PASS;433unit/76filer PASS6.46s. Build inklusive strict typecheck PASS. Browser1280/1920 fysiska klick med uttryckliga presentationsfixtures för alla byggnadstyper/farms, enemyfog/order-skydd, unit/resource och restart/Save-load. Ny inspectionselection är transient; inget Save-schema ändrat.
 
 ## RTS-153 – Upplösning utan automatisk uppförstoring
 

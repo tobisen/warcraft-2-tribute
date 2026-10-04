@@ -1699,3 +1699,15 @@ BootScene skapar UUID endast för verklig ny match och bevarar det via currentMa
 `config/release.ts`, package.json och lockfilens rootpackage använder0.2.0. Changelog behåller0.1.0; inga dependencies ändras. Vites build-ID är gitHEAD, separat från Save-config33 och scoremodell1. Pages-CI kör fortsatt full regression; `npm run build` inkluderar strict typecheck och ersätter dubbel separat typecheck. Verifierad releasekandidat publiceras av befintlig workflow innan slutlig publiceringsstatus dokumenteras. Inga simulation-/balanssystem ändras i150.
 
 Pages-workflow hoppar över push som enbart ändrar Markdown/rollinstruktioner (`**/*.md`, `.agents/**`); kod/config/package/asset/workflow-ändring kör fortsatt full test+build. workflow_dispatch kan alltid köras. Slutlig docscommit kan därför ligga efter den publicerade kodbuilden utan en identisk ny matchregression.
+
+## RTS-152 – Komplett byggnadsinspektion
+
+`gameplay/buildingInspection.ts` löser levande egna footprints/HP och enemy-ID:n
+endast med aktuell entityVisible-vision. Scenen bevarar unit-hitprioritet och
+resource-selection, använder modellen för ring/rensning/kamerafokus och blockerar
+rally/queue-cancel på inspektionsval. Forge använder befintliga researchhandlers.
+`selectionInfo` visar funktion, fraktionsnamn, HP, supply, produktionskö och
+unitAvailability-prerequisites för egna byggnader. Fiendevy visar ingen kö,
+research, resursbank eller actions. Dold/död byggnad rensas vid sync.
+Save33 behålls; forge/farm/enemy-inspektion är transient och sparas som null,
+samma princip som resource-selection. Gameplaystate och äldre producentval bevaras.

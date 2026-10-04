@@ -38,3 +38,23 @@ it('expansion nodes use the same selection and visibility rules',()=>{
  const m=createMatch('skirmish','beginner',undefined,'frontier');
  for(const node of m.gathering.extraNodes!){expect(pick(m,node.position).resource).toBeNull();reveal(m,node.position);expect(pick(m,node.position).resource).toBe(node.id);expect(selectionInfo(m,null,node.id).detail).toContain(String(node.remaining));}
 });
+
+it('inspects every farm and forge, preserving orders and unit priority',async()=>{
+ const {inspectBuildingAt,inspectedBuilding,savedBuildingSelection}=await import('./buildingInspection');
+ const m=createMatch();m.placement.farms=[1,2].map(n=>({id:`farm-${n}` as const,hp:40,footprint:{x:700+n*64,y:300,width:32,height:32},construction:{remainingSeconds:n===1?0:4,builderId:null}}));
+ m.placement.forge={id:'forge',owner:'player',hp:60,footprint:{x:700,y:400,width:64,height:64},construction:{remainingSeconds:0,builderId:null}};
+ expect(inspectBuildingAt(m,{x:765,y:305})).toBe('farm-1');expect(inspectBuildingAt(m,{x:830,y:305})).toBe('farm-2');expect(inspectBuildingAt(m,{x:710,y:410})).toBe('forge');
+ expect(selectionInfo(m,'farm-1').stats.join(' ')).toContain('Supply capacity');expect(selectionInfo(m,'farm-2').detail).toContain('Construction');expect(selectionInfo(m,'forge').stats.join(' ')).toContain('Research');
+ expect(savedBuildingSelection('forge')).toBeNull();expect(savedBuildingSelection('enemy:secret')).toBeNull();expect(savedBuildingSelection('base')).toBe('base');
+ m.placement.farms[0].hp=0;expect(inspectedBuilding(m,'farm-1')).toBeNull();expect(selectionInfo(m,'farm-1').hp).toBeNull();
+});
+it('visible enemy building inspection never exposes queues/research and disappears under fog',async()=>{
+ const {inspectBuildingAt,inspectedBuilding}=await import('./buildingInspection');const {actionPanel}=await import('../presentation/actionPanel');
+ const m=createMatch();m.gathering.units.forEach(u=>u.selected=false);
+ const enemy={id:'inspect-test',kind:'building' as const,buildingType:'forge' as const,hp:55,position:{x:800,y:500},footprint:{x:784,y:484,width:32,height:32}};m.combat.enemies.push(enemy);
+ expect(inspectBuildingAt(m,enemy.position)).toBeNull();reveal(m,enemy.position);
+ expect(inspectBuildingAt(m,enemy.position)).toBe('enemy:inspect-test');const info=selectionInfo(m,'enemy:inspect-test');expect(info.hp).toBe(55);expect(info.stats).toEqual(['Enemy building · Inspection only']);expect(info.detail).not.toContain('55');
+ expect(Object.values(actionPanel(m,'enemy:inspect-test',true)).every(a=>!a.visible)).toBe(true);
+ m.fog!.teams.player.visible.fill(false);expect(inspectedBuilding(m,'enemy:inspect-test')).toBeNull();expect(selectionInfo(m,'enemy:inspect-test').name).toBe('No selection');
+ reveal(m,enemy.position);enemy.hp=0;expect(inspectBuildingAt(m,enemy.position)).toBeNull();
+});

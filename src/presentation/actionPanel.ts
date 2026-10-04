@@ -43,7 +43,7 @@ export function actionPanel(m:MatchState,building:BuildingSelection,playing:bool
    const prerequisite=naval?null:unitAvailability(faction,role,technologyFor(m,'player'));
    reason=remaining>0?'Construction unfinished':prerequisite??(production&&productionJobCount(production)>=queueConfig.maxJobs?'Queue full':!hasPopulation(population,recipe.supply)?uiText.populationLimitReached:affordabilityReason(m.gathering,recipe.cost));
   }
-  else if(id.startsWith('research-')){visible=base;const kind=id==='research-attack'?'attack':'defense';cost=costLabel(faction.upgrades[kind].cost);reason=!forgeReady(m.placement)?'Build and complete a forge':m.research?.job?'Research in progress':(m.research?.[kind]??0)>=faction.upgrades[kind].maxLevel?'Already researched':affordabilityReason(m.gathering,faction.upgrades[kind].cost);}
+  else if(id.startsWith('research-')){visible=base||building==='forge';const kind=id==='research-attack'?'attack':'defense';cost=costLabel(faction.upgrades[kind].cost);reason=!forgeReady(m.placement)?'Build and complete a forge':m.research?.job?'Research in progress':(m.research?.[kind]??0)>=faction.upgrades[kind].maxLevel?'Already researched':affordabilityReason(m.gathering,faction.upgrades[kind].cost);}
   else if(id==='attack-move')visible=combat;
   else if(id==='unit-ability'){visible=combat;reason=!land.some(abilityReady)?'Ability cooling down':'';}
   else if(id==='unload-transport'){visible=!!transport;reason=!transport?.passengers?.length?'Transport is empty':'';}

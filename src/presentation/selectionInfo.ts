@@ -1,3 +1,5 @@
+import {inspectedBuilding} from '../gameplay/buildingInspection';
+import {unitAvailability,technologyFor} from '../gameplay/productionPrerequisites';
 import {resourceStaffing} from '../gameplay/resourceStaffing';
 import {resourceNodes} from '../gameplay/gathering';
 import {knownResource} from '../gameplay/visibility';
@@ -10,7 +12,7 @@ import {artAtlas,motion,unitFrame,type UnitArt} from './animation';
 import {buildingFrame} from './assets';
 export interface SelectionInfo {name:string;detail:string;hp:number|null;maxHP:number|null;stats:string[];portrait:{atlas:'units'|'naval'|'buildings';frame:string}|null}
 const empty=():SelectionInfo=>({name:'No selection',detail:'Click a unit, building or resource, or drag to select a group.',hp:null,maxHP:null,stats:[],portrait:null});
-/** Presentation only: reads selected player entities, never enemy or hidden resources. Stats are baseline recipes. */
+/** Presentation only: reads selected player entities, only visible enemy buildings and known resources. Stats are baseline recipes. */
 export function selectionInfo(m:MatchState,building:BuildingSelection,resourceId:string|null=null):SelectionInfo {
  if(resourceId){
   const node=resourceNodes(m.gathering).find(n=>n.id===resourceId);
@@ -29,11 +31,21 @@ export function selectionInfo(m:MatchState,building:BuildingSelection,resourceId
   return {name:u.kind==='ship'?faction.naval.units[role as 'transport'|'warship'].name:faction.unitNames[role as 'worker'|'soldier'|'archer'|'catapult'|'specialist'],detail:`${u.id} · ${u.order.kind}`,hp:u.hp??data.hp,maxHP:data.hp,stats,portrait:{atlas:artAtlas(role),frame:unitFrame(motion(undefined,u.position,'idle',0,role,'player',undefined,faction.id),0)}};
  }
  if(!building)return empty();
- const harbor=m.navy?.harbor;if(building==='barracks'&&!m.placement.barracks||building==='harbor'&&!harbor||building==='base'&&m.combat.baseHP<=0)return empty();
- const hp=building==='base'?m.combat.baseHP:building==='barracks'?m.placement.barracksHP??faction.buildings.barracks.hp:harbor!.hp;
- const maxHP=building==='harbor'?faction.naval.harbor.hp:faction.buildings[building].hp;
- const remaining=building==='barracks'?m.placement.construction?.remainingSeconds??0:building==='harbor'?harbor!.construction.remainingSeconds:0;
- return {name:building==='harbor'?faction.naval.harbor.name:faction.buildingNames[building],detail:remaining>0?`Construction ${remaining.toFixed(1)}s remaining`:'Complete',hp,maxHP,stats:building==='base'?[`Supply capacity ${faction.buildings.base.populationCapacity}`]:['Select production actions to train units.'],portrait:{atlas:'buildings',frame:buildingFrame(building,'player',remaining,5,faction.id,hp)}};
+ const b=inspectedBuilding(m,building);if(!b)return empty();
+ const {kind,team,hp,maxHP,remaining}=b,f=b.faction;
+ const name=kind==='outpost'?'Outpost':kind==='harbor'?f.naval.harbor.name:f.buildingNames[kind];
+ const description=kind==='base'?'Your stronghold trains workers and receives gathered resources.':kind==='barracks'?'Trains combat units to defend and expand your territory.':kind==='farm'?'Provides population capacity for workers and troops.':kind==='forge'?'Unlocks military research and advanced unit prerequisites.':kind==='harbor'?'Produces transports and warships at a free coastal exit.':'An expansion strongpoint.';
+ const stats:string[]=team==='enemy'?['Enemy building · Inspection only']:kind==='farm'?[`Supply capacity +${f.buildings.farm.populationCapacity}`]:kind==='base'?[`Supply capacity ${f.buildings.base.populationCapacity}`]:[];
+ if(team==='player'){
+  if(remaining>0)stats.unshift(description);
+  const roles=kind==='base'?['worker'] as const:kind==='barracks'?f.roster.filter(r=>r!=='worker'):[];
+  for(const role of roles){const reason=unitAvailability(f,role,technologyFor(m,'player'));stats.push(`${f.unitNames[role]}: ${reason??'Available'}`);}
+  const production=kind==='base'?m.production:kind==='barracks'?m.soldierProduction:kind==='harbor'?m.navy?.production:undefined;
+  if(production)stats.push(`Production: ${production.queue?.length??0} queued`);
+  if(kind==='harbor')stats.push(`${f.naval.units.transport.name} · ${f.naval.units.warship.name}`);
+  if(kind==='forge'||kind==='base')stats.push(`Research: Attack ${m.research?.attack??0} / Defense ${m.research?.defense??0}`,m.research?.job?`${m.research.job.kind}: ${m.research.job.remainingSeconds.toFixed(1)}s remaining`:'Attack / Defense research requires a completed forge');
+ }
+ return {name,detail:team==='enemy'?'Visible enemy building · No orders or private production data':remaining>0?`Construction ${remaining.toFixed(1)}s remaining`:description,hp,maxHP,stats,portrait:kind==='outpost'?null:{atlas:'buildings',frame:buildingFrame(kind,team,remaining,5,f.id,hp)}};
 }
 export function renderSelectionInfo(info:SelectionInfo):void {
  document.getElementById('selection-name')!.textContent=info.name;document.getElementById('selection-detail')!.textContent=info.detail;

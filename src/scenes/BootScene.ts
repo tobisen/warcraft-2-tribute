@@ -1,3 +1,4 @@
+import {inspectBuildingAt,inspectedBuilding,savedBuildingSelection} from '../gameplay/buildingInspection';
 import {highscoreStore,renderHighscorePanels} from '../presentation/highscores';
 import {dismissProposal,dismissUnits,type DismissProposal} from '../gameplay/dismiss';
 import {dismissMessage} from '../presentation/dismiss';
@@ -272,7 +273,7 @@ export class BootScene extends Phaser.Scene {
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.attackMoveButton.removeEventListener('click',beginAttackMove));
     this.queuePanel=document.getElementById('production-queue')!;
     const cancelJob=(event:MouseEvent)=>{
-      if(!this.gameplayActive()||!this.selectedBuilding)return;
+      if(!this.gameplayActive()||!['base','barracks','harbor'].includes(this.selectedBuilding??''))return;
       const button=event.target instanceof Element?event.target.closest<HTMLButtonElement>('button[data-job-id]'):null;
       if(!button||!this.queuePanel.contains(button))return;
       const p=this.selectedBuilding==='harbor'?this.navy!.production:this.selectedBuilding==='base'?this.production:this.soldierProduction;
@@ -463,7 +464,7 @@ export class BootScene extends Phaser.Scene {
     abilityButton.addEventListener('click',activateAbility);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>abilityButton.removeEventListener('click',activateAbility));
     const saveButton=document.getElementById('save-match') as HTMLButtonElement;
     const loadButton=document.getElementById('load-match') as HTMLButtonElement;
-    const save=()=>{if(this.session.phase==='menu'||this.restartPending)return;const result=storeSave(()=>window.localStorage,this.currentMatch(),{camera:{x:this.cameras.main.scrollX,y:this.cameras.main.scrollY},building:this.selectedBuilding});document.getElementById('save-status')!.textContent=result.ok?uiText.savedLocallyInSlot1:uiText.couldNotSaveLocallyCheckBrowserStorage;};
+    const save=()=>{if(this.session.phase==='menu'||this.restartPending)return;const result=storeSave(()=>window.localStorage,this.currentMatch(),{camera:{x:this.cameras.main.scrollX,y:this.cameras.main.scrollY},building:savedBuildingSelection(this.selectedBuilding)});document.getElementById('save-status')!.textContent=result.ok?uiText.savedLocallyInSlot1:uiText.couldNotSaveLocallyCheckBrowserStorage;};
     const load=()=>{if(this.restartPending)return;const result=readSave(()=>window.localStorage);if(!result.ok){document.getElementById('save-status')!.textContent=result.code==='missing'?result.error:result.code==='version'?uiText.thisSaveUsesAnUnsupportedFormatOrGame:uiText.couldNotReadTheSaveTheActiveMatch;return;}this.awaitingLoadedResume=result.match.outcome==='playing';this.pendingLoad={match:{...result.match,paused:true},view:result.view};this.scenario=result.match.scenario!;this.difficulty=result.match.difficulty!;this.session={options:{scenario:this.scenario,difficulty:this.difficulty,map:result.match.map.id??'arena',faction:result.match.factions?.player??defaultFactions.player,enemyFaction:result.match.factions?.enemy??defaultFactions.enemy,speed:result.match.speed??1},phase:result.match.outcome==='playing'?'paused':'ended'};this.skipGameplayFrame=true;this.restartPending=true;this.restartButton.disabled=true;gameAudio.setPhase(this.session.phase);document.getElementById('save-status')!.textContent=result.match.outcome==='playing'?uiText.loadedPausedNoGameplayTimePassesUntilResume:uiText.loadedCompletedMatch;this.scene.restart();};
     saveButton.addEventListener('click',save);loadButton.addEventListener('click',load);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{saveButton.removeEventListener('click',save);loadButton.removeEventListener('click',load);});
     for(const [id,action] of [['start-match','start'],['pause-match','pause'],['resume-match','resume'],['new-match','new-match']] as const){const button=document.getElementById(id)!;const handler=()=>this.sessionAction(action);button.addEventListener('click',handler);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>button.removeEventListener('click',handler));}
@@ -602,7 +603,7 @@ export class BootScene extends Phaser.Scene {
     } else if (pointer.button === 2) {
       if(this.selectedBuilding||this.gathering.units.some(u=>u.selected))gameAudio.play('command');
       if (this.selectedBuilding) {
-        if(this.selectedBuilding==='harbor'){this.syncVisuals();return;}
+        if(this.selectedBuilding!=='base'&&this.selectedBuilding!=='barracks'){this.syncVisuals();return;}
         if (this.selectedBuilding === 'base') this.production = setRally(this.production, world, this.map,
           baseFootprint(this.gathering.base), 'base');
         else this.soldierProduction = setRally(this.soldierProduction, world, this.map, this.placement.barracks, 'barracks');
@@ -688,6 +689,7 @@ export class BootScene extends Phaser.Scene {
     } else {
       const selected = selectWorldTarget(this.allSelectable(), end, this.gathering.base,
         this.placement.barracks, u=>u.kind==='ship'?navyConfig.ship.size:u.kind==='worker'?unitStats.size:combatUnitStats(u).size,this.navy?.harbor?.footprint,resourceNodes(this.gathering),n=>knownResource(this.fog,n.position));
+      if(!selected.units.some(u=>u.selected)){const building=inspectBuildingAt(this.currentMatch(),end);selected.building=building;if(building)selected.resource=null;}
       this.selectedResource=selected.resource;
       if(this.drag.shift&&!selected.building&&!selected.resource){
         this.setSelectable(combineSelection(this.allSelectable(),selected.units,'toggle'));
@@ -744,7 +746,7 @@ export class BootScene extends Phaser.Scene {
   }
 
   private syncVisuals(): void {
-    if(this.selectedBuilding==='harbor'&&!this.navy?.harbor||this.selectedBuilding==='barracks'&&!this.placement.barracks||this.selectedBuilding==='base'&&this.combat.baseHP<=0)this.selectedBuilding=null;
+    if(this.selectedBuilding&&!inspectedBuilding(this.currentMatch(),this.selectedBuilding))this.selectedBuilding=null;
     this.baseVisual.setFrame(buildingFrame('base','player',0,5,this.factions.player,this.combat.baseHP)).setVisible(this.combat.baseHP>0);this.baseLabel.setVisible(this.combat.baseHP>0).setText(`${factions[this.factions.player].buildingNames.base} ${Math.ceil(this.combat.baseHP)} HP`);
     if (!this.gameplayActive()) {
       this.unloadMode=null;this.attackMoveMode=false;
@@ -789,8 +791,7 @@ export class BootScene extends Phaser.Scene {
     renderSelectedQueue(selectedQueue(this.currentMatch(),this.selectedBuilding,this.gameplayActive()),(canvas,asset)=>this.paintPortrait(canvas,asset));
     this.rallyMarker.setVisible(selectedProduction?.rally !== undefined);
     if (selectedProduction?.rally) this.rallyMarker.setPosition(selectedProduction.rally.x, selectedProduction.rally.y);
-    const selectedFootprint = this.selectedBuilding === 'base' ? baseFootprint(this.gathering.base)
-      : this.selectedBuilding === 'barracks' ? this.placement.barracks : this.selectedBuilding==='harbor'?this.navy!.harbor!.footprint:null;
+    const selectedFootprint = inspectedBuilding(this.currentMatch(),this.selectedBuilding)?.footprint??null;
     this.buildingRing.setVisible(selectedFootprint !== null);
     if (selectedFootprint) this.buildingRing.setPosition(selectedFootprint.x, selectedFootprint.y)
       .setSize(selectedFootprint.width, selectedFootprint.height);
@@ -812,7 +813,7 @@ export class BootScene extends Phaser.Scene {
     document.getElementById('ability-status')!.textContent=abilityStatus(this.gathering);
     const labels = matchLabels(this.currentMatch());
     for (const [id, text] of [['resource-status', labels.economy], ['health-status', labels.health],
-      ['wave-status', labels.wave],['population-status',`Population: ${population.used} + ${population.reserved} reserved / ${population.cap}`], ['selection-status', this.selectedBuilding ? `${(this.selectedBuilding==='harbor'?uiText.harbor:factions[this.factions.player].buildingNames[this.selectedBuilding])} selected (${Math.ceil(this.selectedBuilding==='harbor'?this.navy!.harbor!.hp:this.selectedBuilding==='base'?this.combat.baseHP:this.placement.barracksHP??combatConfig.barracksHP)} HP) ${this.selectedBuilding==='harbor'?uiText.shipQueue:uiText.rightClickSetsRally2}${selectedProduction?.rallyError ? ': ' + uiText.theRallyDestinationIsBlockedOrUnreachable : ''}` : (this.selectedResource?info.name:this.navy?.ships.some(s=>s.selected)?`${this.allSelectable().filter(u=>u.selected).length} units selected · ships`:labels.selected)]]) {
+      ['wave-status', labels.wave],['population-status',`Population: ${population.used} + ${population.reserved} reserved / ${population.cap}`], ['selection-status', this.selectedBuilding ? `${info.name} selected (${Math.ceil(info.hp??0)} HP)` : (this.selectedResource?info.name:this.navy?.ships.some(s=>s.selected)?`${this.allSelectable().filter(u=>u.selected).length} units selected · ships`:labels.selected)]]) {
       document.getElementById(id)!.textContent = text;
     }
 

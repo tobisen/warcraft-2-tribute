@@ -1284,3 +1284,11 @@ Produkt- och packageversion0.2.0 betecknar femfraktions-/åttamissionsetappen. S
 Användarens uttryckliga uppskjutna ljudtest/matchlyssning har företräde framför ursprunglig150-lyssningsrad. Tekniska assets/engine-checks och grafisk granskning utförs, lyssning förblir ej verifierad och redovisas. Releasekandidat behöver push för CI-publicering; tasken kvarstår In Progress tills faktisk Pages-build verifierats, därefter dokumenteras Done. Stoppa före151.
 
 Rena Markdown-/rollinstruktionspushar undantas från automatisk Pages/fullregression genom paths-ignore. Blandad kod+docs och workflow_dispatch kör fulla checks. Detta följer effektivare checkstyrningen: final docs efter verifierad publicering kontrolleras för text/länkar/diff, medan publicerad kodbuild behåller verifierad commitidentitet.
+
+## RTS-152 – Publik information och transient inspektion
+
+Byggnadsval använder befintliga producent-ID:n plus forge, farm-ID och enemy:ID.
+Inspektion ger aldrig enemyorders eller tillgång till privat produktion/research.
+Aktuell vision krävs för enemydata; ingen remembered-HP i fog. Farm/forge/enemy
+är transient UI-selection och återställs vid Load; ingen ny Saveversion behövs.
+Forskning kan nås från forge och den befintliga basvyn med samma admissionregler.

@@ -2636,3 +2636,19 @@ Review: scope/historik och källhänvisningar kontrollerade; inga blockerande fy
 separat omkörning av samma fall passerade med endpoint600/240 och hela flödet.
 Det är en intermittent kontroll; ingen runtimeorsak fastställd, ingen kodändring.
 Diffkontroll PASS. Roadmap-ID:n151–180 finns exakt en gång; docsreferenser kontrollerade.
+
+## 2026-10-04 – RTS-152: alla byggnader kan inspekteras
+
+151/29b49e7 pushad origin/main. Implementerat gameplayfri inspektionsmodell för
+farm-ID/forge och levande enemybyggnader med aktuell vision. Unit-hitprioritet,
+resource/shift/drag bevaras; enemy och passiva byggnader kan inte ändra rally/kö.
+HP/ring/fokus rensas vid död/fog. Funktion/supply/research/prerequisites och kö
+visas för egna; enemy får bara publika data. Save33 oförändrat, nya inspektionsval transient.
+31riktade/5filer PASS,32selection/Save-tester PASS(2filer; inputState-filen finns ej),
+433unit/76filer PASS6.46s; build inklusive strict typecheck PASS. Browser1280/1920
+fixtures med fysiska klick för base/barracks/farm1/farm2/forge/harbor/enemy,
+no-orders/fog/död/unit/resource och giltig restart/Save-load. Fixturekontrollen
+rättades för fraktionsnamn och full navy/enemyconstruction; dessa var testhelperfel.
+Ingen ny betald matchgenomspelning; fixture redovisas separat. Review av diff,
+producerhandler-skydd, synlighet, Savekompatibilitet och docs utan blockerande fynd.
+Bundlevarningen och faktisk lyssning kvarstår.

@@ -26,7 +26,9 @@ I huvudmenyn väljer du Campaign (åtta upplåsbara operationer), Skirmish eller
 4. Klick eller drag väljer trupper; högerklick ger move eller attack på synlig fiende. Attack Move/Stop/förmåga har knapp och hotkey. Skydda workers/bas och uppfyll briefingens mål. På naval-uppdrag behövs harbor, transport, boarding och fri synlig landstigningsyta.
 5. Victory/Defeat fryser gameplay. Visa statistik/highscores, Play Again för helt ny match, eller Main Menu. Save/load bevarar pågående mål och match-ID; äldre Saves förblir spelbara utan highscore-registrering.
 
-Vänsterklick väljer en unit eller bas/barracks. Units har företräde vid
+Vänsterklick väljer en unit eller valfri egen byggnad (även varje farm och forge).
+Synliga fiendebyggnader visar namn/HP i en begränsad inspektionsvy utan orders.
+Farm förklarar supply; forge visar research och produktionsbyggnader visar kö/prerequisites. Units har företräde vid
 överlapp; byggnadsval och unit-selection är exklusiva. Tom mark avmarkerar.
 Drag ersätter selection med units vars centrum ligger i rektangeln, inklusive
 kanten. Gester under 5 screen pixels är klick. Ringar/byggnadsram visar val.
@@ -77,7 +79,7 @@ varningen om stor Phaser-bundle kvarstår inom releasebudgeten. Pages-workflow k
 ## Dokumentation
 
 - [AGENTS.md](AGENTS.md): arbetsregler och Definition of Done.
-- [BACKLOG.md](BACKLOG.md): RTS-001–066 klara, RTS-067–090 planerade och Current Focus.
+- [BACKLOG.md](BACKLOG.md): historiska tasks, roadmap RTS-151–180 och Current Focus.
 - [GAME_DESIGN.md](GAME_DESIGN.md): regler och framtida mål.
 - [ARCHITECTURE.md](ARCHITECTURE.md): faktisk struktur.
 - [DECISIONS.md](DECISIONS.md): beslut och öppna frågor.
