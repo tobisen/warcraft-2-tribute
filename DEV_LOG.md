@@ -2033,6 +2033,15 @@ Campaign → Tutorial – First Steps på Arena. Fristående progression för se
 
 Chromium1280×720/Crown/0.75× och1920×1080/Clans/1×: fysisk klickselection och workerbyte, högerklickmove, draggruppexploration/gather/verkligleverans,40wood barracks/byggtid, betald soldier, Save/load före build och i combat med exakt samma stage/tid/en enda target, vald soldier/manualattack, Victory/result och fresh restart. Inga units/saldo/HP injicerade; gameplayklockan accelererad. Inga errors; start/gather/attack/Victoryscreenshots granskade. Diffgranskning gameplayisolation/economy/fog/input/Save/phase/legacyregression/scope utan blockerande fynd. Actions37133885618 för tidigare108/697244f är SUCCESS och Pages publicerad. Nästa110 kräver faktiskt nybörjarspeltest och får inte räknas klart av automatisering.
 
+## 2026-10-04 – RTS-155: Human sprite reference pass
+
+- Inspekterade godkända referensbilderna `docs/art/human-reference.png` och `docs/art/buildings-reference.png` i faktisk storlek och identifierade att de ger tillräckligt underlag för Human worker, melee-unit och huvudbyggnad (keep/base). Inga andra Human- eller byggnadsreferenser i repot bedömdes som godkända.
+- Implementerade bara de asset-delar som faktiskt stöds av referensen: Human crown worker, Human crown melee/sword-and-shield soldier och Human keep/base i `assets/sources/units.mjs` samt `assets/sources/buildings.mjs`.
+- Bevarade frame-format, animationer, footprints och anchors. Ingen illustrativ bild sträcktes eller beskars till spritesheet; ändringen gjordes inom projektets befintliga pixel-pipeline och palette.
+- Saknade referenser rapporteras separat: övriga assetgrupper i RTS-155 saknar godkänt underlag i repot och blev inte modifierade.
+- Verifiering: `npm run assets:export` och `npx vitest run tests/unitAssets.test.mjs tests/buildingAssets.test.mjs` passerade. Den väntade exporten uppdaterade den genererade `public/assets/units-atlas.png` tillsammans med källorna.
+- Nästa steg: slutlig diff-/build-/git diff --check under aktuell task, därefter commit/push med kort överlämning.
+
 ## 2026-10-03 – RTS-110 In Progress: speltest förberett
 
 RTS-109/d1e5b6f pushad. PLAYTEST.md beskriver verklig tutorial → Beginner Skirmish, observationer och tydlig åtskillnad från tekniska kontroller. Ingen mänsklig speltestdata finns ännu; inga nya balansändringar eller påhittade slutsatser. RTS-110 kan inte markeras Done av bot/browserautomation enligt användarens arbetslista. Actions37135134183 SUCCESS; publicerad109bundle index-D5sn15XH.js verifierad med riktiga inputs i realtid genom sex tutorialsteg till Victory, utan runtime-/nätverksfel. Spelarens rapport behövs innan beroende111 fortsätter. Dokumentationsändringarna för110 är ännu inte committade eller pushade.

@@ -39,18 +39,44 @@ export function unitFrames(Surface,p){const frames=[];
    if(guard&&!orc){s.line(handX,handY,handX+dx*2,handY-11+swing,p.rockHighlight);s.rect(handX-3,handY-1,6,2,p.gold);const shieldX=cx-(dx>=0?10:-6);s.polygon([[shieldX,cy-10],[shieldX+7,cy-10],[shieldX+8,cy-2],[shieldX+4,cy+2],[shieldX-1,cy-2]],p.ink);s.rect(shieldX+1,cy-9,5,7,team);s.pixel(shieldX+3,cy-6,p.goldLight);}
    if(archer){const bowX=handX+dx;s.line(bowX,handY-8,bowX+4,handY,p.barkLight);s.line(bowX+4,handY,bowX,handY+7,p.barkLight);s.line(bowX,handY-8,bowX,handY+7,p.rockLight);if(state==='attack'){const pull=[0,2,4,0][frame];s.line(bowX,handY-8,bowX-pull,handY,p.rockLight);s.line(bowX-pull,handY,bowX,handY+7,p.rockLight);s.line(bowX-pull-3,handY,bowX+8,handY,p.rockHighlight);}s.rect(cx-7,cy-13,3,10,p.barkDark);s.line(cx-6,cy-16,cx-6,cy-10,p.rockHighlight);}
   }
+  if(faction==='crown' && (type==='worker'||type==='soldier')){
+   const crownHandX=cx+dx*2+(dx>=0?5:-5),crownHandY=cy-7+dy*2+swing;
+   if(type==='worker'){
+    s.rect(cx-6,cy-12-bob,12,9,p.ink);
+    s.rect(cx-5,cy-11-bob,10,7,p.rockDark);
+    s.rect(cx-4,cy-8-bob,8,5,team);
+    s.rect(cx-2,cy-17+dy-bob,4,5,p.goldDark);
+    s.pixel(cx,cy-17+dy-bob,p.goldLight);
+    s.rect(cx-7,cy-1,3,8,p.barkDark);s.rect(cx+4,cy-1,3,8,p.barkDark);
+    s.line(cx-3,cy-9,crownHandX,crownHandY,p.barkLight);s.line(cx+3,cy-9,crownHandX,crownHandY,p.barkLight);
+    s.rect(cx-8,cy-11-bob,3,4,p.goldDark);s.rect(cx+5,cy-11-bob,3,4,p.goldDark);
+    s.rect(cx-3,cy-14-bob,6,5,p.skin);s.rect(cx-2,cy-13-bob,4,2,p.rockHighlight);
+    const packX=cx+(dx>=0?-8:4);s.rect(packX,cy-3,5,6,p.ink);s.rect(packX+1,cy-2,3,3,p.goldDark);
+    s.line(cx-6,cy-18-bob,cx+6,cy-18-bob,p.goldLight);
+   }
+   if(type==='soldier'){
+    s.rect(cx-7,cy-12-bob,14,12,p.rockDark);s.rect(cx-5,cy-10-bob,10,9,team);s.rect(cx-3,cy-9-bob,6,5,p.goldDark);
+    s.rect(cx-9,cy-11-bob,3,8,p.rockLight);s.rect(cx+6,cy-11-bob,3,8,p.rockLight);
+    s.rect(cx-5+dx,cy-19+dy-bob,10,7,p.goldDark);s.rect(cx-4+dx,cy-19+dy-bob,8,3,p.goldLight);s.pixel(cx+dx,cy-20+dy-bob,p.gold);
+    s.rect(cx-2,cy-12-bob,4,4,p.skin);s.rect(cx-3,cy-13-bob,6,3,p.rockDark);s.pixel(cx,cy-15+dy-bob,p.goldLight);
+    const shieldX=cx-(dx>=0?10:-6);s.polygon([[shieldX,cy-10],[shieldX+8,cy-10],[shieldX+9,cy+2],[shieldX+4,cy+5],[shieldX-1,cy+1]],p.ink);
+    s.rect(shieldX+1,cy-8,6,8,team);s.line(shieldX+3,cy-6,shieldX+6,cy-6,p.goldLight);
+    const swordX=cx+dx*2+(dx>=0?8:-8);s.line(swordX,cy-7+dy,swordX+dx,cy-18+swing,p.barkLight);s.rect(swordX+dx-2,cy-16+swing,5,2,p.goldDark);
+    s.pixel(cx+dx,cy-15+dy-bob,p.gold);
+   }
+  }
   if(type==='specialist'&&faction==='crown'){
-   // Human banner escort: gold plate, broad kite shield and a tall pennant.
-   s.rect(cx-6,cy-12-bob,12,3,p.goldDark);s.line(cx-6,cy-12-bob,cx+5,cy-12-bob,p.goldLight);
-   s.rect(cx-5+dx,cy-19+dy-bob,10,2,p.gold);s.pixel(cx+dx,cy-20+dy-bob,p.goldLight);
-   const shieldX=dx>=0?3:22;
-   s.polygon([[shieldX,cy-11],[shieldX+7,cy-11],[shieldX+7,cy-3],[shieldX+3,cy+3],[shieldX,cy-3]],p.goldDark);
-   s.polygon([[shieldX+1,cy-10],[shieldX+6,cy-10],[shieldX+6,cy-3],[shieldX+3,cy+1],[shieldX+1,cy-3]],team);
-   s.line(shieldX+3,cy-9,shieldX+3,cy-2,p.goldLight);s.line(shieldX+1,cy-6,shieldX+5,cy-6,p.goldLight);
-   const poleX=dx>=0?25:6; s.line(poleX,3+bob,poleX,cy+1,p.barkLight);
-   const wave=state==='walk'?stride/2:state==='attack'?frame%2:0;
-   s.polygon([[poleX+1,3+bob],[poleX+6,4+bob+wave],[poleX+5,9+bob+wave],[poleX+1,8+bob]],team);
-   s.line(poleX+2,4+bob,poleX+4,7+bob,p.goldLight);s.pixel(poleX,2+bob,p.gold);
+    // Human banner escort: gold plate, broad kite shield and a tall pennant.
+    s.rect(cx-6,cy-12-bob,12,3,p.goldDark);s.line(cx-6,cy-12-bob,cx+5,cy-12-bob,p.goldLight);
+    s.rect(cx-5+dx,cy-19+dy-bob,10,2,p.gold);s.pixel(cx+dx,cy-20+dy-bob,p.goldLight);
+    const shieldX=dx>=0?3:22;
+    s.polygon([[shieldX,cy-11],[shieldX+7,cy-11],[shieldX+7,cy-3],[shieldX+3,cy+3],[shieldX,cy-3]],p.goldDark);
+    s.polygon([[shieldX+1,cy-10],[shieldX+6,cy-10],[shieldX+6,cy-3],[shieldX+3,cy+1],[shieldX+1,cy-3]],team);
+    s.line(shieldX+3,cy-9,shieldX+3,cy-2,p.goldLight);s.line(shieldX+1,cy-6,shieldX+5,cy-6,p.goldLight);
+    const poleX=dx>=0?25:6; s.line(poleX,3+bob,poleX,cy+1,p.barkLight);
+    const wave=state==='walk'?stride/2:state==='attack'?frame%2:0;
+    s.polygon([[poleX+1,3+bob],[poleX+6,4+bob+wave],[poleX+5,9+bob+wave],[poleX+1,8+bob]],team);
+    s.line(poleX+2,4+bob,poleX+4,7+bob,p.goldLight);s.pixel(poleX,2+bob,p.gold);
   }
   if(type==='specialist'&&orc){
    // Raider: bare head, light leather and a second axe, distinct from heavy warriors.

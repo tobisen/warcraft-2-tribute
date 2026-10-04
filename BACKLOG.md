@@ -2,9 +2,9 @@
 
 ## Current Focus
 
-**RTS-154 – Ny titel och huvudmeny** — **Done**. Etappen avslutad; stopp före RTS-155.
+**RTS-155 – Ny kvalitetsnivå för sprites** — **Done**. Första referenspasset är klart och dokumenterat; se nedan för detaljer om godkända Humans/building-referenser.
 
-**Aktuell etapp:** RTS-151–154 färdiga enligt nytt uppdrag2026-10-04. Roadmap151–180 återställd; senare tasks Todo och inte implementerade. Nästa task är RTS-155, men inget fortsatt implementationsmandat efter154. Se [HANDOFF.md](HANDOFF.md) och [QUALITY_REVIEW.md](QUALITY_REVIEW.md). Tidigare stopp/fortsättningsmandat nedan är historik.
+**Aktuell etapp:** RTS-151–155 färdiga enligt nytt uppdrag2026-10-04. Roadmap151–180 återställd; senare tasks Todo och inte implementerade. Nästa task är RTS-156, men inget fortsatt implementationsmandat efter155. Se [HANDOFF.md](HANDOFF.md) och [QUALITY_REVIEW.md](QUALITY_REVIEW.md). Tidigare stopp/fortsättningsmandat nedan är historik.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -2037,6 +2037,33 @@ Inga blockerande regressioner hittades; protokoll i [DEV_LOG.md](DEV_LOG.md).
 **Pages:** Först efter godkända releasekontroller: Actions på push main/workflow_dispatch, npm ci/test/typecheck/build, officiella Pages-actions, minimala permissions/concurrency, Vite base /warcraft-2-tribute/ och basrelativa assets. Verifiera lokal produktion under subpath samt Actions/publicerad sida när åtkomst finns; rapportera annars ej kontrollerat. Localhost-saves flyttas inte mellan origins.
 
 **Subtasks under samma ID:** 60a Mät-/releasekriterier. 60b Slutspeltest/balans. 60c Konkreta regressioner/prestandafynd. 60d Lokal releaseverifiering/dokumentation.
+
+## RTS-155 – Ny kvalitetsnivå för sprites
+
+**Status:** Done.
+
+**Goal:** Ny kvalitetsnivå för sprites.
+
+**Requirements:**
+
+Förbättra först worker, melee-unit och huvudbyggnad som referens.
+Tydliga silhuetter, konsekvent skala, lagfärger och animationer.
+Granska i faktisk spelstorlek innan resten uppdateras.
+Använd användarens godkända Humans-design om den finns tillgänglig.
+Om referensen saknas: dokumentera behovet; hitta inte på dess innehåll.
+Dela resterande assetarbete i subtasks per fraktion/assetgrupp.
+
+**Verified references:** `docs/art/human-reference.png` covers the Human worker and melee silhouettes; `docs/art/buildings-reference.png` covers the main Human keep/base silhouette. No approved reference was available for other asset groups, so only those supported assets were updated.
+
+**Non-goals:** Inga andra roadmap-features; återimplementera inte fungerande system.
+
+**Acceptance Criteria:** Förbättra först worker, melee-unit och huvudbyggnad som referens. Tydliga silhuetter, konsekvent skala, lagfärger och animationer. Granska i faktisk spelstorlek innan resten uppdateras. Använd användarens godkända Humans-design om den finns tillgänglig. Om referensen saknas: dokumentera behovet; hitta inte på dess innehåll. Dela resterande assetarbete i subtasks per fraktion/assetgrupp.
+
+**Dependencies:** RTS-154. Befintliga relevanta system återanvänds efter inventering.
+
+**Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
+
+**Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
 
 ## Etapp 7–11 – Planerad fortsättning (ingen implementation i denna körning)
 
