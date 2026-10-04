@@ -738,3 +738,7 @@ Framsteg sparas i den här browsern, separat från matchens lokala Save. Save/lo
 ## RTS-143 – Nästa campaign-etapp
 
 Planen omfattar åtta uppdrag: de fem befintliga plus Ridge Convoy, Valley Rescue och Coastal Banner. Alla fem fraktioner introduceras och större operationer använder Highland Crossroads, Frontier Valley och Shattered Coast. Se [GAME_DESIGN.md](GAME_DESIGN.md) för berättelse, fraktionspar, ekonomi och konkreta mål. Detta är en plan: runtime-menyn har ännu fem nivåer; första/andra halvan levereras i RTS-144–145 och kedjan verifieras i RTS-146.
+
+## RTS-144 – Campaign 1–4
+
+De första fyra operationerna har fasta berättelseprofiler: Humans → Orcs, Orcs → Humans, Elves → Goblins och Dwarves → Goblins. Läs briefingarna för mål, ekonomi och egna förmågor. The Siege kräver en tillräcklig betald armé och supply; The Outpost kräver en levande bas vid90gameplay-sekunder. Fraktionsfälten låses enbart inför ny Campaign-start. Skirmishval och tidigare sparade campaign-matchers fraktioner bevaras. Den andra halvan följer i145.

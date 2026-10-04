@@ -1,4 +1,4 @@
-import {campaignMissions,campaignMission,type CampaignMissionId} from '../config/campaign';
+import {campaignMissions,campaignMission,campaignPreset,type CampaignMissionId} from '../config/campaign';
 import {scenarioConfig} from '../config/scenarios';
 import {createMatch,type MatchState} from './match';
 import type {Difficulty} from '../config/difficulty';
@@ -28,7 +28,7 @@ export function completeCampaignMission(progress:CampaignProgress,match:MatchSta
 export function startCampaignMission(progress:CampaignProgress,id:CampaignMissionId,difficulty:Difficulty,factions:MatchFactions,speed:GameSpeed=1):MatchState|null{
  const mission=campaignMission(id);
  if(!mission||campaignMissionStatus(progress,id)==='locked')return null;
- return {...createMatch(mission.scenario,difficulty,factions,scenarioConfig[mission.scenario].map,speed),campaignMission:id};
+ return {...createMatch(mission.scenario,difficulty,campaignPreset(id)??factions,scenarioConfig[mission.scenario].map,speed),campaignMission:id};
 }
 export interface CampaignStorage {getItem(key:string):string|null;setItem(key:string,value:string):void}
 export function createCampaignStore(storage:()=>CampaignStorage){

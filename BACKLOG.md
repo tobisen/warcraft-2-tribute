@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**RTS-143 – Utöka campaign till minst åtta uppdrag** — **Done**.
+**RTS-145 – Campaign, andra halvan** — **Todo**.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
 
@@ -3768,7 +3768,7 @@ Implementera nya måltyper först när ett uppdrag behöver dem.
 
 ## RTS-144 – Campaign, första halvan
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Färdigställ uppdrag 1–4 med kartor, briefings och tydliga mål.
 
@@ -3787,7 +3787,9 @@ Successiv introduktion av systemen och rimlig svårighetskurva.
 
 **Docs:** BACKLOG.md, DEV_LOG.md, ARCHITECTURE.md, GAME_DESIGN.md, DECISIONS.md och README.md; relevanta asset/licensdocs när assets ändras.
 
-**Detaljering:** Bryt ned under samma ID före implementation; senare etapp, utanför denna körning.
+**Detaljplan:**144A bind1–4 till143:s fyra fasta player/enemy-par, befintliga Arena/scenario-mål och initiala förråd; tydliga egna fraktions-/mål-/förmågebriefings och debriefings, ingen återimplementation av Tutorial/waves/base/timer.144B Campaign-menyn visar/avgränsar berättelseprofiler vid ny start utan att skriva om gamla spelbara campaign-Saves eller Skirmishval; paus/restart behåller faktiskt startad identitet.144C betalda reproducibla genomgångar för alla fyra mål, plus failure/defeat-precedence, progression, mid-match Save/load och replay. Egna producera-/försvarsförmågor används där lämpligt; inga gratis units/resurser eller nya målkrav.144D native briefing→success med1–4 där möjligt, dokumenterad grundbalans och begränsningar. Fullsvit/typecheck/build/browser/diff/docs före Done.5–8 och nya måltyper ligger145; scriptade raiders är fortfarande141:s redovisade förenkling.
+
+**Slutverifiering:**33 riktade tester PASS; fullsvit1077tester/139filer PASS493.31s. Typecheck/build/diff/doclänkar PASS. Native betald1–4-kedja, profiler, Save/load/replay/restart/progression/browser-reload samt separat legacy-identitet/preferenser PASS i1280×720 och1920×1080 utan browserfel. Normal-baser260/220/300HP vid Forest/Siege/Outpost-vinst i browsern. Ingen ny goaltyp, balance-buff, Save-format eller wave-roster. Bundlevarning kvar; ljudlyssning uppskjuten.
 
 ## RTS-145 – Campaign, andra halvan
 

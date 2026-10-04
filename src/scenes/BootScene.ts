@@ -1,4 +1,4 @@
-import {campaignMissionForScenario,type CampaignMissionId} from '../config/campaign';
+import {campaignMissionForScenario,campaignPreset,type CampaignMissionId} from '../config/campaign';
 import {startCampaignMission} from '../gameplay/campaign';
 import {campaignStore} from '../presentation/campaign';
 import {currentHomePage} from '../presentation/homeMenu';
@@ -484,7 +484,7 @@ export class BootScene extends Phaser.Scene {
     if(action==='start'&&this.session.phase==='menu'&&!this.restartPending){
       const mission=currentHomePage()==='campaign'?campaignMissionForScenario(this.session.options.scenario):undefined;
       if(currentHomePage()==='campaign'&&!mission)return;
-      if(mission&&!startCampaignMission(campaignStore.get(),mission.id,this.session.options.difficulty,factionsForPlayer(this.session.options.faction??defaultFactions.player,this.session.options.enemyFaction),this.session.options.speed??1))return;
+      if(mission){const start=startCampaignMission(campaignStore.get(),mission.id,this.session.options.difficulty,factionsForPlayer(this.session.options.faction??defaultFactions.player,this.session.options.enemyFaction),this.session.options.speed??1);if(!start)return;this.session=changeOptions(this.session,{faction:start.factions!.player,enemyFaction:start.factions!.enemy});}
       this.campaignMission=mission?.id;
     }
     const next=sessionTransition(this.session,action);if(next===this.session||this.restartPending)return;
@@ -505,10 +505,12 @@ export class BootScene extends Phaser.Scene {
     const phase=this.session.phase,menu=phase==='menu';
     if(phase==='ended')campaignStore.record(this.currentMatch());
     renderMatchResults(document.getElementById('match-results')!,this.currentMatch(),phase==='ended');
-    const details=matchSettingDetails(this.session.options);document.getElementById('map-description')!.textContent=details.map;document.getElementById('difficulty-description')!.textContent=details.difficulty;
-    const summary=document.getElementById('match-options-summary')!;summary.textContent=matchSettingsSummary(this.session.options);summary.hidden=!menu;
+    const preset=menu&&currentHomePage()==='campaign'?campaignPreset(campaignMissionForScenario(this.session.options.scenario)?.id):undefined;
+    const shown=preset?{...this.session.options,faction:preset.player,enemyFaction:preset.enemy}:this.session.options;
+    const details=matchSettingDetails(shown);document.getElementById('map-description')!.textContent=details.map;document.getElementById('difficulty-description')!.textContent=details.difficulty;
+    const summary=document.getElementById('match-options-summary')!;summary.textContent=matchSettingsSummary(shown);summary.hidden=!menu;
     const mapSelect=document.querySelector<HTMLSelectElement>('#map-select')!;mapSelect.disabled=!menu||this.session.options.scenario!=='skirmish';mapSelect.value=this.session.options.map;
-    const factionSelect=document.querySelector<HTMLSelectElement>('#faction-select')!;factionSelect.disabled=!menu;factionSelect.value=this.session.options.faction??defaultFactions.player;const enemyFactionSelect=document.querySelector<HTMLSelectElement>('#enemy-faction-select')!;enemyFactionSelect.disabled=!menu;enemyFactionSelect.value=this.session.options.enemyFaction??'';
+    const factionSelect=document.querySelector<HTMLSelectElement>('#faction-select')!;factionSelect.disabled=!menu||!!preset;factionSelect.value=shown.faction??defaultFactions.player;const enemyFactionSelect=document.querySelector<HTMLSelectElement>('#enemy-faction-select')!;enemyFactionSelect.disabled=!menu||!!preset;enemyFactionSelect.value=shown.enemyFaction??'';
     this.scenarioSelect.disabled=!menu;this.scenarioSelect.value=this.session.options.scenario==='siege-test'?'survival':this.session.options.scenario;
     const speed=document.querySelector<HTMLSelectElement>('#speed-select')!;speed.disabled=!menu;speed.value=String(this.session.options.speed??1);
     const difficulty=document.querySelector<HTMLSelectElement>('#difficulty-select')!;difficulty.disabled=!menu;difficulty.value=this.session.options.difficulty;

@@ -1,5 +1,5 @@
 import {expect,it} from 'vitest';
-import {campaignMissions,campaignDetails} from '../config/campaign';
+import {campaignMissions,campaignDetails,campaignPreset} from '../config/campaign';
 import {freshCampaignProgress,campaignMissionStatus,completeCampaignMission,startCampaignMission,createCampaignStore,validateCampaignProgress,campaignProgressKey} from './campaign';
 import {createMatch,updateMatch} from './match';
 import {encodeSave,decodeSave} from './save';
@@ -54,7 +54,7 @@ it.each(campaignMissions)('$id preserves run identity, settings and state throug
  match.gathering.units[0].selected=true;match.gathering.units[0].position.x+=16;match.paused=true;
  expect(updateMatch(match,100)).toBe(match);
  const loaded=decodeSave(encodeSave(match,view));expect(loaded.ok,loaded.ok?'':loaded.error).toBe(true);if(!loaded.ok)return;
- expect(loaded.match.campaignMission).toBe(mission.id);expect(loaded.match.factions).toEqual(pair);expect(loaded.match.speed).toBe(.75);expect(loaded.match.gathering.units[0].selected).toBe(true);
+ expect(loaded.match.campaignMission).toBe(mission.id);expect(loaded.match.factions).toEqual(campaignPreset(mission.id)??pair);expect(loaded.match.speed).toBe(.75);expect(loaded.match.gathering.units[0].selected).toBe(true);
  const replay=startCampaignMission(progress,mission.id,'beginner',loaded.match.factions!,.75)!;
  expect(replay.campaignMission).toBe(mission.id);expect(replay.gathering.units[0].selected).toBe(false);expect(replay.waves.elapsedSeconds).toBe(0);expect(replay.gathering.units).not.toBe(match.gathering.units);
  const forged=JSON.parse(encodeSave(match,view));forged.state.campaignMission=mission.id==='first-steps'?'the-crossing':'first-steps';expect(decodeSave(JSON.stringify(forged)).ok).toBe(false);
