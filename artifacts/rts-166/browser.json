@@ -1,0 +1,170 @@
+[
+  {
+    "width": 800,
+    "effects": {
+      "mana": 35,
+      "cooldowns": {
+        "heal": 6,
+        "ward": 8,
+        "hex": 8
+      },
+      "mode": null,
+      "ally": {
+        "id": "unit-5",
+        "kind": "soldier",
+        "owner": "player",
+        "hp": 45,
+        "cargo": 0,
+        "selected": false,
+        "autoDisabled": true,
+        "position": {
+          "x": 460,
+          "y": 300
+        },
+        "target": {
+          "x": 460,
+          "y": 300
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "spellEffects": [
+          {
+            "spell": "ward",
+            "sourceFaction": "crown",
+            "remainingSeconds": 6
+          }
+        ]
+      },
+      "enemy": {
+        "id": "enemy-produced-1",
+        "kind": "unit",
+        "owner": "enemy",
+        "role": "soldier",
+        "hp": 66,
+        "position": {
+          "x": 540,
+          "y": 240
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "spellEffects": [
+          {
+            "spell": "hex",
+            "sourceFaction": "crown",
+            "remainingSeconds": 5
+          }
+        ]
+      }
+    },
+    "panels": [
+      {
+        "id": "bottom-bar",
+        "width": 800,
+        "scrollWidth": 800,
+        "height": 158,
+        "scrollHeight": 158
+      },
+      {
+        "id": "context-actions",
+        "width": 166,
+        "scrollWidth": 166,
+        "height": 116,
+        "scrollHeight": 116
+      },
+      {
+        "id": "selection-info",
+        "width": 232,
+        "scrollWidth": 232,
+        "height": 78,
+        "scrollHeight": 78
+      }
+    ],
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "effects": {
+      "mana": 35,
+      "cooldowns": {
+        "heal": 6,
+        "ward": 8,
+        "hex": 8
+      },
+      "mode": null,
+      "ally": {
+        "id": "unit-5",
+        "kind": "soldier",
+        "owner": "player",
+        "hp": 45,
+        "cargo": 0,
+        "selected": false,
+        "autoDisabled": true,
+        "position": {
+          "x": 460,
+          "y": 300
+        },
+        "target": {
+          "x": 460,
+          "y": 300
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "spellEffects": [
+          {
+            "spell": "ward",
+            "sourceFaction": "crown",
+            "remainingSeconds": 6
+          }
+        ]
+      },
+      "enemy": {
+        "id": "enemy-produced-1",
+        "kind": "unit",
+        "owner": "enemy",
+        "role": "soldier",
+        "hp": 66,
+        "position": {
+          "x": 540,
+          "y": 240
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "spellEffects": [
+          {
+            "spell": "hex",
+            "sourceFaction": "crown",
+            "remainingSeconds": 5
+          }
+        ]
+      }
+    },
+    "panels": [
+      {
+        "id": "bottom-bar",
+        "width": 1280,
+        "scrollWidth": 1280,
+        "height": 158,
+        "scrollHeight": 158
+      },
+      {
+        "id": "context-actions",
+        "width": 316,
+        "scrollWidth": 316,
+        "height": 116,
+        "scrollHeight": 116
+      },
+      {
+        "id": "selection-info",
+        "width": 442,
+        "scrollWidth": 442,
+        "height": 101,
+        "scrollHeight": 101
+      }
+    ],
+    "errors": []
+  }
+]

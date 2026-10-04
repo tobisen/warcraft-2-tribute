@@ -1,3 +1,4 @@
+import type {SpellState} from './spells';
 import type {ResourceService} from './resourceQueue';
 import type {AbilityState} from './abilities';
 import type {FactionId} from '../config/factions';
@@ -26,7 +27,7 @@ export interface Worker extends SelectableUnit {
   cargo: number;
   cargoType?: ResourceType;
 }
-export interface Soldier extends SelectableUnit {
+export interface Soldier extends SelectableUnit, SpellState {
   mana?:number;
   ability?:AbilityState;
   faction?:FactionId;

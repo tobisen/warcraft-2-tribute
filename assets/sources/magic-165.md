@@ -20,3 +20,7 @@ Chromium800×600/1280×720 för samtliga fem raser, fysisk train/selection/Save/
 HUD, initial mana/regen/pause/cap. Bilder och rapport i artifacts/rts-165;
 regression i scripts/check-mana.mjs. Avgränsad fixture ger färdig truppbyggnad,
 forge och research, men betalar riktig träning med faktiska recipes.
+
+## RTS-166: spells
+
+Befintliga godkända sprites återanvänds. Range/targetmarkörer och cyan buff-/lila debuffringar är Phaser-vektorgrafik; inga nya rasterassets eller casting-animationer hävdas. Faktisk native800/1280-granskning och screenshots finns i artifacts/rts-166.

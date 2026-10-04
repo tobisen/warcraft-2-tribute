@@ -1,0 +1,16 @@
+/* Keep mixed worker/caster actions in the existing horizontal HUD row. */
+#context-actions.spell-context {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+}
+#context-actions.spell-context [data-action-group]:not([hidden]) {
+  display: contents;
+}
+#context-actions.spell-context [data-action-group] button {
+  height: 36px;
+  min-height: 36px;
+}
+#action-panel button[aria-pressed="true"] {
+  outline: 2px solid #86dbe6;
+  outline-offset: -2px;
+}

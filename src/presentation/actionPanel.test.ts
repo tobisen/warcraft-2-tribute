@@ -2,7 +2,7 @@ import {factions} from '../config/factions';
 import {actionIds,actionGroups,actionGroup,actionTooltip} from './actionPanel';
 import {hotkeys,commandGuide,hotkeyButton} from './hotkeys';
 it('every existing action has one group, a distinct guarded hotkey and a complete tooltip/guide',()=>{
- expect(actionGroups).toEqual(['Orders','Build','Train','Research']);expect(new Set(hotkeys.map(h=>h.key)).size).toBe(hotkeys.length);
+ expect(actionGroups).toEqual(['Orders','Build','Train','Research','Spells']);expect(new Set(hotkeys.map(h=>h.key)).size).toBe(hotkeys.length);
  for(const id of actionIds){expect(actionGroups).toContain(actionGroup(id));const h=hotkeys.find(h=>h.button===id)!;expect(h).toBeTruthy();expect(commandGuide).toContain(`${h.key}: ${h.label}`);const tip=actionTooltip(id,{visible:true,cost:'20 wood',reason:'Not enough wood'},'Faction action');expect(tip).toContain(h.label);expect(tip).toContain('20 wood');expect(tip).toContain('Not enough wood');expect(hotkeyButton(h.key,{playing:true,repeat:false,focusedTag:'CANVAS'})).toBe(id);}
 });
 import {expect,it} from 'vitest';import {createMatch} from '../gameplay/match';import {actionPanel} from './actionPanel';import {createNavy} from '../gameplay/navy';import {enqueueProduction} from '../gameplay/productionQueue';

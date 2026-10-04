@@ -1,6 +1,9 @@
 import {text as uiText} from '../text';
 import { gameplayKeyAllowed,type KeyContext } from './keyboard';
 export const hotkeys=[
+ {key:'F2',button:'cast-heal',label:'Heal: choose a visible damaged allied ground combat unit in spell range. Escape or right-click cancels without cost.'},
+ {key:'F3',button:'cast-ward',label:'Ward: choose a visible allied ground combat unit in spell range. Escape or right-click cancels without cost.'},
+ {key:'F4',button:'cast-hex',label:'Hex: choose a visible hostile ground combat unit in spell range. Escape or right-click cancels without cost.'},
  {key:'Z',button:'repair-building',label:'Select workers, then choose an own damaged building to repair. Costs 0.5 wood + 0.1 gold per restored HP, 4 HP/s per worker, at most three active workers per building.'},
  {key:'M',button:'build-wall',label:'Build a wall with a selected worker. Placement preserves mandatory routes and exits.'},
  {key:'Q',button:'build-gate',label:'Build a gate with a selected worker. It starts closed.'},

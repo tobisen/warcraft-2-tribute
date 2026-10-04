@@ -1742,3 +1742,7 @@ RTS-159: wildlife.ts är ren dekorativ presentationslogik. Statiska habitats och
 ## RTS-165 – mana
 
 Fraktionsdefinitionernas valfria mana-data kompletterar specialistrollen. gameplay/mana.ts uppdaterar egna/fiende-enheter och transportpassagerare utan Phaser; match.ts anropar det före produktion med gameplay-delta. Aktuell mana är ett valfritt enhetsfält med initialfallback för gamla saves. Save38 migrerar37 och validerar endast casterroller, ändlig mana och maxgräns. SelectionInfo presenterar egen markerad enhets mana/max tillsammans med HP.
+
+## RTS-166 – spells och effekter
+
+config/spells.ts anger mana/range/cooldown/måltyper och effekter. gameplay/spells.ts validerar casts och uppdaterar ren MatchState; Soldier/Enemy har valfria cooldowns/effekter. Befintlig combat adapterar multiplikatorer; match tickar timers med gameplay-delta inklusive passagerare. BootScene håller endast targetinginput/Phaser-markörer, actionPanel och commandFeedback presenterar tillgänglighet. Save39 validerar effekter/cooldowns och migrerar38; inga nya scener eller debug-API införs.

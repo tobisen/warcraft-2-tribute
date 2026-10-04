@@ -1357,3 +1357,9 @@ Tier2-torn får192px räckvidd så minsta siege-räckvidden208 kan användas som
 Senaste mandatet tillåter att komplettera befintlig magienhet/specialist. Ingen separat magiker-/luftroster finns i134-planen. Frågan har tagits upp med användaren; arbetsantagandet är befintliga fem specialister med bevarade namn/stridsprofiler/godkända assets, enligt rekommenderat alternativ. Mana-definition ligger i fraktionsdata; endast aktuell mana sparas. Äldre specialistsaves utan fältet börjar med profilens initiala mana, utan HP-/kö-/orderändringar.37-migration avvisar framtida mana-fält.
 
 Regeneration följer gameplay-delta, även ombord på transport, för levande egna/fiende-specialister. Pause/gameover/0delta regenererar inte. Regeneration sker före produktion så nya enheter börjar på initialvärdet och inte får en hel produktionsframe gratis. Namnen innebär fortsatt stridsrollerna från134; deras support/control-/alchemical-roller får spellmekaniken166/167. Ingen ny casting-sprite hävdas. Luftdesign är en öppen fråga före168.
+
+## RTS-166 – gemensamma spelregler för spells
+
+Första utbudet är Heal, Ward och Hex för befintliga specialister; fraktionsvarianter och AI hör till167. Endast levande markstridsenheter är mål, inte workers, byggnader, skepp eller ombordvarande enheter. Cast validerar nuvarande IDs, lag, fog, range, mana och cooldown vid commit; targeting i sig ändrar ingen gameplaystate. Cast behåller casterordern.
+
+Heal cappar vid profilens max HP. Ett buff- och ett debufffält kan samexistera; återapplicering ersätter samma effektkanal och startar ny duration, utan multipel stacking. Effekter upphör med gameplay-tid även ombord; casterdöd tar inte bort redan betald effekt. Egna/fienders befintliga strid använder attack-/defensemultiplikatorer, projektilattackstyrka låses vid skottet. Gamla E-abilities förblir separata och kostar ingen mana. Save39 bevarar cooldowns, sourceFaction och duration samt migrerar38.

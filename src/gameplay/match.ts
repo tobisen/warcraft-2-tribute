@@ -1,3 +1,4 @@
+import {advanceSpells} from './spells';
 import {advanceMana} from './mana';
 import {updateRepair} from './repair';
 import {withGateRules} from './gates';import {enemyNavigationMap} from './map';
@@ -193,7 +194,7 @@ function advance(state: MatchState, delta: number): MatchState {
   updated=updateEnemyExploration(updated);
   const separated=separateBodies(updated.map,[...updated.gathering.units.map(u=>({id:`player:${u.id}`,position:u.position,half:(u.kind==='worker'?workerStats(state.gathering.faction):combatUnitStats(u,state.gathering.faction)).size/2})),...updated.combat.enemies.filter(e=>e.kind!=='ship'&&!e.footprint).map(e=>({id:`enemy:${e.id}`,position:e.position,half:enemySize(e)/2}))],delta);
   if(separated.size){updated.gathering={...updated.gathering,units:updated.gathering.units.map(u=>{const position=separated.get(`player:${u.id}`);return position?{...u,position,navigation:correctedNavigation(updated.map,position,(u.kind==='worker'?workerStats(state.gathering.faction):combatUnitStats(u,state.gathering.faction)).size/2,u.navigation)}:u;})};updated.combat={...updated.combat,enemies:updated.combat.enemies.map(e=>{const position=separated.get(`enemy:${e.id}`);return position?{...e,position,navigation:correctedNavigation(updated.map,position,enemySize(e)/2,e.navigation)}:e;})};}
-  updated=advanceEnemyAbilities(updated,delta);updated.gathering=advanceAbilities(updated.gathering,delta);updated.fog=matchFog(updated);const taught=updateTutorial(updated);if(taught!==updated){updated=taught;updated.fog=matchFog(updated);}return resolveOutcome(advanceCapture(state,updated,delta));
+  updated=advanceSpells(updated,delta);updated=advanceEnemyAbilities(updated,delta);updated.gathering=advanceAbilities(updated.gathering,delta);updated.fog=matchFog(updated);const taught=updateTutorial(updated);if(taught!==updated){updated=taught;updated.fog=matchFog(updated);}return resolveOutcome(advanceCapture(state,updated,delta));
 }
 
 /** Split only at wave boundaries, retaining delta-based gameplay rather than a fixed timestep. */

@@ -1,3 +1,5 @@
+import {selectedSpellCaster,spellCasterReason} from '../gameplay/spells';
+import {spellDefinition,type SpellId} from '../config/spells';
 import {gateToggleReason} from '../gameplay/gates';
 import {towerUpgradeReason} from '../gameplay/towers';import {defenseConfig} from '../config/defenses';
 import {baseDevelopment,baseUpgradeReason} from '../gameplay/baseUpgrade';
@@ -20,10 +22,10 @@ import {forgeReady} from '../gameplay/research';
 import type {BuildingSelection} from '../gameplay/buildingSelection';
 import type {MatchState} from '../gameplay/match';
 import {hotkeys} from './hotkeys';
-export const actionIds=['repair-building','build-wall','build-gate','toggle-gate','build-tower','upgrade-tower','upgrade-base','train-worker','train-soldier','train-archer','train-catapult','train-specialist','train-transport','train-ship','build-barracks','build-farm','build-forge','build-harbor','research-attack','research-defense','attack-move','unit-ability','unload-transport','stop-units','dismiss-units'] as const;
+export const actionIds=['cast-heal','cast-ward','cast-hex','repair-building','build-wall','build-gate','toggle-gate','build-tower','upgrade-tower','upgrade-base','train-worker','train-soldier','train-archer','train-catapult','train-specialist','train-transport','train-ship','build-barracks','build-farm','build-forge','build-harbor','research-attack','research-defense','attack-move','unit-ability','unload-transport','stop-units','dismiss-units'] as const;
 type ActionId=typeof actionIds[number];
-export const actionGroups=['Orders','Build','Train','Research'] as const;
-export function actionGroup(id:ActionId):typeof actionGroups[number]{return id.startsWith('build-')?'Build':id.startsWith('train-')?'Train':id.startsWith('research-')||id.startsWith('upgrade-')?'Research':'Orders';}
+export const actionGroups=['Orders','Build','Train','Research','Spells'] as const;
+export function actionGroup(id:ActionId):typeof actionGroups[number]{return id.startsWith('cast-')?'Spells':id.startsWith('build-')?'Build':id.startsWith('train-')?'Train':id.startsWith('research-')||id.startsWith('upgrade-')?'Research':'Orders';}
 export function actionTooltip(id:ActionId,action:ActionPresentation,label:string):string{
  const shortcut=hotkeys.find(h=>h.button===id);
  return [label,shortcut?.label,action.cost?`Cost: ${action.cost}`:null,shortcut?`Key: ${shortcut.key}`:null,action.reason?`Unavailable: ${action.reason}`:null].filter(Boolean).join(' · ');
@@ -37,7 +39,8 @@ export function actionPanel(m:MatchState,building:BuildingSelection,playing:bool
  const faction=factionForTeam(m,'player'),population=matchPopulation(m);
  const result={} as Record<ActionId,ActionPresentation>;
  for(const id of actionIds){let visible=false,reason='',cost;
-  if(id==='repair-building'){visible=worker;cost='0.5 wood + 0.1 gold per restored HP';reason=m.gathering.wood<=0||(m.gathering.goldBalance??0)<=0?'Not enough wood or gold':'';}
+  if(id.startsWith('cast-')){const spell=id.slice(5) as SpellId,caster=selectedSpellCaster(m,spell);visible=!!caster;const cfg=spellDefinition(spell,faction.id);cost=`${cfg.manaCost} mana · Range ${cfg.range}px · Cooldown ${cfg.cooldown}s`;reason=caster?spellCasterReason(m,caster.id,spell)??'':'Select a specialist';}
+  else if(id==='repair-building'){visible=worker;cost='0.5 wood + 0.1 gold per restored HP';reason=m.gathering.wood<=0||(m.gathering.goldBalance??0)<=0?'Not enough wood or gold':'';}
   else if(id==='toggle-gate'){visible=!!building?.startsWith('gate-');reason=gateToggleReason(m,building??'')??'';}
   else if(id==='build-wall'||id==='build-gate'){visible=worker;cost=costLabel(defenseConfig[id==='build-wall'?'wall':'gate'].cost);reason=m.placement.active?'Finish or cancel placement':affordabilityReason(m.gathering,defenseConfig[id==='build-wall'?'wall':'gate'].cost);}
   else if(id==='upgrade-tower'){visible=!!building?.startsWith('tower-');cost=costLabel(defenseConfig.upgrade.cost);reason=towerUpgradeReason(m,building??'')??'';}
@@ -78,6 +81,7 @@ export function renderActionPanel(model:ReturnType<typeof actionPanel>):void{
   const hotkey=hotkeys.find(h=>h.button===id)?.key;button.title=actionTooltip(id,{...action,reason:reason.textContent},button.textContent??'');button.setAttribute('aria-label',button.title);if(hotkey){button.dataset.hotkey=hotkey;if(!button.textContent!.includes(`[${hotkey}]`))button.textContent+=` [${hotkey}]`;}
  }
  for(const group of actionGroups)(document.querySelector(`[data-action-group="${group}"]`) as HTMLElement).hidden=!actionIds.some(id=>actionGroup(id)===group&&model[id].visible);
+ document.getElementById('context-actions')!.classList.toggle('spell-context',actionIds.some(id=>id.startsWith('cast-')&&model[id].visible));
  const productionSelected=actionIds.some(id=>id.startsWith('train-')&&model[id].visible);document.getElementById('production-queue')!.hidden=!productionSelected;
  document.getElementById('action-hint')!.textContent=model['train-transport'].visible?'Ships spawn at a free harbor exit. Select a ship to command it.':productionSelected?'Right-click the world to set a production rally point.':Object.values(model).some(x=>x.visible)?'Right-click: move, gather (workers), attack (combat). Escape: cancel placement.':'Select a unit or production building for actions.';
 }

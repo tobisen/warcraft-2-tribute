@@ -14,7 +14,7 @@ export function enemyUnitStats(e:Enemy,faction:FactionId='clans'){
 }
 export function enemySoldier(e:Enemy,faction:FactionId):Soldier{
  return {id:e.id,owner:'player',kind:'soldier',...(e.role&&e.role!=='soldier'?{archetype:e.role}:{}),faction,
-  ...(e.mana!==undefined?{mana:e.mana}:{}),position:e.position,target:e.position,hp:e.hp,cargo:0,selected:false,order:{kind:'idle'},
+  ...(e.mana!==undefined?{mana:e.mana}:{}),...(e.spellCooldowns?{spellCooldowns:e.spellCooldowns}:{}),...(e.spellEffects?{spellEffects:e.spellEffects}:{}),position:e.position,target:e.position,hp:e.hp,cargo:0,selected:false,order:{kind:'idle'},
   ...(e.attackCooldown!==undefined?{attackCooldown:e.attackCooldown}:{}),...(e.ability?{ability:e.ability}:{})};
 }
 export const enemyRangedStats=(e:Enemy,faction:FactionId)=>e.role?rangedStats(enemySoldier(e,faction),faction):undefined;

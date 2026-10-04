@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**Nytt mandat RTS-165–169:**165 Done (committen med mana-slicen),166 nästa. Användarens bifogade uppdrag för165–173 anger etappstopp efter169 och ny chatt170–173.160–164 är verifierade och pushade;164 `874f761`. Befintliga ändringar bevaras.
+**Nytt mandat RTS-165–169:**165 Done (`838f729`),166 Done (denna taskcommit); nästa167. Användarens bifogade uppdrag för165–173 anger etappstopp efter169 och ny chatt170–173.160–164 är verifierade och pushade;164 `874f761`. Befintliga ändringar bevaras.
 
 **UI-BUGFIX-BOTTOM-BAR – Horisontell bottom bar** — **Done** (2026-10-04).
 Separat beställd UI-bugfix; befintliga RTS-ID:n/statusar bevaras. Uppdraget
@@ -4470,7 +4470,9 @@ Mana, regeneration och UI integreras i befintliga system.
 
 ## RTS-166 – Spell-system
 
-**Status:** Todo.
+**Status:** Done.
+
+**Verifiering:** Datadrivna Heal/Ward/Hex: targetingmarkör, mana/range/cooldown, aktuellt fog/ägarskap/levande markstridsmål, Escape/högerklick utan kostnad, tydlig blocked-tooltip och feedback. Save39 bevarar aktiva effekter/cooldowns och migrerar38. Heal, buff och debuff uppfyller användarens skärpta krav (backlogens tidigare ”eller”).72 riktade tester/7filer PASS; slutlig unit446/80 och build med strict typecheck PASS. Faktisk Chromium native800/1280, fysisk targeting/cancel/cast, blandad worker+specialist utan HUD-scroll samt Save/Load; screenshots visuellt granskade i artifacts/rts-166. Inga nya casting-sprites eller helmatchbalans hävdas.
 
 **Goal:** Spell-system.
 

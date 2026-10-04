@@ -69,6 +69,7 @@
   "src/gameplay/separation.test.ts",
   "src/gameplay/session.test.ts",
   "src/gameplay/skirmishBalance.test.ts",
+  "src/gameplay/spells.test.ts",
   "src/gameplay/statLedger.test.ts",
   "src/gameplay/towers.test.ts",
   "src/gameplay/transport.test.ts",

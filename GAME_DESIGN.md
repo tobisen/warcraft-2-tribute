@@ -1362,3 +1362,9 @@ Nivå2-tornens räckvidd är192px; alla befintliga siege-enheter har minst208px.
 ## RTS-165 – specialistmana
 
 Banner Guard, Raider, Marksman, Bulwark och Grenadier kompletteras med mana; namn, stridsprofil, kostnad, tid, supply och prerequisites bevaras. Max/initial/regeneration per gameplay-sekund: Humans100/60/1, Orcs80/40/1, Elves120/60/1.25, Dwarves100/50/0.8, Goblins80/40/1. Mana visas bredvid HP för en markerad specialist. Regeneration stannar vid max, paus, gameover eller död; transporterade specialister regenererar också. Mana används av spells166/167, inte av äldre gratis E-selfbuff. Äldre saves börjar med initial mana när fältet saknas.
+
+## RTS-166 – riktade spells
+
+Välj en specialist: Heal[F2] kostar20mana, range160 och cooldown6s; återställer25HP upp till max. Ward[F3] kostar25mana, range160 och cooldown8s; en egen markstridsenhet tar0.75× skada i6s. Hex[F4] kostar20mana, range192 och cooldown8s; en synlig fientlig markstridsenhet gör0.75× attackskada i5s.
+
+Range-cirkeln och grön/röd markör visar targeting. Escape/högerklick avbryter utan kostnad; invalid/fullHP/fog/range/feltyp ger feedback utan cooldown. Aktiva buffs har cyan ring, debuffs lila; selection-tooltip visar namn och återstående tid. En buff och en debuff kan samexistera; samma kanal ersätts och får ny duration. Pause/save/load bevarar mana och tid. Ingen ny castpose ingår.

@@ -1,3 +1,4 @@
+import {spellDefinition} from '../config/spells';
 import {manaFor,currentMana} from '../gameplay/mana';
 import {inspectedBuilding} from '../gameplay/buildingInspection';
 import {unitAvailability,technologyFor} from '../gameplay/productionPrerequisites';
@@ -29,7 +30,7 @@ export function selectionInfo(m:MatchState,building:BuildingSelection,resourceId
   if(u.kind==='worker')stats.push(`Cargo ${u.cargo.toFixed(1)} / ${faction.units.worker.capacity} ${u.cargoType??'wood'}`,`Gather ${faction.units.worker.gatherPerSecond}/s`);
   else if(role==='transport')stats.push(`Passengers ${u.kind==='ship'?(u.passengers?.length??0):0} / ${navyConfig.transport.capacity}`);
   else {const combat=u.kind==='ship'?faction.naval.units[u.role??'warship']:faction.units[role as 'soldier'|'archer'|'catapult'|'specialist'];if(combat.range!==undefined)stats.push(`Range ${combat.range} px`);if('damagePerSecond' in combat&&combat.damagePerSecond!==undefined)stats.push(`Damage ${combat.damagePerSecond}/s`);if(combat.damage!==undefined)stats.push(`Damage ${combat.damage}/hit`);}
-  const mana=u.kind==='ship'?undefined:currentMana(u,faction.id),manaData=u.kind==='ship'?undefined:manaFor(u,faction.id);if(manaData)stats.push(`${manaData.role} · Mana regeneration ${manaData.regenerationPerSecond}/s`);
+  const mana=u.kind==='ship'?undefined:currentMana(u,faction.id),manaData=u.kind==='ship'?undefined:manaFor(u,faction.id);if(u.kind==='soldier')for(const e of u.spellEffects??[])stats.push(`${spellDefinition(e.spell,e.sourceFaction).name} ${e.remainingSeconds.toFixed(1)}s`);if(manaData)stats.push(`${manaData.role} · Mana regeneration ${manaData.regenerationPerSecond}/s`);
   return {...(manaData?{mana,maxMana:manaData.max}:{}),name:u.kind==='ship'?faction.naval.units[role as 'transport'|'warship'].name:faction.unitNames[role as 'worker'|'soldier'|'archer'|'catapult'|'specialist'],detail:`${u.id} · ${u.order.kind}`,hp:u.hp??data.hp,maxHP:data.hp,stats,portrait:{atlas:artAtlas(role),frame:unitFrame(motion(undefined,u.position,'idle',0,role,'player',undefined,faction.id),0)}};
  }
  if(!building)return empty();

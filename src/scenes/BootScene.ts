@@ -1,3 +1,5 @@
+import {spellDefinition,spellIds,type SpellId} from '../config/spells';
+import {castSpell,selectedSpellCaster,spellCasterReason,spellTargetAt,spellTargetReason} from '../gameplay/spells';
 import {orderRepair} from '../gameplay/repair';
 import {toggleGate,gateToggleReason} from '../gameplay/gates';import {defenseConfig} from '../config/defenses';
 import {placeTower,towerPlacementError,upgradeTower,towerUpgradeReason} from '../gameplay/towers';
@@ -152,6 +154,10 @@ export class BootScene extends Phaser.Scene {
   private stopButton!: HTMLButtonElement;
   private defenseVisuals=new Map<string,Phaser.GameObjects.Image>();
   private repairMode=false;
+  private spellMode:SpellId|null=null;
+  private spellFeedback='';
+  private spellFeedbackError=false;
+  private spellGraphics?:Phaser.GameObjects.Graphics;
   private selectedBuilding: BuildingSelection = null;
   private selectedResource:string|null=null;
   private rallyMarker!: Phaser.GameObjects.Arc;
@@ -229,6 +235,7 @@ export class BootScene extends Phaser.Scene {
 
   create(): void {
     this.audioSnapshot=undefined;this.combatSoundSnapshot=undefined;gameAudio.setPhase('menu');gameAudio.reset();
+    this.spellGraphics=this.add.graphics().setDepth(45);
     this.warningState=createWarningState();this.warningVisual=this.add.graphics().setDepth(9);
     this.habitats=[];this.wildlifeVisuals.clear();this.wildlifeProps=[];this.visualTime=0;this.extraResourceVisuals.clear();this.hitSnapshot=undefined;this.motions.clear();this.deaths.clear();this.impacts.clear();this.nextImpact=1;
     this.hpBars=this.add.graphics().setDepth(7);
@@ -275,11 +282,11 @@ export class BootScene extends Phaser.Scene {
     this.minimap=bindMinimap(document.querySelector<HTMLCanvasElement>('#minimap')!,()=>({data:visibleMinimapData(this.currentMatch()),scroll:{x:this.cameras.main.scrollX,y:this.cameras.main.scrollY},viewport:{width:this.cameras.main.width,height:this.cameras.main.height}}),point=>this.cameras.main.setScroll(point.x,point.y),()=>this.gameplayActive());
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.minimap?.destroy());
 
-    this.unloadMode=null;this.attackMoveMode=false;this.repairMode=false;
+    this.unloadMode=null;this.attackMoveMode=false;this.repairMode=false;this.spellMode=null;this.spellFeedback='';
     this.attackMoveButton=document.querySelector<HTMLButtonElement>('#attack-move')!;
     const beginAttackMove=()=>{
       if(!this.gameplayActive()||!this.gathering.units.some(u=>u.kind==='soldier'&&u.selected))return;
-      this.attackMoveMode=true;this.placement=cancelPlacement(this.placement);this.drag=undefined;
+      this.spellMode=null;this.spellFeedback='';this.repairMode=false;this.attackMoveMode=true;this.placement=cancelPlacement(this.placement);this.drag=undefined;
       this.dragBox.setVisible(false);this.syncVisuals();
     };
     this.attackMoveButton.addEventListener('click',beginAttackMove);
@@ -302,7 +309,7 @@ export class BootScene extends Phaser.Scene {
     this.orderVisuals.clear();
     this.farmVisuals.clear();
     this.stopButton = document.querySelector<HTMLButtonElement>('#stop-units')!;
-    const stop = () => { const before=voiceOrders(this.allSelectable());this.attackMoveMode=false;this.repairMode=false; this.gathering.units = stopSelected(this.gathering.units, this.gameplayActive());if(this.gameplayActive())this.navy=stopShips(this.navy);gameAudio.say(orderedSpeaker(before,this.allSelectable()),voiceOrderAction(orderedSpeaker(before,this.allSelectable())),this.factions.player); this.syncVisuals(); };
+    const stop = () => { const before=voiceOrders(this.allSelectable());this.attackMoveMode=false;this.repairMode=false;this.spellMode=null;this.spellFeedback=''; this.gathering.units = stopSelected(this.gathering.units, this.gameplayActive());if(this.gameplayActive())this.navy=stopShips(this.navy);gameAudio.say(orderedSpeaker(before,this.allSelectable()),voiceOrderAction(orderedSpeaker(before,this.allSelectable())),this.factions.player); this.syncVisuals(); };
     this.stopButton.addEventListener('click', stop);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.stopButton.removeEventListener('click', stop));
     this.selectedResource=null;
@@ -352,7 +359,7 @@ export class BootScene extends Phaser.Scene {
     this.goldVisual=this.add.image(this.gathering.gold!.position.x,this.gathering.gold!.position.y,'world','gold-available').setOrigin(resourceOrigin.x,resourceOrigin.y);
     this.add.text(this.gathering.gold!.position.x, this.gathering.gold!.position.y+26, 'Gold',
       {fontSize:'16px',color:'#ffffff'}).setOrigin(.5,0);
-    this.visuals.clear();this.defenseVisuals.clear();this.repairMode=false;
+    this.visuals.clear();this.defenseVisuals.clear();this.repairMode=false;this.spellMode=null;this.spellFeedback='';
     this.drag = undefined;
     this.dragBox = this.add.rectangle(0, 0, 0, 0, 0xffdc73, 0.1)
       .setOrigin(0).setStrokeStyle(1, 0xffdc73).setVisible(false).setDepth(60);
@@ -367,7 +374,7 @@ export class BootScene extends Phaser.Scene {
     const begin = (kind:'harbor'|'barracks'|'farm'|'forge'|'tower'|'wall'|'gate'='barracks') => {
       if (!this.gameplayActive()) return;
       if (!this.gathering.units.some(u=>u.kind==='worker' && u.selected)) return;
-      this.unloadMode=null;this.attackMoveMode=false;this.repairMode=false;
+      this.unloadMode=null;this.attackMoveMode=false;this.repairMode=false;this.spellMode=null;this.spellFeedback='';
       if(kind==='harbor'&&this.navy?.harbor)return;
       if(buildingAvailability(factions[this.factions.player],kind==='tower'||kind==='wall'||kind==='gate'?'base':kind,technologyFor(this.currentMatch(),'player')))return;
       this.placement = beginPlacement(this.placement,kind);
@@ -383,7 +390,7 @@ export class BootScene extends Phaser.Scene {
     const cancel = (event?:KeyboardEvent) => {
       if(event&&!gameplayKeyAllowed(keyboardContext(event,this.gameplayActive())))return;
       if (!this.gameplayActive()) return;
-      this.unloadMode=null;this.attackMoveMode=false;this.repairMode=false;
+      this.unloadMode=null;this.attackMoveMode=false;this.repairMode=false;this.spellMode=null;this.spellFeedback='';
       this.placement = cancelPlacement(this.placement);
       this.syncVisuals();
     };
@@ -484,6 +491,7 @@ export class BootScene extends Phaser.Scene {
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       this.soldierButton.removeEventListener('click', trainSoldier);
     });
+    for(const id of spellIds){const button=document.getElementById(`cast-${id}`) as HTMLButtonElement,begin=()=>{const caster=selectedSpellCaster(this.currentMatch(),id);if(!caster||spellCasterReason(this.currentMatch(),caster.id,id))return;this.placement=cancelPlacement(this.placement);this.unloadMode=null;this.attackMoveMode=false;this.repairMode=false;this.spellMode=this.spellMode===id?null:id;this.spellFeedback='';this.syncVisuals();};button.addEventListener('click',begin);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>button.removeEventListener('click',begin));}
     const abilityButton=document.querySelector<HTMLButtonElement>('#unit-ability')!;
     const activateAbility=()=>{this.gathering=useAbility(this.gathering,this.gameplayActive());this.syncVisuals();};
     abilityButton.addEventListener('click',activateAbility);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>abilityButton.removeEventListener('click',activateAbility));
@@ -504,7 +512,7 @@ export class BootScene extends Phaser.Scene {
     const actionKey=(event:KeyboardEvent)=>{
       if(this.pendingDismiss)return;
       const menuContext={...keyboardContext(event,this.session.phase==='playing'||this.session.phase==='paused'),ctrlKey:event.ctrlKey,metaKey:event.metaKey};
-      if(!event.ctrlKey&&!event.metaKey&&gameplayKeyAllowed(menuContext)&&(event.key.toLowerCase()==='p'||event.key==='Escape'&&(this.session.phase==='paused'||!this.placement.active&&!this.attackMoveMode&&!this.repairMode&&!this.unloadMode))){event.preventDefault();this.sessionAction(this.session.phase==='paused'?'resume':'pause');return;}
+      if(!event.ctrlKey&&!event.metaKey&&gameplayKeyAllowed(menuContext)&&(event.key.toLowerCase()==='p'||event.key==='Escape'&&(this.session.phase==='paused'||!this.placement.active&&!this.attackMoveMode&&!this.repairMode&&!this.spellMode&&!this.unloadMode))){event.preventDefault();this.sessionAction(this.session.phase==='paused'?'resume':'pause');return;}
       const context={...keyboardContext(event,this.gameplayActive()),ctrlKey:event.ctrlKey,metaKey:event.metaKey};
       if(event.key==='Escape'&&!event.ctrlKey&&!event.metaKey&&gameplayKeyAllowed(context)){event.preventDefault();cancel(event);return;}
       if(!hotkeyButton(event.key,context))return;event.preventDefault();
@@ -538,7 +546,7 @@ export class BootScene extends Phaser.Scene {
     if(action==='start')this.factions=factionsForPlayer(next.options.faction??defaultFactions.player,next.options.enemyFaction);
     if(action==='start'||action==='restart'){this.awaitingLoadedResume=false;this.scenario=next.options.scenario;this.difficulty=next.options.difficulty;this.skipGameplayFrame=true;this.restartPending=true;this.restartButton.disabled=true;this.scene.restart();return;}
     if(action==='resume'){this.skipGameplayFrame=true;if(this.awaitingLoadedResume){document.getElementById('save-status')!.textContent=uiText.loadedMatchResumed;this.awaitingLoadedResume=false;}}
-    if(action==='pause'||action==='new-match'){this.placement=cancelPlacement(this.placement);this.unloadMode=null;this.attackMoveMode=false;this.repairMode=false;this.drag=undefined;this.cameraDrag=undefined;this.dragBox.setVisible(false);}
+    if(action==='pause'||action==='new-match'){this.placement=cancelPlacement(this.placement);this.unloadMode=null;this.attackMoveMode=false;this.repairMode=false;this.spellMode=null;this.spellFeedback='';this.drag=undefined;this.cameraDrag=undefined;this.dragBox.setVisible(false);}
     this.syncVisuals();
   }
   private saveGamePreferences():void {if(this.session.phase==='menu')updatePreferences({game:{difficulty:this.session.options.difficulty,faction:this.session.options.faction??defaultFactions.player,enemyFaction:this.session.options.enemyFaction,speed:this.session.options.speed??1}});}
@@ -600,10 +608,11 @@ export class BootScene extends Phaser.Scene {
     }
     if (this.cameraDrag) return;
     const world = this.worldPoint(pointer);
+    if(this.spellMode&&(pointer.button===0||pointer.button===2)){this.placementClick=true;if(pointer.button===2){this.spellMode=null;this.spellFeedback='';}else{const id=this.spellMode,caster=selectedSpellCaster(this.currentMatch(),id),target=spellTargetAt(this.currentMatch(),id,world);const result=caster&&target?castSpell(this.currentMatch(),caster.id,id,target):{match:this.currentMatch(),reason:'Choose a valid visible target'};this.spellFeedbackError=!!result.reason;this.spellFeedback=result.reason??`${spellDefinition(id,this.factions.player).name} cast`;if(!result.reason){this.applyMatch(result.match);this.spellMode=null;}}this.syncVisuals();return;}
     if(this.unloadMode&&(pointer.button===0||pointer.button===2)){this.placementClick=true;if(pointer.button===2)this.unloadMode=null;else{const before=this.currentMatch(),after=unloadTransport(before,this.unloadMode,world);if(after!==before){this.applyMatch(after);this.unloadMode=null;}}this.syncVisuals();return;}
-    if(this.repairMode&&(pointer.button===0||pointer.button===2)){this.repairMode=false;this.placementClick=true;this.applyMatch(orderRepair(this.currentMatch(),inspectBuildingAt(this.currentMatch(),world)));this.syncVisuals();return;}
+    if(this.repairMode&&(pointer.button===0||pointer.button===2)){this.repairMode=false;this.spellMode=null;this.spellFeedback='';this.placementClick=true;this.applyMatch(orderRepair(this.currentMatch(),inspectBuildingAt(this.currentMatch(),world)));this.syncVisuals();return;}
     if(this.attackMoveMode&&(pointer.button===0||pointer.button===2)) {
-      this.unloadMode=null;this.attackMoveMode=false;this.repairMode=false;this.placementClick=true;
+      this.unloadMode=null;this.attackMoveMode=false;this.repairMode=false;this.spellMode=null;this.spellFeedback='';this.placementClick=true;
       if(pointer.button===0)this.gathering.units=commandAttackMove(this.gathering.units,world,this.map);
       this.syncVisuals();return;
     }
@@ -666,6 +675,7 @@ export class BootScene extends Phaser.Scene {
   private handleMove(pointer: Phaser.Input.Pointer): void {
     if (!this.gameplayActive()) return;
     if(pointer.event.target instanceof Element&&pointer.event.target.closest('#hud, #match-menu, #game-toolbar, #minimap-overlay, #top-bar, #bottom-bar'))return;
+    if(this.spellMode){this.syncSpellPreview(this.worldPoint(pointer));return;}
     if (this.cameraDrag) {
       const scroll = dragCamera(this.cameraDrag, { x: pointer.x, y: pointer.y }, this.map,
         { width: this.cameras.main.width, height: this.cameras.main.height });
@@ -791,7 +801,7 @@ export class BootScene extends Phaser.Scene {
     if(this.selectedBuilding&&!inspectedBuilding(this.currentMatch(),this.selectedBuilding))this.selectedBuilding=null;
     this.baseVisual.setFrame(buildingFrame('base','player',0,5,this.factions.player,this.combat.baseHP,baseDevelopment(this.currentMatch()).level)).setVisible(this.combat.baseHP>0);this.baseLabel.setVisible(this.combat.baseHP>0).setText(`${factions[this.factions.player].buildingNames.base} · L${development.level} · ${Math.ceil(this.combat.baseHP)} HP`);
     if (!this.gameplayActive()) {
-      this.unloadMode=null;this.attackMoveMode=false;this.repairMode=false;
+      this.unloadMode=null;this.attackMoveMode=false;this.repairMode=false;this.spellMode=null;this.spellFeedback='';
       this.cameraDrag = undefined;
       this.drag = undefined;
       this.dragBox.setVisible(false);
@@ -883,6 +893,7 @@ export class BootScene extends Phaser.Scene {
       if(enemy.kind==='ship')this.animateUnit(enemy.id,visual.body,enemy.position,'idle','transport','enemy');
       if(!enemy.footprint&&enemy.kind!=='ship'){const target=enemy.order?.kind==='defend'?this.gathering.units.find(u=>enemy.order?.kind==='defend'&&u.id===enemy.order.targetId)?.position:enemy.navigation?.targetId==='base'?this.gathering.base:undefined;const action:Action=enemy.navigation?.targetId&&enemy.navigation.targetId!=='explore-goal'&&enemy.navigation.status==='arrived'?'attack':enemy.work?.order.kind==='gather'?'gather':'idle';this.animateUnit(enemy.id,visual.body,enemy.position,action,enemy.kind==='worker'?'worker':enemy.role??'soldier','enemy',target);}
       visual.label.setPosition(enemy.position.x,enemy.position.y-(enemy.kind==='ship'?48:90)).setVisible(!!enemy.footprint||enemy.kind==='ship').setText(`${enemy.buildingType==='outpost'?uiText.resourceOutpost:''}${enemy.kind==='ship'?'Transport':enemy.buildingType==='harbor'?uiText.harbor:factions[this.factions.enemy].buildingNames[(enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base']} ${Math.ceil(enemy.hp)} HP`);
+      if(enemy.spellEffects?.length){const color=enemy.spellEffects.some(e=>spellDefinition(e.spell,e.sourceFaction).kind==='debuff')?0xc18ce5:0x86dbe6;this.hpBars?.lineStyle(2,color,.9).strokeCircle(enemy.position.x,enemy.position.y,18);}
       this.drawHP(enemy.position,enemy.hp,enemyMaximumHP(enemy,this.factions.enemy),enemy.footprint?64:24,enemy.footprint?70:enemy.kind==='ship'?29:unitOverlayOffsets(enemy.kind==='worker'?'worker':enemy.role??'soldier',this.factions.enemy).hp,0xcf7770);
     }
     for (const unit of this.gathering.units) {
@@ -905,6 +916,7 @@ export class BootScene extends Phaser.Scene {
       visual.ring.setPosition(unit.position.x, unit.position.y).setVisible(unit.selected);
       visual.cargo.setPosition(unit.position.x, unit.position.y - unitOverlayOffsets(unit.kind==='worker'?'worker':unit.archetype??'soldier',this.factions.player).cargo)
         .setVisible(unit.kind==='worker'&&unit.selected).setText(unit.kind==='worker'?`${unit.cargo.toFixed(1)}/${gatheringConfig.capacity} ${unit.cargoType??'wood'}`:'');
+      if(unit.kind==='soldier'&&unit.spellEffects?.length){const color=unit.spellEffects.some(e=>spellDefinition(e.spell,e.sourceFaction).kind==='debuff')?0xc18ce5:0x86dbe6;this.hpBars?.lineStyle(2,color,.9).strokeCircle(unit.position.x,unit.position.y,18);}
       this.drawHP(unit.position,unit.hp??combatConfig.workerHP,unit.kind==='worker'?factions[this.factions.player].units.worker.hp:factions[this.factions.player].units[unit.archetype??'soldier'].hp,unit.kind==='soldier'&&unit.archetype==='catapult'?40:24,unitOverlayOffsets(unit.kind==='worker'?'worker':unit.archetype??'soldier',this.factions.player).hp,0x7398c1);
     }
     const publicHealth=[...warningSnapshot(this.currentMatch()),...visibleEnemies.map(e=>({id:e.id,hp:e.hp,position:{...e.position}}))].filter(p=>isVisible(this.fog,'player',p.position));
@@ -913,8 +925,12 @@ export class BootScene extends Phaser.Scene {
     for(const [id,e] of this.impacts){if(!impactAlive(e.impact,this.visualTime,p=>isVisible(this.fog,'player',p))){e.visual.destroy();this.impacts.delete(id);}else e.visual.setFrame(impactFrame(e.impact,this.visualTime));}
     for(const [id,d] of this.deaths){if(!effectAlive(d.effect,this.visualTime,isVisible(this.fog,'player',d.effect.motion.position))){d.visual.destroy();this.deaths.delete(id);}else d.visual.setFrame(unitFrame(d.effect.motion,this.visualTime));}
     if(this.fogOverlay)drawFog(this.fogOverlay,this.fog,this.fogPreview??'player');
-    for(const shortcut of hotkeys){const button=document.getElementById(shortcut.button)!;button.textContent=`${button.textContent?.replace(/\s+\[[A-Z]+\]$/,'')} [${shortcut.key}]`;button.title=shortcut.label;}
+    for(const id of spellIds){const button=document.getElementById(`cast-${id}`) as HTMLButtonElement,caster=selectedSpellCaster(this.currentMatch(),id);button.disabled=!caster||!!spellCasterReason(this.currentMatch(),caster.id,id);button.textContent=spellDefinition(id,this.factions.player).name;button.setAttribute('aria-pressed',String(this.spellMode===id));}
+    for(const shortcut of hotkeys){const button=document.getElementById(shortcut.button)!;button.textContent=`${button.textContent?.replace(/\s+\[[A-Z0-9]+\]$/,'')} [${shortcut.key}]`;button.title=shortcut.label;}
     renderActionPanel(actionPanel(this.currentMatch(),this.selectedBuilding,this.gameplayActive()));
+
+    this.syncSpellPreview(this.worldPoint(this.input.activePointer));
+    if(this.spellMode||this.spellFeedback)document.getElementById('action-hint')!.textContent=this.spellFeedback||`${spellDefinition(this.spellMode!,this.factions.player).name}: choose a target; Escape/right-click cancels`;
     if(this.repairMode)document.getElementById('action-hint')!.textContent='Repair: click an own damaged building. Escape cancels.';
     renderTutorial(this.currentMatch());
     renderOperation(this.currentMatch());
@@ -926,7 +942,7 @@ export class BootScene extends Phaser.Scene {
       this.operationLabels[index].setText(marker.label).setPosition(marker.position.x,marker.position.y-marker.radius-4);
     }
 
-    renderCommandFeedback(commandFeedback(this.currentMatch(),this.selectedBuilding,{placementError:this.placementFeedbackError,attackMove:this.attackMoveMode,unload:!!this.unloadMode}));
+    renderCommandFeedback(commandFeedback(this.currentMatch(),this.selectedBuilding,{spell:this.spellMode||this.spellFeedback?{message:this.spellFeedback||`${spellDefinition(this.spellMode!,this.factions.player).name}: choose a target; Escape/right-click cancels`,error:!!this.spellFeedback&&this.spellFeedbackError}:undefined,placementError:this.placementFeedbackError,attackMove:this.attackMoveMode,unload:!!this.unloadMode}));
     const feedback=updateAttackWarnings(this.warningState,warningSnapshot(this.currentMatch()),this.visualTime,this.gameplayActive());
     this.warningState=feedback.state;renderAttackWarning(feedback.state.warning);if(feedback.sound)gameAudio.play('warning');
     this.warningVisual?.clear();const warning=feedback.state.warning;
@@ -958,6 +974,8 @@ export class BootScene extends Phaser.Scene {
     if(!canAddImpact([...this.impacts.values()].map(e=>e.impact),impact))return;
     this.impacts.set(this.nextImpact++,{impact,visual:this.add.image(impact.position.x,impact.position.y,'ui',impactFrame(impact,this.visualTime)).setOrigin(.5).setDepth(effectConfig.groundDepth).setAlpha(effectConfig.groundAlpha)});
   }
+
+  private syncSpellPreview(point:Position):void{this.spellGraphics?.clear();if(!this.spellMode||!this.gameplayActive())return;const m=this.currentMatch(),id=this.spellMode,caster=selectedSpellCaster(m,id);if(!caster)return;const target=spellTargetAt(m,id,point),valid=target&&!spellTargetReason(m,caster.id,id,target),cfg=spellDefinition(id,this.factions.player);this.spellGraphics!.lineStyle(1,0x86dbe6,.6).strokeCircle(caster.position.x,caster.position.y,cfg.range).lineStyle(2,valid?0x71edb0:0xee8a86,1).strokeCircle(point.x,point.y,16).lineBetween(point.x-22,point.y,point.x+22,point.y).lineBetween(point.x,point.y-22,point.x,point.y+22);}
 
   private drawHP(position:Position,hp:number,max:number,width:number,offset:number,color:number):void {this.hpBars?.fillStyle(0x172422).fillRect(position.x-width/2-1,position.y-offset-1,width+2,5).fillStyle(color).fillRect(position.x-width/2,position.y-offset,width*Math.max(0,Math.min(1,hp/max)),3);}
 
