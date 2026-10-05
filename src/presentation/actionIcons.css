@@ -1,0 +1,13 @@
+/* Own icons override the old eight generic symbols without changing the bottom-bar grid. */
+#action-panel button[data-action-icon]::before {
+  background-image: var(--action-icon);
+  background-position: center;
+  background-size: 32px 32px;
+  background-repeat: no-repeat;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+#action-panel button[data-action-icon]:disabled::before { filter: grayscale(1) brightness(.6); }
+#action-panel button[data-producing="true"] { border-color: #ffe8a3; box-shadow: inset 0 0 0 1px #91744b; }
+#action-panel button[aria-pressed="true"] { background-color: #465340; outline: 1px solid #ffe8a3; outline-offset: -3px; }

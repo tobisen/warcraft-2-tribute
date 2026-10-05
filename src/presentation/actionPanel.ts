@@ -9,7 +9,7 @@ import {baseUpgradeConfig} from '../config/baseUpgrade';
 import {technologyFor,unitAvailability,buildingAvailability,researchAvailability} from '../gameplay/productionPrerequisites';
 import {text as uiText} from '../text';
 import type {ResourceCost} from '../config/economy';
-import {factionForTeam} from '../config/factions';
+import {factionForTeam,type UnitPrerequisites} from '../config/factions';
 import {costs} from '../config/economy';
 import {farmConfig} from '../config/buildings';
 import {navyConfig} from '../config/navy';
@@ -25,14 +25,15 @@ import type {BuildingSelection} from '../gameplay/buildingSelection';
 import type {MatchState} from '../gameplay/match';
 import {hotkeys} from './hotkeys';
 export const actionIds=['cast-heal','cast-ward','cast-hex','repair-building','build-wall','build-gate','toggle-gate','build-tower','upgrade-tower','upgrade-base','train-worker','train-soldier','train-archer','train-catapult','train-specialist','train-air','train-transport','train-ship','build-barracks','build-farm','build-forge','build-harbor','research-attack','research-defense','attack-move','unit-ability','unload-transport','hold-position','patrol-units','stop-units','dismiss-units'] as const;
-type ActionId=typeof actionIds[number];
+export type ActionId=typeof actionIds[number];
 export const actionGroups=['Orders','Build','Train','Research','Spells'] as const;
 export function actionGroup(id:ActionId):typeof actionGroups[number]{return id.startsWith('cast-')?'Spells':id.startsWith('build-')?'Build':id.startsWith('train-')?'Train':id.startsWith('research-')||id.startsWith('upgrade-')?'Research':'Orders';}
 export function actionTooltip(id:ActionId,action:ActionPresentation,label:string):string{
  const shortcut=hotkeys.find(h=>h.button===id);
- return [label,shortcut?.label,action.cost?`Cost: ${action.cost}`:null,shortcut?`Key: ${shortcut.key}`:null,action.reason?`Unavailable: ${action.reason}`:null].filter(Boolean).join(' · ');
+ return [label,shortcut?.label,action.cost?`Cost: ${action.cost}`:null,shortcut?`Key: ${shortcut.key}`:null,action.prerequisites?`Requires: ${action.prerequisites}`:null,action.producing?'Production in progress':null,action.reason?`Unavailable: ${action.reason}`:null].filter(Boolean).join(' · ');
 }
-export interface ActionPresentation {visible:boolean;reason:string;cost?:string}
+function prerequisiteLabel(p?:UnitPrerequisites):string|undefined {const labels=[...(p?.buildings??[]).map(b=>`Completed ${b}`),...(p?.baseLevel?[`Base level ${p.baseLevel}`]:[]),...Object.entries(p?.research??{}).map(([kind,level])=>`${kind} ${level}`)];return labels.length?labels.join(', '):undefined;}
+export interface ActionPresentation {visible:boolean;reason:string;cost?:string;prerequisites?:string;producing?:boolean;active?:boolean}
 export function affordabilityReason(balance:{wood:number;goldBalance?:number},cost:ResourceCost):string {
  const wood=balance.wood<cost.wood,gold=(balance.goldBalance??0)<cost.gold;return wood&&gold?uiText.notEnoughWoodAndGold:wood?uiText.notEnoughWood:gold?uiText.notEnoughGold:'';
 }
@@ -40,7 +41,7 @@ export function actionPanel(m:MatchState,building:BuildingSelection,playing:bool
  const land=m.gathering.units.filter(u=>u.selected),ships=m.navy?.ships.filter(u=>u.selected)??[],worker=land.some(u=>u.kind==='worker'),combat=land.some(u=>u.kind==='soldier'),transport=ships.find(u=>u.role==='transport'),any=land.length+ships.length>0,base=building==='base',barracks=building==='barracks',harbor=building==='harbor';
  const faction=factionForTeam(m,'player'),population=matchPopulation(m);
  const result={} as Record<ActionId,ActionPresentation>;
- for(const id of actionIds){let visible=false,reason='',cost;
+ for(const id of actionIds){let visible=false,reason='',cost,prerequisites:string|undefined,producing=false,active:boolean|undefined;
   if(id.startsWith('cast-')){const spell=spellForSlot(faction.id,id.slice(5) as SpellSlot),caster=spell?selectedSpellCaster(m,spell):undefined;visible=!!caster;if(spell){const cfg=spellDefinition(spell,faction.id);cost=`${cfg.manaCost} mana · Range ${cfg.range}px · Cooldown ${cfg.cooldown}s · ${spellDescription(spell,faction.id)}`;reason=caster?spellCasterReason(m,caster.id,spell)??'':'Select a specialist';}}
   else if(id==='repair-building'){visible=worker;cost='0.5 wood + 0.1 gold per restored HP';reason=m.gathering.wood<=0||(m.gathering.goldBalance??0)<=0?'Not enough wood or gold':'';}
   else if(id==='toggle-gate'){visible=!!building?.startsWith('gate-');reason=gateToggleReason(m,building??'')??'';}
@@ -52,8 +53,9 @@ export function actionPanel(m:MatchState,building:BuildingSelection,playing:bool
   else if(id.startsWith('train-')){
    const role=id==='train-ship'?'warship':id.slice(6) as 'worker'|'soldier'|'archer'|'catapult'|'specialist'|'air'|'transport',naval=role==='transport'||role==='warship';
    visible=(role==='worker'?base:naval?harbor:barracks)&&(naval||faction.roster.includes(role as 'worker'|'soldier'|'archer'|'catapult'|'specialist'|'air'));
-   const recipe=naval?faction.naval.units[role as 'transport'|'warship']:faction.units[role];cost=costLabel(recipe.cost);
+   const recipe=naval?faction.naval.units[role as 'transport'|'warship']:faction.units[role];cost=costLabel(recipe.cost);const landPrereq=role!=='transport'&&role!=='warship'?faction.units[role].prerequisites:undefined;prerequisites=naval?'Completed harbor':prerequisiteLabel({...landPrereq,buildings:[...new Set([...(landPrereq?.buildings??[]),role==='worker'?'base':'barracks'] as const)]});
    const production=role==='worker'?m.production:naval?m.navy?.production:m.soldierProduction;
+   producing=!!production?.queue?.some(j=>j.kind===role);
    const remaining=role==='worker'?0:naval?m.navy?.harbor?.construction.remainingSeconds??1:m.placement.construction?.remainingSeconds??0;
    const prerequisite=naval?null:unitAvailability(faction,role,technologyFor(m,'player'));
    reason=remaining>0?'Construction unfinished':prerequisite??(production&&productionJobCount(production)>=queueConfig.maxJobs?'Queue full':!hasPopulation(population,recipe.supply)?uiText.populationLimitReached:affordabilityReason(m.gathering,recipe.cost));
@@ -63,7 +65,11 @@ export function actionPanel(m:MatchState,building:BuildingSelection,playing:bool
   else if(id==='unit-ability'){visible=land.some(u=>u.kind==='soldier'&&!isAir(u));reason=!land.some(abilityReady)?'Ability cooling down':'';}
   else if(id==='unload-transport'){visible=!!transport;reason=!transport?.passengers?.length?'Transport is empty':'';}
   else visible=any;
-  result[id]={visible,reason:visible&&!playing?'Match is paused or ended':reason,cost};
+  if(id.startsWith('build-')){const kind=id.slice(6);active=!!m.placement.active&&(m.placement.kind??'barracks')===kind;if(kind==='barracks'||kind==='farm'||kind==='forge')prerequisites=prerequisiteLabel(faction.buildings[kind].prerequisites);}
+  if(id.startsWith('research-')){const kind=id==='research-attack'?'attack':'defense';prerequisites=prerequisiteLabel(faction.upgrades[kind].prerequisites);active=m.research?.job?.kind===kind;}
+  if(id==='upgrade-base')active=baseDevelopment(m).remainingSeconds!==null;
+  if(id==='upgrade-tower')active=!!m.placement.defenses?.find(t=>t.id===building)?.upgradeRemaining;
+  result[id]={visible,reason:visible&&!playing?'Match is paused or ended':reason,cost,prerequisites,producing,active};
  }
  return result;
 }
@@ -80,7 +86,7 @@ export function bindActionPanel():void{
 /** Called after authoritative gameplay disabled-state sync. */
 export function renderActionPanel(model:ReturnType<typeof actionPanel>):void{
  for(const id of actionIds){const button=document.getElementById(id) as HTMLButtonElement,action=model[id],wrapper=button.parentElement!,reason=document.getElementById(`${id}-reason`)!;wrapper.hidden=!action.visible;button.disabled=button.disabled||!action.visible||!!action.reason;reason.textContent=button.disabled?(action.reason||'Action unavailable'):'';
-  const hotkey=hotkeys.find(h=>h.button===id)?.key;button.title=actionTooltip(id,{...action,reason:reason.textContent},button.textContent??'');button.setAttribute('aria-label',button.title);if(hotkey){button.dataset.hotkey=hotkey;setActionLabel(button,button.textContent??'');}
+  const hotkey=hotkeys.find(h=>h.button===id)?.key;button.dataset.producing=String(!!action.producing);if(action.active!==undefined)button.setAttribute('aria-pressed',String(action.active));button.title=actionTooltip(id,{...action,reason:reason.textContent},button.textContent??'');button.setAttribute('aria-label',button.title);if(hotkey){button.dataset.hotkey=hotkey;setActionLabel(button,button.textContent??'');}
  }
  for(const group of actionGroups)(document.querySelector(`[data-action-group="${group}"]`) as HTMLElement).hidden=!actionIds.some(id=>actionGroup(id)===group&&model[id].visible);
  document.getElementById('context-actions')!.classList.toggle('spell-context',actionIds.some(id=>id.startsWith('cast-')&&model[id].visible));

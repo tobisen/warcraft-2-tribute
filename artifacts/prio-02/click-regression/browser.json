@@ -1,0 +1,32 @@
+[
+  {
+    "width": 800,
+    "height": 600,
+    "liveUpdate": true,
+    "noEnter": true,
+    "mouseBuild": true,
+    "mouseUnit": true,
+    "mouseResearch": true,
+    "mouseUpgrade": true,
+    "insufficientResources": true,
+    "busyFullQueue": true,
+    "hotkeys": true,
+    "noWorldOrderOrDuplicateDebit": true,
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "height": 720,
+    "liveUpdate": true,
+    "noEnter": true,
+    "mouseBuild": true,
+    "mouseUnit": true,
+    "mouseResearch": true,
+    "mouseUpgrade": true,
+    "insufficientResources": true,
+    "busyFullQueue": true,
+    "hotkeys": true,
+    "noWorldOrderOrDuplicateDebit": true,
+    "errors": []
+  }
+]

@@ -1,3 +1,4 @@
+import {renderActionIcons} from '../presentation/actionIcons';
 import {setActionLabel} from '../presentation/actionLabel';
 import {aiProfiles,isAIProfile} from '../config/aiProfiles';
 import {issueOrder} from '../gameplay/commandOrders';
@@ -942,6 +943,7 @@ export class BootScene extends Phaser.Scene {
     for(const slot of spellSlots){const id=spellForSlot(this.factions.player,slot),button=document.getElementById(`cast-${slot}`) as HTMLButtonElement,caster=id?selectedSpellCaster(this.currentMatch(),id):undefined;button.disabled=!id||!caster||!!spellCasterReason(this.currentMatch(),caster.id,id);setActionLabel(button,id?spellDefinition(id,this.factions.player).name:'Unavailable');button.setAttribute('aria-pressed',String(!!id&&this.spellMode===id));}
     for(const shortcut of hotkeys){const button=document.getElementById(shortcut.button) as HTMLButtonElement;setActionLabel(button,`${button.textContent?.replace(/\s+\[[A-Z0-9]+\]$/,'')} [${shortcut.key}]`);button.title=shortcut.label;}
     for(const id of ['hold-position','patrol-units'])(document.getElementById(id) as HTMLButtonElement).disabled=!this.gameplayActive()||!this.allSelectable().some(u=>u.selected);
+    renderActionIcons(this.factions.player,(atlas,name)=>{const f=this.textures.get(atlas).get(name);return {image:f.source.image as HTMLImageElement,x:f.cutX,y:f.cutY,width:f.cutWidth,height:f.cutHeight};});
     renderActionPanel(actionPanel(this.currentMatch(),this.selectedBuilding,this.gameplayActive()));
 
     this.syncSpellPreview(this.worldPoint(this.input.activePointer));

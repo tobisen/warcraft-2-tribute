@@ -8,6 +8,7 @@ import {applySkin} from './presentation/skin';
 import {bindAudioControls} from './presentation/audio';
 import './style.css';
 import './presentation/spells.css';
+import './presentation/actionIcons.css';
 import Phaser from 'phaser';
 import { BootScene } from './scenes/BootScene';
 import { viewportConfig } from './config/camera';

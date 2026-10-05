@@ -1,0 +1,1282 @@
+[
+  {
+    "faction": "crown",
+    "width": 800,
+    "context": "worker",
+    "unique": {
+      "count": 31,
+      "unique": 31
+    },
+    "metrics": {
+      "bar": {
+        "x": 0,
+        "y": 440,
+        "width": 800,
+        "height": 160,
+        "top": 440,
+        "right": 800,
+        "bottom": 600,
+        "left": 0
+      },
+      "overflow": [],
+      "outside": [],
+      "buttons": [
+        {
+          "id": "build-wall",
+          "title": "Build wall [M] · Build a wall with a selected worker. Placement preserves mandatory routes and exits. · Cost: 10 wood · Key: M",
+          "disabled": false,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "build-gate",
+          "title": "Build gate [Q] · Build a gate with a selected worker. It starts closed. · Cost: 30 wood + 5 gold · Key: Q",
+          "disabled": false,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "build-tower",
+          "title": "Build tower [O] · Build a defense tower with a selected worker at a visible legal site. · Cost: 50 wood + 20 gold · Key: O",
+          "disabled": false,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "build-barracks",
+          "title": "Build Barracks – 40 wood [B] · Build barracks – select a worker · Cost: 40 wood · Key: B · Requires: Completed base · Unavailable: Already built",
+          "disabled": true,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "build-farm",
+          "title": "Build Farm – 20 wood [F] · Build farm – select a worker · Cost: 20 wood · Key: F · Requires: Completed base",
+          "disabled": false,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "build-forge",
+          "title": "Build Forge – 40 wood + 10 gold [G] · Build forge – select a worker · Cost: 40 wood + 10 gold · Key: G · Requires: Completed base · Unavailable: Already built",
+          "disabled": true,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "build-harbor",
+          "title": "Build Harbor – 40 wood + 10 gold [H] · Build a harbor with a selected worker at a visible, valid coastal site. Pay the displayed cost at placement. · Cost: 40 wood + 10 gold · Key: H · Unavailable: Already built",
+          "disabled": true,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "repair-building",
+          "title": "Repair building [Z] · Select workers, then choose an own damaged building to repair. Costs 0.5 wood + 0.1 gold per restored HP, 4 HP/s per worker, at most three active workers per building. · Cost: 0.5 wood + 0.1 gold per restored HP · Key: Z",
+          "disabled": false,
+          "active": "false",
+          "width": 42,
+          "height": 40
+        },
+        {
+          "id": "hold-position",
+          "title": "Hold [F6] · Hold position: attack visible targets in range without pursuing. Normal orders replace the queue; Shift adds move, attack, attack-move, gather, hold or patrol (max 32). Hold and patrol continue until replaced or stopped. · Key: F6",
+          "disabled": false,
+          "active": null,
+          "width": 42,
+          "height": 40
+        },
+        {
+          "id": "patrol-units",
+          "title": "Patrol [F7] · Patrol between your current position and the clicked point; combat units attack-move and resume after target loss. Shift appends. · Key: F7",
+          "disabled": false,
+          "active": null,
+          "width": 42,
+          "height": 40
+        },
+        {
+          "id": "stop-units",
+          "title": "Stop [S] · Stop – selected units · Key: S",
+          "disabled": false,
+          "active": null,
+          "width": 42,
+          "height": 40
+        },
+        {
+          "id": "dismiss-units",
+          "title": "Dismiss Unit [DELETE] · Dismiss selected own units. Confirmation includes transport passengers; no refund or kill credit. · Key: DELETE",
+          "disabled": false,
+          "active": null,
+          "width": 42,
+          "height": 40
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "faction": "crown",
+    "width": 800,
+    "context": "active-build",
+    "unique": {
+      "count": 31,
+      "unique": 31
+    },
+    "metrics": {
+      "bar": {
+        "x": 0,
+        "y": 440,
+        "width": 800,
+        "height": 160,
+        "top": 440,
+        "right": 800,
+        "bottom": 600,
+        "left": 0
+      },
+      "overflow": [],
+      "outside": [],
+      "buttons": [
+        {
+          "id": "build-wall",
+          "title": "Build wall [M] · Build a wall with a selected worker. Placement preserves mandatory routes and exits. · Cost: 10 wood · Key: M · Unavailable: Finish or cancel placement",
+          "disabled": true,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "build-gate",
+          "title": "Build gate [Q] · Build a gate with a selected worker. It starts closed. · Cost: 30 wood + 5 gold · Key: Q · Unavailable: Finish or cancel placement",
+          "disabled": true,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "build-tower",
+          "title": "Build tower [O] · Build a defense tower with a selected worker at a visible legal site. · Cost: 50 wood + 20 gold · Key: O · Unavailable: Finish or cancel placement",
+          "disabled": true,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "build-barracks",
+          "title": "Build Barracks – 40 wood [B] · Build barracks – select a worker · Cost: 40 wood · Key: B · Requires: Completed base · Unavailable: Finish or cancel placement",
+          "disabled": true,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "build-farm",
+          "title": "Build Farm – 20 wood [F] · Build farm – select a worker · Cost: 20 wood · Key: F · Requires: Completed base · Unavailable: Finish or cancel placement",
+          "disabled": true,
+          "active": "true",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "build-forge",
+          "title": "Build Forge – 40 wood + 10 gold [G] · Build forge – select a worker · Cost: 40 wood + 10 gold · Key: G · Requires: Completed base · Unavailable: Finish or cancel placement",
+          "disabled": true,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "build-harbor",
+          "title": "Build Harbor – 40 wood + 10 gold [H] · Build a harbor with a selected worker at a visible, valid coastal site. Pay the displayed cost at placement. · Cost: 40 wood + 10 gold · Key: H · Unavailable: Finish or cancel placement",
+          "disabled": true,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "repair-building",
+          "title": "Repair building [Z] · Select workers, then choose an own damaged building to repair. Costs 0.5 wood + 0.1 gold per restored HP, 4 HP/s per worker, at most three active workers per building. · Cost: 0.5 wood + 0.1 gold per restored HP · Key: Z",
+          "disabled": false,
+          "active": "false",
+          "width": 42,
+          "height": 40
+        },
+        {
+          "id": "hold-position",
+          "title": "Hold [F6] · Hold position: attack visible targets in range without pursuing. Normal orders replace the queue; Shift adds move, attack, attack-move, gather, hold or patrol (max 32). Hold and patrol continue until replaced or stopped. · Key: F6",
+          "disabled": false,
+          "active": null,
+          "width": 42,
+          "height": 40
+        },
+        {
+          "id": "patrol-units",
+          "title": "Patrol [F7] · Patrol between your current position and the clicked point; combat units attack-move and resume after target loss. Shift appends. · Key: F7",
+          "disabled": false,
+          "active": null,
+          "width": 42,
+          "height": 40
+        },
+        {
+          "id": "stop-units",
+          "title": "Stop [S] · Stop – selected units · Key: S",
+          "disabled": false,
+          "active": null,
+          "width": 42,
+          "height": 40
+        },
+        {
+          "id": "dismiss-units",
+          "title": "Dismiss Unit [DELETE] · Dismiss selected own units. Confirmation includes transport passengers; no refund or kill credit. · Key: DELETE",
+          "disabled": false,
+          "active": null,
+          "width": 42,
+          "height": 40
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "faction": "crown",
+    "width": 800,
+    "context": "base",
+    "unique": {
+      "count": 31,
+      "unique": 31
+    },
+    "metrics": {
+      "bar": {
+        "x": 0,
+        "y": 440,
+        "width": 800,
+        "height": 160,
+        "top": 440,
+        "right": 800,
+        "bottom": 600,
+        "left": 0
+      },
+      "overflow": [],
+      "outside": [],
+      "buttons": [
+        {
+          "id": "train-worker",
+          "title": "Train Worker – 20 wood [W] · Train worker – select the base · Cost: 20 wood · Key: W · Requires: Completed base",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "upgrade-base",
+          "title": "Upgrade base to level 3 [I] · Upgrade the selected base. Its worker queue pauses and resumes with its remaining time intact. · Cost: 120 wood + 100 gold · Key: I",
+          "disabled": false,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "research-attack",
+          "title": "Tempered Arms – 40 wood + 10 gold [U] · Attack research – completed forge · Cost: 40 wood + 10 gold · Key: U · Requires: Completed forge · Unavailable: Already researched",
+          "disabled": true,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "research-defense",
+          "title": "Plate Craft – 40 wood + 10 gold [D] · Defense research – completed forge · Cost: 40 wood + 10 gold · Key: D · Requires: Completed forge · Unavailable: Already researched",
+          "disabled": true,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "faction": "crown",
+    "width": 800,
+    "context": "barracks",
+    "unique": {
+      "count": 31,
+      "unique": 31
+    },
+    "metrics": {
+      "bar": {
+        "x": 0,
+        "y": 440,
+        "width": 800,
+        "height": 160,
+        "top": 440,
+        "right": 800,
+        "bottom": 600,
+        "left": 0
+      },
+      "overflow": [],
+      "outside": [],
+      "buttons": [
+        {
+          "id": "train-soldier",
+          "title": "Train Guard – 20 wood + 5 gold · 5 s [T] · Train soldier – select barracks · Cost: 20 wood + 5 gold · Key: T · Requires: Completed barracks",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "train-archer",
+          "title": "Train Archer – 20 wood + 10 gold [R] · Train archer – select barracks · Cost: 20 wood + 10 gold · Key: R · Requires: Completed barracks",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "train-catapult",
+          "title": "Train Catapult – 40 wood + 20 gold [C] · Train catapult – select barracks · Cost: 40 wood + 20 gold · Key: C · Requires: Completed forge, Completed barracks",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "train-specialist",
+          "title": "Train Banner Guard – 30 wood + 15 gold · 8 s [V] · Train the faction specialist at selected barracks. Requires its forge/research prerequisites, resources, supply and queue capacity. · Cost: 30 wood + 15 gold · Key: V · Requires: Completed forge, Completed barracks, defense 1",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "train-air",
+          "title": "Train Gryphon Rider · TEMP ART [F5] · Train the faction flyer at a completed barracks; Forge and both research upgrades required. Temporary art. · Cost: 65 wood + 35 gold · Key: F5 · Requires: Completed forge, Completed barracks, attack 1, defense 1",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "faction": "crown",
+    "width": 800,
+    "context": "harbor",
+    "unique": {
+      "count": 31,
+      "unique": 31
+    },
+    "metrics": {
+      "bar": {
+        "x": 0,
+        "y": 440,
+        "width": 800,
+        "height": 160,
+        "top": 440,
+        "right": 800,
+        "bottom": 600,
+        "left": 0
+      },
+      "overflow": [],
+      "outside": [],
+      "buttons": [
+        {
+          "id": "train-transport",
+          "title": "Train Transport – 40 wood + 10 gold [J] · Train a transport at the selected completed harbor. Requires resources, supply and a free queue slot. · Cost: 40 wood + 10 gold · Key: J · Requires: Completed harbor",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "train-ship",
+          "title": "Train Cutter – 40 wood + 15 gold [K] · Train a warship at the selected completed harbor. Requires resources, supply and a free queue slot. · Cost: 40 wood + 15 gold · Key: K · Requires: Completed harbor",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "faction": "crown",
+    "width": 800,
+    "context": "spells",
+    "unique": {
+      "count": 31,
+      "unique": 31
+    },
+    "metrics": {
+      "bar": {
+        "x": 0,
+        "y": 440,
+        "width": 800,
+        "height": 160,
+        "top": 440,
+        "right": 800,
+        "bottom": 600,
+        "left": 0
+      },
+      "overflow": [],
+      "outside": [],
+      "buttons": [
+        {
+          "id": "cast-heal",
+          "title": "Heal [F2] · Healing spell (faction loadout): choose a visible damaged allied ground combat unit in spell range. Escape or right-click cancels without cost. · Cost: 20 mana · Range 160px · Cooldown 6s · Restore 25 HP · Key: F2",
+          "disabled": false,
+          "active": "false",
+          "width": 38.40625,
+          "height": 36
+        },
+        {
+          "id": "cast-ward",
+          "title": "Ward [F3] · Buff spell (faction loadout): choose a visible allied ground combat unit in spell range. Escape or right-click cancels without cost. · Cost: 25 mana · Range 160px · Cooldown 8s · Attack 1× · Incoming damage 0.75× · 6s; replaces same effect channel · Key: F3",
+          "disabled": false,
+          "active": "false",
+          "width": 38.40625,
+          "height": 36
+        },
+        {
+          "id": "cast-hex",
+          "title": "Hex [F4] · Debuff spell (faction loadout): choose a visible hostile ground combat unit in spell range. Escape or right-click cancels without cost. · Cost: 20 mana · Range 192px · Cooldown 8s · Attack 0.75× · Incoming damage 1× · 5s; replaces same effect channel · Key: F4",
+          "disabled": false,
+          "active": "false",
+          "width": 38.40625,
+          "height": 36
+        },
+        {
+          "id": "attack-move",
+          "title": "Attack-move [A] · Attack-move – select a combat unit, then click a destination · Key: A",
+          "disabled": false,
+          "active": "false",
+          "width": 42,
+          "height": 40
+        },
+        {
+          "id": "unit-ability",
+          "title": "Defensive Stance · −25% incoming damage · 5 s [E] · Faction ability – selected combat units that are ready · Key: E",
+          "disabled": false,
+          "active": null,
+          "width": 42,
+          "height": 40
+        },
+        {
+          "id": "hold-position",
+          "title": "Hold [F6] · Hold position: attack visible targets in range without pursuing. Normal orders replace the queue; Shift adds move, attack, attack-move, gather, hold or patrol (max 32). Hold and patrol continue until replaced or stopped. · Key: F6",
+          "disabled": false,
+          "active": null,
+          "width": 42,
+          "height": 40
+        },
+        {
+          "id": "patrol-units",
+          "title": "Patrol [F7] · Patrol between your current position and the clicked point; combat units attack-move and resume after target loss. Shift appends. · Key: F7",
+          "disabled": false,
+          "active": null,
+          "width": 42,
+          "height": 40
+        },
+        {
+          "id": "stop-units",
+          "title": "Stop [S] · Stop – selected units · Key: S",
+          "disabled": false,
+          "active": null,
+          "width": 42,
+          "height": 40
+        },
+        {
+          "id": "dismiss-units",
+          "title": "Dismiss Unit [DELETE] · Dismiss selected own units. Confirmation includes transport passengers; no refund or kill credit. · Key: DELETE",
+          "disabled": false,
+          "active": null,
+          "width": 42,
+          "height": 40
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "faction": "clans",
+    "width": 800,
+    "context": "barracks",
+    "unique": {
+      "count": 31,
+      "unique": 31
+    },
+    "metrics": {
+      "bar": {
+        "x": 0,
+        "y": 440,
+        "width": 800,
+        "height": 160,
+        "top": 440,
+        "right": 800,
+        "bottom": 600,
+        "left": 0
+      },
+      "overflow": [],
+      "outside": [],
+      "buttons": [
+        {
+          "id": "train-soldier",
+          "title": "Train Axe Warrior – 18 wood + 6 gold · 6 s [T] · Train soldier – select barracks · Cost: 18 wood + 6 gold · Key: T · Requires: Completed barracks",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "train-archer",
+          "title": "Train Hunter – 20 wood + 10 gold [R] · Train archer – select barracks · Cost: 20 wood + 10 gold · Key: R · Requires: Completed barracks",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "train-catapult",
+          "title": "Train Stone Thrower – 40 wood + 20 gold [C] · Train catapult – select barracks · Cost: 40 wood + 20 gold · Key: C · Requires: Completed forge, Completed barracks",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "train-specialist",
+          "title": "Train Raider – 26 wood + 12 gold · 7 s [V] · Train the faction specialist at selected barracks. Requires its forge/research prerequisites, resources, supply and queue capacity. · Cost: 26 wood + 12 gold · Key: V · Requires: Completed forge, Completed barracks, attack 1",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "train-air",
+          "title": "Train Wyvern Rider · TEMP ART [F5] · Train the faction flyer at a completed barracks; Forge and both research upgrades required. Temporary art. · Cost: 60 wood + 40 gold · Key: F5 · Requires: Completed forge, Completed barracks, attack 1, defense 1",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "faction": "elves",
+    "width": 800,
+    "context": "barracks",
+    "unique": {
+      "count": 31,
+      "unique": 31
+    },
+    "metrics": {
+      "bar": {
+        "x": 0,
+        "y": 440,
+        "width": 800,
+        "height": 160,
+        "top": 440,
+        "right": 800,
+        "bottom": 600,
+        "left": 0
+      },
+      "overflow": [],
+      "outside": [],
+      "buttons": [
+        {
+          "id": "train-soldier",
+          "title": "Train Warden – 20 wood + 6 gold · 5 s [T] · Train soldier – select barracks · Cost: 20 wood + 6 gold · Key: T · Requires: Completed barracks",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "train-archer",
+          "title": "Train Longbow – 22 wood + 12 gold [R] · Train archer – select barracks · Cost: 22 wood + 12 gold · Key: R · Requires: Completed barracks",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "train-catapult",
+          "title": "Train Ballista – 45 wood + 25 gold [C] · Train catapult – select barracks · Cost: 45 wood + 25 gold · Key: C · Requires: Completed forge, Completed barracks",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "train-specialist",
+          "title": "Train Marksman – 30 wood + 20 gold · 8 s [V] · Train the faction specialist at selected barracks. Requires its forge/research prerequisites, resources, supply and queue capacity. · Cost: 30 wood + 20 gold · Key: V · Requires: Completed forge, Completed barracks, attack 1",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "train-air",
+          "title": "Train Great Eagle · TEMP ART [F5] · Train the faction flyer at a completed barracks; Forge and both research upgrades required. Temporary art. · Cost: 45 wood + 35 gold · Key: F5 · Requires: Completed forge, Completed barracks, attack 1, defense 1",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "faction": "dwarves",
+    "width": 800,
+    "context": "barracks",
+    "unique": {
+      "count": 31,
+      "unique": 31
+    },
+    "metrics": {
+      "bar": {
+        "x": 0,
+        "y": 440,
+        "width": 800,
+        "height": 160,
+        "top": 440,
+        "right": 800,
+        "bottom": 600,
+        "left": 0
+      },
+      "overflow": [],
+      "outside": [],
+      "buttons": [
+        {
+          "id": "train-soldier",
+          "title": "Train Iron Guard – 24 wood + 5 gold · 6 s [T] · Train soldier – select barracks · Cost: 24 wood + 5 gold · Key: T · Requires: Completed barracks",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "train-archer",
+          "title": "Train Crossbow – 24 wood + 10 gold [R] · Train archer – select barracks · Cost: 24 wood + 10 gold · Key: R · Requires: Completed barracks",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "train-catapult",
+          "title": "Train Cannon – 45 wood + 25 gold [C] · Train catapult – select barracks · Cost: 45 wood + 25 gold · Key: C · Requires: Completed forge, Completed barracks",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "train-specialist",
+          "title": "Train Bulwark – 45 wood + 20 gold · 10 s [V] · Train the faction specialist at selected barracks. Requires its forge/research prerequisites, resources, supply and queue capacity. · Cost: 45 wood + 20 gold · Key: V · Requires: Completed forge, Completed barracks, defense 1",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "train-air",
+          "title": "Train Gyrocopter · TEMP ART [F5] · Train the faction flyer at a completed barracks; Forge and both research upgrades required. Temporary art. · Cost: 65 wood + 40 gold · Key: F5 · Requires: Completed forge, Completed barracks, attack 1, defense 1",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "faction": "goblins",
+    "width": 800,
+    "context": "barracks",
+    "unique": {
+      "count": 31,
+      "unique": 31
+    },
+    "metrics": {
+      "bar": {
+        "x": 0,
+        "y": 440,
+        "width": 800,
+        "height": 160,
+        "top": 440,
+        "right": 800,
+        "bottom": 600,
+        "left": 0
+      },
+      "overflow": [],
+      "outside": [],
+      "buttons": [
+        {
+          "id": "train-soldier",
+          "title": "Train Scrapper – 16 wood + 4 gold · 4 s [T] · Train soldier – select barracks · Cost: 16 wood + 4 gold · Key: T · Requires: Completed barracks",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "train-archer",
+          "title": "Train Slinger – 18 wood + 8 gold [R] · Train archer – select barracks · Cost: 18 wood + 8 gold · Key: R · Requires: Completed barracks",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "train-catapult",
+          "title": "Train Mortar – 35 wood + 25 gold [C] · Train catapult – select barracks · Cost: 35 wood + 25 gold · Key: C · Requires: Completed forge, Completed barracks",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "train-specialist",
+          "title": "Train Grenadier – 25 wood + 25 gold · 7 s [V] · Train the faction specialist at selected barracks. Requires its forge/research prerequisites, resources, supply and queue capacity. · Cost: 25 wood + 25 gold · Key: V · Requires: Completed forge, Completed barracks, attack 1",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "train-air",
+          "title": "Train Airship · TEMP ART [F5] · Train the faction flyer at a completed barracks; Forge and both research upgrades required. Temporary art. · Cost: 75 wood + 45 gold · Key: F5 · Requires: Completed forge, Completed barracks, attack 1, defense 1 · Unavailable: Population limit reached",
+          "disabled": true,
+          "active": null,
+          "width": 44,
+          "height": 40
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "faction": "crown",
+    "width": 1280,
+    "context": "worker",
+    "unique": {
+      "count": 31,
+      "unique": 31
+    },
+    "metrics": {
+      "bar": {
+        "x": 0,
+        "y": 560,
+        "width": 1280,
+        "height": 160,
+        "top": 560,
+        "right": 1280,
+        "bottom": 720,
+        "left": 0
+      },
+      "overflow": [],
+      "outside": [],
+      "buttons": [
+        {
+          "id": "build-wall",
+          "title": "Build wall [M] · Build a wall with a selected worker. Placement preserves mandatory routes and exits. · Cost: 10 wood · Key: M",
+          "disabled": false,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "build-gate",
+          "title": "Build gate [Q] · Build a gate with a selected worker. It starts closed. · Cost: 30 wood + 5 gold · Key: Q",
+          "disabled": false,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "build-tower",
+          "title": "Build tower [O] · Build a defense tower with a selected worker at a visible legal site. · Cost: 50 wood + 20 gold · Key: O",
+          "disabled": false,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "build-barracks",
+          "title": "Build Barracks – 40 wood [B] · Build barracks – select a worker · Cost: 40 wood · Key: B · Requires: Completed base · Unavailable: Already built",
+          "disabled": true,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "build-farm",
+          "title": "Build Farm – 20 wood [F] · Build farm – select a worker · Cost: 20 wood · Key: F · Requires: Completed base",
+          "disabled": false,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "build-forge",
+          "title": "Build Forge – 40 wood + 10 gold [G] · Build forge – select a worker · Cost: 40 wood + 10 gold · Key: G · Requires: Completed base · Unavailable: Already built",
+          "disabled": true,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "build-harbor",
+          "title": "Build Harbor – 40 wood + 10 gold [H] · Build a harbor with a selected worker at a visible, valid coastal site. Pay the displayed cost at placement. · Cost: 40 wood + 10 gold · Key: H · Unavailable: Already built",
+          "disabled": true,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "repair-building",
+          "title": "Repair building [Z] · Select workers, then choose an own damaged building to repair. Costs 0.5 wood + 0.1 gold per restored HP, 4 HP/s per worker, at most three active workers per building. · Cost: 0.5 wood + 0.1 gold per restored HP · Key: Z",
+          "disabled": false,
+          "active": "false",
+          "width": 42,
+          "height": 40
+        },
+        {
+          "id": "hold-position",
+          "title": "Hold [F6] · Hold position: attack visible targets in range without pursuing. Normal orders replace the queue; Shift adds move, attack, attack-move, gather, hold or patrol (max 32). Hold and patrol continue until replaced or stopped. · Key: F6",
+          "disabled": false,
+          "active": null,
+          "width": 42,
+          "height": 40
+        },
+        {
+          "id": "patrol-units",
+          "title": "Patrol [F7] · Patrol between your current position and the clicked point; combat units attack-move and resume after target loss. Shift appends. · Key: F7",
+          "disabled": false,
+          "active": null,
+          "width": 42,
+          "height": 40
+        },
+        {
+          "id": "stop-units",
+          "title": "Stop [S] · Stop – selected units · Key: S",
+          "disabled": false,
+          "active": null,
+          "width": 42,
+          "height": 40
+        },
+        {
+          "id": "dismiss-units",
+          "title": "Dismiss Unit [DELETE] · Dismiss selected own units. Confirmation includes transport passengers; no refund or kill credit. · Key: DELETE",
+          "disabled": false,
+          "active": null,
+          "width": 42,
+          "height": 40
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "faction": "crown",
+    "width": 1280,
+    "context": "active-build",
+    "unique": {
+      "count": 31,
+      "unique": 31
+    },
+    "metrics": {
+      "bar": {
+        "x": 0,
+        "y": 560,
+        "width": 1280,
+        "height": 160,
+        "top": 560,
+        "right": 1280,
+        "bottom": 720,
+        "left": 0
+      },
+      "overflow": [],
+      "outside": [],
+      "buttons": [
+        {
+          "id": "build-wall",
+          "title": "Build wall [M] · Build a wall with a selected worker. Placement preserves mandatory routes and exits. · Cost: 10 wood · Key: M · Unavailable: Finish or cancel placement",
+          "disabled": true,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "build-gate",
+          "title": "Build gate [Q] · Build a gate with a selected worker. It starts closed. · Cost: 30 wood + 5 gold · Key: Q · Unavailable: Finish or cancel placement",
+          "disabled": true,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "build-tower",
+          "title": "Build tower [O] · Build a defense tower with a selected worker at a visible legal site. · Cost: 50 wood + 20 gold · Key: O · Unavailable: Finish or cancel placement",
+          "disabled": true,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "build-barracks",
+          "title": "Build Barracks – 40 wood [B] · Build barracks – select a worker · Cost: 40 wood · Key: B · Requires: Completed base · Unavailable: Finish or cancel placement",
+          "disabled": true,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "build-farm",
+          "title": "Build Farm – 20 wood [F] · Build farm – select a worker · Cost: 20 wood · Key: F · Requires: Completed base · Unavailable: Finish or cancel placement",
+          "disabled": true,
+          "active": "true",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "build-forge",
+          "title": "Build Forge – 40 wood + 10 gold [G] · Build forge – select a worker · Cost: 40 wood + 10 gold · Key: G · Requires: Completed base · Unavailable: Finish or cancel placement",
+          "disabled": true,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "build-harbor",
+          "title": "Build Harbor – 40 wood + 10 gold [H] · Build a harbor with a selected worker at a visible, valid coastal site. Pay the displayed cost at placement. · Cost: 40 wood + 10 gold · Key: H · Unavailable: Finish or cancel placement",
+          "disabled": true,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "repair-building",
+          "title": "Repair building [Z] · Select workers, then choose an own damaged building to repair. Costs 0.5 wood + 0.1 gold per restored HP, 4 HP/s per worker, at most three active workers per building. · Cost: 0.5 wood + 0.1 gold per restored HP · Key: Z",
+          "disabled": false,
+          "active": "false",
+          "width": 42,
+          "height": 40
+        },
+        {
+          "id": "hold-position",
+          "title": "Hold [F6] · Hold position: attack visible targets in range without pursuing. Normal orders replace the queue; Shift adds move, attack, attack-move, gather, hold or patrol (max 32). Hold and patrol continue until replaced or stopped. · Key: F6",
+          "disabled": false,
+          "active": null,
+          "width": 42,
+          "height": 40
+        },
+        {
+          "id": "patrol-units",
+          "title": "Patrol [F7] · Patrol between your current position and the clicked point; combat units attack-move and resume after target loss. Shift appends. · Key: F7",
+          "disabled": false,
+          "active": null,
+          "width": 42,
+          "height": 40
+        },
+        {
+          "id": "stop-units",
+          "title": "Stop [S] · Stop – selected units · Key: S",
+          "disabled": false,
+          "active": null,
+          "width": 42,
+          "height": 40
+        },
+        {
+          "id": "dismiss-units",
+          "title": "Dismiss Unit [DELETE] · Dismiss selected own units. Confirmation includes transport passengers; no refund or kill credit. · Key: DELETE",
+          "disabled": false,
+          "active": null,
+          "width": 42,
+          "height": 40
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "faction": "crown",
+    "width": 1280,
+    "context": "base",
+    "unique": {
+      "count": 31,
+      "unique": 31
+    },
+    "metrics": {
+      "bar": {
+        "x": 0,
+        "y": 560,
+        "width": 1280,
+        "height": 160,
+        "top": 560,
+        "right": 1280,
+        "bottom": 720,
+        "left": 0
+      },
+      "overflow": [],
+      "outside": [],
+      "buttons": [
+        {
+          "id": "train-worker",
+          "title": "Train Worker – 20 wood [W] · Train worker – select the base · Cost: 20 wood · Key: W · Requires: Completed base",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "upgrade-base",
+          "title": "Upgrade base to level 3 [I] · Upgrade the selected base. Its worker queue pauses and resumes with its remaining time intact. · Cost: 120 wood + 100 gold · Key: I",
+          "disabled": false,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "research-attack",
+          "title": "Tempered Arms – 40 wood + 10 gold [U] · Attack research – completed forge · Cost: 40 wood + 10 gold · Key: U · Requires: Completed forge · Unavailable: Already researched",
+          "disabled": true,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "research-defense",
+          "title": "Plate Craft – 40 wood + 10 gold [D] · Defense research – completed forge · Cost: 40 wood + 10 gold · Key: D · Requires: Completed forge · Unavailable: Already researched",
+          "disabled": true,
+          "active": "false",
+          "width": 44,
+          "height": 40
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "faction": "crown",
+    "width": 1280,
+    "context": "barracks",
+    "unique": {
+      "count": 31,
+      "unique": 31
+    },
+    "metrics": {
+      "bar": {
+        "x": 0,
+        "y": 560,
+        "width": 1280,
+        "height": 160,
+        "top": 560,
+        "right": 1280,
+        "bottom": 720,
+        "left": 0
+      },
+      "overflow": [],
+      "outside": [],
+      "buttons": [
+        {
+          "id": "train-soldier",
+          "title": "Train Guard – 20 wood + 5 gold · 5 s [T] · Train soldier – select barracks · Cost: 20 wood + 5 gold · Key: T · Requires: Completed barracks",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "train-archer",
+          "title": "Train Archer – 20 wood + 10 gold [R] · Train archer – select barracks · Cost: 20 wood + 10 gold · Key: R · Requires: Completed barracks",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "train-catapult",
+          "title": "Train Catapult – 40 wood + 20 gold [C] · Train catapult – select barracks · Cost: 40 wood + 20 gold · Key: C · Requires: Completed forge, Completed barracks",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "train-specialist",
+          "title": "Train Banner Guard – 30 wood + 15 gold · 8 s [V] · Train the faction specialist at selected barracks. Requires its forge/research prerequisites, resources, supply and queue capacity. · Cost: 30 wood + 15 gold · Key: V · Requires: Completed forge, Completed barracks, defense 1",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "train-air",
+          "title": "Train Gryphon Rider · TEMP ART [F5] · Train the faction flyer at a completed barracks; Forge and both research upgrades required. Temporary art. · Cost: 65 wood + 35 gold · Key: F5 · Requires: Completed forge, Completed barracks, attack 1, defense 1",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "faction": "crown",
+    "width": 1280,
+    "context": "harbor",
+    "unique": {
+      "count": 31,
+      "unique": 31
+    },
+    "metrics": {
+      "bar": {
+        "x": 0,
+        "y": 560,
+        "width": 1280,
+        "height": 160,
+        "top": 560,
+        "right": 1280,
+        "bottom": 720,
+        "left": 0
+      },
+      "overflow": [],
+      "outside": [],
+      "buttons": [
+        {
+          "id": "train-transport",
+          "title": "Train Transport – 40 wood + 10 gold [J] · Train a transport at the selected completed harbor. Requires resources, supply and a free queue slot. · Cost: 40 wood + 10 gold · Key: J · Requires: Completed harbor",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        },
+        {
+          "id": "train-ship",
+          "title": "Train Cutter – 40 wood + 15 gold [K] · Train a warship at the selected completed harbor. Requires resources, supply and a free queue slot. · Cost: 40 wood + 15 gold · Key: K · Requires: Completed harbor",
+          "disabled": false,
+          "active": null,
+          "width": 44,
+          "height": 40
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "faction": "crown",
+    "width": 1280,
+    "context": "spells",
+    "unique": {
+      "count": 31,
+      "unique": 31
+    },
+    "metrics": {
+      "bar": {
+        "x": 0,
+        "y": 560,
+        "width": 1280,
+        "height": 160,
+        "top": 560,
+        "right": 1280,
+        "bottom": 720,
+        "left": 0
+      },
+      "overflow": [],
+      "outside": [],
+      "buttons": [
+        {
+          "id": "cast-heal",
+          "title": "Heal [F2] · Healing spell (faction loadout): choose a visible damaged allied ground combat unit in spell range. Escape or right-click cancels without cost. · Cost: 20 mana · Range 160px · Cooldown 6s · Restore 25 HP · Key: F2",
+          "disabled": false,
+          "active": "false",
+          "width": 75.90625,
+          "height": 36
+        },
+        {
+          "id": "cast-ward",
+          "title": "Ward [F3] · Buff spell (faction loadout): choose a visible allied ground combat unit in spell range. Escape or right-click cancels without cost. · Cost: 25 mana · Range 160px · Cooldown 8s · Attack 1× · Incoming damage 0.75× · 6s; replaces same effect channel · Key: F3",
+          "disabled": false,
+          "active": "false",
+          "width": 75.90625,
+          "height": 36
+        },
+        {
+          "id": "cast-hex",
+          "title": "Hex [F4] · Debuff spell (faction loadout): choose a visible hostile ground combat unit in spell range. Escape or right-click cancels without cost. · Cost: 20 mana · Range 192px · Cooldown 8s · Attack 0.75× · Incoming damage 1× · 5s; replaces same effect channel · Key: F4",
+          "disabled": false,
+          "active": "false",
+          "width": 75.90625,
+          "height": 36
+        },
+        {
+          "id": "attack-move",
+          "title": "Attack-move [A] · Attack-move – select a combat unit, then click a destination · Key: A",
+          "disabled": false,
+          "active": "false",
+          "width": 42,
+          "height": 40
+        },
+        {
+          "id": "unit-ability",
+          "title": "Defensive Stance · −25% incoming damage · 5 s [E] · Faction ability – selected combat units that are ready · Key: E",
+          "disabled": false,
+          "active": null,
+          "width": 42,
+          "height": 40
+        },
+        {
+          "id": "hold-position",
+          "title": "Hold [F6] · Hold position: attack visible targets in range without pursuing. Normal orders replace the queue; Shift adds move, attack, attack-move, gather, hold or patrol (max 32). Hold and patrol continue until replaced or stopped. · Key: F6",
+          "disabled": false,
+          "active": null,
+          "width": 42,
+          "height": 40
+        },
+        {
+          "id": "patrol-units",
+          "title": "Patrol [F7] · Patrol between your current position and the clicked point; combat units attack-move and resume after target loss. Shift appends. · Key: F7",
+          "disabled": false,
+          "active": null,
+          "width": 42,
+          "height": 40
+        },
+        {
+          "id": "stop-units",
+          "title": "Stop [S] · Stop – selected units · Key: S",
+          "disabled": false,
+          "active": null,
+          "width": 42,
+          "height": 40
+        },
+        {
+          "id": "dismiss-units",
+          "title": "Dismiss Unit [DELETE] · Dismiss selected own units. Confirmation includes transport passengers; no refund or kill credit. · Key: DELETE",
+          "disabled": false,
+          "active": null,
+          "width": 42,
+          "height": 40
+        }
+      ]
+    },
+    "errors": []
+  }
+]

@@ -24,3 +24,9 @@ it('roster and prerequisite presentation agrees with real admission data',()=>{
   factions.crown={...factions.crown,roster:['worker','soldier']};expect(actionPanel(m,'barracks',true)['train-catapult'].visible).toBe(false);
  }finally{factions.crown=original;}
 });
+it('keeps prerequisites visible after unlocking and identifies active build, research and production',()=>{
+ const m=createMatch();m.gathering.wood=1000;m.gathering.goldBalance=1000;m.gathering.units[0].selected=true;m.placement.active=true;m.placement.kind='farm';expect(actionPanel(m,null,true)['build-farm'].active).toBe(true);
+ m.placement.active=false;const queued=enqueueProduction(m.gathering,m.production);m.production=queued.production;expect(actionPanel(m,'base',true)['train-worker']).toMatchObject({producing:true,prerequisites:'Completed base'});
+ m.placement.forge={id:'forge',owner:'player',hp:120,footprint:{x:512,y:384,width:64,height:64},construction:{remainingSeconds:0,builderId:null}};const available=actionPanel(m,'base',true)['research-attack'];expect(available.prerequisites).toContain('Completed forge');m.research!.job={kind:'attack',remainingSeconds:2};expect(actionPanel(m,'base',true)['research-attack'].active).toBe(true);
+ expect(actionTooltip('research-attack',available,'Attack')).toContain('Requires: Completed forge');
+});

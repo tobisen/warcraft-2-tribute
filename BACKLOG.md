@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**Nytt prioriterat mandat PRIO-01–04:** RTS-174–176 pausade enligt användarens nya uppdrag. PRIO-01 Done;02–04 Todo. En task åt gången, docs/checks/browser/commit/push; stopp efter04,174 startas inte. PRIO-03:s två bildreferenser är godkända; referenskarta verifieras före spridning. Användarens CSS/docs bevaras.
+**Nytt prioriterat mandat PRIO-01–04:** RTS-174–176 pausade enligt användarens nya uppdrag. PRIO-01–02 Done;03–04 Todo. En task åt gången, docs/checks/browser/commit/push; stopp efter04,174 startas inte. PRIO-03:s två bildreferenser är godkända; referenskarta verifieras före spridning. Användarens CSS/docs bevaras.
 
 **CI-korrigering efter RTS-173 (2026-10-05):** Användaren rapporterar flera röda pushar. Senaste GitHub-jobbet fallerar enbart på femsekunderstimeout i factionArt-testet; äldre air-assertions är rättade i173. Samma uttömmande assetkontroller delas i16 faction/type/owner-fall, utan höjd timeout eller ändrade assets/runtime. Riktade17/1, unit450/79 och build/strict typecheck/diff PASS lokalt. Fix `b79d1fd` pushad. Ny [GitHub-fullregression/build/Pages-deploy](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37300780990) PASS; teststeget12m05s.174 startas inte.
 
@@ -4698,7 +4698,9 @@ Browserverifiera verkliga musklick för byggnad, enhet, forskning och uppgraderi
 
 ## PRIO-02 – Tydliga och olika action-ikoner
 
-**Status:** Todo.
+**Status:** Done.
+
+**Leverans:** 31 särskilda actionbilder per fraktion: tight crop av riktiga byggnads-/unitassets, egna command/spell-glyphs och tydliga research/upgrade-märken. Cache utan per-frame canvasarbete; befintliga Textnoder/kompakt grid bevaras. Prerequisites även efter unlock, aktiv preview/research/upgrade och markerad producerande typ. Riktade19/4, unit457/81, build/typecheck/diff PASS. Live clickregression800/1280 PASS; browser alla fem fraktioner31unique, sex kontexter800/1280 utan scroll/klipp PASS, representativa bilder granskade. artifacts/prio-02. Air fortsatt godkänd TEMP.
 
 - Varje byggnad och enhet ska ha en egen igenkännbar ikon som visar vad man bygger eller producerar.
 - Forskning och uppgraderingar ska också kunna skiljas åt visuellt.
