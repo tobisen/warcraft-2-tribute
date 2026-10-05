@@ -1,3 +1,39 @@
+# Överlämning RTS-177–180 — releasekontroll pågår
+
+Datum2026-10-05.177 Done8fafce5,178 Done598478f,179 Done686c1e6.180 förbereder
+0.3.0-release; markeras inte Done före faktisk slutregression och publiceringskontroll.
+Stanna efter180; inga nya roadmaptasks eller karteditor.
+
+Nya åtta kampanjstarter och mål definieras i CAMPAIGN_DESIGN.md. Seven expanded
+plans + befintlig tutorial; permanent phase och finite-wave-start i Save51.
+Legacycampaigns behåller mål/kartor; progression/replay/lag/skirmish återanvänds.
+Samlad179:53/6 kampanj/fog/load PASS; alla åtta Beginner/Normal med betalda order,
+Saves och landstigningar. Native800/1280 för fem raser verifierar mouse/hotkeys/
+icons/HUD och18 decoded audioassets samt faktisk paused/suspendedcontext.
+Kort Highlands64/128 stress:60.0/50.9FPS, CPU p959.4/18.9ms efter fogunionfix.
+Inte mänsklig tids-/balans-/ljud-/långmatch- eller allhårdvaruverifiering.
+
+Lokal0.3.0-production-browser på Pages-base har kontrollerat campaign/result/replay,
+skirmishdefeat, team/spectator/save/defeat, pause/restart/menu cleanup, sex render-
+upplösningar, Native/Fit och fullscreenEnterExit, assets/reload utan browser/HTTPfel.
+Slutmål/eliminering är explicitfixture; paid completion kommer från179.
+Slutlig full1458/176 PASS415.95s, unit465/84 PASS10.76s och strict typecheck/build
+PASS388ms; diff/manifest/länkar PASS. Scorefix för tre moved campaignmaps ingår.
+Ny release-publicering redovisas efter push;180 är inte Done ännu.
+178 faktisktGitHub37350880157 och17937352527511 success (test/build/Pages).
+
+Mänsklig20–40min/mission, subjektiv balans/fun och ny längre mixlyssning återstår.
+Finalflyerart/animationer, vissa caster/navalassets och slutliga egna voices
+är fortfarande begränsningar; inga nya kvalitetsclaim från enbart automation.
+Kartor/djurljud är tidigare användargodkända. Tre spelare endast Plains96/128
+skirmish; ingen campaign-teamkonfigurator, nya resource-depots eller gratis rescue-
+armies. Användarens src/style.css SHA95c3725250221ef8386519adecfb05db601103697d421e78e1b2bdf057141a5e
+och otrackade docs/ bevaras/undantags från commits.
+
+---
+
+Historiska överlämningar nedan, ersatta av denna aktuella etapp.
+
 # Överlämning RTS-174–176
 
 Datum: 2026-10-05.174–176 Done.174/175 är pushade;176 levereras i taskcommitten `RTS-176: resolve team outcomes and support eliminated spectators`, vars hash redovisas i slutrapporten efter push. Stopp före177; inget fortsatt roadmapmandat. Ingen delegering.

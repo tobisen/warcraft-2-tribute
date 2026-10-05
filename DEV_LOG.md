@@ -3214,3 +3214,44 @@ bundlevarning; diff/manifest PASS. Extra slutchecks efter faktisk perf-fix, inte
 omotiverade fullregressioner.178 CI37350880157 ännu in_progress vid avläsning;
 176:s37346778616 är success.179 Done teknisk granskning med explicit humanpending;
 180 nästa. CSS SHA95c372…a5e/docs bevarade.
+
+## 2026-10-05 — RTS-180 release0.3.0, lokal slutkontroll
+
+Gemensam releaseVersion0.3.0, package/lock synkade; changelog redovisar faktisk
+kampanj/AI/lag/order/PRIO/fog-utveckling och bevarar0.2.0/0.1.0. Versionsinvariant
+test använder Vites rawimport utan nya Node-typdeps. README/HANDOFF anger aktuella
+spelregler, Save51, legacy-map/goalbevarande, spectator och kvalitetsbegränsningar.
+
+Sent reviewfynd: highscorevalidatorn använde gamla Arena för Forest Watch/Siege/
+Outpost. Minimal fix accepterar authored nya map från rule51 och historiska
+scenariokartor, utan ändrad scoremodell/dedup. Tre nya isolerade result/store-
+regressioner och faktisk Frontier-scorepost i browser; riktade29/3 PASS727ms.
+Releasebrowserassert kräver exakt en lagrad match-ID-post (inte bara identisk/null
+storage). Terminalfixture är completed phases, inte paid playthrough.
+
+Första fullregression1455/176 PASS408.19s var före scorefix. Ny full slutregression
+**1458/176 PASS415.95s**, slutlig unit **465/84 PASS10.76s**, build inklusive strict
+typecheck **PASS388ms**, befintlig bundlevarning, manifest/länkar/diff PASS.
+Omkörningen motiveras av konkret ny scorekod/test, inte docs. Ingen ytterligare
+full körning planeras för ren publiceringsdokumentation.
+
+Final lokal production0.3.0/Build686c1e6 (build från precommitHEAD) på exakt
+Pages-base PASS i fyra viewport/mode-cases: native800/1280 och native/fit800 i
+1600fönster. Sex renderresolutionval; helHUD-resolution skiljs från kartcanvasens
+clientstorlek. Fysisk fullscreenEnterExit bevarar val. CampaignSaveLoad paused/
+phase0, pauseclockfrys, completed-phase victory/result/replay, faktisk score en
+gång/frozen ended, skirmishdefeat, humanSpectatorTeamSaveLoad/finalteamDefeat/
+statistik och menu som rensar live state, samt reload/version/displayprefs.
+34 assetURLs,18 audiofiles, inga HTTP-/browserfel. scripts/check-release.mjs och
+artifacts/rts-180/local/browser.json + åtta PNG; representativa native800 victory
+och fit teamstats visuellt granskade. Paid campaigncompletion återanvänds från179,
+inte från resultatfixtures.
+
+Oförändrad Pages-workflow läst/verifierad: npmci/fulltest/build/dist/Pages OIDC,
+Vitebase/HTML assets under/warcraft-2-tribute/. Ingen hostingändring.178 actual
+CI/Pages37350880157 SUCCESS,17937352527511 SUCCESS.180 releasepush/public browser
+ä återstående;180 är därför ännu inte Done. Publicering kräver denna verifierade
+kodpush först, därefter docs-only slutstatuscommit. Ingen force/amend/historyrewrite.
+CSS SHA95c3725250221ef8386519adecfb05db601103697d421e78e1b2bdf057141a5e och docs/
+bevaras/undantags från commits. Lokalt ändrad userCSS ingår inte i publicerad CSS.
+Mänsklig tid/balans/fun/mixlyssning/finalvoice/flyerassets återstår enligt179.

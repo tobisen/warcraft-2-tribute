@@ -1,3 +1,5 @@
+import {campaignMissions,campaignPreset} from '../config/campaign';
+import {startCampaignMission} from './campaign';
 import {saveConfig as currentSaveConfig} from '../config/save';
 import {expect,it} from 'vitest';
 import {createMatch} from './match';
@@ -27,4 +29,12 @@ it('ranking preserves every dedup ID and separates groups; displaying top ten ca
 it('storage failure retains session scores with an honest error; invalid stores reset safely',()=>{
  const store=createHighscoreStore(()=>({getItem(){throw Error('blocked');},setItem(){throw Error('quota');}}));expect(store.load()).toEqual([]);expect(store.error()).toMatch(/read/);store.record(ended());expect(store.get()).toHaveLength(1);expect(store.error()).toMatch(/session only/);store.record(ended());expect(store.get()).toHaveLength(1);
  for(const raw of ['bad JSON',JSON.stringify({version:2,entries:[]}),JSON.stringify({version:1,entries:[resultScore(ended()),resultScore(ended())]}),JSON.stringify({version:1,entries:[],extra:true})]){const s=createHighscoreStore(()=>({getItem:()=>raw,setItem(){}}));expect(s.load()).toEqual([]);expect(s.error()).toMatch(/read/);}
+});
+
+it.each(['forest-watch','the-siege','the-outpost'] as const)('%s: moved campaign map records exactly one result without accepting invented old-rule maps',id=>{
+ const m=startCampaignMission({version:1,completed:campaignMissions.map(m=>m.id)},id,'normal',campaignPreset(id)!)!;
+ m.matchId='10000000-0000-4000-8000-000000000001';m.outcome='victory';
+ const score=resultScore(m)!;expect(validHighscore(score)).toBe(true);expect(validHighscore({...score,config:'tribute-config-50'})).toBe(false);
+ let writes=0;const memory=new Map<string,string>(),store=createHighscoreStore(()=>({getItem:k=>memory.get(k)??null,setItem:(k,v)=>{writes++;memory.set(k,v);}}));store.load();store.record(m);store.record(m);expect(writes).toBe(1);expect(store.get()).toHaveLength(1);
+ expect(validHighscore({...score,map:'arena'})).toBe(true); // Legacy campaign loaded under new rules keeps its historical map.
 });

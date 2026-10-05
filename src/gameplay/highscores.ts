@@ -1,3 +1,4 @@
+import {campaignPlans} from '../config/campaignPhases';
 import {validPlayers} from './matchSettings';
 import type {PlayerDefinition} from '../config/players';
 import {isAIProfile,type AIProfileId} from '../config/aiProfiles';
@@ -41,7 +42,7 @@ export function validHighscore(value:unknown):value is Highscore{
  if(!validStats(s.stats))return false;
  if(s.players){if(!s.stats?.players||!s.stats.teams)return false;const expected:Record<number,import('./matchStats').TeamStats>={};for(const p of s.players){const stat=s.stats.players[p.id];if(!stat)return false;const team=p.teamId??s.players.indexOf(p)+1;expected[team]=expected[team]?sumStats(expected[team],stat):stat;}if(Object.keys(s.stats.teams).sort().join()!==Object.keys(expected).sort().join()||Object.entries(expected).some(([id,stat])=>JSON.stringify(s.stats.teams![Number(id)])!==JSON.stringify(stat)))return false;}
  const mission=campaignMission(s.goal);
- return validMatchId(s.id)&&s.model===1&&typeof s.config==='string'&&/^tribute-config-[1-9][0-9]{0,3}$/.test(s.config)&&isMapId(s.map)&&Object.hasOwn(difficultyProfiles,s.difficulty)&&isGameSpeed(s.speed)&&isFactionId(s.player)&&isFactionId(s.enemy)&&(s.outcome==='victory'||s.outcome==='defeat')&&finite(s.seconds)&&s.score===scoreFor(s.outcome,s.seconds)&&validStats(s.stats)&&s.stats.seconds===s.seconds&&(s.kind==='campaign'?!!mission&&s.map===scenarioConfig[mission.scenario].map:s.kind==='skirmish'&&s.goal===s.map);
+ return validMatchId(s.id)&&s.model===1&&typeof s.config==='string'&&/^tribute-config-[1-9][0-9]{0,3}$/.test(s.config)&&isMapId(s.map)&&Object.hasOwn(difficultyProfiles,s.difficulty)&&isGameSpeed(s.speed)&&isFactionId(s.player)&&isFactionId(s.enemy)&&(s.outcome==='victory'||s.outcome==='defeat')&&finite(s.seconds)&&s.score===scoreFor(s.outcome,s.seconds)&&validStats(s.stats)&&s.stats.seconds===s.seconds&&(s.kind==='campaign'?!!mission&&(s.map===scenarioConfig[mission.scenario].map||Number(s.config.slice('tribute-config-'.length))>=51&&s.map===campaignPlans[mission.id]?.map):s.kind==='skirmish'&&s.goal===s.map);
 }
 export function rankedScores(entries:readonly Highscore[],partition?:string):Highscore[]{return entries.filter(s=>!partition||scorePartition(s)===partition).sort((a,b)=>b.score-a.score||a.seconds-b.seconds||a.id.localeCompare(b.id));}
 interface Storage {getItem(key:string):string|null;setItem(key:string,value:string):void}

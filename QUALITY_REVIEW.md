@@ -51,8 +51,9 @@ Ny verifiering på178:s kampanj plus179:s fogoptimering; äldre151-belägg ovan 
 historiska. Samlad slutlig53/6 PASS innehåller alla åtta Beginner/Normal-missioner
 med betald produktion, faktiska order/landstigningar och fas-/resultat-Saves.
 First Steps är tryckfri introduktion. Forest Watch/Outpost ger preparation och
-exploration före finite waves; Beginner minskar antal och ökar intervall enligt
-befintlig difficulty. Övriga missioner behåller paid AI eller fasta två guards.
+exploration före finite waves; Beginner minskar antal och senarelägger start.
+Forest Watch har längre intervall; Outpost behåller sina authored intervall.
+HP, movement och kostnader är oförändrade. Övriga missioner behåller paid AI eller fasta två guards.
 Inga fler bank-/HP-/coständringar motiverades av dessa scenarier. Återhämtning
 betyder återbyggnad/träning med finite resurser; kurirförlust är explicit defeat.
 
@@ -90,3 +91,40 @@ underhållningsvärde och längre mixlyssning. Särskilt waveuppdragen riskerar 
 tid.179 slutför teknisk granskning enligt användarens uttryckliga tillåtelse att
 dokumentera mänskligt test som återstående; dessa aspekter markeras inte verifierade.
 Slutlig unit461/83/build/typecheck/diff PASS, full release-regression i180.
+
+## RTS-180 — Lokal release0.3.0 och publiceringsförberedelse
+
+Versionen kommer från befintlig gemensam release.ts; package/lock är0.3.0 och
+versionsregression jämför dem. Changelog bevarar0.2.0/0.1.0 som historik och
+anger uttryckligen temporary flyers och mänsklig qualitypending. README beskriver
+phasegoals, order/Shift, relationer, spectator, Save51 och faktiska kartval.
+
+Slutgranskning hittade en highscore-regression från178:s tre nya kartval:
+validatorn accepterade bara Arena för dessa missioner. Avgränsad fix accepterar
+planens authored map från config51 och framåt, samtidigt som gamla kartor/records
+bevaras. Tre nya result/dedup/legacy-rule-testfall och riktig Frontier-resultpost
+i browser täcker detta.29/3 riktade PASS. Den första fullregressionen1455/176
+PASS408.19s gäller före scorefix; därför körs en ny full slutregression på final
+kod. Ingen omkörning enbart för Markdown.
+
+Final lokal production-browser på Pages-base: fyra native/fit-cases vid800/1280/
+1600, sex render-resolutionval, fysisk fullscreenEnterExit med bevarade settings,
+physical selection/pause/Save/load/replay/menu. Explicit completed-phase fixture
+går till campaignVictory; resultat fryser simulation och registrerar exakt en
+faktisk match-ID-post. Skirmishdefeat och lagSpectatorSaveDefeat har egna fixtures;
+meny rensar multi/campaign-state.18 audiofiles och34 asset-URLs laddas, reload
+behåller version/displaysettings, inga HTTP-/browserfel. Aktuella localbilder i
+artifacts/rts-180/local granskade, inte ersättning för179:s paid completion.
+
+Pages-workflow oförändrad: npm ci/test/build, dist-artifact och befintlig
+Pages-deploy med OIDC/pageswrite. Vitebase/producerade HTML assetpaths verifierade
+som/warcraft-2-tribute/, inga/asset-rootläckor eller nya hostingtjänster.
+178CI/Pages37350880157 och17937352527511 är faktiskt success.180:s nya publicering
+är ännu inte verifierad; status uppdateras efter releasepush. Lokala userCSS/docs
+är bevarade och ingår inte i releasecommits/publicerad CSS.
+
+Slutlig scorefixkod: full1458/176 PASS415.95s, unit465/84 PASS10.76s, strict
+typecheck/build PASS388ms, manifest/länk/diff PASS. Dessa är nya releasebelägg;
+första1455-körningen ovan är uttryckligen pre-fix. Ny production-browser kräver
+en faktisk sparad match-ID-post för moved-map-campaign och verifierar dedup.
+Public0.3.0-deployment/browser kvarstår före Done.

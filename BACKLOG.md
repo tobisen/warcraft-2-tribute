@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**Aktuellt mandat RTS-177–180:** Nytt användaruppdrag ersätter stoppet efter176.177 Done/push8fafce5;178 Done/push598478f;179 Done;180 nästa. En task åt gången, riktad/browser-verifiering, docs och commit/push. Samlad kampanjregression när kampanjändringarna är klara; full releasekontroll vid180. Uppdatera HANDOFF/QUALITY_REVIEW efter180 och stanna. CSS/docs bevaras.
+**Aktuellt mandat RTS-177–180:** Nytt användaruppdrag ersätter stoppet efter176.177 Done/push8fafce5;178 Done/push598478f;179 Done/push686c1e6;180 pågår, publicering verifieras efter releasepush. En task åt gången, riktad/browser-verifiering, docs och commit/push. Samlad kampanjregression när kampanjändringarna är klara; full releasekontroll vid180. Uppdatera HANDOFF/QUALITY_REVIEW efter180 och stanna. CSS/docs bevaras.
 
 **Aktuellt mandat RTS-174–176:** Användaren återupptar174–176 efter färdiga PRIO-01–04.174 Done/push416cfa9;175 Done/push0a5b422,176 Done. Etappen avslutad; stanna före177. En task åt gången, riktade tester/browser, slutchecks/docs och commit/push. HANDOFF efter176; stopp före177. CSS/docs bevaras.
 
@@ -4931,7 +4931,7 @@ Skilj automatiska simuleringar från mänskligt speltest.
 
 ## RTS-180 – Samlad release
 
-**Status:** Todo.
+**Status:** In progress — lokal0.3.0-releasekontroll; publicering återstår till push och faktisk Pages-kontroll.
 
 **Goal:** Samlad release.
 

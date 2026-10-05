@@ -5,7 +5,7 @@ Arbetstiteln är inte juridiskt granskad för kommersiell release. Reponamnet
 
 Browserbaserat singleplayer-RTS inspirerat av Warcraft 2, Age of Empires 2 och
 Command & Conquer. Phaser, strict TypeScript och Vite; local-first, gameplay
-före grafik. Egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD. Aktuell taskstatus finns i [BACKLOG.md](BACKLOG.md).
+före grafik. Egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD. Aktuell version är0.3.0. Taskstatus finns i [BACKLOG.md](BACKLOG.md).
 
 ## Installation och lokal start
 
@@ -21,7 +21,7 @@ De mindre kartorna är1280×960 world pixels; Frontier Valley1600×1152, Highlan
 
 ## Spela matchen
 
-I huvudmenyn väljer du Campaign (åtta upplåsbara operationer), Skirmish eller Wave-survival. Campaign låser första matchprofilen till uppdragets fraktionspar; Skirmish låter dig välja fem fraktioner, fiende och karta. Välj Beginner/Normal/Hard och gameplayhastighet. Läs briefing och målstatus: vågor, fiendebas, överlevnadstid, eskort, räddning eller kustkontroll har olika segervillkor. Förlust vid basens död har företräde.
+I huvudmenyn väljer du Campaign (åtta upplåsbara operationer), Skirmish eller Wave-survival. Campaign låser första matchprofilen till uppdragets fraktionspar; Skirmish låter dig välja fem fraktioner, fiende och karta. Välj Beginner/Normal/Hard och gameplayhastighet. Nya kampanjstarter har permanenta faser: preparation, spaning, försvar, passage, transport, eskort, räddning och kustkontroll. Läs aktuellt engelskt phasegoal. Fristående scenarier och äldre kampanj-saves behåller tidigare villkor. Förlust vid basens död har företräde.
 
 1. Välj workers och utforska nära basen. Högerklicka upptäckt wood/gold. På de flesta kartor finns wood vid(650,180), gold vid(850,220); på kust-/ö-kartor ligger startgruvan vid(600,300). Workers samlar och levererar automatiskt.
 2. Välj en worker och Build Barracks. Placera grön preview nära basen, exempelvis(528,400) om platsen är fri. Worker bygger; ge därefter ny gather-order. Kostnader/tider varierar med fraktion och visas på knapparna. Escape/högerklick avbryter preview.
@@ -783,3 +783,44 @@ fast renderingsupplösning och lokalt sparat visningsläge.
 prioriteringar och begränsningar. [HANDOFF.md](HANDOFF.md) samlar denna etapps
 leveranser, verifiering och nästa task RTS-155. Roadmap151–180 finns i
 [BACKLOG.md](BACKLOG.md); uppdraget omfattar endast151–154.
+
+## Release0.3.0 — Kampanj, AI och lag
+
+Välj Campaign för åtta upplåsbara uppdrag; First Steps är kort introduktion.
+Nya Forest Watch/Outpost startar på Frontier och Siege på Highlands. Övriga
+missioner behåller Islands/Highlands/Frontier/Coast. Phasegoals visas i HUD.
+Scoutmål kräver faktiskt utforskad grove/mine; resursdepåer finns inte, så workers
+levererar till den ursprungliga basen. Finite waves börjar efter preparation och
+spaning. Kurirens död ger defeat. Banner kräver30s obruten marknärvaro utan
+fiendekontest; passagerare/ships/workers håller inte zonen.
+
+Shift köar move, gather, attack, attack-move, hold och patrol; vanliga order
+ersätter kön. F6 Hold stannar utan förföljelse; F7 Patrol väljer andra punkten.
+Stop ersätter order/kö. Synliga knappar och tooltips visar spelbara villkor,
+tech, kostnader och hotkeys. Save51 bevarar faser, order och lag; äldre campaign
+saves återupptar sina ursprungliga mål/kartor, utan nya gratis completion/rewards.
+
+Skirmish på Plains96/128 erbjuder You+2AI; andra kartor erbjuder endast två
+validerade starts. Välj varje ras/profil/lag i befintlig meny. Ras och färg är
+separata. Allierade delar aktuell/utforskad vision men inte ekonomi, supply,
+forskning eller unitcontrol. Friendly ground spells stöder allierade; repair
+och gate-control är egna. Öppna portar släpper igenom allierade, stängda portar
+blockerar alla. Laget förlorar när alla baser i laget är utslagna. Om du förlorar din
+bas medan ally lever fortsätter AI; du kan följa lagvision/kamera, pausa/spara
+eller lämna, men inte ge gameplay-order. Resultatsidan visar individuella och
+lagstatistik samt separata kills/losses/dismissals.
+
+Versionsetiketten använder `src/config/release.ts`; buildhash är separat och
+visas i tooltip.0.2.0 och0.1.0 ligger kvar som historiska changelog-versioner.
+Publicering använder befintlig GitHub Pages-workflow och Vite-base
+`/warcraft-2-tribute/`, inga nya hostingtjänster.
+
+**Kända begränsningar:**20–40min/ordinarie Normal-mission är designuppskattning,
+inte mänskligt uppmätt speltid. Human tempo/difficulty/fun och ny lång mixlyssning
+återstår. Flyerart/animationer är temporära; vissa caster/navalassets och egna
+slutliga voices saknas enligt tidigare assetinventering. Frontier har den nya
+godkända sammanhängande terrängen; andra kartor behåller äldre presentation.
+Mätt64/128-unit Highlands-stress gäller kort headless Chrome-fixtur, inte generell
+hårdvaru-/långmatchgaranti. Användarens lokala style.css/docs är bevarade och
+ingår inte i taskcommits. Se HANDOFF.md och QUALITY_REVIEW.md för faktisk
+release-/Pages-verifiering.
