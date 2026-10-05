@@ -30,3 +30,7 @@ Regressionen avslöjade att testbotens enda Forge-plats blockerades av egen sold
 - Användarens src/style.css SHA256 `95c3725250221ef8386519adecfb05db601103697d421e78e1b2bdf057141a5e` och otrackade docs/ bevarade, utanför våra commits. main/origin utan force/amend/history rewrite.
 
 Nästa task RTS-174 är Todo och kräver nytt uppdrag. Inga senare tasks har startats.
+
+## CI-korrigering efter överlämningen
+
+Af8ec31:s faktiska [GitHub-körning](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37282536894) fallerade på factionArt-testets5000ms-timeout. Lokal regression ovan ska inte tolkas som CI-PASS. Samma test delas nu i16 animationsfall med gemensam atlas-init och oförändrade uttömmande assertions; timeout förblir default. Riktade17/1, unit450/79 och build/typecheck/diff PASS lokalt. Ny GitHub-fullregression verifieras efter fixpush. Ingen gameplay/asset/browserändring,174 fortsatt ej startad.

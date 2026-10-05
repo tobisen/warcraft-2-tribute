@@ -2,6 +2,8 @@
 
 ## Current Focus
 
+**CI-korrigering efter RTS-173 (2026-10-05):** Användaren rapporterar flera röda pushar. Senaste GitHub-jobbet fallerar enbart på femsekunderstimeout i factionArt-testet; äldre air-assertions är rättade i173. Samma uttömmande assetkontroller delas i16 faction/type/owner-fall, utan höjd timeout eller ändrade assets/runtime. Riktade17/1, unit450/79 och build/strict typecheck/diff PASS lokalt. Ny GitHub-fullregression verifieras efter push;174 startas inte.
+
 **Aktuellt mandat RTS-170–173:** Nytt uttryckligt uppdrag ersätter stoppet efter169.170–173 Done; etappen avslutad före174. En task åt gången med riktade tester/browser, slutchecks, docs och commit/push till origin/main. Stopp efter173 med HANDOFF;174 startas inte.160–164 och165–169 återimplementeras inte. Befintlig style.css och otrackade docs/ bevaras.
 
 **Nytt mandat RTS-165–169:**165 Done (`838f729`),166 Done (`2cd36a6`),167 Done (`fd9dfd3`),168 Done gameplay (`83d01fe`, pushad);169 Done som preliminärt första balanspass. Slutlig flygargrafik återstår separat. Användarens bifogade uppdrag för165–173 anger etappstopp efter169 och ny chatt170–173.160–164 är verifierade och pushade;164 `874f761`. Befintliga ändringar bevaras.
