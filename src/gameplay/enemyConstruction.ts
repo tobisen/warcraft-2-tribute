@@ -1,3 +1,4 @@
+import {isAir} from './domains';
 import {approachRoute} from './approach';
 import {enemyNavigationMap} from './map';
 import {enemySoldier,enemySupply} from './enemyUnits';
@@ -47,7 +48,7 @@ export function prepareEnemyConstruction(m:MatchState):MatchState {
  if(!kind)return m;
  for(const builder of available)for(const point of maps[m.map.id??'arena'].enemyBuildSites??config.candidates){
   g={...g,units:g.units.map(u=>({...u,selected:u.id===builder.id}))};
-  const rect={...point,width:64,height:64};if(m.gathering.units.some(u=>overlaps(rect,unitBody(u.position,(u.kind==='worker'?unitStats:combatUnitStats(u)).size))))continue;
+  const rect={...point,width:64,height:64};if(m.gathering.units.some(u=>!isAir(u)&&overlaps(rect,unitBody(u.position,(u.kind==='worker'?unitStats:combatUnitStats(u)).size))))continue;
   // Ordinary placement already checks reachability; only open gates need the enemy-only view.
   if(m.map.enemyPassageBlocks?.length&&approachRoute(enemyNavigationMap(m.map),builder.position,buildingFootprint(point,kind),24).status==='blocked')continue;
   const placed=placeBuilding(beginPlacement(p,kind),point,g.wood,[],{map:m.map,gathering:g,enemies:[...m.gathering.units,...m.combat.enemies.filter(e=>!e.footprint&&e.kind!=='worker')]});

@@ -1,0 +1,382 @@
+[
+  {
+    "faction": "crown",
+    "width": 800,
+    "setup": {
+      "damage": 16,
+      "hp": 90
+    },
+    "shot": {
+      "targets": [
+        "land",
+        "sea",
+        "air",
+        "building"
+      ],
+      "damageByDomain": {
+        "air": 0.75
+      },
+      "airborne": true,
+      "marine": true,
+      "id": "arrow-1",
+      "shooterId": "ship-1",
+      "targetId": "enemy-1",
+      "position": {
+        "x": 210.8,
+        "y": 512
+      },
+      "destination": {
+        "x": 320,
+        "y": 512
+      },
+      "speed": 280,
+      "remainingLife": 2.99,
+      "damage": 16,
+      "hitRadius": 20
+    },
+    "after": 118,
+    "errors": []
+  },
+  {
+    "faction": "crown",
+    "width": 1280,
+    "setup": {
+      "damage": 16,
+      "hp": 90
+    },
+    "shot": {
+      "targets": [
+        "land",
+        "sea",
+        "air",
+        "building"
+      ],
+      "damageByDomain": {
+        "air": 0.75
+      },
+      "airborne": true,
+      "marine": true,
+      "id": "arrow-1",
+      "shooterId": "ship-1",
+      "targetId": "enemy-1",
+      "position": {
+        "x": 210.8,
+        "y": 512
+      },
+      "destination": {
+        "x": 320,
+        "y": 512
+      },
+      "speed": 280,
+      "remainingLife": 2.99,
+      "damage": 16,
+      "hitRadius": 20
+    },
+    "after": 118,
+    "errors": []
+  },
+  {
+    "faction": "clans",
+    "width": 800,
+    "setup": {
+      "damage": 16,
+      "hp": 100
+    },
+    "shot": {
+      "targets": [
+        "land",
+        "sea",
+        "air",
+        "building"
+      ],
+      "damageByDomain": {
+        "air": 0.75
+      },
+      "airborne": true,
+      "marine": true,
+      "id": "arrow-1",
+      "shooterId": "ship-1",
+      "targetId": "enemy-1",
+      "position": {
+        "x": 210.8,
+        "y": 512
+      },
+      "destination": {
+        "x": 320,
+        "y": 512
+      },
+      "speed": 280,
+      "remainingLife": 2.99,
+      "damage": 16,
+      "hitRadius": 20
+    },
+    "after": 118,
+    "errors": []
+  },
+  {
+    "faction": "clans",
+    "width": 1280,
+    "setup": {
+      "damage": 16,
+      "hp": 100
+    },
+    "shot": {
+      "targets": [
+        "land",
+        "sea",
+        "air",
+        "building"
+      ],
+      "damageByDomain": {
+        "air": 0.75
+      },
+      "airborne": true,
+      "marine": true,
+      "id": "arrow-1",
+      "shooterId": "ship-1",
+      "targetId": "enemy-1",
+      "position": {
+        "x": 210.8,
+        "y": 512
+      },
+      "destination": {
+        "x": 320,
+        "y": 512
+      },
+      "speed": 280,
+      "remainingLife": 2.99,
+      "damage": 16,
+      "hitRadius": 20
+    },
+    "after": 118,
+    "errors": []
+  },
+  {
+    "faction": "elves",
+    "width": 800,
+    "setup": {
+      "damage": 16,
+      "hp": 80
+    },
+    "shot": {
+      "targets": [
+        "land",
+        "sea",
+        "air",
+        "building"
+      ],
+      "damageByDomain": {
+        "air": 0.75
+      },
+      "airborne": true,
+      "marine": true,
+      "id": "arrow-1",
+      "shooterId": "ship-1",
+      "targetId": "enemy-1",
+      "position": {
+        "x": 210.8,
+        "y": 512
+      },
+      "destination": {
+        "x": 320,
+        "y": 512
+      },
+      "speed": 280,
+      "remainingLife": 2.99,
+      "damage": 16,
+      "hitRadius": 20
+    },
+    "after": 118,
+    "errors": []
+  },
+  {
+    "faction": "elves",
+    "width": 1280,
+    "setup": {
+      "damage": 16,
+      "hp": 80
+    },
+    "shot": {
+      "targets": [
+        "land",
+        "sea",
+        "air",
+        "building"
+      ],
+      "damageByDomain": {
+        "air": 0.75
+      },
+      "airborne": true,
+      "marine": true,
+      "id": "arrow-1",
+      "shooterId": "ship-1",
+      "targetId": "enemy-1",
+      "position": {
+        "x": 210.8,
+        "y": 512
+      },
+      "destination": {
+        "x": 320,
+        "y": 512
+      },
+      "speed": 280,
+      "remainingLife": 2.99,
+      "damage": 16,
+      "hitRadius": 20
+    },
+    "after": 118,
+    "errors": []
+  },
+  {
+    "faction": "dwarves",
+    "width": 800,
+    "setup": {
+      "damage": 16,
+      "hp": 120
+    },
+    "shot": {
+      "targets": [
+        "land",
+        "sea",
+        "air",
+        "building"
+      ],
+      "damageByDomain": {
+        "air": 0.75
+      },
+      "airborne": true,
+      "marine": true,
+      "id": "arrow-1",
+      "shooterId": "ship-1",
+      "targetId": "enemy-1",
+      "position": {
+        "x": 210.8,
+        "y": 512
+      },
+      "destination": {
+        "x": 320,
+        "y": 512
+      },
+      "speed": 280,
+      "remainingLife": 2.99,
+      "damage": 16,
+      "hitRadius": 20
+    },
+    "after": 118,
+    "errors": []
+  },
+  {
+    "faction": "dwarves",
+    "width": 1280,
+    "setup": {
+      "damage": 16,
+      "hp": 120
+    },
+    "shot": {
+      "targets": [
+        "land",
+        "sea",
+        "air",
+        "building"
+      ],
+      "damageByDomain": {
+        "air": 0.75
+      },
+      "airborne": true,
+      "marine": true,
+      "id": "arrow-1",
+      "shooterId": "ship-1",
+      "targetId": "enemy-1",
+      "position": {
+        "x": 210.8,
+        "y": 512
+      },
+      "destination": {
+        "x": 320,
+        "y": 512
+      },
+      "speed": 280,
+      "remainingLife": 2.99,
+      "damage": 16,
+      "hitRadius": 20
+    },
+    "after": 118,
+    "errors": []
+  },
+  {
+    "faction": "goblins",
+    "width": 800,
+    "setup": {
+      "damage": 16,
+      "hp": 65
+    },
+    "shot": {
+      "targets": [
+        "land",
+        "sea",
+        "air",
+        "building"
+      ],
+      "damageByDomain": {
+        "air": 0.75
+      },
+      "airborne": true,
+      "marine": true,
+      "id": "arrow-1",
+      "shooterId": "ship-1",
+      "targetId": "enemy-1",
+      "position": {
+        "x": 210.8,
+        "y": 512
+      },
+      "destination": {
+        "x": 320,
+        "y": 512
+      },
+      "speed": 280,
+      "remainingLife": 2.99,
+      "damage": 16,
+      "hitRadius": 20
+    },
+    "after": 118,
+    "errors": []
+  },
+  {
+    "faction": "goblins",
+    "width": 1280,
+    "setup": {
+      "damage": 16,
+      "hp": 65
+    },
+    "shot": {
+      "targets": [
+        "land",
+        "sea",
+        "air",
+        "building"
+      ],
+      "damageByDomain": {
+        "air": 0.75
+      },
+      "airborne": true,
+      "marine": true,
+      "id": "arrow-1",
+      "shooterId": "ship-1",
+      "targetId": "enemy-1",
+      "position": {
+        "x": 210.8,
+        "y": 512
+      },
+      "destination": {
+        "x": 320,
+        "y": 512
+      },
+      "speed": 280,
+      "remainingLife": 2.99,
+      "damage": 16,
+      "hitRadius": 20
+    },
+    "after": 118,
+    "errors": []
+  }
+]

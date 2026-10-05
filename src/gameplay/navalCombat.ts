@@ -1,5 +1,5 @@
 import {shipTargets} from '../config/domains';
-import {targetDomain} from './domains';
+import {isAir,targetDomain} from './domains';
 import {enemyBody} from './enemyBody';
 import {navyConfig} from '../config/navy';
 import {navigationConfig} from '../config/navigation';
@@ -18,7 +18,7 @@ type ShipStats=typeof navyConfig.ship;
 function canShoot(map:WorldMap|undefined,point:Position,enemy:Enemy,cfg:ShipStats){
  const foot=enemyBody(enemy);
  if(footprintDistance(point,foot)>cfg.range+1e-9)return false;
- if(!map)return true;const flight=marineFlightMap(map);return segmentFits({...flight,obstacles:flight.obstacles.filter(o=>!enemy.footprint||o.x!==foot.x||o.y!==foot.y||o.width!==foot.width||o.height!==foot.height)},point,enemy.position,0);
+ if(!map||isAir(enemy))return true;const flight=marineFlightMap(map);return segmentFits({...flight,obstacles:flight.obstacles.filter(o=>!enemy.footprint||o.x!==foot.x||o.y!==foot.y||o.width!==foot.width||o.height!==foot.height)},point,enemy.position,0);
 }
 function firingRoute(map:WorldMap,ship:Ship,enemy:Enemy,cfg:ShipStats):RouteState {
  const water={...domainMap(map,'water'),bodyHalf:cfg.size/2},foot:Footprint=enemyBody(enemy),candidates:{point:Position;bound:number;index:number}[]=[];
@@ -45,7 +45,7 @@ export function prepareNavalCombat(navy:NavyState|undefined,enemies:readonly Ene
   const enemy=enemies.find(e=>ship.order.kind==='attack'&&e.id===ship.order.enemyId&&e.hp>0);
   if(!enemy||!shipTargets.includes(targetDomain(enemy) as typeof shipTargets[number])||!visible(enemy))return {...ship,navigation:undefined,attackCooldown:Math.max(0,(ship.attackCooldown??0)-delta),order:{kind:'idle' as const}};
   const step=attackStep(ship,enemy,delta,map,cfg);let cooldown=Math.max(0,(ship.attackCooldown??0)-(delta-step.attackSeconds)),time=step.attackSeconds;
-  while(time>0&&time+1e-9>=cooldown){time=Math.max(0,time-cooldown);shots.push({projectile:{targets:shipTargets,marine:true,id:`arrow-${nextProjectileNumber++}`,shooterId:ship.id,targetId:enemy.id,position:{...step.position},destination:{...enemy.position},speed:cfg.projectileSpeed,remainingLife:cfg.projectileLifetime,damage:cfg.damage*attackMultiplier,hitRadius:cfg.hitRadius,...(enemy.footprint?{targetFootprint:{...enemy.footprint}}:{})},time});cooldown=cfg.attackInterval;}
+  while(time>0&&time+1e-9>=cooldown){time=Math.max(0,time-cooldown);shots.push({projectile:{targets:shipTargets,damageByDomain:cfg.damageByDomain,...(isAir(enemy)?{airborne:true as const}:{}),marine:true,id:`arrow-${nextProjectileNumber++}`,shooterId:ship.id,targetId:enemy.id,position:{...step.position},destination:{...enemy.position},speed:cfg.projectileSpeed,remainingLife:cfg.projectileLifetime,damage:cfg.damage*attackMultiplier,hitRadius:cfg.hitRadius,...(enemy.footprint?{targetFootprint:{...enemy.footprint}}:{})},time});cooldown=cfg.attackInterval;}
   return {...ship,position:step.position,navigation:step.navigation,attackCooldown:Math.max(0,cooldown-time)};
  });return {navy:{...navy,ships},shots,nextProjectileNumber};
 }

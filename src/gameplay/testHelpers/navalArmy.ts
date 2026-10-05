@@ -1,3 +1,4 @@
+import {canAttackDomain} from '../domains';
 import {factions} from '../../config/factions';
 import {updateMatch,type MatchState} from '../match';
 import {orderUnits} from '../gathering';
@@ -31,7 +32,7 @@ export function prepareNavalArmy(initial:MatchState):MatchState{
    if(m.placement.barracks&&m.placement.construction?.remainingSeconds===0&&army.length+pending<4){const trained=enqueueProduction(m.gathering,m.soldierProduction,{kind:'barracks',footprint:m.placement.barracks},matchPopulation(m));m={...m,gathering:trained.gathering,soldierProduction:trained.production};}
    for(const soldier of army){
     select(soldier.id);
-    const target=visible.filter(e=>e.kind==='unit'&&Math.hypot(e.position.x-600,e.position.y-336)<240).sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}))[0];
+    const target=visible.filter(e=>canAttackDomain(soldier,e,m.factions!.player)&&e.kind==='unit'&&Math.hypot(e.position.x-600,e.position.y-336)<240).sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}))[0];
     if(target){if(Math.hypot(target.position.x-soldier.position.x,target.position.y-soldier.position.y)<80)m.gathering=useAbility(m.gathering);if(soldier.order.kind!=='attack'||soldier.order.enemyId!==target.id)m.gathering.units=orderAttack(m.gathering.units,target.id);}
     else if(soldier.order.kind==='idle'&&Math.hypot(soldier.position.x-rally.x,soldier.position.y-rally.y)>60)m.gathering.units=commandGroupMove(m.gathering.units,rally,m.map);
    }

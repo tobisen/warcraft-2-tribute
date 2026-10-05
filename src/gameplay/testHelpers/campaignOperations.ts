@@ -1,3 +1,4 @@
+import {canAttackDomain} from '../domains';
 import {campaignMissions,campaignPreset,type CampaignMissionId} from '../../config/campaign';
 import {operationFor} from '../../config/operations';
 import {startCampaignMission} from '../campaign';
@@ -32,7 +33,7 @@ export function playCampaignOperation(id:CampaignMissionId){
   if(i%4===0){
    const visible=m.combat.enemies.filter(e=>e.hp>0&&entityVisible(m.fog!,'player',e));
    for(const unit of m.gathering.units.filter(u=>u.kind==='soldier')){
-    select(unit.id);const target=[...visible].sort((a,b)=>Number(!!a.footprint)-Number(!!b.footprint)||Math.hypot(a.position.x-unit.position.x,a.position.y-unit.position.y)-Math.hypot(b.position.x-unit.position.x,b.position.y-unit.position.y))[0];
+    select(unit.id);const target=visible.filter(e=>canAttackDomain(unit,e,m.factions!.player)).sort((a,b)=>Number(!!a.footprint)-Number(!!b.footprint)||Math.hypot(a.position.x-unit.position.x,a.position.y-unit.position.y)-Math.hypot(b.position.x-unit.position.x,b.position.y-unit.position.y))[0];
     if(target){if(Math.hypot(target.position.x-unit.position.x,target.position.y-unit.position.y)<80){const result=useAbility(m.gathering);if(result!==m.gathering)abilities++;m.gathering=result;}if(unit.order.kind!=='attack'||unit.order.enemyId!==target.id)m.gathering.units=orderAttack(m.gathering.units,target.id);}
     else if(unit.order.kind==='idle'&&Math.hypot(unit.position.x-goal.x,unit.position.y-goal.y)>32)m.gathering.units=commandAttackMove(m.gathering.units,goal,m.map);
    }

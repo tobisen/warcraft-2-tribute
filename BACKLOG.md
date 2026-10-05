@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**Nytt mandat RTS-165–169:**165 Done (`838f729`),166 Done (`2cd36a6`),167 Done (`fd9dfd3`),168 gameplay verifieras enligt nytt godkänt luftmandat;169 därefter. Slutlig flygargrafik återstår separat. Användarens bifogade uppdrag för165–173 anger etappstopp efter169 och ny chatt170–173.160–164 är verifierade och pushade;164 `874f761`. Befintliga ändringar bevaras.
+**Nytt mandat RTS-165–169:**165 Done (`838f729`),166 Done (`2cd36a6`),167 Done (`fd9dfd3`),168 Done gameplay (`83d01fe`, pushad);169 Done som preliminärt första balanspass. Slutlig flygargrafik återstår separat. Användarens bifogade uppdrag för165–173 anger etappstopp efter169 och ny chatt170–173.160–164 är verifierade och pushade;164 `874f761`. Befintliga ändringar bevaras.
 
 **UI-BUGFIX-BOTTOM-BAR – Horisontell bottom bar** — **Done** (2026-10-04).
 Separat beställd UI-bugfix; befintliga RTS-ID:n/statusar bevaras. Uppdraget
@@ -4547,9 +4547,13 @@ Silhuetter och skuggor visar flyghöjd.
 
 ## RTS-169 – Balans för mark, sjö, luft och magi
 
-**Status:** In Progress efter godkänd luftroster och verifierad168-gameplay. Historisk blockerare nedan är upphävd.
+**Status:** Done – första preliminära balanspasset verifierat2026-10-05. Mänskligt speltest och slutlig flygargrafik återstår separat; historisk blockerare är upphävd.
 
-**Avstämning:** Befintliga mark/sjö/specialistprofiler och manabegränsningar inventerade i artifacts/rts-169/partial-review.md. Magi/AI och relevanta äldre factionBalance-genomspelningar verifierade inom165–167; detta är inte en färdig169 combined-arms-balans eller mänskligt helmatchspeltest. Inga169-stats ändrade utan belägg. Luftkostnad/counters/tillgång/AI kan inte testas före168. Nästa task är att lösa168:s konkreta design-/assetunderlag;170–173 inte startade.
+**Resultat 2026-10-05:** Första combined-arms-pass med89 deterministiska scenarier:25 korsras ground-AA/air,16 flygdueller,10 faktisk-water sjögrupper, mark/siege/magic och betald AI-produktion/counterköer. Warships får luftmask med0.75× skada; Eagle får1.25× mot luft, behåller svag markattack. Bomber-escort och melee-counters fungerar i kostnadsjämförbara fixtures. Två AI-preflightkontroller korrigerade så flygare inte blockerar markbyggen. Save42 migrerar41 utan omprissättning av köer/projektiler. Rapport och exakta values i artifacts/rts-169/balance-review.md och results.json.
+
+**Verifiering:** Riktade122/5 PASS; tidigare felande tre islandsfall och The Crossing PASS efter testbotar filtrerar lagliga mål utan svagare asserts. AI-browser fem raser faktisk betald airproduktion/defense/fog-release PASS. Chromium alla fem navalprofiler ×800/1280 fysisk luftattack, faktiskt12damage, inflightSave/Load och20 före/efterbilder visuellt stickprovsgranskade. Slutlig unit435/79, build inklusive strict typecheck, full regression1320/160(526.62s), diff och lokala docslänkar PASS. Ingen extra fristående kampanjbatch; projektets obligatoriska etappregression körs på slutlig kod.
+
+**Kvar:** Balansen är preliminär, ingen mänsklig helmatch/kiting/strategispeltest eller ny CI/Pages. Slutlig flygargrafik saknas enligt168:s uttryckliga TEMP-mandat. Äldre casting-/sjöreferens-/ljud-/röstbegränsningar kvarstår.170 startas inte i körningen. Historisk delinventering i partial-review.md ersätts för nuvarande balansstatus av nya rapporten.
 
 **Goal:** Balans för mark, sjö, luft och magi.
 

@@ -52,7 +52,7 @@ interface UpgradeData {
 export type UnitDefinition=UnitData&{id:`${FactionId}:unit:${UnitRole}`;faction:FactionId};
 export type BuildingDefinition=BuildingData&{id:`${FactionId}:building:${BuildingRole}`;faction:FactionId};
 export type UpgradeDefinition=UpgradeData&{id:`${FactionId}:upgrade:${UpgradeRole}`;faction:FactionId};
-export interface FactionNaval {harbor:typeof navyConfig.harbor&{name:string};units: {warship:typeof navyConfig.ship&{id:string;name:string;role:'warship'};transport:typeof navyConfig.ship&typeof navyConfig.transport&{id:string;name:string;role:'transport'}}}
+export interface FactionNaval {harbor:typeof navyConfig.harbor&{name:string};units: {warship:typeof navyConfig.ship&{id:string;name:string;role:'warship'};transport:Omit<typeof navyConfig.ship,'targets'|'damageByDomain'>&typeof navyConfig.transport&{id:string;name:string;role:'transport'}}}
 export interface FactionDefinition {
   id:FactionId;label:string;artPrefix:string;roster:readonly UnitRole[];unitNames:Record<UnitRole,string>;buildingNames:Record<BuildingRole,string>;units:Record<UnitRole,UnitDefinition>;
   naval:FactionNaval;

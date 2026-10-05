@@ -1755,3 +1755,8 @@ config/spells.ts innehåller globalt stabila IDs, factionSpells och presentation
 ## RTS-168 – domäner och luft
 
 config/air.ts har fem recipes, config/domains.ts måltyper/masker. gameplay/domains.ts klassificerar befintliga entities och väljer mark-/luftmap utan separata MatchStates. Navigation/produktion/combat/fog/AI adapters återanvänds. Projektiler sparar mask, airborne och per-domain damage; Save41 migrerar40 och bevarar FIFO/resurser/ordrar. BootScene använder presentation/airIcons.ts CanvasTexture för godkända tillfälliga TEMP-ikoner; logisk position är skuggans markpunkt, kroppen24px högre, selection träffar upphöjd ikon. Ingen ny transport/spellförmåga.
+
+
+## RTS-169 – balanserade domänmultiplikatorer och Save42
+
+Warshipdefs har explicit targets och damageByDomain.air=.75, transports targets=[]; navalCombat återanvänder befintlig water-routing och tillåter airborne-projectiles mot luft. Save42 tillåter kontrollerad marine+airborne-kombination och bevarar gamla41-skott vid migration. Eagle.damageByDomain.air=1.25. Inga nya MatchStatefält eller scenes. AI construction/expansion preflight ignorerar luftockupation. combinedArmsBalance.test.ts återanvänder actual combat/casts/paid AI för explicita scenarier; scripts/check-combined-arms.mjs exporterar resultat, scripts/check-naval-air.mjs verifierar fysisk browserinput/Save/Load.

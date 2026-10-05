@@ -1392,8 +1392,17 @@ Alla flygare tränas i rasens barracks efter Forge+attack1+defense1. Archer är 
 | --- | --- | --- | --- | --- | --- |
 | Human Gryphon Rider |65/35|14s/3|130/160|18/1.3s/160|land,sea,air,building|
 | Orc Wyvern Rider |60/40|13s/3|90/170|24/1.4s/160|land,sea,air,building|
-| Elf Great Eagle |45/35|12s/2|60/215|14/0.9s/176|land,air,building; mark/byggnad0.45×|
+| Elf Great Eagle |45/35|12s/2|60/215|14/0.9s/176|land,air,building; mark/byggnad0.45×, luft1.25×|
 | Dwarf Gyrocopter |65/40|15s/3|95/175|12/1s/192|land,air,building; mark/byggnad0.65×, luft1.5×|
 | Goblin Airship |75/45|18s/4|140/90|30/2s/160, splash40|land,building; ingen luftattack|
 
 Flygare använder samma production/FIFO/supply/selection/save/matchsystem som marktrupp. Lokal luftvision, cyan/pink minimapmarkörer och höjd/skugga. Slutgrafik inte godkänd; tillfälliga originalikoner synligt märkta TEMP ART. Balansvärden är första preliminära passets utgångspunkt, inte mänskligt speltestade.
+
+
+## RTS-169 – första preliminära counters
+
+Markarchers är tidig anti-air för alla fem raser. I25 kostnadsjämförbara korsrasfixturer slår de två flygare; på marken slår billigare meleegrupper archers vid32px startavstånd. Detta inkluderar inte mänsklig kiting. Siege besegrar AA i fyra av fem120px-fixturer; Elf-archers vinner sin siege-matchup.
+
+Great Eagle gör17.5 mot luft före research men bara6.3 mot mark/byggnad. Den snabba luftjägaren slår Wyvern vid400-resursbudget men förlorar mot tåliga Gryphon och anti-air-Gyrocopter. Gyrocopter gör18 mot luft men7.8 mot mark/byggnad. Airship saknar luftattack: två bombare(240 resurser) förlorar mot tre Eagles(240); en bombare+fyra Slingers(224) skyddar kombinationen mot tre Eagles(240). Bombare kan slå ren melee som saknar lagliga luftmål.
+
+Warship är nu också sjöbaserad AA:16 normal skada men12 mot luft, samma192range/1.5s. Jämförbara3–4 warships mot två Gryphon/Wyvern vinner i faktisk water-fixture för samtliga raser. Transport attackerar aldrig. Sjö-/markspritekvalitet ändras inte i detta balanspass. Specialisternas markspells använder samma mana/kostnad/duration som före169; de ger inte automatisk seger mot kostnadsjämförbar melee. Lika research1 och exakt wood/gold/supply/produktionstid i config ger en reproducerbar teknisk bas; mänsklig fullmatchbalans krävs fortfarande.

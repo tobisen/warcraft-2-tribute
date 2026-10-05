@@ -1,0 +1,773 @@
+[
+  {
+    "faction": "crown",
+    "fixture": "Explicit completed tech/bank/army preconditions; real Scene.update paid production/counter/defense. Not regular economy or human playtest.",
+    "paid": {
+      "wood": 145,
+      "gold": 70,
+      "head": {
+        "id": "barracks-job-1",
+        "kind": "air",
+        "supply": 3,
+        "cost": {
+          "wood": 65,
+          "gold": 35
+        },
+        "durationSeconds": 14,
+        "remainingSeconds": 13.99
+      },
+      "bank": {
+        "roster": true,
+        "wood": 145,
+        "gold": 70,
+        "cap": 6,
+        "durationSeconds": 5,
+        "production": {
+          "remainingSeconds": 13.99,
+          "nextUnitNumber": 2,
+          "queue": [
+            {
+              "id": "barracks-job-1",
+              "kind": "air",
+              "supply": 3,
+              "cost": {
+                "wood": 65,
+                "gold": 35
+              },
+              "durationSeconds": 14,
+              "remainingSeconds": 13.99
+            },
+            {
+              "id": "barracks-job-2",
+              "kind": "soldier",
+              "supply": 1,
+              "cost": {
+                "wood": 20,
+                "gold": 5
+              },
+              "durationSeconds": 5,
+              "remainingSeconds": 5
+            },
+            {
+              "id": "barracks-job-3",
+              "kind": "archer",
+              "supply": 1,
+              "cost": {
+                "wood": 20,
+                "gold": 10
+              },
+              "durationSeconds": 6,
+              "remainingSeconds": 6
+            }
+          ],
+          "nextJobNumber": 4
+        },
+        "acceptedJobs": 7,
+        "extracted": {
+          "wood": 0,
+          "gold": 0
+        },
+        "spent": {
+          "wood": 145,
+          "gold": 50
+        },
+        "lostCargo": {
+          "wood": 0,
+          "gold": 0
+        }
+      },
+      "priority": "army",
+      "population": {
+        "cap": 13,
+        "used": 3,
+        "reserved": 5
+      },
+      "tech": {
+        "buildings": [
+          "base",
+          "barracks",
+          "farm",
+          "forge"
+        ],
+        "research": {
+          "attack": 1,
+          "defense": 1
+        }
+      },
+      "phase": "playing",
+      "active": true,
+      "elapsed": 0.04326666666666672
+    },
+    "produced": [
+      {
+        "id": "enemy-produced-2",
+        "kind": "unit",
+        "owner": "enemy",
+        "order": {
+          "kind": "muster",
+          "destination": {
+            "x": 896,
+            "y": 320
+          }
+        },
+        "role": "air",
+        "hp": 130,
+        "position": {
+          "x": 896,
+          "y": 320
+        },
+        "navigation": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 896,
+            "y": 320
+          },
+          "revision": 6,
+          "waypoints": [],
+          "status": "arrived"
+        },
+        "attackCooldown": 0
+      }
+    ],
+    "defense": {
+      "threat": "unit-4",
+      "defenders": [
+        {
+          "id": "enemy-produced-1"
+        },
+        {
+          "id": "enemy-produced-2"
+        }
+      ],
+      "head": {
+        "id": "barracks-job-3",
+        "kind": "archer",
+        "supply": 1,
+        "cost": {
+          "wood": 20,
+          "gold": 10
+        },
+        "durationSeconds": 6,
+        "remainingSeconds": 4.889999999999999
+      }
+    },
+    "hidden": null,
+    "errors": []
+  },
+  {
+    "faction": "clans",
+    "fixture": "Explicit completed tech/bank/army preconditions; real Scene.update paid production/counter/defense. Not regular economy or human playtest.",
+    "paid": {
+      "wood": 152,
+      "gold": 64,
+      "head": {
+        "id": "barracks-job-1",
+        "kind": "air",
+        "supply": 3,
+        "cost": {
+          "wood": 60,
+          "gold": 40
+        },
+        "durationSeconds": 13,
+        "remainingSeconds": 12.99
+      },
+      "bank": {
+        "roster": true,
+        "wood": 152,
+        "gold": 64,
+        "cap": 6,
+        "durationSeconds": 5,
+        "production": {
+          "remainingSeconds": 12.99,
+          "nextUnitNumber": 2,
+          "queue": [
+            {
+              "id": "barracks-job-1",
+              "kind": "air",
+              "supply": 3,
+              "cost": {
+                "wood": 60,
+                "gold": 40
+              },
+              "durationSeconds": 13,
+              "remainingSeconds": 12.99
+            },
+            {
+              "id": "barracks-job-2",
+              "kind": "soldier",
+              "supply": 1,
+              "cost": {
+                "wood": 18,
+                "gold": 6
+              },
+              "durationSeconds": 6,
+              "remainingSeconds": 6
+            },
+            {
+              "id": "barracks-job-3",
+              "kind": "archer",
+              "supply": 1,
+              "cost": {
+                "wood": 20,
+                "gold": 10
+              },
+              "durationSeconds": 6,
+              "remainingSeconds": 6
+            }
+          ],
+          "nextJobNumber": 4
+        },
+        "acceptedJobs": 7,
+        "extracted": {
+          "wood": 0,
+          "gold": 0
+        },
+        "spent": {
+          "wood": 138,
+          "gold": 56
+        },
+        "lostCargo": {
+          "wood": 0,
+          "gold": 0
+        }
+      },
+      "priority": "army",
+      "population": {
+        "cap": 13,
+        "used": 3,
+        "reserved": 5
+      },
+      "tech": {
+        "buildings": [
+          "base",
+          "barracks",
+          "farm",
+          "forge"
+        ],
+        "research": {
+          "attack": 1,
+          "defense": 1
+        }
+      },
+      "phase": "playing",
+      "active": true,
+      "elapsed": 0.04286666666666667
+    },
+    "produced": [
+      {
+        "id": "enemy-produced-2",
+        "kind": "unit",
+        "owner": "enemy",
+        "order": {
+          "kind": "muster",
+          "destination": {
+            "x": 896,
+            "y": 320
+          }
+        },
+        "role": "air",
+        "hp": 90,
+        "position": {
+          "x": 896,
+          "y": 320
+        },
+        "navigation": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 896,
+            "y": 320
+          },
+          "revision": 6,
+          "waypoints": [],
+          "status": "arrived"
+        },
+        "attackCooldown": 0
+      }
+    ],
+    "defense": {
+      "threat": "unit-4",
+      "defenders": [
+        {
+          "id": "enemy-produced-1"
+        },
+        {
+          "id": "enemy-produced-2"
+        }
+      ],
+      "head": {
+        "id": "barracks-job-3",
+        "kind": "archer",
+        "supply": 1,
+        "cost": {
+          "wood": 20,
+          "gold": 10
+        },
+        "durationSeconds": 6,
+        "remainingSeconds": 4.890000000000001
+      }
+    },
+    "hidden": null,
+    "errors": []
+  },
+  {
+    "faction": "elves",
+    "fixture": "Explicit completed tech/bank/army preconditions; real Scene.update paid production/counter/defense. Not regular economy or human playtest.",
+    "paid": {
+      "wood": 163,
+      "gold": 67,
+      "head": {
+        "id": "barracks-job-1",
+        "kind": "air",
+        "supply": 2,
+        "cost": {
+          "wood": 45,
+          "gold": 35
+        },
+        "durationSeconds": 12,
+        "remainingSeconds": 11.99
+      },
+      "bank": {
+        "roster": true,
+        "wood": 163,
+        "gold": 67,
+        "cap": 6,
+        "durationSeconds": 5,
+        "production": {
+          "remainingSeconds": 11.99,
+          "nextUnitNumber": 2,
+          "queue": [
+            {
+              "id": "barracks-job-1",
+              "kind": "air",
+              "supply": 2,
+              "cost": {
+                "wood": 45,
+                "gold": 35
+              },
+              "durationSeconds": 12,
+              "remainingSeconds": 11.99
+            },
+            {
+              "id": "barracks-job-2",
+              "kind": "soldier",
+              "supply": 1,
+              "cost": {
+                "wood": 20,
+                "gold": 6
+              },
+              "durationSeconds": 5,
+              "remainingSeconds": 5
+            },
+            {
+              "id": "barracks-job-3",
+              "kind": "archer",
+              "supply": 1,
+              "cost": {
+                "wood": 22,
+                "gold": 12
+              },
+              "durationSeconds": 6,
+              "remainingSeconds": 6
+            }
+          ],
+          "nextJobNumber": 4
+        },
+        "acceptedJobs": 7,
+        "extracted": {
+          "wood": 0,
+          "gold": 0
+        },
+        "spent": {
+          "wood": 127,
+          "gold": 53
+        },
+        "lostCargo": {
+          "wood": 0,
+          "gold": 0
+        }
+      },
+      "priority": "army",
+      "population": {
+        "cap": 13,
+        "used": 3,
+        "reserved": 4
+      },
+      "tech": {
+        "buildings": [
+          "base",
+          "barracks",
+          "farm",
+          "forge"
+        ],
+        "research": {
+          "attack": 1,
+          "defense": 1
+        }
+      },
+      "phase": "playing",
+      "active": true,
+      "elapsed": 0.05922333333333334
+    },
+    "produced": [
+      {
+        "id": "enemy-produced-2",
+        "kind": "unit",
+        "owner": "enemy",
+        "order": {
+          "kind": "muster",
+          "destination": {
+            "x": 896,
+            "y": 320
+          }
+        },
+        "role": "air",
+        "hp": 60,
+        "position": {
+          "x": 896,
+          "y": 320
+        },
+        "navigation": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 896,
+            "y": 320
+          },
+          "revision": 6,
+          "waypoints": [],
+          "status": "arrived"
+        },
+        "attackCooldown": 0
+      }
+    ],
+    "defense": {
+      "threat": "unit-4",
+      "defenders": [
+        {
+          "id": "enemy-produced-1"
+        },
+        {
+          "id": "enemy-produced-2"
+        }
+      ],
+      "head": {
+        "id": "barracks-job-3",
+        "kind": "archer",
+        "supply": 1,
+        "cost": {
+          "wood": 22,
+          "gold": 12
+        },
+        "durationSeconds": 6,
+        "remainingSeconds": 2.89
+      }
+    },
+    "hidden": null,
+    "errors": []
+  },
+  {
+    "faction": "dwarves",
+    "fixture": "Explicit completed tech/bank/army preconditions; real Scene.update paid production/counter/defense. Not regular economy or human playtest.",
+    "paid": {
+      "wood": 137,
+      "gold": 65,
+      "head": {
+        "id": "barracks-job-1",
+        "kind": "air",
+        "supply": 3,
+        "cost": {
+          "wood": 65,
+          "gold": 40
+        },
+        "durationSeconds": 15,
+        "remainingSeconds": 14.99
+      },
+      "bank": {
+        "roster": true,
+        "wood": 137,
+        "gold": 65,
+        "cap": 6,
+        "durationSeconds": 5,
+        "production": {
+          "remainingSeconds": 14.99,
+          "nextUnitNumber": 2,
+          "queue": [
+            {
+              "id": "barracks-job-1",
+              "kind": "air",
+              "supply": 3,
+              "cost": {
+                "wood": 65,
+                "gold": 40
+              },
+              "durationSeconds": 15,
+              "remainingSeconds": 14.99
+            },
+            {
+              "id": "barracks-job-2",
+              "kind": "soldier",
+              "supply": 1,
+              "cost": {
+                "wood": 24,
+                "gold": 5
+              },
+              "durationSeconds": 6,
+              "remainingSeconds": 6
+            },
+            {
+              "id": "barracks-job-3",
+              "kind": "archer",
+              "supply": 1,
+              "cost": {
+                "wood": 24,
+                "gold": 10
+              },
+              "durationSeconds": 7,
+              "remainingSeconds": 7
+            }
+          ],
+          "nextJobNumber": 4
+        },
+        "acceptedJobs": 7,
+        "extracted": {
+          "wood": 0,
+          "gold": 0
+        },
+        "spent": {
+          "wood": 158,
+          "gold": 55
+        },
+        "lostCargo": {
+          "wood": 0,
+          "gold": 0
+        }
+      },
+      "priority": "army",
+      "population": {
+        "cap": 13,
+        "used": 3,
+        "reserved": 5
+      },
+      "tech": {
+        "buildings": [
+          "base",
+          "barracks",
+          "farm",
+          "forge"
+        ],
+        "research": {
+          "attack": 1,
+          "defense": 1
+        }
+      },
+      "phase": "playing",
+      "active": true,
+      "elapsed": 0.043020000000000023
+    },
+    "produced": [
+      {
+        "id": "enemy-produced-2",
+        "kind": "unit",
+        "owner": "enemy",
+        "order": {
+          "kind": "muster",
+          "destination": {
+            "x": 896,
+            "y": 320
+          }
+        },
+        "role": "air",
+        "hp": 95,
+        "position": {
+          "x": 1198.6269877319485,
+          "y": 257.5221702746945
+        },
+        "navigation": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 896,
+            "y": 320
+          },
+          "waypoints": [
+            {
+              "x": 896,
+              "y": 320
+            }
+          ],
+          "revision": 5,
+          "status": "moving"
+        },
+        "attackCooldown": 0
+      }
+    ],
+    "defense": {
+      "threat": "unit-4",
+      "defenders": [
+        {
+          "id": "enemy-produced-1"
+        },
+        {
+          "id": "enemy-produced-2"
+        }
+      ],
+      "head": {
+        "id": "barracks-job-2",
+        "kind": "soldier",
+        "supply": 1,
+        "cost": {
+          "wood": 24,
+          "gold": 5
+        },
+        "durationSeconds": 6,
+        "remainingSeconds": 0.8900000000000002
+      }
+    },
+    "hidden": null,
+    "errors": []
+  },
+  {
+    "faction": "goblins",
+    "fixture": "Explicit completed tech/bank/army preconditions; real Scene.update paid production/counter/defense. Not regular economy or human playtest.",
+    "paid": {
+      "wood": 159,
+      "gold": 71,
+      "head": {
+        "id": "barracks-job-1",
+        "kind": "air",
+        "supply": 4,
+        "cost": {
+          "wood": 75,
+          "gold": 45
+        },
+        "durationSeconds": 18,
+        "remainingSeconds": 17.99
+      },
+      "bank": {
+        "roster": true,
+        "wood": 159,
+        "gold": 71,
+        "cap": 6,
+        "durationSeconds": 5,
+        "production": {
+          "remainingSeconds": 17.99,
+          "nextUnitNumber": 2,
+          "queue": [
+            {
+              "id": "barracks-job-1",
+              "kind": "air",
+              "supply": 4,
+              "cost": {
+                "wood": 75,
+                "gold": 45
+              },
+              "durationSeconds": 18,
+              "remainingSeconds": 17.99
+            },
+            {
+              "id": "barracks-job-2",
+              "kind": "soldier",
+              "supply": 1,
+              "cost": {
+                "wood": 16,
+                "gold": 4
+              },
+              "durationSeconds": 4,
+              "remainingSeconds": 4
+            }
+          ],
+          "nextJobNumber": 3
+        },
+        "acceptedJobs": 6,
+        "extracted": {
+          "wood": 0,
+          "gold": 0
+        },
+        "spent": {
+          "wood": 126,
+          "gold": 49
+        },
+        "lostCargo": {
+          "wood": 0,
+          "gold": 0
+        }
+      },
+      "priority": "army",
+      "population": {
+        "cap": 13,
+        "used": 3,
+        "reserved": 5
+      },
+      "tech": {
+        "buildings": [
+          "base",
+          "barracks",
+          "farm",
+          "forge"
+        ],
+        "research": {
+          "attack": 1,
+          "defense": 1
+        }
+      },
+      "phase": "playing",
+      "active": true,
+      "elapsed": 0.05954666666666667
+    },
+    "produced": [
+      {
+        "id": "enemy-produced-2",
+        "kind": "unit",
+        "owner": "enemy",
+        "order": {
+          "kind": "muster",
+          "destination": {
+            "x": 896,
+            "y": 320
+          }
+        },
+        "role": "air",
+        "hp": 140,
+        "position": {
+          "x": 1200.7514847118364,
+          "y": 257.08356444658864
+        },
+        "navigation": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 896,
+            "y": 320
+          },
+          "waypoints": [
+            {
+              "x": 896,
+              "y": 320
+            }
+          ],
+          "revision": 5,
+          "status": "moving"
+        },
+        "attackCooldown": 0
+      }
+    ],
+    "defense": {
+      "threat": "unit-4",
+      "defenders": [
+        {
+          "id": "enemy-produced-1"
+        }
+      ],
+      "head": {
+        "id": "barracks-job-2",
+        "kind": "soldier",
+        "supply": 1,
+        "cost": {
+          "wood": 16,
+          "gold": 4
+        },
+        "durationSeconds": 4,
+        "remainingSeconds": 1.8899999999999983
+      }
+    },
+    "hidden": null,
+    "errors": []
+  }
+]

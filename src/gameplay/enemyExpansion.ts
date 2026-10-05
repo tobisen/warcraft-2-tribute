@@ -1,3 +1,4 @@
+import {isAir} from './domains';
 import {enemyNavigationMap} from './map';
 import {knownEnemyNode} from './enemyKnowledge';
 import {barracksConfig} from '../config/buildings';
@@ -31,7 +32,7 @@ export function prepareEnemyExpansion(m:MatchState):MatchState {
  if(m.combat.enemies.some(e=>e.construction&&e.construction.remainingSeconds>0)||!canAfford({wood:m.enemyProduction!.wood,goldBalance:m.enemyProduction!.gold},config.cost))return m;
  for(const point of config.candidates){const rect={...point,width:config.size,height:config.size};
   if(rect.x<0||rect.y<0||rect.x+rect.width>m.map.width||rect.y+rect.height>m.map.height||m.map.obstacles.some(o=>overlaps(rect,o)))continue;
-  if(m.gathering.units.some(u=>overlaps(rect,unitBody(u.position,(u.kind==='worker'?unitStats:combatUnitStats(u)).size)))||m.combat.enemies.filter(e=>!e.footprint).some(e=>overlaps(rect,unitBody(e.position,unitStats.size))))continue;
+  if(m.gathering.units.some(u=>!isAir(u)&&overlaps(rect,unitBody(u.position,(u.kind==='worker'?unitStats:combatUnitStats(u)).size)))||m.combat.enemies.filter(e=>!e.footprint&&!isAir(e)).some(e=>overlaps(rect,unitBody(e.position,unitStats.size))))continue;
   const builder=builderFor(m,rect);if(!builder)continue;
   const map=replaceObstacles(m.map,[...m.map.obstacles,rect]);if(!spawnCandidates(map,rect,'base').some(p=>hasSpawnExit(map,p)))continue;
   const bank=m.enemyProduction!;return {...m,map,enemyProduction:{...bank,wood:bank.wood-config.cost.wood,gold:bank.gold-config.cost.gold,spent:{wood:(bank.spent?.wood??0)+config.cost.wood,gold:(bank.spent?.gold??0)+config.cost.gold}},combat:{...m.combat,enemies:[...m.combat.enemies.map(e=>e.id===builder.id?{...e,navigation:undefined,work:{...e.work!,order:{kind:'build' as const,buildingId:'outpost' as const}}}:e),{id:'enemy-outpost',owner:'enemy',kind:'building',buildingType:'outpost',hp:config.hp,position:{x:rect.x+config.size/2,y:rect.y+config.size/2},footprint:rect,construction:{remainingSeconds:config.constructionSeconds,builderId:builder.id}}]}};

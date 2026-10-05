@@ -1,0 +1,1200 @@
+{
+  "method": "Explicit deterministic open-field .1s actual combat; equal wood+gold weight, closest whole-unit budget; both research1; nearest legal focus, no kiting, local fog for spells. Not paid economy or human playtest.",
+  "reports": [
+    {
+      "case": "groundAA-v-air",
+      "player": "crown",
+      "enemy": "crown",
+      "own": [
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer"
+      ],
+      "hostile": [
+        "air",
+        "air"
+      ],
+      "gap": 120,
+      "magic": false,
+      "ownCost": {
+        "wood": 120,
+        "gold": 60
+      },
+      "enemyCost": {
+        "wood": 130,
+        "gold": 70
+      },
+      "ownSurvivors": 4,
+      "enemySurvivors": 0,
+      "ownHP": 160,
+      "enemyHP": 0,
+      "seconds": 4.6,
+      "casts": 0
+    },
+    {
+      "case": "melee-v-AA-close",
+      "player": "crown",
+      "enemy": "crown",
+      "own": [
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier"
+      ],
+      "hostile": [
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer"
+      ],
+      "gap": 32,
+      "magic": false,
+      "ownCost": {
+        "wood": 140,
+        "gold": 35
+      },
+      "enemyCost": {
+        "wood": 120,
+        "gold": 60
+      },
+      "ownSurvivors": 7,
+      "enemySurvivors": 0,
+      "ownHP": 240,
+      "enemyHP": 0,
+      "seconds": 2.4,
+      "casts": 0
+    },
+    {
+      "case": "AA-v-siege",
+      "player": "crown",
+      "enemy": "crown",
+      "own": [
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer"
+      ],
+      "hostile": [
+        "catapult",
+        "catapult",
+        "catapult"
+      ],
+      "gap": 120,
+      "magic": false,
+      "ownCost": {
+        "wood": 120,
+        "gold": 60
+      },
+      "enemyCost": {
+        "wood": 120,
+        "gold": 60
+      },
+      "ownSurvivors": 0,
+      "enemySurvivors": 2,
+      "ownHP": 0,
+      "enemyHP": 115,
+      "seconds": 5.2,
+      "casts": 0
+    },
+    {
+      "case": "groundAA-v-air",
+      "player": "clans",
+      "enemy": "clans",
+      "own": [
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer"
+      ],
+      "hostile": [
+        "air",
+        "air"
+      ],
+      "gap": 120,
+      "magic": false,
+      "ownCost": {
+        "wood": 120,
+        "gold": 60
+      },
+      "enemyCost": {
+        "wood": 120,
+        "gold": 80
+      },
+      "ownSurvivors": 4,
+      "enemySurvivors": 0,
+      "ownHP": 155.04,
+      "enemyHP": 0,
+      "seconds": 3.8,
+      "casts": 0
+    },
+    {
+      "case": "melee-v-AA-close",
+      "player": "clans",
+      "enemy": "clans",
+      "own": [
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier"
+      ],
+      "hostile": [
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer"
+      ],
+      "gap": 32,
+      "magic": false,
+      "ownCost": {
+        "wood": 126,
+        "gold": 42
+      },
+      "enemyCost": {
+        "wood": 120,
+        "gold": 60
+      },
+      "ownSurvivors": 7,
+      "enemySurvivors": 0,
+      "ownHP": 324.71999999999997,
+      "enemyHP": 0,
+      "seconds": 2.2,
+      "casts": 0
+    },
+    {
+      "case": "AA-v-siege",
+      "player": "clans",
+      "enemy": "clans",
+      "own": [
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer"
+      ],
+      "hostile": [
+        "catapult",
+        "catapult",
+        "catapult"
+      ],
+      "gap": 120,
+      "magic": false,
+      "ownCost": {
+        "wood": 120,
+        "gold": 60
+      },
+      "enemyCost": {
+        "wood": 120,
+        "gold": 60
+      },
+      "ownSurvivors": 0,
+      "enemySurvivors": 2,
+      "ownHP": 0,
+      "enemyHP": 130.07999999999998,
+      "seconds": 5.3,
+      "casts": 0
+    },
+    {
+      "case": "groundAA-v-air",
+      "player": "elves",
+      "enemy": "elves",
+      "own": [
+        "archer",
+        "archer",
+        "archer",
+        "archer"
+      ],
+      "hostile": [
+        "air",
+        "air"
+      ],
+      "gap": 120,
+      "magic": false,
+      "ownCost": {
+        "wood": 88,
+        "gold": 48
+      },
+      "enemyCost": {
+        "wood": 90,
+        "gold": 70
+      },
+      "ownSurvivors": 4,
+      "enemySurvivors": 0,
+      "ownHP": 148.5,
+      "enemyHP": 0,
+      "seconds": 2.4,
+      "casts": 0
+    },
+    {
+      "case": "melee-v-AA-close",
+      "player": "elves",
+      "enemy": "elves",
+      "own": [
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier"
+      ],
+      "hostile": [
+        "archer",
+        "archer",
+        "archer",
+        "archer"
+      ],
+      "gap": 32,
+      "magic": false,
+      "ownCost": {
+        "wood": 100,
+        "gold": 30
+      },
+      "enemyCost": {
+        "wood": 88,
+        "gold": 48
+      },
+      "ownSurvivors": 5,
+      "enemySurvivors": 0,
+      "ownHP": 96,
+      "enemyHP": 0,
+      "seconds": 2.8,
+      "casts": 0
+    },
+    {
+      "case": "AA-v-siege",
+      "player": "elves",
+      "enemy": "elves",
+      "own": [
+        "archer",
+        "archer",
+        "archer",
+        "archer"
+      ],
+      "hostile": [
+        "catapult",
+        "catapult"
+      ],
+      "gap": 120,
+      "magic": false,
+      "ownCost": {
+        "wood": 88,
+        "gold": 48
+      },
+      "enemyCost": {
+        "wood": 90,
+        "gold": 50
+      },
+      "ownSurvivors": 4,
+      "enemySurvivors": 0,
+      "ownHP": 144,
+      "enemyHP": 0,
+      "seconds": 2.4,
+      "casts": 0
+    },
+    {
+      "case": "groundAA-v-air",
+      "player": "dwarves",
+      "enemy": "dwarves",
+      "own": [
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer"
+      ],
+      "hostile": [
+        "air",
+        "air"
+      ],
+      "gap": 120,
+      "magic": false,
+      "ownCost": {
+        "wood": 144,
+        "gold": 60
+      },
+      "enemyCost": {
+        "wood": 130,
+        "gold": 80
+      },
+      "ownSurvivors": 6,
+      "enemySurvivors": 0,
+      "ownHP": 291.975,
+      "enemyHP": 0,
+      "seconds": 3.6,
+      "casts": 0
+    },
+    {
+      "case": "melee-v-AA-close",
+      "player": "dwarves",
+      "enemy": "dwarves",
+      "own": [
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier"
+      ],
+      "hostile": [
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer"
+      ],
+      "gap": 32,
+      "magic": false,
+      "ownCost": {
+        "wood": 168,
+        "gold": 35
+      },
+      "enemyCost": {
+        "wood": 144,
+        "gold": 60
+      },
+      "ownSurvivors": 7,
+      "enemySurvivors": 0,
+      "ownHP": 335,
+      "enemyHP": 0,
+      "seconds": 4,
+      "casts": 0
+    },
+    {
+      "case": "AA-v-siege",
+      "player": "dwarves",
+      "enemy": "dwarves",
+      "own": [
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer"
+      ],
+      "hostile": [
+        "catapult",
+        "catapult",
+        "catapult"
+      ],
+      "gap": 120,
+      "magic": false,
+      "ownCost": {
+        "wood": 144,
+        "gold": 60
+      },
+      "enemyCost": {
+        "wood": 135,
+        "gold": 75
+      },
+      "ownSurvivors": 0,
+      "enemySurvivors": 1,
+      "ownHP": 0,
+      "enemyHP": 58,
+      "seconds": 8.9,
+      "casts": 0
+    },
+    {
+      "case": "groundAA-v-air",
+      "player": "goblins",
+      "enemy": "goblins",
+      "own": [
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer"
+      ],
+      "hostile": [
+        "air",
+        "air"
+      ],
+      "gap": 120,
+      "magic": false,
+      "ownCost": {
+        "wood": 162,
+        "gold": 72
+      },
+      "enemyCost": {
+        "wood": 150,
+        "gold": 90
+      },
+      "ownSurvivors": 5,
+      "enemySurvivors": 0,
+      "ownHP": 150,
+      "enemyHP": 0,
+      "seconds": 4,
+      "casts": 0
+    },
+    {
+      "case": "melee-v-AA-close",
+      "player": "goblins",
+      "enemy": "goblins",
+      "own": [
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier"
+      ],
+      "hostile": [
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer"
+      ],
+      "gap": 32,
+      "magic": false,
+      "ownCost": {
+        "wood": 176,
+        "gold": 44
+      },
+      "enemyCost": {
+        "wood": 162,
+        "gold": 72
+      },
+      "ownSurvivors": 11,
+      "enemySurvivors": 0,
+      "ownHP": 252.15000000000003,
+      "enemyHP": 0,
+      "seconds": 1.7,
+      "casts": 0
+    },
+    {
+      "case": "AA-v-siege",
+      "player": "goblins",
+      "enemy": "goblins",
+      "own": [
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer",
+        "archer"
+      ],
+      "hostile": [
+        "catapult",
+        "catapult",
+        "catapult",
+        "catapult"
+      ],
+      "gap": 120,
+      "magic": false,
+      "ownCost": {
+        "wood": 162,
+        "gold": 72
+      },
+      "enemyCost": {
+        "wood": 140,
+        "gold": 100
+      },
+      "ownSurvivors": 0,
+      "enemySurvivors": 1,
+      "ownHP": 0,
+      "enemyHP": 43.95,
+      "seconds": 4,
+      "casts": 0
+    },
+    {
+      "case": "bomber-v-interceptor",
+      "player": "goblins",
+      "enemy": "elves",
+      "own": [
+        "air",
+        "air"
+      ],
+      "hostile": [
+        "air",
+        "air",
+        "air"
+      ],
+      "gap": 120,
+      "magic": false,
+      "ownCost": {
+        "wood": 150,
+        "gold": 90
+      },
+      "enemyCost": {
+        "wood": 135,
+        "gold": 105
+      },
+      "ownSurvivors": 0,
+      "enemySurvivors": 3,
+      "ownHP": 0,
+      "enemyHP": 180,
+      "seconds": 5.9,
+      "casts": 0
+    },
+    {
+      "case": "bomber-with-ground-AA-escort",
+      "player": "goblins",
+      "enemy": "elves",
+      "own": [
+        "air",
+        "archer",
+        "archer",
+        "archer",
+        "archer"
+      ],
+      "hostile": [
+        "air",
+        "air"
+      ],
+      "gap": 120,
+      "magic": false,
+      "ownCost": {
+        "wood": 147,
+        "gold": 77
+      },
+      "enemyCost": {
+        "wood": 90,
+        "gold": 70
+      },
+      "ownSurvivors": 5,
+      "enemySurvivors": 0,
+      "ownHP": 201.9875,
+      "enemyHP": 0,
+      "seconds": 2.9,
+      "casts": 0
+    },
+    {
+      "case": "bomber-v-melee",
+      "player": "goblins",
+      "enemy": "dwarves",
+      "own": [
+        "air",
+        "air"
+      ],
+      "hostile": [
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier"
+      ],
+      "gap": 120,
+      "magic": false,
+      "ownCost": {
+        "wood": 150,
+        "gold": 90
+      },
+      "enemyCost": {
+        "wood": 192,
+        "gold": 40
+      },
+      "ownSurvivors": 2,
+      "enemySurvivors": 0,
+      "ownHP": 280,
+      "enemyHP": 0,
+      "seconds": 30.6,
+      "casts": 0
+    },
+    {
+      "case": "mixed-no-spells",
+      "player": "crown",
+      "enemy": "crown",
+      "own": [
+        "specialist",
+        "soldier",
+        "archer"
+      ],
+      "hostile": [
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier"
+      ],
+      "gap": 64,
+      "magic": false,
+      "ownCost": {
+        "wood": 70,
+        "gold": 30
+      },
+      "enemyCost": {
+        "wood": 80,
+        "gold": 20
+      },
+      "ownSurvivors": 0,
+      "enemySurvivors": 4,
+      "ownHP": 0,
+      "enemyHP": 145.6153846153846,
+      "seconds": 3.5,
+      "casts": 0
+    },
+    {
+      "case": "mixed-with-spells",
+      "player": "crown",
+      "enemy": "crown",
+      "own": [
+        "specialist",
+        "soldier",
+        "archer"
+      ],
+      "hostile": [
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier"
+      ],
+      "gap": 64,
+      "magic": true,
+      "ownCost": {
+        "wood": 70,
+        "gold": 30
+      },
+      "enemyCost": {
+        "wood": 80,
+        "gold": 20
+      },
+      "ownSurvivors": 0,
+      "enemySurvivors": 4,
+      "ownHP": 0,
+      "enemyHP": 140.3653846153846,
+      "seconds": 3.9,
+      "casts": 2
+    },
+    {
+      "case": "mixed-no-spells",
+      "player": "clans",
+      "enemy": "clans",
+      "own": [
+        "specialist",
+        "soldier",
+        "archer"
+      ],
+      "hostile": [
+        "soldier",
+        "soldier",
+        "soldier"
+      ],
+      "gap": 64,
+      "magic": false,
+      "ownCost": {
+        "wood": 64,
+        "gold": 28
+      },
+      "enemyCost": {
+        "wood": 54,
+        "gold": 18
+      },
+      "ownSurvivors": 0,
+      "enemySurvivors": 1,
+      "ownHP": 0,
+      "enemyHP": 34.8,
+      "seconds": 3.6,
+      "casts": 0
+    },
+    {
+      "case": "mixed-with-spells",
+      "player": "clans",
+      "enemy": "clans",
+      "own": [
+        "specialist",
+        "soldier",
+        "archer"
+      ],
+      "hostile": [
+        "soldier",
+        "soldier",
+        "soldier"
+      ],
+      "gap": 64,
+      "magic": true,
+      "ownCost": {
+        "wood": 64,
+        "gold": 28
+      },
+      "enemyCost": {
+        "wood": 54,
+        "gold": 18
+      },
+      "ownSurvivors": 0,
+      "enemySurvivors": 1,
+      "ownHP": 0,
+      "enemyHP": 14.832000000000013,
+      "seconds": 4.4,
+      "casts": 1
+    },
+    {
+      "case": "mixed-no-spells",
+      "player": "elves",
+      "enemy": "elves",
+      "own": [
+        "specialist",
+        "soldier",
+        "archer"
+      ],
+      "hostile": [
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier"
+      ],
+      "gap": 64,
+      "magic": false,
+      "ownCost": {
+        "wood": 72,
+        "gold": 38
+      },
+      "enemyCost": {
+        "wood": 80,
+        "gold": 24
+      },
+      "ownSurvivors": 0,
+      "enemySurvivors": 4,
+      "ownHP": 0,
+      "enemyHP": 117.19999999999997,
+      "seconds": 2.9,
+      "casts": 0
+    },
+    {
+      "case": "mixed-with-spells",
+      "player": "elves",
+      "enemy": "elves",
+      "own": [
+        "specialist",
+        "soldier",
+        "archer"
+      ],
+      "hostile": [
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier"
+      ],
+      "gap": 64,
+      "magic": true,
+      "ownCost": {
+        "wood": 72,
+        "gold": 38
+      },
+      "enemyCost": {
+        "wood": 80,
+        "gold": 24
+      },
+      "ownSurvivors": 0,
+      "enemySurvivors": 3,
+      "ownHP": 0,
+      "enemyHP": 104,
+      "seconds": 3.2,
+      "casts": 2
+    },
+    {
+      "case": "mixed-no-spells",
+      "player": "dwarves",
+      "enemy": "dwarves",
+      "own": [
+        "specialist",
+        "soldier",
+        "archer"
+      ],
+      "hostile": [
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier"
+      ],
+      "gap": 64,
+      "magic": false,
+      "ownCost": {
+        "wood": 93,
+        "gold": 35
+      },
+      "enemyCost": {
+        "wood": 96,
+        "gold": 20
+      },
+      "ownSurvivors": 0,
+      "enemySurvivors": 4,
+      "ownHP": 0,
+      "enemyHP": 211.73333333333326,
+      "seconds": 5.8,
+      "casts": 0
+    },
+    {
+      "case": "mixed-with-spells",
+      "player": "dwarves",
+      "enemy": "dwarves",
+      "own": [
+        "specialist",
+        "soldier",
+        "archer"
+      ],
+      "hostile": [
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier"
+      ],
+      "gap": 64,
+      "magic": true,
+      "ownCost": {
+        "wood": 93,
+        "gold": 35
+      },
+      "enemyCost": {
+        "wood": 96,
+        "gold": 20
+      },
+      "ownSurvivors": 0,
+      "enemySurvivors": 4,
+      "ownHP": 0,
+      "enemyHP": 198.08333333333326,
+      "seconds": 7,
+      "casts": 2
+    },
+    {
+      "case": "mixed-no-spells",
+      "player": "goblins",
+      "enemy": "goblins",
+      "own": [
+        "specialist",
+        "soldier",
+        "archer"
+      ],
+      "hostile": [
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier"
+      ],
+      "gap": 64,
+      "magic": false,
+      "ownCost": {
+        "wood": 59,
+        "gold": 37
+      },
+      "enemyCost": {
+        "wood": 64,
+        "gold": 16
+      },
+      "ownSurvivors": 0,
+      "enemySurvivors": 3,
+      "ownHP": 0,
+      "enemyHP": 80.66199999999999,
+      "seconds": 2.2,
+      "casts": 0
+    },
+    {
+      "case": "mixed-with-spells",
+      "player": "goblins",
+      "enemy": "goblins",
+      "own": [
+        "specialist",
+        "soldier",
+        "archer"
+      ],
+      "hostile": [
+        "soldier",
+        "soldier",
+        "soldier",
+        "soldier"
+      ],
+      "gap": 64,
+      "magic": true,
+      "ownCost": {
+        "wood": 59,
+        "gold": 37
+      },
+      "enemyCost": {
+        "wood": 64,
+        "gold": 16
+      },
+      "ownSurvivors": 0,
+      "enemySurvivors": 3,
+      "ownHP": 0,
+      "enemyHP": 80.66199999999999,
+      "seconds": 2.2,
+      "casts": 1
+    },
+    {
+      "case": "AI-paid-air-and-counter",
+      "faction": "crown",
+      "queue": [
+        {
+          "id": "barracks-job-1",
+          "kind": "archer",
+          "supply": 1,
+          "cost": {
+            "wood": 20,
+            "gold": 10
+          },
+          "durationSeconds": 6,
+          "remainingSeconds": 6
+        },
+        {
+          "id": "barracks-job-2",
+          "kind": "archer",
+          "supply": 1,
+          "cost": {
+            "wood": 20,
+            "gold": 10
+          },
+          "durationSeconds": 6,
+          "remainingSeconds": 6
+        },
+        {
+          "id": "barracks-job-3",
+          "kind": "archer",
+          "supply": 1,
+          "cost": {
+            "wood": 20,
+            "gold": 10
+          },
+          "durationSeconds": 6,
+          "remainingSeconds": 6
+        }
+      ],
+      "produced": 1
+    },
+    {
+      "case": "AI-paid-air-and-counter",
+      "faction": "clans",
+      "queue": [
+        {
+          "id": "barracks-job-1",
+          "kind": "archer",
+          "supply": 1,
+          "cost": {
+            "wood": 20,
+            "gold": 10
+          },
+          "durationSeconds": 6,
+          "remainingSeconds": 6
+        },
+        {
+          "id": "barracks-job-2",
+          "kind": "archer",
+          "supply": 1,
+          "cost": {
+            "wood": 20,
+            "gold": 10
+          },
+          "durationSeconds": 6,
+          "remainingSeconds": 6
+        },
+        {
+          "id": "barracks-job-3",
+          "kind": "archer",
+          "supply": 1,
+          "cost": {
+            "wood": 20,
+            "gold": 10
+          },
+          "durationSeconds": 6,
+          "remainingSeconds": 6
+        }
+      ],
+      "produced": 1
+    },
+    {
+      "case": "AI-paid-air-and-counter",
+      "faction": "elves",
+      "queue": [
+        {
+          "id": "barracks-job-1",
+          "kind": "archer",
+          "supply": 1,
+          "cost": {
+            "wood": 22,
+            "gold": 12
+          },
+          "durationSeconds": 6,
+          "remainingSeconds": 6
+        },
+        {
+          "id": "barracks-job-2",
+          "kind": "archer",
+          "supply": 1,
+          "cost": {
+            "wood": 22,
+            "gold": 12
+          },
+          "durationSeconds": 6,
+          "remainingSeconds": 6
+        },
+        {
+          "id": "barracks-job-3",
+          "kind": "archer",
+          "supply": 1,
+          "cost": {
+            "wood": 22,
+            "gold": 12
+          },
+          "durationSeconds": 6,
+          "remainingSeconds": 6
+        }
+      ],
+      "produced": 1
+    },
+    {
+      "case": "AI-paid-air-and-counter",
+      "faction": "dwarves",
+      "queue": [
+        {
+          "id": "barracks-job-1",
+          "kind": "archer",
+          "supply": 1,
+          "cost": {
+            "wood": 24,
+            "gold": 10
+          },
+          "durationSeconds": 7,
+          "remainingSeconds": 7
+        },
+        {
+          "id": "barracks-job-2",
+          "kind": "archer",
+          "supply": 1,
+          "cost": {
+            "wood": 24,
+            "gold": 10
+          },
+          "durationSeconds": 7,
+          "remainingSeconds": 7
+        },
+        {
+          "id": "barracks-job-3",
+          "kind": "archer",
+          "supply": 1,
+          "cost": {
+            "wood": 24,
+            "gold": 10
+          },
+          "durationSeconds": 7,
+          "remainingSeconds": 7
+        }
+      ],
+      "produced": 1
+    },
+    {
+      "case": "AI-paid-air-and-counter",
+      "faction": "goblins",
+      "queue": [
+        {
+          "id": "barracks-job-1",
+          "kind": "archer",
+          "supply": 1,
+          "cost": {
+            "wood": 18,
+            "gold": 8
+          },
+          "durationSeconds": 5,
+          "remainingSeconds": 5
+        },
+        {
+          "id": "barracks-job-2",
+          "kind": "archer",
+          "supply": 1,
+          "cost": {
+            "wood": 18,
+            "gold": 8
+          },
+          "durationSeconds": 5,
+          "remainingSeconds": 5
+        },
+        {
+          "id": "barracks-job-3",
+          "kind": "archer",
+          "supply": 1,
+          "cost": {
+            "wood": 18,
+            "gold": 8
+          },
+          "durationSeconds": 5,
+          "remainingSeconds": 5
+        }
+      ],
+      "produced": 1
+    },
+    {
+      "case": "sea-v-air-baseline",
+      "faction": "crown",
+      "ownCost": {
+        "wood": 40,
+        "gold": 15
+      },
+      "shipHP": 0,
+      "airHP": 130
+    },
+    {
+      "case": "sea-v-air-baseline",
+      "faction": "clans",
+      "ownCost": {
+        "wood": 40,
+        "gold": 15
+      },
+      "shipHP": 0,
+      "airHP": 130
+    },
+    {
+      "case": "sea-v-air-baseline",
+      "faction": "elves",
+      "ownCost": {
+        "wood": 45,
+        "gold": 15
+      },
+      "shipHP": 0,
+      "airHP": 130
+    },
+    {
+      "case": "sea-v-air-baseline",
+      "faction": "dwarves",
+      "ownCost": {
+        "wood": 50,
+        "gold": 15
+      },
+      "shipHP": 12,
+      "airHP": 130
+    },
+    {
+      "case": "sea-v-air-baseline",
+      "faction": "goblins",
+      "ownCost": {
+        "wood": 35,
+        "gold": 20
+      },
+      "shipHP": 0,
+      "airHP": 130
+    }
+  ]
+}

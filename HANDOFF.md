@@ -1,111 +1,28 @@
-# Pågående RTS-168–169 enligt nytt mandat
+# Överlämning efter RTS-168–169
 
-2026-10-05: Luftroster/design och märkta TEMP-ikoner är uttryckligen godkända av användaren.168 gameplay verifierad, slutliga flygarsprites Pending;169 är nästa task. Stopp efter169, ingen170. Se nya DECISIONS/BACKLOG/DEV_LOG och artifacts/rts-168. 168 unit446/80, berörda integrationer93/12, build/strict typecheck och diffcheck PASS. Chromium fem raser×800/1280 produktion/Save/Load/luftstrid/restart PASS,45 PNG visuellt stickprovsgranskade. Full regression vid169-etappslut.
+Datum2026-10-05. Användaren godkänner första luftrostern och tydligt märkta TEMP-ikoner, inte slutliga flygarsprites. RTS-168 gameplay Done (`83d01fe`, pushad); RTS-169 Done som första preliminära balanspass, verifierat före separat commit/push. Körningen stannar efter169; RTS-170 Hold Position, Patrol och köade orders är nästa roadmaptask och har inte startats. Ingen agentdelegering.
 
-## Historisk överlämning165–167 (blockerare upphävd av nytt mandat)
+## Status och implementation
 
-# Överlämning efter RTS-165–167; RTS-168/169 blockerade
+- RTS-165 Done838f729,166 Done2cd36a6,167 Donefd9dfd3 (historiskt verifierade/pushade). De återimplementeras inte.
+- 168: Gryphon Rider/Wyvern Rider/Great Eagle/Gyrocopter/Airship. Befintlig barracks, Forge+attack1+defense1, tidig markarcher-AA. Domänbaserad navigation/vision/minimap/combat/production/supply/AI/Save/restart. TEMP-ikoner/porträtt med24px höjd/skugga; statiska, inga slutliga animationer. Sjö-AI:s markcap2 hindrar inte flygproduktion; boarding är mark-only.
+- 169:89 explicita actualcombat-scenarier, kostnadsjämförbara land/sea/air/magicgrupper, counters för alla fem raser. Warship air0.75× (12) men normal16damage; Eagle air1.25×(17.5), mark6.3. AI-byggnadspreflight ignorerar flygare och bevarar markblockering. Save42 migrerar41; gamla projektilmasker/skador/köer behålls, inga recipes omprisade. Transporttargets=[], befintliga spells markstrid-only.
+- Balans preliminär:25 ground-AA-korsrasfall vinner, fem nära meleegrupper slår AA. Bombare behöver eskort; Gyro är stark aircounter med svag markattack. Spells hjälper inte automatiskt en supportgrupp slå massmelee. Ingen mänsklig kiting/strategi/helmatchspeltest.
 
-Datum2026-10-05. Bifogat mandat165–173 anger uttryckligen etappstopp efter169
-för ny chatt170–173.165–167 är färdiga och pushade;168 och169 har centrala
-krav kvar och markeras inte Done. Nästa arbete är att lösa168:s saknade
-luftdesign/underlag.170–173 är inte startade. Ingen agentdelegering.
+## Verifiering
 
-## Leverans
+168: unit446/80, berörda integrationer93/12, build/strict typecheck/diff PASS. Chromium fem raser×800/1280 fysisk production/selection/flight-over-building/Save/Load/airtargeting/combat/fullkö/restart, panelmått PASS.45PNG/browser.json i [rts-168](artifacts/rts-168), representativa femrasscreenshots visuellt granskade.
 
-| Task | Status/resultat | Commit |
-| --- | --- | --- |
-| RTS-165 | Done: befintlig specialist per ras kompletterad med mana, regeneration, HUD, betald produktion/prereqs och Save38. | `838f729`, pushad |
-| RTS-166 | Done: datadrivna heal/buff/debuff, targeting/cancel/fog/range/mana/cooldown, Save39. | `2cd36a6`, pushad |
-| RTS-167 | Done: fem skilda spell-loadouts, effektstatus/expiry/stackregler, AI med samma validering, Save40. | `fd9dfd3`, pushad |
-| RTS-168 | Blocked: ingen befintlig luftroster och inga godkända flygarreferenser; inga nya flygare implementerade eller visuellt verifierade. | Dokumenterad i separat överlämningscommit |
-| RTS-169 | Blocked av168: oberoende mark/sjö/magi-inventering genomförd, luft/anti-air/combined-arms-verifiering kvar. Inga169-stats ändrade. | Dokumenterad i separat överlämningscommit |
+169: riktade122/5 PASS,73 balansintegrationer/89 records PASS. Slutlig unit435/79, build inklusive strict typecheck och diff/lokala docslänkar PASS. Komplett slutregression1320/160 PASS526.62s. Unit435/79 PASS12.08s och build/strict typecheck PASS på slutliga roster-/testhelperändringar. Föregående fullkörning1314PASS/6FAIL krävde äldre rosterförväntningar uppdaterade till hela nya luftrostern; riktade32/2 PASS, inga svagare kostnads-/segerasserts. Chromium fem navalprofiler×native800×600/1280×720 fysisk airtarget, inflightSave42/Load och12HPimpact PASS;20PNG/[browserrapport](artifacts/rts-169/browser-naval-aa.json), fyra representativa före/efter/större bilder visuellt granskade. AI-browser fem raser native800 PASS med faktisk Scene.update: betald airproduktion, archerdefense och release vid fogloss;5PNG/browser-ai-air.json, Elf/Goblin-bilder visuellt granskade. Explicit bank/tech/armyfixture, ingen mänsklig helmatchekonomi. Äldre testbotar väljer nu lagliga synliga mål, bevarade victory/ledger/Save-asserts; tre riktade islandsfall och The Crossing PASS efter anpassningen. Balansmetod/ändrade values/resultat i [review](artifacts/rts-169/balance-review.md), [data](artifacts/rts-169/results.json).
 
-160–164 inventerades som Done, faktisk implementation och dokumenterade checks
-matchade status:7d7290c/b7439ae/4658a0d/efbdd7d/874f761. De återimplementerades
-inte. Historisk164-regression1193/155 är separat från nya checks nedan.
+Reproducerbart: npm test -- src/gameplay/air.test.ts src/gameplay/combinedArmsBalance.test.ts src/gameplay/navalCombat.test.ts. node scripts/check-combined-arms.mjs skriver rapport. Browserharness scripts/check-air.mjs, scripts/check-naval-air.mjs och scripts/check-air-ai.mjs använder extern Playwright/Chromium via W2T_PLAYWRIGHT_MODULE/W2T_BROWSER_EXECUTABLE. Lokal devserver http://127.0.0.1:5183/ (ursprungligt5182 upptaget). Ingen skeppad debug-API.
 
-## Implementerat beteende
+## Kvar och nästa
 
-- Mana på Banner Guard/Raider/Marksman/Bulwark/Grenadier med bevarade namn,
-  stridsprofiler, costs/tider/supply och godkända assets. Max/initial/regen:
-  Humans100/60/1, Orcs80/40/1, Elves120/60/1.25, Dwarves100/50/0.8,
-  Goblins80/40/1. Gameplay-tid, pause/gameover, cap, levande/embarked ingår.
-- Aktuellt utbud: Human Heal/Ward/Hex, Orc War Cry/Intimidate, Elf Renew/Wither,
-  Dwarf Mend/Rune Shield, Goblin Overclock/Corrode. Configdata och konkret
-  kostnad/range/cooldown/effekt finns i src/config/spells.ts och GAME_DESIGN.md.
-  Detta konkretiserar dokumenterade134-roller; ingen historisk färdig spellista
-  eller ny magikerroster hittas på. Tidigare designfråga: arbetsantagandet var
-  att komplettera befintliga specialister enligt165-mandatet.
-- F2/F3/F4 är heal-/buff-/debuffslots; tomma slots döljs. Grön/röd markör,
-  range-cirkel, Escape/högerklick utan kostnad. Cast validerar aktuellt ID,
-  team, levande markstridsmål, aktuell fog, range, mana/cooldown/fullHP.
-  Workers/byggnader/skepp/embarked är inte giltiga mål. Casterordern består.
-- Högst en buff och en debuff per mål. Återapplicering ersätter samma kanal
-  och duration; effekter upphör med gameplay-tid inklusive ombord, även efter
-  casterdöd. Namn/tid i selection, separata cyan/lila ringar. E-abilities och
-  research är separata multiplikatorer; projektilstyrka sparas vid skottet.
-  Overclock ökar både attack1.4× och inkommande skada1.2×.
-- AI: högst en cast per caster/beslut, två beslut/s från sparad matchklocka.
-  Heal lägst HP-fraktion under70%, annars synlig debuff, annars buff nära
-  synligt stridshot. Aktiv kanal med mer än1s hindrar meningslös refresh.
-  Samma castSpell-validering som spelaren. Match delas vid expiry/AI-beslut.
-- Save config40 migrerar39 och hela tidigare kedjan. Gamla tre speldefinitioner
-  kvar så deras aktiva effekter/cooldowns inte omtolkas; nytt fraktionsutbud
-  valideras vid cast. Schema2 och lokal slot består. Load/restart utan läckage.
+- [Slutlig airgrafik](assets/sources/air-168.md) Pending: fem godkända detaljrika silhuetter/referenser, transparenta spelassets, idle/fly/attack/death-animationer och porträtt. TEMP är användargodkänd implementationpresentation, inte färdiga slutassets.
+- [Casting-poser](assets/sources/magic-165.md) och [sjöreferenser](assets/sources/remaining-sprites.md) saknas fortsatt; Human/övriga landassets enligt155 är accepterade för tillfället.
+- RTS-157 In Progress: faktisk ljudlyssning kvar.158 In Progress:380 inspelningar/licensposter saknas; texter/fallback är inte inspelade röster.159 är användaraccepterad Done.
+- Mänskligt balansspeltest/airmicro/helmatchekonomi saknas; teknisk simulering skiljs från detta. Ny CI-/Pages-build inte separat kontrollerad. Befintlig bundlevarning kvarstår.
+- Användarens src/style.css SHA25695c3725250221ef8386519adecfb05db601103697d421e78e1b2bdf057141a5e är bevarad. Otrackade docs/ är utanför våra commits. main/origin används utan force/amend/historyrewrite.
 
-## Ny verifiering
-
--165 riktade52/4 och fraktions18/4 PASS; unit445/80/build strict PASS.
--166 riktade72/7 och feedback/spellcheck14/2 PASS; slutlig unit446/80/build
-  strict PASS. Faktisk browser fann ett feedbackproblem; rättat och testat.
--167 riktade78/7 och strids-/AI-/profil95/6 PASS (inklusive relevanta befintliga
-  factionBalance-genomspelningar då gameplay/AI ändras). Slutlig unit446/80
-  och build inklusive strict typecheck PASS. Manifestet validerat.
-- Full regression vid etappgränsen:1227tester/158filer PASS (477.49s).
-  git diff --check och lokala Markdownreferenser PASS.
-  Ingen ny kod ändrad efter slutliga167-checks; efter fd9dfd3 endast docs.
-- Faktisk Chromium native800×600 och1280×720.165: fem raser, betald production,
-  fysisk selection/mana/regen/pause/Save/Load/cap.166: fysisk targeting/invalid/
-  cancel/heal/buff/debuff, mana/CD/Save/Load och blandad worker+caster-HUD.
- 167: fem raser, fysiska casts, distinkta slots/status, verklig Scene.update med
-  AI-cast, Save/Load/expiry/restart och HUD-scrollmått. Noll pageerrors.
-- [165 bilder/rapport](artifacts/rts-165), [166](artifacts/rts-166),
-  [167](artifacts/rts-167). Alla fem native800-mana- och effectbilder samt
-  representativa större vyer visuellt granskade.167 innehåller20screenshots.
-  Skript: scripts/check-mana.mjs, check-spells.mjs, check-faction-spells.mjs.
-  Extern Playwright/Chromium anges med W2T_PLAYWRIGHT_MODULE och
-  W2T_BROWSER_EXECUTABLE; ingen skeppad debug-API.
-- Lokal devserver http://127.0.0.1:5182/. Ingen ny CI-/Pages-build eller fysisk
-  ljudlyssning kontrollerad. Befintlig bundlevarning kvar.
-
-## Exakt blockering och kvarstående arbete
-
-[RTS-168-underlag](assets/sources/air-168.md) anger saknat luftrosterbeslut:
-enhetsidentiteter/roller per ras, produktion/prereqs och land/sea/air/anti-air.
-De tio godkända landreferenserna innehåller bara redan använda landroller;
-separata flygarsilhuetter/porträtt/animationer saknas. Designfrågan är ställd
-men obesvarad. Kräver befintligt faktiskt underlag eller nytt uttryckligt
-luftdesign-/originalassetbeslut. Hitta inte på en historisk plan, ändra inte
-namn på marksprites till ”godkända flygare”, markera inga placeholders Done.
-
-[RTS-169 delreview](artifacts/rts-169/partial-review.md) skiljer faktiska
-stats/manabegränsningar och167-testresultat från historisk164-siege-balans.
-Ingen mänsklig helmatchbalans utförd. Full169 behöver168, kombinerade
-mark/sjö/luft/magi-scenarier, anti-air-tillgång, AI och kostnad/supply-counters.
-Buff+E+research-kombinationerna behöver ingå i den stridsbudgeten. Inga
-spekulativa169-statsjusteringar eller falsk färdigmarkering.
-
-Övriga tidigare begränsningar består: separata casting-poser saknas enligt
-[magiprotokollet](assets/sources/magic-165.md); befintliga godkända unitassets
-räcker för levererade magiflöden men en ny castanimation hävdas inte.
-RTS-155 landassets implementerade; sjöreferenser saknas enligt
-[spriteinventeringen](assets/sources/remaining-sprites.md). RTS-157 fortsatt
-In Progress (faktisk ljudlyssning); RTS-158 fortsatt In Progress (380
-inspelningar/licensposter, repliker/fallback är inte inspelade röster).
-
-Användarens src/style.css är byte-identisk med etappstart, SHA256
-95c3725250221ef8386519adecfb05db601103697d421e78e1b2bdf057141a5e.
-Otrackade docs/ bevaras utanför våra commits. main/origin/main används utan
-force, amend eller history rewrite. Nästa task168 är blockerad enligt ovan;
-170–173 lämnas till ny chatt när165–169-etappen faktiskt är klar.
+Nästa roadmaptask170 kräver ny körning; inga senare tasks eller nya RTS-ID:n skapade. Slutlig flygarassetbearbetning hanteras separat under168:s kvarstående grafik, utan att gameplaystatus eller placeholders blandas ihop.

@@ -7,7 +7,7 @@ import {updateCombat,type Enemy} from './combat';
 import {encodeSave,decodeSave} from './save';
 import {prepareEnemyAbilities,advanceEnemyAbilities} from './enemyAbilities';
 const view={camera:{x:0,y:0},building:null};
-const roles=['soldier','archer','catapult','specialist'] as const;
+const roles=['soldier','archer','catapult','specialist','air'] as const;
 describe('faction-aware opponent army',()=>{
  it.each(factionIds)('%s pays each full roster recipe once with exact timers, supply and distinct stats',id=>{
   const m=createMatch('skirmish','normal',{player:'crown',enemy:id}),f=factions[id];
@@ -20,7 +20,7 @@ describe('faction-aware opponent army',()=>{
    expect(state.wood+state.gold).toBeLessThanOrEqual(before);
   }
   const army=c.enemies.filter(e=>e.role);expect(army.map(e=>e.role)).toEqual(roles);
-  expect(state.acceptedJobs).toBe(4);expect(new Set(army.map(e=>e.id)).size).toBe(4);
+  expect(state.acceptedJobs).toBe(roles.length);expect(new Set(army.map(e=>e.id)).size).toBe(roles.length);
   expect(state.wood).toBe(1000-roles.reduce((n,r)=>n+f.units[r].cost.wood,0));expect(state.gold).toBe(1000-roles.reduce((n,r)=>n+f.units[r].cost.gold,0));
   for(const e of army){expect(e.hp).toBe(f.units[e.role!].hp);expect(enemySupply(e,id)).toBe(f.units[e.role!].supply);expect(enemyUnitStats(e,id).speed).toBe(f.units[e.role!].speed);}
   for(const job of snapshots.values()){const recipe=f.units[job.kind as typeof roles[number]];expect(job.cost).toEqual(recipe.cost);expect(job.durationSeconds).toBe(recipe.durationSeconds);expect(job.supply).toBe(recipe.supply);}
@@ -54,7 +54,7 @@ describe('faction-aware opponent army',()=>{
   // Explicit resilience fixture for the observed AI, not a paid player victory.
   m.combat.baseHP=10000;
   const observed=new Set<string>();
-  for(let i=0;i<650&&observed.size<4;i++){
+  for(let i=0;i<650&&observed.size<roles.length;i++){
    m=updateMatch(m,1);
    for(const e of m.combat.enemies)if(e.role)observed.add(e.role);
    if(m.enemyPolicy?.research.attack===1&&m.enemyPolicy.research.defense===1){

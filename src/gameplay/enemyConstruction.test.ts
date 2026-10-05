@@ -52,3 +52,5 @@ it('rejects invalid building size, construction references, and spoofed new mode
  const json=encodeSave(prepareEnemyConstruction(createMatch('skirmish')),view);
  for(const mutate of [(d:any)=>d.state.combat.enemies.find((e:any)=>e.buildingType).footprint.width=32,(d:any)=>d.state.combat.enemies.find((e:any)=>e.buildingType).construction.builderId='unit-1',(d:any)=>d.configVersion='tribute-config-5']){const d=JSON.parse(json);mutate(d);expect(decodeSave(JSON.stringify(d)).ok).toBe(false);}
 });
+
+it('AI ground construction ignores aircraft above its preferred site but respects ground blockers',()=>{for(const air of [true,false]){const m=createMatch('skirmish'),point=enemyConstructionConfig.candidates[0];m.gathering.units.push({id:'unit-4',kind:'soldier',owner:'player',...(air?{archetype:'air' as const}:{}),hp:60,cargo:0,selected:false,position:{x:point.x+32,y:point.y+32},target:{x:point.x+32,y:point.y+32},order:{kind:'idle'}});const site=prepareEnemyConstruction(m).combat.enemies.find(e=>e.buildingType==='barracks')!;expect(site.footprint!.y===point.y&&site.footprint!.x===point.x).toBe(air);}});
