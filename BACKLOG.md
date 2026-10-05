@@ -4763,6 +4763,8 @@ Visa före/efter av samma områden i browsern. Slutför och verifiera referenska
 
 Leverans: spelbar Frontier-referenskarta med egna reproducerbara terrängassets, sammanhängande skördbara groves, glänta, oregelbundna flodbasiner/strand/djup/ö, tre landvägar och befintliga stockar. Avverkning öppnar kroppssäkra ytor och reviderar routes endast när hinder ändras. Save46 bevarar äldre Frontier-layout och fogminne; minimap/AI-scoutpunkter följer ny layout. Alla12 faktiska referensbilder granskade; inget raster importerat. Riktade75/8 inklusive två betalda matcher till seger PASS; slutliga ändringschecks60/6 + overlap3/1 PASS, unit457/81/build strict/diff PASS. Browser800/1280 fysisk skogsselection/gather, faktisk avverkning, SaveLoad/restart samt betald naval-fixture hamn/produktion/sjöpassage PASS. Före/efter samma forest/coast/overview i artifacts/prio-03; alla tre slutliga vyer visuellt granskade. Endast referenskartan sprids här; inget nytt höjdgameplay.
 
+CI-tillägg: push0ab2436 GitHub37309876585 föll på config20-testfixturen som använde ny referensterräng. Fixturen återskapar nu ursprunglig terräng/resources och tar bort senare fields; migration/ledger/view-asserts oförändrade. Isolerat mot03: targeted1/unit457/81/build strict/diff PASS. Korrigeringspush och dess CI följs separat.04:s påbörjade ändringar bevaras ocommitade.
+
 ## PRIO-04 – Interaktiva djur
 
 **Status:** Todo.

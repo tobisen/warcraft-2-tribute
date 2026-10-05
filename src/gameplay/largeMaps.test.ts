@@ -1,7 +1,9 @@
+import {placementObstacles} from './placement';
+import {resourceNodes} from './gathering';
 import {legacyEnemyFixture} from './testHelpers/legacyEnemyFixture';
 import {expect,it} from 'vitest';
 import {createMatch,updateMatch} from './match';
-import {bodyFits,tileFootprint} from './map';
+import {createMap,bodyFits,tileFootprint} from './map';
 import {findRoute,segmentFits} from './navigation';
 import {encodeSave,decodeSave} from './save';
 import {isExplored} from './fog';
@@ -46,6 +48,8 @@ for(const [id,tiles] of [['plains96',96],['plains128',128]] as const){
 }
 it('config20 preserves existing matches, ledger and views when migrating to21',()=>{
  const m=createMatch('skirmish','beginner',undefined,'frontier'),view={camera:{x:400,y:300},building:null};m.statLedger!.player.built=2;
- const doc=JSON.parse(encodeSave(m,view));doc.configVersion='tribute-config-20';legacyEnemyFixture(doc);const loaded=decodeSave(JSON.stringify(doc));
+ // Reconstruct the actual config20 terrain/resources, rather than relabeling a new reference-layout save.
+ m.map=createMap('frontier','legacy');for(const node of resourceNodes(m.gathering))delete node.grove;delete m.fog!.forest;m.map.obstacles.push(...placementObstacles(m.gathering),...m.combat.enemies.flatMap(e=>e.footprint?[e.footprint]:[]));
+ const doc=JSON.parse(encodeSave(m,view));delete doc.state.map.terrainLayout;delete doc.state.wildlife;doc.configVersion='tribute-config-20';legacyEnemyFixture(doc);const loaded=decodeSave(JSON.stringify(doc));
  expect(loaded.ok).toBe(true);if(loaded.ok){expect(loaded.match.statLedger).toEqual(m.statLedger);expect(loaded.match.gathering).toMatchObject({extraNodes:m.gathering.extraNodes});expect(loaded.view).toEqual(view);}
 });
