@@ -1,12 +1,31 @@
-# Aktuellt mandat RTS-174–176
+# Överlämning RTS-174–176
 
-174 Done enligt slutliga riktade97/6, unit461/83, strict typecheck/build/diff och browser800/1280 i artifacts/rts-174. Push416cfa9, faktisk CI37321500841 success.175 Done enligt nedan;176 nästa. Nytt mandat ersätter tidigare paus/stopp efterPRIO04. Bevara användarens CSS/docs; ingen delegering. Efter176 slutlig fullregression/HANDOFF och stopp före177.
+Datum: 2026-10-05.174–176 Done.174/175 är pushade;176 levereras i taskcommitten `RTS-176: resolve team outcomes and support eliminated spectators`, vars hash redovisas i slutrapporten efter push. Stopp före177; inget fortsatt roadmapmandat. Ingen delegering.
 
-Tre spelare stöds på Plains96/128 skirmish; andra kartor fortsatt två. Separata AI-banker/tech/queues/knowledge/fog, FFA relationer, distinct playercolors, cross-AI combat/projectiles och strikt Save48. Lokal browser använder explicit stridsfixture och delvis fryst Scene.update men ordinarie updateMatch, inga nya mänskliga balans-/FPS-/publik Pages-browserbelägg.168–173 ochPRIO01–04 färdiga enligt historiken nedan; tidigare asset-/balansbegränsningar kvarstår.
+- **RTS-174 `416cfa9`:** stabila spelar-ID:n, två självständiga AI-ekonomier/produktion/tech/AI/fog, separata raser/färger, AI-mot-AI-strid, validerade starter, matchinställningar/statistik och Save48.
+- **RTS-175 `0a5b422`:** lagval, aktuell/utforskad lagvision, egen ekonomi/supply/tech/kontroll, gemensamt allied-skydd för attacker/spells/splash, friendly ground spells, allierad passage genom öppna portar och AI-försvar av observerade hot nära allierad bas. Save49.
+- **RTS-176:** individuell baseliminering och lagutfall, stoppad eliminerad aktör, begränsad spectator med synlig status/minimapkamera/paus/save/leave, separat resultatvy med player-/teamstats och idempotenta roster-partitionerade highscores. Save50 migrerar även49:s äldre individuella utfall till korrekta lagutfall; aktuell vision bygger på levande lagobservatörer. Överlevare står kvar inerta utan syntetiska losses/dismissals/kills. Restart/menu rensar live-state.
 
-175 Done: team-ID/menu, shared current/explored vision, individual economy/control, allied immunity (inklusive spells/splash), friendly spells och öppna allierade portar. AI hjälper synliga hot nära allierad bas. Save49. Riktade152/8 och sista43/3 PASS, unit461/83, strict build/diff PASS. Native800/1280 i artifacts/rts-175/browser.json PASS; teams800/shared-vision1280 granskade. Lagutfall/spectator/statistiksummor genomförs i176.
+## Verifiering
+
+174: riktade97/6 + modifiers31/3, unit461/83, build inklusive strict typecheck/diff PASS.175: riktade152/8 + sista43/3, unit461/83, strict build/diff PASS.176: retirement/order/spell93/9 och sista Save-migration62/6 PASS; slutlig unit461/83 PASS13.93s, strict build PASS378ms och diff PASS. Manifest83 unit/90 integrationfiler validerat. Full etappregression på slutlig kod PASS:1426 tester/173 filer,609.57s. De två avbrutna fullkörningarna räknas inte som PASS. De avbröts efter konkreta reviewfynd om pensionerat AI-basminne respektive Save49-lagutfall.
+
+Native Chrome800/1280 PASS: [174](artifacts/rts-174/browser.json) två betalda AI-banker/strid/ägare/Save/restart; [175](artifacts/rts-175/browser.json) faktisk teammeny/lagvision/ingen allied-kontroll eller attack/friendlyheal/port/save; [176](artifacts/rts-176/browser.json) allied-eliminering med fortsatt human, human-eliminering med faktisk framåtrörelse/konstruktion hos ally och frysta humanunits, spectator/minimap/rightclickspärr, fysisk paused SaveLoad inklusive config49-migration, victory/defeat, separat statistik, frozen ended simulation, endast en highscorepost, tre restarts och quit som rensar roster/clock. Representative settings800/AI-colors1280, teams800/shared-vision1280, victory800 och spectator800 granskade visuellt. Explicita fixtures och ordinarie updateMatch/Scene.update; ingen mänsklig helmatch-/FPS-mätning eller ny publik Pages-browser hävdas.
+
+Faktisk GitHub fulltest/build/Pages: [174](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37321500841) och [175](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37324774940) SUCCESS.Ny176-CI efter taskpush redovisas separat i slutrapporten; inga äldre CI-belägg gäller automatiskt för den.
+
+## Begränsningar och nästa steg
+
+Tre spelare erbjuds endast på Plains96/128 skirmish; övriga kartor har två validerade platser. Inga nya samtidiga campaign-objectives eller delad ekonomi/kontroll. Friendly spells gäller allierade markenheter enligt befintliga spellvillkor; repair/gatekontroll förblir egna. Öppna portar släpper igenom allierade, stängda blockerar alla. Äldre49-defeat med levande allierad kan laddas som fortsatt spectator; äldre playing med enbart eget lag kvar blir victory.
+
+168–173 ochPRIO01–04 är historiskt Done. Final flygargrafik/animationer, vissa caster/navalassets, mänsklig balans/FPS och äldre återstående ljud-/röstunderlag kvarstår enligt tidigare överlämning; inga nya assetclaim. Kartorna och djurljuden är användargodkända. Dessa blockerar inte174–176.
+
+Användarens ändrade src/style.css och otrackade docs/ bevarade/undantagna från taskcommits. CSS SHA256:95c3725250221ef8386519adecfb05db601103697d421e78e1b2bdf057141a5e. Nästa roadmaptask177 är Todo och får inte startas utan nytt uppdrag.
 
 ---
+
+Historiska mandat/belägg nedan är ersatta av överlämningen ovan.
+
 
 # Aktuellt mandat PRIO-01–04
 

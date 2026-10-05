@@ -1,3 +1,5 @@
+import {playerEliminated} from '../gameplay/teamResults';
+import {playerTeam} from '../gameplay/players';
 import {campaignDebrief} from './campaign';
 import {text as uiText} from '../text';
 import {matchStats,type MatchStats} from '../gameplay/matchStats';
@@ -21,7 +23,10 @@ export function renderMatchResults(element:HTMLElement,m:MatchState,show:boolean
  const note=document.createElement('p');note.textContent='Net spent is paid costs minus refunds, including unfinished jobs. Units produced exclude starting units. Buildings completed exclude starting bases; destruction includes unfinished sites.'+(m.statLedger?.legacy?' Building and owner-removal history before this legacy save was loaded is unavailable; these counters start at migration.':'');const summary=document.createElement('div'),details=document.createElement('div');summary.dataset.resultSummary='';details.dataset.resultStatistics='';summary.append(title,context);const debrief=campaignDebrief(m);if(debrief){const p=document.createElement('p');p.dataset.campaignDebrief='';p.textContent=debrief;summary.append(p);}if(stats.players&&m.multiplePlayers){
   const perPlayer=document.createElement('table'),heading=document.createElement('tr');
   for(const text of ['Player','Kills','Losses','Dismissals','Wood delivered','Gold delivered']){const th=document.createElement('th');th.textContent=text;heading.append(th);}perPlayer.append(heading);
-  for(const p of m.multiplePlayers.roster){const stat=stats.players[p.id]!;const row=document.createElement('tr');row.style.color=p.color;for(const value of [`${p.id} · ${factions[p.faction].label}`,stat.killed,stat.lost,stat.removed,stat.wood.delivered,stat.gold.delivered]){const cell=document.createElement('td');cell.textContent=typeof value==='number'?number.format(value):value;row.append(cell);}perPlayer.append(row);}details.append(perPlayer);
+  for(const p of m.multiplePlayers.roster){const stat=stats.players[p.id]!;const row=document.createElement('tr');row.style.color=p.color;for(const value of [`${p.id} · Team ${playerTeam(p.id,m.multiplePlayers.roster)} · ${factions[p.faction].label} · ${playerEliminated(m,p.id)?'Eliminated':'Active'}`,stat.killed,stat.lost,stat.removed,stat.wood.delivered,stat.gold.delivered]){const cell=document.createElement('td');cell.textContent=typeof value==='number'?number.format(value):value;row.append(cell);}perPlayer.append(row);}details.append(perPlayer);
+  const teamTable=document.createElement('table');teamTable.dataset.teamResults='';
+  const headings=document.createElement('tr');for(const label of ['Team','Kills','Losses','Dismissals','Wood delivered','Gold delivered']){const cell=document.createElement('th');cell.textContent=label;headings.append(cell);}teamTable.append(headings);
+  for(const [team,stat] of Object.entries(stats.teams!)){const eliminated=m.multiplePlayers.roster.filter(p=>playerTeam(p.id,m.multiplePlayers!.roster)===Number(team)).every(p=>playerEliminated(m,p.id)),row=document.createElement('tr');for(const value of [`Team ${team} · ${eliminated?'Eliminated':'Active'}`,stat.killed,stat.lost,stat.removed,stat.wood.delivered,stat.gold.delivered]){const cell=document.createElement('td');cell.textContent=typeof value==='number'?number.format(value):value;row.append(cell);}teamTable.append(row);}details.append(teamTable);
  }
- details.append(table,note);element.replaceChildren(summary,details);
+ if(!stats.players)details.append(table);details.append(note);element.replaceChildren(summary,details);
 }

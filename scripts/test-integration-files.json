@@ -87,5 +87,6 @@
   "src/gameplay/visibility.test.ts",
   "src/gameplay/wildlife.test.ts",
   "src/presentation/wildlifeSave.test.ts",
-  "tests/referenceTerrain.test.mjs"
+  "tests/referenceTerrain.test.mjs",
+  "src/gameplay/teamResults.test.ts"
 ]

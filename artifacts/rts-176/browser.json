@@ -1,0 +1,100 @@
+[
+  {
+    "width": 800,
+    "height": 600,
+    "allyEliminated": {
+      "phase": "playing",
+      "outcome": "playing",
+      "active": true,
+      "clock": 0.3165799999999999
+    },
+    "spectator": {
+      "phase": "playing",
+      "outcome": "playing",
+      "active": false,
+      "clock": 0.25
+    },
+    "noOrders": {
+      "allyAssetsAdvance": true,
+      "unchanged": true,
+      "visibleSame": true,
+      "clock": 1.25
+    },
+    "pausedSpectatorSaveLoad": true,
+    "legacy49Migration": {
+      "phase": "paused",
+      "outcome": "playing",
+      "humanVision": false
+    },
+    "victory": {
+      "phase": "ended",
+      "outcome": "victory",
+      "active": false,
+      "clock": 1.25
+    },
+    "scoreCheck": {
+      "once": true,
+      "frozen": true
+    },
+    "defeat": {
+      "phase": "ended",
+      "outcome": "defeat",
+      "active": false,
+      "clock": 0.25
+    },
+    "repeatedRestarts": 3,
+    "menuClearsState": true,
+    "explicitBaseEliminationFixture": true,
+    "ordinarySceneUpdate": true,
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "height": 720,
+    "allyEliminated": {
+      "phase": "playing",
+      "outcome": "playing",
+      "active": true,
+      "clock": 0.2666466666666667
+    },
+    "spectator": {
+      "phase": "playing",
+      "outcome": "playing",
+      "active": false,
+      "clock": 0.25
+    },
+    "noOrders": {
+      "allyAssetsAdvance": true,
+      "unchanged": true,
+      "visibleSame": true,
+      "clock": 1.25
+    },
+    "pausedSpectatorSaveLoad": true,
+    "legacy49Migration": {
+      "phase": "paused",
+      "outcome": "playing",
+      "humanVision": false
+    },
+    "victory": {
+      "phase": "ended",
+      "outcome": "victory",
+      "active": false,
+      "clock": 1.25
+    },
+    "scoreCheck": {
+      "once": true,
+      "frozen": true
+    },
+    "defeat": {
+      "phase": "ended",
+      "outcome": "defeat",
+      "active": false,
+      "clock": 0.25
+    },
+    "repeatedRestarts": 3,
+    "menuClearsState": true,
+    "explicitBaseEliminationFixture": true,
+    "ordinarySceneUpdate": true,
+    "errors": []
+  }
+]

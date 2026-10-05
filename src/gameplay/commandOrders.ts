@@ -1,3 +1,4 @@
+import {playerEliminated} from './teamResults';
 import {canHarm} from './players';
 import {matchAnimals} from './wildlife';
 import type {Position} from './movement';
@@ -35,8 +36,8 @@ function start(m:MatchState,u:Unit|Ship,o:QueuedOrder):Unit|Ship {
 }
 /** Shift appends only supported commands. Selection never changes as orders advance. */
 export function issueOrder(m:MatchState,o:QueuedOrder,append=false):MatchState {
- if(m.paused||m.outcome!=='playing')return m;
- if(o.kind==='attack'){const target=m.combat.enemies.find(e=>e.id===o.enemyId);if(target&&!canHarm('player',target.playerId??'enemy',m.multiplePlayers?.roster))return m;}
+ if(m.paused||m.outcome!=='playing'||!!m.multiplePlayers&&m.combat.baseHP<=0)return m;
+ if(o.kind==='attack'){const target=m.combat.enemies.find(e=>e.id===o.enemyId);if(target&&(playerEliminated(m,target.playerId??'enemy')||!canHarm('player',target.playerId??'enemy',m.multiplePlayers?.roster)))return m;}
  const destination='destination' in o?o.destination:undefined;
  const group=destination?new Map((o.kind==='attack-move'?commandAttackMove:commandGroupMove)(m.gathering.units,destination,m.map).map(u=>[u.id,u])):undefined;
  const shipGroup=destination&&o.kind!=='attack-move'?new Map((commandShips(m,destination)?.ships??[]).map(u=>[u.id,u])):undefined;
@@ -67,7 +68,7 @@ export function prepareOrders(m:MatchState):MatchState {
   if(u.order.kind!=='idle'||u.kind==='soldier'&&u.attackMoveTarget||!u.orderQueue?.length)return u;
   const pending=[...u.orderQueue];
   while(pending.length){const o=pending.shift()!;
-   if(o.kind==='attack'&&!m.combat.enemies.some(e=>e.id===o.enemyId&&e.hp>0&&canHarm('player',e.playerId??'enemy',m.multiplePlayers?.roster)&&(!m.fog||entityVisible(m.fog,'player',e))))continue;
+   if(o.kind==='attack'&&!m.combat.enemies.some(e=>e.id===o.enemyId&&e.hp>0&&!playerEliminated(m,e.playerId??'enemy')&&canHarm('player',e.playerId??'enemy',m.multiplePlayers?.roster)&&(!m.fog||entityVisible(m.fog,'player',e))))continue;
    if(o.kind==='hunt'&&!matchAnimals(m).some(a=>a.id===o.animalId&&a.hp>0&&(!m.fog||entityVisible(m.fog,'player',a))))continue;
    if(o.kind==='gather'&&!resourceNodes(m.gathering).some(n=>n.id===o.nodeId))continue;
    return {...start(m,u,o),orderQueue:pending.length?pending:undefined};

@@ -1,3 +1,4 @@
+import {isSpectating} from '../gameplay/teamResults';
 import {matchAnimals} from '../gameplay/wildlife';
 import {orderSummary} from '../gameplay/commandOrders';
 import {spellDefinition} from '../config/spells';
@@ -18,6 +19,7 @@ export interface SelectionInfo {mana?:number;maxMana?:number;name:string;detail:
 const empty=():SelectionInfo=>({name:'No selection',detail:'Click a unit, building or resource, or drag to select a group.',hp:null,maxHP:null,stats:[],portrait:null});
 /** Presentation only: reads selected player entities, only visible enemy buildings and known resources. Stats are baseline recipes. */
 export function selectionInfo(m:MatchState,building:BuildingSelection,resourceId:string|null=null,animalId:string|null=null):SelectionInfo {
+ if(isSpectating(m))return {...empty(),name:'Spectating your team',detail:'Camera only · Allied vision · Menu [P] to leave'};
  if(animalId){const animal=matchAnimals(m).find(a=>a.id===animalId&&a.hp>0&&(!m.fog||isVisible(m.fog,'player',a.position)));if(animal)return {name:animal.name,detail:`${animal.id} · Neutral animal`,hp:animal.hp,maxHP:animal.maxHP,stats:['Right-click with combat units to attack.'],portrait:{atlas:'world',frame:`critter-${animal.type}-idle-0`}};}
  if(resourceId){
   const node=resourceNodes(m.gathering).find(n=>n.id===resourceId);

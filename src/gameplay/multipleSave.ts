@@ -1,7 +1,8 @@
+import {teamOutcome} from './teamResults';
 import {decodeSave,encodeSingleSave,type SavedView,type LoadResult,type SaveContext} from './save';
 import {validPlayers} from './matchSettings';
 import {playerStart,canHarm} from './players';
-import {shareTeamVision,projectMultiplePlayers,globalEntityId,type MultiplePlayers} from './multiplePlayers';
+import {refreshTeamVision,shareTeamVision,projectMultiplePlayers,globalEntityId,type MultiplePlayers} from './multiplePlayers';
 import type {MatchState} from './match';
 import type {Footprint} from './placement';
 import {saveConfig} from '../config/save';
@@ -36,8 +37,9 @@ export function encodeMultipleSave(m:MatchState,view:SavedView):string{
 /** Validate every scoped document with the existing strict economy/tech/ID checks. */
 export function decodeMultipleSave(raw:unknown):LoadResult{
  try{
- const doc=raw as Record<string,unknown>;
+ const doc=raw as Record<string,unknown>,migrateTeams=doc?.configVersion==='tribute-config-49';
  if(doc?.configVersion==='tribute-config-48'&&Array.isArray(doc.multiplePlayers)){doc.multiplePlayers=doc.multiplePlayers.map((p,i)=>({...p as object,teamId:i+1}));doc.configVersion=saveConfig.configVersion;}
+ if(doc?.configVersion==='tribute-config-49')doc.configVersion=saveConfig.configVersion;
  if(!doc||Object.keys(doc).some(k=>!['schemaVersion','configVersion','map','multiplePlayers','kills','human','ai'].includes(k))||doc.schemaVersion!==saveConfig.schemaVersion||doc.configVersion!==saveConfig.configVersion||typeof doc.human!=='string'||!Array.isArray(doc.ai)||doc.ai.length!==2)throw Error('Invalid multiplayer document');
  const humanRaw=JSON.parse(doc.human) as {state:MatchState};
  if(!validPlayers(doc.multiplePlayers,{scenario:humanRaw.state.scenario,map:doc.map})||(doc.multiplePlayers as unknown[]).length!==3)throw Error('Invalid player roster');
@@ -53,7 +55,13 @@ export function decodeMultipleSave(raw:unknown):LoadResult{
  });
  const shell:MatchState={...humanRaw.state,multiplePlayers:{roster,ai,kills}};
  if(shell.factions?.player!==roster[0].faction||shell.factions.enemy!==roster[1].faction)throw Error('Human faction mismatch');
- const human=decodeSave(doc.human,contextFor(shell,'player'));if(!human.ok)return human;
+ if(migrateTeams){
+  const legacyOutcome=shell.combat.baseHP<=0?'defeat':ai.every(bot=>!bot.state.combat.enemies.some(e=>e.kind==='base'&&e.hp>0))?'victory':'playing';
+  if(humanRaw.state.outcome!==legacyOutcome||ai.some(bot=>bot.state.outcome!==legacyOutcome))throw Error('Invalid legacy multiplayer outcome');
+  const outcome=teamOutcome(shell);humanRaw.state.outcome=outcome;doc.human=JSON.stringify(humanRaw);
+  for(const part of doc.ai as {document:string}[]){const parsed=JSON.parse(part.document);parsed.state.outcome=outcome;part.document=JSON.stringify(parsed);}
+ }
+ const human=decodeSave(doc.human as string,contextFor(shell,'player'));if(!human.ok)return human;
  const validated=ai.map((bot,index)=>{
  const loaded=decodeSave((doc.ai as {document:string}[])[index].document,contextFor(shell,bot.id));if(!loaded.ok)throw Error(loaded.error);
  if(loaded.match.waves.elapsedSeconds!==human.match.waves.elapsedSeconds||loaded.match.map.id!==human.match.map.id||loaded.match.outcome!==human.match.outcome)throw Error('Unsynchronised AI state');
@@ -64,7 +72,8 @@ export function decodeMultipleSave(raw:unknown):LoadResult{
  for(const unit of [...human.match.gathering.units,...(human.match.navy?.ships??[])]){if(unit.order.kind==='attack')checkAttack('player',unit.order.enemyId);for(const order of unit.orderQueue??[])if(order.kind==='attack')checkAttack('player',order.enemyId);}
  for(const shot of human.match.combat.projectiles??[])if(!shot.owner)checkAttack('player',shot.targetId);
  for(const bot of validated){if(bot.state.enemyAI?.threatId)checkAttack(bot.id,bot.state.enemyAI.threatId);for(const entity of bot.state.combat.enemies)if(entity.order?.kind==='defend')checkAttack(bot.id,entity.order.targetId);for(const shot of bot.state.combat.projectiles??[])checkAttack(shot.owner==='enemy'?bot.id:'player',shot.targetId);}
- const expected=human.match.combat.baseHP<=0?'defeat':validated.every(bot=>!bot.state.combat.enemies.some(e=>e.kind==='base'&&e.hp>0))?'victory':'playing';if(human.match.outcome!==expected)throw Error('Invalid multiplayer outcome');
- return {...human,match:shareTeamVision(projectMultiplePlayers({...human.match,multiplePlayers:{roster,ai:validated,kills}}))};
+ const expected=teamOutcome({...human.match,multiplePlayers:{roster,ai:validated,kills}});if(human.match.outcome!==expected)throw Error('Invalid multiplayer outcome');
+ const match=projectMultiplePlayers({...human.match,multiplePlayers:{roster,ai:validated,kills}});
+ return {...human,match:migrateTeams?refreshTeamVision(match):shareTeamVision(match)};
  }catch(e){return {ok:false,code:'invalid',error:e instanceof Error?e.message:'Invalid multiplayer save'};}
 }

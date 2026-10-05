@@ -163,6 +163,7 @@ export function decodeSave(json:string,context?:SaveContext):LoadResult {
   if(doc.schemaVersion===2&&doc.configVersion==='tribute-config-43'){ensure((doc.state as Data).aiProfile===undefined,'legacy AI profile');doc.configVersion='tribute-config-44';}
   if(doc.schemaVersion===2&&doc.configVersion==='tribute-config-44')doc.configVersion='tribute-config-45';
   if(doc.schemaVersion===2&&doc.configVersion==='tribute-config-45'){const old=doc.state as Data;ensure((old.map as Data).terrainLayout===undefined,'legacy terrain layout');if(doc.map==='frontier')(old.map as Data).terrainLayout='legacy';doc.configVersion='tribute-config-46';}
+  if(doc.schemaVersion===2&&doc.configVersion==='tribute-config-49')doc.configVersion=saveConfig.configVersion;
   if(doc.schemaVersion===2&&doc.configVersion==='tribute-config-48')doc.configVersion=saveConfig.configVersion;
   if(doc.schemaVersion===2&&doc.configVersion==='tribute-config-47')doc.configVersion=saveConfig.configVersion;
   if(doc.schemaVersion===2&&doc.configVersion==='tribute-config-46'){const old=doc.state as Data;ensure(old.wildlife===undefined||Object.keys(old.wildlife as Data).length===0,'legacy wildlife');old.wildlife={};doc.configVersion=saveConfig.configVersion;}

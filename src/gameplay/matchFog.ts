@@ -1,3 +1,4 @@
+import {playerEliminated} from './teamResults';
 import {canSupport} from './players';
 import {observeForest} from './forestFog';
 import {terrainPatches} from './map';
@@ -23,5 +24,5 @@ export function visionObservers(state:MatchState):VisionObserver[]{
 }
 export function matchFog(state:MatchState){
  const blockers=terrainPatches(state.map).filter(t=>t.kind==='rock').map(t=>({x:t.column*arenaConfig.tileSize,y:t.row*arenaConfig.tileSize,width:t.columns*arenaConfig.tileSize,height:t.rows*arenaConfig.tileSize}));
- return observeForest(updateFog(state.fog??createFog(state.map),[...visionObservers(state),...(state.multiplePlayers?.ai.filter(bot=>canSupport('player',bot.id,state.multiplePlayers!.roster)).flatMap(bot=>visionObservers(bot.state).filter(o=>o.owner==='enemy').map(o=>({...o,owner:'player' as const})))??[]),...(state.aiContext?.sharedObservers??[]).map(o=>({...o,owner:state.aiContext?.visionSide??'enemy'}))],blockers),state.gathering);
+ return observeForest(updateFog(state.fog??createFog(state.map),[...visionObservers(state).filter(o=>!state.multiplePlayers||!playerEliminated(state,o.owner==='player'?'player':state.combat.enemies.find(e=>e.id===o.id)?.playerId??'enemy')),...(state.multiplePlayers?.ai.filter(bot=>!playerEliminated(state,bot.id)&&canSupport('player',bot.id,state.multiplePlayers!.roster)).flatMap(bot=>visionObservers(bot.state).filter(o=>o.owner==='enemy').map(o=>({...o,owner:'player' as const})))??[]),...(state.aiContext?.sharedObservers??[]).map(o=>({...o,owner:state.aiContext?.visionSide??'enemy'}))],blockers),state.gathering);
 }

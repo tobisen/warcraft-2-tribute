@@ -1,3 +1,4 @@
+import {isSpectating,playerEliminated} from '../gameplay/teamResults';
 import {supportedPlayerCounts} from '../config/players';
 import {matchPlayers} from '../gameplay/players';
 import type {MultiplePlayers} from '../gameplay/multiplePlayers';
@@ -307,7 +308,7 @@ export class BootScene extends Phaser.Scene {
     enemyFactionSelect.addEventListener('change',changeEnemyFaction);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>enemyFactionSelect.removeEventListener('change',changeEnemyFaction));
 
-    this.minimap=bindMinimap(document.querySelector<HTMLCanvasElement>('#minimap')!,()=>({data:visibleMinimapData(this.currentMatch()),scroll:{x:this.cameras.main.scrollX,y:this.cameras.main.scrollY},viewport:{width:this.cameras.main.width,height:this.cameras.main.height}}),point=>this.cameras.main.setScroll(point.x,point.y),()=>this.gameplayActive());
+    this.minimap=bindMinimap(document.querySelector<HTMLCanvasElement>('#minimap')!,()=>({data:visibleMinimapData(this.currentMatch()),scroll:{x:this.cameras.main.scrollX,y:this.cameras.main.scrollY},viewport:{width:this.cameras.main.width,height:this.cameras.main.height}}),point=>this.cameras.main.setScroll(point.x,point.y),()=>this.simulationActive());
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.minimap?.destroy());
 
     this.unloadMode=null;this.attackMoveMode=false;this.patrolMode=false;this.repairMode=false;this.spellMode=null;this.spellFeedback='';
@@ -349,7 +350,7 @@ export class BootScene extends Phaser.Scene {
     const resizeCamera=()=>{const v=viewportGeometry(this.scale.width,this.scale.height,this.map);const camera=this.cameras.main;camera.setViewport(v.camera.x,v.camera.y,v.camera.width,v.camera.height);camera.setBounds(0,0,this.map.width,this.map.height);camera.setScroll(Math.max(0,Math.min(camera.scrollX,this.map.width-camera.width)),Math.max(0,Math.min(camera.scrollY,this.map.height-camera.height)));this.drag=undefined;this.cameraDrag=undefined;this.dragBox?.setVisible(false);};
     resizeCamera();this.scale.on(Phaser.Scale.Events.RESIZE,resizeCamera);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.scale.off(Phaser.Scale.Events.RESIZE,resizeCamera));
     this.cameraDrag = undefined;
-    this.cameraInput=bindCameraInput(this.game.canvas,()=>{const c=this.cameras.main;return {scroll:{x:c.scrollX,y:c.scrollY},world:this.map,camera:{x:c.x,y:c.y,width:c.width,height:c.height}};},()=>this.gameplayActive()&&!this.cameraDrag&&!this.drag,p=>{this.cameras.main.setScroll(p.x,p.y);if(this.placement.active)this.previewPoint=this.worldPoint(this.input.activePointer);});
+    this.cameraInput=bindCameraInput(this.game.canvas,()=>{const c=this.cameras.main;return {scroll:{x:c.scrollX,y:c.scrollY},world:this.map,camera:{x:c.x,y:c.y,width:c.width,height:c.height}};},()=>this.simulationActive()&&!this.cameraDrag&&!this.drag,p=>{this.cameras.main.setScroll(p.x,p.y);if(this.placement.active)this.previewPoint=this.worldPoint(this.input.activePointer);});
     const cameraKey=(event:KeyboardEvent)=>{const shortcut=cameraShortcut(event.key,{...keyboardContext(event,this.gameplayActive()),ctrlKey:event.ctrlKey,metaKey:event.metaKey});if(!shortcut||this.drag||this.cameraDrag)return;event.preventDefault();const c=this.cameras.main,target=cameraFocus(shortcut==='base'?[this.gathering.base]:selectionFocusPoints(this.currentMatch(),this.selectedBuilding),this.map,{width:c.width,height:c.height});if(target){c.setScroll(target.x,target.y);if(this.placement.active)this.previewPoint=this.worldPoint(this.input.activePointer);this.syncVisuals();}};
     window.addEventListener('keydown',cameraKey);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>window.removeEventListener('keydown',cameraKey));
     const clearCameraGestures=()=>{this.cameraDrag=undefined;this.drag=undefined;this.dragBox?.setVisible(false);};window.addEventListener('blur',clearCameraGestures);
@@ -415,7 +416,7 @@ export class BootScene extends Phaser.Scene {
     };
     const repairBegin=()=>{if(!this.gameplayActive()||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected))return;this.unloadMode=null;this.attackMoveMode=false;this.patrolMode=false;this.placement=cancelPlacement(this.placement);this.repairMode=!this.repairMode;this.syncVisuals();};
     document.getElementById('repair-building')!.addEventListener('click',repairBegin);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>document.getElementById('repair-building')!.removeEventListener('click',repairBegin));
-    const wallBuild=()=>begin('wall'),gateBuild=()=>begin('gate'),gateToggle=()=>{if(this.selectedBuilding){this.applyMatch(toggleGate(this.currentMatch(),this.selectedBuilding));this.syncVisuals();}},towerBuild=()=>begin('tower'),towerUpgrade=()=>{if(this.gameplayActive()&&this.selectedBuilding)this.applyMatch(upgradeTower(this.currentMatch(),this.selectedBuilding));this.syncVisuals();};
+    const wallBuild=()=>begin('wall'),gateBuild=()=>begin('gate'),gateToggle=()=>{if(this.gameplayActive()&&this.selectedBuilding){this.applyMatch(toggleGate(this.currentMatch(),this.selectedBuilding));this.syncVisuals();}},towerBuild=()=>begin('tower'),towerUpgrade=()=>{if(this.gameplayActive()&&this.selectedBuilding)this.applyMatch(upgradeTower(this.currentMatch(),this.selectedBuilding));this.syncVisuals();};
     for(const [id,handler] of [['build-wall',wallBuild],['build-gate',gateBuild],['toggle-gate',gateToggle],['build-tower',towerBuild],['upgrade-tower',towerUpgrade]] as const){document.getElementById(id)!.addEventListener('click',handler);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>document.getElementById(id)!.removeEventListener('click',handler));}
     const cancel = (event?:KeyboardEvent) => {
       if(event&&!gameplayKeyAllowed(keyboardContext(event,this.gameplayActive())))return;
@@ -563,7 +564,8 @@ export class BootScene extends Phaser.Scene {
     });
   }
 
-  private gameplayActive():boolean{return this.session.phase==='playing'&&this.outcome==='playing'&&!this.restartPending&&!this.pendingDismiss;}
+  private simulationActive():boolean{return this.session.phase==='playing'&&this.outcome==='playing'&&!this.restartPending&&!this.pendingDismiss;}
+  private gameplayActive():boolean{return this.simulationActive()&&(!this.multiplePlayers||this.combat.baseHP>0);}
   private sessionAction(action:SessionAction):void {
     if(this.pendingDismiss)return;
     if(action==='start'&&this.session.phase==='menu'&&!this.restartPending){
@@ -578,6 +580,7 @@ export class BootScene extends Phaser.Scene {
     if(action==='start'||action==='restart'){this.awaitingLoadedResume=false;this.scenario=next.options.scenario;this.difficulty=next.options.difficulty;this.skipGameplayFrame=true;this.restartPending=true;this.restartButton.disabled=true;this.scene.restart();return;}
     if(action==='resume'){this.skipGameplayFrame=true;if(this.awaitingLoadedResume){document.getElementById('save-status')!.textContent=uiText.loadedMatchResumed;this.awaitingLoadedResume=false;}}
     if(action==='pause'||action==='new-match'){this.placement=cancelPlacement(this.placement);this.unloadMode=null;this.attackMoveMode=false;this.patrolMode=false;this.repairMode=false;this.spellMode=null;this.spellFeedback='';this.drag=undefined;this.cameraDrag=undefined;this.dragBox.setVisible(false);}
+    if(action==='new-match'){this.applyMatch(createMatch(this.session.options.scenario,this.session.options.difficulty,factionsForPlayer(this.session.options.faction??defaultFactions.player,this.session.options.enemyFaction),this.session.options.map,this.session.options.speed??1,this.session.options.aiProfile));this.selectedBuilding=null;this.controlGroups={};}
     this.syncVisuals();
   }
   private saveGamePreferences():void {if(this.session.phase==='menu')updatePreferences({game:{aiProfile:this.session.options.aiProfile,difficulty:this.session.options.difficulty,faction:this.session.options.faction??defaultFactions.player,enemyFaction:this.session.options.enemyFaction,speed:this.session.options.speed??1}});}
@@ -605,7 +608,7 @@ export class BootScene extends Phaser.Scene {
     const secondFaction=document.getElementById('ai-2-faction-select') as HTMLSelectElement,secondProfile=document.getElementById('ai-2-profile-select') as HTMLSelectElement;
     secondFaction.disabled=secondProfile.disabled=!menu;
     if(this.session.options.players){secondFaction.value=this.session.options.players[2].faction;secondProfile.value=this.session.options.players[2].profile;}
-    const legend=document.getElementById('minimap-player-legend')!;legend.replaceChildren(...(this.session.options.players??[]).map(p=>{const span=document.createElement('span');span.textContent=`${p.id==='player'?'You':p.id==='enemy'?'AI1':'AI2'} T${p.teamId}`;span.style.color=p.color;return span;}));
+    const legend=document.getElementById('minimap-player-legend')!;legend.replaceChildren(...(this.session.options.players??[]).map(p=>{const span=document.createElement('span');span.textContent=`${p.id==='player'?'You':p.id==='enemy'?'AI1':'AI2'} T${p.teamId}`;const eliminated=!!this.multiplePlayers&&playerEliminated(this.currentMatch(),p.id);if(eliminated)span.textContent+=' ×';span.title=eliminated?'Eliminated: base destroyed; surviving assets inactive':'Active player';span.style.color=p.color;return span;}));
     document.getElementById('player-color-summary')!.textContent=this.session.options.players?this.session.options.players.map(p=>`${p.id==='player'?'Blue: You':p.id==='enemy'?'Red: AI 1':'Gold: AI 2'} · Team ${p.teamId}`).join(' / '):'Blue: You · Red: AI 1';
     const mapSelect=document.querySelector<HTMLSelectElement>('#map-select')!;mapSelect.disabled=!menu||this.session.options.scenario!=='skirmish';mapSelect.value=this.session.options.map;
     const factionSelect=document.querySelector<HTMLSelectElement>('#faction-select')!;factionSelect.disabled=!menu||!!preset;factionSelect.value=shown.faction??defaultFactions.player;const enemyFactionSelect=document.querySelector<HTMLSelectElement>('#enemy-faction-select')!;enemyFactionSelect.disabled=!menu||!!preset;enemyFactionSelect.value=shown.enemyFaction??'';
@@ -618,7 +621,7 @@ export class BootScene extends Phaser.Scene {
     document.getElementById('hud')!.hidden=menu||phase==='ended';const game=document.getElementById('game')!,wasHidden=game.hidden;game.hidden=menu||phase==='ended';
     if(wasHidden&&!menu)this.scale.refresh();
     document.getElementById('mission-instruction')!.textContent=this.session.options.scenario==='skirmish'?(maps[this.session.options.map??'arena'].instruction??scenarioConfig.skirmish.instruction):scenarioConfig[this.session.options.scenario].instruction;
-    document.getElementById('session-status')!.textContent=menu?uiText.chooseAScenarioAndDifficultyThenStartMatch:phase==='paused'?uiText.pausedSimulationIsFrozen:phase==='ended'?uiText.theMatchHasEndedRestartOrChooseA:`${scenarioConfig[this.session.options.scenario].label} · ${this.session.options.difficulty} · ${aiProfiles[this.session.options.aiProfile??'balanced'].label} AI · ${maps[this.session.options.map].label}`;
+    document.getElementById('session-status')!.textContent=isSpectating(this.currentMatch())?"Spectating your team · Your base was destroyed. Camera only; no gameplay orders. Use the match menu to leave.":menu?uiText.chooseAScenarioAndDifficultyThenStartMatch:phase==='paused'?uiText.pausedSimulationIsFrozen:phase==='ended'?uiText.theMatchHasEndedRestartOrChooseA:`${scenarioConfig[this.session.options.scenario].label} · ${this.session.options.difficulty} · ${aiProfiles[this.session.options.aiProfile??'balanced'].label} AI · ${maps[this.session.options.map].label}`;
     syncHomeMenu(phase);syncResultScreen(phase);
   }
 
@@ -1038,7 +1041,7 @@ export class BootScene extends Phaser.Scene {
     this.syncVisuals();
   }
 
-  private currentMatch():MatchState {return {...(this.session.options.aiProfile&&this.session.options.aiProfile!=='balanced'?{aiProfile:this.session.options.aiProfile}:{}),multiplePlayers:this.multiplePlayers,wildlife:this.wildlife,armyPlan:this.armyPlan,matchId:this.matchId,capture:this.capture,campaignMission:this.campaignMission,statLedger:this.statLedger,tutorial:this.tutorial,speed:this.session.options.speed??1,enemyNaval:this.enemyNaval,navy:this.navy,factions:{...this.factions},map:this.map,gathering:this.gathering,combat:this.combat,waves:this.waves,production:this.production,soldierProduction:this.soldierProduction,placement:this.placement,outcome:this.outcome,paused:!this.gameplayActive(),controlGroups:this.controlGroups,fog:this.fog,research:this.research,scenario:this.scenario,difficulty:this.difficulty,enemyProduction:this.enemyProduction,enemyAI:this.enemyAI,enemyConstruction:this.enemyConstruction,enemyPolicy:this.enemyPolicy,enemyRecovery:this.enemyRecovery,enemyKnowledge:this.enemyKnowledge};}
+  private currentMatch():MatchState {return {...(this.session.options.aiProfile&&this.session.options.aiProfile!=='balanced'?{aiProfile:this.session.options.aiProfile}:{}),multiplePlayers:this.multiplePlayers,wildlife:this.wildlife,armyPlan:this.armyPlan,matchId:this.matchId,capture:this.capture,campaignMission:this.campaignMission,statLedger:this.statLedger,tutorial:this.tutorial,speed:this.session.options.speed??1,enemyNaval:this.enemyNaval,navy:this.navy,factions:{...this.factions},map:this.map,gathering:this.gathering,combat:this.combat,waves:this.waves,production:this.production,soldierProduction:this.soldierProduction,placement:this.placement,outcome:this.outcome,paused:!this.simulationActive(),controlGroups:this.controlGroups,fog:this.fog,research:this.research,scenario:this.scenario,difficulty:this.difficulty,enemyProduction:this.enemyProduction,enemyAI:this.enemyAI,enemyConstruction:this.enemyConstruction,enemyPolicy:this.enemyPolicy,enemyRecovery:this.enemyRecovery,enemyKnowledge:this.enemyKnowledge};}
 
   private addImpact(impact:Impact):void {
     if(!canAddImpact([...this.impacts.values()].map(e=>e.impact),impact))return;

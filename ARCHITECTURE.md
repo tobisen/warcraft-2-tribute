@@ -1792,3 +1792,7 @@ Warshipdefs har explicit targets och damageByDomain.air=.75, transports targets=
 ## RTS-175 — lagvy
 
 players.ts centraliserar teamrelation/kontroll. multiplePlayers delar observer/current/explored-vyer och härleder actor-specifika hostile targets/gate-blocks/helpBases. CombatScope.canTarget skyddar auto/manual/projectile/splash; commandOrders/spells använder samma relation. multipleSave validerar lag och globala attackreferenser. Meny/minimap visar team och separata färger; playerUI.css kompletterar utan ändring av användarens style.css.
+
+## RTS-176 — gemensamt lagresultat
+
+[teamResults.ts](src/gameplay/teamResults.ts) härleder playerEliminated/teamOutcome/isSpectating från befintliga baser och roster. multiplePlayers tickar aktiva aktörer, tar bort eliminerades vision/targets och fryser kvarvarande tillgångar; aktuella gemensamma worldclock hålls synkroniserad även för inerta actor-saves. Public elimination pensionerar remembered AI-destination. MatchStats summerar per-team-counters; presentation/matchResults visar separat player- och teamtabell. Highscores lagrar roster och strikt validerade lagsummor, med samma idempotenta ID-regel. Save50 använder samma scoped validators plus teamOutcome.49-migration verifierar gammal outcome innan omräkning; refreshTeamVision bygger current från aktiva observatörer och bevarar explored. BootScene skiljer simulationActive från gameplayActive, så AI tickar och kamera/minimap fungerar i spectator medan order/input är spärrade. Återgång till menu rensar live-state; konfiguration bevaras för nästa match.

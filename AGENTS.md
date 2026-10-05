@@ -138,3 +138,7 @@ Användaren pausar174–176 och beställer separata PRIO-01–04 enligt BACKLOG.
 ## Mandat RTS-174–176
 
 Nytt uttryckligt uppdrag återupptar174–176 efter färdiga PRIO-01–04. En task åt gången med riktade tester/browser, slutlig unit/build inklusive strict typecheck/diff, docs och commit/push till origin/main utan force. Full regression vid etappslut. HANDOFF efter176; stanna före177. Bevara användarens style.css och docs/. Ingen automatisk delegering.
+
+## Avslutad etapp RTS-174–176
+
+174–176 är Done. Slutlig fullregression1426/173, unit461/83, build inklusive strict typecheck/diff och native browser800/1280 PASS. HANDOFF.md redovisar lag/spectator/Save50, kontroller och begränsningar. Stoppa före177; tidigare fortsättningsmandat startar inte senare tasks. Användarens style.css/docs bevaras. Ny176-CI efter taskpush rapporteras separat från174/175:s faktiskt gröna GitHubkörningar.

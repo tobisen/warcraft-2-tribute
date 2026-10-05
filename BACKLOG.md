@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**Aktuellt mandat RTS-174–176:** Användaren återupptar174–176 efter färdiga PRIO-01–04.174 Done/push416cfa9;175 Done,176 nästa. En task åt gången, riktade tester/browser, slutchecks/docs och commit/push. HANDOFF efter176; stopp före177. CSS/docs bevaras.
+**Aktuellt mandat RTS-174–176:** Användaren återupptar174–176 efter färdiga PRIO-01–04.174 Done/push416cfa9;175 Done/push0a5b422,176 Done. Etappen avslutad; stanna före177. En task åt gången, riktade tester/browser, slutchecks/docs och commit/push. HANDOFF efter176; stopp före177. CSS/docs bevaras.
 
 **Nytt prioriterat mandat PRIO-01–04:** RTS-174–176 pausade enligt användarens nya uppdrag. PRIO-01–04 Done. Användaren har godkänt kartorna och djurljuden tills resterande ljudarbete genomförs. En task åt gången, docs/checks/browser/commit/push; stopp efter04,174 startas inte. PRIO-03:s två bildreferenser är godkända; referenskarta verifieras före spridning. Användarens CSS/docs bevaras.
 
@@ -4836,7 +4836,7 @@ Allierade attackerar inte varandra automatiskt.
 
 ## RTS-176 – Lagmatchers resultat
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Lagmatchers resultat.
 
@@ -4850,6 +4850,8 @@ Hantera fortsatt match efter förstörd allierad bas.
 **Acceptance Criteria:** Seger/förlust, utslagna spelare och lagstatistik. Hantera fortsatt match efter förstörd allierad bas.
 
 **Dependencies:** RTS-175. Befintliga relevanta system återanvänds efter inventering.
+
+**Leverans:** Lagutfall på befintlig individuell baseliminering, inerta eliminerade aktörer, spectator med lagvision utan order, separat owner-/teamstatistik och idempotenta highscores. Save50 inklusive strikt49-lagutfallsmigration, restart och menu-cleanup. Browser800/1280 PASS i artifacts/rts-176/browser.json; full slutregression1426/173 PASS609.57s, unit461/83, strict build/diff PASS.
 
 **Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
 

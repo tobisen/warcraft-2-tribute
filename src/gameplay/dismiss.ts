@@ -2,7 +2,7 @@ import {updateMatch,type MatchState} from './match';
 import {createStatLedger} from './statLedger';
 export interface DismissProposal {ids:string[];count:number;passengers:number}
 export function dismissProposal(m:MatchState):DismissProposal|null {
- if(m.paused||m.outcome!=='playing')return null;
+ if(m.paused||m.outcome!=='playing'||!!m.multiplePlayers&&m.combat.baseHP<=0)return null;
  const units=m.gathering.units.filter(u=>u.selected&&(u.hp??1)>0&&(!u.owner||u.owner==='player'));
  const ships=m.navy?.ships.filter(s=>s.selected&&s.hp>0&&s.owner==='player')??[];
  const passengers=ships.reduce((n,s)=>n+(s.passengers?.filter(u=>(u.hp??1)>0).length??0),0);
@@ -10,7 +10,7 @@ export function dismissProposal(m:MatchState):DismissProposal|null {
 }
 /** Confirmed own IDs only. The existing destruction transaction cleans all references. */
 export function dismissUnits(m:MatchState,ids:readonly string[]):MatchState {
- if(m.paused||m.outcome!=='playing')return m;
+ if(m.paused||m.outcome!=='playing'||!!m.multiplePlayers&&m.combat.baseHP<=0)return m;
  const requested=new Set(ids),land=m.gathering.units.filter(u=>requested.has(u.id)&&(u.hp??1)>0&&(!u.owner||u.owner==='player'));
  const ships=m.navy?.ships.filter(s=>requested.has(s.id)&&s.hp>0&&s.owner==='player')??[];
  const count=land.length+ships.length+ships.reduce((n,s)=>n+(s.passengers?.filter(u=>(u.hp??1)>0).length??0),0);if(!count)return m;
