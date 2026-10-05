@@ -23,7 +23,7 @@ export interface MatchFactions {player:FactionId;enemy:FactionId}
 export const defaultFactions:Readonly<MatchFactions>={player:'crown',enemy:'clans'};
 export const isFactionId=(value:unknown):value is FactionId=>factionIds.some(id=>id===value);
 
-export interface TechnologyState {baseLevel?:number;buildings:readonly BuildingRole[];research:Partial<Record<UpgradeRole,number>>}
+export interface TechnologyState {campaignContent?:import('./campaignContent').CampaignContent;baseLevel?:number;buildings:readonly BuildingRole[];research:Partial<Record<UpgradeRole,number>>}
 export interface UnitPrerequisites {baseLevel?:number;buildings?:readonly BuildingRole[];research?:Partial<Record<UpgradeRole,number>>}
 interface UnitData {
   domain?:'land'|'air';

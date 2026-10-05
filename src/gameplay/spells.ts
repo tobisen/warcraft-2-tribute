@@ -1,3 +1,4 @@
+import {campaignActionReason} from '../config/campaignContent';
 import {playerEliminated} from './teamResults';
 import {syncProjectedCombat} from './multiplePlayers';
 import {canHarm,canSupport,ownerOf} from './players';
@@ -16,6 +17,7 @@ type Combatant=Soldier|Enemy;
 const teamFaction=(m:MatchState,team:'player'|'enemy')=>(m.factions??defaultFactions)[team];
 function combatant(m:MatchState,id:string,team:'player'|'enemy'):Combatant|undefined{return team==='player'?m.gathering.units.find((u):u is Soldier=>u.kind==='soldier'&&!isAir(u)&&u.id===id):m.combat.enemies.find(e=>e.id===id&&!isAir(e)&&!e.footprint&&(e.kind===undefined||e.kind==='unit'));}
 export function spellCasterReason(m:MatchState,casterId:string,id:SpellId,team:'player'|'enemy'='player'):string|null{
+ if(team==='player'){const locked=campaignActionReason(m,'cast-heal');if(locked)return locked;}
  if(m.paused||m.outcome!=='playing'||!!m.multiplePlayers&&m.combat.baseHP<=0)return 'Match is paused or ended';
  const caster=combatant(m,casterId,team),faction=teamFaction(m,team),cfg=spellDefinition(id,faction);
  if(!caster||caster.hp<=0||('archetype'in caster?caster.archetype!=='specialist':!('role'in caster)||caster.role!=='specialist'))return 'Select a living own specialist';

@@ -3301,3 +3301,8 @@ RTS-183 klar: tabell/filter och explicit legacydatum. Riktade23/3, unit467/84, s
 ## 2026-10-05 — RTS-185
 
 185 klar: fem egna åttauppdragsserier, scoped progression, Save52 och highscoreseries. Riktade88/6, unit468/84, strict build/diff PASS. Chrome1920 fem starts/SaveLoad plus Human/Beginner terminalfixture/isolation PASS; bild granskad. Två harnessfel rättades (Resume-frame och dubbel freeze noop); slutkörningen använder ordinarie Scene.update. Ingen betald40-kampanjgenomspelning/mänsklig balansclaim.
+
+
+## 2026-10-05 — RTS-186
+
+186 klar.138/12 riktade och unit468/84/strict build/diff PASS. Chrome fem raser×800/1920/3440 staged flow/briefing/SaveLoad och hotkeys PASS, inklusive positiv B-kontroll.800briefing granskad. scripts/check-campaign-menu.mjs gör flödet reproducerbart med extern Playwright/Chrome. Testfixturers saknade reserved/enemies/owner rättades före PASS. All40 taktiska krav testade; tillåtna queues betalas i riktade tester, ingen full40-/mänsklig balansclaim.185 push7b7e9fc.

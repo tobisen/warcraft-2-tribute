@@ -1492,3 +1492,8 @@ Fem nya fasta renderingar och Available window area. Auto clamp800–3840/600–
 ## 2026-10-05 — RTS-185
 
 Nya fem campaign-ID:n i config/campaignSeries, åtta operationer vardera med egen berättelse/enemy/taktiska force/research/fleet-mål. Kartor och scenario goals återanvänds. Progressionv2 partitions per campaign-ID/faction/difficulty. V1 innehåller endast completed och bevaras separat/oförändrad som legacy mixed campaign, aldrig kopierad till nya kombinationer. Save52 sparar campaignId i run, validates faction och behåller befintlig difficulty;51 migreras utan att tilldela identitet. Resultatpartition inkluderar campaignId. Replay/reset bevarar identitet men återställer faser. Innehållsspärrar/flöde byggs i186.
+
+
+## 2026-10-05 — RTS-186
+
+Campaign: faction→difficulty→start/continue→briefing→mission. Endast current/completed visas; replay använder valt missionsinnehåll. Åtta steg: infantry/supply, ranged/fortifications/ability, Forge/research/baseupgrade, specialist/spells, transport/landing, siege, air, warships/combined arms. Rasens faktiska recipes/names och taktiska mål används. campaignContent är härledd admissionpolicy på GatheringState/TechnologyState, exkluderas från Save och rekonstrueras från authored runidentity vid start/load/apply. Produktion/placement/research/naval/ability/spell/upgrade validerar policy; actionPanel visar samma spärr. Accepterade jobb och äldre legacy/skirmish behåller tidigare gameplay. Ingen ny configversion för härledda fält.

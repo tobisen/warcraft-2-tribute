@@ -1,3 +1,4 @@
+import {contentReason} from '../config/campaignContent';
 import {isAir} from './domains';
 import {text as uiText} from '../text';
 import {abilityConfig} from '../config/abilities';
@@ -7,7 +8,7 @@ export function abilityFor(g:GatheringState){return abilityConfig[g.faction??'cr
 export function abilityReady(unit:Unit):boolean {return unit.kind==='soldier'&&!isAir(unit)&&unit.hp>0&&(unit.ability?.cooldownSeconds??0)<=1e-9;}
 /** Self-buff only: never reads enemies/hidden targets and keeps orders/selection. */
 export function useAbility(g:GatheringState,playing=true):GatheringState {
- if(!playing||!g.units.some(u=>u.selected&&abilityReady(u)))return g;
+ if(contentReason(g.campaignContent,'abilities')||!playing||!g.units.some(u=>u.selected&&abilityReady(u)))return g;
  const config=abilityFor(g);
  return {...g,units:g.units.map(u=>u.kind==='soldier'&&u.selected&&abilityReady(u)?{...u,ability:{activeSeconds:config.durationSeconds,cooldownSeconds:config.cooldownSeconds}}:u)};
 }

@@ -136,3 +136,21 @@ Den gamla blandade serien och äldre saves behålls som legacy. Nya kampanjer an
 | Goblins | The Last Contract | Dwarves | Attackforskning, större första warband/fleet/siege/air |
 
 Varje mission får ett faktiskt observerat krav på levande trupper, färdig forskning eller fartyg. Kraven är permanenta fasövergångar och ersätter inte kartans base/waves/escort/rescue/capture-mål. Alla krav framgår av briefing och fas-HUD. Progression är separat för kampanj/ras/svårighet. Gamla uppdrags-ID:n saknar ras/difficulty och ger därför inga nya upplåsningar. Nya saves bevarar alla tre identitetsdelar; äldre fortsätter legacy-regler. Mänsklig tempo-/balansgranskning återstår.186 tillför missionvis innehållsplan och menyflöde.
+
+
+## RTS-186 — Innehåll introduceras per operation
+
+Alla fem raser följer denna plan med sina egna enhets-/byggnads-/forskningsnamn och taktiska krav. Tidigare innehåll är fortsatt tillgängligt; matchens byggnads-/researchprerequisites måste fortfarande vara uppfyllda.
+
+| Operation | Nytt innehåll |
+|---|---|
+| First Steps | Worker, infantry, Barracks, supply och grundläggande order/ekonomi |
+| Forest Watch | Ranged, tower/wall/gate och faction ability |
+| The Siege | Forge, attack/defense research och base/tower upgrades |
+| The Outpost | Specialist, mana och faction spells |
+| The Crossing | Dock, transport och landstigning |
+| Ridge Convoy | Siege |
+| Valley Rescue | Air/anti-air |
+| Coastal Banner | Warship och combined arms |
+
+UI och gameplayadmission begränsas av valt uppdrag. Replay av First Steps får därför inte senare missionsinnehåll. Skirmish och äldre mixed-campaign saves använder sina befintliga fulla techträd. Briefing visar introduktionen och nästa victoryupplåsning.

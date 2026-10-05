@@ -3,3 +3,8 @@
 .score-tables table { width:100%; border-collapse:collapse; margin:16px 0; text-align:left; }
 .score-tables caption { text-align:left; padding:8px 0; font-weight:bold; }
 .score-tables th,.score-tables td { padding:8px; border-bottom:1px solid #657263; }
+
+#campaign-flow [data-campaign-step] { display:flex; flex-direction:column; gap:12px; }
+#campaign-flow [data-campaign-step][hidden] { display:none; }
+#campaign-flow p { line-height:1.5; white-space:pre-line; }
+#campaign-flow button { margin:6px 0; }

@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**Nytt mandat RTS-182–187 (2026-10-05):** Bilagans sex meny-/kampanjuppgifter, en i taget med riktad/browser-verifiering, docs och commit/push. RTS-180 är historiskt Done/publicerad;181 redan Done.182 Done/push90df09f,183 Done/pushc3f691b,184 Done/push289cc9f,185 Done,186–187 Todo. Stanna efter187. CSS/docs bevaras.
+**Nytt mandat RTS-182–187 (2026-10-05):** Bilagans sex meny-/kampanjuppgifter, en i taget med riktad/browser-verifiering, docs och commit/push. RTS-180 är historiskt Done/publicerad;181 redan Done.182 Done/push90df09f,183 Done/pushc3f691b,184 Done/push289cc9f,185 Done/push7b7e9fc,186 Done,187 Todo. Stanna efter187. CSS/docs bevaras.
 
 **Aktuellt avgränsat uppdrag RTS-181:** Done. Startinställning1920×1080/Fit to Window. Tidigare180 Done enligt HANDOFF; historiska releasebelägg återanvänds endast som status. Bilagans bredare meny-/kampanjfas genomförs inte i denna avgränsade ändring. CSS/docs bevaras.
 
@@ -5035,7 +5035,7 @@ Publicera efter godkända kontroller.
 
 ## RTS-186 — Kampanjflöde och successiva upplåsningar
 
-**Status:** Todo.
+**Status:** Done.
 
 **Krav/acceptance:** Ras → difficulty → continue/start → briefing → mission. Engelska faktabaserade ras/difficultybeskrivningar. Aktuellt/tidigare uppdrag spelbara; framtida låsta. Alla rasers nivåer introducerar nytt innehåll via definierad plan; UI/gameplay/hotkeys spärrade separat från matchprerequisites. Replay använder missionens plan; skirmish oberoende. Dela vid behov i subtasks och redovisa saknat innehåll.
 
@@ -5045,6 +5045,8 @@ Publicera efter godkända kontroller.
 
 **Docs:** BACKLOG, DECISIONS, DEV_LOG, HANDOFF och relevanta systemdefinitioner. Taskvis commit/push utan force.
 
+
+**Verifiering186:** Riktade138/12, unit468/84, strict build/diff PASS. Fem raser×800/1920/3440 verkliga staged menus/briefings/SaveLoad/keyboardlocks och skirmishindependence PASS; positiv Barracks-hotkeykontroll.800briefing visuellt granskad. Contenttests betalar tillåtna queues och observerar40 taktiska mål med explicita fixtures; inga40 fullkampanjer eller mänskliga tider hävdas.
 
 ## RTS-187 — Skirmish med flera AI-motståndare
 

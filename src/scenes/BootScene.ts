@@ -1,3 +1,4 @@
+import {campaignActionReason,campaignContentFor} from '../config/campaignContent';
 import {identityFor,seriesMissionPlan} from '../config/campaignSeries';
 import {campaignPlans} from '../config/campaignPhases';
 import {campaignObjective} from '../gameplay/campaignPhases';
@@ -410,6 +411,7 @@ export class BootScene extends Phaser.Scene {
       if (!this.gameplayActive()) return;
       if (!this.gathering.units.some(u=>u.kind==='worker' && u.selected)) return;
       this.unloadMode=null;this.attackMoveMode=false;this.patrolMode=false;this.repairMode=false;this.spellMode=null;this.spellFeedback='';
+      if(campaignActionReason(this.currentMatch(),`build-${kind}`))return;
       if(kind==='harbor'&&this.navy?.harbor)return;
       if(buildingAvailability(factions[this.factions.player],kind==='tower'||kind==='wall'||kind==='gate'?'base':kind,technologyFor(this.currentMatch(),'player')))return;
       this.placement = beginPlacement(this.placement,kind);
@@ -1119,7 +1121,7 @@ export class BootScene extends Phaser.Scene {
     this.research=match.research??createResearch();
     this.map = match.map;
     this.fog=match.fog??createFog(match.map);
-    this.gathering = match.gathering;
+    this.gathering = {...match.gathering,campaignContent:campaignContentFor(match)};
     this.combat = match.combat;
     this.waves = match.waves;
     this.production = match.production;

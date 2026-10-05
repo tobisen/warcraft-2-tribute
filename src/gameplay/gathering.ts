@@ -54,6 +54,8 @@ export interface ResourceNode {
   remaining: number;
 }
 export interface GatheringState {
+  /** Derived mission admission policy; not serialized. */
+  campaignContent?:import('../config/campaignContent').CampaignContent;
   /** Derived from match ownership; reconstructed on Load rather than serialized. */
   faction?:FactionId;
   baseSize?:number;

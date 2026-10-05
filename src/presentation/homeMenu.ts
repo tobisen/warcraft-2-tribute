@@ -1,3 +1,4 @@
+import {bindCampaignFlow} from './campaignFlow';
 import {highscoreStore} from './highscores';
 import {campaignStore,syncCampaignMenu} from './campaign';
 import {homePeoples} from '../config/homeArt';
@@ -26,14 +27,14 @@ export function syncHomeMenu(nextPhase:SessionPhase):void{
  element('match-setup').hidden=!menu||!setup;element('audio-controls').hidden=menu&&current!=='settings';element('camera-controls').hidden=menu&&current!=='settings';element('display-controls').hidden=menu&&current!=='settings';
  if(menu&&current==='settings'){(element('audio-controls') as HTMLDetailsElement).open=true;(element('camera-controls') as HTMLDetailsElement).open=true;(element('display-controls') as HTMLDetailsElement).open=true;}
  element('save-controls').hidden=menu&&current!=='load';element('save-match').hidden=menu;
- for(const id of ['match-options-summary','mission-instruction','session-status'])element(id).hidden=menu&&!setup;
+ for(const id of ['match-options-summary','mission-instruction','session-status'])element(id).hidden=menu&&(!setup||current==='campaign');
  const select=element('scenario-select') as HTMLSelectElement;
  for(const option of select.options)option.hidden=menu&&setup&&!homeScenarios[current as 'campaign'|'skirmish'].includes(option.value as never);
  syncCampaignMenu(menu&&current==='campaign',select);
  syncPauseMenu(phase);
 }
 export function bindHomeMenu():void{
- campaignStore.load();highscoreStore.load();
+ campaignStore.load();highscoreStore.load();bindCampaignFlow();
  element('home-peoples').textContent=homePeoples.map(p=>p.label).join(' · ')+' — artwork. Playable factions: Human, Orcs, Elves, Dwarves and Goblins.';
  bindActionPanel();bindCameraSettings();bindPauseMenu();bindFullscreen();
  const open=(page:HomePage)=>{if(phase!=='menu')return;current=page;if(page==='campaign'||page==='skirmish'){const select=element('scenario-select') as HTMLSelectElement;if(!homeScenarios[page].includes(select.value as never)){select.value=homeScenarios[page][0];select.dispatchEvent(new Event('change'));}}syncHomeMenu(phase);(page==='home'?element('menu-campaign'):element('menu-back')).focus();};

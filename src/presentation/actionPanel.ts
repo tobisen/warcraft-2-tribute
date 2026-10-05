@@ -1,3 +1,4 @@
+import {campaignActionReason} from '../config/campaignContent';
 import {setActionLabel} from './actionLabel';
 import {isAir} from '../gameplay/domains';
 import {selectedSpellCaster,spellCasterReason} from '../gameplay/spells';
@@ -69,6 +70,7 @@ export function actionPanel(m:MatchState,building:BuildingSelection,playing:bool
   if(id.startsWith('research-')){const kind=id==='research-attack'?'attack':'defense';prerequisites=prerequisiteLabel(faction.upgrades[kind].prerequisites);active=m.research?.job?.kind===kind;}
   if(id==='upgrade-base')active=baseDevelopment(m).remainingSeconds!==null;
   if(id==='upgrade-tower')active=!!m.placement.defenses?.find(t=>t.id===building)?.upgradeRemaining;
+  reason=campaignActionReason(m,id)??reason;
   result[id]={visible,reason:visible&&!playing?'Match is paused or ended':reason,cost,prerequisites,producing,active};
  }
  return result;

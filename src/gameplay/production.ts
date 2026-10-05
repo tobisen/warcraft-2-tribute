@@ -43,7 +43,7 @@ export function soldierSpawn(footprint: Footprint,size=soldierStats.size,bounds:
 
 export function canStartProduction(gathering: GatheringState, production: ProductionState, building: ProductionBuilding = base, population?:Population): boolean {
   const recipe=productionRecipe(gathering,building),cost=recipe.cost;
-  return unitAvailability(productionFaction(gathering),building.kind==='base'?'worker':building.unitType??'soldier',building.kind==='base'?undefined:building.technology)===null && (!population || hasPopulation(population,recipe.supply)) && production.remainingSeconds === null && canAfford(gathering,cost)
+  return unitAvailability(productionFaction(gathering),building.kind==='base'?'worker':building.unitType??'soldier',building.kind==='base'?undefined:building.technology,gathering.campaignContent)===null && (!population || hasPopulation(population,recipe.supply)) && production.remainingSeconds === null && canAfford(gathering,cost)
     && (building.kind === 'base' || (building.ready !== false && building.footprint !== null && soldierSpawn(building.footprint,recipe.size,building.bounds) !== null));
 }
 

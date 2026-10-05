@@ -1,3 +1,4 @@
+import {contentReason} from '../config/campaignContent';
 import {researchAvailability} from './productionPrerequisites';
 import {productionFaction,factions,type FactionId} from '../config/factions';
 import { upgradeConfig } from '../config/upgrades';
@@ -8,7 +9,7 @@ export type ResearchKind='attack'|'defense';
 export interface ResearchState {attack:number;defense:number;job:{kind:ResearchKind;remainingSeconds:number}|null}
 export const createResearch=():ResearchState=>({attack:0,defense:0,job:null});
 export function forgeReady(p:PlacementState){return !!p.forge&&(p.forge.hp??0)>0&&p.forge.construction.remainingSeconds===0;}
-export function canResearch(g:GatheringState,r:ResearchState,p:PlacementState,kind:ResearchKind,playing=true){return playing&&researchAvailability(productionFaction(g),kind,{buildings:forgeReady(p)?['forge']:[],research:r})===null&&!r.job&&r[kind]<productionFaction(g).upgrades[kind].maxLevel&&canAfford(g,productionFaction(g).upgrades[kind].cost);}
+export function canResearch(g:GatheringState,r:ResearchState,p:PlacementState,kind:ResearchKind,playing=true){return !contentReason(g.campaignContent,'research',kind)&&playing&&researchAvailability(productionFaction(g),kind,{buildings:forgeReady(p)?['forge']:[],research:r})===null&&!r.job&&r[kind]<productionFaction(g).upgrades[kind].maxLevel&&canAfford(g,productionFaction(g).upgrades[kind].cost);}
 export function startResearch(g:GatheringState,r:ResearchState,p:PlacementState,kind:ResearchKind,playing=true){
  return canResearch(g,r,p,kind,playing)?{gathering:payCost(g,productionFaction(g).upgrades[kind].cost),research:{...r,job:{kind,remainingSeconds:productionFaction(g).upgrades[kind].durationSeconds}}}:{gathering:g,research:r};
 }

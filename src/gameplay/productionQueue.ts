@@ -18,7 +18,7 @@ export function productionJobCount(p:ProductionState):number {
 }
 export function canEnqueue(g:GatheringState,p:ProductionState,b:ProductionBuilding=base,pop?:Population):boolean {
   const recipe=productionRecipe(g,b);
-  return unitAvailability(productionFaction(g),b.kind==='base'?'worker':b.unitType??'soldier',b.kind==='base'?undefined:b.technology)===null && productionJobCount(p)<queueConfig.maxJobs && (!pop||hasPopulation(pop,recipe.supply))
+  return unitAvailability(productionFaction(g),b.kind==='base'?'worker':b.unitType??'soldier',b.kind==='base'?undefined:b.technology,g.campaignContent)===null && productionJobCount(p)<queueConfig.maxJobs && (!pop||hasPopulation(pop,recipe.supply))
     && canAfford(g,recipe.cost)
     && (b.kind==='base'||b.ready!==false&&b.footprint!==null&&soldierSpawn(b.footprint,recipe.size,b.bounds)!==null);
 }

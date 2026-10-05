@@ -1,3 +1,4 @@
+import {contentReason} from '../config/campaignContent';
 import {forestRectangles} from './forestTerrain';
 import {isAir} from './domains';
 import {defenseConfig} from '../config/defenses';
@@ -76,6 +77,7 @@ export function cancelPlacement(state: PlacementState): PlacementState {
 
 export function placementError(state: PlacementState, point: Position, wood: number, obstacles: Footprint[], context?: PlacementContext): string | null {
   const kind=state.kind??'barracks';
+  const locked=contentReason(context?.gathering.campaignContent,'buildings',kind);if(locked)return locked;
   if(context?.technology){const locked=buildingAvailability(productionFaction(context.gathering),kind==='tower'||kind==='wall'||kind==='gate'?'base':kind,context.technology);if(locked)return locked;}
   if(kind==='harbor')return uiText.harborUsesCoastRules;
   if(kind==='forge'&&state.forge)return uiText.forgeExists;
