@@ -1,9 +1,9 @@
 import {it,expect} from 'vitest';
 import {resolutions,displayGeometry,clientPoint,validateDisplaySettings,type Resolution} from './displayPolicy';
 import {createPreferenceStore} from './preferences';
-it('all six rendering viewports fit small/large windows without stretching or changing their logical dimensions',()=>{
+it('all preset rendering viewports fit small/large windows without stretching or changing their logical dimensions',()=>{
  for(const id of Object.keys(resolutions) as Resolution[])for(const windowSize of [{width:640,height:480},{width:1280,height:720},{width:2560,height:1440}]){
-  const v=displayGeometry({resolution:id,mode:'native'},windowSize);expect({width:v.width,height:v.height}).toEqual(resolutions[id]);expect(v.width*v.scale).toBeLessThanOrEqual(windowSize.width);expect(v.height*v.scale).toBeLessThanOrEqual(windowSize.height);
+  const v=displayGeometry({resolution:id,mode:'native'},windowSize);expect({width:v.width,height:v.height}).toEqual(resolutions[id as keyof typeof resolutions]);expect(v.width*v.scale).toBeLessThanOrEqual(windowSize.width);expect(v.height*v.scale).toBeLessThanOrEqual(windowSize.height);
   const logical=clientPoint({x:v.left+v.width*v.scale*.4,y:v.top+v.height*v.scale*.6},{left:v.left,top:v.top,width:v.width*v.scale,height:v.height*v.scale},v);expect(logical.x).toBeCloseTo(v.width*.4);expect(logical.y).toBeCloseTo(v.height*.6);
  }
 });
@@ -31,4 +31,10 @@ it('fresh installs start at 1920x1080 fit while saved lower native choices survi
  let data:string|null=null;const host={getItem:()=>data,setItem:(_key:string,value:string)=>{data=value;}};
  const first=createPreferenceStore(()=>host);first.load();expect(first.get().display).toEqual({resolution:'1920x1080',mode:'fit'});
  first.update({display:{resolution:'800x600',mode:'native'}});const returning=createPreferenceStore(()=>host);returning.load();expect(returning.get().display).toEqual({resolution:'800x600',mode:'native'});
+});
+
+it('window rendering responds to available area, stays bounded and maps clicks proportionally',()=>{
+ expect(validateDisplaySettings({resolution:'window',mode:'native'}).resolution).toBe('window');
+ for(const [width,height] of [[800,600],[1920,1080],[3440,1440],[10000,10000],[400,300]]){const v=displayGeometry({resolution:'window',mode:'fit'},{width,height});expect(v.width).toBeGreaterThanOrEqual(800);expect(v.height).toBeGreaterThanOrEqual(600);expect(v.width).toBeLessThanOrEqual(3840);expect(v.height).toBeLessThanOrEqual(2160);expect(clientPoint({x:v.left+v.width*v.scale/2,y:v.top+v.height*v.scale/2},{left:v.left,top:v.top,width:v.width*v.scale,height:v.height*v.scale},v)).toEqual({x:v.width/2,y:v.height/2});}
+ expect(displayGeometry({resolution:'window',mode:'native'},{width:3440,height:1440})).toMatchObject({width:3440,height:1440,scale:1});
 });

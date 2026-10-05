@@ -3291,3 +3291,8 @@ RTS-182 klar. Riktade9/3, unit466/84, strict build och diff PASS. Chrome800/1920
 ## 2026-10-05 — RTS-183
 
 RTS-183 klar: tabell/filter och explicit legacydatum. Riktade23/3, unit467/84, strict build/diff PASS. Chrome800 verkliga filter och tomlägen PASS; screenshot granskad.182 push90df09f. Ingen ny CI/Pages/full campaign.
+
+
+## 2026-10-05 — RTS-184
+
+184 klar. Display/preferences11/2+camera10/2, unit468/84 och strict build/diff PASS. Chrome800/1920/3440/3840 input/minimap/fullscreen/windowreload PASS,3440 screenshot granskad. Kort≈60FPS i startmatch, inget generellt stresstest.183 pushc3f691b. CSS/docs bevarade.

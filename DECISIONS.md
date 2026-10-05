@@ -1482,3 +1482,8 @@ Synlig titel Warborn — A Tribute to Warcraft II och rasnamn Human/Orcs. Intern
 ## 2026-10-05 — RTS-183
 
 Highscores filtreras exakt mode/map/difficulty; inom urvalet behålls jämförbara rules-partitioner och top10 per grupp. Sortering poäng fallande, tid stigande, match-ID. Äldre poster har giltig karta/difficulty/config men inget datum; Unknown visas utan gissning. Nya registreringar får recordedAt endast vid första ID-registrering.
+
+
+## 2026-10-05 — RTS-184
+
+Fem nya fasta renderingar och Available window area. Auto clamp800–3840/600–2160; Fit/Native proportionella mot logisk rendering och camera behåller pixelstorlekar. Resize/fullscreen följer sparat val; auto sparar läget, inte senaste storleken.

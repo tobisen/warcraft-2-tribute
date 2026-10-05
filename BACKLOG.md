@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**Nytt mandat RTS-182–187 (2026-10-05):** Bilagans sex meny-/kampanjuppgifter, en i taget med riktad/browser-verifiering, docs och commit/push. RTS-180 är historiskt Done/publicerad;181 redan Done.182 Done/push90df09f,183 Done,184–187 Todo. Stanna efter187. CSS/docs bevaras.
+**Nytt mandat RTS-182–187 (2026-10-05):** Bilagans sex meny-/kampanjuppgifter, en i taget med riktad/browser-verifiering, docs och commit/push. RTS-180 är historiskt Done/publicerad;181 redan Done.182 Done/push90df09f,183 Done/pushc3f691b,184 Done,185–187 Todo. Stanna efter187. CSS/docs bevaras.
 
 **Aktuellt avgränsat uppdrag RTS-181:** Done. Startinställning1920×1080/Fit to Window. Tidigare180 Done enligt HANDOFF; historiska releasebelägg återanvänds endast som status. Bilagans bredare meny-/kampanjfas genomförs inte i denna avgränsade ändring. CSS/docs bevaras.
 
@@ -5005,7 +5005,7 @@ Publicera efter godkända kontroller.
 
 ## RTS-184 — Större upplösningar och ultrawide
 
-**Status:** Todo.
+**Status:** Done.
 
 **Krav/acceptance:** Behåll800×600 och befintliga val; lägg till2560×1440,2560×1080,3440×1440,3840×1600,3840×2160 och rendering efter tillgänglig fönsteryta. Native/Fit proportionella; större karta utan stretched sprites. HUD/minimap/input/fullscreen, förklaring/sparade val och prestandakontroll.
 
@@ -5015,6 +5015,8 @@ Publicera efter godkända kontroller.
 
 **Docs:** BACKLOG, DECISIONS, DEV_LOG, HANDOFF och relevanta systemdefinitioner. Taskvis commit/push utan force.
 
+
+**Verifiering184:** Display/preferences11/2 och camera10/2, unit468/84, strict build/diff PASS. Chrome800/1920/3440/3840: Native logical camera520/1640/3160/3560, physical worker/minimap, fullscreen och windowresize/reload PASS.3440bild granskad. Kort60-frame startmatchprobe≈60FPS; ingen massarmé/hårdvarugaranti. Testflödets initiala Survival→map-timeout och felaktiga FPS-formel rättades i extern harness före slutlig PASS.
 
 ## RTS-185 — Separat kampanjprogression
 

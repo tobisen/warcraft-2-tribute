@@ -1,3 +1,7 @@
+# RTS-184 klar
+
+183 pushc3f691b;184 ultrawide/window klar. Riktade21/4, unit468/84, strict build/diff och Chrome800/1920/3440/3840 PASS. Kort≈60FPS startmatch, ingen massarmégaranti. Nästa185 separat progression. CSS/docs bevaras.
+
 # RTS-183 klar
 
 182 push90df09f;183 tabell/filter klar. Riktade23/3, unit467/84, strict build/diff och Chrome800 filters/legacy/empty PASS. Nästa184. CSS/docs bevaras.
