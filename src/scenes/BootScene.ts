@@ -607,25 +607,28 @@ export class BootScene extends Phaser.Scene {
     const shown=inCampaign&&chosenMission?{...this.session.options,map:seriesMissionPlan(chosenMission.id,identityFor(this.session.options.faction??defaultFactions.player,this.session.options.difficulty).campaignId).map}:this.session.options;
     const details=matchSettingDetails(shown);document.getElementById('map-description')!.textContent=details.map;document.getElementById('difficulty-description')!.textContent=details.difficulty;
     const summary=document.getElementById('match-options-summary')!;summary.textContent=matchSettingsSummary(shown);summary.hidden=!menu;
+    // Native menus keep a tentative selection until Enter/click commits it.
+    const syncSelectValue=(select:HTMLSelectElement,value:string)=>{if(!select.matches(':open')&&select.value!==value)select.value=value;};
+    const syncSelectDisabled=(select:HTMLSelectElement,disabled:boolean)=>{if(select.disabled!==disabled)select.disabled=disabled;};
     const counts=supportedPlayerCounts(this.session.options.map,this.session.options.scenario),playerCount=document.getElementById('player-count-select') as HTMLSelectElement;
     if(playerCount.dataset.map!==counts.join(',')){playerCount.replaceChildren(...counts.map(n=>new Option(`You + ${n-1} AI`,String(n))));playerCount.dataset.map=counts.join(',');}
     playerCount.parentElement!.hidden=this.session.options.scenario!=='skirmish';
-    playerCount.value=String(this.session.options.players?.length??2);playerCount.disabled=!menu;
+    syncSelectValue(playerCount,String(this.session.options.players?.length??2));syncSelectDisabled(playerCount,!menu);
     document.getElementById('additional-ai-settings')!.hidden=!this.session.options.players;
     document.getElementById('team-settings')!.hidden=!this.session.options.players;
-    if(this.session.options.players)for(const p of this.session.options.players){const select=document.getElementById(`${p.id}-team-select`) as HTMLSelectElement;select.value=String(p.teamId);select.disabled=!menu;}
+    if(this.session.options.players)for(const p of this.session.options.players){const select=document.getElementById(`${p.id}-team-select`) as HTMLSelectElement;syncSelectValue(select,String(p.teamId));syncSelectDisabled(select,!menu);}
     const secondFaction=document.getElementById('ai-2-faction-select') as HTMLSelectElement,secondProfile=document.getElementById('ai-2-profile-select') as HTMLSelectElement;
     const secondDifficulty=document.getElementById('ai-2-difficulty-select') as HTMLSelectElement;
-    secondFaction.disabled=secondProfile.disabled=secondDifficulty.disabled=!menu;
-    if(this.session.options.players){secondFaction.value=this.session.options.players[2].faction;secondProfile.value=this.session.options.players[2].profile;secondDifficulty.value=this.session.options.players[2].difficulty??'';}
+    for(const select of [secondFaction,secondProfile,secondDifficulty])syncSelectDisabled(select,!menu);
+    if(this.session.options.players){syncSelectValue(secondFaction,this.session.options.players[2].faction);syncSelectValue(secondProfile,this.session.options.players[2].profile);syncSelectValue(secondDifficulty,this.session.options.players[2].difficulty??'');}
     const legend=document.getElementById('minimap-player-legend')!;legend.replaceChildren(...(this.session.options.players??[]).map(p=>{const span=document.createElement('span');span.textContent=`${p.id==='player'?'You':p.id==='enemy'?'AI1':'AI2'} T${p.teamId}`;const eliminated=!!this.multiplePlayers&&playerEliminated(this.currentMatch(),p.id);if(eliminated)span.textContent+=' ×';span.title=eliminated?'Eliminated: base destroyed; surviving assets inactive':'Active player';span.style.color=p.color;return span;}));
     document.getElementById('player-color-summary')!.textContent=this.session.options.players?this.session.options.players.map(p=>`${p.id==='player'?'Blue: You':p.id==='enemy'?'Red: AI 1':'Gold: AI 2'} · Team ${p.teamId}`).join(' / '):'Blue: You · Red: AI 1';
-    const mapSelect=document.querySelector<HTMLSelectElement>('#map-select')!;mapSelect.disabled=!menu||this.session.options.scenario!=='skirmish';mapSelect.value=shown.map;
-    const factionSelect=document.querySelector<HTMLSelectElement>('#faction-select')!;factionSelect.disabled=!menu;factionSelect.value=shown.faction??defaultFactions.player;const enemyFactionSelect=document.querySelector<HTMLSelectElement>('#enemy-faction-select')!;enemyFactionSelect.disabled=!menu||inCampaign;enemyFactionSelect.value=shown.enemyFaction??'';
-    this.scenarioSelect.disabled=!menu;this.scenarioSelect.value=this.session.options.scenario==='siege-test'?'survival':this.session.options.scenario;
-    const speed=document.querySelector<HTMLSelectElement>('#speed-select')!;speed.disabled=!menu;speed.value=String(this.session.options.speed??1);
-    const aiSelect=document.getElementById('ai-profile-select') as HTMLSelectElement;aiSelect.value=this.session.options.aiProfile??'balanced';aiSelect.disabled=!menu;document.getElementById('ai-profile-description')!.textContent=aiProfiles[this.session.options.aiProfile??'balanced'].description;
-    const difficulty=document.querySelector<HTMLSelectElement>('#difficulty-select')!;difficulty.disabled=!menu;difficulty.value=this.session.options.difficulty;
+    const mapSelect=document.querySelector<HTMLSelectElement>('#map-select')!;syncSelectDisabled(mapSelect,!menu||this.session.options.scenario!=='skirmish');syncSelectValue(mapSelect,shown.map);
+    const factionSelect=document.querySelector<HTMLSelectElement>('#faction-select')!;syncSelectDisabled(factionSelect,!menu);syncSelectValue(factionSelect,shown.faction??defaultFactions.player);const enemyFactionSelect=document.querySelector<HTMLSelectElement>('#enemy-faction-select')!;syncSelectDisabled(enemyFactionSelect,!menu||inCampaign);syncSelectValue(enemyFactionSelect,shown.enemyFaction??'');
+    syncSelectDisabled(this.scenarioSelect,!menu);syncSelectValue(this.scenarioSelect,this.session.options.scenario==='siege-test'?'survival':this.session.options.scenario);
+    const speed=document.querySelector<HTMLSelectElement>('#speed-select')!;syncSelectDisabled(speed,!menu);syncSelectValue(speed,String(this.session.options.speed??1));
+    const aiSelect=document.getElementById('ai-profile-select') as HTMLSelectElement;syncSelectValue(aiSelect,this.session.options.aiProfile??'balanced');syncSelectDisabled(aiSelect,!menu);document.getElementById('ai-profile-description')!.textContent=aiProfiles[this.session.options.aiProfile??'balanced'].description;
+    const difficulty=document.querySelector<HTMLSelectElement>('#difficulty-select')!;syncSelectDisabled(difficulty,!menu);syncSelectValue(difficulty,this.session.options.difficulty);
     for(const [id,show] of [['start-match',menu],['pause-match',phase==='playing'],['resume-match',phase==='paused'],['new-match',!menu],['restart-match',phase==='paused'||phase==='ended']] as const)(document.getElementById(id) as HTMLButtonElement).hidden=!show;
     (document.getElementById('gameplay-controls') as HTMLFieldSetElement).disabled=!this.gameplayActive();
     document.getElementById('hud')!.hidden=menu||phase==='ended';const game=document.getElementById('game')!,wasHidden=game.hidden;game.hidden=menu||phase==='ended';

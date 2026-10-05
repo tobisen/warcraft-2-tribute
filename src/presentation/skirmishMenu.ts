@@ -28,5 +28,5 @@ export function syncSkirmishMenu(active:boolean,options:MatchOptions):void{
  const opponent=options.enemyFaction??(faction==='crown'?'clans':'crown');element('skirmish-ai-1-description').textContent=`${factions[opponent].label}: ${factionDescriptions[opponent]}`;
  const selected=(element('ai-2-faction-select') as HTMLSelectElement).value,second=isFactionId(selected)?selected:'elves';
  element('skirmish-ai-2-description').textContent=`${factions[second].label}: ${factionDescriptions[second]} ${difficultyDescription[options.players?.[2].difficulty??options.difficulty]}`;
- const difficultyLabel=element('difficulty-select').closest('label')!.querySelector('span');if(difficultyLabel)difficultyLabel.textContent='Difficulty';
+ const difficultyLabel=element('difficulty-select').closest('label')!.querySelector('span');if(difficultyLabel&&difficultyLabel.textContent!=='Difficulty')difficultyLabel.textContent='Difficulty';
 }

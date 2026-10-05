@@ -21,7 +21,7 @@ export function syncCampaignFlow(active:boolean):void{
  const flow=document.getElementById('campaign-flow');if(!flow)return;
  if(active&&!wasActive)step='faction';wasActive=active;flow.hidden=!active;
  const moves:[[HTMLElement,Step],[HTMLElement,Step],[HTMLElement,Step],[HTMLElement,Step],[HTMLElement,Step]]=[[(element('faction-select') as HTMLSelectElement).closest('label')!,'faction'],[(element('difficulty-select') as HTMLSelectElement).closest('label')!,'difficulty'],[element('campaign-overview'),'mission'],[element('campaign-briefing'),'briefing'],[element('start-match'),'briefing']];
- for(const [node,stage] of moves){if(active){if(!slots.has(node)){const marker=document.createComment('campaign flow origin');node.before(marker);slots.set(node,marker);}const target=flow.querySelector(`[data-campaign-step="${stage}"]`)!;if(stage==='briefing')target.append(node);else target.prepend(node);}else{const marker=slots.get(node);if(marker){marker.replaceWith(node);slots.delete(node);}}}
+ for(const [node,stage] of moves){if(active){if(!slots.has(node)){const marker=document.createComment('campaign flow origin');node.before(marker);slots.set(node,marker);}const target=flow.querySelector(`[data-campaign-step="${stage}"]`)!;if(node.parentElement!==target){if(stage==='briefing')target.append(node);else target.prepend(node);}}else{const marker=slots.get(node);if(marker){marker.replaceWith(node);slots.delete(node);}}}
  for(const child of element('match-setup').children)if(child!==flow)(child as HTMLElement).style.display=active?'none':'';
  if(!active)return;
  for(const node of flow.querySelectorAll<HTMLElement>('[data-campaign-step]'))node.hidden=node.dataset.campaignStep!==step;
