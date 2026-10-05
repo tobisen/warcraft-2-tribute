@@ -126,3 +126,7 @@ Nästa task är att lösa168:s underlag, inte170.170–173 har inte startats.
 ## Mandat RTS-170–173
 
 Nytt uttryckligt uppdrag ersätter tidigare stopp efter169. HANDOFF:s senaste168/169-leverans gäller framför den äldre blockeringsnoteringen ovan. Genomför170–173 en task åt gången, återanvänd befintliga system, bevara style.css/docs/, verifiera riktat och i browser samt slutlig unit/build med strict typecheck/diff, docs och taskvis commit/push till origin/main utan force. Full regression vid etappgräns. Stanna efter173 med HANDOFF;174 startas inte. Ingen automatisk delegering.
+
+## Stopp efter RTS-173
+
+RTS-170–173 är Done och verifierade. Full regression1355/163, unit435/79 och build inklusive strict typecheck PASS; riktade browserflöden granskade. HANDOFF.md redovisar commits och begränsningar. Aktuellt mandat avslutas efter173;174 är Todo och startas inte utan nytt uppdrag. Användarens CSS/docs bevarade. Ingen ny CI/Pages-/ljud-/mänsklig balansverifiering hävdas.

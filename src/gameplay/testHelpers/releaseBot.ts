@@ -27,6 +27,7 @@ export function releasePlaythrough(scenario: MatchScenario, difficulty: Difficul
   const explicitFaction=options?.faction!==undefined||options?.campaignMission!==undefined;
   let match = createMatch(scenario, difficulty,factionsForPlayer(faction,options?.enemyFaction),options?.map??'arena'), spentWood = 0, spentGold = 0, saved = false,abilitiesUsed=0;
   if(options?.campaignMission){const definition=campaignMission(options.campaignMission)!;if(definition.scenario!==scenario)throw Error('Campaign scenario mismatch');const prior=campaignMissions.slice(0,campaignMissions.indexOf(definition)).map(m=>m.id);match=startCampaignMission({version:1,completed:prior},definition.id,difficulty,match.factions!)!;}
+  let observedAir=false;
   const retreatUntil = new Map<string, number>();
   const select = (id: string) => { match.gathering.units = match.gathering.units.map(u => ({ ...u, selected: u.id === id })); };
   for (let frame = 0; frame < 6000 && match.outcome === 'playing'; frame++) {
@@ -35,10 +36,12 @@ export function releasePlaythrough(scenario: MatchScenario, difficulty: Difficul
       const army = match.gathering.units.filter(u => u.kind === 'soldier');
       const pending = match.soldierProduction.queue?.length ?? 0;
       const modern=match.enemyProduction?.roster===true;
+      observedAir ||= modern&&visible.some(e=>e.role==='air');
+      const needsAA=observedAir&&army.filter(u=>u.kind==='soldier'&&u.archetype==='archer').length+(match.soldierProduction.queue??[]).filter(j=>j.kind==='archer').length<2;
       const tech=modern&&difficulty==='hard'&&match.map.id!=='river',definition=factions[faction];
-      const armyLimit=tech?4:modern?6:4;
+      const armyLimit=observedAir?6:tech?4:modern?6:4;
       const assaultReady=army.length>=(tech?4:modern?5:3)||(modern?army.length>=2&&match.waves.elapsedSeconds>=210:army.length>=(explicitFaction?1:2)&&match.waves.elapsedSeconds>=120);
-      const goldNeeded = tech?Math.max(definition.units.soldier.cost.gold,!match.placement.forge?definition.buildings.forge.cost.gold:0,match.research!.defense?0:definition.upgrades.defense.cost.gold,army.length>=4&&!match.research!.attack?definition.upgrades.attack.cost.gold:0):Math.max(0,armyLimit-army.length-pending)*definition.units.soldier.cost.gold;
+      const goldNeeded = needsAA?definition.units.archer.cost.gold:tech?Math.max(definition.units.soldier.cost.gold,!match.placement.forge?definition.buildings.forge.cost.gold:0,match.research!.defense?0:definition.upgrades.defense.cost.gold,army.length>=4&&!match.research!.attack?definition.upgrades.attack.cost.gold:0):Math.max(0,armyLimit-army.length-pending)*definition.units.soldier.cost.gold;
       for (const worker of [...match.gathering.units].filter(u => u.kind === 'worker')) {
         select(worker.id);
         const threatened = visible.some(e => (modern?!e.footprint&&e.kind!=='worker'&&e.kind!=='ship'&&e.order?.kind!=='idle'&&e.order?.kind!=='muster':e.kind !== 'base') && Math.hypot(e.position.x - worker.position.x, e.position.y - worker.position.y) < 160);
@@ -80,20 +83,20 @@ export function releasePlaythrough(scenario: MatchScenario, difficulty: Difficul
       }
       if(tech&&army.length+pending>=3&&!match.placement.forge&&match.gathering.wood>=definition.buildings.forge.cost.wood){
         const builder=match.gathering.units.find(u=>u.kind==='worker'&&u.order.kind!=='build');
-        if(builder){select(builder.id);const placed=placeBuilding(beginPlacement(match.placement,'forge'),{x:608,y:384},match.gathering.wood,placementObstacles(match.gathering),{map:match.map,gathering:match.gathering,enemies:visible});if(placed.gathering&&placed.map){spentWood+=match.gathering.wood-placed.gathering.wood;spentGold+=(match.gathering.goldBalance??0)-(placed.gathering.goldBalance??0);match={...match,map:placed.map,gathering:placed.gathering,placement:placed.placement};}}
+        if(builder){select(builder.id);for(const point of [{x:608,y:384},{x:544,y:512},{x:480,y:256}]){const placed=placeBuilding(beginPlacement(match.placement,'forge'),point,match.gathering.wood,placementObstacles(match.gathering),{map:match.map,gathering:match.gathering,enemies:visible});if(placed.gathering&&placed.map){spentWood+=match.gathering.wood-placed.gathering.wood;spentGold+=(match.gathering.goldBalance??0)-(placed.gathering.goldBalance??0);match={...match,map:placed.map,gathering:placed.gathering,placement:placed.placement};break;}}}
       }
       if(tech&&match.placement.forge?.construction.remainingSeconds===0&&!match.research!.job&&(!match.research!.defense||army.length>=4)){
         const kind=match.research!.defense<definition.upgrades.defense.maxLevel?'defense':'attack';
         const started=startResearch(match.gathering,match.research!,match.placement,kind);spentWood+=match.gathering.wood-started.gathering.wood;spentGold+=(match.gathering.goldBalance??0)-(started.gathering.goldBalance??0);match={...match,gathering:started.gathering,research:started.research};
       }
       if (barracksReady(match.placement) && army.length + pending < armyLimit&&(!tech||army.length+pending<3||match.research!.defense>0)) {
-        const queued = enqueueProduction(match.gathering, match.soldierProduction, { kind: 'barracks', footprint: match.placement.barracks,technology:technologyFor(match,'player'),unitType:'soldier' }, populationState(match.gathering, match.placement, [match.production, match.soldierProduction]));
+        const queued = enqueueProduction(match.gathering, match.soldierProduction, { kind: 'barracks', footprint: match.placement.barracks,technology:technologyFor(match,'player'),unitType:needsAA?'archer':'soldier' }, populationState(match.gathering, match.placement, [match.production, match.soldierProduction]));
         spentWood += match.gathering.wood - queued.gathering.wood; spentGold += (match.gathering.goldBalance ?? 0) - (queued.gathering.goldBalance ?? 0);
         match = { ...match, gathering: queued.gathering, soldierProduction: queued.production };
       }
       for (const soldier of army) {
         select(soldier.id);
-        const target = visible.filter(e=>canAttackDomain(soldier,e,faction)).filter(e => modern?(assaultReady||tech&&e.kind==='worker'&&e.work?.order.kind==='gather'&&Math.hypot(e.position.x-match.gathering.node.position.x,e.position.y-match.gathering.node.position.y)<=80||!e.footprint&&e.kind!=='worker'&&e.kind!=='ship'&&e.order?.kind!=='idle'&&e.order?.kind!=='muster'&&(Math.hypot(e.position.x-match.gathering.base.x,e.position.y-match.gathering.base.y)<240||match.gathering.units.some(u=>u.kind==='worker'&&Math.hypot(e.position.x-u.position.x,e.position.y-u.position.y)<140))):assaultReady||Math.hypot(e.position.x-match.gathering.base.x,e.position.y-match.gathering.base.y)<240||explicitFaction&&match.gathering.units.some(u=>u.kind==='worker'&&Math.hypot(e.position.x-u.position.x,e.position.y-u.position.y)<140)).sort((a,b) => (modern?(a.role==='catapult'?0:a.role?1:a.kind==='worker'?2:a.kind==='base'?4:3)-(b.role==='catapult'?0:b.role?1:b.kind==='worker'?2:b.kind==='base'?4:3):Number(a.kind === 'base') - Number(b.kind === 'base')) || Math.hypot(a.position.x - soldier.position.x,a.position.y - soldier.position.y) - Math.hypot(b.position.x - soldier.position.x,b.position.y - soldier.position.y))[0];
+        const target = visible.filter(e=>canAttackDomain(soldier,e,faction)).filter(e => modern?(assaultReady||tech&&e.kind==='worker'&&e.work?.order.kind==='gather'&&Math.hypot(e.position.x-match.gathering.node.position.x,e.position.y-match.gathering.node.position.y)<=80||!e.footprint&&e.kind!=='worker'&&e.kind!=='ship'&&e.order?.kind!=='idle'&&e.order?.kind!=='muster'&&(Math.hypot(e.position.x-match.gathering.base.x,e.position.y-match.gathering.base.y)<240||match.gathering.units.some(u=>u.kind==='worker'&&Math.hypot(e.position.x-u.position.x,e.position.y-u.position.y)<140))):assaultReady||Math.hypot(e.position.x-match.gathering.base.x,e.position.y-match.gathering.base.y)<240||explicitFaction&&match.gathering.units.some(u=>u.kind==='worker'&&Math.hypot(e.position.x-u.position.x,e.position.y-u.position.y)<140)).sort((a,b) => (modern?(soldier.kind==='soldier'&&soldier.archetype==='archer'&&a.role==='air'?-1:a.role==='catapult'?0:a.role?1:a.kind==='worker'?2:a.kind==='base'?4:3)-(soldier.kind==='soldier'&&soldier.archetype==='archer'&&b.role==='air'?-1:b.role==='catapult'?0:b.role?1:b.kind==='worker'?2:b.kind==='base'?4:3):Number(a.kind === 'base') - Number(b.kind === 'base')) || Math.hypot(a.position.x - soldier.position.x,a.position.y - soldier.position.y) - Math.hypot(b.position.x - soldier.position.x,b.position.y - soldier.position.y))[0];
         if((options?.abilities||modern)&&target&&Math.hypot(target.position.x-soldier.position.x,target.position.y-soldier.position.y)<80){const next=useAbility(match.gathering);if(next!==match.gathering)abilitiesUsed++;match.gathering=next;}
         if (target && (soldier.order.kind !== 'attack' || soldier.order.enemyId !== target.id)) match.gathering.units = orderAttack(match.gathering.units, target.id);
         else if(modern&&match.map.id==='river'&&!target&&!assaultReady&&Math.hypot(soldier.position.x-400,soldier.position.y-450)>40)match.gathering.units=commandGroupMove(match.gathering.units,{x:400,y:450},match.map);

@@ -1,28 +1,32 @@
-# Överlämning efter RTS-168–169
+# Överlämning RTS-170–173
 
-Datum2026-10-05. Användaren godkänner första luftrostern och tydligt märkta TEMP-ikoner, inte slutliga flygarsprites. RTS-168 gameplay Done (`83d01fe`, pushad); RTS-169 Done som första preliminära balanspass, verifierat före separat commit/push. Körningen stannar efter169; RTS-170 Hold Position, Patrol och köade orders är nästa roadmaptask och har inte startats. Ingen agentdelegering.
+Datum 2026-10-05. Uppdraget omfattar endast170–173; nästa roadmaptask är174 och startas inte. Ingen agentdelegering. RTS-170–173 är Done.170–172 är pushade;173 ingår i commit med titeln `RTS-173: compose and regroup AI armies`. Dess hash redovisas i slutrapporten och kan hämtas med `git log -1 --format=%h --grep="RTS-173: compose"`.
 
-## Status och implementation
+## Leverans
 
-- RTS-165 Done838f729,166 Done2cd36a6,167 Donefd9dfd3 (historiskt verifierade/pushade). De återimplementeras inte.
-- 168: Gryphon Rider/Wyvern Rider/Great Eagle/Gyrocopter/Airship. Befintlig barracks, Forge+attack1+defense1, tidig markarcher-AA. Domänbaserad navigation/vision/minimap/combat/production/supply/AI/Save/restart. TEMP-ikoner/porträtt med24px höjd/skugga; statiska, inga slutliga animationer. Sjö-AI:s markcap2 hindrar inte flygproduktion; boarding är mark-only.
-- 169:89 explicita actualcombat-scenarier, kostnadsjämförbara land/sea/air/magicgrupper, counters för alla fem raser. Warship air0.75× (12) men normal16damage; Eagle air1.25×(17.5), mark6.3. AI-byggnadspreflight ignorerar flygare och bevarar markblockering. Save42 migrerar41; gamla projektilmasker/skador/köer behålls, inga recipes omprisade. Transporttargets=[], befintliga spells markstrid-only.
-- Balans preliminär:25 ground-AA-korsrasfall vinner, fem nära meleegrupper slår AA. Bombare behöver eskort; Gyro är stark aircounter med svag markattack. Spells hjälper inte automatiskt en supportgrupp slå massmelee. Ingen mänsklig kiting/strategi/helmatchspeltest.
+- RTS-170 `31df7e6`: Hold utan förföljelse, Patrol och Shift-FIFO med32 order, kompakt status, avbrott/targetloss, Save43 och restart. Slutlig173-korrigering väntar på attack-move-slutmål före nästa köorder och adopterar nåbart Patrol-fallbackmål efter hinderändring.
+- RTS-171 `bcebde1`: separata kroppssäkra mål för mark/sjö/luft, nåbara alternativ och en bounded multi-goal-BFS per medlem/kommando. Befintlig trafik/separation används under rörelse.
+- RTS-172 `4b40f38`: Standard/Defensive/Offensive/Economic skilda från difficulty, datadriven expansion/produktion/försvar/anfall, preferences/highscores/Save44/restart.
+- RTS-173: fogbegränsad rollplan för front/ranged/siege/magic/air med egna betalade köer/tech, ett beslut per gameplaysekund, synligt försvar prioriteras av siege och försvagade/blockerade anfall omgrupperas. Befintliga meningsfulla spells och betald naval transport/landning återanvänds. Save45 migrerar44. Ingen ny enemy-warship-AI.
 
-## Verifiering
+RTS-160–164 är historiskt Done/pushade7d7290c/b7439ae/4658a0d/efbdd7d/874f761;168/16983d01fe/756b768 återimplementerades inte. Dessa historiska belägg är inte nya checks.
 
-168: unit446/80, berörda integrationer93/12, build/strict typecheck/diff PASS. Chromium fem raser×800/1280 fysisk production/selection/flight-over-building/Save/Load/airtargeting/combat/fullkö/restart, panelmått PASS.45PNG/browser.json i [rts-168](artifacts/rts-168), representativa femrasscreenshots visuellt granskade.
+## Ny verifiering
 
-169: riktade122/5 PASS,73 balansintegrationer/89 records PASS. Slutlig unit435/79, build inklusive strict typecheck och diff/lokala docslänkar PASS. Komplett slutregression1320/160 PASS526.62s. Unit435/79 PASS12.08s och build/strict typecheck PASS på slutliga roster-/testhelperändringar. Föregående fullkörning1314PASS/6FAIL krävde äldre rosterförväntningar uppdaterade till hela nya luftrostern; riktade32/2 PASS, inga svagare kostnads-/segerasserts. Chromium fem navalprofiler×native800×600/1280×720 fysisk airtarget, inflightSave42/Load och12HPimpact PASS;20PNG/[browserrapport](artifacts/rts-169/browser-naval-aa.json), fyra representativa före/efter/större bilder visuellt granskade. AI-browser fem raser native800 PASS med faktisk Scene.update: betald airproduktion, archerdefense och release vid fogloss;5PNG/browser-ai-air.json, Elf/Goblin-bilder visuellt granskade. Explicit bank/tech/armyfixture, ingen mänsklig helmatchekonomi. Äldre testbotar väljer nu lagliga synliga mål, bevarade victory/ledger/Save-asserts; tre riktade islandsfall och The Crossing PASS efter anpassningen. Balansmetod/ändrade values/resultat i [review](artifacts/rts-169/balance-review.md), [data](artifacts/rts-169/results.json).
+Taskvisa riktade tester:170142/14,17158/7,172152/10 PASS.173 targeted104/7 och final68/5 PASS, slutliga ordertester12/1 och air/groupMovement/orders37/3 PASS. Slutlig unit435/79 PASS8.89s; build inklusive strict typecheck PASS356ms med befintlig bundlevarning. Full etappregression1355 tester/163 filer PASS527.48s på slutlig kod. `git diff --check` PASS före dokumentavslut.
 
-Reproducerbart: npm test -- src/gameplay/air.test.ts src/gameplay/combinedArmsBalance.test.ts src/gameplay/navalCombat.test.ts. node scripts/check-combined-arms.mjs skriver rapport. Browserharness scripts/check-air.mjs, scripts/check-naval-air.mjs och scripts/check-air-ai.mjs använder extern Playwright/Chromium via W2T_PLAYWRIGHT_MODULE/W2T_BROWSER_EXECUTABLE. Lokal devserver http://127.0.0.1:5183/ (ursprungligt5182 upptaget). Ingen skeppad debug-API.
+Chromium:170 fysisk queue/Hold/Patrol/Stop/avmarkering/SaveLoad/restart800/1280;1714/24 arbetare genom64px öppen port800/1280;172tre profiler×800/1280 med oberoende difficulty/SaveLoad/restart och faktisk betald profilproduktion;173fem fraktioners betalda femrollsproduktion, fog-AA-release, fem meningsfulla casts, siege-towerskada och omgruppering PASS. Representativa screenshots visuellt granskade. Orderflöden återkontrollerade efter173:s orderkorrigering;173-browser återkontrollerad efter sista outside-world-fix.
 
-## Kvar och nästa
+[170](artifacts/rts-170/browser.json), [171](artifacts/rts-171/browser.json), [172](artifacts/rts-172/browser.json), [173](artifacts/rts-173/browser.json), [orderregression](artifacts/rts-173/order-regression/browser.json). Browserharness använder extern Playwright/Chrome via W2T_PLAYWRIGHT_MODULE/W2T_BROWSER_EXECUTABLE och lokal Vite5184. Explicit bank/tech/supply/camera-fixture används; ingen mänsklig helmatchekonomi eller FPS-mätning hävdas. Ingen skeppad debug-API.
 
-- [Slutlig airgrafik](assets/sources/air-168.md) Pending: fem godkända detaljrika silhuetter/referenser, transparenta spelassets, idle/fly/attack/death-animationer och porträtt. TEMP är användargodkänd implementationpresentation, inte färdiga slutassets.
-- [Casting-poser](assets/sources/magic-165.md) och [sjöreferenser](assets/sources/remaining-sprites.md) saknas fortsatt; Human/övriga landassets enligt155 är accepterade för tillfället.
-- RTS-157 In Progress: faktisk ljudlyssning kvar.158 In Progress:380 inspelningar/licensposter saknas; texter/fallback är inte inspelade röster.159 är användaraccepterad Done.
-- Mänskligt balansspeltest/airmicro/helmatchekonomi saknas; teknisk simulering skiljs från detta. Ny CI-/Pages-build inte separat kontrollerad. Befintlig bundlevarning kvarstår.
-- Användarens src/style.css SHA25695c3725250221ef8386519adecfb05db601103697d421e78e1b2bdf057141a5e är bevarad. Otrackade docs/ är utanför våra commits. main/origin används utan force/amend/historyrewrite.
+Regressionen avslöjade att testbotens enda Forge-plats blockerades av egen soldier. Botens tre lagliga kända byggplatser och betalda AA vid synligt lufthot löser detta utan ändrade gameplaykostnader, HP, seger-/Save-/ledgerasserts eller deadlines. Första fullkörningen avbröts för konkret orderkorrigering. Nästa1355/163 gav1349PASS/6FAIL: outside-world avbröt pågående flygorder (rättat) och äldre mixed-domain-test krävde idle trots171:s nya fallback (assertar nu kroppssäkra move-mål). Slutregression1355/163 PASS på rättad kod; misslyckade/avbrutna körningar räknas inte som PASS.
 
-Nästa roadmaptask170 kräver ny körning; inga senare tasks eller nya RTS-ID:n skapade. Slutlig flygarassetbearbetning hanteras separat under168:s kvarstående grafik, utan att gameplaystatus eller placeholders blandas ihop.
+## Kvar och stopp
+
+- [Slutlig airgrafik](assets/sources/air-168.md) kvar: godkända TEMP-ikoner/porträtt är statiska, inte slutliga sprites/animationer. [Casting-poser](assets/sources/magic-165.md) och [sjöreferenser](assets/sources/remaining-sprites.md) kvarstår.
+- RTS-157 faktisk ljudlyssning och RTS-158 egna/licensierade380 röstinspelningar/lyssning kvar; RTS-159 användaraccepterad Done.
+- Mänskligt balansspeltest, naturlig helmatchekonomi och uppmätt prestanda i stora matcher saknas. Normala supply/difficultycaps begränsar samtidiga roller; femrolls-browsern använder uttrycklig bank/tech/cap. Sjö-AI använder befintlig transportinvasion, inte en ny offensiv flotta.
+- Täta arbetarnas befintliga cargotexter kan överlappa; kropparnas separata platser verifierades. Ny CI/Pages-publicering och faktisk ljudlyssning har inte kontrollerats i denna etapp.
+- Användarens src/style.css SHA256 `95c3725250221ef8386519adecfb05db601103697d421e78e1b2bdf057141a5e` och otrackade docs/ bevarade, utanför våra commits. main/origin utan force/amend/history rewrite.
+
+Nästa task RTS-174 är Todo och kräver nytt uppdrag. Inga senare tasks har startats.

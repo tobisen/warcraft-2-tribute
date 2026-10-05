@@ -1772,3 +1772,7 @@ Warshipdefs har explicit targets och damageByDomain.air=.75, transports targets=
 ## RTS-172 – profiladapter
 
 `config/aiProfiles.ts` innehåller stabila IDs, presentation och policydata. Match adapterar difficulty-AISettings med profileAISettings; enemyPolicy/enemyExpansion läser minArmy/research/expansionvillkor från samma config. MatchOptions/preferenser/scene binder separat val, Save44 validerar/migrerar43. Highscores får valfri profile i partition och visning, äldre records behålls. Inget nytt ekonomisystem eller ny scen.
+
+## RTS-173 – sammansatta AI-arméer
+
+`config/combinedArmy.ts` definierar stabila roller/vikter/tidsgränser. `gameplay/combinedArmy.ts` observerar enemy-team-fog högst1/s och väljer nästa betalda recipe efter egna live/reservationskvoter och tech. Match passerar plan till befintlig enemyProduction; naval cap och actual supply bevaras. enemyAI återanvänder muster/grupporder för sekundbegränsad retreat/retry; combat prioriterar synliga försvar för siege. Befintlig enemySpells är oförändrad. Save45 validerar plan/clock, scene speglar endast detta matchstate. Ingen ny scen eller separat pathfinder.

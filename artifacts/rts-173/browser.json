@@ -1,0 +1,949 @@
+[
+  {
+    "faction": "crown",
+    "paid": {
+      "before": {
+        "wood": 1000,
+        "gold": 1000
+      },
+      "after": {
+        "wood": 725,
+        "gold": 915
+      },
+      "army": [
+        {
+          "id": "enemy-produced-1",
+          "kind": "unit",
+          "owner": "enemy",
+          "order": {
+            "kind": "idle"
+          },
+          "role": "soldier",
+          "hp": 60,
+          "position": {
+            "x": 600,
+            "y": 240
+          }
+        },
+        {
+          "id": "enemy-produced-2",
+          "kind": "unit",
+          "owner": "enemy",
+          "order": {
+            "kind": "idle"
+          },
+          "role": "archer",
+          "hp": 40,
+          "position": {
+            "x": 640,
+            "y": 240
+          },
+          "attackCooldown": 0
+        },
+        {
+          "id": "enemy-produced-3",
+          "kind": "unit",
+          "owner": "enemy",
+          "order": {
+            "kind": "idle"
+          },
+          "role": "catapult",
+          "hp": 80,
+          "position": {
+            "x": 680,
+            "y": 240
+          },
+          "attackCooldown": 0
+        },
+        {
+          "id": "enemy-produced-4",
+          "kind": "unit",
+          "owner": "enemy",
+          "order": {
+            "kind": "idle"
+          },
+          "mana": 73.99999999999962,
+          "role": "specialist",
+          "hp": 100,
+          "position": {
+            "x": 720,
+            "y": 240
+          }
+        },
+        {
+          "id": "enemy-produced-5",
+          "kind": "unit",
+          "owner": "enemy",
+          "order": {
+            "kind": "idle"
+          },
+          "role": "air",
+          "hp": 130,
+          "position": {
+            "x": 600,
+            "y": 280
+          }
+        }
+      ],
+      "plan": {
+        "weights": {
+          "soldier": 3,
+          "archer": 2,
+          "catapult": 1,
+          "specialist": 1,
+          "air": 1
+        },
+        "nextDecisionSeconds": 43.04995333333366
+      },
+      "elapsed": 43.049953333333676
+    },
+    "observations": {
+      "visible": 4,
+      "released": 2
+    },
+    "spell": {
+      "initialMana": 60,
+      "mana": 60,
+      "actual": {
+        "id": "enemy-produced-4",
+        "kind": "unit",
+        "owner": "enemy",
+        "order": {
+          "kind": "idle"
+        },
+        "mana": 40.60000000000001,
+        "role": "specialist",
+        "hp": 100,
+        "position": {
+          "x": 1040,
+          "y": 440
+        },
+        "spellCooldowns": {
+          "heal": 5.550046666666306
+        }
+      },
+      "ally": {
+        "id": "enemy-produced-1",
+        "kind": "unit",
+        "owner": "enemy",
+        "order": {
+          "kind": "idle"
+        },
+        "role": "soldier",
+        "hp": 55,
+        "position": {
+          "x": 1080,
+          "y": 440
+        }
+      },
+      "hostile": {
+        "id": "unit-4",
+        "kind": "soldier",
+        "archetype": "soldier",
+        "owner": "player",
+        "hp": 60,
+        "cargo": 0,
+        "selected": false,
+        "position": {
+          "x": 1060,
+          "y": 480
+        },
+        "target": {
+          "x": 1060,
+          "y": 480
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "autoDisabled": true,
+        "attackCooldown": 0
+      }
+    },
+    "tactics": {
+      "siege": {
+        "tower": {
+          "id": "tower-1",
+          "kind": "tower",
+          "owner": "player",
+          "hp": 115,
+          "level": 1,
+          "cooldown": 0.6,
+          "upgradeRemaining": null,
+          "footprint": {
+            "x": 1008,
+            "y": 512,
+            "width": 32,
+            "height": 32
+          },
+          "construction": {
+            "remainingSeconds": 0,
+            "builderId": null
+          },
+          "readyAfter": 0
+        },
+        "enemy": {
+          "id": "enemy-produced-3",
+          "kind": "unit",
+          "owner": "enemy",
+          "order": {
+            "kind": "attack-move",
+            "destination": {
+              "x": 400,
+              "y": 450
+            }
+          },
+          "role": "catapult",
+          "hp": 80,
+          "position": {
+            "x": 1224,
+            "y": 530.000001
+          },
+          "navigation": {
+            "commandNumber": 1,
+            "destination": {
+              "x": 1224,
+              "y": 530.000001
+            },
+            "waypoints": [],
+            "revision": 6,
+            "status": "arrived",
+            "goalKey": "attack:tower-1:1024:528",
+            "targetId": "tower-1",
+            "retryAfter": 0
+          },
+          "attackCooldown": 0.9999999999999986,
+          "ability": {
+            "activeSeconds": 2.0000000000000018,
+            "cooldownSeconds": 16.999999999999957
+          }
+        }
+      },
+      "regroup": {
+        "group": {
+          "id": "enemy-group-1",
+          "status": "muster",
+          "members": [
+            "enemy-produced-1",
+            "enemy-produced-6"
+          ],
+          "destinations": {
+            "enemy-produced-1": {
+              "x": 896,
+              "y": 320
+            },
+            "enemy-produced-6": {
+              "x": 896,
+              "y": 288
+            }
+          },
+          "startedAt": 12
+        },
+        "enemy": {
+          "id": "enemy-produced-1",
+          "kind": "unit",
+          "owner": "enemy",
+          "order": {
+            "kind": "muster",
+            "destination": {
+              "x": 896,
+              "y": 320
+            }
+          },
+          "role": "soldier",
+          "hp": 55,
+          "position": {
+            "x": 1056.736731934208,
+            "y": 415.6636867158017
+          },
+          "navigation": {
+            "commandNumber": 1,
+            "destination": {
+              "x": 896,
+              "y": 320
+            },
+            "waypoints": [
+              {
+                "x": 896,
+                "y": 320
+              }
+            ],
+            "revision": 6,
+            "status": "moving"
+          }
+        }
+      }
+    },
+    "errors": [],
+    "fixture": "Explicit completed own tech/bank; actual Scene.update paid roster and spell decisions. Existing TEMP air presentation; not a human whole-match balance playtest."
+  },
+  {
+    "faction": "clans",
+    "paid": {
+      "before": {
+        "wood": 1000,
+        "gold": 1000
+      },
+      "after": {
+        "wood": 738,
+        "gold": 911
+      },
+      "army": [
+        {
+          "id": "enemy-produced-1",
+          "kind": "unit",
+          "owner": "enemy",
+          "order": {
+            "kind": "idle"
+          },
+          "role": "soldier",
+          "hp": 66,
+          "position": {
+            "x": 600,
+            "y": 240
+          }
+        },
+        {
+          "id": "enemy-produced-2",
+          "kind": "unit",
+          "owner": "enemy",
+          "order": {
+            "kind": "idle"
+          },
+          "role": "archer",
+          "hp": 45,
+          "position": {
+            "x": 640,
+            "y": 240
+          },
+          "attackCooldown": 0
+        },
+        {
+          "id": "enemy-produced-3",
+          "kind": "unit",
+          "owner": "enemy",
+          "order": {
+            "kind": "idle"
+          },
+          "role": "catapult",
+          "hp": 90,
+          "position": {
+            "x": 680,
+            "y": 240
+          },
+          "attackCooldown": 0
+        },
+        {
+          "id": "enemy-produced-4",
+          "kind": "unit",
+          "owner": "enemy",
+          "order": {
+            "kind": "idle"
+          },
+          "mana": 53.00000000000018,
+          "role": "specialist",
+          "hp": 80,
+          "position": {
+            "x": 720,
+            "y": 240
+          }
+        },
+        {
+          "id": "enemy-produced-5",
+          "kind": "unit",
+          "owner": "enemy",
+          "order": {
+            "kind": "idle"
+          },
+          "role": "air",
+          "hp": 90,
+          "position": {
+            "x": 600,
+            "y": 280
+          }
+        }
+      ],
+      "plan": {
+        "weights": {
+          "soldier": 3,
+          "archer": 2,
+          "catapult": 1,
+          "specialist": 1,
+          "air": 1
+        },
+        "nextDecisionSeconds": 43.04992473333366
+      },
+      "elapsed": 43.049924733333675
+    },
+    "observations": {
+      "visible": 4,
+      "released": 2
+    },
+    "spell": {
+      "initialMana": 40,
+      "mana": 40,
+      "actual": {
+        "id": "enemy-produced-4",
+        "kind": "unit",
+        "owner": "enemy",
+        "order": {
+          "kind": "idle"
+        },
+        "mana": 20.60000000000001,
+        "role": "specialist",
+        "hp": 80,
+        "position": {
+          "x": 1040,
+          "y": 440
+        },
+        "spellCooldowns": {
+          "intimidate": 9.550075266666306
+        }
+      },
+      "ally": {
+        "id": "enemy-produced-1",
+        "kind": "unit",
+        "owner": "enemy",
+        "order": {
+          "kind": "idle"
+        },
+        "role": "soldier",
+        "hp": 33,
+        "position": {
+          "x": 1080,
+          "y": 440
+        }
+      },
+      "hostile": {
+        "id": "unit-4",
+        "kind": "soldier",
+        "archetype": "soldier",
+        "owner": "player",
+        "hp": 60,
+        "cargo": 0,
+        "selected": false,
+        "position": {
+          "x": 1060,
+          "y": 480
+        },
+        "target": {
+          "x": 1060,
+          "y": 480
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "autoDisabled": true,
+        "attackCooldown": 0,
+        "spellEffects": [
+          {
+            "spell": "intimidate",
+            "sourceFaction": "clans",
+            "remainingSeconds": 4.5500752666663065
+          }
+        ]
+      }
+    },
+    "errors": [],
+    "fixture": "Explicit completed own tech/bank; actual Scene.update paid roster and spell decisions. Existing TEMP air presentation; not a human whole-match balance playtest."
+  },
+  {
+    "faction": "elves",
+    "paid": {
+      "before": {
+        "wood": 1000,
+        "gold": 1000
+      },
+      "after": {
+        "wood": 736,
+        "gold": 899
+      },
+      "army": [
+        {
+          "id": "enemy-produced-1",
+          "kind": "unit",
+          "owner": "enemy",
+          "order": {
+            "kind": "idle"
+          },
+          "role": "soldier",
+          "hp": 50,
+          "position": {
+            "x": 600,
+            "y": 240
+          }
+        },
+        {
+          "id": "enemy-produced-2",
+          "kind": "unit",
+          "owner": "enemy",
+          "order": {
+            "kind": "idle"
+          },
+          "role": "archer",
+          "hp": 45,
+          "position": {
+            "x": 640,
+            "y": 240
+          },
+          "attackCooldown": 0
+        },
+        {
+          "id": "enemy-produced-3",
+          "kind": "unit",
+          "owner": "enemy",
+          "order": {
+            "kind": "idle"
+          },
+          "role": "catapult",
+          "hp": 60,
+          "position": {
+            "x": 680,
+            "y": 240
+          },
+          "attackCooldown": 0
+        },
+        {
+          "id": "enemy-produced-4",
+          "kind": "unit",
+          "owner": "enemy",
+          "order": {
+            "kind": "idle"
+          },
+          "mana": 75.00000000000001,
+          "role": "specialist",
+          "hp": 50,
+          "position": {
+            "x": 720,
+            "y": 240
+          },
+          "attackCooldown": 0
+        },
+        {
+          "id": "enemy-produced-5",
+          "kind": "unit",
+          "owner": "enemy",
+          "order": {
+            "kind": "idle"
+          },
+          "role": "air",
+          "hp": 60,
+          "position": {
+            "x": 600,
+            "y": 280
+          }
+        }
+      ],
+      "plan": {
+        "weights": {
+          "soldier": 3,
+          "archer": 2,
+          "catapult": 1,
+          "specialist": 1,
+          "air": 1
+        },
+        "nextDecisionSeconds": 41.033304666666965
+      },
+      "elapsed": 41.03330466666698
+    },
+    "observations": {
+      "visible": 4,
+      "released": 2
+    },
+    "spell": {
+      "initialMana": 60,
+      "mana": 60,
+      "actual": {
+        "id": "enemy-produced-4",
+        "kind": "unit",
+        "owner": "enemy",
+        "order": {
+          "kind": "idle"
+        },
+        "mana": 35.75,
+        "role": "specialist",
+        "hp": 50,
+        "position": {
+          "x": 1040,
+          "y": 440
+        },
+        "attackCooldown": 0,
+        "spellCooldowns": {
+          "renew": 7.566695333333003
+        }
+      },
+      "ally": {
+        "id": "enemy-produced-1",
+        "kind": "unit",
+        "owner": "enemy",
+        "order": {
+          "kind": "idle"
+        },
+        "role": "soldier",
+        "hp": 50,
+        "position": {
+          "x": 1080,
+          "y": 440
+        }
+      },
+      "hostile": {
+        "id": "unit-4",
+        "kind": "soldier",
+        "archetype": "soldier",
+        "owner": "player",
+        "hp": 60,
+        "cargo": 0,
+        "selected": false,
+        "position": {
+          "x": 1060,
+          "y": 480
+        },
+        "target": {
+          "x": 1060,
+          "y": 480
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "autoDisabled": true,
+        "attackCooldown": 0
+      }
+    },
+    "errors": [],
+    "fixture": "Explicit completed own tech/bank; actual Scene.update paid roster and spell decisions. Existing TEMP air presentation; not a human whole-match balance playtest."
+  },
+  {
+    "faction": "dwarves",
+    "paid": {
+      "before": {
+        "wood": 1000,
+        "gold": 1000
+      },
+      "after": {
+        "wood": 694,
+        "gold": 905
+      },
+      "army": [
+        {
+          "id": "enemy-produced-1",
+          "kind": "unit",
+          "owner": "enemy",
+          "order": {
+            "kind": "idle"
+          },
+          "role": "soldier",
+          "hp": 85,
+          "position": {
+            "x": 600,
+            "y": 240
+          }
+        },
+        {
+          "id": "enemy-produced-2",
+          "kind": "unit",
+          "owner": "enemy",
+          "order": {
+            "kind": "idle"
+          },
+          "role": "archer",
+          "hp": 55,
+          "position": {
+            "x": 640,
+            "y": 240
+          },
+          "attackCooldown": 0
+        },
+        {
+          "id": "enemy-produced-3",
+          "kind": "unit",
+          "owner": "enemy",
+          "order": {
+            "kind": "idle"
+          },
+          "role": "catapult",
+          "hp": 110,
+          "position": {
+            "x": 680,
+            "y": 240
+          },
+          "attackCooldown": 0
+        },
+        {
+          "id": "enemy-produced-4",
+          "kind": "unit",
+          "owner": "enemy",
+          "order": {
+            "kind": "idle"
+          },
+          "mana": 61.99999999999979,
+          "role": "specialist",
+          "hp": 140,
+          "position": {
+            "x": 720,
+            "y": 240
+          }
+        },
+        {
+          "id": "enemy-produced-5",
+          "kind": "unit",
+          "owner": "enemy",
+          "order": {
+            "kind": "idle"
+          },
+          "role": "air",
+          "hp": 95,
+          "position": {
+            "x": 600,
+            "y": 280
+          }
+        }
+      ],
+      "plan": {
+        "weights": {
+          "soldier": 3,
+          "archer": 2,
+          "catapult": 1,
+          "specialist": 1,
+          "air": 1
+        },
+        "nextDecisionSeconds": 50.033286666667095
+      },
+      "elapsed": 50.03328666666711
+    },
+    "observations": {
+      "visible": 4,
+      "released": 2
+    },
+    "spell": {
+      "initialMana": 50,
+      "mana": 50,
+      "actual": {
+        "id": "enemy-produced-4",
+        "kind": "unit",
+        "owner": "enemy",
+        "order": {
+          "kind": "idle"
+        },
+        "mana": 35.47999999999999,
+        "role": "specialist",
+        "hp": 140,
+        "position": {
+          "x": 1040,
+          "y": 440
+        },
+        "spellCooldowns": {
+          "mend": 7.566713333332872
+        }
+      },
+      "ally": {
+        "id": "enemy-produced-1",
+        "kind": "unit",
+        "owner": "enemy",
+        "order": {
+          "kind": "idle"
+        },
+        "role": "soldier",
+        "hp": 62.5,
+        "position": {
+          "x": 1080,
+          "y": 440
+        }
+      },
+      "hostile": {
+        "id": "unit-4",
+        "kind": "soldier",
+        "archetype": "soldier",
+        "owner": "player",
+        "hp": 60,
+        "cargo": 0,
+        "selected": false,
+        "position": {
+          "x": 1060,
+          "y": 480
+        },
+        "target": {
+          "x": 1060,
+          "y": 480
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "autoDisabled": true,
+        "attackCooldown": 0
+      }
+    },
+    "errors": [],
+    "fixture": "Explicit completed own tech/bank; actual Scene.update paid roster and spell decisions. Existing TEMP air presentation; not a human whole-match balance playtest."
+  },
+  {
+    "faction": "goblins",
+    "paid": {
+      "before": {
+        "wood": 1000,
+        "gold": 1000
+      },
+      "after": {
+        "wood": 737,
+        "gold": 896
+      },
+      "army": [
+        {
+          "id": "enemy-produced-1",
+          "kind": "unit",
+          "owner": "enemy",
+          "order": {
+            "kind": "idle"
+          },
+          "role": "soldier",
+          "hp": 40,
+          "position": {
+            "x": 600,
+            "y": 240
+          }
+        },
+        {
+          "id": "enemy-produced-2",
+          "kind": "unit",
+          "owner": "enemy",
+          "order": {
+            "kind": "idle"
+          },
+          "role": "archer",
+          "hp": 30,
+          "position": {
+            "x": 640,
+            "y": 240
+          },
+          "attackCooldown": 0
+        },
+        {
+          "id": "enemy-produced-3",
+          "kind": "unit",
+          "owner": "enemy",
+          "order": {
+            "kind": "idle"
+          },
+          "role": "catapult",
+          "hp": 55,
+          "position": {
+            "x": 680,
+            "y": 240
+          },
+          "attackCooldown": 0
+        },
+        {
+          "id": "enemy-produced-4",
+          "kind": "unit",
+          "owner": "enemy",
+          "order": {
+            "kind": "idle"
+          },
+          "mana": 58.000000000000256,
+          "role": "specialist",
+          "hp": 35,
+          "position": {
+            "x": 720,
+            "y": 240
+          },
+          "attackCooldown": 0
+        },
+        {
+          "id": "enemy-produced-5",
+          "kind": "unit",
+          "owner": "enemy",
+          "order": {
+            "kind": "idle"
+          },
+          "role": "air",
+          "hp": 140,
+          "position": {
+            "x": 600,
+            "y": 280
+          }
+        }
+      ],
+      "plan": {
+        "weights": {
+          "soldier": 3,
+          "archer": 2,
+          "catapult": 1,
+          "specialist": 1,
+          "air": 1
+        },
+        "nextDecisionSeconds": 42.04993333333365
+      },
+      "elapsed": 42.04993333333366
+    },
+    "observations": {
+      "visible": 4,
+      "released": 2
+    },
+    "spell": {
+      "initialMana": 40,
+      "mana": 40,
+      "actual": {
+        "id": "enemy-produced-4",
+        "kind": "unit",
+        "owner": "enemy",
+        "order": {
+          "kind": "idle"
+        },
+        "mana": 20.60000000000001,
+        "role": "specialist",
+        "hp": 35,
+        "position": {
+          "x": 1040,
+          "y": 440
+        },
+        "attackCooldown": 0,
+        "spellCooldowns": {
+          "corrode": 9.55006666666632
+        }
+      },
+      "ally": {
+        "id": "enemy-produced-1",
+        "kind": "unit",
+        "owner": "enemy",
+        "order": {
+          "kind": "idle"
+        },
+        "role": "soldier",
+        "hp": 20,
+        "position": {
+          "x": 1080,
+          "y": 440
+        }
+      },
+      "hostile": {
+        "id": "unit-4",
+        "kind": "soldier",
+        "archetype": "soldier",
+        "owner": "player",
+        "hp": 60,
+        "cargo": 0,
+        "selected": false,
+        "position": {
+          "x": 1060,
+          "y": 480
+        },
+        "target": {
+          "x": 1060,
+          "y": 480
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "autoDisabled": true,
+        "attackCooldown": 0,
+        "spellEffects": [
+          {
+            "spell": "corrode",
+            "sourceFaction": "goblins",
+            "remainingSeconds": 4.55006666666632
+          }
+        ]
+      }
+    },
+    "errors": [],
+    "fixture": "Explicit completed own tech/bank; actual Scene.update paid roster and spell decisions. Existing TEMP air presentation; not a human whole-match balance playtest."
+  }
+]

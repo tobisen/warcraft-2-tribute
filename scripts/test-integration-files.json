@@ -14,6 +14,7 @@
   "src/gameplay/coast.test.ts",
   "src/gameplay/combatNavigation.test.ts",
   "src/gameplay/combinedArmsBalance.test.ts",
+  "src/gameplay/combinedArmy.test.ts",
   "src/gameplay/commandOrders.test.ts",
   "src/gameplay/construction.test.ts",
   "src/gameplay/controlGroups.test.ts",

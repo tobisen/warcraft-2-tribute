@@ -1,7 +1,7 @@
 import {mkdir,writeFile} from 'node:fs/promises';
 import assert from 'node:assert/strict';
 const {chromium}=await import(process.env.W2T_PLAYWRIGHT_MODULE??'playwright-core');
-const browser=await chromium.launch({headless:true,executablePath:process.env.W2T_BROWSER_EXECUTABLE}),out='artifacts/rts-170',reports=[];
+const browser=await chromium.launch({headless:true,executablePath:process.env.W2T_BROWSER_EXECUTABLE}),out=process.env.W2T_SCREENSHOTS??'artifacts/rts-170',reports=[];
 await mkdir(out,{recursive:true});
 try {for(const width of [800,1280]){
  const height=width===800?600:720,page=await browser.newPage({viewport:{width,height}}),errors=[];page.on('pageerror',e=>errors.push(e.message));

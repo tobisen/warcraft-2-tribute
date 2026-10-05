@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**Aktuellt mandat RTS-170–173:** Nytt uttryckligt uppdrag ersätter stoppet efter169.170–172 Done;173 In Progress. En task åt gången med riktade tester/browser, slutchecks, docs och commit/push till origin/main. Stopp efter173 med HANDOFF;174 startas inte.160–164 och165–169 återimplementeras inte. Befintlig style.css och otrackade docs/ bevaras.
+**Aktuellt mandat RTS-170–173:** Nytt uttryckligt uppdrag ersätter stoppet efter169.170–173 Done; etappen avslutad före174. En task åt gången med riktade tester/browser, slutchecks, docs och commit/push till origin/main. Stopp efter173 med HANDOFF;174 startas inte.160–164 och165–169 återimplementeras inte. Befintlig style.css och otrackade docs/ bevaras.
 
 **Nytt mandat RTS-165–169:**165 Done (`838f729`),166 Done (`2cd36a6`),167 Done (`fd9dfd3`),168 Done gameplay (`83d01fe`, pushad);169 Done som preliminärt första balanspass. Slutlig flygargrafik återstår separat. Användarens bifogade uppdrag för165–173 anger etappstopp efter169 och ny chatt170–173.160–164 är verifierade och pushade;164 `874f761`. Befintliga ändringar bevaras.
 
@@ -4646,7 +4646,9 @@ Personlighet och svårighet är separata val.
 
 ## RTS-173 – AI med kombinerade arméer
 
-**Status:** Todo.
+**Status:** Done.
+
+**Leverans:** Fogbegränsad rollplan, betald front/ranged/siege/magic/air, synlig försvarsprioritet, omgruppering och befintlig naval transport/spells. Save45. Riktade104/7, final68/5 och air/group/orders37/3 PASS; slutlig unit435/79, build inklusive strict typecheck och full regression1355/163 PASS527.48s. Browser fem fraktioner betald sammansättning/fog/spells/siege/omgruppering PASS. Slutliga170-orderfixar och171 outside-world-guard verifierade. Begränsningar och nästa174 i [HANDOFF](HANDOFF.md).
 
 **Goal:** AI med kombinerade arméer.
 

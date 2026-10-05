@@ -137,6 +137,7 @@ export class BootScene extends Phaser.Scene {
   private enemyProduction?:EnemyProductionState;
   private scenario:MatchScenario=initialScenario(new URLSearchParams(window.location.search).get('scenario'));
   private difficulty:Difficulty=initialDifficulty(new URLSearchParams(window.location.search).get('difficulty')??getPreferences().game.difficulty);
+  private armyPlan?:import('../gameplay/combinedArmy').ArmyPlan;
   private session:MatchSession=createSession({aiProfile:getPreferences().game.aiProfile,scenario:this.scenario,difficulty:this.difficulty,map:scenarioConfig[this.scenario].map,faction:this.factions.player,enemyFaction:getPreferences().game.enemyFaction,speed:getPreferences().game.speed});
   private skipGameplayFrame=true;
   private scenarioSelect!:HTMLSelectElement;
@@ -981,7 +982,7 @@ export class BootScene extends Phaser.Scene {
     this.syncVisuals();
   }
 
-  private currentMatch():MatchState {return {...(this.session.options.aiProfile&&this.session.options.aiProfile!=='balanced'?{aiProfile:this.session.options.aiProfile}:{}),matchId:this.matchId,capture:this.capture,campaignMission:this.campaignMission,statLedger:this.statLedger,tutorial:this.tutorial,speed:this.session.options.speed??1,enemyNaval:this.enemyNaval,navy:this.navy,factions:{...this.factions},map:this.map,gathering:this.gathering,combat:this.combat,waves:this.waves,production:this.production,soldierProduction:this.soldierProduction,placement:this.placement,outcome:this.outcome,paused:!this.gameplayActive(),controlGroups:this.controlGroups,fog:this.fog,research:this.research,scenario:this.scenario,difficulty:this.difficulty,enemyProduction:this.enemyProduction,enemyAI:this.enemyAI,enemyConstruction:this.enemyConstruction,enemyPolicy:this.enemyPolicy,enemyRecovery:this.enemyRecovery,enemyKnowledge:this.enemyKnowledge};}
+  private currentMatch():MatchState {return {...(this.session.options.aiProfile&&this.session.options.aiProfile!=='balanced'?{aiProfile:this.session.options.aiProfile}:{}),armyPlan:this.armyPlan,matchId:this.matchId,capture:this.capture,campaignMission:this.campaignMission,statLedger:this.statLedger,tutorial:this.tutorial,speed:this.session.options.speed??1,enemyNaval:this.enemyNaval,navy:this.navy,factions:{...this.factions},map:this.map,gathering:this.gathering,combat:this.combat,waves:this.waves,production:this.production,soldierProduction:this.soldierProduction,placement:this.placement,outcome:this.outcome,paused:!this.gameplayActive(),controlGroups:this.controlGroups,fog:this.fog,research:this.research,scenario:this.scenario,difficulty:this.difficulty,enemyProduction:this.enemyProduction,enemyAI:this.enemyAI,enemyConstruction:this.enemyConstruction,enemyPolicy:this.enemyPolicy,enemyRecovery:this.enemyRecovery,enemyKnowledge:this.enemyKnowledge};}
 
   private addImpact(impact:Impact):void {
     if(!canAddImpact([...this.impacts.values()].map(e=>e.impact),impact))return;
@@ -1036,6 +1037,7 @@ export class BootScene extends Phaser.Scene {
     }
   }
   private applyMatch(match: MatchState): void {
+    this.armyPlan=match.armyPlan;
     this.matchId=match.matchId;
     this.capture=match.capture;
     this.campaignMission=match.campaignMission;

@@ -58,9 +58,9 @@ export function prepareOrders(m:MatchState):MatchState {
    const arrived=Math.hypot(u.position.x-leg.x,u.position.y-leg.y)<1;
    const returning=arrived?!mode.returning:mode.returning,destination=returning?mode.origin:mode.destination;
    const next=start(m,u,{kind:u.kind==='soldier'?'attack-move':'move',destination});
-   return {...next,commandMode:{...mode,returning},orderQueue:u.orderQueue};
+   return {...next,commandMode:{...mode,returning,...(returning?{origin:{...next.target}}:{destination:{...next.target}})},orderQueue:u.orderQueue};
   }
-  if(u.order.kind!=='idle'||!u.orderQueue?.length)return u;
+  if(u.order.kind!=='idle'||u.kind==='soldier'&&u.attackMoveTarget||!u.orderQueue?.length)return u;
   const pending=[...u.orderQueue];
   while(pending.length){const o=pending.shift()!;
    if(o.kind==='attack'&&!m.combat.enemies.some(e=>e.id===o.enemyId&&e.hp>0&&(!m.fog||entityVisible(m.fog,'player',e))))continue;

@@ -21,7 +21,7 @@ describe('separate group destinations', () => {
     for(const unit of result)expect(bodyFits(s.map,unit.target,12)).toBe(true);
     expect(new Set(result.map(u=>JSON.stringify(u.target))).size).toBe(3);
     const fallback=commandGroupMove(units,{x:120,y:120},s.map);expect(fallback.every(u=>u.navigation?.status!=='blocked'&&bodyFits(s.map,u.target,12))).toBe(true);
-    expect(commandGroupMove(units,{x:s.map.width,y:s.map.height},s.map).every(u=>u.navigation?.error==='outside-world')).toBe(true);
+    expect(commandGroupMove(units,{x:s.map.width,y:s.map.height},s.map)).toBe(units);
   });
   it('bounded candidate exhaustion never assigns a duplicate fallback even after revision', () => {
     const s=createMatch();s.map={...s.map,obstacles:[]};

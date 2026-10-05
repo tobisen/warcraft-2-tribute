@@ -1,3 +1,4 @@
+import {combinedArmyConfig} from '../config/combinedArmy';
 import {enemySoldier} from './enemyUnits';
 import type {FactionId} from '../config/factions';
 import { updateEnemyDefense,type PlayerVisibility } from './enemyDefense';
@@ -16,6 +17,17 @@ export function updateEnemyAI(state:EnemyAIState,combat:CombatState,map:WorldMap
  let groups=state.groups.map(g=>({...g,members:g.members.filter(id=>alive.has(id)),destinations:Object.fromEntries(Object.entries(g.destinations).filter(([id])=>alive.has(id)))})).filter(g=>g.members.length);
  const defense=updateEnemyDefense({...state,groups},combat,map,playerBase,playerUnits,settings,visible,faction);groups=defense.state.groups;
  let enemies=defense.combat.enemies,nextGroupNumber=state.nextGroupNumber,lastDispatchSeconds=state.lastDispatchSeconds;
+ // Tactical retreat is bounded to one decision per gameplay second. Existing muster timeout gates retry.
+ if(settings.regroup&&Math.floor(elapsedSeconds)!==Math.floor(state.elapsedSeconds))groups=groups.map(g=>{
+  if(g.status!=='attack')return g;
+  const time=elapsedSeconds-(g.dispatchedAt??elapsedSeconds),members=enemies.filter(e=>g.members.includes(e.id));
+  const weakened=g.members.length<Math.ceil(settings.groupSize/2)&&time>=combinedArmyConfig.retreatAfterSeconds;
+  const blocked=members.length>0&&members.every(e=>e.navigation?.status==='blocked')&&time>=combinedArmyConfig.blockedAfterSeconds;
+  if(!weakened&&!blocked)return g;
+  const orders=commandGroupMove(members.map(e=>({...enemySoldier(e,faction),selected:true})),settings.muster,map),byId=new Map(orders.map(u=>[u.id,u]));
+  enemies=enemies.map(e=>{const u=byId.get(e.id);return u?{...e,navigation:u.navigation,order:{kind:'muster' as const,destination:{...u.target}}}:e;});
+  return {...g,status:'muster',startedAt:elapsedSeconds,dispatchedAt:undefined,destinations:Object.fromEntries(orders.map(u=>[u.id,{...u.target}]))};
+ });
  const assigned=new Set([...groups.flatMap(g=>g.members),...defense.protectedIds]);
  const recruits=enemies.filter(e=>e.hp>0&&e.id.startsWith('enemy-produced-')&&!e.navalLanding&&!assigned.has(e.id)).sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}));
  for(const recruit of recruits){

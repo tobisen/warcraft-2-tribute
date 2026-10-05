@@ -147,7 +147,8 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
       distance:Math.hypot(t.footprint.x+t.footprint.width/2-enemy.position.x,t.footprint.y+t.footprint.height/2-enemy.position.y)}))
       .filter(t=>t.distance<=stats.aggroRange).sort((a,b)=>a.distance-b.distance
         ||priority[a.target.kind]-priority[b.target.kind]||a.target.id.localeCompare(b.target.id,'en',{numeric:true}));
-    const target=enemy.order?.kind==='defend'?knownTargets.find(t=>enemy.order?.kind==='defend'&&t.id===enemy.order.targetId):nearby[0]?.target??knownTargets.find(t=>t.kind==='base');
+    const siegeDefense=enemy.role==='catapult'?knownTargets.filter(t=>['tower','wall','gate'].includes(t.kind)&&Math.hypot(t.footprint.x+t.footprint.width/2-enemy.position.x,t.footprint.y+t.footprint.height/2-enemy.position.y)<=stats.aggroRange).sort((a,b)=>Math.hypot(a.footprint.x+a.footprint.width/2-enemy.position.x,a.footprint.y+a.footprint.height/2-enemy.position.y)-Math.hypot(b.footprint.x+b.footprint.width/2-enemy.position.x,b.footprint.y+b.footprint.height/2-enemy.position.y)||a.id.localeCompare(b.id))[0]:undefined;
+    const target=enemy.order?.kind==='defend'?knownTargets.find(t=>enemy.order?.kind==='defend'&&t.id===enemy.order.targetId):siegeDefense??nearby[0]?.target??knownTargets.find(t=>t.kind==='base');
     if(!target){
       if(enemy.order?.kind==='defend')return {...enemy,navigation:undefined,order:{kind:'idle' as const}};
       const goal=enemy.order?.kind==='attack-move'?enemy.order.destination:arenaConfig.base;

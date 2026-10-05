@@ -1,3 +1,4 @@
+import {replaceObstacles} from './map';
 import {createNavy} from './navy';
 import {prepareNavalCombat} from './navalCombat';
 import {describe,it,expect} from 'vitest';
@@ -57,6 +58,16 @@ describe('persistent commands and FIFO',()=>{
   const far=prepareNavalCombat(m.navy,[{...nearby,position:{x:850,y:220}}],2,m.map,1);expect(far.shots).toHaveLength(0);expect(far.navy!.ships[0].position).toEqual({x:208,y:512});
   m=issueOrder(m,{kind:'move',destination:{x:144,y:512}},true);expect(m.navy!.ships[0].orderQueue).toHaveLength(1);
   m.navy!.ships[0].role='transport';m=issueOrder(m,{kind:'attack',enemyId:'enemy-1'},true);expect(m.navy!.ships[0].orderQueue).toHaveLength(1);
+ });
+ it('finishes attack-move destination after target loss before starting the next Shift order',()=>{
+  const m=fixture();const soldier:Soldier={id:'unit-4',kind:'soldier',hp:60,cargo:0,position:{x:300,y:300},target:{x:500,y:300},attackMoveTarget:{x:500,y:300},selected:false,order:{kind:'idle'},orderQueue:[{kind:'hold'}]};m.gathering.units=[soldier];
+  const pending=prepareOrders(m).gathering.units[0];expect(pending.commandMode).toBeUndefined();expect(pending.orderQueue).toEqual([{kind:'hold'}]);expect(pending.kind==='soldier'&&pending.attackMoveTarget).toEqual({x:500,y:300});
+  m.gathering.units=[{...soldier,position:{x:500,y:300},attackMoveTarget:undefined}];const completed=prepareOrders(m).gathering.units[0];expect(completed.commandMode?.kind).toBe('hold');expect(completed.selected).toBe(false);
+ });
+ it('patrol adopts a reachable changed endpoint and reverses after arriving there',()=>{
+  const m=fixture(),u=m.gathering.units[0];u.commandMode={kind:'patrol',origin:{x:200,y:300},destination:{x:400,y:300},returning:false};u.position={x:300,y:300};u.order={kind:'idle'};m.map=replaceObstacles(m.map,[...m.map.obstacles,{x:400,y:284,width:64,height:64}]);
+  const moved=prepareOrders(m).gathering.units[0];expect(moved.target).not.toEqual({x:400,y:300});expect(moved.commandMode?.kind==='patrol'&&moved.commandMode.destination).toEqual(moved.target);
+  m.gathering.units=[{...moved,position:{...moved.target},order:{kind:'idle'}}];const reversed=prepareOrders(m).gathering.units[0];expect(reversed.commandMode?.kind==='patrol'&&reversed.commandMode.returning).toBe(true);expect(reversed.target).toEqual({x:200,y:300});
  });
  it('paused matches neither accept nor advance commands; blocks runaway queue growth',()=>{
   let m=issueOrder(fixture(),{kind:'hold'});for(let i=0;i<50;i++)m=issueOrder(m,{kind:'hold'},true);expect(m.gathering.units[0].orderQueue).toHaveLength(32);
