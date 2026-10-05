@@ -1,0 +1,3566 @@
+[
+  {
+    "width": 800,
+    "count": 4,
+    "initial": [
+      {
+        "target": {
+          "x": 544,
+          "y": 528
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 544,
+            "y": 528
+          },
+          "waypoints": [
+            {
+              "x": 464,
+              "y": 272
+            },
+            {
+              "x": 496,
+              "y": 272
+            },
+            {
+              "x": 528,
+              "y": 272
+            },
+            {
+              "x": 528,
+              "y": 304
+            },
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 528,
+              "y": 464
+            },
+            {
+              "x": 528,
+              "y": 496
+            },
+            {
+              "x": 544,
+              "y": 528
+            }
+          ],
+          "revision": 2,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 544,
+          "y": 496
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 544,
+            "y": 496
+          },
+          "waypoints": [
+            {
+              "x": 496,
+              "y": 272
+            },
+            {
+              "x": 528,
+              "y": 272
+            },
+            {
+              "x": 528,
+              "y": 304
+            },
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 528,
+              "y": 464
+            },
+            {
+              "x": 544,
+              "y": 496
+            }
+          ],
+          "revision": 2,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 512,
+          "y": 528
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 512,
+            "y": 528
+          },
+          "waypoints": [
+            {
+              "x": 528,
+              "y": 272
+            },
+            {
+              "x": 528,
+              "y": 304
+            },
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 528,
+              "y": 464
+            },
+            {
+              "x": 528,
+              "y": 496
+            },
+            {
+              "x": 512,
+              "y": 528
+            }
+          ],
+          "revision": 2,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 576,
+          "y": 528
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 576,
+            "y": 528
+          },
+          "waypoints": [
+            {
+              "x": 576,
+              "y": 528
+            }
+          ],
+          "revision": 2,
+          "status": "moving"
+        }
+      }
+    ],
+    "settled": [
+      {
+        "position": {
+          "x": 544,
+          "y": 528
+        },
+        "target": {
+          "x": 544,
+          "y": 528
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 544,
+            "y": 528
+          },
+          "waypoints": [],
+          "revision": 2,
+          "status": "arrived"
+        }
+      },
+      {
+        "position": {
+          "x": 552.0326002700601,
+          "y": 495.87037516864365
+        },
+        "target": {
+          "x": 544,
+          "y": 496
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 512,
+          "y": 528.0652005401204
+        },
+        "target": {
+          "x": 512,
+          "y": 528
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 576,
+          "y": 528
+        },
+        "target": {
+          "x": 576,
+          "y": 528
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 576,
+            "y": 528
+          },
+          "waypoints": [],
+          "revision": 2,
+          "status": "arrived"
+        }
+      }
+    ],
+    "errors": [],
+    "fixture": "Authored narrow open own gate; real Scene.update; physical drag-selection and right-click."
+  },
+  {
+    "width": 800,
+    "count": 24,
+    "initial": [
+      {
+        "target": {
+          "x": 544,
+          "y": 528
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 544,
+            "y": 528
+          },
+          "waypoints": [
+            {
+              "x": 464,
+              "y": 272
+            },
+            {
+              "x": 496,
+              "y": 272
+            },
+            {
+              "x": 528,
+              "y": 272
+            },
+            {
+              "x": 528,
+              "y": 304
+            },
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 528,
+              "y": 464
+            },
+            {
+              "x": 528,
+              "y": 496
+            },
+            {
+              "x": 544,
+              "y": 528
+            }
+          ],
+          "revision": 2,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 544,
+          "y": 496
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 544,
+            "y": 496
+          },
+          "waypoints": [
+            {
+              "x": 496,
+              "y": 272
+            },
+            {
+              "x": 528,
+              "y": 272
+            },
+            {
+              "x": 528,
+              "y": 304
+            },
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 528,
+              "y": 464
+            },
+            {
+              "x": 544,
+              "y": 496
+            }
+          ],
+          "revision": 2,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 512,
+          "y": 528
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 512,
+            "y": 528
+          },
+          "waypoints": [
+            {
+              "x": 528,
+              "y": 272
+            },
+            {
+              "x": 528,
+              "y": 304
+            },
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 528,
+              "y": 464
+            },
+            {
+              "x": 528,
+              "y": 496
+            },
+            {
+              "x": 512,
+              "y": 528
+            }
+          ],
+          "revision": 2,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 576,
+          "y": 528
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 576,
+            "y": 528
+          },
+          "waypoints": [
+            {
+              "x": 576,
+              "y": 528
+            }
+          ],
+          "revision": 2,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 544,
+          "y": 560
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 544,
+            "y": 560
+          },
+          "waypoints": [
+            {
+              "x": 544,
+              "y": 560
+            }
+          ],
+          "revision": 2,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 512,
+          "y": 496
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 512,
+            "y": 496
+          },
+          "waypoints": [
+            {
+              "x": 512,
+              "y": 496
+            }
+          ],
+          "revision": 2,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 576,
+          "y": 496
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 576,
+            "y": 496
+          },
+          "waypoints": [
+            {
+              "x": 464,
+              "y": 304
+            },
+            {
+              "x": 496,
+              "y": 304
+            },
+            {
+              "x": 528,
+              "y": 304
+            },
+            {
+              "x": 560,
+              "y": 304
+            },
+            {
+              "x": 560,
+              "y": 336
+            },
+            {
+              "x": 560,
+              "y": 368
+            },
+            {
+              "x": 560,
+              "y": 400
+            },
+            {
+              "x": 560,
+              "y": 432
+            },
+            {
+              "x": 560,
+              "y": 464
+            },
+            {
+              "x": 576,
+              "y": 496
+            }
+          ],
+          "revision": 2,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 512,
+          "y": 560
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 512,
+            "y": 560
+          },
+          "waypoints": [
+            {
+              "x": 496,
+              "y": 304
+            },
+            {
+              "x": 528,
+              "y": 304
+            },
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 528,
+              "y": 464
+            },
+            {
+              "x": 528,
+              "y": 496
+            },
+            {
+              "x": 528,
+              "y": 528
+            },
+            {
+              "x": 512,
+              "y": 560
+            }
+          ],
+          "revision": 2,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 576,
+          "y": 560
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 576,
+            "y": 560
+          },
+          "waypoints": [
+            {
+              "x": 528,
+              "y": 304
+            },
+            {
+              "x": 560,
+              "y": 304
+            },
+            {
+              "x": 560,
+              "y": 336
+            },
+            {
+              "x": 560,
+              "y": 368
+            },
+            {
+              "x": 560,
+              "y": 400
+            },
+            {
+              "x": 560,
+              "y": 432
+            },
+            {
+              "x": 560,
+              "y": 464
+            },
+            {
+              "x": 560,
+              "y": 496
+            },
+            {
+              "x": 560,
+              "y": 528
+            },
+            {
+              "x": 576,
+              "y": 560
+            }
+          ],
+          "revision": 2,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 544,
+          "y": 464
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 544,
+            "y": 464
+          },
+          "waypoints": [
+            {
+              "x": 528,
+              "y": 304
+            },
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 544,
+              "y": 464
+            }
+          ],
+          "revision": 2,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 480,
+          "y": 528
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 480,
+            "y": 528
+          },
+          "waypoints": [
+            {
+              "x": 528,
+              "y": 304
+            },
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 528,
+              "y": 464
+            },
+            {
+              "x": 528,
+              "y": 496
+            },
+            {
+              "x": 480,
+              "y": 528
+            }
+          ],
+          "revision": 2,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 608,
+          "y": 528
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 608,
+            "y": 528
+          },
+          "waypoints": [
+            {
+              "x": 560,
+              "y": 304
+            },
+            {
+              "x": 560,
+              "y": 336
+            },
+            {
+              "x": 560,
+              "y": 368
+            },
+            {
+              "x": 560,
+              "y": 400
+            },
+            {
+              "x": 592,
+              "y": 400
+            },
+            {
+              "x": 592,
+              "y": 432
+            },
+            {
+              "x": 592,
+              "y": 464
+            },
+            {
+              "x": 592,
+              "y": 496
+            },
+            {
+              "x": 608,
+              "y": 528
+            }
+          ],
+          "revision": 2,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 544,
+          "y": 592
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 544,
+            "y": 592
+          },
+          "waypoints": [
+            {
+              "x": 464,
+              "y": 336
+            },
+            {
+              "x": 496,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 528,
+              "y": 464
+            },
+            {
+              "x": 528,
+              "y": 496
+            },
+            {
+              "x": 528,
+              "y": 528
+            },
+            {
+              "x": 528,
+              "y": 560
+            },
+            {
+              "x": 544,
+              "y": 592
+            }
+          ],
+          "revision": 2,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 512,
+          "y": 464
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 512,
+            "y": 464
+          },
+          "waypoints": [
+            {
+              "x": 496,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 512,
+              "y": 464
+            }
+          ],
+          "revision": 2,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 576,
+          "y": 464
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 576,
+            "y": 464
+          },
+          "waypoints": [
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 560,
+              "y": 336
+            },
+            {
+              "x": 560,
+              "y": 368
+            },
+            {
+              "x": 560,
+              "y": 400
+            },
+            {
+              "x": 560,
+              "y": 432
+            },
+            {
+              "x": 576,
+              "y": 464
+            }
+          ],
+          "revision": 2,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 480,
+          "y": 496
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 480,
+            "y": 496
+          },
+          "waypoints": [
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 528,
+              "y": 464
+            },
+            {
+              "x": 480,
+              "y": 496
+            }
+          ],
+          "revision": 2,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 608,
+          "y": 496
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 608,
+            "y": 496
+          },
+          "waypoints": [
+            {
+              "x": 560,
+              "y": 336
+            },
+            {
+              "x": 560,
+              "y": 368
+            },
+            {
+              "x": 560,
+              "y": 400
+            },
+            {
+              "x": 592,
+              "y": 400
+            },
+            {
+              "x": 592,
+              "y": 432
+            },
+            {
+              "x": 592,
+              "y": 464
+            },
+            {
+              "x": 608,
+              "y": 496
+            }
+          ],
+          "revision": 2,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 480,
+          "y": 560
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 480,
+            "y": 560
+          },
+          "waypoints": [
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 528,
+              "y": 464
+            },
+            {
+              "x": 528,
+              "y": 496
+            },
+            {
+              "x": 528,
+              "y": 528
+            },
+            {
+              "x": 480,
+              "y": 560
+            }
+          ],
+          "revision": 2,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 608,
+          "y": 560
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 608,
+            "y": 560
+          },
+          "waypoints": [
+            {
+              "x": 464,
+              "y": 336
+            },
+            {
+              "x": 496,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 560,
+              "y": 336
+            },
+            {
+              "x": 560,
+              "y": 368
+            },
+            {
+              "x": 560,
+              "y": 400
+            },
+            {
+              "x": 592,
+              "y": 400
+            },
+            {
+              "x": 592,
+              "y": 432
+            },
+            {
+              "x": 592,
+              "y": 464
+            },
+            {
+              "x": 592,
+              "y": 496
+            },
+            {
+              "x": 592,
+              "y": 528
+            },
+            {
+              "x": 608,
+              "y": 560
+            }
+          ],
+          "revision": 2,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 512,
+          "y": 592
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 512,
+            "y": 592
+          },
+          "waypoints": [
+            {
+              "x": 496,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 528,
+              "y": 464
+            },
+            {
+              "x": 528,
+              "y": 496
+            },
+            {
+              "x": 528,
+              "y": 528
+            },
+            {
+              "x": 528,
+              "y": 560
+            },
+            {
+              "x": 512,
+              "y": 592
+            }
+          ],
+          "revision": 2,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 576,
+          "y": 592
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 576,
+            "y": 592
+          },
+          "waypoints": [
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 560,
+              "y": 336
+            },
+            {
+              "x": 560,
+              "y": 368
+            },
+            {
+              "x": 560,
+              "y": 400
+            },
+            {
+              "x": 560,
+              "y": 432
+            },
+            {
+              "x": 560,
+              "y": 464
+            },
+            {
+              "x": 560,
+              "y": 496
+            },
+            {
+              "x": 560,
+              "y": 528
+            },
+            {
+              "x": 560,
+              "y": 560
+            },
+            {
+              "x": 576,
+              "y": 592
+            }
+          ],
+          "revision": 2,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 480,
+          "y": 464
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 480,
+            "y": 464
+          },
+          "waypoints": [
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 480,
+              "y": 464
+            }
+          ],
+          "revision": 2,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 608,
+          "y": 464
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 608,
+            "y": 464
+          },
+          "waypoints": [
+            {
+              "x": 560,
+              "y": 336
+            },
+            {
+              "x": 560,
+              "y": 368
+            },
+            {
+              "x": 560,
+              "y": 400
+            },
+            {
+              "x": 592,
+              "y": 400
+            },
+            {
+              "x": 592,
+              "y": 432
+            },
+            {
+              "x": 608,
+              "y": 464
+            }
+          ],
+          "revision": 2,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 480,
+          "y": 592
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 480,
+            "y": 592
+          },
+          "waypoints": [
+            {
+              "x": 480,
+              "y": 592
+            }
+          ],
+          "revision": 2,
+          "status": "moving"
+        }
+      }
+    ],
+    "settled": [
+      {
+        "position": {
+          "x": 544,
+          "y": 528
+        },
+        "target": {
+          "x": 544,
+          "y": 528
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 544,
+            "y": 528
+          },
+          "waypoints": [],
+          "revision": 2,
+          "status": "arrived"
+        }
+      },
+      {
+        "position": {
+          "x": 550.9727787790571,
+          "y": 493.2528819577092
+        },
+        "target": {
+          "x": 544,
+          "y": 496
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 504.19340056860165,
+          "y": 523.1999999999999
+        },
+        "target": {
+          "x": 512,
+          "y": 528
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 581.5999989999999,
+          "y": 526.4100825040947
+        },
+        "target": {
+          "x": 576,
+          "y": 528
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 551.4588955732944,
+          "y": 560.0342527942252
+        },
+        "target": {
+          "x": 544,
+          "y": 560
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 501.3151506809565,
+          "y": 496
+        },
+        "target": {
+          "x": 512,
+          "y": 496
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 576,
+          "y": 496
+        },
+        "target": {
+          "x": 576,
+          "y": 496
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 576,
+            "y": 496
+          },
+          "waypoints": [],
+          "revision": 2,
+          "status": "arrived"
+        }
+      },
+      {
+        "position": {
+          "x": 507.2,
+          "y": 560
+        },
+        "target": {
+          "x": 512,
+          "y": 560
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 576,
+          "y": 560
+        },
+        "target": {
+          "x": 576,
+          "y": 560
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 576,
+            "y": 560
+          },
+          "waypoints": [],
+          "revision": 2,
+          "status": "arrived"
+        }
+      },
+      {
+        "position": {
+          "x": 546.9038950119836,
+          "y": 469.2528809577092
+        },
+        "target": {
+          "x": 544,
+          "y": 464
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 480,
+          "y": 528
+        },
+        "target": {
+          "x": 480,
+          "y": 528
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 480,
+            "y": 528
+          },
+          "waypoints": [],
+          "revision": 2,
+          "status": "arrived"
+        }
+      },
+      {
+        "position": {
+          "x": 617.5999999999999,
+          "y": 526.562871180899
+        },
+        "target": {
+          "x": 608,
+          "y": 528
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 544,
+          "y": 592
+        },
+        "target": {
+          "x": 544,
+          "y": 592
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 544,
+            "y": 592
+          },
+          "waypoints": [],
+          "revision": 2,
+          "status": "arrived"
+        }
+      },
+      {
+        "position": {
+          "x": 501.0665347994244,
+          "y": 464
+        },
+        "target": {
+          "x": 512,
+          "y": 464
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 593.5579270801691,
+          "y": 467.3004176082867
+        },
+        "target": {
+          "x": 576,
+          "y": 464
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 477.3151496809565,
+          "y": 496
+        },
+        "target": {
+          "x": 480,
+          "y": 496
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 619.2000010000002,
+          "y": 496.3980028787734
+        },
+        "target": {
+          "x": 608,
+          "y": 496
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 480,
+          "y": 560
+        },
+        "target": {
+          "x": 480,
+          "y": 560
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 480,
+            "y": 560
+          },
+          "waypoints": [],
+          "revision": 2,
+          "status": "arrived"
+        }
+      },
+      {
+        "position": {
+          "x": 608,
+          "y": 560
+        },
+        "target": {
+          "x": 608,
+          "y": 560
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 608,
+            "y": 560
+          },
+          "waypoints": [],
+          "revision": 2,
+          "status": "arrived"
+        }
+      },
+      {
+        "position": {
+          "x": 512,
+          "y": 592.5177881465887
+        },
+        "target": {
+          "x": 512,
+          "y": 592
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 576,
+          "y": 592
+        },
+        "target": {
+          "x": 576,
+          "y": 592
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 576,
+            "y": 592
+          },
+          "waypoints": [],
+          "revision": 2,
+          "status": "arrived"
+        }
+      },
+      {
+        "position": {
+          "x": 477.0665337994244,
+          "y": 464
+        },
+        "target": {
+          "x": 480,
+          "y": 464
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 621.4542888343761,
+          "y": 462.97863108935195
+        },
+        "target": {
+          "x": 608,
+          "y": 464
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 480,
+          "y": 592
+        },
+        "target": {
+          "x": 480,
+          "y": 592
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 480,
+            "y": 592
+          },
+          "waypoints": [],
+          "revision": 2,
+          "status": "arrived"
+        }
+      }
+    ],
+    "errors": [],
+    "fixture": "Authored narrow open own gate; real Scene.update; physical drag-selection and right-click."
+  },
+  {
+    "width": 1280,
+    "count": 4,
+    "initial": [
+      {
+        "target": {
+          "x": 544,
+          "y": 528
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 544,
+            "y": 528
+          },
+          "waypoints": [
+            {
+              "x": 464,
+              "y": 272
+            },
+            {
+              "x": 496,
+              "y": 272
+            },
+            {
+              "x": 528,
+              "y": 272
+            },
+            {
+              "x": 528,
+              "y": 304
+            },
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 528,
+              "y": 464
+            },
+            {
+              "x": 528,
+              "y": 496
+            },
+            {
+              "x": 544,
+              "y": 528
+            }
+          ],
+          "revision": 1,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 544,
+          "y": 496
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 544,
+            "y": 496
+          },
+          "waypoints": [
+            {
+              "x": 496,
+              "y": 272
+            },
+            {
+              "x": 528,
+              "y": 272
+            },
+            {
+              "x": 528,
+              "y": 304
+            },
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 528,
+              "y": 464
+            },
+            {
+              "x": 544,
+              "y": 496
+            }
+          ],
+          "revision": 1,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 512,
+          "y": 528
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 512,
+            "y": 528
+          },
+          "waypoints": [
+            {
+              "x": 528,
+              "y": 272
+            },
+            {
+              "x": 528,
+              "y": 304
+            },
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 528,
+              "y": 464
+            },
+            {
+              "x": 528,
+              "y": 496
+            },
+            {
+              "x": 512,
+              "y": 528
+            }
+          ],
+          "revision": 1,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 576,
+          "y": 528
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 576,
+            "y": 528
+          },
+          "waypoints": [
+            {
+              "x": 576,
+              "y": 528
+            }
+          ],
+          "revision": 1,
+          "status": "moving"
+        }
+      }
+    ],
+    "settled": [
+      {
+        "position": {
+          "x": 544,
+          "y": 528
+        },
+        "target": {
+          "x": 544,
+          "y": 528
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 544,
+            "y": 528
+          },
+          "waypoints": [],
+          "revision": 1,
+          "status": "arrived"
+        }
+      },
+      {
+        "position": {
+          "x": 552.0326002700601,
+          "y": 495.87037516864365
+        },
+        "target": {
+          "x": 544,
+          "y": 496
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 512,
+          "y": 528.0652005401204
+        },
+        "target": {
+          "x": 512,
+          "y": 528
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 576,
+          "y": 528
+        },
+        "target": {
+          "x": 576,
+          "y": 528
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 576,
+            "y": 528
+          },
+          "waypoints": [],
+          "revision": 1,
+          "status": "arrived"
+        }
+      }
+    ],
+    "errors": [],
+    "fixture": "Authored narrow open own gate; real Scene.update; physical drag-selection and right-click."
+  },
+  {
+    "width": 1280,
+    "count": 24,
+    "initial": [
+      {
+        "target": {
+          "x": 544,
+          "y": 528
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 544,
+            "y": 528
+          },
+          "waypoints": [
+            {
+              "x": 464,
+              "y": 272
+            },
+            {
+              "x": 496,
+              "y": 272
+            },
+            {
+              "x": 528,
+              "y": 272
+            },
+            {
+              "x": 528,
+              "y": 304
+            },
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 528,
+              "y": 464
+            },
+            {
+              "x": 528,
+              "y": 496
+            },
+            {
+              "x": 544,
+              "y": 528
+            }
+          ],
+          "revision": 1,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 544,
+          "y": 496
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 544,
+            "y": 496
+          },
+          "waypoints": [
+            {
+              "x": 496,
+              "y": 272
+            },
+            {
+              "x": 528,
+              "y": 272
+            },
+            {
+              "x": 528,
+              "y": 304
+            },
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 528,
+              "y": 464
+            },
+            {
+              "x": 544,
+              "y": 496
+            }
+          ],
+          "revision": 1,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 512,
+          "y": 528
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 512,
+            "y": 528
+          },
+          "waypoints": [
+            {
+              "x": 528,
+              "y": 272
+            },
+            {
+              "x": 528,
+              "y": 304
+            },
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 528,
+              "y": 464
+            },
+            {
+              "x": 528,
+              "y": 496
+            },
+            {
+              "x": 512,
+              "y": 528
+            }
+          ],
+          "revision": 1,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 576,
+          "y": 528
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 576,
+            "y": 528
+          },
+          "waypoints": [
+            {
+              "x": 576,
+              "y": 528
+            }
+          ],
+          "revision": 1,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 544,
+          "y": 560
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 544,
+            "y": 560
+          },
+          "waypoints": [
+            {
+              "x": 544,
+              "y": 560
+            }
+          ],
+          "revision": 1,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 512,
+          "y": 496
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 512,
+            "y": 496
+          },
+          "waypoints": [
+            {
+              "x": 512,
+              "y": 496
+            }
+          ],
+          "revision": 1,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 576,
+          "y": 496
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 576,
+            "y": 496
+          },
+          "waypoints": [
+            {
+              "x": 464,
+              "y": 304
+            },
+            {
+              "x": 496,
+              "y": 304
+            },
+            {
+              "x": 528,
+              "y": 304
+            },
+            {
+              "x": 560,
+              "y": 304
+            },
+            {
+              "x": 560,
+              "y": 336
+            },
+            {
+              "x": 560,
+              "y": 368
+            },
+            {
+              "x": 560,
+              "y": 400
+            },
+            {
+              "x": 560,
+              "y": 432
+            },
+            {
+              "x": 560,
+              "y": 464
+            },
+            {
+              "x": 576,
+              "y": 496
+            }
+          ],
+          "revision": 1,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 512,
+          "y": 560
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 512,
+            "y": 560
+          },
+          "waypoints": [
+            {
+              "x": 496,
+              "y": 304
+            },
+            {
+              "x": 528,
+              "y": 304
+            },
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 528,
+              "y": 464
+            },
+            {
+              "x": 528,
+              "y": 496
+            },
+            {
+              "x": 528,
+              "y": 528
+            },
+            {
+              "x": 512,
+              "y": 560
+            }
+          ],
+          "revision": 1,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 576,
+          "y": 560
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 576,
+            "y": 560
+          },
+          "waypoints": [
+            {
+              "x": 528,
+              "y": 304
+            },
+            {
+              "x": 560,
+              "y": 304
+            },
+            {
+              "x": 560,
+              "y": 336
+            },
+            {
+              "x": 560,
+              "y": 368
+            },
+            {
+              "x": 560,
+              "y": 400
+            },
+            {
+              "x": 560,
+              "y": 432
+            },
+            {
+              "x": 560,
+              "y": 464
+            },
+            {
+              "x": 560,
+              "y": 496
+            },
+            {
+              "x": 560,
+              "y": 528
+            },
+            {
+              "x": 576,
+              "y": 560
+            }
+          ],
+          "revision": 1,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 544,
+          "y": 464
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 544,
+            "y": 464
+          },
+          "waypoints": [
+            {
+              "x": 528,
+              "y": 304
+            },
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 544,
+              "y": 464
+            }
+          ],
+          "revision": 1,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 480,
+          "y": 528
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 480,
+            "y": 528
+          },
+          "waypoints": [
+            {
+              "x": 528,
+              "y": 304
+            },
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 528,
+              "y": 464
+            },
+            {
+              "x": 528,
+              "y": 496
+            },
+            {
+              "x": 480,
+              "y": 528
+            }
+          ],
+          "revision": 1,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 608,
+          "y": 528
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 608,
+            "y": 528
+          },
+          "waypoints": [
+            {
+              "x": 560,
+              "y": 304
+            },
+            {
+              "x": 560,
+              "y": 336
+            },
+            {
+              "x": 560,
+              "y": 368
+            },
+            {
+              "x": 560,
+              "y": 400
+            },
+            {
+              "x": 592,
+              "y": 400
+            },
+            {
+              "x": 592,
+              "y": 432
+            },
+            {
+              "x": 592,
+              "y": 464
+            },
+            {
+              "x": 592,
+              "y": 496
+            },
+            {
+              "x": 608,
+              "y": 528
+            }
+          ],
+          "revision": 1,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 544,
+          "y": 592
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 544,
+            "y": 592
+          },
+          "waypoints": [
+            {
+              "x": 464,
+              "y": 336
+            },
+            {
+              "x": 496,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 528,
+              "y": 464
+            },
+            {
+              "x": 528,
+              "y": 496
+            },
+            {
+              "x": 528,
+              "y": 528
+            },
+            {
+              "x": 528,
+              "y": 560
+            },
+            {
+              "x": 544,
+              "y": 592
+            }
+          ],
+          "revision": 1,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 512,
+          "y": 464
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 512,
+            "y": 464
+          },
+          "waypoints": [
+            {
+              "x": 496,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 512,
+              "y": 464
+            }
+          ],
+          "revision": 1,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 576,
+          "y": 464
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 576,
+            "y": 464
+          },
+          "waypoints": [
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 560,
+              "y": 336
+            },
+            {
+              "x": 560,
+              "y": 368
+            },
+            {
+              "x": 560,
+              "y": 400
+            },
+            {
+              "x": 560,
+              "y": 432
+            },
+            {
+              "x": 576,
+              "y": 464
+            }
+          ],
+          "revision": 1,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 480,
+          "y": 496
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 480,
+            "y": 496
+          },
+          "waypoints": [
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 528,
+              "y": 464
+            },
+            {
+              "x": 480,
+              "y": 496
+            }
+          ],
+          "revision": 1,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 608,
+          "y": 496
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 608,
+            "y": 496
+          },
+          "waypoints": [
+            {
+              "x": 560,
+              "y": 336
+            },
+            {
+              "x": 560,
+              "y": 368
+            },
+            {
+              "x": 560,
+              "y": 400
+            },
+            {
+              "x": 592,
+              "y": 400
+            },
+            {
+              "x": 592,
+              "y": 432
+            },
+            {
+              "x": 592,
+              "y": 464
+            },
+            {
+              "x": 608,
+              "y": 496
+            }
+          ],
+          "revision": 1,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 480,
+          "y": 560
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 480,
+            "y": 560
+          },
+          "waypoints": [
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 528,
+              "y": 464
+            },
+            {
+              "x": 528,
+              "y": 496
+            },
+            {
+              "x": 528,
+              "y": 528
+            },
+            {
+              "x": 480,
+              "y": 560
+            }
+          ],
+          "revision": 1,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 608,
+          "y": 560
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 608,
+            "y": 560
+          },
+          "waypoints": [
+            {
+              "x": 464,
+              "y": 336
+            },
+            {
+              "x": 496,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 560,
+              "y": 336
+            },
+            {
+              "x": 560,
+              "y": 368
+            },
+            {
+              "x": 560,
+              "y": 400
+            },
+            {
+              "x": 592,
+              "y": 400
+            },
+            {
+              "x": 592,
+              "y": 432
+            },
+            {
+              "x": 592,
+              "y": 464
+            },
+            {
+              "x": 592,
+              "y": 496
+            },
+            {
+              "x": 592,
+              "y": 528
+            },
+            {
+              "x": 608,
+              "y": 560
+            }
+          ],
+          "revision": 1,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 512,
+          "y": 592
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 512,
+            "y": 592
+          },
+          "waypoints": [
+            {
+              "x": 496,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 528,
+              "y": 464
+            },
+            {
+              "x": 528,
+              "y": 496
+            },
+            {
+              "x": 528,
+              "y": 528
+            },
+            {
+              "x": 528,
+              "y": 560
+            },
+            {
+              "x": 512,
+              "y": 592
+            }
+          ],
+          "revision": 1,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 576,
+          "y": 592
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 576,
+            "y": 592
+          },
+          "waypoints": [
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 560,
+              "y": 336
+            },
+            {
+              "x": 560,
+              "y": 368
+            },
+            {
+              "x": 560,
+              "y": 400
+            },
+            {
+              "x": 560,
+              "y": 432
+            },
+            {
+              "x": 560,
+              "y": 464
+            },
+            {
+              "x": 560,
+              "y": 496
+            },
+            {
+              "x": 560,
+              "y": 528
+            },
+            {
+              "x": 560,
+              "y": 560
+            },
+            {
+              "x": 576,
+              "y": 592
+            }
+          ],
+          "revision": 1,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 480,
+          "y": 464
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 480,
+            "y": 464
+          },
+          "waypoints": [
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 368
+            },
+            {
+              "x": 528,
+              "y": 400
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 480,
+              "y": 464
+            }
+          ],
+          "revision": 1,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 608,
+          "y": 464
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 608,
+            "y": 464
+          },
+          "waypoints": [
+            {
+              "x": 560,
+              "y": 336
+            },
+            {
+              "x": 560,
+              "y": 368
+            },
+            {
+              "x": 560,
+              "y": 400
+            },
+            {
+              "x": 592,
+              "y": 400
+            },
+            {
+              "x": 592,
+              "y": 432
+            },
+            {
+              "x": 608,
+              "y": 464
+            }
+          ],
+          "revision": 1,
+          "status": "moving"
+        }
+      },
+      {
+        "target": {
+          "x": 480,
+          "y": 592
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 480,
+            "y": 592
+          },
+          "waypoints": [
+            {
+              "x": 480,
+              "y": 592
+            }
+          ],
+          "revision": 1,
+          "status": "moving"
+        }
+      }
+    ],
+    "settled": [
+      {
+        "position": {
+          "x": 544,
+          "y": 528
+        },
+        "target": {
+          "x": 544,
+          "y": 528
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 544,
+            "y": 528
+          },
+          "waypoints": [],
+          "revision": 1,
+          "status": "arrived"
+        }
+      },
+      {
+        "position": {
+          "x": 550.9727787790571,
+          "y": 493.2528819577092
+        },
+        "target": {
+          "x": 544,
+          "y": 496
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 504.19340056860165,
+          "y": 523.1999999999999
+        },
+        "target": {
+          "x": 512,
+          "y": 528
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 581.5999989999999,
+          "y": 526.4100825040947
+        },
+        "target": {
+          "x": 576,
+          "y": 528
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 551.4588955732944,
+          "y": 560.0342527942252
+        },
+        "target": {
+          "x": 544,
+          "y": 560
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 501.3151506809565,
+          "y": 496
+        },
+        "target": {
+          "x": 512,
+          "y": 496
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 576,
+          "y": 496
+        },
+        "target": {
+          "x": 576,
+          "y": 496
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 576,
+            "y": 496
+          },
+          "waypoints": [],
+          "revision": 1,
+          "status": "arrived"
+        }
+      },
+      {
+        "position": {
+          "x": 507.2,
+          "y": 560
+        },
+        "target": {
+          "x": 512,
+          "y": 560
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 576,
+          "y": 560
+        },
+        "target": {
+          "x": 576,
+          "y": 560
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 576,
+            "y": 560
+          },
+          "waypoints": [],
+          "revision": 1,
+          "status": "arrived"
+        }
+      },
+      {
+        "position": {
+          "x": 546.9038950119836,
+          "y": 469.2528809577092
+        },
+        "target": {
+          "x": 544,
+          "y": 464
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 480,
+          "y": 528
+        },
+        "target": {
+          "x": 480,
+          "y": 528
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 480,
+            "y": 528
+          },
+          "waypoints": [],
+          "revision": 1,
+          "status": "arrived"
+        }
+      },
+      {
+        "position": {
+          "x": 617.5999999999999,
+          "y": 526.562871180899
+        },
+        "target": {
+          "x": 608,
+          "y": 528
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 544,
+          "y": 592
+        },
+        "target": {
+          "x": 544,
+          "y": 592
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 544,
+            "y": 592
+          },
+          "waypoints": [],
+          "revision": 1,
+          "status": "arrived"
+        }
+      },
+      {
+        "position": {
+          "x": 501.0665347994244,
+          "y": 464
+        },
+        "target": {
+          "x": 512,
+          "y": 464
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 593.5579270801691,
+          "y": 467.3004176082867
+        },
+        "target": {
+          "x": 576,
+          "y": 464
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 477.3151496809565,
+          "y": 496
+        },
+        "target": {
+          "x": 480,
+          "y": 496
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 619.2000010000002,
+          "y": 496.3980028787734
+        },
+        "target": {
+          "x": 608,
+          "y": 496
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 480,
+          "y": 560
+        },
+        "target": {
+          "x": 480,
+          "y": 560
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 480,
+            "y": 560
+          },
+          "waypoints": [],
+          "revision": 1,
+          "status": "arrived"
+        }
+      },
+      {
+        "position": {
+          "x": 608,
+          "y": 560
+        },
+        "target": {
+          "x": 608,
+          "y": 560
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 608,
+            "y": 560
+          },
+          "waypoints": [],
+          "revision": 1,
+          "status": "arrived"
+        }
+      },
+      {
+        "position": {
+          "x": 512,
+          "y": 592.5177881465887
+        },
+        "target": {
+          "x": 512,
+          "y": 592
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 576,
+          "y": 592
+        },
+        "target": {
+          "x": 576,
+          "y": 592
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 576,
+            "y": 592
+          },
+          "waypoints": [],
+          "revision": 1,
+          "status": "arrived"
+        }
+      },
+      {
+        "position": {
+          "x": 477.0665337994244,
+          "y": 464
+        },
+        "target": {
+          "x": 480,
+          "y": 464
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 621.4542888343761,
+          "y": 462.97863108935195
+        },
+        "target": {
+          "x": 608,
+          "y": 464
+        },
+        "order": {
+          "kind": "idle"
+        }
+      },
+      {
+        "position": {
+          "x": 480,
+          "y": 592
+        },
+        "target": {
+          "x": 480,
+          "y": 592
+        },
+        "order": {
+          "kind": "idle"
+        },
+        "route": {
+          "commandNumber": 1,
+          "destination": {
+            "x": 480,
+            "y": 592
+          },
+          "waypoints": [],
+          "revision": 1,
+          "status": "arrived"
+        }
+      }
+    ],
+    "errors": [],
+    "fixture": "Authored narrow open own gate; real Scene.update; physical drag-selection and right-click."
+  }
+]

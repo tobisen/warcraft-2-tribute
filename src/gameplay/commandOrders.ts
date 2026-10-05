@@ -24,20 +24,24 @@ function start(m:MatchState,u:Unit|Ship,o:QueuedOrder):Unit|Ship {
  if(u.kind==='ship'){
   const single={...m,navy:{...m.navy!,ships:[selected as Ship]}};
   const moved=o.kind==='attack'?attackShips(single,o.enemyId)?.ships[0]:o.kind==='move'||o.kind==='patrol'?commandShips(single,o.destination)?.ships[0]:selected;
-  return {...moved!,...(o.kind==='patrol'?{commandMode:{kind:'patrol' as const,origin:{...u.position},destination:{...o.destination},returning:false}}:{}),selected:u.selected};
+  return {...moved!,...(o.kind==='patrol'?{commandMode:{kind:'patrol' as const,origin:{...u.position},destination:{...moved!.target},returning:false}}:{}),selected:u.selected};
  }
  const land=selected as Unit;
  const next=o.kind==='attack'?orderAttack([land],o.enemyId)[0]:o.kind==='gather'?orderUnits([land],u.position,resourceNodes(m.gathering).find(n=>n.id===o.nodeId))[0]:o.kind==='attack-move'||o.kind==='patrol'&&u.kind==='soldier'?commandAttackMove([land],o.destination,m.map)[0]:o.kind==='move'||o.kind==='patrol'?commandGroupMove([land],o.destination,m.map)[0]:land;
- return {...next,selected:u.selected,...(o.kind==='patrol'?{commandMode:{kind:'patrol' as const,origin:{...u.position},destination:{...o.destination},returning:false}}:{})};
+ return {...next,selected:u.selected,...(o.kind==='patrol'?{commandMode:{kind:'patrol' as const,origin:{...u.position},destination:{...next.target},returning:false}}:{})};
 }
 /** Shift appends only supported commands. Selection never changes as orders advance. */
 export function issueOrder(m:MatchState,o:QueuedOrder,append=false):MatchState {
  if(m.paused||m.outcome!=='playing')return m;
- const group=o.kind==='move'||o.kind==='attack-move'?new Map((o.kind==='move'?commandGroupMove:commandAttackMove)(m.gathering.units.map(u=>({...u,selected:u.selected&&(!append||u.order.kind==='idle'&&!u.commandMode&&!u.orderQueue?.length)})),o.destination,m.map).map(u=>[u.id,u])):undefined;
+ const destination='destination' in o?o.destination:undefined;
+ const group=destination?new Map((o.kind==='attack-move'?commandAttackMove:commandGroupMove)(m.gathering.units,destination,m.map).map(u=>[u.id,u])):undefined;
+ const shipGroup=destination&&o.kind!=='attack-move'?new Map((commandShips(m,destination)?.ships??[]).map(u=>[u.id,u])):undefined;
  const apply=(u:Unit|Ship):Unit|Ship=>{
   if(!u.selected||!supports(u,o))return u;
-  if(append&&(u.order.kind!=='idle'||u.commandMode||u.orderQueue?.length))return {...u,orderQueue:[...(u.orderQueue??[]),structuredClone(o)].slice(0,orderQueueLimit)};
-  return u.kind!=='ship'&&group?{...group.get(u.id)!,selected:u.selected}:start(m,u,o);
+  const allocated=u.kind==='ship'?shipGroup?.get(u.id):group?.get(u.id);
+  const command=destination&&allocated?{...o,destination:{...allocated.target}} as QueuedOrder:o;
+  if(append&&(u.order.kind!=='idle'||u.commandMode||u.orderQueue?.length))return {...u,orderQueue:[...(u.orderQueue??[]),structuredClone(command)].slice(0,orderQueueLimit)};
+  return (o.kind==='move'||o.kind==='attack-move')&&allocated?{...allocated,selected:u.selected}:start(m,u,command);
  };
  return {...m,gathering:{...m.gathering,units:m.gathering.units.map(u=>apply(u) as Unit)},...(m.navy?{navy:{...m.navy,ships:m.navy.ships.map(u=>apply(u) as Ship)}}:{})};
 }

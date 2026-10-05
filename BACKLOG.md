@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**Aktuellt mandat RTS-170–173:** Nytt uttryckligt uppdrag ersätter stoppet efter169.170 Done;171 In Progress;172–173 Todo. En task åt gången med riktade tester/browser, slutchecks, docs och commit/push till origin/main. Stopp efter173 med HANDOFF;174 startas inte.160–164 och165–169 återimplementeras inte. Befintlig style.css och otrackade docs/ bevaras.
+**Aktuellt mandat RTS-170–173:** Nytt uttryckligt uppdrag ersätter stoppet efter169.170–171 Done;172 In Progress;173 Todo. En task åt gången med riktade tester/browser, slutchecks, docs och commit/push till origin/main. Stopp efter173 med HANDOFF;174 startas inte.160–164 och165–169 återimplementeras inte. Befintlig style.css och otrackade docs/ bevaras.
 
 **Nytt mandat RTS-165–169:**165 Done (`838f729`),166 Done (`2cd36a6`),167 Done (`fd9dfd3`),168 Done gameplay (`83d01fe`, pushad);169 Done som preliminärt första balanspass. Slutlig flygargrafik återstår separat. Användarens bifogade uppdrag för165–173 anger etappstopp efter169 och ny chatt170–173.160–164 är verifierade och pushade;164 `874f761`. Befintliga ändringar bevaras.
 
@@ -4600,7 +4600,9 @@ Visa aktuella orders.
 
 ## RTS-171 – Formationer och gruppnavigation
 
-**Status:** Todo.
+**Status:** Done.
+
+**Leverans:** Gemensam stabil formationsallocator för land/air/ships, storleksanpassad spacing och bounded kandidatfält upp till17×17. Blockerad central plats använder kroppssäkra nåbara alternativ; större kroppar först, separata domänplatser och en bounded multi-goal-BFS per enhet/kommando. Befintlig trafik/separation/routelivscykel bevaras; inga formationsomtag per frame. Shift-kö och Patrol får separata slutplatser. Riktade58/7, unit435/79 och build med strict typecheck PASS. Chromium4/24 units×800/1280 fysisk drag/rightclick och öppen own-gatepassage PASS; [artefakter](artifacts/rts-171).128 blandade enheter och water-safe ships verifierade i tester.
 
 **Goal:** Formationer och gruppnavigation.
 

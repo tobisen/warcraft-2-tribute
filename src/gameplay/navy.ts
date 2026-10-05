@@ -1,3 +1,4 @@
+import {allocateFormation} from './formations';
 import type {OrderState} from './commandOrders';
 import {isAir} from './domains';
 import {factionForTeam} from '../config/factions';
@@ -65,7 +66,11 @@ export function trainShip(m:MatchState,role:'warship'|'transport'='warship'):Mat
  if(!canTrainShip(m,role))return m;const recipe=role==='transport'?factionForTeam(m,'player').naval.units.transport:factionForTeam(m,'player').naval.units.warship;const navy=m.navy!,p=navy.production,number=p.nextJobNumber??1,job={id:`harbor-job-${number}`,kind:role,supply:recipe.supply,cost:{...recipe.cost},durationSeconds:recipe.durationSeconds,remainingSeconds:recipe.durationSeconds};
  return {...m,gathering:payCost(m.gathering,job.cost),navy:{...navy,production:{...p,queue:[...(p.queue??[]),job],nextJobNumber:number+1,remainingSeconds:p.remainingSeconds??job.durationSeconds}}};
 }
-export function commandShips(m:MatchState,target:Position):NavyState|undefined {return m.navy?{...m.navy,ships:m.navy.ships.map(s=>{if(!s.selected)return s;const navigation=planDomainRoute(m.map,'water',s.position,target,shipRecipe(m,s.role).size/2,(s.navigation?.commandNumber??0)+1);return {...s,commandMode:undefined,orderQueue:undefined,target:{...target},navigation,order:{kind:navigation.status==='moving'?'move' as const:'idle' as const}};})}:undefined;}
+export function commandShips(m:MatchState,target:Position):NavyState|undefined {
+ if(!m.navy)return undefined;
+ const water=domainMap(m.map,'water'),routes=allocateFormation(m.navy.ships.filter(s=>s.selected).map(s=>({id:s.id,position:s.position,half:shipRecipe(m,s.role).size/2,domain:'water',map:water,commandNumber:(s.navigation?.commandNumber??0)+1})),target);
+ return {...m.navy,ships:m.navy.ships.map(s=>{const navigation=routes.get(s.id);return navigation?{...s,commandMode:undefined,orderQueue:undefined,target:{...navigation.destination},navigation,order:{kind:navigation.status==='moving'?'move' as const:'idle' as const}}:s;})};
+}
 export function updateNavy(m:MatchState,delta:number):MatchState {
  if(!m.navy||m.outcome!=='playing'||m.paused||m.combat.baseHP<=0)return m;
  let navy=m.navy,gathering=m.gathering;

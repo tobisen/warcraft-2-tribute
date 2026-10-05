@@ -134,3 +134,20 @@ export function updateMappedMove(unit: Unit, map: WorldMap, delta: number, gate?
   return {...unit,position:step.position,navigation:step.route,
     order:{kind:step.route.status==='moving'?'move':'idle'}};
 }
+
+/** One bounded search for all free formation slots, rather than one failed BFS per slot. */
+export function findFormationRoute(map:WorldMap,start:Position,candidates:readonly Position[],half:number):{destination:Position;waypoints:Position[]}|undefined {
+ if(!bodyFits(map,start,half)||!candidates.length)return undefined;
+ const first=candidates[0];if(same(start,first))return {destination:first,waypoints:[]};if(segmentFits(map,start,first,half))return {destination:first,waypoints:[{...first}]};
+ const goals=new Map<string,{destination:Position;index:number}>();
+ candidates.forEach((destination,index)=>{for(const tile of connectors(map,destination,half))if(!goals.has(key(tile)))goals.set(key(tile),{destination,index});});
+ const queue=connectors(map,start,half),parent=new Map<string,Tile|null>(queue.map(t=>[key(t),null]));
+ let best:{tile:Tile;destination:Position;index:number}|undefined;
+ for(let index=0;index<queue.length&&index<navigationConfig.maxVisited;index++){
+  const tile=queue[index],center=tileCenter(map,tile)!,goal=goals.get(key(tile));
+  if(goal&&(!best||goal.index<best.index)){best={...goal,tile};if(goal.index===0)break;}
+  for(const [dx,dy]of [[0,-1],[1,0],[0,1],[-1,0]]){const neighbor={column:tile.column+dx,row:tile.row+dy};if(parent.has(key(neighbor)))continue;const next=tileCenter(map,neighbor);if(next&&segmentFits(map,center,next,half)){parent.set(key(neighbor),tile);queue.push(neighbor);}}
+ }
+ if(!best)return undefined;
+ const route:Position[]=[];let current:Tile|null=best.tile;while(current){route.unshift(tileCenter(map,current)!);current=parent.get(key(current))??null;}if(!same(route[route.length-1],best.destination))route.push({...best.destination});return {destination:best.destination,waypoints:route.filter((p,i)=>i!==0||!same(p,start))};
+}

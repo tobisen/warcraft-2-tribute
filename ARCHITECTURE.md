@@ -1764,3 +1764,7 @@ Warshipdefs har explicit targets och damageByDomain.air=.75, transports targets=
 ## RTS-170 – kommandon
 
 `gameplay/commandOrders.ts` äger bestående Hold/Patrol och kompatibel FIFO för Unit/Ship, adapterar befintliga orderfunktioner och startar nästa order före simulation. Acquisition/combat respektive navalCombat begränsar Hold till faktisk räckvidd; separation håller kroppen fast. Save43 validerar mode/endpoints/orderkö och migrerar42. Scenen håller endast Patrol-targeting och Shift-input; selectionInfo härleder status. Inga nya scenes eller debug-API.
+
+## RTS-171 – formationer
+
+`gameplay/formations.ts` adapterar FormationMember(id/body/domain/map) till separata RouteState, återanvänds av groupMovement och commandShips. `navigation.findFormationRoute` gör en bounded sökning över fria kandidatanslutningar med befintlig swept-body/BFS. Domänkartor och deras hinder ändras inte. commandOrders adapterar fördelade slutplatser för Shift/Patrol, Save43-format behålls. Befintlig trafik/separation och revisionsstyrd routing sköter själva förflyttningen.
