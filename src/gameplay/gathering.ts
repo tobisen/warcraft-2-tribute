@@ -41,7 +41,7 @@ export interface Soldier extends SelectableUnit, SpellState, importOrderState {
   navigation?: RouteState;
   kind: 'soldier';
   owner?:'player';
-  order: { kind: 'idle' } | { kind: 'move' } | { kind: 'attack'; enemyId: string };
+  order: { kind: 'idle' } | { kind: 'move' } | {kind:'hunt';animalId:string} | { kind: 'attack'; enemyId: string };
   hp: number;
   cargo: 0;
 }

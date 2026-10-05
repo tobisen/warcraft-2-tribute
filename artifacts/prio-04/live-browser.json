@@ -1,0 +1,24 @@
+[
+  {
+    "width": 800,
+    "liveSceneUpdate": true,
+    "movingHeadClick": true,
+    "physicalHunt": true,
+    "damageDeathCleanup": true,
+    "normalIdle": true,
+    "corpseFade": true,
+    "startClock": 4.8,
+    "deathClock": 6.580966666666648
+  },
+  {
+    "width": 1280,
+    "liveSceneUpdate": true,
+    "movingHeadClick": true,
+    "physicalHunt": true,
+    "damageDeathCleanup": true,
+    "normalIdle": true,
+    "corpseFade": true,
+    "startClock": 4.8,
+    "deathClock": 6.597396666666649
+  }
+]

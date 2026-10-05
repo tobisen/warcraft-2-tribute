@@ -26,7 +26,7 @@ function reachable(unit: Soldier, enemy: Enemy, map?: WorldMap,faction?:FactionI
 export function acquireTargets(units: Unit[], enemies: Enemy[], map?: WorldMap,
   visible: EnemyVisibility = allEnemiesVisible,faction?:FactionId): Unit[] {
   return units.map(unit => {
-    if(unit.kind!=='soldier'||unit.hp<=0||unit.autoDisabled) return unit;
+    if(unit.kind!=='soldier'||unit.hp<=0||unit.autoDisabled||unit.order.kind==='hunt') return unit;
     if(unit.order.kind==='move'&&!unit.attackMoveTarget) return unit;
     // An explicit attack has priority and is never replaced by proximity targeting.
     if(unit.order.kind==='attack'&&!unit.autoOrigin&&unit.commandMode?.kind!=='hold') return unit;

@@ -83,6 +83,7 @@
   "src/gameplay/transport.test.ts",
   "src/gameplay/tutorial.test.ts",
   "src/gameplay/visibility.test.ts",
+  "src/gameplay/wildlife.test.ts",
   "src/presentation/wildlifeSave.test.ts",
   "tests/referenceTerrain.test.mjs"
 ]

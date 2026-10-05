@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "origin": "Original deterministic synthesized animal calls; no imported recordings",
+  "source": "scripts/export-wildlife-audio.py",
+  "entries": {
+    "deer": {
+      "file": "audio/animal-deer.wav",
+      "master": "assets/audio/animal-deer.wav",
+      "duration": 0.65,
+      "rate": 24000,
+      "channels": 1,
+      "bits": 16
+    },
+    "rabbit": {
+      "file": "audio/animal-rabbit.wav",
+      "master": "assets/audio/animal-rabbit.wav",
+      "duration": 0.22,
+      "rate": 24000,
+      "channels": 1,
+      "bits": 16
+    },
+    "fox": {
+      "file": "audio/animal-fox.wav",
+      "master": "assets/audio/animal-fox.wav",
+      "duration": 0.4,
+      "rate": 24000,
+      "channels": 1,
+      "bits": 16
+    }
+  }
+}

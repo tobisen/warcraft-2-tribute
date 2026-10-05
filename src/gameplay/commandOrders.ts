@@ -1,3 +1,4 @@
+import {matchAnimals} from './wildlife';
 import type {Position} from './movement';
 import type {Unit} from './gathering';
 import type {Ship} from './navy';
@@ -9,16 +10,17 @@ import {commandAttackMove} from './attackMove';
 import {orderUnits,resourceNodes} from './gathering';
 import {orderAttack} from './combat';
 import {entityVisible} from './visibility';
-export type QueuedOrder = {kind:'move'|'attack-move'|'patrol';destination:Position}|{kind:'attack';enemyId:string}|{kind:'gather';nodeId:string}|{kind:'hold'};
+export type QueuedOrder = {kind:'move'|'attack-move'|'patrol';destination:Position}|{kind:'attack';enemyId:string}|{kind:'gather';nodeId:string}|{kind:'hold'}|{kind:'hunt';animalId:string};
 export interface OrderState {
  orderQueue?:QueuedOrder[];
  commandMode?:{kind:'hold'}|{kind:'patrol';origin:Position;destination:Position;returning:boolean};
 }
 export const orderQueueLimit=32;
 function supports(u:Unit|Ship,o:QueuedOrder):boolean {
- return o.kind==='gather'?u.kind==='worker':o.kind==='attack-move'?u.kind==='soldier':o.kind==='attack'?u.kind==='soldier'||u.kind==='ship'&&u.role!=='transport':true;
+ return o.kind==='hunt'?u.kind==='soldier'||u.kind==='ship'&&u.role!=='transport':o.kind==='gather'?u.kind==='worker':o.kind==='attack-move'?u.kind==='soldier':o.kind==='attack'?u.kind==='soldier'||u.kind==='ship'&&u.role!=='transport':true;
 }
 function start(m:MatchState,u:Unit|Ship,o:QueuedOrder):Unit|Ship {
+ if(o.kind==='hunt'&&(u.kind==='soldier'||u.kind==='ship'&&u.role!=='transport')){const animal=matchAnimals(m).find(a=>a.id===o.animalId);return {...u,commandMode:undefined,orderQueue:undefined,navigation:undefined,...(u.kind==='soldier'?{attackMoveTarget:undefined,autoOrigin:undefined,autoDisabled:false}:{}),target:{...(animal?.position??u.position)},order:animal?.hp?{kind:'hunt',animalId:o.animalId}:{kind:'idle'}};}
  const selected={...u,selected:true,commandMode:undefined,orderQueue:undefined,navigation:undefined};
  if(o.kind==='hold')return {...selected,selected:u.selected,target:{...u.position},order:{kind:'idle'},...(u.kind==='soldier'?{autoDisabled:false,autoOrigin:undefined,attackMoveTarget:undefined}:{}),commandMode:{kind:'hold'}};
  if(u.kind==='ship'){
@@ -64,6 +66,7 @@ export function prepareOrders(m:MatchState):MatchState {
   const pending=[...u.orderQueue];
   while(pending.length){const o=pending.shift()!;
    if(o.kind==='attack'&&!m.combat.enemies.some(e=>e.id===o.enemyId&&e.hp>0&&(!m.fog||entityVisible(m.fog,'player',e))))continue;
+   if(o.kind==='hunt'&&!matchAnimals(m).some(a=>a.id===o.animalId&&a.hp>0&&(!m.fog||entityVisible(m.fog,'player',a))))continue;
    if(o.kind==='gather'&&!resourceNodes(m.gathering).some(n=>n.id===o.nodeId))continue;
    return {...start(m,u,o),orderQueue:pending.length?pending:undefined};
   }

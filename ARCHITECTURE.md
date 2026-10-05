@@ -1780,3 +1780,7 @@ Warshipdefs har explicit targets och damageByDomain.air=.75, transports targets=
 ## PRIO-03 – gemensamt terrängunderlag
 
 `referenceTerrain.ts` config äger authored Frontier-contours/groves. `terrainPatches` väljer reference/legacy för navigation, fog, renderer och minimap. `forestTerrain` härleder livecrowncollision från befintlig stock och reviderar endast ändrade hinder; `forestFog` sparar senaste synliga crownstatus per team. Egna Surface-brushes/export ger separat reference-terrain-atlas. BootScene binder renderer/input till pure helpers; övriga kartors atlas behålls. Save46 validerar layout/grove/fogmemory och migrerar äldre Frontier till legacy.
+
+## PRIO-04 – neutrala djur med separat hälsostate
+
+`gameplay/wildlife.ts` återanvänder statiska habitats/absolute-time poser, med bounded cache per karta/layout. Sparse MatchState.wildlife håller HP/hit/deathtid; inget nytt occupancy-/observer-/fiendeobjekt. Soldater och krigsfartyg har typad hunt-order och Shift-kö; shared combatApproach respektive marin attackStep begränsar routing/siktlinje. Neutral profildamage och cleanup går genom separat uppdatering, utanför ekonomi/ledgers/highscores. Spriteklick/portrait/HP/impact/corpse återanvänder scene/UI; inspektion bevarar troopselection. Save47 migrerar46, validerar animal-/huntreferenser och sparar health utan nya wanderpositioner. Original-WAVs laddas i befintlig audio graph med per-art/global djurspärr och vanlig mix/mute/pause. Teknisk playback verifierar inte lyssning.

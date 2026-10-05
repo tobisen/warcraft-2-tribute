@@ -1422,3 +1422,7 @@ Standard är befintlig policy för äldre/utelämnade val. Defensive:4-armé fö
 ## PRIO-03 – Frontier som första referenskarta
 
 Nya Frontier-matcher använder egna terrängkonturer och skördbara groves kopplade till befintliga stocks/entréer. Tilefringe öppnas proportionellt med stock; inga extra resurser eller nytt höjdgameplay. Fog sparar senast observerade crowns. Save46 låter äldre Frontier behålla legacyterräng/AI-waypoints/rendering. Den torra mittpassagen skiljer sjöbasinerna; skepp följer waterunion och seglar inte över den. Övriga kartor ändras först efter separat verifiering.
+
+## PRIO-04 – neutrala djurmål
+
+Djur är neutrala med separat sparse HP-state, utan resurser/killscore/vision/blockering. Soldater/luft och krigsfartyg använder befintliga weaponstats, combat approach/marina firing-position; transports/workers får inga hunts. Normal order ersätter jakt/kö och Shift kan köa den. Dött/försvunnet/dolt/onåbart mål avslutas; nästa order startar nästa steg. Inspektion håller markerade trupper kvar, så nästa högerklick kan attackera samma djur. Ranged neutral hits visar attack-/impactfeedback och applicerar profildamage direkt; inga neutrala projektiler eller loot införs. Save47 sparar hälsa/hit/death men fortsätter härleda wandering från befintlig clock. Egna stiliserade WAVs får tekniska checks och kräver separat faktisk lyssning före Done.

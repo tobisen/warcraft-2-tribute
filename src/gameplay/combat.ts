@@ -53,7 +53,7 @@ function approach(position: Position, target: Position, speed: number, range: nu
   };
 }
 
-function combatApproach(map: WorldMap, position: Position, target: Footprint, targetId: string,
+export function combatApproach(map: WorldMap, position: Position, target: Footprint, targetId: string,
   speed: number, range: number, delta: number, cached?: RouteState, gate?:MovementGate) {
   const center={x:target.x+target.width/2,y:target.y+target.height/2};
   const goalKey=`attack:${targetId}:${center.x}:${center.y}`;
@@ -99,6 +99,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
       const arrived=moved.position.x===unit.target.x&&moved.position.y===unit.target.y;
       return {...moved,...(rangedStats(unit,gathering.faction)?{attackCooldown:Math.max(0,(unit.attackCooldown??0)-delta)}:{}),...(arrived||moved.navigation?.status==='blocked'?{attackMoveTarget:undefined,autoOrigin:undefined,order:{kind:'idle' as const}}:{})};
     }
+    if(unit.kind==='soldier'&&unit.order.kind==='hunt')return unit;
     if (unit.kind !== 'soldier' || unit.hp <= 0 || unit.order.kind !== 'attack') return unit.kind==='soldier'&&rangedStats(unit,gathering.faction)?{...unit,attackCooldown:Math.max(0,(unit.attackCooldown??0)-delta)}:unit;
     const enemy = combat.enemies.find(e => e.id === (unit.order.kind === 'attack' ? unit.order.enemyId : '') && e.hp > 0);
     if (!enemy||!canAttackDomain(unit,enemy,gathering.faction??'crown')||visible&&!visible(enemy,unit)) return { ...unit, autoOrigin:undefined,navigation: undefined, order: { kind: 'idle' as const } };

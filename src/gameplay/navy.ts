@@ -23,7 +23,7 @@ import {domainMap,coastalFootprint,planDomainRoute,advanceDomainRoute} from './t
 import type {RouteState} from './navigation';
 import type {Position} from './movement';
 import type {MatchState} from './match';
-export interface Ship extends SelectableUnit, OrderState {kind:'ship';role?:'warship'|'transport';passengers?:Unit[];owner:'player';hp:number;attackCooldown?:number;order:{kind:'idle'|'move'}|{kind:'attack';enemyId:string};navigation?:RouteState}
+export interface Ship extends SelectableUnit, OrderState {kind:'ship';role?:'warship'|'transport';passengers?:Unit[];owner:'player';hp:number;attackCooldown?:number;order:{kind:'idle'|'move'}|{kind:'attack';enemyId:string}|{kind:'hunt';animalId:string};navigation?:RouteState}
 export interface Harbor {owner:'player';hp:number;footprint:Footprint;construction:ConstructionJob}
 export interface NavyState {harbor:Harbor|null;ships:Ship[];production:ProductionState}
 export const createNavy=():NavyState=>({harbor:null,ships:[],production:{remainingSeconds:null,nextUnitNumber:1}});

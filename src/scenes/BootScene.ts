@@ -1,3 +1,4 @@
+import {animalAt,visibleAnimals,type WildlifeState} from '../gameplay/wildlife';
 import {referenceTile} from '../presentation/referenceTerrain';
 import {forestVisuals} from '../presentation/forestVisuals';
 import {renderActionIcons} from '../presentation/actionIcons';
@@ -14,7 +15,7 @@ import {toggleGate,gateToggleReason} from '../gameplay/gates';import {defenseCon
 import {placeTower,towerPlacementError,upgradeTower,towerUpgradeReason} from '../gameplay/towers';
 import {techTree,buildingAvailability} from '../gameplay/productionPrerequisites';
 import {baseDevelopment,startBaseUpgrade,baseUpgradeReason} from '../gameplay/baseUpgrade';
-import {wildlifeHabitats,visibleWildlife,wildlifeDetails,type Habitat} from '../presentation/wildlife';
+import {wildlifeHabitats,wildlifeDetails,type Habitat} from '../presentation/wildlife';
 import {combatAudioSnapshot,combatAudioCues,type CombatAudioSnapshot} from '../presentation/combatAudio';
 import {inspectBuildingAt,inspectedBuilding,savedBuildingSelection} from '../gameplay/buildingInspection';
 import {highscoreStore,renderHighscorePanels} from '../presentation/highscores';
@@ -171,6 +172,10 @@ export class BootScene extends Phaser.Scene {
   private spellGraphics?:Phaser.GameObjects.Graphics;
   private selectedBuilding: BuildingSelection = null;
   private selectedResource:string|null=null;
+  private selectedAnimal:string|null=null;
+  private wildlife:WildlifeState={};
+  private animalFeedback?:Phaser.GameObjects.Graphics;
+  private animalHP=new Map<string,number>();
   private rallyMarker!: Phaser.GameObjects.Arc;
   private buildingRing!: Phaser.GameObjects.Rectangle;
   private cameraDrag?: CameraDrag;
@@ -251,7 +256,7 @@ export class BootScene extends Phaser.Scene {
     this.spellGraphics=this.add.graphics().setDepth(45);
     this.warningState=createWarningState();this.warningVisual=this.add.graphics().setDepth(9);
     this.forestImages.clear();this.habitats=[];this.wildlifeVisuals.clear();this.wildlifeProps=[];this.visualTime=0;this.extraResourceVisuals.clear();this.hitSnapshot=undefined;this.motions.clear();this.deaths.clear();this.impacts.clear();this.nextImpact=1;
-    this.hpBars=this.add.graphics().setDepth(7);
+    this.hpBars=this.add.graphics().setDepth(7);this.animalFeedback=this.add.graphics().setDepth(7);this.animalHP.clear();this.selectedAnimal=null;
     this.operationGraphics=this.add.graphics().setDepth(6);this.operationLabels=[];
     const loaded=this.pendingLoad;this.pendingLoad=undefined;
     if(!loaded)document.getElementById('save-status')!.textContent='';
@@ -262,7 +267,7 @@ export class BootScene extends Phaser.Scene {
       if(!gameplayKeyAllowed(keyboardContext(event,this.gameplayActive()))||!validGroup(event.key))return;
       event.preventDefault();
       if(event.ctrlKey||event.metaKey)this.controlGroups=bindGroup(this.controlGroups,event.key,this.allSelectable(),u=>entityVisible(this.fog,'player',u));
-      else{this.setSelectable(recallGroup(this.controlGroups,event.key,this.allSelectable(),u=>entityVisible(this.fog,'player',u)));this.selectedBuilding=null;this.selectedResource=null;this.attackMoveMode=false;this.patrolMode=false;this.placement=cancelPlacement(this.placement);this.drag=undefined;this.dragBox.setVisible(false);gameAudio.say(voiceSpeaker(this.allSelectable()),'select',this.factions.player);}
+      else{this.setSelectable(recallGroup(this.controlGroups,event.key,this.allSelectable(),u=>entityVisible(this.fog,'player',u)));this.selectedBuilding=null;this.selectedResource=null;this.selectedAnimal=null;this.attackMoveMode=false;this.patrolMode=false;this.placement=cancelPlacement(this.placement);this.drag=undefined;this.dragBox.setVisible(false);gameAudio.say(voiceSpeaker(this.allSelectable()),'select',this.factions.player);}
       this.syncVisuals();
     };window.addEventListener('keydown',groupKey);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>window.removeEventListener('keydown',groupKey));
     this.fogOverlay=this.add.graphics().setDepth(40);
@@ -327,7 +332,7 @@ export class BootScene extends Phaser.Scene {
     for(const id of ['hold-position','patrol-units']){const button=document.getElementById(id)!,handler=()=>{if(!this.gameplayActive())return;if(id==='hold-position'){this.applyMatch(issueOrder(this.currentMatch(),{kind:'hold'},this.input.keyboard?.addKey('SHIFT').isDown??false));}else{this.patrolMode=!this.patrolMode;this.attackMoveMode=false;this.repairMode=false;this.spellMode=null;this.placement=cancelPlacement(this.placement);}this.syncVisuals();};button.addEventListener('click',handler);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>button.removeEventListener('click',handler));}
     this.stopButton.addEventListener('click', stop);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.stopButton.removeEventListener('click', stop));
-    this.selectedResource=null;
+    this.selectedResource=null;this.selectedAnimal=null;
     this.selectedBuilding = loaded?.view.building??null;
     this.rallyMarker = this.add.circle(0, 0, 8).setStrokeStyle(2, 0x7bd389).setDepth(6).setVisible(false);
     this.buildingRing = this.add.rectangle(0, 0, 0, 0).setOrigin(0).setStrokeStyle(2, 0xffdc73).setDepth(effectConfig.selectionDepth).setVisible(false);
@@ -627,6 +632,14 @@ export class BootScene extends Phaser.Scene {
     }
     if (this.cameraDrag) return;
     const world = this.worldPoint(pointer);
+    const animal=animalAt(this.currentMatch(),world);
+    if(animal&&!this.placement.active&&!this.spellMode&&!this.unloadMode&&!this.repairMode&&!this.patrolMode&&!this.attackMoveMode&&(pointer.button===0||pointer.button===2)){
+      this.drag=undefined;this.placementClick=true;
+      if(pointer.button===0){this.selectedAnimal=animal.id;this.selectedBuilding=null;this.selectedResource=null;gameAudio.play(`animal-${animal.type}`);}
+      else this.applyMatch(issueOrder(this.currentMatch(),{kind:'hunt',animalId:animal.id},'shiftKey' in pointer.event&&pointer.event.shiftKey));
+      this.syncVisuals();return;
+    }
+
     if(this.spellMode&&(pointer.button===0||pointer.button===2)){this.placementClick=true;if(pointer.button===2){this.spellMode=null;this.spellFeedback='';}else{const id=this.spellMode,caster=selectedSpellCaster(this.currentMatch(),id),target=spellTargetAt(this.currentMatch(),id,world);const result=caster&&target?castSpell(this.currentMatch(),caster.id,id,target):{match:this.currentMatch(),reason:'Choose a valid visible target'};this.spellFeedbackError=!!result.reason;this.spellFeedback=result.reason??`${spellDefinition(id,this.factions.player).name} cast`;if(!result.reason){this.applyMatch(result.match);this.spellMode=null;}}this.syncVisuals();return;}
     if(this.unloadMode&&(pointer.button===0||pointer.button===2)){this.placementClick=true;if(pointer.button===2)this.unloadMode=null;else{const before=this.currentMatch(),after=unloadTransport(before,this.unloadMode,world);if(after!==before){this.applyMatch(after);this.unloadMode=null;}}this.syncVisuals();return;}
     if(this.repairMode&&(pointer.button===0||pointer.button===2)){this.repairMode=false;this.spellMode=null;this.spellFeedback='';this.placementClick=true;this.applyMatch(orderRepair(this.currentMatch(),inspectBuildingAt(this.currentMatch(),world)));this.syncVisuals();return;}
@@ -729,6 +742,7 @@ export class BootScene extends Phaser.Scene {
       return;
     }
     if (this.placement.active || pointer.button !== 0 || !this.drag) return;
+    this.selectedAnimal=null;
     if (pointer.event.target instanceof Element && pointer.event.target.closest('#hud, #match-menu, #game-toolbar, #minimap-overlay, #top-bar, #bottom-bar')) {
       this.drag = undefined;
       this.dragBox.setVisible(false);
@@ -737,7 +751,7 @@ export class BootScene extends Phaser.Scene {
     this.handleMove(pointer);
     const end = this.worldPoint(pointer);
     if (this.drag.active) {
-      this.selectedResource=null;
+      this.selectedResource=null;this.selectedAnimal=null;
       const all=this.allSelectable(),hits=selectUnitsInRectangle(all, this.drag.world, end);
       this.setSelectable(this.drag.shift?combineSelection(all,hits,'add'):hits);
       if(!this.drag.shift||this.allSelectable().some(u=>u.selected))this.selectedBuilding = null;
@@ -810,9 +824,17 @@ export class BootScene extends Phaser.Scene {
     document.getElementById('tech-tree-text')!.textContent=techTree(this.currentMatch()).join('\n');
     const development=baseDevelopment(this.currentMatch()),upgradeButton=document.getElementById('upgrade-base') as HTMLButtonElement;
     upgradeButton.disabled=!!baseUpgradeReason(this.currentMatch());setActionLabel(upgradeButton,development.remainingSeconds!==null?`Upgrading to level ${development.level+1}: ${Math.ceil(development.remainingSeconds)}s; training paused`:`Upgrade base to level ${Math.min(3,development.level+1)}`);
-    const animalPoses=visibleWildlife(this.habitats,this.waves.elapsedSeconds,this.map,p=>isVisible(this.fog,'player',p)),animalIds=new Set(animalPoses.map(p=>p.id));
+    const animalPoses=visibleAnimals(this.currentMatch()),animalIds=new Set(animalPoses.map(p=>p.id));
+    for(const id of this.animalHP.keys())if(!animalIds.has(id))this.animalHP.delete(id);
+    this.animalFeedback?.clear();if(this.selectedAnimal&&!animalPoses.some(a=>a.id===this.selectedAnimal&&a.hp>0))this.selectedAnimal=null;
     for(const [id,image]of this.wildlifeVisuals)if(!animalIds.has(id))image.setVisible(false);
-    for(const pose of animalPoses){let image=this.wildlifeVisuals.get(pose.id);if(!image){image=this.add.image(pose.position.x,pose.position.y,'world',pose.frame).setOrigin(.5,.75).setDepth(-.5);this.wildlifeVisuals.set(pose.id,image);}image.setPosition(pose.position.x,pose.position.y).setFrame(pose.frame).setFlipX(pose.flipX).setVisible(true);}
+    for(const pose of animalPoses){let image=this.wildlifeVisuals.get(pose.id);if(!image){image=this.add.image(pose.position.x,pose.position.y,'world',pose.frame).setOrigin(.5,.75).setDepth(-.5);this.wildlifeVisuals.set(pose.id,image);}image.setPosition(pose.position.x,pose.position.y).setFrame(pose.frame).setFlipX(pose.flipX).setAngle(pose.hp<=0?90:0).setAlpha(pose.hp<=0?.6:1).setVisible(true);
+      if(this.animalHP.has(pose.id)&&pose.hp<this.animalHP.get(pose.id)!&&this.gameplayActive())gameAudio.play('impact');this.animalHP.set(pose.id,pose.hp);
+      const p=pose.position,hit=pose.hurtAt!==undefined&&this.waves.elapsedSeconds-pose.hurtAt<.25;
+      if(hit)this.animalFeedback?.lineStyle(2,0xe4ab71).strokeCircle(p.x,p.y,17);
+      if(pose.hp<=0)this.animalFeedback?.lineStyle(2,0xc27555,.8).lineBetween(p.x-7,p.y-7,p.x+7,p.y+7).lineBetween(p.x+7,p.y-7,p.x-7,p.y+7);
+      if(this.selectedAnimal===pose.id){this.animalFeedback?.lineStyle(2,0xffdc73).strokeEllipse(p.x,p.y,30,14).fillStyle(0x172422).fillRect(p.x-14,p.y-30,28,4).fillStyle(0x8cb56b).fillRect(p.x-14,p.y-30,28*pose.hp/pose.maxHP,4);}
+    }
     for(const image of this.wildlifeProps)image.setVisible(isVisible(this.fog,'player',image)&&bodyFits(this.map,image,12));
     if(this.selectedBuilding&&!inspectedBuilding(this.currentMatch(),this.selectedBuilding))this.selectedBuilding=null;
     this.baseVisual.setFrame(buildingFrame('base','player',0,5,this.factions.player,this.combat.baseHP,baseDevelopment(this.currentMatch()).level)).setVisible(this.combat.baseHP>0);this.baseLabel.setVisible(this.combat.baseHP>0).setText(`${factions[this.factions.player].buildingNames.base} · L${development.level} · ${Math.ceil(this.combat.baseHP)} HP`);
@@ -864,7 +886,7 @@ export class BootScene extends Phaser.Scene {
     this.buildingRing.setVisible(selectedFootprint !== null);
     if (selectedFootprint) this.buildingRing.setPosition(selectedFootprint.x, selectedFootprint.y)
       .setSize(selectedFootprint.width, selectedFootprint.height);
-    const info=selectionInfo(this.currentMatch(),this.selectedBuilding,this.selectedResource);renderSelectionInfo(info);
+    const info=selectionInfo(this.currentMatch(),this.selectedBuilding,this.selectedResource,this.selectedAnimal);renderSelectionInfo(info);
     const portrait=document.getElementById('selection-portrait') as HTMLCanvasElement;portrait.hidden=!info.portrait;this.paintPortrait(portrait,info.portrait);
     renderSelectedIcons(selectedIcons(this.currentMatch()),(canvas,asset)=>this.paintPortrait(canvas,asset));
     renderTopBar(this.currentMatch());
@@ -883,7 +905,7 @@ export class BootScene extends Phaser.Scene {
     document.getElementById('ability-status')!.textContent=abilityStatus(this.gathering);
     const labels = matchLabels(this.currentMatch());
     for (const [id, text] of [['resource-status', labels.economy], ['health-status', labels.health],
-      ['wave-status', labels.wave],['population-status',`Population: ${population.used} + ${population.reserved} reserved / ${population.cap}`], ['selection-status', this.selectedBuilding ? `${info.name} selected (${Math.ceil(info.hp??0)} HP)` : (this.selectedResource?info.name:this.navy?.ships.some(s=>s.selected)?`${this.allSelectable().filter(u=>u.selected).length} units selected · ships`:labels.selected)]]) {
+      ['wave-status', labels.wave],['population-status',`Population: ${population.used} + ${population.reserved} reserved / ${population.cap}`], ['selection-status', this.selectedBuilding ? `${info.name} selected (${Math.ceil(info.hp??0)} HP)` : (this.selectedAnimal?`${info.name} ${Math.ceil(info.hp??0)} HP`:this.selectedResource?info.name:this.navy?.ships.some(s=>s.selected)?`${this.allSelectable().filter(u=>u.selected).length} units selected · ships`:labels.selected)]]) {
       document.getElementById(id)!.textContent = text;
     }
 
@@ -930,8 +952,9 @@ export class BootScene extends Phaser.Scene {
       const marker=orderMarkers({ ...this.gathering,units:[{...unit,selected:true}] },{...this.combat,enemies:visibleEnemies},true,this.placement.barracks,this.placement.farms,this.placement.forge?.footprint)[0];
       const enemy=unit.order.kind==='attack'?visibleEnemies.find(e=>unit.order.kind==='attack'&&e.id===unit.order.enemyId):undefined;
       const attackRange=unit.kind==='soldier'?(unit.archetype==='archer'?archerConfig.range:unit.archetype==='catapult'?catapultConfig.range:combatConfig.soldierRange):0;
-      const action:Action=unit.order.kind==='attack'&&enemy&&canInteract(this.map,unit.position,enemyBody(enemy),attackRange)?'attack':unit.order.kind==='gather'&&marker&&Math.hypot(marker.position.x-unit.position.x,marker.position.y-unit.position.y)<=gatheringConfig.nodeRadius+gatheringConfig.range?'gather':(unit.order.kind==='build'||unit.order.kind==='repair')&&unit.navigation?.status==='arrived'?'build':'idle';
-      this.animateUnit(unit.id,visual.body,unit.position,action,unit.kind==='worker'?'worker':unit.archetype??'soldier','player',enemy?.position??marker?.position);
+      const animalTarget=unit.order.kind==='hunt'?animalPoses.find(a=>unit.order.kind==='hunt'&&a.id===unit.order.animalId):undefined;
+      const action:Action=unit.order.kind==='hunt'&&unit.navigation?.status==='arrived'?'attack':unit.order.kind==='attack'&&enemy&&canInteract(this.map,unit.position,enemyBody(enemy),attackRange)?'attack':unit.order.kind==='gather'&&marker&&Math.hypot(marker.position.x-unit.position.x,marker.position.y-unit.position.y)<=gatheringConfig.nodeRadius+gatheringConfig.range?'gather':(unit.order.kind==='build'||unit.order.kind==='repair')&&unit.navigation?.status==='arrived'?'build':'idle';
+      this.animateUnit(unit.id,visual.body,unit.position,action,unit.kind==='worker'?'worker':unit.archetype??'soldier','player',animalTarget?.position??enemy?.position??marker?.position);
       visual.ring.setPosition(unit.position.x, unit.position.y).setVisible(unit.selected);
       visual.cargo.setPosition(unit.position.x, unit.position.y - unitOverlayOffsets(unit.kind==='worker'?'worker':unit.archetype??'soldier',this.factions.player).cargo)
         .setVisible(unit.kind==='worker'&&unit.selected).setText(unit.kind==='worker'?`${unit.cargo.toFixed(1)}/${gatheringConfig.capacity} ${unit.cargoType??'wood'}`:'');
@@ -991,7 +1014,7 @@ export class BootScene extends Phaser.Scene {
     this.syncVisuals();
   }
 
-  private currentMatch():MatchState {return {...(this.session.options.aiProfile&&this.session.options.aiProfile!=='balanced'?{aiProfile:this.session.options.aiProfile}:{}),armyPlan:this.armyPlan,matchId:this.matchId,capture:this.capture,campaignMission:this.campaignMission,statLedger:this.statLedger,tutorial:this.tutorial,speed:this.session.options.speed??1,enemyNaval:this.enemyNaval,navy:this.navy,factions:{...this.factions},map:this.map,gathering:this.gathering,combat:this.combat,waves:this.waves,production:this.production,soldierProduction:this.soldierProduction,placement:this.placement,outcome:this.outcome,paused:!this.gameplayActive(),controlGroups:this.controlGroups,fog:this.fog,research:this.research,scenario:this.scenario,difficulty:this.difficulty,enemyProduction:this.enemyProduction,enemyAI:this.enemyAI,enemyConstruction:this.enemyConstruction,enemyPolicy:this.enemyPolicy,enemyRecovery:this.enemyRecovery,enemyKnowledge:this.enemyKnowledge};}
+  private currentMatch():MatchState {return {...(this.session.options.aiProfile&&this.session.options.aiProfile!=='balanced'?{aiProfile:this.session.options.aiProfile}:{}),wildlife:this.wildlife,armyPlan:this.armyPlan,matchId:this.matchId,capture:this.capture,campaignMission:this.campaignMission,statLedger:this.statLedger,tutorial:this.tutorial,speed:this.session.options.speed??1,enemyNaval:this.enemyNaval,navy:this.navy,factions:{...this.factions},map:this.map,gathering:this.gathering,combat:this.combat,waves:this.waves,production:this.production,soldierProduction:this.soldierProduction,placement:this.placement,outcome:this.outcome,paused:!this.gameplayActive(),controlGroups:this.controlGroups,fog:this.fog,research:this.research,scenario:this.scenario,difficulty:this.difficulty,enemyProduction:this.enemyProduction,enemyAI:this.enemyAI,enemyConstruction:this.enemyConstruction,enemyPolicy:this.enemyPolicy,enemyRecovery:this.enemyRecovery,enemyKnowledge:this.enemyKnowledge};}
 
   private addImpact(impact:Impact):void {
     if(!canAddImpact([...this.impacts.values()].map(e=>e.impact),impact))return;
@@ -1041,12 +1064,12 @@ export class BootScene extends Phaser.Scene {
     for(const [id,body] of this.shipVisuals)if(!this.navy?.ships.some(s=>s.id===id)){this.removedVisual(id,true);body.destroy();this.shipVisuals.delete(id);}
     for(const [id,label] of this.shipLabels)if(!this.navy?.ships.some(s=>s.id===id)){label.destroy();this.shipLabels.delete(id);}
     for(const ship of this.navy?.ships??[]){const p=ship.position,type=ship.role==='transport'?'transport':'warship';this.drawHP(p,ship.hp,factions[this.factions.player].naval.units[ship.role??'warship'].hp,32,40,0x77c4cf);if(ship.selected)this.navyGraphics.lineStyle(2,0xffdf73).strokeCircle(p.x,p.y,22);
-      if(!this.shipVisuals.has(ship.id))this.shipVisuals.set(ship.id,this.add.image(p.x,p.y,'naval',`${factions[this.factions.player].artPrefix}${type}-player-s-idle-0`).setOrigin(.5,40/64).setDepth(1));const body=this.shipVisuals.get(ship.id)!;body.setPosition(p.x,p.y);const target=ship.order.kind==='attack'?this.combat.enemies.find(e=>ship.order.kind==='attack'&&e.id===ship.order.enemyId&&entityVisible(this.fog,'player',e))?.position:undefined;this.animateUnit(ship.id,body,p,target?'attack':'idle',type,'player',target);
+      if(!this.shipVisuals.has(ship.id))this.shipVisuals.set(ship.id,this.add.image(p.x,p.y,'naval',`${factions[this.factions.player].artPrefix}${type}-player-s-idle-0`).setOrigin(.5,40/64).setDepth(1));const body=this.shipVisuals.get(ship.id)!;body.setPosition(p.x,p.y);const target=ship.order.kind==='hunt'?visibleAnimals(this.currentMatch()).find(a=>ship.order.kind==='hunt'&&a.id===ship.order.animalId)?.position:ship.order.kind==='attack'?this.combat.enemies.find(e=>ship.order.kind==='attack'&&e.id===ship.order.enemyId&&entityVisible(this.fog,'player',e))?.position:undefined;this.animateUnit(ship.id,body,p,target?'attack':'idle',type,'player',target);
       if(!this.shipLabels.has(ship.id))this.shipLabels.set(ship.id,this.add.text(p.x,p.y-48,uiText.warship,{fontSize:'10px',color:'#d6eef1'}).setOrigin(.5).setDepth(7));this.shipLabels.get(ship.id)!.setPosition(p.x,p.y-48).setText(`${ship.role==='transport'?'Transport '+(ship.passengers?.length??0)+'/4':uiText.warship} ${Math.ceil(ship.hp)} HP`);
     }
   }
   private applyMatch(match: MatchState): void {
-    this.armyPlan=match.armyPlan;
+    this.wildlife=match.wildlife??{};this.armyPlan=match.armyPlan;
     this.matchId=match.matchId;
     this.capture=match.capture;
     this.campaignMission=match.campaignMission;

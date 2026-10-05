@@ -10,5 +10,5 @@ export function orderedSpeaker(before:ReadonlyMap<string,string>,units:readonly 
 }
 
 export function voiceOrderAction(unit:VoiceUnit|undefined):VoiceAction{
- return !unit?'order':['gather','deliver','build'].includes(unit.order.kind)?'work':unit.order.kind==='attack'||unit.attackMoveTarget?'attack':unit.order.kind==='move'?'move':'order';
+ return !unit?'order':['gather','deliver','build'].includes(unit.order.kind)?'work':unit.order.kind==='attack'||unit.order.kind==='hunt'||unit.attackMoveTarget?'attack':unit.order.kind==='move'?'move':'order';
 }

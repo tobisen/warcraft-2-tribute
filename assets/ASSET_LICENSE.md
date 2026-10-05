@@ -60,3 +60,9 @@ RTS-157: melee/bow/siege/buildingHit är egna deterministiska synteskompositione
 
 
 RTS-159: hjort/kanin/räv och stock/svamp/gräsdetaljer i sources/wildlife.mjs är original integer-pixelkompositioner enligt projektvillkoren. Ingen extern djurbild eller spelasset importerad.
+
+PRIO-04: djurlätena i scripts/export-wildlife-audio.py är egna deterministiska
+synteskompositioner, med PCM-masters/runtime-WAV och separat wildlife-manifest.
+Samma projektvillkor för användning, ändring och distribution gäller. Inga
+externa inspelningar, kommersiella ljudeffekter eller attributioner tillkommer.
+Faktisk provlyssning redovisas separat från fil- och uppspelningskontroller.

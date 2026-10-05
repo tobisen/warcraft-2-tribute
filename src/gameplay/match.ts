@@ -1,3 +1,4 @@
+import {updateWildlife,type WildlifeState} from './wildlife';
 import {groveForNode} from '../config/referenceTerrain';
 import {syncForestObstacles} from './forestTerrain';
 import {prepareArmyPlan,type ArmyPlan} from './combinedArmy';
@@ -66,6 +67,7 @@ import { updateWaves, type WaveState } from './waves';
 
 export type MatchOutcome = 'playing' | 'defeat' | 'victory';
 export interface MatchState {
+ wildlife?:WildlifeState;
   aiProfile?:AIProfileId;
   armyPlan?:ArmyPlan;
   matchId?:string;
@@ -105,7 +107,7 @@ export function createMatch(scenario:MatchScenario='survival',difficulty:Difficu
   if(!isMapId(mapId)||!scenarioMapAllowed(scenario,mapId))throw Error('Unknown or unsupported map');
   if(!isFactionId(factions.player)||!isFactionId(factions.enemy))throw Error('Unknown faction');
   if(!isAIProfile(aiProfile))throw Error('Unknown AI profile');
-  const state: MatchState = {
+  const state: MatchState = {wildlife:{},
     ...(aiProfile!=='balanced'?{aiProfile}:{}),
     statLedger:createStatLedger(),
     speed,
@@ -205,7 +207,7 @@ function advance(state: MatchState, delta: number): MatchState {
   const beforeNavyCompletion=readyBuildings(updated);
   updated=updateNavy(updated,delta);
   updated={...updated,statLedger:recordCompletions(beforeNavyCompletion,updated)};
-  updated=updateEnemyExploration(updated);
+  updated=updateEnemyExploration(updated);updated=updateWildlife(updated,delta);
   const separated=separateBodies(updated.map,[...updated.gathering.units.filter(u=>!isAir(u)).map(u=>({id:`player:${u.id}`,position:u.position,fixed:u.commandMode?.kind==='hold',half:(u.kind==='worker'?workerStats(state.gathering.faction):combatUnitStats(u,state.gathering.faction)).size/2})),...updated.combat.enemies.filter(e=>!isAir(e)&&e.kind!=='ship'&&!e.footprint).map(e=>({id:`enemy:${e.id}`,position:e.position,half:enemySize(e)/2}))],delta);
   if(separated.size){updated.gathering={...updated.gathering,units:updated.gathering.units.map(u=>{const position=separated.get(`player:${u.id}`);return position?{...u,position,navigation:correctedNavigation(updated.map,position,(u.kind==='worker'?workerStats(state.gathering.faction):combatUnitStats(u,state.gathering.faction)).size/2,u.navigation)}:u;})};updated.combat={...updated.combat,enemies:updated.combat.enemies.map(e=>{const position=separated.get(`enemy:${e.id}`);return position?{...e,position,navigation:correctedNavigation(updated.map,position,enemySize(e)/2,e.navigation)}:e;})};}
   updated=advanceSpells(updated,delta);updated=advanceEnemyAbilities(updated,delta);updated.gathering=advanceAbilities(updated.gathering,delta);updated.fog=matchFog(updated);const taught=updateTutorial(updated);if(taught!==updated){updated=taught;updated.fog=matchFog(updated);}return resolveOutcome(advanceCapture(state,updated,delta));

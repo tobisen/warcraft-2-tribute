@@ -1,0 +1,52 @@
+[
+  {
+    "width": 800,
+    "height": 600,
+    "physicalAnimalInspection": true,
+    "markedUnitsPreserved": true,
+    "threeClickSounds": [
+      "animal-deer",
+      "animal-rabbit",
+      "animal-fox"
+    ],
+    "audio": {
+      "loaded": 18,
+      "before": 1,
+      "after": 1,
+      "state": "running"
+    },
+    "actualListening": false,
+    "physicalHunt": true,
+    "warshipHunt": true,
+    "damageDeathTargetCleanup": true,
+    "noResourcesOrEnemyScore": true,
+    "saveLoadDamageHuntDeath": true,
+    "restart": true,
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "height": 720,
+    "physicalAnimalInspection": true,
+    "markedUnitsPreserved": true,
+    "threeClickSounds": [
+      "animal-deer",
+      "animal-rabbit",
+      "animal-fox"
+    ],
+    "audio": {
+      "loaded": 18,
+      "before": 1,
+      "after": 1,
+      "state": "running"
+    },
+    "actualListening": false,
+    "physicalHunt": true,
+    "warshipHunt": true,
+    "damageDeathTargetCleanup": true,
+    "noResourcesOrEnemyScore": true,
+    "saveLoadDamageHuntDeath": true,
+    "restart": true,
+    "errors": []
+  }
+]

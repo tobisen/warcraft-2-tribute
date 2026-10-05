@@ -1,3 +1,4 @@
+import {matchAnimals} from '../gameplay/wildlife';
 import {orderSummary} from '../gameplay/commandOrders';
 import {spellDefinition} from '../config/spells';
 import {manaFor,currentMana} from '../gameplay/mana';
@@ -13,10 +14,11 @@ import type {BuildingSelection} from '../gameplay/buildingSelection';
 import type {MatchState} from '../gameplay/match';
 import {artAtlas,motion,unitFrame,type UnitArt} from './animation';
 import {buildingFrame} from './assets';
-export interface SelectionInfo {mana?:number;maxMana?:number;name:string;detail:string;hp:number|null;maxHP:number|null;stats:string[];portrait:{atlas:'units'|'naval'|'buildings'|'air';frame:string}|null}
+export interface SelectionInfo {mana?:number;maxMana?:number;name:string;detail:string;hp:number|null;maxHP:number|null;stats:string[];portrait:{atlas:'units'|'naval'|'buildings'|'air'|'world';frame:string}|null}
 const empty=():SelectionInfo=>({name:'No selection',detail:'Click a unit, building or resource, or drag to select a group.',hp:null,maxHP:null,stats:[],portrait:null});
 /** Presentation only: reads selected player entities, only visible enemy buildings and known resources. Stats are baseline recipes. */
-export function selectionInfo(m:MatchState,building:BuildingSelection,resourceId:string|null=null):SelectionInfo {
+export function selectionInfo(m:MatchState,building:BuildingSelection,resourceId:string|null=null,animalId:string|null=null):SelectionInfo {
+ if(animalId){const animal=matchAnimals(m).find(a=>a.id===animalId&&a.hp>0&&(!m.fog||isVisible(m.fog,'player',a.position)));if(animal)return {name:animal.name,detail:`${animal.id} · Neutral animal`,hp:animal.hp,maxHP:animal.maxHP,stats:['Right-click with combat units to attack.'],portrait:{atlas:'world',frame:`critter-${animal.type}-idle-0`}};}
  if(resourceId){
   const node=resourceNodes(m.gathering).find(n=>n.id===resourceId);
   if(!node||!m.fog||!knownResource(m.fog,node.position))return empty();

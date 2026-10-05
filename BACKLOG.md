@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**Nytt prioriterat mandat PRIO-01–04:** RTS-174–176 pausade enligt användarens nya uppdrag. PRIO-01–03 Done;04 Todo. En task åt gången, docs/checks/browser/commit/push; stopp efter04,174 startas inte. PRIO-03:s två bildreferenser är godkända; referenskarta verifieras före spridning. Användarens CSS/docs bevaras.
+**Nytt prioriterat mandat PRIO-01–04:** RTS-174–176 pausade enligt användarens nya uppdrag. PRIO-01–04 Done. Användaren har godkänt kartorna och djurljuden tills resterande ljudarbete genomförs. En task åt gången, docs/checks/browser/commit/push; stopp efter04,174 startas inte. PRIO-03:s två bildreferenser är godkända; referenskarta verifieras före spridning. Användarens CSS/docs bevaras.
 
 **CI-korrigering efter RTS-173 (2026-10-05):** Användaren rapporterar flera röda pushar. Senaste GitHub-jobbet fallerar enbart på femsekunderstimeout i factionArt-testet; äldre air-assertions är rättade i173. Samma uttömmande assetkontroller delas i16 faction/type/owner-fall, utan höjd timeout eller ändrade assets/runtime. Riktade17/1, unit450/79 och build/strict typecheck/diff PASS lokalt. Fix `b79d1fd` pushad. Ny [GitHub-fullregression/build/Pages-deploy](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37300780990) PASS; teststeget12m05s.174 startas inte.
 
@@ -4763,11 +4763,11 @@ Visa före/efter av samma områden i browsern. Slutför och verifiera referenska
 
 Leverans: spelbar Frontier-referenskarta med egna reproducerbara terrängassets, sammanhängande skördbara groves, glänta, oregelbundna flodbasiner/strand/djup/ö, tre landvägar och befintliga stockar. Avverkning öppnar kroppssäkra ytor och reviderar routes endast när hinder ändras. Save46 bevarar äldre Frontier-layout och fogminne; minimap/AI-scoutpunkter följer ny layout. Alla12 faktiska referensbilder granskade; inget raster importerat. Riktade75/8 inklusive två betalda matcher till seger PASS; slutliga ändringschecks60/6 + overlap3/1 PASS, unit457/81/build strict/diff PASS. Browser800/1280 fysisk skogsselection/gather, faktisk avverkning, SaveLoad/restart samt betald naval-fixture hamn/produktion/sjöpassage PASS. Före/efter samma forest/coast/overview i artifacts/prio-03; alla tre slutliga vyer visuellt granskade. Endast referenskartan sprids här; inget nytt höjdgameplay.
 
-CI-tillägg: push0ab2436 GitHub37309876585 föll på config20-testfixturen som använde ny referensterräng. Fixturen återskapar nu ursprunglig terräng/resources och tar bort senare fields; migration/ledger/view-asserts oförändrade. Isolerat mot03: targeted1/unit457/81/build strict/diff PASS. Korrigeringspush och dess CI följs separat.04:s påbörjade ändringar bevaras ocommitade.
+CI-tillägg: push0ab2436 GitHub37309876585 föll på config20-testfixturen som använde ny referensterräng. Fixturen återskapar nu ursprunglig terräng/resources och tar bort senare fields; migration/ledger/view-asserts oförändrade. Isolerat mot03: targeted1/unit457/81/build strict/diff PASS. Korrigeringspushb5a3100: faktisk GitHub37312395555 SUCCESS (fulltest/build/Pagesdeploy).04:s påbörjade ändringar bevaras ocommitade.
 
 ## PRIO-04 – Interaktiva djur
 
-**Status:** Todo.
+**Status:** Done. Kartor och djurljud godkända av användaren 2026-10-05; ljuden accepterade tills resterande ljudarbete.
 
 Utöka befintliga NPC-djur:
 - Vänsterklick på ett synligt djur visar namn och HP samt spelar ett passande djurljud.
@@ -4783,6 +4783,8 @@ Djuren ska gå att klicka på även när egna enheter är markerade. Interaktion
 Använd egna eller korrekt licensierade ljud och provlyssna på dem.
 
 **Checks/leverans:** Riktade beteendetester, faktisk browserkontroll när relevant, unit-suite, build med strict typecheck och diffkontroll. Uppdatera BACKLOG/DEV_LOG/HANDOFF; commit/push efter verifierad task. Inga orelaterade roadmap-features.
+
+Teknisk del: synligt sprite-/huvudklick visar namn/HP och rätt eget läte, behåller troopselection. Typad hunt för soldater/luft/krigsfartyg, Shift-kö, vanlig replace/Stop, samma combat/marine approach och profildamage; dead/hidden/unreachable cleanup och normal idle. Ingen neutral ekonomi/killscore/vision/occupancy. Hit/corpsefeedback, oförändrad wanderclock, Save47 health/hunt/queue och restart. Riktade65/8 före sjöstöd, slutliga76/6 inkl. naval/acquisition/queue/Save PASS. Slutlig unit458/82/build strict/diff PASS. Browser800/1280 physical inspection/headclick/tre ljud/hunt/skada/död/score/SaveLoad/restart samt shore-warship PASS; huvudvy/död granskade. Ljudfil/mixeruppspelning är tekniskt verifierad, användaren har därefter godkänt de tre djurljuden. Full etappregression på slutlig kod1394/169 PASS588.49s. Även verklig löpande Scene.update-browser800/1280 PASS för vandrande huvudklick/jakt/död/idle/corpsefade. Taskleverans med commit/push enligt mandat.174 vilande.
 
 ## RTS-174 – Flera AI-spelare
 
