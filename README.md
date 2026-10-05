@@ -824,3 +824,6 @@ Mätt64/128-unit Highlands-stress gäller kort headless Chrome-fixtur, inte gene
 hårdvaru-/långmatchgaranti. Användarens lokala style.css/docs är bevarade och
 ingår inte i taskcommits. Se HANDOFF.md och QUALITY_REVIEW.md för faktisk
 release-/Pages-verifiering.
+
+
+Release **0.3.0 / Build6a96227** är [publicerad på GitHub Pages](https://tobisen.github.io/warcraft-2-tribute/), med [grön CI/Pages-körning](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37355621323) och faktisk [browserkontroll](artifacts/rts-180/public.md). Se HANDOFF.md för slutstatus och återstående mänsklig tids-/balans-/ljudgranskning.

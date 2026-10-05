@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**Aktuellt mandat RTS-177–180:** Nytt användaruppdrag ersätter stoppet efter176.177 Done/push8fafce5;178 Done/push598478f;179 Done/push686c1e6;180 pågår, publicering verifieras efter releasepush. En task åt gången, riktad/browser-verifiering, docs och commit/push. Samlad kampanjregression när kampanjändringarna är klara; full releasekontroll vid180. Uppdatera HANDOFF/QUALITY_REVIEW efter180 och stanna. CSS/docs bevaras.
+**Avslutad etapp RTS-177–180:**177 Done/push8fafce5;178 Done/push598478f;179 Done/push686c1e6;180 Done/release6a96227. Publicerad0.3.0/Build6a96227 och faktisk CI/Pages/browser PASS. Full regression1458/176, unit465/84, strict typecheck/build och diff PASS. HANDOFF/QUALITY_REVIEW redovisar återstående mänsklig tids-/balans-/ljudgranskning och assets. Stopp efter180; inga nya tasks eller karteditor. CSS/docs bevaras.
 
 **Aktuellt mandat RTS-174–176:** Användaren återupptar174–176 efter färdiga PRIO-01–04.174 Done/push416cfa9;175 Done/push0a5b422,176 Done. Etappen avslutad; stanna före177. En task åt gången, riktade tester/browser, slutchecks/docs och commit/push. HANDOFF efter176; stopp före177. CSS/docs bevaras.
 
@@ -4931,7 +4931,7 @@ Skilj automatiska simuleringar från mänskligt speltest.
 
 ## RTS-180 – Samlad release
 
-**Status:** In progress — lokal0.3.0-releasekontroll; publicering återstår till push och faktisk Pages-kontroll.
+**Status:** Done (2026-10-05). Release0.3.0/Build6a96227 publicerad och faktiskt browserkontrollerad.
 
 **Goal:** Samlad release.
 
@@ -4951,3 +4951,6 @@ Publicera efter godkända kontroller.
 **Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
 
 **Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+
+**Verifiering180:** Slutlig full regression1458/176 PASS415.95s; unit465/84 PASS10.76s; strict typecheck/build PASS388ms; diff/manifest/länkar PASS. Faktisk [GitHub CI/Pages](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37355621323) SUCCESS. Public browser: fyra Native/Fit-fall, kampanj/save/load/result/replay, skirmishdefeat, lag-spectator/save/defeat, pause/menu cleanup, sex resolutionsval, fullscreen och reload. Alla18 ljudfiler och34 asset-URLs laddade i varje fall utan HTTP-/browserfel. Resultateliminering använder explicita fixtures; betald genomspelning är179:s separata belägg. Se [publiceringskontroll](artifacts/rts-180/public.md). Slutöverlämningen ändrar endast Markdown och återanvänder verifieringen av oförändrad kod.

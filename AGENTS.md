@@ -146,3 +146,8 @@ Nytt uttryckligt uppdrag återupptar174–176 efter färdiga PRIO-01–04. En ta
 ## Mandat RTS-177–180
 
 Användarens nya uppdrag ersätter stoppet efter176. Genomför177–180 en task i taget med riktade tester/browser, slutchecks, docs och commit/push.177 anger uppskattad speltid; mänskligt speltest får inte ersättas av snabb simulering. Samlad kampanjregression när ändringarna är klara, full releasekontroll vid180. HANDOFF och QUALITY_REVIEW efter180; stanna utan nya tasks/karteditor. CSS/docs bevaras; ingen automatisk delegering.
+
+
+## Stopp efter RTS-180
+
+RTS-177–180 är avslutade och0.3.0/Build6a96227 är publicerad med faktisk CI/Pages/browser-verifiering. HANDOFF.md och QUALITY_REVIEW.md skiljer tekniska belägg från kvarstående mänsklig tids-/balans-/ljudgranskning och slutliga assets. Stanna efter180; inga nya roadmaptasks eller karteditor utan nytt uppdrag. Användarens CSS/docs är fortsatt bevarade.

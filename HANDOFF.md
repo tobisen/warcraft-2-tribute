@@ -1,34 +1,47 @@
-# Överlämning RTS-177–180 — releasekontroll pågår
+# Överlämning RTS-177–180 — avslutad och publicerad
 
-Datum2026-10-05.177 Done8fafce5,178 Done598478f,179 Done686c1e6.180 förbereder
-0.3.0-release; markeras inte Done före faktisk slutregression och publiceringskontroll.
-Stanna efter180; inga nya roadmaptasks eller karteditor.
+Datum: 2026-10-05.177–180 Done. Stanna efter180; inga nya roadmaptasks eller karteditor.
 
-Nya åtta kampanjstarter och mål definieras i CAMPAIGN_DESIGN.md. Seven expanded
-plans + befintlig tutorial; permanent phase och finite-wave-start i Save51.
-Legacycampaigns behåller mål/kartor; progression/replay/lag/skirmish återanvänds.
-Samlad179:53/6 kampanj/fog/load PASS; alla åtta Beginner/Normal med betalda order,
-Saves och landstigningar. Native800/1280 för fem raser verifierar mouse/hotkeys/
-icons/HUD och18 decoded audioassets samt faktisk paused/suspendedcontext.
-Kort Highlands64/128 stress:60.0/50.9FPS, CPU p959.4/18.9ms efter fogunionfix.
-Inte mänsklig tids-/balans-/ljud-/långmatch- eller allhårdvaruverifiering.
+- **177** `8fafce5`: åtta kampanjmissioner inventerade och designade i CAMPAIGN_DESIGN.md.
+- **178** `598478f`: sju utökade fasplaner, permanent progression/Save51, legacy/replay bevarade.
+- **179** `686c1e6`: betalda Beginner/Normal-genomspelningar, fem rasers UI/audio och avgränsad fogoptimering.
+- **180** `6a96227`: gemensam0.3.0-version, changelog, releasechecks och scorefix för flyttade kampanjkartor.
 
-Lokal0.3.0-production-browser på Pages-base har kontrollerat campaign/result/replay,
-skirmishdefeat, team/spectator/save/defeat, pause/restart/menu cleanup, sex render-
-upplösningar, Native/Fit och fullscreenEnterExit, assets/reload utan browser/HTTPfel.
-Slutmål/eliminering är explicitfixture; paid completion kommer från179.
-Slutlig full1458/176 PASS415.95s, unit465/84 PASS10.76s och strict typecheck/build
-PASS388ms; diff/manifest/länkar PASS. Scorefix för tre moved campaignmaps ingår.
-Ny release-publicering redovisas efter push;180 är inte Done ännu.
-178 faktisktGitHub37350880157 och17937352527511 success (test/build/Pages).
+## Faktisk verifiering
 
-Mänsklig20–40min/mission, subjektiv balans/fun och ny längre mixlyssning återstår.
-Finalflyerart/animationer, vissa caster/navalassets och slutliga egna voices
-är fortfarande begränsningar; inga nya kvalitetsclaim från enbart automation.
-Kartor/djurljud är tidigare användargodkända. Tre spelare endast Plains96/128
-skirmish; ingen campaign-teamkonfigurator, nya resource-depots eller gratis rescue-
-armies. Användarens src/style.css SHA95c3725250221ef8386519adecfb05db601103697d421e78e1b2bdf057141a5e
-och otrackade docs/ bevaras/undantags från commits.
+Samlad179-kampanj/fog/load53/6 PASS: alla åtta Beginner/Normal genom betald automation,
+fas-Saves och landstigningar. Browser800/1280 för fem raser kontrollerar fysiska
+order/ikoner/HUD och18 decoded audioassets; riktig appinstans paused/suspended.
+Kort Highlands64/128-stress:60.0/50.9FPS, CPU p959.4/18.9ms. Ingen generell hårdvarugaranti.
+
+Slutlig full regression1458/176 PASS415.95s, unit465/84 PASS10.76s, strict
+TypeScript/build PASS388ms; diff/manifest/länkar PASS. Lokal production-browser PASS.
+[GitHub CI/Pages37355621323](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37355621323)
+faktiskt SUCCESS: npm test620s, build och deploy gröna.
+
+[Publicerat spel](https://tobisen.github.io/warcraft-2-tribute/) visar **v0.3.0 / Build6a96227**.
+Fyra publicerade Native/Fit-fall: kampanj/save/load/result/replay, skirmishdefeat,
+lag-spectator/save/defeat/statistik, pause/menu cleanup, sex resolutionsval,
+fullscreenEnterExit och reload.34 asset-URLs/18 ljudfiler i varje fall; inga HTTP-
+eller browserfel. Slutfaser/eliminering är explicita fixtures; faktisk betald
+missioncompletion kommer från179. Resultat registreras exakt en gång och fryser
+simulation. Närbilder/resultat granskade lokalt; [mätprotokoll](artifacts/rts-180/public.md).
+
+Den slutliga överlämningen ändrar endast Markdown. Ingen ny kodverifiering körs;
+ovanstående slutchecks återanvänds eftersom releasekoden är oförändrad.
+Dokumentationscommit ändrar inte den publicerade kodens Build6a96227.
+
+## Kvarstående begränsningar
+
+20–40min/mission är designuppskattning, inte mänskligt uppmätt. Mänsklig tempo-/
+svårighets-/underhållningsgranskning och ny längre mixlyssning återstår.
+Slutlig flyerart/animationer, vissa caster/navalassets och egna voices återstår.
+Kartor/djurljud är tidigare användargodkända; Frontier har ny sammanhängande terräng,
+övriga kartor äldre presentation. Tre spelare endast Plains96/128 skirmish;
+ingen campaign-teamkonfigurator, nya depots eller gratis rescue-arméer.
+Användarens src/style.css och otrackade docs/ är bevarade och inte committade.
+CSS SHA25695c3725250221ef8386519adecfb05db601103697d421e78e1b2bdf057141a5e.
+Publiceringskontrollen använder faktiskt publicerad, committad CSS.
 
 ---
 

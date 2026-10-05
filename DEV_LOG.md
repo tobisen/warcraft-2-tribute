@@ -3250,8 +3250,17 @@ inte från resultatfixtures.
 Oförändrad Pages-workflow läst/verifierad: npmci/fulltest/build/dist/Pages OIDC,
 Vitebase/HTML assets under/warcraft-2-tribute/. Ingen hostingändring.178 actual
 CI/Pages37350880157 SUCCESS,17937352527511 SUCCESS.180 releasepush/public browser
-ä återstående;180 är därför ännu inte Done. Publicering kräver denna verifierade
+är återstående;180 är därför ännu inte Done. Publicering kräver denna verifierade
 kodpush först, därefter docs-only slutstatuscommit. Ingen force/amend/historyrewrite.
 CSS SHA95c3725250221ef8386519adecfb05db601103697d421e78e1b2bdf057141a5e och docs/
 bevaras/undantags från commits. Lokalt ändrad userCSS ingår inte i publicerad CSS.
 Mänsklig tid/balans/fun/mixlyssning/finalvoice/flyerassets återstår enligt179.
+
+
+## RTS-180 — avslutad publiceringskontroll, 2026-10-05
+
+Releasecommit6a96227 pushad utan force. Faktisk [CI/Pages37355621323](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37355621323) SUCCESS: full test620s, build och deploy gröna. Publicerad sida visar v0.3.0 / Build6a96227. Fyra public-browserfall Native/Fit passerar kampanj/save/load/result/replay, skirmishdefeat, lag-spectator/save/defeat/statistik, pause/menu cleanup, resolutionsval, fullscreen och reload.34 asset-URLs/18 ljudfiler per fall, inga HTTP-/browserfel. Första800-kontrollen hann först bara nio ljudförfrågningar; kompletterad kontroll väntar uttryckligen på alla18 och passerar. Ingen spelkod ändrad för detta. Publicerade resultatvyer visuellt granskade. [Mätprotokoll](artifacts/rts-180/public.md).
+
+Terminala mål/eliminering är fixtures, inte mänsklig genomspelning.179:s betalda åtta Beginner/Normal-genomspelningar är separat belägg. Mänskliga20–40min/timing/balans/fun/lång mixlyssning och tidigare slutliga flygar-/voiceassets återstår. Dessa markeras inte verifierade. Tidigare pending-publiceringstext ovan beskriver läget före releasepush och ersätts av denna slutstatus.
+
+Slutlig kodverifiering: full1458/176 PASS415.95s, unit465/84 PASS10.76s, strict typecheck/build PASS388ms, diff/manifest/länkar PASS. Slutöverlämningen ändrar endast Markdown; ingen ny test/build-körning, beläggen återanvänds för oförändrad kod. HANDOFF/BACKLOG/README/QUALITY_REVIEW uppdaterade, stopp efter180 utan nya tasks/karteditor. UserCSS/docs bevaras och ingår inte i publicerad kod.
