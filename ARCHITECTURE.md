@@ -1760,3 +1760,7 @@ config/air.ts har fem recipes, config/domains.ts måltyper/masker. gameplay/doma
 ## RTS-169 – balanserade domänmultiplikatorer och Save42
 
 Warshipdefs har explicit targets och damageByDomain.air=.75, transports targets=[]; navalCombat återanvänder befintlig water-routing och tillåter airborne-projectiles mot luft. Save42 tillåter kontrollerad marine+airborne-kombination och bevarar gamla41-skott vid migration. Eagle.damageByDomain.air=1.25. Inga nya MatchStatefält eller scenes. AI construction/expansion preflight ignorerar luftockupation. combinedArmsBalance.test.ts återanvänder actual combat/casts/paid AI för explicita scenarier; scripts/check-combined-arms.mjs exporterar resultat, scripts/check-naval-air.mjs verifierar fysisk browserinput/Save/Load.
+
+## RTS-170 – kommandon
+
+`gameplay/commandOrders.ts` äger bestående Hold/Patrol och kompatibel FIFO för Unit/Ship, adapterar befintliga orderfunktioner och startar nästa order före simulation. Acquisition/combat respektive navalCombat begränsar Hold till faktisk räckvidd; separation håller kroppen fast. Save43 validerar mode/endpoints/orderkö och migrerar42. Scenen håller endast Patrol-targeting och Shift-input; selectionInfo härleder status. Inga nya scenes eller debug-API.

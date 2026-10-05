@@ -20,7 +20,7 @@ export function loadTransport(m:MatchState,shipId:string):MatchState {
  let seats=cfg.capacity-(ship.passengers?.length??0);
  const boarding=m.gathering.units.filter(u=>!isAir(u)&&u.selected&&(u.hp??1)>0&&(!m.fog||placementVisible(m.fog,unitBody(u.position,size(u))))&&bodyFits({...m.map,bodyHalf:size(u)/2},u.position,size(u)/2)&&contact(m,ship.position,u.position)&&seats-->0);
  if(!boarding.length)return m;
- const passengers=boarding.map((u):Unit=>({...u,selected:false,navigation:undefined,target:{...u.position},order:{kind:'idle'},...(u.kind==='soldier'?{attackMoveTarget:undefined,autoOrigin:undefined,autoDisabled:true}: {})}));
+ const passengers=boarding.map((u):Unit=>({...u,selected:false,commandMode:undefined,orderQueue:undefined,navigation:undefined,target:{...u.position},order:{kind:'idle'},...(u.kind==='soldier'?{attackMoveTarget:undefined,autoOrigin:undefined,autoDisabled:true}: {})}));
  return cleanDestroyed({...m,gathering:{...m.gathering,units:m.gathering.units.filter(u=>!boarding.includes(u))},navy:{...m.navy!,ships:m.navy!.ships.map(s=>s===ship?{...s,passengers:[...(s.passengers??[]),...passengers]}:s)}});
 }
 /** Plan the entire landing before mutation; a crowded/hidden/invalid shore rejects all. */
@@ -36,6 +36,6 @@ export function unloadTransport(m:MatchState,shipId:string,point:Position):Match
  // Click itself must name visible legal land, rather than silently searching from water.
  const firstBody=unitBody(point,size(passengers[0]));
  if(!bodyFits(m.map,point,size(passengers[0])/2)||m.fog&&!placementVisible(m.fog,firstBody))return m;
- for(const unit of passengers){const p=points.find(p=>{const body=unitBody(p,size(unit));return contact(m,ship.position,p)&&bodyFits(m.map,p,size(unit)/2)&&(!m.fog||placementVisible(m.fog,body))&&!occupied.some(o=>overlaps(o,body));});if(!p)return m;occupied.push(unitBody(p,size(unit)));landed.push({...unit,position:{...p},target:{...p},selected:false,navigation:undefined,order:{kind:'idle'}});}
+ for(const unit of passengers){const p=points.find(p=>{const body=unitBody(p,size(unit));return contact(m,ship.position,p)&&bodyFits(m.map,p,size(unit)/2)&&(!m.fog||placementVisible(m.fog,body))&&!occupied.some(o=>overlaps(o,body));});if(!p)return m;occupied.push(unitBody(p,size(unit)));landed.push({...unit,position:{...p},target:{...p},selected:false,commandMode:undefined,orderQueue:undefined,navigation:undefined,order:{kind:'idle'}});}
  return {...m,gathering:{...m.gathering,units:[...m.gathering.units,...landed]},navy:{...m.navy!,ships:m.navy!.ships.map(s=>s===ship?{...s,passengers:[]}:s)}};
 }

@@ -44,7 +44,7 @@ export function commandGroupMove(units: Unit[], destination: Position, map: Worl
   }
   return units.map(unit=>{
     const navigation=result.get(unit.id);if(!navigation)return unit;
-    return {...unit,...(unit.kind==='soldier'?{attackMoveTarget:undefined,autoOrigin:undefined,autoDisabled:false}:{}),navigation,target:{...navigation.destination},
+    return {...unit,commandMode:undefined,orderQueue:undefined,...(unit.kind==='soldier'?{attackMoveTarget:undefined,autoOrigin:undefined,autoDisabled:false}:{}),navigation,target:{...navigation.destination},
       order:{kind:navigation.status==='moving'?'move':'idle'}};
   });
 }

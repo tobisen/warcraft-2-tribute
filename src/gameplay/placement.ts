@@ -147,7 +147,7 @@ export function placeBuilding(state: PlacementState, point: Position, wood: numb
     wood:paid.wood,
     ...(context && builder ? {map:replaceObstacles(context.map,[...context.map.obstacles,rect]),
       gathering:{...payCost({...context.gathering,wood},recipe.cost),units:context.gathering.units.map((u):Unit=>
-        u.id===builder.id&&u.kind==='worker'?{...u,navigation:undefined,order:{kind:'build',buildingId:id}}:u)}}:{}),
+        u.id===builder.id&&u.kind==='worker'?{...u,commandMode:undefined,orderQueue:undefined,navigation:undefined,order:{kind:'build',buildingId:id}}:u)}}:{}),
   };
 }
 

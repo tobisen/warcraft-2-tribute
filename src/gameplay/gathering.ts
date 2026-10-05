@@ -1,3 +1,4 @@
+import type {OrderState as importOrderState} from './commandOrders';
 import type {SpellState} from './spells';
 import type {ResourceService} from './resourceQueue';
 import type {AbilityState} from './abilities';
@@ -18,7 +19,7 @@ import type { SelectableUnit } from './selection';
 export type ResourceType = 'wood' | 'gold';
 export type WorkerOrder = {kind:'repair';buildingId:import('./buildingSelection').BuildingSelection&string} |  { kind: 'idle' } | { kind: 'move' }
   | { kind: 'gather' | 'deliver'; nodeId: string } | {kind:'build';buildingId:`wall-${number}`|`gate-${number}`|`tower-${number}`|'harbor'|'outpost'|'barracks'|'forge'|`farm-${number}`};
-export interface Worker extends SelectableUnit {
+export interface Worker extends SelectableUnit, importOrderState {
   navigation?: RouteState;
   kind: 'worker';
   owner?:'player';
@@ -27,7 +28,7 @@ export interface Worker extends SelectableUnit {
   cargo: number;
   cargoType?: ResourceType;
 }
-export interface Soldier extends SelectableUnit, SpellState {
+export interface Soldier extends SelectableUnit, SpellState, importOrderState {
   mana?:number;
   ability?:AbilityState;
   faction?:FactionId;
@@ -75,10 +76,10 @@ export function isNodeHit(point: Position, node: ResourceNode): boolean {
 export function orderUnits(units: Unit[], target: Position, node?: ResourceNode): Unit[] {
   return units.map(unit => {
     if (!unit.selected || (node && unit.kind === 'soldier')) return unit;
-    if (unit.kind === 'soldier') return { ...unit, attackMoveTarget: undefined, autoOrigin: undefined, autoDisabled: false, navigation: undefined, target: { ...target }, order: { kind: 'move' } };
+    if (unit.kind === 'soldier') return { ...unit, attackMoveTarget: undefined, autoOrigin: undefined, autoDisabled: false, commandMode: undefined, orderQueue: undefined, navigation: undefined, target: { ...target }, order: { kind: 'move' } };
     return {
       ...unit,
-      navigation: undefined,
+      commandMode: undefined, orderQueue: undefined, navigation: undefined,
       target: { ...(node ? node.position : target) },
       order: !node ? { kind: 'move' }
         : unit.cargo >= gatheringConfig.capacity || (unit.cargo > 0 && (unit.cargoType ?? 'wood') !== (node.resource ?? 'wood')) || (node.remaining <= 0 && unit.cargo > 0)

@@ -1,3 +1,4 @@
+import {issueOrder} from '../gameplay/commandOrders';
 import {createAirIcons} from '../presentation/airIcons';
 import {airPresentation} from '../config/air';
 import {isAir} from '../gameplay/domains';
@@ -152,6 +153,7 @@ export class BootScene extends Phaser.Scene {
   private warningVisual?:Phaser.GameObjects.Graphics;
   private enemyNaval?:EnemyNavalState;
   private unloadMode:string|null=null;
+  private patrolMode=false;
   private attackMoveMode=false;
   private attackMoveButton!:HTMLButtonElement;
   private stopButton!: HTMLButtonElement;
@@ -253,7 +255,7 @@ export class BootScene extends Phaser.Scene {
       if(!gameplayKeyAllowed(keyboardContext(event,this.gameplayActive()))||!validGroup(event.key))return;
       event.preventDefault();
       if(event.ctrlKey||event.metaKey)this.controlGroups=bindGroup(this.controlGroups,event.key,this.allSelectable(),u=>entityVisible(this.fog,'player',u));
-      else{this.setSelectable(recallGroup(this.controlGroups,event.key,this.allSelectable(),u=>entityVisible(this.fog,'player',u)));this.selectedBuilding=null;this.selectedResource=null;this.attackMoveMode=false;this.placement=cancelPlacement(this.placement);this.drag=undefined;this.dragBox.setVisible(false);gameAudio.say(voiceSpeaker(this.allSelectable()),'select',this.factions.player);}
+      else{this.setSelectable(recallGroup(this.controlGroups,event.key,this.allSelectable(),u=>entityVisible(this.fog,'player',u)));this.selectedBuilding=null;this.selectedResource=null;this.attackMoveMode=false;this.patrolMode=false;this.placement=cancelPlacement(this.placement);this.drag=undefined;this.dragBox.setVisible(false);gameAudio.say(voiceSpeaker(this.allSelectable()),'select',this.factions.player);}
       this.syncVisuals();
     };window.addEventListener('keydown',groupKey);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>window.removeEventListener('keydown',groupKey));
     this.fogOverlay=this.add.graphics().setDepth(40);
@@ -286,11 +288,11 @@ export class BootScene extends Phaser.Scene {
     this.minimap=bindMinimap(document.querySelector<HTMLCanvasElement>('#minimap')!,()=>({data:visibleMinimapData(this.currentMatch()),scroll:{x:this.cameras.main.scrollX,y:this.cameras.main.scrollY},viewport:{width:this.cameras.main.width,height:this.cameras.main.height}}),point=>this.cameras.main.setScroll(point.x,point.y),()=>this.gameplayActive());
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.minimap?.destroy());
 
-    this.unloadMode=null;this.attackMoveMode=false;this.repairMode=false;this.spellMode=null;this.spellFeedback='';
+    this.unloadMode=null;this.attackMoveMode=false;this.patrolMode=false;this.repairMode=false;this.spellMode=null;this.spellFeedback='';
     this.attackMoveButton=document.querySelector<HTMLButtonElement>('#attack-move')!;
     const beginAttackMove=()=>{
       if(!this.gameplayActive()||!this.gathering.units.some(u=>u.kind==='soldier'&&u.selected))return;
-      this.spellMode=null;this.spellFeedback='';this.repairMode=false;this.attackMoveMode=true;this.placement=cancelPlacement(this.placement);this.drag=undefined;
+      this.spellMode=null;this.spellFeedback='';this.repairMode=false;this.patrolMode=false;this.attackMoveMode=true;this.placement=cancelPlacement(this.placement);this.drag=undefined;
       this.dragBox.setVisible(false);this.syncVisuals();
     };
     this.attackMoveButton.addEventListener('click',beginAttackMove);
@@ -313,7 +315,8 @@ export class BootScene extends Phaser.Scene {
     this.orderVisuals.clear();
     this.farmVisuals.clear();
     this.stopButton = document.querySelector<HTMLButtonElement>('#stop-units')!;
-    const stop = () => { const before=voiceOrders(this.allSelectable());this.attackMoveMode=false;this.repairMode=false;this.spellMode=null;this.spellFeedback=''; this.gathering.units = stopSelected(this.gathering.units, this.gameplayActive());if(this.gameplayActive())this.navy=stopShips(this.navy);gameAudio.say(orderedSpeaker(before,this.allSelectable()),voiceOrderAction(orderedSpeaker(before,this.allSelectable())),this.factions.player); this.syncVisuals(); };
+    const stop = () => { const before=voiceOrders(this.allSelectable());this.attackMoveMode=false;this.patrolMode=false;this.repairMode=false;this.spellMode=null;this.spellFeedback=''; this.gathering.units = stopSelected(this.gathering.units, this.gameplayActive());if(this.gameplayActive())this.navy=stopShips(this.navy);gameAudio.say(orderedSpeaker(before,this.allSelectable()),voiceOrderAction(orderedSpeaker(before,this.allSelectable())),this.factions.player); this.syncVisuals(); };
+    for(const id of ['hold-position','patrol-units']){const button=document.getElementById(id)!,handler=()=>{if(!this.gameplayActive())return;if(id==='hold-position'){this.applyMatch(issueOrder(this.currentMatch(),{kind:'hold'},this.input.keyboard?.addKey('SHIFT').isDown??false));}else{this.patrolMode=!this.patrolMode;this.attackMoveMode=false;this.repairMode=false;this.spellMode=null;this.placement=cancelPlacement(this.placement);}this.syncVisuals();};button.addEventListener('click',handler);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>button.removeEventListener('click',handler));}
     this.stopButton.addEventListener('click', stop);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.stopButton.removeEventListener('click', stop));
     this.selectedResource=null;
@@ -378,7 +381,7 @@ export class BootScene extends Phaser.Scene {
     const begin = (kind:'harbor'|'barracks'|'farm'|'forge'|'tower'|'wall'|'gate'='barracks') => {
       if (!this.gameplayActive()) return;
       if (!this.gathering.units.some(u=>u.kind==='worker' && u.selected)) return;
-      this.unloadMode=null;this.attackMoveMode=false;this.repairMode=false;this.spellMode=null;this.spellFeedback='';
+      this.unloadMode=null;this.attackMoveMode=false;this.patrolMode=false;this.repairMode=false;this.spellMode=null;this.spellFeedback='';
       if(kind==='harbor'&&this.navy?.harbor)return;
       if(buildingAvailability(factions[this.factions.player],kind==='tower'||kind==='wall'||kind==='gate'?'base':kind,technologyFor(this.currentMatch(),'player')))return;
       this.placement = beginPlacement(this.placement,kind);
@@ -387,14 +390,14 @@ export class BootScene extends Phaser.Scene {
       this.previewPoint = this.worldPoint(this.input.activePointer);
       this.syncVisuals();
     };
-    const repairBegin=()=>{if(!this.gameplayActive()||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected))return;this.unloadMode=null;this.attackMoveMode=false;this.placement=cancelPlacement(this.placement);this.repairMode=!this.repairMode;this.syncVisuals();};
+    const repairBegin=()=>{if(!this.gameplayActive()||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected))return;this.unloadMode=null;this.attackMoveMode=false;this.patrolMode=false;this.placement=cancelPlacement(this.placement);this.repairMode=!this.repairMode;this.syncVisuals();};
     document.getElementById('repair-building')!.addEventListener('click',repairBegin);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>document.getElementById('repair-building')!.removeEventListener('click',repairBegin));
     const wallBuild=()=>begin('wall'),gateBuild=()=>begin('gate'),gateToggle=()=>{if(this.selectedBuilding){this.applyMatch(toggleGate(this.currentMatch(),this.selectedBuilding));this.syncVisuals();}},towerBuild=()=>begin('tower'),towerUpgrade=()=>{if(this.gameplayActive()&&this.selectedBuilding)this.applyMatch(upgradeTower(this.currentMatch(),this.selectedBuilding));this.syncVisuals();};
     for(const [id,handler] of [['build-wall',wallBuild],['build-gate',gateBuild],['toggle-gate',gateToggle],['build-tower',towerBuild],['upgrade-tower',towerUpgrade]] as const){document.getElementById(id)!.addEventListener('click',handler);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>document.getElementById(id)!.removeEventListener('click',handler));}
     const cancel = (event?:KeyboardEvent) => {
       if(event&&!gameplayKeyAllowed(keyboardContext(event,this.gameplayActive())))return;
       if (!this.gameplayActive()) return;
-      this.unloadMode=null;this.attackMoveMode=false;this.repairMode=false;this.spellMode=null;this.spellFeedback='';
+      this.unloadMode=null;this.attackMoveMode=false;this.patrolMode=false;this.repairMode=false;this.spellMode=null;this.spellFeedback='';
       this.placement = cancelPlacement(this.placement);
       this.syncVisuals();
     };
@@ -428,7 +431,7 @@ export class BootScene extends Phaser.Scene {
     this.shipButton.textContent=`Train ${naval.units.warship.name} – ${costLabel(naval.units.warship.cost)}`;
     transportButton.textContent=`Train ${naval.units.transport.name} – ${costLabel(naval.units.transport.cost)}`;
     const trainTransport=()=>{if(!this.gameplayActive()||this.selectedBuilding!=='harbor')return;this.applyMatch(trainShip(this.currentMatch(),'transport'));this.syncVisuals();};
-    const beginUnload=()=>{const ship=this.navy?.ships.find(s=>s.selected&&s.role==='transport'&&s.passengers?.length);if(!this.gameplayActive()||!ship)return;this.unloadMode=ship.id;this.placement=cancelPlacement(this.placement);this.attackMoveMode=false;this.drag=undefined;this.dragBox.setVisible(false);this.syncVisuals();};
+    const beginUnload=()=>{const ship=this.navy?.ships.find(s=>s.selected&&s.role==='transport'&&s.passengers?.length);if(!this.gameplayActive()||!ship)return;this.unloadMode=ship.id;this.placement=cancelPlacement(this.placement);this.attackMoveMode=false;this.patrolMode=false;this.drag=undefined;this.dragBox.setVisible(false);this.syncVisuals();};
     transportButton.addEventListener('click',trainTransport);unloadButton.addEventListener('click',beginUnload);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{transportButton.removeEventListener('click',trainTransport);unloadButton.removeEventListener('click',beginUnload);});
     const beginHarbor=()=>begin('harbor'),ship=()=>{if(!this.gameplayActive()||this.selectedBuilding!=='harbor')return;this.applyMatch(trainShip(this.currentMatch()));this.syncVisuals();};
     this.harborButton.addEventListener('click',beginHarbor);this.shipButton.addEventListener('click',ship);
@@ -495,7 +498,7 @@ export class BootScene extends Phaser.Scene {
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       this.soldierButton.removeEventListener('click', trainSoldier);
     });
-    for(const slot of spellSlots){const button=document.getElementById(`cast-${slot}`) as HTMLButtonElement,begin=()=>{const id=spellForSlot(this.factions.player,slot);if(!id)return;const caster=selectedSpellCaster(this.currentMatch(),id);if(!caster||spellCasterReason(this.currentMatch(),caster.id,id))return;this.placement=cancelPlacement(this.placement);this.unloadMode=null;this.attackMoveMode=false;this.repairMode=false;this.spellMode=this.spellMode===id?null:id;this.spellFeedback='';this.syncVisuals();};button.addEventListener('click',begin);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>button.removeEventListener('click',begin));}
+    for(const slot of spellSlots){const button=document.getElementById(`cast-${slot}`) as HTMLButtonElement,begin=()=>{const id=spellForSlot(this.factions.player,slot);if(!id)return;const caster=selectedSpellCaster(this.currentMatch(),id);if(!caster||spellCasterReason(this.currentMatch(),caster.id,id))return;this.placement=cancelPlacement(this.placement);this.unloadMode=null;this.attackMoveMode=false;this.patrolMode=false;this.repairMode=false;this.spellMode=this.spellMode===id?null:id;this.spellFeedback='';this.syncVisuals();};button.addEventListener('click',begin);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>button.removeEventListener('click',begin));}
     const airButton=document.getElementById('train-air') as HTMLButtonElement,trainAir=()=>{if(!allowsProduction(this.selectedBuilding,'barracks',this.placement.barracks!==null,this.gameplayActive()))return;const result=enqueueProduction(this.gathering,this.soldierProduction,{kind:'barracks',bounds:this.map,technology:technologyFor(this.currentMatch(),'player'),footprint:this.placement.barracks,ready:barracksReady(this.placement),unitType:'air'},matchPopulation(this.currentMatch()));this.gathering=result.gathering;this.soldierProduction=result.production;this.syncVisuals();};airButton.addEventListener('click',trainAir);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>airButton.removeEventListener('click',trainAir));
     const abilityButton=document.querySelector<HTMLButtonElement>('#unit-ability')!;
     const activateAbility=()=>{this.gathering=useAbility(this.gathering,this.gameplayActive());this.syncVisuals();};
@@ -517,7 +520,7 @@ export class BootScene extends Phaser.Scene {
     const actionKey=(event:KeyboardEvent)=>{
       if(this.pendingDismiss)return;
       const menuContext={...keyboardContext(event,this.session.phase==='playing'||this.session.phase==='paused'),ctrlKey:event.ctrlKey,metaKey:event.metaKey};
-      if(!event.ctrlKey&&!event.metaKey&&gameplayKeyAllowed(menuContext)&&(event.key.toLowerCase()==='p'||event.key==='Escape'&&(this.session.phase==='paused'||!this.placement.active&&!this.attackMoveMode&&!this.repairMode&&!this.spellMode&&!this.unloadMode))){event.preventDefault();this.sessionAction(this.session.phase==='paused'?'resume':'pause');return;}
+      if(!event.ctrlKey&&!event.metaKey&&gameplayKeyAllowed(menuContext)&&(event.key.toLowerCase()==='p'||event.key==='Escape'&&(this.session.phase==='paused'||!this.placement.active&&!this.attackMoveMode&&!this.patrolMode&&!this.repairMode&&!this.spellMode&&!this.unloadMode))){event.preventDefault();this.sessionAction(this.session.phase==='paused'?'resume':'pause');return;}
       const context={...keyboardContext(event,this.gameplayActive()),ctrlKey:event.ctrlKey,metaKey:event.metaKey};
       if(event.key==='Escape'&&!event.ctrlKey&&!event.metaKey&&gameplayKeyAllowed(context)){event.preventDefault();cancel(event);return;}
       if(!hotkeyButton(event.key,context))return;event.preventDefault();
@@ -551,7 +554,7 @@ export class BootScene extends Phaser.Scene {
     if(action==='start')this.factions=factionsForPlayer(next.options.faction??defaultFactions.player,next.options.enemyFaction);
     if(action==='start'||action==='restart'){this.awaitingLoadedResume=false;this.scenario=next.options.scenario;this.difficulty=next.options.difficulty;this.skipGameplayFrame=true;this.restartPending=true;this.restartButton.disabled=true;this.scene.restart();return;}
     if(action==='resume'){this.skipGameplayFrame=true;if(this.awaitingLoadedResume){document.getElementById('save-status')!.textContent=uiText.loadedMatchResumed;this.awaitingLoadedResume=false;}}
-    if(action==='pause'||action==='new-match'){this.placement=cancelPlacement(this.placement);this.unloadMode=null;this.attackMoveMode=false;this.repairMode=false;this.spellMode=null;this.spellFeedback='';this.drag=undefined;this.cameraDrag=undefined;this.dragBox.setVisible(false);}
+    if(action==='pause'||action==='new-match'){this.placement=cancelPlacement(this.placement);this.unloadMode=null;this.attackMoveMode=false;this.patrolMode=false;this.repairMode=false;this.spellMode=null;this.spellFeedback='';this.drag=undefined;this.cameraDrag=undefined;this.dragBox.setVisible(false);}
     this.syncVisuals();
   }
   private saveGamePreferences():void {if(this.session.phase==='menu')updatePreferences({game:{difficulty:this.session.options.difficulty,faction:this.session.options.faction??defaultFactions.player,enemyFaction:this.session.options.enemyFaction,speed:this.session.options.speed??1}});}
@@ -616,9 +619,10 @@ export class BootScene extends Phaser.Scene {
     if(this.spellMode&&(pointer.button===0||pointer.button===2)){this.placementClick=true;if(pointer.button===2){this.spellMode=null;this.spellFeedback='';}else{const id=this.spellMode,caster=selectedSpellCaster(this.currentMatch(),id),target=spellTargetAt(this.currentMatch(),id,world);const result=caster&&target?castSpell(this.currentMatch(),caster.id,id,target):{match:this.currentMatch(),reason:'Choose a valid visible target'};this.spellFeedbackError=!!result.reason;this.spellFeedback=result.reason??`${spellDefinition(id,this.factions.player).name} cast`;if(!result.reason){this.applyMatch(result.match);this.spellMode=null;}}this.syncVisuals();return;}
     if(this.unloadMode&&(pointer.button===0||pointer.button===2)){this.placementClick=true;if(pointer.button===2)this.unloadMode=null;else{const before=this.currentMatch(),after=unloadTransport(before,this.unloadMode,world);if(after!==before){this.applyMatch(after);this.unloadMode=null;}}this.syncVisuals();return;}
     if(this.repairMode&&(pointer.button===0||pointer.button===2)){this.repairMode=false;this.spellMode=null;this.spellFeedback='';this.placementClick=true;this.applyMatch(orderRepair(this.currentMatch(),inspectBuildingAt(this.currentMatch(),world)));this.syncVisuals();return;}
+    if(this.patrolMode&&(pointer.button===0||pointer.button===2)){this.patrolMode=false;this.placementClick=true;if(pointer.button===0)this.applyMatch(issueOrder(this.currentMatch(),{kind:'patrol',destination:world},'shiftKey' in pointer.event&&pointer.event.shiftKey));this.syncVisuals();return;}
     if(this.attackMoveMode&&(pointer.button===0||pointer.button===2)) {
-      this.unloadMode=null;this.attackMoveMode=false;this.repairMode=false;this.spellMode=null;this.spellFeedback='';this.placementClick=true;
-      if(pointer.button===0)this.gathering.units=commandAttackMove(this.gathering.units,world,this.map);
+      this.unloadMode=null;this.attackMoveMode=false;this.patrolMode=false;this.repairMode=false;this.spellMode=null;this.spellFeedback='';this.placementClick=true;
+      if(pointer.button===0)this.applyMatch(issueOrder(this.currentMatch(),{kind:'attack-move',destination:world},'shiftKey' in pointer.event&&pointer.event.shiftKey));
       this.syncVisuals();return;
     }
     if (this.placement.active) {
@@ -669,11 +673,7 @@ export class BootScene extends Phaser.Scene {
       const ownBuilding=inspectBuildingAt(this.currentMatch(),world);if(ownBuilding&&inspectedBuilding(this.currentMatch(),ownBuilding)?.team==='player'&&this.gathering.units.some(u=>u.kind==='worker'&&u.selected)){this.applyMatch(orderRepair(this.currentMatch(),ownBuilding));this.syncVisuals();return;}
       const enemy = enemyAt(this.combat.enemies.filter(e=>entityVisible(this.fog,'player',e)), world);
       const resource = resourceNodes(this.gathering).find(n=> knownResource(this.fog,n.position)&&isNodeHit(world,n));
-      if(enemy)this.navy=attackShips(this.currentMatch(),enemy.id);
-      if(!enemy&&!resource)this.navy=commandShips(this.currentMatch(),world);
-      this.gathering.units = enemy ? orderAttack(this.gathering.units, enemy.id)
-        : resource ? orderUnits(this.gathering.units, world, resource)
-          : commandGroupMove(this.gathering.units, world, this.map);
+      this.applyMatch(issueOrder(this.currentMatch(),enemy?{kind:'attack',enemyId:enemy.id}:resource?{kind:'gather',nodeId:resource.id}:{kind:'move',destination:world},'shiftKey' in pointer.event&&pointer.event.shiftKey));
     }
   }
 
@@ -806,7 +806,7 @@ export class BootScene extends Phaser.Scene {
     if(this.selectedBuilding&&!inspectedBuilding(this.currentMatch(),this.selectedBuilding))this.selectedBuilding=null;
     this.baseVisual.setFrame(buildingFrame('base','player',0,5,this.factions.player,this.combat.baseHP,baseDevelopment(this.currentMatch()).level)).setVisible(this.combat.baseHP>0);this.baseLabel.setVisible(this.combat.baseHP>0).setText(`${factions[this.factions.player].buildingNames.base} · L${development.level} · ${Math.ceil(this.combat.baseHP)} HP`);
     if (!this.gameplayActive()) {
-      this.unloadMode=null;this.attackMoveMode=false;this.repairMode=false;this.spellMode=null;this.spellFeedback='';
+      this.unloadMode=null;this.attackMoveMode=false;this.patrolMode=false;this.repairMode=false;this.spellMode=null;this.spellFeedback='';
       this.cameraDrag = undefined;
       this.drag = undefined;
       this.dragBox.setVisible(false);
@@ -935,10 +935,12 @@ export class BootScene extends Phaser.Scene {
     if(this.fogOverlay)drawFog(this.fogOverlay,this.fog,this.fogPreview??'player');
     for(const slot of spellSlots){const id=spellForSlot(this.factions.player,slot),button=document.getElementById(`cast-${slot}`) as HTMLButtonElement,caster=id?selectedSpellCaster(this.currentMatch(),id):undefined;button.disabled=!id||!caster||!!spellCasterReason(this.currentMatch(),caster.id,id);button.textContent=id?spellDefinition(id,this.factions.player).name:'Unavailable';button.setAttribute('aria-pressed',String(!!id&&this.spellMode===id));}
     for(const shortcut of hotkeys){const button=document.getElementById(shortcut.button)!;button.textContent=`${button.textContent?.replace(/\s+\[[A-Z0-9]+\]$/,'')} [${shortcut.key}]`;button.title=shortcut.label;}
+    for(const id of ['hold-position','patrol-units'])(document.getElementById(id) as HTMLButtonElement).disabled=!this.gameplayActive()||!this.allSelectable().some(u=>u.selected);
     renderActionPanel(actionPanel(this.currentMatch(),this.selectedBuilding,this.gameplayActive()));
 
     this.syncSpellPreview(this.worldPoint(this.input.activePointer));
     if(this.spellMode||this.spellFeedback)document.getElementById('action-hint')!.textContent=this.spellFeedback||`${spellDefinition(this.spellMode!,this.factions.player).name}: choose a target; Escape/right-click cancels`;
+    if(this.patrolMode)document.getElementById('action-hint')!.textContent='Patrol: click endpoint; Shift appends. Escape/right-click cancels.';
     if(this.repairMode)document.getElementById('action-hint')!.textContent='Repair: click an own damaged building. Escape cancels.';
     renderTutorial(this.currentMatch());
     renderOperation(this.currentMatch());

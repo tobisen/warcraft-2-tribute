@@ -3,7 +3,7 @@ import { separationConfig as config } from '../config/separation';
 import type { Position } from './movement';
 import type { WorldMap } from './map';
 import { segmentFits } from './navigation';
-export interface SeparationBody { id:string; position:Position; half:number }
+export interface SeparationBody { id:string; position:Position; half:number;fixed?:boolean }
 /** No saved/hidden state. Stable IDs settle ties; square bodies match navigation clearance. */
 export function separateBodies(map:WorldMap, bodies:readonly SeparationBody[], delta:number):Map<string,Position> {
   const moved=new Map<string,Position>(), budget=config.speed*Math.max(0,delta);
@@ -12,6 +12,7 @@ export function separateBodies(map:WorldMap, bodies:readonly SeparationBody[], d
     .map(b=>({...b,position:{...b.position},spent:0})).sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}));
   const tie=(a:string,b:string)=>{let n=0;for(const c of `${a}|${b}`)n=(n*31+c.charCodeAt(0))>>>0;return n;};
   const shift=(actor:typeof actors[number],axis:'x'|'y',direction:number,wanted:number):number=>{
+    if(actor.fixed)return 0;
     const amount=Math.min(wanted,Math.max(0,budget-actor.spent));if(amount<=config.epsilon)return 0;
     const point=(distance:number)=>({...actor.position,[axis]:actor.position[axis]+direction*distance});
     let allowed=amount;const actorMap=actor.id.startsWith('enemy:')?enemyNavigationMap(map):map;

@@ -1393,3 +1393,11 @@ Två belagda justeringar: (1) Warships kunde tidigare inte skjuta tillbaka mot G
 AI-barracks/outpostpreflight får inte behandla egna eller fientliga flygare som markockupation. De sista redundanta byggplatskontrollerna adapteras till samma domänregel; riktade tester med ground-positive-control bevarar markspärren. AI betalar fortfarande med faktisk budget/supply/prereqs och väljer två tidiga archers vid observerad luft. AI:s befintliga sjöproduktion är transport, ingen ny AI-warshipfunktion införs.
 
 Save42 migrerar41 med gamla projektilmasker/skador intakta; nya naval airborne+marine-skott får inte smygas in i påstådd41. Kostnader/tider/maxHP oförändrade, så redan accepterade köer och airunits migrerar utan omprissättning. Tidigare ground-only-spells och individuella flygmasker består. Slutgrafik Pending; mänskligt balansspeltest Pending.
+
+## RTS-170 – bestående kommandon och FIFO
+
+- Hold stoppar rörelse, behåller automatiska synliga lagliga mål i faktisk skotträckvidd och förföljer inte. Separation behandlar Hold som fast kropp. Workers/transports är obeväpnade.
+- Patrol pendlar mellan utfärdande enhetens start och klickpunkten. Soldater använder befintlig attack-move med återgång efter strid; ships bekämpar synliga mål i skotträckvidd och fortsätter samma ben. Workers patrullerar utan strid. Blockerad patrol vilar tills map revision ändras.
+- Shift köar move/attack/attack-move/gather/Hold/Patrol för kompatibla enheter, högst32 väntande order. Full kö tar inte emot fler. Vanlig stödd order och Stop ersätter/rensar; avmarkering påverkar inte. Build/repair/boarding avbryter på berörda enheter och köas inte; spells/abilities påverkar inte rörelseorder.
+- Hold/Patrol/gather på en ej uttömd nod fortsätter tills ersatta; nästa order väntar. Uttömd nod avslutas efter befintlig cargoleverans. Dött/dolt/ogiltigt attackmål och saknad nod hoppas över; blockerad attack med väntande kö avslutas, blockerad move går vidare. Nästa order startar i nästa simulationssteg, utan påhittad återstående arbetstid.
+- Save43 migrerar42 utan nya historiska kommandon, lagrar modes/endpoints/kö och återbildar navigation; restart skapar tomma köer. F6 Hold/F7 Patrol återanvänder actions/hotkeyvalidering. Kompakt order/kö i selection, full sekvens i tooltip.

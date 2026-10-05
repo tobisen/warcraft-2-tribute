@@ -40,7 +40,7 @@ export function enemyAt(enemies: Enemy[], point: Position): Enemy | undefined {
 
 export function orderAttack(units: Unit[], enemyId: string): Unit[] {
   return units.map(unit => unit.kind === 'soldier' && unit.selected
-    ? { ...unit, attackMoveTarget: undefined, autoOrigin: undefined, autoDisabled: false, navigation: undefined, order: { kind: 'attack', enemyId } } : unit);
+    ? { ...unit, commandMode: undefined, orderQueue: undefined, attackMoveTarget: undefined, autoOrigin: undefined, autoDisabled: false, navigation: undefined, order: { kind: 'attack', enemyId } } : unit);
 }
 
 /** Consume travel time before melee damage; positions/ranges use centre distances. */
@@ -105,7 +105,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
     const ranged=rangedStats(unit,gathering.faction);
     const range=ranged?.range??combatUnitStats(unit,gathering.faction).range??combatConfig.soldierRange;
     const speed=combatUnitStats(unit,gathering.faction).speed;
-    const step = map ? combatApproach({...movementMap(map,unit),ignoreAttackOcclusion:isAir(enemy),bodyHalf:combatUnitStats(unit,gathering.faction).size/2},unit.position,enemyBody(enemy),
+    const step = unit.commandMode?.kind==='hold' ? {position:{...unit.position},attackSeconds:(map?canInteract({...movementMap(map,unit),ignoreAttackOcclusion:isAir(enemy)},unit.position,enemyBody(enemy),range):Math.hypot(unit.position.x-enemy.position.x,unit.position.y-enemy.position.y)<=range)?delta:0,navigation:undefined} : map ? combatApproach({...movementMap(map,unit),ignoreAttackOcclusion:isAir(enemy),bodyHalf:combatUnitStats(unit,gathering.faction).size/2},unit.position,enemyBody(enemy),
       enemy.id,speed,range,delta,unit.navigation,gateFor?.(`player:${unit.id}`))
       : approach(unit.position, enemy.position, speed, range, delta);
     if(ranged) {

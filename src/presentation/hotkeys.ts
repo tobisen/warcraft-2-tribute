@@ -1,6 +1,8 @@
 import {text as uiText} from '../text';
 import { gameplayKeyAllowed,type KeyContext } from './keyboard';
 export const hotkeys=[
+ {key:'F6',button:'hold-position',label:'Hold position: attack visible targets in range without pursuing. Normal orders replace the queue; Shift adds move, attack, attack-move, gather, hold or patrol (max 32). Hold and patrol continue until replaced or stopped.'},
+ {key:'F7',button:'patrol-units',label:'Patrol between your current position and the clicked point; combat units attack-move and resume after target loss. Shift appends.'},
  {key:'F5',button:'train-air',label:'Train the faction flyer at a completed barracks; Forge and both research upgrades required. Temporary art.'},
  {key:'F2',button:'cast-heal',label:'Healing spell (faction loadout): choose a visible damaged allied ground combat unit in spell range. Escape or right-click cancels without cost.'},
  {key:'F3',button:'cast-ward',label:'Buff spell (faction loadout): choose a visible allied ground combat unit in spell range. Escape or right-click cancels without cost.'},

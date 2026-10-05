@@ -2,6 +2,8 @@
 
 ## Current Focus
 
+**Aktuellt mandat RTS-170–173:** Nytt uttryckligt uppdrag ersätter stoppet efter169.170 Done;171 In Progress;172–173 Todo. En task åt gången med riktade tester/browser, slutchecks, docs och commit/push till origin/main. Stopp efter173 med HANDOFF;174 startas inte.160–164 och165–169 återimplementeras inte. Befintlig style.css och otrackade docs/ bevaras.
+
 **Nytt mandat RTS-165–169:**165 Done (`838f729`),166 Done (`2cd36a6`),167 Done (`fd9dfd3`),168 Done gameplay (`83d01fe`, pushad);169 Done som preliminärt första balanspass. Slutlig flygargrafik återstår separat. Användarens bifogade uppdrag för165–173 anger etappstopp efter169 och ny chatt170–173.160–164 är verifierade och pushade;164 `874f761`. Befintliga ändringar bevaras.
 
 **UI-BUGFIX-BOTTOM-BAR – Horisontell bottom bar** — **Done** (2026-10-04).
@@ -4574,7 +4576,9 @@ Bevara användbara roller för olika enhetstyper.
 
 ## RTS-170 – Hold Position, Patrol och köade orders
 
-**Status:** Todo.
+**Status:** Done.
+
+**Leverans:** Bestående Hold/Patrol och max32 kompatibla Shift-order för land/air/workers/ships. Normal order och Stop rensar, avmarkering bevarar; definierade target loss/blockering/återgång och nästa simulationssteg. Save43 migrerar42, restart rensar. F6/F7, kompakta order/köstatus och tooltip. Riktade142/14 samt slutliga commandOrders10/1 PASS; unit435/79 och build inklusive strict typecheck PASS. Fysisk Chromium800/1280 kö/Hold-strid/Patrol/Stop/Escape/Save/Load/restart PASS; sex screenshots/browser.json i [artifacts](artifacts/rts-170). Queue800 och Hold-combat1280 visuellt granskade.
 
 **Goal:** Hold Position, Patrol och köade orders.
 

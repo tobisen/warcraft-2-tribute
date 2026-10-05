@@ -23,7 +23,7 @@ import {forgeReady} from '../gameplay/research';
 import type {BuildingSelection} from '../gameplay/buildingSelection';
 import type {MatchState} from '../gameplay/match';
 import {hotkeys} from './hotkeys';
-export const actionIds=['cast-heal','cast-ward','cast-hex','repair-building','build-wall','build-gate','toggle-gate','build-tower','upgrade-tower','upgrade-base','train-worker','train-soldier','train-archer','train-catapult','train-specialist','train-air','train-transport','train-ship','build-barracks','build-farm','build-forge','build-harbor','research-attack','research-defense','attack-move','unit-ability','unload-transport','stop-units','dismiss-units'] as const;
+export const actionIds=['cast-heal','cast-ward','cast-hex','repair-building','build-wall','build-gate','toggle-gate','build-tower','upgrade-tower','upgrade-base','train-worker','train-soldier','train-archer','train-catapult','train-specialist','train-air','train-transport','train-ship','build-barracks','build-farm','build-forge','build-harbor','research-attack','research-defense','attack-move','unit-ability','unload-transport','hold-position','patrol-units','stop-units','dismiss-units'] as const;
 type ActionId=typeof actionIds[number];
 export const actionGroups=['Orders','Build','Train','Research','Spells'] as const;
 export function actionGroup(id:ActionId):typeof actionGroups[number]{return id.startsWith('cast-')?'Spells':id.startsWith('build-')?'Build':id.startsWith('train-')?'Train':id.startsWith('research-')||id.startsWith('upgrade-')?'Research':'Orders';}

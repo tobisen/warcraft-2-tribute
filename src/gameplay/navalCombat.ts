@@ -31,7 +31,7 @@ function firingRoute(map:WorldMap,ship:Ship,enemy:Enemy,cfg:ShipStats):RouteStat
 }
 function attackStep(ship:Ship,enemy:Enemy,delta:number,map:WorldMap|undefined,cfg:ShipStats){
  if(canShoot(map,ship.position,enemy,cfg))return {position:ship.position,navigation:{commandNumber:ship.navigation?.commandNumber??1,destination:{...ship.position},waypoints:[],revision:map?.revision??0,status:'arrived' as const,targetId:enemy.id,goalKey:`naval:${enemy.id}:${enemy.position.x}:${enemy.position.y}`},attackSeconds:delta};
- if(!map)return {position:ship.position,navigation:ship.navigation,attackSeconds:0};
+ if(!map||ship.commandMode?.kind==='hold')return {position:ship.position,navigation:ship.navigation,attackSeconds:0};
  const cached=ship.navigation,retryAfter=Math.max(0,(cached?.retryAfter??0)-delta);
  const route=cached&&cached.targetId===enemy.id&&cached.revision===map.revision&&retryAfter>0?{...cached,retryAfter}:firingRoute(map,ship,enemy,cfg);
  const step=advanceRoute({...domainMap(map,'water'),bodyHalf:cfg.size/2},ship.position,route,cfg.speed,delta);
@@ -40,7 +40,10 @@ function attackStep(ship:Ship,enemy:Enemy,delta:number,map:WorldMap|undefined,cf
 /** Prepare movement/shots from the same live snapshot as land combat; damage applies afterwards. */
 export function prepareNavalCombat(navy:NavyState|undefined,enemies:readonly Enemy[],delta:number,map:WorldMap|undefined,nextProjectileNumber:number,attackMultiplier=1,visible:(e:Enemy)=>boolean=()=>true,cfg:ShipStats=navyConfig.ship){
  const shots:{projectile:Projectile;time:number}[]=[];if(!navy||delta<=0)return {navy,shots,nextProjectileNumber};
- const ships=navy.ships.map(ship=>{
+ const ships=navy.ships.map(original=>{
+  let ship=original;
+  if(ship.commandMode&&ship.role!=='transport'){const target=enemies.filter(e=>e.hp>0&&visible(e)&&shipTargets.includes(targetDomain(e) as typeof shipTargets[number])&&canShoot(map,ship.position,e,cfg)).sort((a,b)=>Math.hypot(a.position.x-ship.position.x,a.position.y-ship.position.y)-Math.hypot(b.position.x-ship.position.x,b.position.y-ship.position.y)||a.id.localeCompare(b.id))[0];if(target)ship={...ship,order:{kind:'attack',enemyId:target.id}};else if(ship.order.kind==='attack')ship={...ship,navigation:undefined,order:{kind:'idle'}};}
+
   if(ship.hp<=0||ship.role==='transport'||ship.order.kind!=='attack')return {...ship,attackCooldown:Math.max(0,(ship.attackCooldown??0)-delta)};
   const enemy=enemies.find(e=>ship.order.kind==='attack'&&e.id===ship.order.enemyId&&e.hp>0);
   if(!enemy||!shipTargets.includes(targetDomain(enemy) as typeof shipTargets[number])||!visible(enemy))return {...ship,navigation:undefined,attackCooldown:Math.max(0,(ship.attackCooldown??0)-delta),order:{kind:'idle' as const}};

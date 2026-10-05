@@ -24,7 +24,7 @@ export function resumeConstruction(gathering:GatheringState,placement:PlacementS
   return {placement:id==='barracks'?{...placement,construction:updated}
       :tower?{...placement,defenses:placement.defenses!.map(t=>t.id===id?{...t,construction:updated}:t)}:id==='forge'?{...placement,forge:{...placement.forge!,construction:updated}}:{...placement,farms:placement.farms!.map(f=>f.id===id?{...f,construction:updated}:f)},
     gathering:{...gathering,units:gathering.units.map((u):Unit=>u.id===builder.id&&u.kind==='worker'
-      ? {...u,navigation:undefined,order:{kind:'build',buildingId:id}}
+      ? {...u,commandMode:undefined,orderQueue:undefined,navigation:undefined,order:{kind:'build',buildingId:id}}
       : u.order.kind==='build'&&u.order.buildingId===id?{...u,navigation:undefined,target:{...u.position},order:{kind:'idle'}}:u)}};
 }
 export function updateSite(gathering:GatheringState,job:ConstructionJob,rect:Footprint,id:SiteId,map:WorldMap,delta:number,gateFor?:GateFor) {

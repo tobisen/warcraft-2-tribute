@@ -1,3 +1,5 @@
+import {canInteract} from './approach';
+import {enemyBody} from './enemyBody';
 import {canAttackDomain,movementMap,isAir} from './domains';
 import type {FactionId} from '../config/factions';
 import {enemySize} from './enemyBody';
@@ -27,16 +29,17 @@ export function acquireTargets(units: Unit[], enemies: Enemy[], map?: WorldMap,
     if(unit.kind!=='soldier'||unit.hp<=0||unit.autoDisabled) return unit;
     if(unit.order.kind==='move'&&!unit.attackMoveTarget) return unit;
     // An explicit attack has priority and is never replaced by proximity targeting.
-    if(unit.order.kind==='attack'&&!unit.autoOrigin) return unit;
+    if(unit.order.kind==='attack'&&!unit.autoOrigin&&unit.commandMode?.kind!=='hold') return unit;
     const origin=unit.autoOrigin??unit.position;
     const valid=(enemy:Enemy)=>visible(enemy,unit)&&enemy.hp>0&&canAttackDomain(unit,enemy,faction??'crown')
       &&distance(origin,enemy.position)<=(rangedStats(unit,faction)?.aggroRange??combatUnitStats(unit,faction).aggroRange??combatConfig.soldierAggroRange)
-      &&reachable(unit,enemy,map,faction);
+      &&(unit.commandMode?.kind==='hold'?(map?canInteract({...movementMap(map,unit),ignoreAttackOcclusion:isAir(enemy)},unit.position,enemyBody(enemy),rangedStats(unit,faction)?.range??combatUnitStats(unit,faction).range??combatConfig.soldierRange):distance(unit.position,enemy.position)<=(rangedStats(unit,faction)?.range??combatUnitStats(unit,faction).range??combatConfig.soldierRange)):reachable(unit,enemy,map,faction));
     const current=unit.order.kind==='attack'?enemies.find(e=>unit.order.kind==='attack'&&e.id===unit.order.enemyId):undefined;
     if(current&&valid(current))return unit;
     const target=enemies.filter(valid).sort((a,b)=>distance(unit.position,a.position)-distance(unit.position,b.position)
       ||a.id.localeCompare(b.id,'en',{numeric:true}))[0];
     if(target)return {...unit,autoOrigin:{...origin},navigation:undefined,order:{kind:'attack' as const,enemyId:target.id}};
+    if(unit.commandMode?.kind==='hold')return {...unit,autoOrigin:undefined,navigation:undefined,order:{kind:'idle' as const}};
     const destination=unit.attackMoveTarget??origin;
     if((unit.autoOrigin||unit.attackMoveTarget)&&distance(unit.position,destination)>1e-9) {
       if(unit.order.kind==='move')return unit;

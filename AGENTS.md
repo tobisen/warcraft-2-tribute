@@ -122,3 +122,7 @@ luftroster och flygarassets; designfråga ställd men obesvarad.169:s centrala
 luft/anti-air/combined-arms-verifiering är också blockerad. Se HANDOFF.md och
 assets/sources/air-168.md. Inga flygplaceholders eller full169-balans hävdas.
 Nästa task är att lösa168:s underlag, inte170.170–173 har inte startats.
+
+## Mandat RTS-170–173
+
+Nytt uttryckligt uppdrag ersätter tidigare stopp efter169. HANDOFF:s senaste168/169-leverans gäller framför den äldre blockeringsnoteringen ovan. Genomför170–173 en task åt gången, återanvänd befintliga system, bevara style.css/docs/, verifiera riktat och i browser samt slutlig unit/build med strict typecheck/diff, docs och taskvis commit/push till origin/main utan force. Full regression vid etappgräns. Stanna efter173 med HANDOFF;174 startas inte. Ingen automatisk delegering.

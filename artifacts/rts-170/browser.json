@@ -1,0 +1,192 @@
+[
+  {
+    "width": 800,
+    "queued": {
+      "kind": "worker",
+      "owner": "player",
+      "hp": 30,
+      "id": "unit-1",
+      "position": {
+        "x": 500,
+        "y": 350
+      },
+      "target": {
+        "x": 500,
+        "y": 350
+      },
+      "selected": true,
+      "order": {
+        "kind": "idle"
+      },
+      "cargo": 0,
+      "navigation": {
+        "commandNumber": 1,
+        "destination": {
+          "x": 500,
+          "y": 350
+        },
+        "waypoints": [],
+        "revision": 1,
+        "status": "arrived"
+      }
+    },
+    "held": {
+      "kind": "worker",
+      "owner": "player",
+      "hp": 30,
+      "id": "unit-1",
+      "position": {
+        "x": 500,
+        "y": 350
+      },
+      "target": {
+        "x": 500,
+        "y": 350
+      },
+      "selected": true,
+      "order": {
+        "kind": "idle"
+      },
+      "cargo": 0,
+      "commandMode": {
+        "kind": "hold"
+      },
+      "orderQueue": [
+        {
+          "kind": "move",
+          "destination": {
+            "x": 450,
+            "y": 300
+          }
+        }
+      ]
+    },
+    "loaded": {
+      "kind": "worker",
+      "owner": "player",
+      "hp": 30,
+      "id": "unit-1",
+      "position": {
+        "x": 500,
+        "y": 350
+      },
+      "target": {
+        "x": 500,
+        "y": 350
+      },
+      "selected": true,
+      "order": {
+        "kind": "idle"
+      },
+      "cargo": 0,
+      "commandMode": {
+        "kind": "hold"
+      },
+      "orderQueue": [
+        {
+          "kind": "move",
+          "destination": {
+            "x": 450,
+            "y": 300
+          }
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "queued": {
+      "kind": "worker",
+      "owner": "player",
+      "hp": 30,
+      "id": "unit-1",
+      "position": {
+        "x": 500,
+        "y": 350
+      },
+      "target": {
+        "x": 500,
+        "y": 350
+      },
+      "selected": true,
+      "order": {
+        "kind": "idle"
+      },
+      "cargo": 0,
+      "navigation": {
+        "commandNumber": 1,
+        "destination": {
+          "x": 500,
+          "y": 350
+        },
+        "waypoints": [],
+        "revision": 1,
+        "status": "arrived"
+      }
+    },
+    "held": {
+      "kind": "worker",
+      "owner": "player",
+      "hp": 30,
+      "id": "unit-1",
+      "position": {
+        "x": 500,
+        "y": 350
+      },
+      "target": {
+        "x": 500,
+        "y": 350
+      },
+      "selected": true,
+      "order": {
+        "kind": "idle"
+      },
+      "cargo": 0,
+      "commandMode": {
+        "kind": "hold"
+      },
+      "orderQueue": [
+        {
+          "kind": "move",
+          "destination": {
+            "x": 450,
+            "y": 300
+          }
+        }
+      ]
+    },
+    "loaded": {
+      "kind": "worker",
+      "owner": "player",
+      "hp": 30,
+      "id": "unit-1",
+      "position": {
+        "x": 500,
+        "y": 350
+      },
+      "target": {
+        "x": 500,
+        "y": 350
+      },
+      "selected": true,
+      "order": {
+        "kind": "idle"
+      },
+      "cargo": 0,
+      "commandMode": {
+        "kind": "hold"
+      },
+      "orderQueue": [
+        {
+          "kind": "move",
+          "destination": {
+            "x": 450,
+            "y": 300
+          }
+        }
+      ]
+    },
+    "errors": []
+  }
+]
