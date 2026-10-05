@@ -3166,3 +3166,9 @@ Sista native800/1280-browser kompletterar med faktisk framåtrörelse/konstrukti
 ## 2026-10-05 — RTS-176 Done och etappstopp
 
 Slutlig fullregression npm test PASS1426 tester/173 filer,609.57s på slutlig kod. Inga runtime-/teständringar efter den sista startade fullkörningen; endast docs avslutas. Senaste unit461/83, strict typecheck via build och diff PASS. Samma slutliga browser800/1280 PASS inklusive fysisk config49-migration och faktisk allied-assetprogress i spectator. Dokumentlänkar verifierade och HANDOFF uppdaterad.174–176 Done;176 taskcommit/push, stoppa före177.176:s nya GitHubstatus redovisas efter push, inte antagen från174/175:s gröna körningar. UserCSS SHA95c3725250221ef8386519adecfb05db601103697d421e78e1b2bdf057141a5e/docs bevarade och undantas från committen.
+
+## 2026-10-05 — RTS-177 design
+
+Inventerat alla åtta befintliga missioner, progression, operationer, kartor, Save och tidigare PRIO/168–176-status. CAMPAIGN_DESIGN.md definierar exakt178-omfattning: befintlig tutorial, sju flerfasmissioner med faktiska preparation/exploration/transport/guard/zone/base-mål, English briefings, stabila engångsövergångar, bas-/kurirförlust, difficulty-/legacy-regler och verifieringskontrakt. Fem raser behåller meningsfulla player/enemy-roller. Nya tre kampanjkartval redovisade före implementation; ingen ny mapgenerator/depot/reward-army.
+
+177 Done som design enligt användarens uttryckliga uppskattningsregel.20–40min är uppskattningar; särskilt waveuppdragen kan visa sig kortare och kräver mänskligt speltest. Ingen ny runtime, browser eller kodtest hävdas. Dokumentgranskning/länk- och diffkontroll före taskcommit; tidigare176-kodchecks återanvänds enbart som historik.178 nästa; stopp efter180. Befintlig CSS och docs/ bevarade.

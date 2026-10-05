@@ -2,6 +2,8 @@
 
 ## Current Focus
 
+**Aktuellt mandat RTS-177–180:** Nytt användaruppdrag ersätter stoppet efter176.177 design klar;178 nästa. En task åt gången, riktad/browser-verifiering, docs och commit/push. Samlad kampanjregression när kampanjändringarna är klara; full releasekontroll vid180. Uppdatera HANDOFF/QUALITY_REVIEW efter180 och stanna. CSS/docs bevaras.
+
 **Aktuellt mandat RTS-174–176:** Användaren återupptar174–176 efter färdiga PRIO-01–04.174 Done/push416cfa9;175 Done/push0a5b422,176 Done. Etappen avslutad; stanna före177. En task åt gången, riktade tester/browser, slutchecks/docs och commit/push. HANDOFF efter176; stopp före177. CSS/docs bevaras.
 
 **Nytt prioriterat mandat PRIO-01–04:** RTS-174–176 pausade enligt användarens nya uppdrag. PRIO-01–04 Done. Användaren har godkänt kartorna och djurljuden tills resterande ljudarbete genomförs. En task åt gången, docs/checks/browser/commit/push; stopp efter04,174 startas inte. PRIO-03:s två bildreferenser är godkända; referenskarta verifieras före spridning. Användarens CSS/docs bevaras.
@@ -4859,7 +4861,7 @@ Hantera fortsatt match efter förstörd allierad bas.
 
 ## RTS-177 – Design för längre uppdrag
 
-**Status:** Todo.
+**Status:** Done (2026-10-05), design enligt [CAMPAIGN_DESIGN.md](CAMPAIGN_DESIGN.md).
 
 **Goal:** Design för längre uppdrag.
 
@@ -4868,11 +4870,11 @@ Hantera fortsatt match efter förstörd allierad bas.
 Utvalda uppdrag siktar på cirka 20–40 minuter vid normalt tempo.
 Flera delmål, expansioner och förändrade situationer.
 Förläng inte genom enbart mer HP eller väntetid.
-Speltiden verifieras genom speltest.
+Speltider är designuppskattningar enligt användarens förtydligande; faktisk mänsklig tidsverifiering hör till RTS-179.
 
 **Non-goals:** Inga andra roadmap-features; återimplementera inte fungerande system.
 
-**Acceptance Criteria:** Utvalda uppdrag siktar på cirka 20–40 minuter vid normalt tempo. Flera delmål, expansioner och förändrade situationer. Förläng inte genom enbart mer HP eller väntetid. Speltiden verifieras genom speltest.
+**Acceptance Criteria:** Utvalda uppdrag siktar på cirka 20–40 minuter vid normalt tempo. Flera delmål, expansioner och förändrade situationer. Förläng inte genom enbart mer HP eller väntetid. Speltider är designuppskattningar enligt användarens förtydligande; faktisk mänsklig tidsverifiering hör till RTS-179.
 
 **Dependencies:** RTS-176. Befintliga relevanta system återanvänds efter inventering.
 

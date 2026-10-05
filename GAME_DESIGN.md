@@ -1406,3 +1406,7 @@ Markarchers är tidig anti-air för alla fem raser. I25 kostnadsjämförbara kor
 Great Eagle gör17.5 mot luft före research men bara6.3 mot mark/byggnad. Den snabba luftjägaren slår Wyvern vid400-resursbudget men förlorar mot tåliga Gryphon och anti-air-Gyrocopter. Gyrocopter gör18 mot luft men7.8 mot mark/byggnad. Airship saknar luftattack: två bombare(240 resurser) förlorar mot tre Eagles(240); en bombare+fyra Slingers(224) skyddar kombinationen mot tre Eagles(240). Bombare kan slå ren melee som saknar lagliga luftmål.
 
 Warship är nu också sjöbaserad AA:16 normal skada men12 mot luft, samma192range/1.5s. Jämförbara3–4 warships mot två Gryphon/Wyvern vinner i faktisk water-fixture för samtliga raser. Transport attackerar aldrig. Sjö-/markspritekvalitet ändras inte i detta balanspass. Specialisternas markspells använder samma mana/kostnad/duration som före169; de ger inte automatisk seger mot kostnadsjämförbar melee. Lika research1 och exakt wood/gold/supply/produktionstid i config ger en reproducerbar teknisk bas; mänsklig fullmatchbalans krävs fortfarande.
+
+## RTS-177 — Utökad kampanj
+
+[CAMPAIGN_DESIGN.md](CAMPAIGN_DESIGN.md) definierar exakt de åtta missionerna för178, flerfasmål, kartor, återanvända system och verifieringskontrakt. Tider20–40min är uppskattningar, inte speltestbelägg. Äldre sparade kampanjmatcher behåller legacy-mål/kartor; completion-ID:n bevaras.

@@ -142,3 +142,7 @@ Nytt uttryckligt uppdrag återupptar174–176 efter färdiga PRIO-01–04. En ta
 ## Avslutad etapp RTS-174–176
 
 174–176 är Done. Slutlig fullregression1426/173, unit461/83, build inklusive strict typecheck/diff och native browser800/1280 PASS. HANDOFF.md redovisar lag/spectator/Save50, kontroller och begränsningar. Stoppa före177; tidigare fortsättningsmandat startar inte senare tasks. Användarens style.css/docs bevaras. Ny176-CI efter taskpush rapporteras separat från174/175:s faktiskt gröna GitHubkörningar.
+
+## Mandat RTS-177–180
+
+Användarens nya uppdrag ersätter stoppet efter176. Genomför177–180 en task i taget med riktade tester/browser, slutchecks, docs och commit/push.177 anger uppskattad speltid; mänskligt speltest får inte ersättas av snabb simulering. Samlad kampanjregression när ändringarna är klara, full releasekontroll vid180. HANDOFF och QUALITY_REVIEW efter180; stanna utan nya tasks/karteditor. CSS/docs bevaras; ingen automatisk delegering.
