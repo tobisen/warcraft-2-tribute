@@ -105,7 +105,7 @@ export const factions:Record<FactionId,FactionDefinition>={crown:defineFaction('
 factions.clans.units.soldier={...factions.clans.units.soldier,hp:66,cost:{wood:18,gold:6},durationSeconds:6};
 factions.clans.units.specialist={...factions.clans.units.specialist,cost:{wood:26,gold:12},durationSeconds:7,hp:80,speed:175,damagePerSecond:24,prerequisites:{buildings:['forge'],research:{attack:1}}};
 // RTS-136: completed Human roster, stable crown identity.
-factions.crown.label='Humans · Crown Alliance';
+factions.crown.label='Human';
 factions.crown.roster=['worker','soldier','archer','catapult','specialist'];
 factions.crown.units.specialist={...factions.crown.units.specialist,art:'specialist'};
 factions.crown.units.catapult={...factions.crown.units.catapult,aggroRange:264,prerequisites:{buildings:['forge']}};
@@ -113,7 +113,7 @@ factions.crown.upgrades.attack.name='Tempered Arms';
 factions.crown.upgrades.defense.name='Plate Craft';
 factions.crown.naval.units.warship.name='Cutter';
 // RTS-137: offensive Orc roster with unchanged clans identities.
-factions.clans.label='Orcs · Iron Clan';
+factions.clans.label='Orcs';
 factions.clans.roster=['worker','soldier','archer','catapult','specialist'];
 factions.clans.unitNames.worker='Peon';
 factions.clans.units.worker={...factions.clans.units.worker,hp:35,speed:155};

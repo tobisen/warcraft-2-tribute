@@ -1,4 +1,4 @@
-# Iron & Timber — A Tribute to Warcraft II
+# Warborn — A Tribute to Warcraft II
 
 Arbetstiteln är inte juridiskt granskad för kommersiell release. Reponamnet
 `warcraft-2-tribute`, GitHub-remote och Pages-adress är oförändrade.
@@ -552,7 +552,7 @@ RTS-095: startsidan är helt dold under match. Den separata spelvyn fyller föns
 
 ## Aktuellt engelskt gränssnitt – RTS-096
 
-Spelets menyer, HUD, tooltips, fel, guide, fraktionsnamn, uppdrag och resultat är engelska. Dokumenten kan vara svenska och äldre slice-avsnitt beskriver historisk UI. Crown Alliance / Iron Clan och Arena / Forest Pass / River Bend / Islands är aktuella visningsnamn; interna ID:n och sparformat är samma.
+Spelets menyer, HUD, tooltips, fel, guide, fraktionsnamn, uppdrag och resultat är engelska. Dokumenten kan vara svenska och äldre slice-avsnitt beskriver historisk UI. Human / Orcs och Arena / Forest Pass / River Bend / Islands är aktuella visningsnamn; interna ID:n och sparformat är samma.
 
 Välj Campaign för Mission1–4 eller Skirmish för Skirmish/Wave-survival. Start Match startar, Pause/Resume [P] stoppar/återupptar simulation; Save locally/Load save använder befintlig slot. Load återkommer pausad, Restart återställer matchen, New match / menu öppnar startsidan. Settings har befintligt ljud. Keys and commands visar den engelska kontrollguiden. Ingen ny stegvis tutorial är implementerad (109).
 
@@ -696,11 +696,11 @@ Roster, produktions-prerequisites, research och naval-recept är datastyrda. UI 
 
 ## RTS-136 – Humans
 
-Välj Humans · Crown Alliance (stabilt ID crown). Fem roller: Worker, Guard, Archer, Catapult och Banner Guard. Catapult kräver färdig Forge. Banner Guard kräver Forge och färdig Plate Craft:30wood/15gold,8s,2supply,100HP,130px/s och14DPS. Bygg Forge40wood/10gold och välj basen för research; Tempered Arms/Plate Craft kostar40wood/10gold och tar8s. Befintlig Defensive Stance bevaras. Human-warship heter Cutter. Banner Guard har egna riktnings-/animationsbilder; Human-byggnader behåller sina egna befintliga sten-/trä-/heraldikbilder. Save25 migrerar24 utan att avbryta betalda jobb. Fiendens fulla femrolls-AI återstår till141.
+Välj Human (stabilt ID crown). Fem roller: Worker, Guard, Archer, Catapult och Banner Guard. Catapult kräver färdig Forge. Banner Guard kräver Forge och färdig Plate Craft:30wood/15gold,8s,2supply,100HP,130px/s och14DPS. Bygg Forge40wood/10gold och välj basen för research; Tempered Arms/Plate Craft kostar40wood/10gold och tar8s. Befintlig Defensive Stance bevaras. Human-warship heter Cutter. Banner Guard har egna riktnings-/animationsbilder; Human-byggnader behåller sina egna befintliga sten-/trä-/heraldikbilder. Save25 migrerar24 utan att avbryta betalda jobb. Fiendens fulla femrolls-AI återstår till141.
 
 ## RTS-137 – Orcs
 
-Välj Orcs · Iron Clan (stabilt clans-ID). Peon35HP/155px/s, Axe Warrior20DPS, Hunter kortare144px range och Stone Thrower26damage/2.1s med11s produktion. Raider kräver färdig Smithy och War Blades, kostar26wood/12gold, tar7s och använder2supply:80HP,175px/s,24DPS. War Blades35wood/15gold,8s,+30% damage; Hide Armor40wood/10gold,8s,20% mindre inkommande skada. Fury ger fortsatt+25% outgoing i5s. Stronghold260HP; War Dock170HP, War Barge/Raft100HP och105px/s. Egen Raider-grafik med två yxor; befintliga Orc-byggnadsbilder återanvänds. Save26 bevarar äldre betalda siege-tider och befintlig skadad HP. Full AI-roster ligger141.
+Välj Orcs (stabilt clans-ID). Peon35HP/155px/s, Axe Warrior20DPS, Hunter kortare144px range och Stone Thrower26damage/2.1s med11s produktion. Raider kräver färdig Smithy och War Blades, kostar26wood/12gold, tar7s och använder2supply:80HP,175px/s,24DPS. War Blades35wood/15gold,8s,+30% damage; Hide Armor40wood/10gold,8s,20% mindre inkommande skada. Fury ger fortsatt+25% outgoing i5s. Stronghold260HP; War Dock170HP, War Barge/Raft100HP och105px/s. Egen Raider-grafik med två yxor; befintliga Orc-byggnadsbilder återanvänds. Save26 bevarar äldre betalda siege-tider och befintlig skadad HP. Full AI-roster ligger141.
 
 ## RTS-138 – Elves
 
@@ -774,7 +774,7 @@ Release0.2.0 är publicerad som Build53267ef efter grön [CI/Pages-run](https://
 
 ## RTS-151–154: presentation och inspektion
 
-Arbetstiteln är Iron & Timber — A Tribute to Warcraft II. Alla egna byggnader
+Arbetstiteln är Warborn — A Tribute to Warcraft II. Alla egna byggnader
 kan inspekteras; synliga fiendebyggnader ger en begränsad vy utan orders eller
 privat information. Display har separata Native Size/Fit to Window-val med
 fast renderingsupplösning och lokalt sparat visningsläge.

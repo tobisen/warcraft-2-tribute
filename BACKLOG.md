@@ -2,6 +2,8 @@
 
 ## Current Focus
 
+**Nytt mandat RTS-182–187 (2026-10-05):** Bilagans sex meny-/kampanjuppgifter, en i taget med riktad/browser-verifiering, docs och commit/push. RTS-180 är historiskt Done/publicerad;181 redan Done.182 Done,183 In Progress,184–187 Todo. Stanna efter187. CSS/docs bevaras.
+
 **Aktuellt avgränsat uppdrag RTS-181:** Done. Startinställning1920×1080/Fit to Window. Tidigare180 Done enligt HANDOFF; historiska releasebelägg återanvänds endast som status. Bilagans bredare meny-/kampanjfas genomförs inte i denna avgränsade ändring. CSS/docs bevaras.
 
 **Avslutad etapp RTS-177–180:**177 Done/push8fafce5;178 Done/push598478f;179 Done/push686c1e6;180 Done/release6a96227. Publicerad0.3.0/Build6a96227 och faktisk CI/Pages/browser PASS. Full regression1458/176, unit465/84, strict typecheck/build och diff PASS. HANDOFF/QUALITY_REVIEW redovisar återstående mänsklig tids-/balans-/ljudgranskning och assets. Stopp efter180; inga nya tasks eller karteditor. CSS/docs bevaras.
@@ -4969,3 +4971,83 @@ Publicera efter godkända kontroller.
 **Verifiering:** Riktade display/preference-tester, unit-suite, build inklusive strict typecheck, browser första start och sparat val/reload samt diffkontroll före commit/push.
 
 **Resultat181:** Riktade display/preferences10/2 PASS; unit466/84 PASS9.53s; build inklusive strict typecheck PASS (befintlig bundlevarning). Lokal Chrome vid800×600/1920×1080: ny start1920×1080/Fit, proportionell appgeometri och sparat800×600/Native efter reload PASS utan pageerrors. Diff granskad. Ingen ny full campaign-/matchregression, CI eller Pages-verifiering;180:s belägg är historiska.
+
+
+## RTS-182 — Titel och rasnamn
+
+**Status:** Done.
+
+**Krav/acceptance:** Warborn — A Tribute to Warcraft II. Synliga Human/Orcs; ta bort Crown Alliance/Iron Clan från spelartext. Kontrollera startsida, inställningar, HUD, briefing och resultat. Bevara tekniska ID:n, repo/Pages och saves.
+
+**Non-goals:** Andra tasks, karteditor, ny backend eller ändring av användarens CSS/docs.
+
+**Verifiering:** Riktade system-/integrationstester och verkliga browserflöden. Slutlig unit/build med strict typecheck/diff före commit. Full regression vid etappslut. Gemensam meny/HUD/input vid800×600,1920×1080,3440×1440. Inga fulla kampanjsimuleringar för rena menyändringar.
+
+**Docs:** BACKLOG, DECISIONS, DEV_LOG, HANDOFF och relevanta systemdefinitioner. Taskvis commit/push utan force.
+
+
+## RTS-183 — Highscores per karta och svårighet
+
+**Status:** Todo.
+
+**Krav/acceptance:** Tabell med filter karta/svårighet och separata campaign/skirmish. Placering, poäng, ras, resultat, tid och känd datum/version. Befintlig sortering och tie-break; bevara data och redovisa okänd metadata. Ingen dubbelregistrering vid replay/save/load/återbesök.
+
+**Non-goals:** Andra tasks, karteditor, ny backend eller ändring av användarens CSS/docs.
+
+**Verifiering:** Riktade system-/integrationstester och verkliga browserflöden. Slutlig unit/build med strict typecheck/diff före commit. Full regression vid etappslut. Gemensam meny/HUD/input vid800×600,1920×1080,3440×1440. Inga fulla kampanjsimuleringar för rena menyändringar.
+
+**Docs:** BACKLOG, DECISIONS, DEV_LOG, HANDOFF och relevanta systemdefinitioner. Taskvis commit/push utan force.
+
+
+## RTS-184 — Större upplösningar och ultrawide
+
+**Status:** Todo.
+
+**Krav/acceptance:** Behåll800×600 och befintliga val; lägg till2560×1440,2560×1080,3440×1440,3840×1600,3840×2160 och rendering efter tillgänglig fönsteryta. Native/Fit proportionella; större karta utan stretched sprites. HUD/minimap/input/fullscreen, förklaring/sparade val och prestandakontroll.
+
+**Non-goals:** Andra tasks, karteditor, ny backend eller ändring av användarens CSS/docs.
+
+**Verifiering:** Riktade system-/integrationstester och verkliga browserflöden. Slutlig unit/build med strict typecheck/diff före commit. Full regression vid etappslut. Gemensam meny/HUD/input vid800×600,1920×1080,3440×1440. Inga fulla kampanjsimuleringar för rena menyändringar.
+
+**Docs:** BACKLOG, DECISIONS, DEV_LOG, HANDOFF och relevanta systemdefinitioner. Taskvis commit/push utan force.
+
+
+## RTS-185 — Separat kampanjprogression
+
+**Status:** Todo.
+
+**Krav/acceptance:** Separata serier/progression för campaign-ID, ras och difficulty. Egen berättelse/mål för alla spelbara raser. Första tillgänglig, sekventiell upplåsning och replay utan sänkt/cross progression. Save-identitet bevaras. Inventera/migrera legacy utan att tillskriva okänd progression.
+
+**Non-goals:** Andra tasks, karteditor, ny backend eller ändring av användarens CSS/docs.
+
+**Verifiering:** Riktade system-/integrationstester och verkliga browserflöden. Slutlig unit/build med strict typecheck/diff före commit. Full regression vid etappslut. Gemensam meny/HUD/input vid800×600,1920×1080,3440×1440. Inga fulla kampanjsimuleringar för rena menyändringar.
+
+**Docs:** BACKLOG, DECISIONS, DEV_LOG, HANDOFF och relevanta systemdefinitioner. Taskvis commit/push utan force.
+
+
+## RTS-186 — Kampanjflöde och successiva upplåsningar
+
+**Status:** Todo.
+
+**Krav/acceptance:** Ras → difficulty → continue/start → briefing → mission. Engelska faktabaserade ras/difficultybeskrivningar. Aktuellt/tidigare uppdrag spelbara; framtida låsta. Alla rasers nivåer introducerar nytt innehåll via definierad plan; UI/gameplay/hotkeys spärrade separat från matchprerequisites. Replay använder missionens plan; skirmish oberoende. Dela vid behov i subtasks och redovisa saknat innehåll.
+
+**Non-goals:** Andra tasks, karteditor, ny backend eller ändring av användarens CSS/docs.
+
+**Verifiering:** Riktade system-/integrationstester och verkliga browserflöden. Slutlig unit/build med strict typecheck/diff före commit. Full regression vid etappslut. Gemensam meny/HUD/input vid800×600,1920×1080,3440×1440. Inga fulla kampanjsimuleringar för rena menyändringar.
+
+**Docs:** BACKLOG, DECISIONS, DEV_LOG, HANDOFF och relevanta systemdefinitioner. Taskvis commit/push utan force.
+
+
+## RTS-187 — Skirmish med flera AI-motståndare
+
+**Status:** Todo.
+
+**Krav/acceptance:** Undersök meny/matchstart. Faktiska startplatser styr max; tydlig kapacitet/orsak, per-AI ras/difficulty/profil/lag enligt system. Unika starter/giltiga lag; alla AI startar. Minst en karta human+2AI, rasbeskrivningar och samlade avancerade val.
+
+**Non-goals:** Andra tasks, karteditor, ny backend eller ändring av användarens CSS/docs.
+
+**Verifiering:** Riktade system-/integrationstester och verkliga browserflöden. Slutlig unit/build med strict typecheck/diff före commit. Full regression vid etappslut. Gemensam meny/HUD/input vid800×600,1920×1080,3440×1440. Inga fulla kampanjsimuleringar för rena menyändringar.
+
+**Docs:** BACKLOG, DECISIONS, DEV_LOG, HANDOFF och relevanta systemdefinitioner. Taskvis commit/push utan force.
+
+**Verifiering182:** Riktade9/3, unit466/84, build med strict typecheck/diff PASS. Lokal Chrome800/1920: titel, rasval och match-HUD utan gamla rasnamn/pageerrors PASS;800-HUD visuellt granskad. Tekniska IDs/saves oförändrade. Ingen ny CI/Pages eller helkampanjsimulering.

@@ -1472,3 +1472,8 @@ Upplösningen är logisk rendering; befintlig proportionell CSS-skalning anpassa
 spelvyn till fönstret. Giltiga sparade val bevaras, även800×600/Native.
 Ogiltiga/saknade fält får nya defaults; explicit äldre adaptToWindow migreras
 som tidigare. Ingen tvingad reset av lokala spelarval.
+
+
+## 2026-10-05 — RTS-182
+
+Synlig titel Warborn — A Tribute to Warcraft II och rasnamn Human/Orcs. Interna crown/clans, textnycklar, repo och Pages-adress bevaras; sparformat ändras inte.

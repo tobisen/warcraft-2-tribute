@@ -3281,3 +3281,8 @@ Lokal Chrome800×600/1920×1080: färsk1920×1080/Fit, appgeometri, sparat
 /tmp/w2t-browser-check/default-display.mjs. Ingen full match-/kampanjregression
 för denna defaultändring; ingen ny CI/Pages eller visuell screenshotgranskning.
 Kod/docs granskade; git diff --check före commit.
+
+
+## 2026-10-05 — RTS-182
+
+RTS-182 klar. Riktade9/3, unit466/84, strict build och diff PASS. Chrome800/1920 verklig home/skirmish/HUD PASS,800bild granskad. Befintlig bundlevarning; ingen ny CI/Pages.182–187 registrerade utan att skriva över181. CSS/docs bevarade.
