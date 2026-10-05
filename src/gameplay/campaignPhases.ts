@@ -1,3 +1,4 @@
+import {seriesMissionPlan,type CampaignId} from '../config/campaignSeries';
 import {campaignPlans,type CampaignPhase} from '../config/campaignPhases';
 import {scenarioWaves} from '../config/scenarios';
 import {operationFor} from '../config/operations';
@@ -6,12 +7,16 @@ import {isAir} from './domains';
 import {passengerUnits} from './navy';
 import {operationOutcome} from './operations';
 import type {MatchState} from './match';
-export interface CampaignRun {version:1;phase:number;waveStartedSeconds?:number}
-export function campaignPlan(m:MatchState){return m.campaignMission&&m.campaignRun?campaignPlans[m.campaignMission]:undefined;}
+export interface CampaignRun {version:1;campaignId?:CampaignId;phase:number;waveStartedSeconds?:number}
+export function campaignPlan(m:MatchState){return m.campaignMission&&m.campaignRun?m.campaignRun.campaignId?seriesMissionPlan(m.campaignMission,m.campaignRun.campaignId):campaignPlans[m.campaignMission]:undefined;}
 export function campaignPhase(m:MatchState){return campaignPlan(m)?.phases[m.campaignRun!.phase];}
 export function campaignPhaseMet(m:MatchState,p:CampaignPhase):boolean{
  const land=m.gathering.units.filter(u=>u.kind==='soldier'&&(u.hp??0)>0&&!isAir(u));
  switch(p.goal){
+  case 'tutorial':return m.tutorial?.step===6;
+  case 'force':return [...m.gathering.units,...passengerUnits(m.navy)].filter(u=>u.kind==='soldier'&&(u.archetype??'soldier')===p.role&&(u.hp??0)>0).length>=(p.count??1);
+  case 'research':return (m.research?.[p.research!]??0)>0;
+  case 'fleet':return (m.navy?.ships??[]).filter(s=>(s.role??'warship')===p.ship&&s.hp>0).length>=(p.count??1);
   case 'prepare':return !!m.placement.barracks&&(m.placement.barracksHP??1)>0&&(m.placement.construction?.remainingSeconds??0)===0&&[...land,...passengerUnits(m.navy).filter(u=>u.kind==='soldier'&&(u.hp??0)>0&&!isAir(u))].length>=2;
   case 'explore':return !!m.fog&&p.points!.every(point=>isExplored(m.fog!,'player',point));
   case 'waves':return m.waves.nextWave===scenarioWaves(m.scenario!,m.difficulty!).length&&!m.combat.enemies.some(e=>e.hp>0&&e.kind!=='base');
@@ -28,7 +33,7 @@ export function advanceCampaignPhases(m:MatchState):MatchState{
  let phase=m.campaignRun!.phase;
  while(phase<plan.phases.length&&campaignPhaseMet(m,plan.phases[phase]))phase++;
  const waveStartedSeconds=plan.phases.some(p=>p.goal==='waves')&&phase>=2?(m.campaignRun!.waveStartedSeconds??m.waves.elapsedSeconds):undefined;
- return phase===m.campaignRun!.phase&&waveStartedSeconds===m.campaignRun!.waveStartedSeconds?m:{...m,campaignRun:{version:1,phase,...(waveStartedSeconds!==undefined?{waveStartedSeconds}:{})}};
+ return phase===m.campaignRun!.phase&&waveStartedSeconds===m.campaignRun!.waveStartedSeconds?m:{...m,campaignRun:{...m.campaignRun!,version:1,phase,...(waveStartedSeconds!==undefined?{waveStartedSeconds}:{})}};
 }
 export function campaignObjective(m:MatchState):string{
  const plan=campaignPlan(m);if(!plan)return '';

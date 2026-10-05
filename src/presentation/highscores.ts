@@ -1,3 +1,4 @@
+import {seriesForId} from '../config/campaignSeries';
 import {aiProfiles} from '../config/aiProfiles';
 import {createHighscoreStore,resultScore,rankedScores,filteredScores,scorePartition,type Highscore} from '../gameplay/highscores';
 import {campaignDetails,campaignMission} from '../config/campaign';
@@ -5,7 +6,7 @@ import {maps,type MapId} from '../config/maps';
 import {factions,type FactionId} from '../config/factions';
 import type {MatchState} from '../gameplay/match';
 export const highscoreStore=createHighscoreStore(()=>window.localStorage);
-export function scoreHeading(s:Highscore):string{return `${s.kind==='campaign'?campaignDetails(s.goal as NonNullable<ReturnType<typeof campaignMission>>['id']).title:maps[s.map as MapId].label} · ${s.difficulty}${s.aiProfile?` · ${aiProfiles[s.aiProfile].label} AI`:""} · ${s.speed}× · ${factions[s.player as FactionId].label} vs ${factions[s.enemy as FactionId].label} · ${s.config} · scoring v${s.model}`;}
+export function scoreHeading(s:Highscore):string{return `${s.campaignId?seriesForId(s.campaignId)!.title+' · ':s.kind==='campaign'?'Legacy mixed campaign · ':''}${s.kind==='campaign'?campaignDetails(s.goal as NonNullable<ReturnType<typeof campaignMission>>['id']).title:maps[s.map as MapId].label} · ${s.difficulty}${s.aiProfile?` · ${aiProfiles[s.aiProfile].label} AI`:""} · ${s.speed}× · ${factions[s.player as FactionId].label} vs ${factions[s.enemy as FactionId].label} · ${s.config} · scoring v${s.model}`;}
 function render(target:HTMLElement,entries:Highscore[],message:string){
  const previous={kind:target.querySelector<HTMLSelectElement>('[data-score-filter="kind"]')?.value,map:target.querySelector<HTMLSelectElement>('[data-score-filter="map"]')?.value,difficulty:target.querySelector<HTMLSelectElement>('[data-score-filter="difficulty"]')?.value};
  target.replaceChildren();

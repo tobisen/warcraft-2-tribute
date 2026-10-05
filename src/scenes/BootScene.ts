@@ -1,3 +1,4 @@
+import {identityFor,seriesMissionPlan} from '../config/campaignSeries';
 import {campaignPlans} from '../config/campaignPhases';
 import {campaignObjective} from '../gameplay/campaignPhases';
 import {isSpectating,playerEliminated} from '../gameplay/teamResults';
@@ -29,7 +30,7 @@ import {dismissProposal,dismissUnits,type DismissProposal} from '../gameplay/dis
 import {dismissMessage} from '../presentation/dismiss';
 import {renderOperation,operationMarkers} from '../presentation/operations';
 import type {CaptureState} from '../gameplay/operations';
-import {campaignMissionForScenario,campaignPreset,type CampaignMissionId} from '../config/campaign';
+import {campaignMissionForScenario,type CampaignMissionId} from '../config/campaign';
 import {startCampaignMission} from '../gameplay/campaign';
 import {campaignStore} from '../presentation/campaign';
 import {currentHomePage} from '../presentation/homeMenu';
@@ -268,7 +269,7 @@ export class BootScene extends Phaser.Scene {
     this.operationGraphics=this.add.graphics().setDepth(6);this.operationLabels=[];
     const loaded=this.pendingLoad;this.pendingLoad=undefined;
     if(!loaded)document.getElementById('save-status')!.textContent='';
-    const fresh=()=>({matchId:crypto.randomUUID(),...createMatch(this.scenario,this.difficulty,this.factions,(this.campaignMission?campaignPlans[this.campaignMission]?.map:undefined)??this.session.options.map,this.session.options.speed??1,this.session.options.aiProfile,this.session.options.players,this.campaignMission),...(this.campaignMission?{campaignMission:this.campaignMission}:{})});
+    const fresh=()=>({matchId:crypto.randomUUID(),...createMatch(this.scenario,this.difficulty,this.factions,(this.campaignMission?campaignPlans[this.campaignMission]?.map:undefined)??this.session.options.map,this.session.options.speed??1,this.session.options.aiProfile,this.session.options.players,this.campaignMission),...(this.campaignMission?{campaignMission:this.campaignMission,...(this.campaignRun?.campaignId?{campaignRun:{version:1 as const,phase:0,campaignId:this.campaignRun.campaignId}}:{})}:{})});
     this.applyMatch(loaded?.match??fresh());
     this.game.canvas.tabIndex=0;this.game.canvas.setAttribute('aria-label',uiText.gameWorld);
     const groupKey=(event:KeyboardEvent)=>{
@@ -574,8 +575,8 @@ export class BootScene extends Phaser.Scene {
     if(action==='start'&&this.session.phase==='menu'&&!this.restartPending){
       const mission=currentHomePage()==='campaign'?campaignMissionForScenario(this.session.options.scenario):undefined;
       if(currentHomePage()==='campaign'&&!mission)return;
-      if(mission){const start=startCampaignMission(campaignStore.get(),mission.id,this.session.options.difficulty,factionsForPlayer(this.session.options.faction??defaultFactions.player,this.session.options.enemyFaction),this.session.options.speed??1);if(!start)return;this.session=changeOptions(this.session,{faction:start.factions!.player,enemyFaction:start.factions!.enemy});}
-      this.campaignMission=mission?.id;
+      if(mission){const start=startCampaignMission(campaignStore.get(identityFor(this.session.options.faction??defaultFactions.player,this.session.options.difficulty)),mission.id,this.session.options.difficulty,factionsForPlayer(this.session.options.faction??defaultFactions.player,this.session.options.enemyFaction),this.session.options.speed??1);if(!start)return;this.campaignRun=start.campaignRun;this.session=changeOptions(this.session,{faction:start.factions!.player,enemyFaction:start.factions!.enemy});}
+      this.campaignMission=mission?.id;if(!mission)this.campaignRun=undefined;
     }
     const next=sessionTransition(this.session,action);if(next===this.session||this.restartPending)return;
     this.session=action==='new-match'?changeOptions(next,getPreferences().game):next;gameAudio.setPhase(next.phase);
@@ -597,8 +598,9 @@ export class BootScene extends Phaser.Scene {
     if(phase==='ended'){campaignStore.record(this.currentMatch());highscoreStore.record(this.currentMatch());}
     renderHighscorePanels(this.currentMatch(),phase==='ended');
     renderMatchResults(document.getElementById('match-results')!,this.currentMatch(),phase==='ended');
-    const preset=menu&&currentHomePage()==='campaign'?campaignPreset(campaignMissionForScenario(this.session.options.scenario)?.id):undefined;
-    const shown=preset?{...this.session.options,map:campaignPlans[campaignMissionForScenario(this.session.options.scenario)!.id]?.map??this.session.options.map,faction:preset.player,enemyFaction:preset.enemy}:this.session.options;
+    const inCampaign=menu&&currentHomePage()==='campaign';
+    const chosenMission=campaignMissionForScenario(this.session.options.scenario);
+    const shown=inCampaign&&chosenMission?{...this.session.options,map:seriesMissionPlan(chosenMission.id,identityFor(this.session.options.faction??defaultFactions.player,this.session.options.difficulty).campaignId).map}:this.session.options;
     const details=matchSettingDetails(shown);document.getElementById('map-description')!.textContent=details.map;document.getElementById('difficulty-description')!.textContent=details.difficulty;
     const summary=document.getElementById('match-options-summary')!;summary.textContent=matchSettingsSummary(shown);summary.hidden=!menu;
     const counts=supportedPlayerCounts(this.session.options.map,this.session.options.scenario),playerCount=document.getElementById('player-count-select') as HTMLSelectElement;
@@ -614,7 +616,7 @@ export class BootScene extends Phaser.Scene {
     const legend=document.getElementById('minimap-player-legend')!;legend.replaceChildren(...(this.session.options.players??[]).map(p=>{const span=document.createElement('span');span.textContent=`${p.id==='player'?'You':p.id==='enemy'?'AI1':'AI2'} T${p.teamId}`;const eliminated=!!this.multiplePlayers&&playerEliminated(this.currentMatch(),p.id);if(eliminated)span.textContent+=' ×';span.title=eliminated?'Eliminated: base destroyed; surviving assets inactive':'Active player';span.style.color=p.color;return span;}));
     document.getElementById('player-color-summary')!.textContent=this.session.options.players?this.session.options.players.map(p=>`${p.id==='player'?'Blue: You':p.id==='enemy'?'Red: AI 1':'Gold: AI 2'} · Team ${p.teamId}`).join(' / '):'Blue: You · Red: AI 1';
     const mapSelect=document.querySelector<HTMLSelectElement>('#map-select')!;mapSelect.disabled=!menu||this.session.options.scenario!=='skirmish';mapSelect.value=shown.map;
-    const factionSelect=document.querySelector<HTMLSelectElement>('#faction-select')!;factionSelect.disabled=!menu||!!preset;factionSelect.value=shown.faction??defaultFactions.player;const enemyFactionSelect=document.querySelector<HTMLSelectElement>('#enemy-faction-select')!;enemyFactionSelect.disabled=!menu||!!preset;enemyFactionSelect.value=shown.enemyFaction??'';
+    const factionSelect=document.querySelector<HTMLSelectElement>('#faction-select')!;factionSelect.disabled=!menu;factionSelect.value=shown.faction??defaultFactions.player;const enemyFactionSelect=document.querySelector<HTMLSelectElement>('#enemy-faction-select')!;enemyFactionSelect.disabled=!menu||inCampaign;enemyFactionSelect.value=shown.enemyFaction??'';
     this.scenarioSelect.disabled=!menu;this.scenarioSelect.value=this.session.options.scenario==='siege-test'?'survival':this.session.options.scenario;
     const speed=document.querySelector<HTMLSelectElement>('#speed-select')!;speed.disabled=!menu;speed.value=String(this.session.options.speed??1);
     const aiSelect=document.getElementById('ai-profile-select') as HTMLSelectElement;aiSelect.value=this.session.options.aiProfile??'balanced';aiSelect.disabled=!menu;document.getElementById('ai-profile-description')!.textContent=aiProfiles[this.session.options.aiProfile??'balanced'].description;

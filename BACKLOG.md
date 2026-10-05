@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**Nytt mandat RTS-182–187 (2026-10-05):** Bilagans sex meny-/kampanjuppgifter, en i taget med riktad/browser-verifiering, docs och commit/push. RTS-180 är historiskt Done/publicerad;181 redan Done.182 Done/push90df09f,183 Done/pushc3f691b,184 Done,185–187 Todo. Stanna efter187. CSS/docs bevaras.
+**Nytt mandat RTS-182–187 (2026-10-05):** Bilagans sex meny-/kampanjuppgifter, en i taget med riktad/browser-verifiering, docs och commit/push. RTS-180 är historiskt Done/publicerad;181 redan Done.182 Done/push90df09f,183 Done/pushc3f691b,184 Done/push289cc9f,185 Done,186–187 Todo. Stanna efter187. CSS/docs bevaras.
 
 **Aktuellt avgränsat uppdrag RTS-181:** Done. Startinställning1920×1080/Fit to Window. Tidigare180 Done enligt HANDOFF; historiska releasebelägg återanvänds endast som status. Bilagans bredare meny-/kampanjfas genomförs inte i denna avgränsade ändring. CSS/docs bevaras.
 
@@ -5020,7 +5020,7 @@ Publicera efter godkända kontroller.
 
 ## RTS-185 — Separat kampanjprogression
 
-**Status:** Todo.
+**Status:** Done.
 
 **Krav/acceptance:** Separata serier/progression för campaign-ID, ras och difficulty. Egen berättelse/mål för alla spelbara raser. Första tillgänglig, sekventiell upplåsning och replay utan sänkt/cross progression. Save-identitet bevaras. Inventera/migrera legacy utan att tillskriva okänd progression.
 
@@ -5030,6 +5030,8 @@ Publicera efter godkända kontroller.
 
 **Docs:** BACKLOG, DECISIONS, DEV_LOG, HANDOFF och relevanta systemdefinitioner. Taskvis commit/push utan force.
 
+
+**Verifiering185:** Campaign/series/phases/highscores/save88/6, unit468/84, strict build/diff PASS.40 new campaign starts/saves via riktade tester, Human/Beginner isolation/replay/legacy preservation. Chrome1920 alla fem rasstarter/fysisk SaveLoad, terminalfixture för Human/Beginner och Orcs/Normal isolation PASS; progressionbild granskad. Ingen mänsklig helkampanj/tids-/balansclaim.
 
 ## RTS-186 — Kampanjflöde och successiva upplåsningar
 

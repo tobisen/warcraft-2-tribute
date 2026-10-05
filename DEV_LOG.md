@@ -3296,3 +3296,8 @@ RTS-183 klar: tabell/filter och explicit legacydatum. Riktade23/3, unit467/84, s
 ## 2026-10-05 — RTS-184
 
 184 klar. Display/preferences11/2+camera10/2, unit468/84 och strict build/diff PASS. Chrome800/1920/3440/3840 input/minimap/fullscreen/windowreload PASS,3440 screenshot granskad. Kort≈60FPS i startmatch, inget generellt stresstest.183 pushc3f691b. CSS/docs bevarade.
+
+
+## 2026-10-05 — RTS-185
+
+185 klar: fem egna åttauppdragsserier, scoped progression, Save52 och highscoreseries. Riktade88/6, unit468/84, strict build/diff PASS. Chrome1920 fem starts/SaveLoad plus Human/Beginner terminalfixture/isolation PASS; bild granskad. Två harnessfel rättades (Resume-frame och dubbel freeze noop); slutkörningen använder ordinarie Scene.update. Ingen betald40-kampanjgenomspelning/mänsklig balansclaim.

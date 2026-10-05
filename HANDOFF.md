@@ -1,3 +1,7 @@
+# RTS-185 klar
+
+184 push289cc9f;185 fem separata kampanjer/Save52 klar. Riktade88/6, unit468/84, strict build/diff och Chrome1920 fem starts/SaveLoad/isolation PASS.40 saveidentiteter testade; ingen40-kampanjgenomspelning/mänsklig balans. Nästa186 flöde/innehållsspärr. Legacyv1 sparad utan gissad ras/difficulty. CSS/docs bevaras.
+
 # RTS-184 klar
 
 183 pushc3f691b;184 ultrawide/window klar. Riktade21/4, unit468/84, strict build/diff och Chrome800/1920/3440/3840 PASS. Kort≈60FPS startmatch, ingen massarmégaranti. Nästa185 separat progression. CSS/docs bevaras.

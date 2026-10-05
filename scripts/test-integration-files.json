@@ -11,6 +11,7 @@
   "src/gameplay/campaignLate.test.ts",
   "src/gameplay/campaignPhases.test.ts",
   "src/gameplay/campaignQuality.test.ts",
+  "src/gameplay/campaignSeries.test.ts",
   "src/gameplay/campaignVerification.test.ts",
   "src/gameplay/catapult.test.ts",
   "src/gameplay/coast.test.ts",

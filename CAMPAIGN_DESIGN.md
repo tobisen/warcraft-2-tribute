@@ -121,3 +121,18 @@ the finite-wave missions'20–40-minute design targets. Native800/1280 campaign 
 and actual audio asset loading/pause reviewed; no new listening claim. A bounded
 fog union optimization improves measured64/128-unit Highlands stress performance
 without changing visibility rules. See QUALITY_REVIEW.md and artifacts/rts-179.
+
+
+## RTS-185 — Separata rasexpeditioner
+
+Den gamla blandade serien och äldre saves behålls som legacy. Nya kampanjer använder åtta befintliga operationer/kartor och utökas med rasens egna taktiska mål i `src/config/campaignSeries.ts`. Varje serie har stabilt campaign-ID, egen berättelse och samma ras genom hela serien.
+
+| Ras | Serie | Motståndare | Taktisk inriktning |
+|---|---|---|---|
+| Human | The Broken Oath | Orcs | Försvarsforskning, liten balanserad expedition |
+| Orcs | Road of the Exiles | Human | Attackforskning, fler melee/specialist/siege |
+| Elves | The Severed Roots | Goblins | Attackforskning, fler ranged/specialist/air |
+| Dwarves | The Stone Road | Goblins | Försvarsforskning, fler durable escort/siege/warships |
+| Goblins | The Last Contract | Dwarves | Attackforskning, större första warband/fleet/siege/air |
+
+Varje mission får ett faktiskt observerat krav på levande trupper, färdig forskning eller fartyg. Kraven är permanenta fasövergångar och ersätter inte kartans base/waves/escort/rescue/capture-mål. Alla krav framgår av briefing och fas-HUD. Progression är separat för kampanj/ras/svårighet. Gamla uppdrags-ID:n saknar ras/difficulty och ger därför inga nya upplåsningar. Nya saves bevarar alla tre identitetsdelar; äldre fortsätter legacy-regler. Mänsklig tempo-/balansgranskning återstår.186 tillför missionvis innehållsplan och menyflöde.

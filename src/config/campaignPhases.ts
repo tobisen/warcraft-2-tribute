@@ -1,7 +1,7 @@
 import type {CampaignMissionId} from './campaign';
 import type {MapId} from './maps';
-export type CampaignGoal='prepare'|'explore'|'waves'|'position'|'base'|'transport'|'guards'|'operation';
-export interface CampaignPhase {goal:CampaignGoal;text:string;points?:readonly {x:number;y:number}[]}
+export type CampaignGoal='prepare'|'explore'|'waves'|'position'|'base'|'transport'|'guards'|'operation'|'tutorial'|'force'|'research'|'fleet';
+export interface CampaignPhase {goal:CampaignGoal;text:string;role?:import('./factions').UnitRole;research?:import('./factions').UpgradeRole;ship?:'transport'|'warship';count?:number;points?:readonly {x:number;y:number}[]}
 export interface CampaignPlan {map:MapId;intro:string;phases:readonly CampaignPhase[]}
 const prepare:CampaignPhase={goal:'prepare',text:'Build your barracks and field two living land combatants. Gather wood and gold; add supply before training more troops.'};
 const east:CampaignPhase={goal:'explore',text:'Scout the eastern grove (1216,896) and mine (1184,640). Secure the resource route; workers still deliver to your original base.',points:[{x:1216,y:896},{x:1184,y:640}]};
