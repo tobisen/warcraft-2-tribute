@@ -1,3 +1,4 @@
+import {setActionLabel} from '../presentation/actionLabel';
 import {aiProfiles,isAIProfile} from '../config/aiProfiles';
 import {issueOrder} from '../gameplay/commandOrders';
 import {createAirIcons} from '../presentation/airIcons';
@@ -380,7 +381,7 @@ export class BootScene extends Phaser.Scene {
       .setOrigin(0).setStrokeStyle(2, 0xffffff).setVisible(false).setDepth(50);
     this.buildButton = document.querySelector<HTMLButtonElement>('#build-barracks')!;
     this.placementStatus = document.querySelector<HTMLElement>('#placement-status')!;
-    this.buildButton.textContent = `Build ${factions[this.factions.player].buildingNames.barracks} – ${costLabel(factions[this.factions.player].buildings.barracks.cost)}`;
+    setActionLabel(this.buildButton,`Build ${factions[this.factions.player].buildingNames.barracks} – ${costLabel(factions[this.factions.player].buildings.barracks.cost)}`);
     const begin = (kind:'harbor'|'barracks'|'farm'|'forge'|'tower'|'wall'|'gate'='barracks') => {
       if (!this.gameplayActive()) return;
       if (!this.gathering.units.some(u=>u.kind==='worker' && u.selected)) return;
@@ -408,7 +409,7 @@ export class BootScene extends Phaser.Scene {
     this.forgeVisual=undefined;
     const beginForge=()=>begin('forge');
     this.forgeButton=document.querySelector<HTMLButtonElement>('#build-forge')!;
-    this.forgeButton.textContent=`Build ${factions[this.factions.player].buildingNames.forge} – ${costLabel(factions[this.factions.player].buildings.forge.cost)}`;
+    setActionLabel(this.forgeButton,`Build ${factions[this.factions.player].buildingNames.forge} – ${costLabel(factions[this.factions.player].buildings.forge.cost)}`);
     this.forgeButton.addEventListener('click',beginForge);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.forgeButton.removeEventListener('click',beginForge));
     this.researchButtons.clear();
@@ -420,7 +421,7 @@ export class BootScene extends Phaser.Scene {
     }
     const beginFarm=()=>begin('farm');
     this.farmButton=document.querySelector<HTMLButtonElement>('#build-farm')!;
-    this.farmButton.textContent=`Build ${factions[this.factions.player].buildingNames.farm} – ${costLabel(factions[this.factions.player].buildings.farm.cost)}`;
+    setActionLabel(this.farmButton,`Build ${factions[this.factions.player].buildingNames.farm} – ${costLabel(factions[this.factions.player].buildings.farm.cost)}`);
     this.farmButton.addEventListener('click',beginFarm);
     this.buildButton.addEventListener('click', beginBarracks);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
@@ -430,9 +431,9 @@ export class BootScene extends Phaser.Scene {
     this.harborButton=document.querySelector<HTMLButtonElement>('#build-harbor')!;this.shipButton=document.querySelector<HTMLButtonElement>('#train-ship')!;
     const transportButton=document.querySelector<HTMLButtonElement>('#train-transport')!,unloadButton=document.querySelector<HTMLButtonElement>('#unload-transport')!;
     const naval=factions[this.factions.player].naval;
-    this.harborButton.textContent=`Build ${naval.harbor.name} – ${costLabel(naval.harbor.cost)}`;
-    this.shipButton.textContent=`Train ${naval.units.warship.name} – ${costLabel(naval.units.warship.cost)}`;
-    transportButton.textContent=`Train ${naval.units.transport.name} – ${costLabel(naval.units.transport.cost)}`;
+    setActionLabel(this.harborButton,`Build ${naval.harbor.name} – ${costLabel(naval.harbor.cost)}`);
+    setActionLabel(this.shipButton,`Train ${naval.units.warship.name} – ${costLabel(naval.units.warship.cost)}`);
+    setActionLabel(transportButton,`Train ${naval.units.transport.name} – ${costLabel(naval.units.transport.cost)}`);
     const trainTransport=()=>{if(!this.gameplayActive()||this.selectedBuilding!=='harbor')return;this.applyMatch(trainShip(this.currentMatch(),'transport'));this.syncVisuals();};
     const beginUnload=()=>{const ship=this.navy?.ships.find(s=>s.selected&&s.role==='transport'&&s.passengers?.length);if(!this.gameplayActive()||!ship)return;this.unloadMode=ship.id;this.placement=cancelPlacement(this.placement);this.attackMoveMode=false;this.patrolMode=false;this.drag=undefined;this.dragBox.setVisible(false);this.syncVisuals();};
     transportButton.addEventListener('click',trainTransport);unloadButton.addEventListener('click',beginUnload);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{transportButton.removeEventListener('click',trainTransport);unloadButton.removeEventListener('click',beginUnload);});
@@ -441,7 +442,7 @@ export class BootScene extends Phaser.Scene {
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{this.harborButton.removeEventListener('click',beginHarbor);this.shipButton.removeEventListener('click',ship);});
     this.trainButton = document.querySelector<HTMLButtonElement>('#train-worker')!;
     this.productionStatus = document.querySelector<HTMLElement>('#production-status')!;
-    this.trainButton.textContent = `Train ${factions[this.factions.player].unitNames.worker} – ${costLabel(factions[this.factions.player].units.worker.cost)}`;
+    setActionLabel(this.trainButton,`Train ${factions[this.factions.player].unitNames.worker} – ${costLabel(factions[this.factions.player].units.worker.cost)}`);
     const train = () => {
       if (!allowsProduction(this.selectedBuilding, 'base', true, this.gameplayActive())) return;
       const result = enqueueProduction(this.gathering, this.production,{kind:'base'},matchPopulation(this.currentMatch()));
@@ -455,7 +456,7 @@ export class BootScene extends Phaser.Scene {
     });
     this.soldierButton = document.querySelector<HTMLButtonElement>('#train-soldier')!;
     this.soldierProductionStatus = document.querySelector<HTMLElement>('#soldier-production-status')!;
-    this.soldierButton.textContent = `Train ${factions[this.factions.player].unitNames.soldier} – ${costLabel(factions[this.factions.player].units.soldier.cost)} · ${factions[this.factions.player].units.soldier.durationSeconds} s`;
+    setActionLabel(this.soldierButton,`Train ${factions[this.factions.player].unitNames.soldier} – ${costLabel(factions[this.factions.player].units.soldier.cost)} · ${factions[this.factions.player].units.soldier.durationSeconds} s`);
     const trainSoldier = () => {
       if (!allowsProduction(this.selectedBuilding, 'barracks', this.placement.barracks !== null, this.gameplayActive())) return;
       const result = enqueueProduction(this.gathering, this.soldierProduction,
@@ -465,7 +466,7 @@ export class BootScene extends Phaser.Scene {
       this.syncVisuals();
     };
     this.archerButton=document.querySelector<HTMLButtonElement>('#train-archer')!;
-    this.archerButton.textContent=`Train ${factions[this.factions.player].unitNames.archer} – ${costLabel(factions[this.factions.player].units.archer.cost)}`;
+    setActionLabel(this.archerButton,`Train ${factions[this.factions.player].unitNames.archer} – ${costLabel(factions[this.factions.player].units.archer.cost)}`);
     const trainArcher=()=>{
       if(!allowsProduction(this.selectedBuilding,'barracks',this.placement.barracks!==null,this.gameplayActive()))return;
       const result=enqueueProduction(this.gathering,this.soldierProduction,
@@ -474,7 +475,7 @@ export class BootScene extends Phaser.Scene {
       this.gathering=result.gathering;this.soldierProduction=result.production;this.syncVisuals();
     };
     this.catapultButton=document.querySelector<HTMLButtonElement>('#train-catapult')!;
-    this.catapultButton.textContent=`Train ${factions[this.factions.player].unitNames.catapult} – ${costLabel(factions[this.factions.player].units.catapult.cost)}`;
+    setActionLabel(this.catapultButton,`Train ${factions[this.factions.player].unitNames.catapult} – ${costLabel(factions[this.factions.player].units.catapult.cost)}`);
     const trainCatapult=()=>{
       if(!allowsProduction(this.selectedBuilding,'barracks',this.placement.barracks!==null,this.gameplayActive()))return;
       const result=enqueueProduction(this.gathering,this.soldierProduction,
@@ -484,7 +485,7 @@ export class BootScene extends Phaser.Scene {
     };
     this.specialistButton=document.querySelector<HTMLButtonElement>('#train-specialist')!;
     const specialist=factions[this.factions.player].units.specialist;
-    this.specialistButton.textContent=`Train ${factions[this.factions.player].unitNames.specialist} – ${costLabel(specialist.cost)} · ${specialist.durationSeconds} s`;
+    setActionLabel(this.specialistButton,`Train ${factions[this.factions.player].unitNames.specialist} – ${costLabel(specialist.cost)} · ${specialist.durationSeconds} s`);
     const trainSpecialist=()=>{
       if(!allowsProduction(this.selectedBuilding,'barracks',this.placement.barracks!==null,this.gameplayActive()))return;
       const result=enqueueProduction(this.gathering,this.soldierProduction,
@@ -610,6 +611,7 @@ export class BootScene extends Phaser.Scene {
 
   private processDown(pointer: Phaser.Input.Pointer): void {
     if (!this.gameplayActive()) return;
+    if(pointer.event.target instanceof Element&&pointer.event.target.closest('#hud, #match-menu, #game-toolbar, #minimap-overlay, #top-bar, #bottom-bar'))return;
     const camera=this.cameras.main;if(pointer.x<camera.x||pointer.y<camera.y||pointer.x>=camera.x+camera.width||pointer.y>=camera.y+camera.height)return;
     this.game.canvas.focus({preventScroll:true});
     if (pointer.button === 1) {
@@ -756,7 +758,7 @@ export class BootScene extends Phaser.Scene {
     if(forge)this.forgeVisual!.setFrame(buildingFrame('forge','player',forge.construction.remainingSeconds,5,this.factions.player,forge.hp));
     this.forgeButton.disabled=!this.gameplayActive()||this.placement.active||!!forge||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected);
     document.getElementById('research-status')!.textContent=forge?`Forge ${Math.ceil(forge.hp)} HP · construction ${forge.construction.remainingSeconds.toFixed(1)} s · Attack ${this.research.attack} / Defense ${this.research.defense}${this.research.job?` · ${this.research.job.kind} ${this.research.job.remainingSeconds.toFixed(1)} s`:''}`:uiText.buildAForgeForUpgrades;
-    for(const [kind,button] of this.researchButtons){button.disabled=!canResearch(this.gathering,this.research,this.placement,kind,this.gameplayActive());button.textContent=`${factions[this.factions.player].upgrades[kind].name} – ${costLabel(factions[this.factions.player].upgrades[kind].cost)}`;}
+    for(const [kind,button] of this.researchButtons){button.disabled=!canResearch(this.gathering,this.research,this.placement,kind,this.gameplayActive());setActionLabel(button,`${factions[this.factions.player].upgrades[kind].name} – ${costLabel(factions[this.factions.player].upgrades[kind].cost)}`);}
 
     if(!this.placement.barracks&&this.barracksVisual){this.barracksVisual.destroy();this.barracksVisual=undefined;}
     const rect = buildingFootprint(this.previewPoint,this.placement.kind??'barracks');
@@ -797,12 +799,12 @@ export class BootScene extends Phaser.Scene {
     const liveDefenses=new Set<string>((this.placement.defenses??[]).map(t=>t.id));for(const [id,image]of this.defenseVisuals)if(!liveDefenses.has(id)){image.destroy();this.defenseVisuals.delete(id);}
     for(const t of this.placement.defenses??[]){let image=this.defenseVisuals.get(t.id);if(!image){image=this.add.image(t.footprint.x+t.footprint.width/2,t.footprint.y+16,'buildings').setOrigin(.5,.75);this.defenseVisuals.set(t.id,image);}image.setFrame(t.kind==='gate'&&t.open?`${factions[this.factions.player].artPrefix}gate-player-open`:buildingFrame(t.kind,'player',t.construction.remainingSeconds,defenseConfig[t.kind].seconds,this.factions.player,t.hp,t.level));}
     for(const kind of ['tower','wall','gate'] as const)(document.getElementById(`build-${kind}`) as HTMLButtonElement).disabled=!this.gameplayActive()||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected)||this.placement.active||this.gathering.wood<defenseConfig[kind].cost.wood||(this.gathering.goldBalance??0)<defenseConfig[kind].cost.gold;
-    const gateButton=document.getElementById('toggle-gate') as HTMLButtonElement;gateButton.disabled=!!gateToggleReason(this.currentMatch(),this.selectedBuilding??'');gateButton.textContent=this.placement.defenses?.find(t=>t.id===this.selectedBuilding)?.open?'Close gate':'Open gate';
+    const gateButton=document.getElementById('toggle-gate') as HTMLButtonElement;gateButton.disabled=!!gateToggleReason(this.currentMatch(),this.selectedBuilding??'');setActionLabel(gateButton,this.placement.defenses?.find(t=>t.id===this.selectedBuilding)?.open?'Close gate':'Open gate');
     const repairButton=document.getElementById('repair-building') as HTMLButtonElement;repairButton.disabled=!this.gameplayActive()||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected)||this.gathering.wood<=0||(this.gathering.goldBalance??0)<=0;repairButton.setAttribute('aria-pressed',String(this.repairMode));
     (document.getElementById('upgrade-tower') as HTMLButtonElement).disabled=!!towerUpgradeReason(this.currentMatch(),this.selectedBuilding??'');
     document.getElementById('tech-tree-text')!.textContent=techTree(this.currentMatch()).join('\n');
     const development=baseDevelopment(this.currentMatch()),upgradeButton=document.getElementById('upgrade-base') as HTMLButtonElement;
-    upgradeButton.disabled=!!baseUpgradeReason(this.currentMatch());upgradeButton.textContent=development.remainingSeconds!==null?`Upgrading to level ${development.level+1}: ${Math.ceil(development.remainingSeconds)}s; training paused`:`Upgrade base to level ${Math.min(3,development.level+1)}`;
+    upgradeButton.disabled=!!baseUpgradeReason(this.currentMatch());setActionLabel(upgradeButton,development.remainingSeconds!==null?`Upgrading to level ${development.level+1}: ${Math.ceil(development.remainingSeconds)}s; training paused`:`Upgrade base to level ${Math.min(3,development.level+1)}`);
     const animalPoses=visibleWildlife(this.habitats,this.waves.elapsedSeconds,this.map,p=>isVisible(this.fog,'player',p)),animalIds=new Set(animalPoses.map(p=>p.id));
     for(const [id,image]of this.wildlifeVisuals)if(!animalIds.has(id))image.setVisible(false);
     for(const pose of animalPoses){let image=this.wildlifeVisuals.get(pose.id);if(!image){image=this.add.image(pose.position.x,pose.position.y,'world',pose.frame).setOrigin(.5,.75).setDepth(-.5);this.wildlifeVisuals.set(pose.id,image);}image.setPosition(pose.position.x,pose.position.y).setFrame(pose.frame).setFlipX(pose.flipX).setVisible(true);}
@@ -817,7 +819,7 @@ export class BootScene extends Phaser.Scene {
     }
     this.attackMoveButton.disabled=!this.gameplayActive()||!this.gathering.units.some(u=>u.kind==='soldier'&&u.selected);
     this.attackMoveButton.setAttribute('aria-pressed',String(this.attackMoveMode));
-    this.attackMoveButton.textContent=this.attackMoveMode?uiText.attackMoveClickADestinationEscapeCancels:'Attack-move';
+    setActionLabel(this.attackMoveButton,this.attackMoveMode?uiText.attackMoveClickADestinationEscapeCancels:'Attack-move');
     this.stopButton.disabled = !this.gameplayActive() || !this.allSelectable().some(u=>u.selected);
     (document.getElementById('dismiss-units') as HTMLButtonElement).disabled=!dismissProposal(this.currentMatch());
     this.hpBars?.clear();
@@ -865,13 +867,13 @@ export class BootScene extends Phaser.Scene {
     this.productionStatus.textContent = productionLabel(this.gathering, this.production, this.outcome,{kind:'base'},population);
     const barracks = { kind: 'barracks' as const, bounds:this.map,technology:technologyFor(this.currentMatch(),'player'), footprint: this.placement.barracks, ready:barracksReady(this.placement) };
     this.soldierButton.disabled = !allowsProduction(this.selectedBuilding, 'barracks', this.placement.barracks !== null, this.gameplayActive()) || !this.gameplayActive() || !canEnqueue(this.gathering, this.soldierProduction, barracks,population);
-    const airButton=document.getElementById('train-air') as HTMLButtonElement;airButton.textContent=`Train ${factions[this.factions.player].unitNames.air} · TEMP ART`;airButton.disabled=!allowsProduction(this.selectedBuilding,'barracks',this.placement.barracks!==null,this.gameplayActive())||!canEnqueue(this.gathering,this.soldierProduction,{...barracks,unitType:'air'},population);
+    const airButton=document.getElementById('train-air') as HTMLButtonElement;setActionLabel(airButton,`Train ${factions[this.factions.player].unitNames.air} · TEMP ART`);airButton.disabled=!allowsProduction(this.selectedBuilding,'barracks',this.placement.barracks!==null,this.gameplayActive())||!canEnqueue(this.gathering,this.soldierProduction,{...barracks,unitType:'air'},population);
     this.specialistButton.disabled=!allowsProduction(this.selectedBuilding,'barracks',this.placement.barracks!==null,this.gameplayActive())||!canEnqueue(this.gathering,this.soldierProduction,{...barracks,unitType:'specialist'},population);
     this.catapultButton.disabled=!allowsProduction(this.selectedBuilding,'barracks',this.placement.barracks!==null,this.gameplayActive())||!canEnqueue(this.gathering,this.soldierProduction,{...barracks,unitType:'catapult'},population);
     this.archerButton.disabled=!allowsProduction(this.selectedBuilding,'barracks',this.placement.barracks!==null,this.gameplayActive())||!canEnqueue(this.gathering,this.soldierProduction,{...barracks,unitType:'archer'},population);
     this.soldierProductionStatus.textContent = productionLabel(this.gathering, this.soldierProduction, this.outcome, barracks,population);
     const ability=abilityFor(this.gathering),abilityButton=document.querySelector<HTMLButtonElement>('#unit-ability')!;
-    abilityButton.textContent=`${ability.label} · ${ability.description} · ${ability.durationSeconds} s`;abilityButton.disabled=!this.gameplayActive()||!this.gathering.units.some(u=>u.selected&&abilityReady(u));
+    setActionLabel(abilityButton,`${ability.label} · ${ability.description} · ${ability.durationSeconds} s`);abilityButton.disabled=!this.gameplayActive()||!this.gathering.units.some(u=>u.selected&&abilityReady(u));
     document.getElementById('ability-status')!.textContent=abilityStatus(this.gathering);
     const labels = matchLabels(this.currentMatch());
     for (const [id, text] of [['resource-status', labels.economy], ['health-status', labels.health],
@@ -937,8 +939,8 @@ export class BootScene extends Phaser.Scene {
     for(const [id,e] of this.impacts){if(!impactAlive(e.impact,this.visualTime,p=>isVisible(this.fog,'player',p))){e.visual.destroy();this.impacts.delete(id);}else e.visual.setFrame(impactFrame(e.impact,this.visualTime));}
     for(const [id,d] of this.deaths){if(!effectAlive(d.effect,this.visualTime,isVisible(this.fog,'player',d.effect.motion.position))){d.visual.destroy();this.deaths.delete(id);}else d.visual.setFrame(unitFrame(d.effect.motion,this.visualTime));}
     if(this.fogOverlay)drawFog(this.fogOverlay,this.fog,this.fogPreview??'player');
-    for(const slot of spellSlots){const id=spellForSlot(this.factions.player,slot),button=document.getElementById(`cast-${slot}`) as HTMLButtonElement,caster=id?selectedSpellCaster(this.currentMatch(),id):undefined;button.disabled=!id||!caster||!!spellCasterReason(this.currentMatch(),caster.id,id);button.textContent=id?spellDefinition(id,this.factions.player).name:'Unavailable';button.setAttribute('aria-pressed',String(!!id&&this.spellMode===id));}
-    for(const shortcut of hotkeys){const button=document.getElementById(shortcut.button)!;button.textContent=`${button.textContent?.replace(/\s+\[[A-Z0-9]+\]$/,'')} [${shortcut.key}]`;button.title=shortcut.label;}
+    for(const slot of spellSlots){const id=spellForSlot(this.factions.player,slot),button=document.getElementById(`cast-${slot}`) as HTMLButtonElement,caster=id?selectedSpellCaster(this.currentMatch(),id):undefined;button.disabled=!id||!caster||!!spellCasterReason(this.currentMatch(),caster.id,id);setActionLabel(button,id?spellDefinition(id,this.factions.player).name:'Unavailable');button.setAttribute('aria-pressed',String(!!id&&this.spellMode===id));}
+    for(const shortcut of hotkeys){const button=document.getElementById(shortcut.button) as HTMLButtonElement;setActionLabel(button,`${button.textContent?.replace(/\s+\[[A-Z0-9]+\]$/,'')} [${shortcut.key}]`);button.title=shortcut.label;}
     for(const id of ['hold-position','patrol-units'])(document.getElementById(id) as HTMLButtonElement).disabled=!this.gameplayActive()||!this.allSelectable().some(u=>u.selected);
     renderActionPanel(actionPanel(this.currentMatch(),this.selectedBuilding,this.gameplayActive()));
 

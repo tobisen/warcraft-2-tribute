@@ -1,3 +1,4 @@
+import {setActionLabel} from './actionLabel';
 import {isAir} from '../gameplay/domains';
 import {selectedSpellCaster,spellCasterReason} from '../gameplay/spells';
 import {spellDefinition,spellDescription,spellForSlot,type SpellSlot} from '../config/spells';
@@ -79,7 +80,7 @@ export function bindActionPanel():void{
 /** Called after authoritative gameplay disabled-state sync. */
 export function renderActionPanel(model:ReturnType<typeof actionPanel>):void{
  for(const id of actionIds){const button=document.getElementById(id) as HTMLButtonElement,action=model[id],wrapper=button.parentElement!,reason=document.getElementById(`${id}-reason`)!;wrapper.hidden=!action.visible;button.disabled=button.disabled||!action.visible||!!action.reason;reason.textContent=button.disabled?(action.reason||'Action unavailable'):'';
-  const hotkey=hotkeys.find(h=>h.button===id)?.key;button.title=actionTooltip(id,{...action,reason:reason.textContent},button.textContent??'');button.setAttribute('aria-label',button.title);if(hotkey){button.dataset.hotkey=hotkey;if(!button.textContent!.includes(`[${hotkey}]`))button.textContent+=` [${hotkey}]`;}
+  const hotkey=hotkeys.find(h=>h.button===id)?.key;button.title=actionTooltip(id,{...action,reason:reason.textContent},button.textContent??'');button.setAttribute('aria-label',button.title);if(hotkey){button.dataset.hotkey=hotkey;setActionLabel(button,button.textContent??'');}
  }
  for(const group of actionGroups)(document.querySelector(`[data-action-group="${group}"]`) as HTMLElement).hidden=!actionIds.some(id=>actionGroup(id)===group&&model[id].visible);
  document.getElementById('context-actions')!.classList.toggle('spell-context',actionIds.some(id=>id.startsWith('cast-')&&model[id].visible));

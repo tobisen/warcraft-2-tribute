@@ -130,3 +130,7 @@ Nytt uttryckligt uppdrag ersätter tidigare stopp efter169. HANDOFF:s senaste168
 ## Stopp efter RTS-173
 
 RTS-170–173 är Done och verifierade. Full regression1355/163, unit435/79 och build inklusive strict typecheck PASS; riktade browserflöden granskade. HANDOFF.md redovisar commits och begränsningar. Aktuellt mandat avslutas efter173;174 är Todo och startas inte utan nytt uppdrag. Användarens CSS/docs bevarade. Ingen ny CI/Pages-/ljud-/mänsklig balansverifiering hävdas.
+
+## Prioriterat mandat PRIO-01–04
+
+Användaren pausar174–176 och beställer separata PRIO-01–04 enligt BACKLOG. Musklick, egna särskiljbara actionikoner, spelbar referenskarta med godkända terrängbilder och interaktiva djur. En task åt gången, relevant verifiering/browser, docs och commit/push till origin/main. Bevara befintlig CSS/docs, ingen automatisk delegering. Stanna efter04;174 startas inte.

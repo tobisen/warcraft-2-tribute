@@ -2,6 +2,8 @@
 
 ## Current Focus
 
+**Nytt prioriterat mandat PRIO-01–04:** RTS-174–176 pausade enligt användarens nya uppdrag. PRIO-01 Done;02–04 Todo. En task åt gången, docs/checks/browser/commit/push; stopp efter04,174 startas inte. PRIO-03:s två bildreferenser är godkända; referenskarta verifieras före spridning. Användarens CSS/docs bevaras.
+
 **CI-korrigering efter RTS-173 (2026-10-05):** Användaren rapporterar flera röda pushar. Senaste GitHub-jobbet fallerar enbart på femsekunderstimeout i factionArt-testet; äldre air-assertions är rättade i173. Samma uttömmande assetkontroller delas i16 faction/type/owner-fall, utan höjd timeout eller ändrade assets/runtime. Riktade17/1, unit450/79 och build/strict typecheck/diff PASS lokalt. Fix `b79d1fd` pushad. Ny [GitHub-fullregression/build/Pages-deploy](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37300780990) PASS; teststeget12m05s.174 startas inte.
 
 **Aktuellt mandat RTS-170–173:** Nytt uttryckligt uppdrag ersätter stoppet efter169.170–173 Done; etappen avslutad före174. En task åt gången med riktade tester/browser, slutchecks, docs och commit/push till origin/main. Stopp efter173 med HANDOFF;174 startas inte.160–164 och165–169 återimplementeras inte. Befintlig style.css och otrackade docs/ bevaras.
@@ -4668,6 +4670,111 @@ Verifiera targeting och resursanvändning.
 **Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
 
 **Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+## PRIO-01 – Fungerande musklick på actions
+
+**Status:** Done.
+
+**Leverans:** Per-frame textnodeersättning avbröt native click. Gemensam stabil actionLabel bevarar textnod/children även vid räknarändringar; world-pointerdown avvisar HUD-targets. Fysisk live browser800/1280 build/unit/research/upgrade/disabled/busy/full/hotkey/noEnter/ingen dubbeldebitering PASS. Riktade34/6, unit451/80 och build/typecheck/diff PASS. Bilder/rapport i artifacts/prio-01. Ny CI följs efter push; ingen ny fullcampaignbatch för UI.
+
+Nu går det inte att klicka på knappar för att producera enheter eller bygga byggnader. Användaren måste använda snabbkommando och sedan Enter.
+
+Åtgärda grundorsaken:
+- Klick på enhetsproduktion ska starta produktion eller lägga till i kön enligt befintliga regler.
+- Klick på en byggnadsknapp ska direkt aktivera placeringspreview.
+- Vänsterklick på giltig mark ska placera byggnaden.
+- Forskning och uppgraderingar ska också kunna startas med musklick.
+- Inget extra Enter ska behövas efter ett knappklick.
+- Snabbkommandon ska fortsätta fungera.
+
+Undersök eventhantering, pointer-events, överlappande element, fokus och om canvasen fångar HUD-klick.
+Mus och tangentbord ska använda samma action-logik och validering.
+
+HUD-klick får inte samtidigt ge order på kartan, ändra selection eller debitera dubbelt. Otillgängliga actions ska visa orsaken.
+
+Browserverifiera verkliga musklick för byggnad, enhet, forskning och uppgradering, inklusive otillräckliga resurser och upptagen/full kö.
+
+**Checks/leverans:** Riktade beteendetester, faktisk browserkontroll när relevant, unit-suite, build med strict typecheck och diffkontroll. Uppdatera BACKLOG/DEV_LOG/HANDOFF; commit/push efter verifierad task. Inga orelaterade roadmap-features.
+
+## PRIO-02 – Tydliga och olika action-ikoner
+
+**Status:** Todo.
+
+- Varje byggnad och enhet ska ha en egen igenkännbar ikon som visar vad man bygger eller producerar.
+- Forskning och uppgraderingar ska också kunna skiljas åt visuellt.
+- Återanvänd rätt godkända assets när de fungerar som ikoner.
+- Använd inte samma generiska bild på flera olika actions.
+- Visa kort namn eller tooltip, kostnad, snabbkommando och prerequisites.
+- Gör disabled, aktiv action och produktion tydliga.
+- Bevara den kompakta horisontella bottom bar-layouten utan scroll eller klippta actions.
+
+Granska ikoner i faktisk knappstorlek vid native 800×600 och större visningsläge.
+
+**Checks/leverans:** Riktade beteendetester, faktisk browserkontroll när relevant, unit-suite, build med strict typecheck och diffkontroll. Uppdatera BACKLOG/DEV_LOG/HANDOFF; commit/push efter verifierad task. Inga orelaterade roadmap-features.
+
+## PRIO-03 – Kartdesign med mer djup och naturliga former
+
+**Status:** Todo.
+
+Referens:
+https://classic.battle.net/war2/lp/c2-4.shtml
+
+Öppna och granska de faktiska kartbilderna som sidan hänvisar till. Om bilderna inte går att nå, säg det uttryckligen och använd inte sidans kartnamn som bevis för visuell granskning.
+
+Målet är Warcraft II-inspirerad terräng med sammanhängande skogar, organiska stränder, varierad mark och tydliga strategiska områden. Skapa egna kartor och egna assets.
+
+Börja med en befintlig karta som referenskarta för förbättringen:
+
+Skogar:
+- Skapa sammanhängande skogspartier med varierade kanter, täthet och små gläntor.
+- Träd ska upplevas som en skog, inte en samling isolerade symboler.
+- Bevara resursmängder, worker-åtkomst och gathering-regler.
+- Avverkning ska öppna skogen visuellt och uppdatera navigation där det behövs.
+- Dekorativa träd får inte förväxlas med skördbara resurser.
+
+Vatten:
+- Skapa oregelbundna kustlinjer, vikar, floder och öar.
+- Använd strandövergångar, hörnvarianter och grunda vattenkanter.
+- Behåll tilebaserad logik men undvik stora synliga rektanglar som enda vattenform.
+- Grafik och land-/sjö-navigation ska stämma överens.
+- Kontrollera hamnplacering, fartygspassage och åtkomst till resurser.
+
+Visuellt djup:
+- Variera gräs, jord, sand och sten med sammanhängande övergångar.
+- Lägg till begripliga skuggor, skogsbryn, klippkanter och sparsamma dekorationer.
+- Undvik slumpmässigt visuellt brus och upprepade mönster.
+- Enheter, resurser och byggbara områden ska fortfarande vara lätta att läsa.
+- Inför inte ett nytt gameplay-system för höjd i denna task.
+
+Kartlayout:
+- Skapa tydliga basområden, expansionsplatser, alternativa vägar och strategiska passager.
+- Kontrollera att startpositioner och obligatoriska objectives fortfarande fungerar.
+- Bevara fog of war, minimap och save/load.
+
+Visa före/efter av samma områden i browsern. Slutför och verifiera referenskartan innan du sprider lösningen till fler kartor.
+
+**Checks/leverans:** Riktade beteendetester, faktisk browserkontroll när relevant, unit-suite, build med strict typecheck och diffkontroll. Uppdatera BACKLOG/DEV_LOG/HANDOFF; commit/push efter verifierad task. Inga orelaterade roadmap-features.
+
+**Godkänt förtydligande:** Två bifogade kartbilder styr formspråket: sammanhängande skogar, organiska kustlinjer, strand/grunt/djupt vatten och diskret marktextur. Både grafik och layout förbättras; fler isolerade träd på enfärgad mark räcker inte. Egna assets och karta, ingen kopierad bakgrund. Spelbar referenskarta först med närbilder av skogsbryn/kust och översikt, grafik/resurser/byggbarhet/land-/sjönavigation verifieras före spridning.
+
+## PRIO-04 – Interaktiva djur
+
+**Status:** Todo.
+
+Utöka befintliga NPC-djur:
+- Vänsterklick på ett synligt djur visar namn och HP samt spelar ett passande djurljud.
+- Begränsa ljudupprepning så att snabba klick inte ger ljudspam.
+- Markerade stridsenheter kan attackera ett djur med högerklick.
+- Djur har HP, tar skada och dör med tydlig återkoppling.
+- När djuret dör ska mål och selection hanteras korrekt.
+- Djur ger inga resurser eller vanliga enemy-kills/highscore-poäng i denna version.
+- De ger ingen vision och ska inte blockera viktiga vägar eller byggplatser.
+- Bevara wandering, save/load och restart.
+
+Djuren ska gå att klicka på även när egna enheter är markerade. Interaktionen får inte oavsiktligt ge en markorder.
+Använd egna eller korrekt licensierade ljud och provlyssna på dem.
+
+**Checks/leverans:** Riktade beteendetester, faktisk browserkontroll när relevant, unit-suite, build med strict typecheck och diffkontroll. Uppdatera BACKLOG/DEV_LOG/HANDOFF; commit/push efter verifierad task. Inga orelaterade roadmap-features.
 
 ## RTS-174 – Flera AI-spelare
 
