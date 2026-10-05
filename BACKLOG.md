@@ -2,6 +2,8 @@
 
 ## Current Focus
 
+**AI-antalbugfix efter187:** Done. Extra knapp borttagen; dropdown1/2AI med förklarat Plains96-byte när tredje start saknas. Ny browser/native-popup, unit468/84, riktade97/4 och strict build/diff PASS. Inga nya roadmaptasks. CSS/docs bevaras.
+
 **Dropdownbugfix efter186/187:** Done. Ras-/svårighetsmenyer bevarar native popup mellan bildrutor; inga senare roadmaptasks startas. Ny synlig Chrome800/1280-popupkontroll, separat värdepersistens, unit468/84 och strict build/diff PASS. Se DEV_LOG/HANDOFF för testmetodens begränsningar. CSS/docs bevaras.
 
 **Nytt mandat RTS-182–187 (2026-10-05):** Bilagans sex meny-/kampanjuppgifter, en i taget med riktad/browser-verifiering, docs och commit/push. RTS-180 är historiskt Done/publicerad;181 redan Done.182 Done/push90df09f,183 Done/pushc3f691b,184 Done/push289cc9f,185 Done/push7b7e9fc,186 Done/pushae5e361 + beläggsf43688d,187 Done; fasen avslutad, inga nya tasks startas. Stanna efter187. CSS/docs bevaras.

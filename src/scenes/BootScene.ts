@@ -291,7 +291,7 @@ export class BootScene extends Phaser.Scene {
     const secondFaction=document.getElementById('ai-2-faction-select') as HTMLSelectElement,secondProfile=document.getElementById('ai-2-profile-select') as HTMLSelectElement;
     const secondDifficulty=document.getElementById('ai-2-difficulty-select') as HTMLSelectElement;
     const teamSelects=['player','enemy','ai-2'].map(id=>document.getElementById(`${id}-team-select`) as HTMLSelectElement);
-    const changePlayers=()=>{if(this.session.phase!=='menu')return;const count=Number(playerCount.value),roster=matchPlayers(this.factions,this.session.options.aiProfile,count);if(count===3&&isFactionId(secondFaction.value)&&isAIProfile(secondProfile.value)){roster[2]={...roster[2],faction:secondFaction.value,profile:secondProfile.value,...(Object.hasOwn(difficultyProfiles,secondDifficulty.value)?{difficulty:secondDifficulty.value as Difficulty}:{})};}for(let i=0;i<roster.length;i++)roster[i].teamId=Number(teamSelects[i].value);this.session=changeOptions(this.session,{players:count===3?roster:undefined});this.syncSession();};
+    const changePlayers=()=>{if(this.session.phase!=='menu')return;const count=Number(playerCount.value),roster=matchPlayers(this.factions,this.session.options.aiProfile,count);if(count===3&&isFactionId(secondFaction.value)&&isAIProfile(secondProfile.value)){roster[2]={...roster[2],faction:secondFaction.value,profile:secondProfile.value,...(Object.hasOwn(difficultyProfiles,secondDifficulty.value)?{difficulty:secondDifficulty.value as Difficulty}:{})};}for(let i=0;i<roster.length;i++)roster[i].teamId=Number(teamSelects[i].value);const map=count===3&&!supportedPlayerCounts(this.session.options.map,this.session.options.scenario).includes(3)?'plains96':this.session.options.map;this.session=changeOptions(this.session,{map,players:count===3?roster:undefined});this.syncSession();};
     for(const select of [playerCount,secondFaction,secondProfile,secondDifficulty,...teamSelects]){select.addEventListener('change',changePlayers);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>select.removeEventListener('change',changePlayers));}
     const mapSelect=document.querySelector<HTMLSelectElement>('#map-select')!;
     const changeMap=()=>{if(this.session.phase==='menu'&&this.session.options.scenario==='skirmish'&&isMapId(mapSelect.value)){this.session=changeOptions(this.session,{map:mapSelect.value});this.syncSession();}};
@@ -610,7 +610,7 @@ export class BootScene extends Phaser.Scene {
     // Native menus keep a tentative selection until Enter/click commits it.
     const syncSelectValue=(select:HTMLSelectElement,value:string)=>{if(!select.matches(':open')&&select.value!==value)select.value=value;};
     const syncSelectDisabled=(select:HTMLSelectElement,disabled:boolean)=>{if(select.disabled!==disabled)select.disabled=disabled;};
-    const counts=supportedPlayerCounts(this.session.options.map,this.session.options.scenario),playerCount=document.getElementById('player-count-select') as HTMLSelectElement;
+    const counts=this.session.options.scenario==='skirmish'?[2,3]:[2],playerCount=document.getElementById('player-count-select') as HTMLSelectElement;
     if(playerCount.dataset.map!==counts.join(',')){playerCount.replaceChildren(...counts.map(n=>new Option(`You + ${n-1} AI`,String(n))));playerCount.dataset.map=counts.join(',');}
     playerCount.parentElement!.hidden=this.session.options.scenario!=='skirmish';
     syncSelectValue(playerCount,String(this.session.options.players?.length??2));syncSelectDisabled(playerCount,!menu);

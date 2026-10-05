@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 const {chromium}=await import(process.env.W2T_PLAYWRIGHT_MODULE??'playwright-core');
 // Headless macOS does not expose the native select popup through :open.
 
- for(const width of [800,1280])for(const mode of ['campaign','skirmish'])for(const id of ['faction-select','difficulty-select']) {
+ for(const width of [800,1280])for(const mode of ['campaign','skirmish'])for(const id of mode==='campaign'?['faction-select','difficulty-select']:['faction-select','difficulty-select','player-count-select']) {
   const browser=await chromium.launch({executablePath:process.env.W2T_BROWSER_EXECUTABLE,headless:false});
   try {const page=await browser.newPage({viewport:{width,height:900}}),errors=[];
   page.on('pageerror',error=>errors.push(error.message));
@@ -18,5 +18,5 @@ const {chromium}=await import(process.env.W2T_PLAYWRIGHT_MODULE??'playwright-cor
   assert.deepEqual(errors,[]);console.log(`${width}/${mode}/${id} PASS`);
   }finally{await browser.close();}
  }
- console.log('Native mouse-open popup survives 600ms of scene updates; separate value persistence: campaign/skirmish faction/difficulty at 800/1280 PASS');
+ console.log('Native mouse-open popup survives 600ms of scene updates; separate value persistence: campaign/skirmish faction/difficulty and skirmish AI count at 800/1280 PASS');
 
