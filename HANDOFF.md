@@ -1,3 +1,18 @@
+# Överlämning RTS-181 — startinställning
+
+2026-10-05: avgränsad senaste begäran klar. Första start använder1920×1080
+och Fit to Window. Sparade upplösningar/lägen bevaras.
+
+Ny verifiering: display/preferences10/2, unit466/84 och build inklusive strict
+typecheck PASS. Lokal Chrome800×600/1920×1080: första start, proportionell
+appgeometri och sparat800×600/Native efter reload PASS utan pageerrors.
+Diff granskad; befintlig bundlevarning kvar. Ingen ny CI/Pages-verifiering,
+full match-/kampanjregression eller screenshotgranskning. CSS/docs bevarade.
+Bilagans bredare meny-/kampanjförbättringar återstår; detta uppdrag är avgränsat
+till startinställningen. Inga andra tasks påbörjade.
+
+Nedan historisk RTS-180-överlämning; dess releasebelägg är inte ny verifiering.
+
 # Överlämning RTS-177–180 — avslutad och publicerad
 
 Datum: 2026-10-05.177–180 Done. Stanna efter180; inga nya roadmaptasks eller karteditor.

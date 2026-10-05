@@ -1463,3 +1463,12 @@ preparation/exploration, preserving counts/intervals and persisting the start.
 Frontier waves need a clear map-specific entry rather than Arena's forest-covered
 entry. Human durations/difficulty remain for actual playtest; bot times are not
 evidence for20–40min estimates.
+
+
+## RTS-181 — Standardvisning vid första start (2026-10-05)
+
+Nya sessioner utan sparade preferenser använder1920×1080 och Fit to Window.
+Upplösningen är logisk rendering; befintlig proportionell CSS-skalning anpassar
+spelvyn till fönstret. Giltiga sparade val bevaras, även800×600/Native.
+Ogiltiga/saknade fält får nya defaults; explicit äldre adaptToWindow migreras
+som tidigare. Ingen tvingad reset av lokala spelarval.

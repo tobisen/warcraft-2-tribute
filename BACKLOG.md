@@ -2,6 +2,8 @@
 
 ## Current Focus
 
+**Aktuellt avgränsat uppdrag RTS-181:** Done. Startinställning1920×1080/Fit to Window. Tidigare180 Done enligt HANDOFF; historiska releasebelägg återanvänds endast som status. Bilagans bredare meny-/kampanjfas genomförs inte i denna avgränsade ändring. CSS/docs bevaras.
+
 **Avslutad etapp RTS-177–180:**177 Done/push8fafce5;178 Done/push598478f;179 Done/push686c1e6;180 Done/release6a96227. Publicerad0.3.0/Build6a96227 och faktisk CI/Pages/browser PASS. Full regression1458/176, unit465/84, strict typecheck/build och diff PASS. HANDOFF/QUALITY_REVIEW redovisar återstående mänsklig tids-/balans-/ljudgranskning och assets. Stopp efter180; inga nya tasks eller karteditor. CSS/docs bevaras.
 
 **Aktuellt mandat RTS-174–176:** Användaren återupptar174–176 efter färdiga PRIO-01–04.174 Done/push416cfa9;175 Done/push0a5b422,176 Done. Etappen avslutad; stanna före177. En task åt gången, riktade tester/browser, slutchecks/docs och commit/push. HANDOFF efter176; stopp före177. CSS/docs bevaras.
@@ -4954,3 +4956,16 @@ Publicera efter godkända kontroller.
 
 
 **Verifiering180:** Slutlig full regression1458/176 PASS415.95s; unit465/84 PASS10.76s; strict typecheck/build PASS388ms; diff/manifest/länkar PASS. Faktisk [GitHub CI/Pages](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37355621323) SUCCESS. Public browser: fyra Native/Fit-fall, kampanj/save/load/result/replay, skirmishdefeat, lag-spectator/save/defeat, pause/menu cleanup, sex resolutionsval, fullscreen och reload. Alla18 ljudfiler och34 asset-URLs laddade i varje fall utan HTTP-/browserfel. Resultateliminering använder explicita fixtures; betald genomspelning är179:s separata belägg. Se [publiceringskontroll](artifacts/rts-180/public.md). Slutöverlämningen ändrar endast Markdown och återanvänder verifieringen av oförändrad kod.
+
+
+## RTS-181 — Startinställning1920×1080 / Fit to Window
+
+**Status:** Done (2026-10-05).
+
+**Krav/acceptance:** Första start utan sparade preferenser använder1920×1080 och Fit to Window. Giltiga sparade val, inklusive lägre upplösning/Native, bevaras. Saknade/ogiltiga fält använder nya standardvärden; äldre adaptToWindow-migrering bevaras.
+
+**Non-goals:** Övriga förbättringar i bifogad meny-/kampanjplan, nya resolutionsval och gameplay.
+
+**Verifiering:** Riktade display/preference-tester, unit-suite, build inklusive strict typecheck, browser första start och sparat val/reload samt diffkontroll före commit/push.
+
+**Resultat181:** Riktade display/preferences10/2 PASS; unit466/84 PASS9.53s; build inklusive strict typecheck PASS (befintlig bundlevarning). Lokal Chrome vid800×600/1920×1080: ny start1920×1080/Fit, proportionell appgeometri och sparat800×600/Native efter reload PASS utan pageerrors. Diff granskad. Ingen ny full campaign-/matchregression, CI eller Pages-verifiering;180:s belägg är historiska.

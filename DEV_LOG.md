@@ -3264,3 +3264,20 @@ Releasecommit6a96227 pushad utan force. Faktisk [CI/Pages37355621323](https://gi
 Terminala mål/eliminering är fixtures, inte mänsklig genomspelning.179:s betalda åtta Beginner/Normal-genomspelningar är separat belägg. Mänskliga20–40min/timing/balans/fun/lång mixlyssning och tidigare slutliga flygar-/voiceassets återstår. Dessa markeras inte verifierade. Tidigare pending-publiceringstext ovan beskriver läget före releasepush och ersätts av denna slutstatus.
 
 Slutlig kodverifiering: full1458/176 PASS415.95s, unit465/84 PASS10.76s, strict typecheck/build PASS388ms, diff/manifest/länkar PASS. Slutöverlämningen ändrar endast Markdown; ingen ny test/build-körning, beläggen återanvänds för oförändrad kod. HANDOFF/BACKLOG/README/QUALITY_REVIEW uppdaterade, stopp efter180 utan nya tasks/karteditor. UserCSS/docs bevaras och ingår inte i publicerad kod.
+
+
+## 2026-10-05 — RTS-181 startinställning
+
+Avgränsad senaste begäran: ändrat defaultDisplaySettings från1280×720/Native
+till1920×1080/Fit. Sparade preferenser och legacy-migrering bevaras. Nytt
+regressionstest för första start och återbesök med sparat800×600/Native.
+RTS-180 kontrollerad som Done via BACKLOG/HANDOFF, inga historiska checks
+redovisas som nya. Användarens style.css/docs bevarade och ingår inte i commit.
+
+Ny verifiering: riktade display/preferences10/2 PASS; npm run test:unit466/84
+PASS9.53s; npm run build inklusive strict typecheck PASS (befintlig bundlevarning).
+Lokal Chrome800×600/1920×1080: färsk1920×1080/Fit, appgeometri, sparat
+800×600/Native och reload PASS utan pageerrors. Lokal extern browserscript
+/tmp/w2t-browser-check/default-display.mjs. Ingen full match-/kampanjregression
+för denna defaultändring; ingen ny CI/Pages eller visuell screenshotgranskning.
+Kod/docs granskade; git diff --check före commit.

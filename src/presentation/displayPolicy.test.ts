@@ -9,7 +9,7 @@ it('all six rendering viewports fit small/large windows without stretching or ch
 });
 it('window adaptation has safe minimum HUD geometry and invalid stored settings fall back per field',()=>{
  expect(displayGeometry({resolution:'800x600',mode:'fit'},{width:400,height:300})).toMatchObject({width:800,height:600,scale:.5});
- expect(validateDisplaySettings({resolution:'stretch',mode:'native'})).toEqual({resolution:'1280x720',mode:'native'});expect(validateDisplaySettings(null).mode).toBe('native');
+ expect(validateDisplaySettings({resolution:'stretch',mode:'native'})).toEqual({resolution:'1920x1080',mode:'native'});expect(validateDisplaySettings(null).mode).toBe('fit');
 });
 it('display preferences persist independently of audio and match settings',()=>{
  let data:string|null=null;const host={getItem:()=>data,setItem:(_k:string,v:string)=>{data=v;}};const first=createPreferenceStore(()=>host);first.load();first.update({display:{resolution:'2048x1332',mode:'native'}});const second=createPreferenceStore(()=>host);second.load();expect(second.get().display).toEqual({resolution:'2048x1332',mode:'native'});expect(second.get().audio).toEqual(first.get().audio);expect(second.get().game).toEqual(first.get().game);
@@ -22,7 +22,13 @@ it('native never enlarges; fit scales proportionally while keeping the rendering
 });
 it('migrates window adaptation to display mode and validates explicit mode independently',()=>{
  expect(validateDisplaySettings({resolution:'800x600',adaptToWindow:true})).toEqual({resolution:'800x600',mode:'fit'});
- expect(validateDisplaySettings({adaptToWindow:false})).toEqual({resolution:'1280x720',mode:'native'});
+ expect(validateDisplaySettings({adaptToWindow:false})).toEqual({resolution:'1920x1080',mode:'native'});
  expect(validateDisplaySettings({mode:'native',adaptToWindow:true}).mode).toBe('native');
- expect(validateDisplaySettings({mode:'stretch'}).mode).toBe('native');
+ expect(validateDisplaySettings({mode:'stretch'}).mode).toBe('fit');
+});
+
+it('fresh installs start at 1920x1080 fit while saved lower native choices survive reload',()=>{
+ let data:string|null=null;const host={getItem:()=>data,setItem:(_key:string,value:string)=>{data=value;}};
+ const first=createPreferenceStore(()=>host);first.load();expect(first.get().display).toEqual({resolution:'1920x1080',mode:'fit'});
+ first.update({display:{resolution:'800x600',mode:'native'}});const returning=createPreferenceStore(()=>host);returning.load();expect(returning.get().display).toEqual({resolution:'800x600',mode:'native'});
 });

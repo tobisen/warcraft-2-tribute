@@ -2,7 +2,7 @@ export const resolutions={ '800x600':{width:800,height:600},'1024x768':{width:10
 export type Resolution=keyof typeof resolutions;
 export type DisplayMode='native'|'fit';
 export interface DisplaySettings {resolution:Resolution;mode:DisplayMode}
-export const defaultDisplaySettings:DisplaySettings={resolution:'1280x720',mode:'native'};
+export const defaultDisplaySettings:DisplaySettings={resolution:'1920x1080',mode:'fit'};
 export function validateDisplaySettings(value:unknown):DisplaySettings {
  const v=value&&typeof value==='object'?value as Record<string,unknown>:{};
  const mode=v.mode==='native'||v.mode==='fit'?v.mode:typeof v.adaptToWindow==='boolean'?v.adaptToWindow?'fit':'native':defaultDisplaySettings.mode;
