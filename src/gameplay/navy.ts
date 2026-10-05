@@ -1,3 +1,4 @@
+import {isAir} from './domains';
 import {factionForTeam} from '../config/factions';
 import {text as uiText} from '../text';
 import {resourceNodes,type Unit} from './gathering';
@@ -32,13 +33,13 @@ export function matchPopulation(m:MatchState):Population {
 export function harborFootprint(point:Position):Footprint {return buildingFootprint(point,'harbor');}
 export function harborSpawn(m:MatchState,footprint:Footprint,occupancy=true,role:'warship'|'transport'='warship'):Position|null {
  const map={...domainMap(m.map,'water'),bodyHalf:shipRecipe(m,role).size/2,obstacles:[...domainMap(m.map,'water').obstacles,footprint]};
- return spawnCandidates(map,footprint,'barracks',shipRecipe(m,role).size).find(p=>hasSpawnExit(map,p)&&(!occupancy||![...m.gathering.units.map(u=>unitBody(u.position,u.kind==='worker'?unitStats.size:combatUnitStats(u).size)),...(m.navy?.ships??[]).map(u=>unitBody(u.position,shipRecipe(m,role).size)),...m.combat.enemies.filter(e=>!e.footprint).map(e=>unitBody(e.position,24))].some(b=>overlaps(unitBody(p,shipRecipe(m,role).size),b))))??null;
+ return spawnCandidates(map,footprint,'barracks',shipRecipe(m,role).size).find(p=>hasSpawnExit(map,p)&&(!occupancy||![...m.gathering.units.filter(u=>!isAir(u)).map(u=>unitBody(u.position,u.kind==='worker'?unitStats.size:combatUnitStats(u).size)),...(m.navy?.ships??[]).map(u=>unitBody(u.position,shipRecipe(m,role).size)),...m.combat.enemies.filter(e=>!e.footprint&&!isAir(e)).map(e=>unitBody(e.position,24))].some(b=>overlaps(unitBody(p,shipRecipe(m,role).size),b))))??null;
 }
 export function harborPlacementError(m:MatchState,point:Position):string|null {
  if(m.navy?.harbor)return uiText.harborExists;
  const rect=harborFootprint(point);if(m.fog&&!placementVisible(m.fog,rect))return uiText.theSiteMustBeVisible;if(!coastalFootprint(m.map,rect))return uiText.aHarborNeedsAFreeCoastWithLand;
  if(!canAfford(m.gathering,factionForTeam(m,'player').naval.harbor.cost))return uiText.notEnoughWoodOrGold;
- if(m.gathering.units.some(u=>overlaps(rect,unitBody(u.position,u.kind==='worker'?unitStats.size:combatUnitStats(u).size)))||m.combat.enemies.some(e=>!e.footprint&&overlaps(rect,unitBody(e.position,24)))||(m.navy?.ships??[]).some(s=>overlaps(rect,unitBody(s.position,factionForTeam(m,'player').naval.units.warship.size))))return uiText.overlapsAUnit;
+ if(m.gathering.units.some(u=>!isAir(u)&&overlaps(rect,unitBody(u.position,u.kind==='worker'?unitStats.size:combatUnitStats(u).size)))||m.combat.enemies.some(e=>!e.footprint&&!isAir(e)&&overlaps(rect,unitBody(e.position,24)))||(m.navy?.ships??[]).some(s=>overlaps(rect,unitBody(s.position,factionForTeam(m,'player').naval.units.warship.size))))return uiText.overlapsAUnit;
  const builder=m.gathering.units.filter(u=>u.kind==='worker'&&u.selected).sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}))[0];
  if(!builder)return uiText.selectAWorkerToBuild;
  const after={...m,map:replaceObstacles(m.map,[...m.map.obstacles,rect])};

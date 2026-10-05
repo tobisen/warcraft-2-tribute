@@ -1,3 +1,5 @@
+import {airConfig} from './air';
+import {bowTargets,groundMeleeTargets,siegeTargets,type TargetDomain} from './domains';
 import {manaConfig,type ManaDefinition} from './mana';
 import {navyConfig} from './navy';
 import {text as uiText} from '../text';
@@ -14,7 +16,7 @@ import {forgeConfig,upgradeConfig} from './upgrades';
 // Stable identity is independent of team ownership and presentation.
 export const factionIds=['crown','clans','elves','dwarves','goblins'] as const;
 export type FactionId=typeof factionIds[number];
-export type UnitRole='worker'|'soldier'|'archer'|'catapult'|'specialist';
+export type UnitRole='worker'|'soldier'|'archer'|'catapult'|'specialist'|'air';
 export type BuildingRole='base'|'barracks'|'farm'|'forge';
 export type UpgradeRole='attack'|'defense';
 export interface MatchFactions {player:FactionId;enemy:FactionId}
@@ -24,9 +26,12 @@ export const isFactionId=(value:unknown):value is FactionId=>factionIds.some(id=
 export interface TechnologyState {baseLevel?:number;buildings:readonly BuildingRole[];research:Partial<Record<UpgradeRole,number>>}
 export interface UnitPrerequisites {baseLevel?:number;buildings?:readonly BuildingRole[];research?:Partial<Record<UpgradeRole,number>>}
 interface UnitData {
+  domain?:'land'|'air';
+  targets?:readonly TargetDomain[];
+  damageByDomain?:Partial<Record<TargetDomain,number>>;
   mana?:ManaDefinition;
   combatMode?:'melee'|'projectile';
-  art?:'worker'|'soldier'|'archer'|'catapult'|'specialist';
+  art?:'worker'|'soldier'|'archer'|'catapult'|'specialist'|'air';
   prerequisites?:UnitPrerequisites;
   role:UnitRole;cost:ResourceCost;durationSeconds:number;supply:number;
   trainedAt:'base'|'barracks';hp:number;speed:number;size:number;
@@ -67,7 +72,7 @@ const units={
   archer:{role:'archer',trainedAt:'barracks',...archerData},
   catapult:{role:'catapult',trainedAt:'barracks',...catapultData},
  specialist:{role:'specialist',combatMode:'melee',art:'soldier',trainedAt:'barracks',cost:{wood:30,gold:15},durationSeconds:8,supply:2,hp:100,speed:130,size:24,range:32,aggroRange:140,damagePerSecond:14,prerequisites:{buildings:['forge'],research:{defense:1}}},
-} satisfies Record<UnitRole,UnitData>;
+} satisfies Record<Exclude<UnitRole,'air'>,UnitData>;
 const buildings:Record<BuildingRole,BuildingData>={
   base:{role:'base',cost:{wood:0,gold:0},hp:combatConfig.baseHP,size:gatheringConfig.baseSize,
     placeable:false,constructionSeconds:0,constructionRange:0,populationCapacity:populationConfig.baseCap},
@@ -87,8 +92,11 @@ const upgrades:Record<UpgradeRole,UpgradeData>={
 };
 const factionNames={crown:{label:uiText.crownAlliance,unitNames:{worker:uiText.worker,soldier:uiText.guard,archer:uiText.archer,catapult:uiText.catapult,specialist:'Banner Guard'},buildingNames:{base:uiText.keep,barracks:uiText.barracks,farm:uiText.farm,forge:uiText.forge}},clans:{label:uiText.ironClan,unitNames:{worker:uiText.clanWorker,soldier:uiText.axeWarrior,archer:uiText.hunter,catapult:uiText.stoneThrower,specialist:'Raider'},buildingNames:{base:uiText.stronghold,barracks:uiText.warHut,farm:uiText.cattlePen,forge:uiText.smithy}},elves:{label:'Elves',unitNames:{worker:'Grove Tender',soldier:'Warden',archer:'Longbow',catapult:'Ballista',specialist:'Marksman'},buildingNames:{base:'Grove Hall',barracks:'Ranger Lodge',farm:'Garden',forge:'Moon Workshop'}},dwarves:{label:'Dwarves',unitNames:{worker:'Miner',soldier:'Iron Guard',archer:'Crossbow',catapult:'Cannon',specialist:'Bulwark'},buildingNames:{base:'Stone Hold',barracks:'Guard Hall',farm:'Storehouse',forge:'Foundry'}},goblins:{label:'Goblins',unitNames:{worker:'Tinkerer',soldier:'Scrapper',archer:'Slinger',catapult:'Mortar',specialist:'Grenadier'},buildingNames:{base:'Workshop Hall',barracks:'Scrap Yard',farm:'Supply Shack',forge:'Lab'}}};
 function defineFaction(id:FactionId):FactionDefinition {
-  return {id,...factionNames[id],artPrefix:id==='crown'?'':`${id}-`,naval:{harbor:{...navyConfig.harbor,cost:{...navyConfig.harbor.cost},name:'Harbor'},units:{warship:{...navyConfig.ship,cost:{...navyConfig.ship.cost},id:`${id}:naval:warship`,role:'warship',name:'Warship'},transport:{...navyConfig.ship,...navyConfig.transport,cost:{...navyConfig.transport.cost},id:`${id}:naval:transport`,role:'transport',name:'Transport'}}},roster:['worker','soldier','archer','catapult'],
-    units:Object.fromEntries(Object.entries(units).map(([role,data])=>[role,{...data,cost:{...data.cost},id:`${id}:unit:${role}`,faction:id}])) as FactionDefinition['units'],
+  const recipes:Record<UnitRole,UnitData>={...units,air:{...airConfig[id],role:'air' as const,domain:'air' as const,combatMode:'projectile' as const,trainedAt:'barracks' as const,size:28,aggroRange:240,projectileSpeed:300,projectileLifetime:3,hitRadius:18,prerequisites:{buildings:['forge'] as const,research:{attack:1,defense:1}}}};
+  const unitDefinitions={} as FactionDefinition['units'];
+  for(const role of Object.keys(recipes) as UnitRole[]){const data=recipes[role];unitDefinitions[role]={targets:role==='archer'?bowTargets:role==='catapult'?siegeTargets:groundMeleeTargets,...data,cost:{...data.cost},id:`${id}:unit:${role}`,faction:id};}
+  return {id,...factionNames[id],unitNames:{...factionNames[id].unitNames,air:airConfig[id].name},artPrefix:id==='crown'?'':`${id}-`,naval:{harbor:{...navyConfig.harbor,cost:{...navyConfig.harbor.cost},name:'Harbor'},units:{warship:{...navyConfig.ship,cost:{...navyConfig.ship.cost},id:`${id}:naval:warship`,role:'warship',name:'Warship'},transport:{...navyConfig.ship,...navyConfig.transport,cost:{...navyConfig.transport.cost},id:`${id}:naval:transport`,role:'transport',name:'Transport'}}},roster:['worker','soldier','archer','catapult'],
+    units:unitDefinitions,
     buildings:Object.fromEntries(Object.entries(buildings).map(([role,data])=>[role,{...data,cost:{...data.cost},id:`${id}:building:${role}`,faction:id}])) as FactionDefinition['buildings'],
     upgrades:Object.fromEntries(Object.entries(upgrades).map(([role,data])=>[role,{...data,cost:{...data.cost},id:`${id}:upgrade:${role}`,faction:id}])) as FactionDefinition['upgrades'],
   };
@@ -180,3 +188,6 @@ export function factionsForPlayer(player:FactionId,enemy?:FactionId):MatchFactio
 
 // RTS-165: mana complements the existing specialist role without replacing its combat recipe.
 for(const id of factionIds)factions[id].units.specialist.mana={...manaConfig[id]};
+
+// RTS-168: approved first air roster; final art remains separate.
+for(const id of factionIds){factions[id].roster=[...factions[id].roster,'air'];if(id==='elves')factions[id].units.specialist.targets=bowTargets;}

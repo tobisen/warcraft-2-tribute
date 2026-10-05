@@ -10,9 +10,9 @@ import {replaceObstacles} from './map';
 import {encodeSave,decodeSave} from './save';
 import {unitFrame,motion} from '../presentation/animation';
 
-it('Orc identity and recipes implement a distinct five-role offensive roster',()=>{
+it('Orc identity and recipes implement a distinct six-role offensive roster',()=>{
  const f=factions.clans,m=createMatch('tutorial','beginner',factionsForPlayer('clans'));
- expect(f.label).toContain('Orcs');expect(f.roster).toEqual(['worker','soldier','archer','catapult','specialist']);
+ expect(f.label).toContain('Orcs');expect(f.roster).toEqual(['worker','soldier','archer','catapult','specialist','air']);
  expect(f.units.worker).toMatchObject({hp:35,speed:155});expect(m.combat.baseHP).toBe(260);expect(matchLabels(m).health).toBe('Stronghold: 260 / 260 HP');expect(m.gathering.units[0].hp).toBe(35);
  expect(f.units.soldier).toMatchObject({cost:{wood:18,gold:6},hp:66,durationSeconds:6,damagePerSecond:20});
  expect(f.units.archer).toMatchObject({hp:45,speed:135,range:144,attackInterval:1.1});

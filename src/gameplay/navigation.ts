@@ -1,3 +1,4 @@
+import {movementMap,isAir} from './domains';
 import type {FactionId} from '../config/factions';
 import { navigationConfig } from '../config/navigation';
 import type { MovementGate } from './traffic';
@@ -119,14 +120,15 @@ export function advanceRoute(map: WorldMap, position: Position, route: RouteStat
 export function commandMappedMove(units: Unit[], destination: Position, map: WorldMap): Unit[] {
   return units.map(unit=>{
     if(!unit.selected)return unit;
-    const unitMap={...map,bodyHalf:(unit.kind==='worker'?unitStats:combatUnitStats(unit)).size/2};
+    const unitMap={...movementMap(map,unit),bodyHalf:(unit.kind==='worker'?unitStats:combatUnitStats(unit)).size/2};
+    if(isAir(unit)&&!bodyFits(unitMap,destination,unitMap.bodyHalf))return unit;
     const navigation=planRoute(unitMap,unit.position,destination,(unit.navigation?.commandNumber??0)+1);
     return {...unit,...(unit.kind==='soldier'?{attackMoveTarget:undefined,autoOrigin:undefined,autoDisabled:false}:{}),navigation,target:{...destination},order:{kind:navigation.status==='moving'?'move':'idle'}};
   });
 }
 
 export function updateMappedMove(unit: Unit, map: WorldMap, delta: number, gate?:MovementGate,faction?:FactionId): Unit {
-  map={...map,bodyHalf:(unit.kind==='worker'?unitStats:combatUnitStats(unit,faction)).size/2};
+  map={...movementMap(map,unit),bodyHalf:(unit.kind==='worker'?unitStats:combatUnitStats(unit,faction)).size/2};
   const route=unit.navigation??planRoute(map,unit.position,unit.target);
   const step=advanceRoute(map,unit.position,route,unit.kind==='worker'?workerStats(faction).speed:combatUnitStats(unit,faction).speed,delta,gate);
   return {...unit,position:step.position,navigation:step.route,

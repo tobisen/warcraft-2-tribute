@@ -1,3 +1,5 @@
+import {shipTargets} from '../config/domains';
+import {targetDomain} from './domains';
 import {enemyBody} from './enemyBody';
 import {navyConfig} from '../config/navy';
 import {navigationConfig} from '../config/navigation';
@@ -41,9 +43,9 @@ export function prepareNavalCombat(navy:NavyState|undefined,enemies:readonly Ene
  const ships=navy.ships.map(ship=>{
   if(ship.hp<=0||ship.role==='transport'||ship.order.kind!=='attack')return {...ship,attackCooldown:Math.max(0,(ship.attackCooldown??0)-delta)};
   const enemy=enemies.find(e=>ship.order.kind==='attack'&&e.id===ship.order.enemyId&&e.hp>0);
-  if(!enemy||!visible(enemy))return {...ship,navigation:undefined,attackCooldown:Math.max(0,(ship.attackCooldown??0)-delta),order:{kind:'idle' as const}};
+  if(!enemy||!shipTargets.includes(targetDomain(enemy) as typeof shipTargets[number])||!visible(enemy))return {...ship,navigation:undefined,attackCooldown:Math.max(0,(ship.attackCooldown??0)-delta),order:{kind:'idle' as const}};
   const step=attackStep(ship,enemy,delta,map,cfg);let cooldown=Math.max(0,(ship.attackCooldown??0)-(delta-step.attackSeconds)),time=step.attackSeconds;
-  while(time>0&&time+1e-9>=cooldown){time=Math.max(0,time-cooldown);shots.push({projectile:{marine:true,id:`arrow-${nextProjectileNumber++}`,shooterId:ship.id,targetId:enemy.id,position:{...step.position},destination:{...enemy.position},speed:cfg.projectileSpeed,remainingLife:cfg.projectileLifetime,damage:cfg.damage*attackMultiplier,hitRadius:cfg.hitRadius,...(enemy.footprint?{targetFootprint:{...enemy.footprint}}:{})},time});cooldown=cfg.attackInterval;}
+  while(time>0&&time+1e-9>=cooldown){time=Math.max(0,time-cooldown);shots.push({projectile:{targets:shipTargets,marine:true,id:`arrow-${nextProjectileNumber++}`,shooterId:ship.id,targetId:enemy.id,position:{...step.position},destination:{...enemy.position},speed:cfg.projectileSpeed,remainingLife:cfg.projectileLifetime,damage:cfg.damage*attackMultiplier,hitRadius:cfg.hitRadius,...(enemy.footprint?{targetFootprint:{...enemy.footprint}}:{})},time});cooldown=cfg.attackInterval;}
   return {...ship,position:step.position,navigation:step.navigation,attackCooldown:Math.max(0,cooldown-time)};
  });return {navy:{...navy,ships},shots,nextProjectileNumber};
 }

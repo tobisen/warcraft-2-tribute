@@ -33,8 +33,8 @@ it('hidden targets cancel orders and cannot receive cannon or projectile damage'
 it('move/Stop replace attack and deselection preserves it',()=>{
  const m=fixture();m.navy=attackShips(m,'enemy-1');const order=m.navy!.ships[0].order;m.navy!.ships[0].selected=false;expect(tick(m,.1).navy!.ships[0].order).toEqual(order);m.navy!.ships[0].selected=true;m.navy=commandShips(m,{x:144,y:512});expect(m.navy!.ships[0].order.kind).toBe('move');m.navy=stopShips(m.navy);expect(m.navy!.ships[0].order.kind).toBe('idle');
 });
-it('coastal enemies can damage and defeat a ship; lethal cannon/melee blows share a live snapshot',()=>{
- let m=fixture(6);m.combat.enemies[0]={...m.combat.enemies[0],hp:16,position:{x:240,y:512},order:{kind:'defend',targetId:'ship-1'}};m.navy=attackShips(m,'enemy-1');m=tick(m,1);expect(m.combat.enemies).toEqual([]);expect(m.navy!.ships).toEqual([]);expect(m.navy!.production.nextUnitNumber).toBe(2);
+it('coastal melee cannot damage ships under ground-only masks; cannon still defeats the melee attacker',()=>{
+ let m=fixture(6);m.combat.enemies[0]={...m.combat.enemies[0],hp:16,position:{x:240,y:512},order:{kind:'defend',targetId:'ship-1'}};m.navy=attackShips(m,'enemy-1');m=tick(m,1);expect(m.combat.enemies).toEqual([]);expect(m.navy!.ships[0].hp).toBe(6);expect(m.navy!.production.nextUnitNumber).toBe(2);
 });
 it('static-target firing/cooldown/projectile outcomes agree across timestep sizes',()=>{
  let a=fixture(),b=fixture();a.navy=attackShips(a,'enemy-1');b.navy=attackShips(b,'enemy-1');a.combat.enemies[0].hp=200;b.combat.enemies[0].hp=200;

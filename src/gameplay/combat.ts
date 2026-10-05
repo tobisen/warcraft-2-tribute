@@ -1,3 +1,5 @@
+import {airPresentation} from '../config/air';
+import {attackTargets,canAttackDomain,isAir,movementMap,targetDomain} from './domains';
 import {spellModifiers,type SpellState} from './spells';
 import {defenseBalanceConfig} from '../config/repair';
 import {enemyNavigationMap} from './map';
@@ -29,11 +31,11 @@ import type { GatheringState, Unit,WorkerOrder,ResourceType } from './gathering'
 import { moveTowards, type Position } from './movement';
 
 export interface EnemyWork {cargo:number;cargoType?:ResourceType;target:Position;order:WorkerOrder}
-export interface Enemy extends SpellState {mana?:number;role?:'soldier'|'archer'|'catapult'|'specialist';attackCooldown?:number;ability?:import('./abilities').AbilityState;legacyProfile?:true; owner?:'enemy'; kind?:'ship'|'unit'|'base'|'worker'|'building';navalLanding?:true;buildingType?:'harbor'|'outpost'|'barracks'|'farm'|'forge';construction?:import('./placement').ConstructionJob;work?:EnemyWork; order?:{kind:'idle'}|{kind:'defend';targetId:string}|{kind:'muster'|'attack-move';destination:Position}; id: string; position: Position; hp: number; footprint?:Footprint; navigation?: RouteState }
+export interface Enemy extends SpellState {mana?:number;role?:'soldier'|'archer'|'catapult'|'specialist'|'air';attackCooldown?:number;ability?:import('./abilities').AbilityState;legacyProfile?:true; owner?:'enemy'; kind?:'ship'|'unit'|'base'|'worker'|'building';navalLanding?:true;buildingType?:'harbor'|'outpost'|'barracks'|'farm'|'forge';construction?:import('./placement').ConstructionJob;work?:EnemyWork; order?:{kind:'idle'}|{kind:'defend';targetId:string}|{kind:'muster'|'attack-move';destination:Position}; id: string; position: Position; hp: number; footprint?:Footprint; navigation?: RouteState }
 export interface CombatState {baseDevelopment?:import('../config/baseUpgrade').BaseDevelopment; baseOwner?:'player'; enemies: Enemy[]; baseHP: number; projectiles?:Projectile[]; nextProjectileNumber?:number; destroyedEnemyFootprints?:Footprint[]; enemyUpgrades?:{attack:number;defense:number};upgrades?:{attack:number;defense:number} }
 
 export function enemyAt(enemies: Enemy[], point: Position): Enemy | undefined {
-  return [...enemies].reverse().find(e=>e.footprint?point.x>=e.footprint.x&&point.x<=e.footprint.x+e.footprint.width&&point.y>=e.footprint.y&&point.y<=e.footprint.y+e.footprint.height:Math.abs(e.position.x-point.x)<=enemySize(e)/2&&Math.abs(e.position.y-point.y)<=enemySize(e)/2);
+  return [...enemies].reverse().find(e=>e.footprint?point.x>=e.footprint.x&&point.x<=e.footprint.x+e.footprint.width&&point.y>=e.footprint.y&&point.y<=e.footprint.y+e.footprint.height:Math.abs(e.position.x-point.x)<=enemySize(e)/2&&Math.abs(e.position.y-(isAir(e)?airPresentation.height:0)-point.y)<=enemySize(e)/2);
 }
 
 export function orderAttack(units: Unit[], enemyId: string): Unit[] {
@@ -59,7 +61,7 @@ function combatApproach(map: WorldMap, position: Position, target: Footprint, ta
   if(canInteract(map,position,target,range))return {position:{...position},attackSeconds:delta,
     navigation:{commandNumber:cached?.commandNumber??1,destination:{...position},waypoints:[],
       revision:map.revision,status:'arrived' as const,goalKey,targetId,retryAfter}};
-  const targetMap={...map,obstacles:[...map.obstacles,target]};
+  const targetMap={...map,obstacles:map.ignoreAttackOcclusion?map.obstacles:[...map.obstacles,target]};
   if(cached?.targetId && cached.targetId!==targetId && retryAfter>0 && cached.revision===map.revision) {
     return {position:{...position},attackSeconds:0,navigation:{...cached,targetId,goalKey,
       waypoints:[],status:'arrived' as const,retryAfter}};
@@ -99,21 +101,21 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
     }
     if (unit.kind !== 'soldier' || unit.hp <= 0 || unit.order.kind !== 'attack') return unit.kind==='soldier'&&rangedStats(unit,gathering.faction)?{...unit,attackCooldown:Math.max(0,(unit.attackCooldown??0)-delta)}:unit;
     const enemy = combat.enemies.find(e => e.id === (unit.order.kind === 'attack' ? unit.order.enemyId : '') && e.hp > 0);
-    if (!enemy||visible&&!visible(enemy,unit)) return { ...unit, autoOrigin:undefined,navigation: undefined, order: { kind: 'idle' as const } };
+    if (!enemy||!canAttackDomain(unit,enemy,gathering.faction??'crown')||visible&&!visible(enemy,unit)) return { ...unit, autoOrigin:undefined,navigation: undefined, order: { kind: 'idle' as const } };
     const ranged=rangedStats(unit,gathering.faction);
     const range=ranged?.range??combatUnitStats(unit,gathering.faction).range??combatConfig.soldierRange;
     const speed=combatUnitStats(unit,gathering.faction).speed;
-    const step = map ? combatApproach({...map,bodyHalf:combatUnitStats(unit,gathering.faction).size/2},unit.position,enemyBody(enemy),
+    const step = map ? combatApproach({...movementMap(map,unit),ignoreAttackOcclusion:isAir(enemy),bodyHalf:combatUnitStats(unit,gathering.faction).size/2},unit.position,enemyBody(enemy),
       enemy.id,speed,range,delta,unit.navigation,gateFor?.(`player:${unit.id}`))
       : approach(unit.position, enemy.position, speed, range, delta);
     if(ranged) {
       let cooldown=Math.max(0,(unit.attackCooldown??0)-(delta-step.attackSeconds)),time=step.attackSeconds;
-      const canFire=(!visible||visible(enemy,unit))&&(!map||segmentFits(enemy.footprint?{...map,obstacles:map.obstacles.filter(o=>!(o.x===enemy.footprint!.x&&o.y===enemy.footprint!.y&&o.width===enemy.footprint!.width&&o.height===enemy.footprint!.height))}:map,step.position,enemy.position,0));
+      const canFire=(!visible||visible(enemy,unit))&&(!map||isAir(unit)||isAir(enemy)||segmentFits(enemy.footprint?{...map,obstacles:map.obstacles.filter(o=>!(o.x===enemy.footprint!.x&&o.y===enemy.footprint!.y&&o.width===enemy.footprint!.width&&o.height===enemy.footprint!.height))}:map,step.position,enemy.position,0));
       while(canFire&&time>0&&time+1e-9>=cooldown) {
         time=Math.max(0,time-cooldown);
         shots.push({projectile:{id:`arrow-${nextProjectileNumber++}`,shooterId:unit.id,targetId:enemy.id,
           position:{...step.position},destination:{...enemy.position},speed:ranged.projectileSpeed,
-          ...(unit.archetype==='catapult'?{defenseMultiplier:defenseBalanceConfig.siegeDefenseMultiplier}:{}),remainingLife:ranged.projectileLifetime,damage:ranged.damage*attackMultiplier*abilityEffects(gathering,unit,delta-time).attackMultiplier*spellModifiers(unit,delta-time).attack,hitRadius:'hitRadius' in ranged?ranged.hitRadius:0,
+          targets:attackTargets(unit,gathering.faction??'crown'),...(isAir(unit)||isAir(enemy)?{airborne:true as const}:{}),...(combatUnitStats(unit,gathering.faction).damageByDomain?{damageByDomain:combatUnitStats(unit,gathering.faction).damageByDomain}:{}),...(unit.archetype==='catapult'?{defenseMultiplier:defenseBalanceConfig.siegeDefenseMultiplier}:{}),remainingLife:ranged.projectileLifetime,damage:ranged.damage*attackMultiplier*abilityEffects(gathering,unit,delta-time).attackMultiplier*spellModifiers(unit,delta-time).attack,hitRadius:'hitRadius' in ranged?ranged.hitRadius:0,
           ...(enemy.footprint?{targetFootprint:{...enemy.footprint}}:{}),
           ...('splashRadius' in ranged?{splashRadius:ranged.splashRadius}:{})},time});
         cooldown=ranged.attackInterval;
@@ -132,7 +134,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
   const movingEnemies = combat.enemies.filter(e => e.hp > 0).map(enemy => {
     const stats=enemyUnitStats(enemy,enemyFaction),ranged=enemyRangedStats(enemy,enemyFaction);
     const cooling={...enemy,...(ranged?{attackCooldown:Math.max(0,(enemy.attackCooldown??0)-delta)}:{})};
-    const enemyMap=map?{...enemyNavigationMap(map),bodyHalf:stats.size/2}:undefined;
+    const enemyMap=map?{...movementMap(enemyNavigationMap(map),enemy),bodyHalf:stats.size/2}:undefined;
     if(enemy.kind==='ship'||enemy.kind==='worker'||enemy.footprint||enemy.order?.kind==='idle')return cooling;
     if(enemy.order?.kind==='muster'){
       const route=enemy.navigation??(map?planRoute(enemyMap!,enemy.position,enemy.order.destination):undefined);
@@ -140,7 +142,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
       return {...cooling,position:step.position,...(step.route?{navigation:step.route}:{})};
     }
 
-    const knownTargets=originalTargets.filter(t=>playerVisible(t,enemy));
+    const knownTargets=originalTargets.filter(t=>playerVisible(t,enemy)&&canAttackDomain(enemy,t,enemyFaction));
     const nearby=knownTargets.filter(t=>t.kind!=='base').map(t=>({target:t,
       distance:Math.hypot(t.footprint.x+t.footprint.width/2-enemy.position.x,t.footprint.y+t.footprint.height/2-enemy.position.y)}))
       .filter(t=>t.distance<=stats.aggroRange).sort((a,b)=>a.distance-b.distance
@@ -156,18 +158,18 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
     const footprint=map&&moved?unitFootprint(moved.position,target.footprint.width):target.footprint;
     if(!playerVisible({...target,footprint},enemy))return {...enemy,navigation:undefined};
     const center={x:footprint.x+footprint.width/2,y:footprint.y+footprint.height/2};
-    const step=map?combatApproach(enemyMap!,enemy.position,footprint,target.id,stats.speed,stats.range,delta,enemy.navigation,gateFor?.(`enemy:${enemy.id}`))
+    const step=map?combatApproach({...enemyMap!,ignoreAttackOcclusion:target.domain==='air'},enemy.position,footprint,target.id,stats.speed,stats.range,delta,enemy.navigation,gateFor?.(`enemy:${enemy.id}`))
       :approach(enemy.position,center,stats.speed,stats.range,delta);
     const multiplier=combat.enemyUpgrades?.attack?opponent.upgrades.attack.multiplier:1;
     const soldier=enemySoldier(enemy,enemyFaction);
     if(ranged){
       let cooldown=Math.max(0,(enemy.attackCooldown??0)-(delta-step.attackSeconds)),time=step.attackSeconds;
-      const canFire=!map||segmentFits({...map,obstacles:map.obstacles.filter(o=>!(o.x===footprint.x&&o.y===footprint.y&&o.width===footprint.width&&o.height===footprint.height))},step.position,center,0);
+      const canFire=!map||isAir(enemy)||target.domain==='air'||segmentFits({...map,obstacles:map.obstacles.filter(o=>!(o.x===footprint.x&&o.y===footprint.y&&o.width===footprint.width&&o.height===footprint.height))},step.position,center,0);
       while(canFire&&time>0&&time+1e-9>=cooldown){
         time=Math.max(0,time-cooldown);
         shots.push({projectile:{owner:'enemy',id:`enemy-arrow-${nextProjectileNumber++}`,shooterId:enemy.id,targetId:target.id,
           position:{...step.position},destination:{...center},speed:ranged.projectileSpeed,remainingLife:ranged.projectileLifetime,
-          ...(enemy.role==='catapult'?{defenseMultiplier:defenseBalanceConfig.siegeDefenseMultiplier}:{}),damage:ranged.damage*multiplier*abilityEffects(enemyGathering,soldier,delta-time).attackMultiplier*spellModifiers(soldier,delta-time).attack,
+          targets:attackTargets(enemy,enemyFaction),...(isAir(enemy)||target.domain==='air'?{airborne:true as const}:{}),...(stats.damageByDomain?{damageByDomain:stats.damageByDomain}:{}),...(enemy.role==='catapult'?{defenseMultiplier:defenseBalanceConfig.siegeDefenseMultiplier}:{}),damage:ranged.damage*multiplier*abilityEffects(enemyGathering,soldier,delta-time).attackMultiplier*spellModifiers(soldier,delta-time).attack,
           hitRadius:'hitRadius' in ranged?ranged.hitRadius:0,targetFootprint:{...footprint},
           ...('splashRadius' in ranged?{splashRadius:ranged.splashRadius}:{})},time});
         cooldown=ranged.attackInterval;
@@ -178,7 +180,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
     return {...cooling,position:step.position,...(step.navigation?{navigation:step.navigation}:{})};
   });
   const visibleProjectile=(enemy:Enemy,p:Projectile)=>projectileVisible?projectileVisible(enemy,p):!visible||units.some(u=>u.id===p.shooterId&&u.kind==='soldier'&&visible(enemy,u));
-  const ownBodies=originalTargets.map(t=>{const moved=units.find(u=>u.id===t.id)??naval.navy?.ships.find(u=>u.id===t.id);const f=moved?unitFootprint(moved.position,t.footprint.width):t.footprint;return {id:t.id,hp:t.hp,...(t.kind==='tower'||t.kind==='wall'||t.kind==='gate'?{fortification:true as const}:{}),position:{x:f.x+f.width/2,y:f.y+f.height/2},...(t.kind==='soldier'||t.kind==='worker'||t.kind==='ship'?{}:{footprint:f})};});
+  const ownBodies=originalTargets.map(t=>{const moved=units.find(u=>u.id===t.id)??naval.navy?.ships.find(u=>u.id===t.id);const f=moved?unitFootprint(moved.position,t.footprint.width):t.footprint;return {id:t.id,hp:t.hp,...(t.domain==='air'?{role:'air' as const}:{}),...(t.kind==='ship'?{kind:'ship' as const}:{}),...(t.kind==='tower'||t.kind==='wall'||t.kind==='gate'?{fortification:true as const}:{}),position:{x:f.x+f.width/2,y:f.y+f.height/2},...(t.kind==='soldier'||t.kind==='worker'||t.kind==='ship'?{}:{footprint:f})};});
   const enemyProjectileVisible=(body:Enemy,p:Projectile)=>{const target=originalTargets.find(t=>t.id===body.id),shooter=movingEnemies.find(e=>e.id===p.shooterId)??combat.enemies.find(e=>e.id===p.shooterId)??{id:p.shooterId??'historical-shooter',position:p.position,hp:1};return !!target&&playerVisible({...target,footprint:body.footprint??unitFootprint(body.position,target.footprint.width)},shooter);};
   const projectiles:Projectile[]=[];
   const advanceShot=(list:Projectile[],time:number,owner?:'enemy')=>{

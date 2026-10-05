@@ -1,3 +1,9 @@
+# Pågående RTS-168–169 enligt nytt mandat
+
+2026-10-05: Luftroster/design och märkta TEMP-ikoner är uttryckligen godkända av användaren.168 gameplay verifierad, slutliga flygarsprites Pending;169 är nästa task. Stopp efter169, ingen170. Se nya DECISIONS/BACKLOG/DEV_LOG och artifacts/rts-168. 168 unit446/80, berörda integrationer93/12, build/strict typecheck och diffcheck PASS. Chromium fem raser×800/1280 produktion/Save/Load/luftstrid/restart PASS,45 PNG visuellt stickprovsgranskade. Full regression vid169-etappslut.
+
+## Historisk överlämning165–167 (blockerare upphävd av nytt mandat)
+
 # Överlämning efter RTS-165–167; RTS-168/169 blockerade
 
 Datum2026-10-05. Bifogat mandat165–173 anger uttryckligen etappstopp efter169

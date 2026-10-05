@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**Nytt mandat RTS-165–169:**165 Done (`838f729`),166 Done (`2cd36a6`),167 Done (`fd9dfd3`),168 Blocked;169 blockerad av luftdelen. Användarens bifogade uppdrag för165–173 anger etappstopp efter169 och ny chatt170–173.160–164 är verifierade och pushade;164 `874f761`. Befintliga ändringar bevaras.
+**Nytt mandat RTS-165–169:**165 Done (`838f729`),166 Done (`2cd36a6`),167 Done (`fd9dfd3`),168 gameplay verifieras enligt nytt godkänt luftmandat;169 därefter. Slutlig flygargrafik återstår separat. Användarens bifogade uppdrag för165–173 anger etappstopp efter169 och ny chatt170–173.160–164 är verifierade och pushade;164 `874f761`. Befintliga ändringar bevaras.
 
 **UI-BUGFIX-BOTTOM-BAR – Horisontell bottom bar** — **Done** (2026-10-04).
 Separat beställd UI-bugfix; befintliga RTS-ID:n/statusar bevaras. Uppdraget
@@ -4518,9 +4518,15 @@ AI använder spells genom enkla, testbara regler.
 
 ## RTS-168 – Flygande enheter och anti-air
 
-**Status:** Blocked.
+**Status:** Done för godkänd första gameplayversion med uttryckligen tillåtna TEMP-ikoner; slutlig flygargrafik Pending.
 
-**Blockerare:** Användarens krav är flygare enligt befintlig faction-plan, men134-planen/runtime definierar enbart fem landroller samt transport/warship. Ingen luftroster eller godkänd flygarsilhuett/animation/porträtt finns i registrerade referenser. Designfråga ställd, obesvarad. Behöver enhetsidentiteter/roller/produktionsprereqs och land/sea/air/anti-air-beslut samt referens eller beslut om nytt originalunderlag. Se assets/sources/air-168.md. Ingen placeholderimplementation eller luftvisuell verifiering hävdas.
+**Historisk blockerare (upphävd av användaren 2026-10-05):** Användarens krav är flygare enligt befintlig faction-plan, men134-planen/runtime definierar enbart fem landroller samt transport/warship. Ingen luftroster eller godkänd flygarsilhuett/animation/porträtt finns i registrerade referenser. Designfråga ställd, obesvarad. Behöver enhetsidentiteter/roller/produktionsprereqs och land/sea/air/anti-air-beslut samt referens eller beslut om nytt originalunderlag. Se assets/sources/air-168.md. Nytt beslut godkänner Gryphon Rider/Wyvern Rider/Great Eagle/Gyrocopter/Airship och tillfälliga ikoner; inga slutliga sprites godkända.
+
+**Resultat 2026-10-05:** En betald air-roll per ras i befintlig barracks, Forge+attack1+defense1; alla raser har grundarcher utan dessa techkrav. Explicit land/sea/air/building-mask, hinderfri lokal luftnavigation, bounds, vision/minimap, selection, produktion/kö/rally, AI-produktion/anti-airförsvar samt Save41/restart. Melee/siege träffar inte luft; rangedtorn gör det; transport/spells är uttryckligen markbegränsade. Sjö-AI:s två landplatser spärrar inte flygare. Originala TEMP-ikoner/porträtt med24px höjd och skugga.
+
+**Verifiering:** Riktade luft-/strids-/AI-/save-/naval-/UI-tester och Chromium fem raser ×800/1280, fysisk produktion/selection/rörelse/Save/Load/restart, kö-/panelscrollmått. screenshots och browser.json i artifacts/rts-168; granskade visuellt. Slutchecks redovisas i DEV_LOG före commit. Ingen mänsklig balansgenomspelning.
+
+**Kvarstående grafik:** Fem godkända slutliga silhuetter, idle/fly/attack/death-animationer och porträtt; TEMP-ikonerna uppfyller endast användarens uttryckligen begränsade implementationstillstånd. Se assets/sources/air-168.md.
 
 **Goal:** Flygande enheter och anti-air.
 
@@ -4541,7 +4547,7 @@ Silhuetter och skuggor visar flyghöjd.
 
 ## RTS-169 – Balans för mark, sjö, luft och magi
 
-**Status:** Blocked (centrala luft-/anti-air-krav beror på168).
+**Status:** In Progress efter godkänd luftroster och verifierad168-gameplay. Historisk blockerare nedan är upphävd.
 
 **Avstämning:** Befintliga mark/sjö/specialistprofiler och manabegränsningar inventerade i artifacts/rts-169/partial-review.md. Magi/AI och relevanta äldre factionBalance-genomspelningar verifierade inom165–167; detta är inte en färdig169 combined-arms-balans eller mänskligt helmatchspeltest. Inga169-stats ändrade utan belägg. Luftkostnad/counters/tillgång/AI kan inte testas före168. Nästa task är att lösa168:s konkreta design-/assetunderlag;170–173 inte startade.
 

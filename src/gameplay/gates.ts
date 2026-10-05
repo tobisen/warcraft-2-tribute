@@ -1,3 +1,4 @@
+import {isAir} from './domains';
 import {enemySize} from './enemyBody';
 import type {MatchState} from './match';import type {Footprint} from './placement';import {placementObstacles} from './placement';import {replaceObstacles,overlaps,enemyNavigationMap} from './map';import {canReachFootprint} from './approach';import {spawnCandidates,hasSpawnExit,unitBody} from './spawning';import {combatUnitStats,unitStats} from '../config/unit';
 const same=(a:Footprint,b:Footprint)=>a.x===b.x&&a.y===b.y&&a.width===b.width&&a.height===b.height;
@@ -5,7 +6,7 @@ const same=(a:Footprint,b:Footprint)=>a.x===b.x&&a.y===b.y&&a.width===b.width&&a
 export function withGateRules(m:MatchState):MatchState{const blocks=(m.placement.defenses??[]).filter(t=>t.kind==='gate'&&t.open).map(t=>t.footprint);return blocks.length?{...m,map:{...m.map,enemyPassageBlocks:blocks}}:m.map.enemyPassageBlocks?{...m,map:{...m.map,enemyPassageBlocks:undefined}}:m;}
 export function fortificationSafety(m:MatchState,rect:Footprint):string|null{
  const after=replaceObstacles(m.map,[...m.map.obstacles,rect]),anchors=[...placementObstacles(m.gathering),...(m.placement.barracks?[m.placement.barracks]:[]),...(m.placement.forge?[m.placement.forge.footprint]:[]),...(m.placement.farms??[]).map(f=>f.footprint),...(m.navy?.harbor?[m.navy.harbor.footprint]:[]),...m.combat.enemies.filter(e=>e.footprint).map(e=>e.footprint!)];
- const actors=[...m.gathering.units.map(u=>({position:u.position,half:(u.kind==='worker'?unitStats.size:combatUnitStats(u).size)/2,enemy:false})),...m.combat.enemies.filter(e=>!e.footprint&&e.kind!=='ship').map(e=>({position:e.position,half:enemySize(e)/2,enemy:true}))];
+ const actors=[...m.gathering.units.filter(u=>!isAir(u)).map(u=>({position:u.position,half:(u.kind==='worker'?unitStats.size:combatUnitStats(u).size)/2,enemy:false})),...m.combat.enemies.filter(e=>!isAir(e)&&!e.footprint&&e.kind!=='ship').map(e=>({position:e.position,half:enemySize(e)/2,enemy:true}))];
  for(const u of actors){if(overlaps(rect,unitBody(u.position,u.half*2)))return 'Overlaps a unit';const beforeMap=u.enemy?enemyNavigationMap(m.map):m.map,afterMap=u.enemy?enemyNavigationMap(after):after;
   for(const anchor of anchors)if(canReachFootprint({...beforeMap,bodyHalf:u.half},u.position,anchor,24)&&!canReachFootprint({...afterMap,bodyHalf:u.half},u.position,anchor,24))return 'Would trap a unit or block a required delivery route';
  }

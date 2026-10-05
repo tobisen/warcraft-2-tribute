@@ -18,7 +18,7 @@ export function canInteract(map: WorldMap, point: Position, target: Footprint, r
   if(!bodyFits(map,point,map.bodyHalf??navigationConfig.halfBody) || footprintDistance(point,target)>range+1e-9)return false;
   const edge={x:Math.max(target.x,Math.min(point.x,target.x+target.width)),
     y:Math.max(target.y,Math.min(point.y,target.y+target.height))};
-  return segmentFits(targetFreeMap(map,target),point,edge,0);
+  return !!map.ignoreAttackOcclusion||segmentFits(targetFreeMap(map,target),point,edge,0);
 }
 
 export function approachRoute(map: WorldMap, position: Position, target: Footprint, range: number,

@@ -1382,3 +1382,18 @@ Detta ersätter166:s gemensamma utbud för fyra raser, med bevarade historiska S
 | Goblins | Overclock / Corrode |25/160/12;20/192/10|attack1.4× OCH inkommande1.2×/5s; fienden tar1.25×/5s|
 
 Effektens namn/tid visas i selection. Cyan buff och lila debuff kan visas samtidigt. Kanaler stackar inte; refresh ersätter samma kanal och startar ny tid. Pause/save/load/restart bevarar eller återställer effekter enligt matchflödet. AI använder heal under70%HP och annars synliga meningsfulla stridsmål, med samma regler och högst två beslut/s. Ingen ny castanimation levereras.
+
+
+## RTS-168 – första luftrostern (TEMP ART)
+
+Alla flygare tränas i rasens barracks efter Forge+attack1+defense1. Archer är tidig mark-AA utan dessa prerequisites. Inga nya resurser, transporter eller air-specialförmågor.
+
+| Ras/enhet | Wood/gold | Tid/supply | HP/fart | Skada/intervall/range | Mål |
+| --- | --- | --- | --- | --- | --- |
+| Human Gryphon Rider |65/35|14s/3|130/160|18/1.3s/160|land,sea,air,building|
+| Orc Wyvern Rider |60/40|13s/3|90/170|24/1.4s/160|land,sea,air,building|
+| Elf Great Eagle |45/35|12s/2|60/215|14/0.9s/176|land,air,building; mark/byggnad0.45×|
+| Dwarf Gyrocopter |65/40|15s/3|95/175|12/1s/192|land,air,building; mark/byggnad0.65×, luft1.5×|
+| Goblin Airship |75/45|18s/4|140/90|30/2s/160, splash40|land,building; ingen luftattack|
+
+Flygare använder samma production/FIFO/supply/selection/save/matchsystem som marktrupp. Lokal luftvision, cyan/pink minimapmarkörer och höjd/skugga. Slutgrafik inte godkänd; tillfälliga originalikoner synligt märkta TEMP ART. Balansvärden är första preliminära passets utgångspunkt, inte mänskligt speltestade.

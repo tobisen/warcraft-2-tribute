@@ -1,6 +1,7 @@
 import {text as uiText} from '../text';
 import { gameplayKeyAllowed,type KeyContext } from './keyboard';
 export const hotkeys=[
+ {key:'F5',button:'train-air',label:'Train the faction flyer at a completed barracks; Forge and both research upgrades required. Temporary art.'},
  {key:'F2',button:'cast-heal',label:'Healing spell (faction loadout): choose a visible damaged allied ground combat unit in spell range. Escape or right-click cancels without cost.'},
  {key:'F3',button:'cast-ward',label:'Buff spell (faction loadout): choose a visible allied ground combat unit in spell range. Escape or right-click cancels without cost.'},
  {key:'F4',button:'cast-hex',label:'Debuff spell (faction loadout): choose a visible hostile ground combat unit in spell range. Escape or right-click cancels without cost.'},

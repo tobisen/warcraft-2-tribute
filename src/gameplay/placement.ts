@@ -1,3 +1,4 @@
+import {isAir} from './domains';
 import {defenseConfig} from '../config/defenses';
 import {buildingAvailability} from './productionPrerequisites';
 import {productionFaction} from '../config/factions';
@@ -90,8 +91,8 @@ export function placementError(state: PlacementState, point: Position, wood: num
   if (!canAfford({wood,goldBalance:context?.gathering.goldBalance},(kind==='tower'||kind==='wall'||kind==='gate'?defenseConfig[kind].cost:context?productionFaction(context.gathering).buildings[kind].cost:costs[kind]))) return uiText.notEnoughWoodOrGold;
   if (context) {
     if([...context.map.obstacles,...(context.map.enemyPassageBlocks??[])].some(o=>overlaps(rect,o)))return uiText.overlapsTerrainOrABuilding;
-    if(context.gathering.units.some(u=>overlaps(rect,unitBody(u.position,u.kind==='worker'?unitStats.size:combatUnitStats(u).size)))
-      || context.enemies.some(e=>overlaps(rect,unitBody(e.position,otherBodySize(e)))))return uiText.overlapsAUnit;
+    if(context.gathering.units.some(u=>!isAir(u)&&overlaps(rect,unitBody(u.position,u.kind==='worker'?unitStats.size:combatUnitStats(u).size)))
+      || context.enemies.some(e=>!isAir(e)&&overlaps(rect,unitBody(e.position,otherBodySize(e)))))return uiText.overlapsAUnit;
     const after=replaceObstacles(context.map,[...context.map.obstacles,rect]);
     const [base,...nodes]=placementObstacles(context.gathering);
     for(const worker of context.gathering.units.filter((u):u is Extract<Unit,{kind:'worker'}>=>u.kind==='worker')) {

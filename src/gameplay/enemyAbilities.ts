@@ -1,3 +1,4 @@
+import {isAir} from './domains';
 import {canInteract} from './approach';
 import {advanceAbilities,useAbility} from './abilities';
 import {enemySoldier,enemyUnitStats} from './enemyUnits';
@@ -9,7 +10,7 @@ import type {MatchState} from './match';
 export function prepareEnemyAbilities(m:MatchState):MatchState{
  const faction=(m.factions??defaultFactions).enemy,targets=playerTargets(m.gathering,m.combat,m.placement,m.navy);
  const enemies=m.combat.enemies.map(e=>{
-  if(!e.role||e.hp<=0||e.order?.kind==='idle'||e.order?.kind==='muster'||(e.ability?.cooldownSeconds??0)>1e-9)return e;
+  if(isAir(e)||!e.role||e.hp<=0||e.order?.kind==='idle'||e.order?.kind==='muster'||(e.ability?.cooldownSeconds??0)>1e-9)return e;
   const range=enemyUnitStats(e,faction).range;
   const target=targets.find(t=>(e.order?.kind!=='defend'||t.id===e.order.targetId)&&(!m.fog||entityVisible(m.fog,'enemy',{position:{x:t.footprint.x+t.footprint.width/2,y:t.footprint.y+t.footprint.height/2},...(t.kind==='soldier'||t.kind==='worker'||t.kind==='ship'?{}:{footprint:t.footprint})}))&&canInteract({...m.map,bodyHalf:enemyUnitStats(e,faction).size/2},e.position,t.footprint,range));
   if(!target)return e;

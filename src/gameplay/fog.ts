@@ -4,7 +4,7 @@ import { segmentFits } from './navigation';
 import type { Position } from './movement';
 import type { Footprint } from './placement';
 export type Team='player'|'enemy';
-export interface VisionObserver {id:string;owner:Team;position:Position;radius:number;footprint?:Footprint}
+export interface VisionObserver {id:string;owner:Team;position:Position;airborne?:true;radius:number;footprint?:Footprint}
 export interface FogTeam {visible:boolean[];explored:boolean[]}
 export interface FogState {width:number;height:number;tileSize:number;columns:number;rows:number;teams:Record<Team,FogTeam>}
 export function createFog(world:{width:number;height:number},tileSize:number=fogConfig.tileSize):FogState {
@@ -30,7 +30,7 @@ export function updateFog(fog:FogState,observers:readonly VisionObserver[],block
   const minRow=Math.max(0,Math.floor((rect.y-o.radius)/fog.tileSize)),maxRow=Math.min(fog.rows-1,Math.floor((rect.y+rect.height+o.radius)/fog.tileSize));
   for(let row=minRow;row<=maxRow;row++)for(let col=minCol;col<=maxCol;col++){
    const x=col*fog.tileSize,y=row*fog.tileSize,point={x:x+Math.min(fog.tileSize,fog.width-x)/2,y:y+Math.min(fog.tileSize,fog.height-y)/2};
-   if(footprintDistance(point,rect)>o.radius+1e-9||!visionLine(fog,o.position,point,blockers))continue;
+   if(footprintDistance(point,rect)>o.radius+1e-9||!o.airborne&&!visionLine(fog,o.position,point,blockers))continue;
    const i=row*fog.columns+col;next.teams[o.owner].visible[i]=true;next.teams[o.owner].explored[i]=true;
   }
  }

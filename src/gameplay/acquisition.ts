@@ -1,3 +1,4 @@
+import {canAttackDomain,movementMap,isAir} from './domains';
 import type {FactionId} from '../config/factions';
 import {enemySize} from './enemyBody';
 import { combatUnitStats,rangedStats } from '../config/unit';
@@ -15,8 +16,9 @@ export const allEnemiesVisible: EnemyVisibility = () => true;
 const distance = (a: {x:number;y:number}, b: {x:number;y:number}) => Math.hypot(a.x-b.x,a.y-b.y);
 function reachable(unit: Soldier, enemy: Enemy, map?: WorldMap,faction?:FactionId): boolean {
   if (!map) return true;
+  map=movementMap(map,unit);
   const half=enemySize(enemy)/2;
-  return approachRoute({...map,bodyHalf:combatUnitStats(unit,faction).size/2},unit.position,enemy.footprint??{x:enemy.position.x-half,y:enemy.position.y-half,
+  return approachRoute({...map,ignoreAttackOcclusion:isAir(enemy),bodyHalf:combatUnitStats(unit,faction).size/2},unit.position,enemy.footprint??{x:enemy.position.x-half,y:enemy.position.y-half,
     width:half*2,height:half*2},(rangedStats(unit,faction)?.range??combatUnitStats(unit,faction).range??combatConfig.soldierRange)).status!=='blocked';
 }
 export function acquireTargets(units: Unit[], enemies: Enemy[], map?: WorldMap,
@@ -27,7 +29,7 @@ export function acquireTargets(units: Unit[], enemies: Enemy[], map?: WorldMap,
     // An explicit attack has priority and is never replaced by proximity targeting.
     if(unit.order.kind==='attack'&&!unit.autoOrigin) return unit;
     const origin=unit.autoOrigin??unit.position;
-    const valid=(enemy:Enemy)=>visible(enemy,unit)&&enemy.hp>0
+    const valid=(enemy:Enemy)=>visible(enemy,unit)&&enemy.hp>0&&canAttackDomain(unit,enemy,faction??'crown')
       &&distance(origin,enemy.position)<=(rangedStats(unit,faction)?.aggroRange??combatUnitStats(unit,faction).aggroRange??combatConfig.soldierAggroRange)
       &&reachable(unit,enemy,map,faction);
     const current=unit.order.kind==='attack'?enemies.find(e=>unit.order.kind==='attack'&&e.id===unit.order.enemyId):undefined;
@@ -38,7 +40,7 @@ export function acquireTargets(units: Unit[], enemies: Enemy[], map?: WorldMap,
     const destination=unit.attackMoveTarget??origin;
     if((unit.autoOrigin||unit.attackMoveTarget)&&distance(unit.position,destination)>1e-9) {
       if(unit.order.kind==='move')return unit;
-      const navigation=map?planRoute({...map,bodyHalf:combatUnitStats(unit,faction).size/2},unit.position,destination):undefined;
+      const navigation=map?planRoute({...movementMap(map,unit),bodyHalf:combatUnitStats(unit,faction).size/2},unit.position,destination):undefined;
       return {...unit,autoOrigin:undefined,target:{...destination},navigation,
         ...(navigation?.status==='blocked'?{attackMoveTarget:undefined}:{}),
         order:{kind:navigation?.status==='blocked'?'idle' as const:'move' as const}};

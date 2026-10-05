@@ -1,3 +1,4 @@
+import {airMap,isAir} from './domains';
 import {unitAvailability} from './productionPrerequisites';
 import {productionFaction,type TechnologyState} from '../config/factions';
 import type { ProductionJob } from './productionQueue';
@@ -24,7 +25,7 @@ export interface ProductionState {
   blockedSpawnKey?: string;
   nextUnitNumber: number;
 }
-export type ProductionBuilding = { kind: 'base' } | { kind: 'barracks'; footprint: Footprint | null; ready?:boolean;bounds?:Pick<WorldMap,'width'|'height'>;technology?:TechnologyState;unitType?:'soldier'|'archer'|'catapult'|'specialist';jobCost?:ResourceCost;durationSeconds?:number };
+export type ProductionBuilding = { kind: 'base' } | { kind: 'barracks'; footprint: Footprint | null; ready?:boolean;bounds?:Pick<WorldMap,'width'|'height'>;technology?:TechnologyState;unitType?:'soldier'|'archer'|'catapult'|'specialist'|'air';jobCost?:ResourceCost;durationSeconds?:number };
 const base: ProductionBuilding = { kind: 'base' };
 
 export function soldierSpawn(footprint: Footprint,size=soldierStats.size,bounds:Pick<WorldMap,'width'|'height'>=worldConfig): Position | null {
@@ -56,7 +57,7 @@ export function startProduction(gathering: GatheringState, production: Productio
   };
 }
 
-export function updateProduction(gathering: GatheringState, production: ProductionState, deltaSeconds: number, building: ProductionBuilding = base, context?: {map:WorldMap;enemies:readonly {id:string;position:Position}[]}) {
+export function updateProduction(gathering: GatheringState, production: ProductionState, deltaSeconds: number, building: ProductionBuilding = base, context?: {map:WorldMap;enemies:readonly {id:string;position:Position;kind?:string;role?:string}[]}) {
   if (building.kind==='barracks' && building.ready===false) return {gathering,production};
   if (production.remainingSeconds === null) return { gathering, production };
   const remainingSeconds = Math.max(0, production.remainingSeconds - Math.max(0, deltaSeconds));
@@ -69,7 +70,7 @@ export function updateProduction(gathering: GatheringState, production: Producti
   const footprint=building.kind==='base'?{x:gathering.base.x-baseSize/2,
     y:gathering.base.y-baseSize/2,width:baseSize,height:baseSize}:building.footprint;
   const recipe=productionRecipe(gathering,building);
-  const position = context ? footprint?chooseSpawn(context.map,footprint,building.kind,gathering.units,context.enemies,recipe.size):null
+  const position = context ? footprint?chooseSpawn(recipe.domain==='air'?airMap(context.map):context.map,footprint,building.kind,gathering.units.filter(u=>isAir(u)===(recipe.domain==='air')),context.enemies.filter(e=>isAir(e)===(recipe.domain==='air')),recipe.size):null
     : building.kind === 'base' ? {
     x: gathering.base.x + productionConfig.spawnOffset.x,
     y: gathering.base.y + productionConfig.spawnOffset.y,
@@ -80,7 +81,7 @@ export function updateProduction(gathering: GatheringState, production: Producti
   const common = { owner:'player' as const, id: `unit-${number}`, position, target: { ...position }, selected: false };
   const unit: Unit = building.kind === 'base'
     ? { ...common, kind: 'worker', hp:recipe.hp, cargo: 0, order: { kind: 'idle' } }
-    : { ...common, kind: 'soldier', ...(recipe.mana?{mana:recipe.mana.initial}:{}), ...(building.kind==='barracks'&&building.unitType&&building.unitType!=='soldier'?{archetype:building.unitType,...(building.unitType==='specialist'?{faction:gathering.faction??'crown'}:{})}:{}), cargo: 0, hp:recipe.hp, order: { kind: 'idle' } };
+    : { ...common, kind: 'soldier', ...(recipe.mana?{mana:recipe.mana.initial}:{}), ...(building.kind==='barracks'&&building.unitType&&building.unitType!=='soldier'?{archetype:building.unitType,...(building.unitType==='specialist'||building.unitType==='air'?{faction:gathering.faction??'crown'}:{})}:{}), cargo: 0, hp:recipe.hp, order: { kind: 'idle' } };
   return {
     gathering: { ...gathering, units: [...gathering.units, context && production.rally
       ? {...commandMappedMove([{...unit,selected:true}],production.rally,context.map)[0],selected:false} : unit] },

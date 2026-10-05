@@ -1,3 +1,4 @@
+import {isAir} from './domains';
 import {factionSpells,spellDefinition,spellIds,type SpellId} from '../config/spells';
 import {factions,defaultFactions,type FactionId} from '../config/factions';
 import {entityVisible} from './visibility';
@@ -10,7 +11,7 @@ export interface SpellEffect {spell:SpellId;sourceFaction:FactionId;remainingSec
 export interface SpellState {spellCooldowns?:Partial<Record<SpellId,number>>;spellEffects?:SpellEffect[]}
 type Combatant=Soldier|Enemy;
 const teamFaction=(m:MatchState,team:'player'|'enemy')=>(m.factions??defaultFactions)[team];
-function combatant(m:MatchState,id:string,team:'player'|'enemy'):Combatant|undefined{return team==='player'?m.gathering.units.find((u):u is Soldier=>u.kind==='soldier'&&u.id===id):m.combat.enemies.find(e=>e.id===id&&!e.footprint&&(e.kind===undefined||e.kind==='unit'));}
+function combatant(m:MatchState,id:string,team:'player'|'enemy'):Combatant|undefined{return team==='player'?m.gathering.units.find((u):u is Soldier=>u.kind==='soldier'&&!isAir(u)&&u.id===id):m.combat.enemies.find(e=>e.id===id&&!isAir(e)&&!e.footprint&&(e.kind===undefined||e.kind==='unit'));}
 export function spellCasterReason(m:MatchState,casterId:string,id:SpellId,team:'player'|'enemy'='player'):string|null{
  if(m.paused||m.outcome!=='playing')return 'Match is paused or ended';
  const caster=combatant(m,casterId,team),faction=teamFaction(m,team),cfg=spellDefinition(id,faction);
@@ -38,7 +39,7 @@ export function castSpell(m:MatchState,casterId:string,id:SpellId,targetId:strin
   if(u.id===targetId&&unitTeam===targetTeam){if(cfg.kind==='heal'){const role='kind'in u&&u.kind==='soldier'?u.archetype??'soldier':'role'in u?u.role??'soldier':'soldier';next={...next,hp:Math.min(targetTeam==='player'?factions[teamFaction(m,targetTeam)].units[role].hp:enemyMaximumHP(u as Enemy,teamFaction(m,targetTeam)),u.hp+cfg.healHP!)};}else next={...next,spellEffects:[...(next.spellEffects??[]).filter(e=>spellDefinition(e.spell,e.sourceFaction).kind!==cfg.kind),{spell:id,sourceFaction:faction,remainingSeconds:cfg.duration}]};}return next;};
  return {reason:null,match:{...m,gathering:{...m.gathering,units:m.gathering.units.map((u):Unit=>u.kind==='soldier'?change(u,'player') as Soldier:u)},combat:{...m.combat,enemies:m.combat.enemies.map(e=>change(e,'enemy') as Enemy)}}};
 }
-export function spellTargetAt(m:MatchState,id:SpellId,point:Position,team:'player'|'enemy'='player'):string|undefined{const cfg=spellDefinition(id,teamFaction(m,team)),targetTeam=cfg.targetTeam==='ally'?team:team==='player'?'enemy':'player',candidates=targetTeam==='player'?m.gathering.units.filter(u=>u.kind==='soldier'):m.combat.enemies.filter(e=>!e.footprint&&(e.kind===undefined||e.kind==='unit'));return candidates.find(u=>u.hp!>0&&(!m.fog||entityVisible(m.fog,team,u))&&Math.abs(u.position.x-point.x)<=16&&Math.abs(u.position.y-point.y)<=16)?.id;}
+export function spellTargetAt(m:MatchState,id:SpellId,point:Position,team:'player'|'enemy'='player'):string|undefined{const cfg=spellDefinition(id,teamFaction(m,team)),targetTeam=cfg.targetTeam==='ally'?team:team==='player'?'enemy':'player',candidates=targetTeam==='player'?m.gathering.units.filter(u=>u.kind==='soldier'&&!isAir(u)):m.combat.enemies.filter(e=>!isAir(e)&&!e.footprint&&(e.kind===undefined||e.kind==='unit'));return candidates.find(u=>u.hp!>0&&(!m.fog||entityVisible(m.fog,team,u))&&Math.abs(u.position.x-point.x)<=16&&Math.abs(u.position.y-point.y)<=16)?.id;}
 export function spellModifiers(u:SpellState,elapsed=0){let attack=1,defense=1;for(const effect of u.spellEffects??[])if(effect.remainingSeconds>elapsed+1e-9){const cfg=spellDefinition(effect.spell,effect.sourceFaction);attack*=cfg.attackMultiplier??1;defense*=cfg.defenseMultiplier??1;}return {attack,defense};}
 export function advanceSpells(m:MatchState,delta:number):MatchState{
  if(m.paused||m.outcome!=='playing'||delta<=0)return m;

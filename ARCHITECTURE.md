@@ -1750,3 +1750,8 @@ config/spells.ts anger mana/range/cooldown/måltyper och effekter. gameplay/spel
 ## RTS-167 – fraktionsutbud och AI
 
 config/spells.ts innehåller globalt stabila IDs, factionSpells och presentationens tre slots. Äldre definitioner bevaras för Save39→40. enemySpells.ts använder samma castSpell och validering; beslutsklocka härleds från sparad waves.elapsedSeconds. updateMatch delar vid liveffektens slut och0.5s-beslut endast när enemy-caster finns. Grundnavigation, projektilsystem, fog och befintliga Enemy-abilities återanvänds. SelectionStats/ringar visar aktiva kanaler utan ytterligare sprites.
+
+
+## RTS-168 – domäner och luft
+
+config/air.ts har fem recipes, config/domains.ts måltyper/masker. gameplay/domains.ts klassificerar befintliga entities och väljer mark-/luftmap utan separata MatchStates. Navigation/produktion/combat/fog/AI adapters återanvänds. Projektiler sparar mask, airborne och per-domain damage; Save41 migrerar40 och bevarar FIFO/resurser/ordrar. BootScene använder presentation/airIcons.ts CanvasTexture för godkända tillfälliga TEMP-ikoner; logisk position är skuggans markpunkt, kroppen24px högre, selection träffar upphöjd ikon. Ingen ny transport/spellförmåga.

@@ -1,6 +1,6 @@
 import {factions,type FactionId} from '../config/factions';
 import type {Position} from '../gameplay/movement';
-export type UnitArt='worker'|'soldier'|'archer'|'catapult'|'warship'|'transport'|'specialist';
+export type UnitArt='worker'|'soldier'|'archer'|'catapult'|'warship'|'transport'|'specialist'|'air';
 export type Action='idle'|'walk'|'attack'|'death'|'gather'|'build';
 export const directions=['e','se','s','sw','w','nw','n','ne'] as const;
 export type Facing=typeof directions[number];
@@ -13,17 +13,17 @@ export function motion(previous:Motion|undefined,position:Position,action:Action
  const nextFacing=facing(moved?vector:aim?{x:aim.x-position.x,y:aim.y-position.y}:{x:0,y:0},previous?.facing);
  return {position:{...position},facing:nextFacing,action:nextAction,since:previous?.action===nextAction&&previous.facing===nextFacing?previous.since:time,type,owner,faction};
 }
-export function unitFrame(m:Motion,time:number):string{const frames=m.action==='idle'?1:4,elapsed=Math.max(0,time-m.since),index=m.action==='death'?Math.min(3,Math.floor(elapsed*8)):Math.floor(elapsed*8)%frames;const type=m.type==='specialist'?factions[m.faction??'crown'].units.specialist.art??'soldier':m.type;return `${factions[m.faction??'crown'].artPrefix}${type}-${m.owner}-${m.facing}-${m.action}-${index}`;}
-export function unitOrigin(type:UnitArt){return {x:.5,y:type==='catapult'||type==='warship'||type==='transport'?40/64:22/32};}
+export function unitFrame(m:Motion,time:number):string{if(m.type==='air')return `${m.faction??'crown'}-air-${m.owner}-placeholder`;const frames=m.action==='idle'?1:4,elapsed=Math.max(0,time-m.since),index=m.action==='death'?Math.min(3,Math.floor(elapsed*8)):Math.floor(elapsed*8)%frames;const type=m.type==='specialist'?factions[m.faction??'crown'].units.specialist.art??'soldier':m.type;return `${factions[m.faction??'crown'].artPrefix}${type}-${m.owner}-${m.facing}-${m.action}-${index}`;}
+export function unitOrigin(type:UnitArt){return {x:.5,y:type==='air'?.5:type==='catapult'||type==='warship'||type==='transport'?40/64:22/32};}
 export interface DeathEffect {motion:Motion;expires:number}
 /** Called only for a logically removed, currently visible unit; fog hiding never creates a death. */
 export function deathEffect(previous:Motion,time:number,visible:boolean,removed:boolean):DeathEffect|null{return visible&&removed?{motion:{...previous,action:'death',since:time,position:{...previous.position}},expires:time+.5}:null;}
 export function effectAlive(effect:DeathEffect,time:number,visible:boolean):boolean{return visible&&time<effect.expires;}
 
-export function artAtlas(type:UnitArt):'units'|'naval'{return type==='warship'||type==='transport'?'naval':'units';}
+export function artAtlas(type:UnitArt):'units'|'naval'|'air'{return type==='air'?'air':type==='warship'||type==='transport'?'naval':'units';}
 
 /** Labels sit above the detailed land silhouettes, without changing its body or origin. */
 export function unitOverlayOffsets(type:UnitArt,faction:FactionId='crown'){
  const detailed=type==='worker'||type==='soldier'||type==='archer'||type==='specialist';
- return {hp:detailed?48:type==='catapult'?48:29,cargo:detailed?68:48};
+ return {hp:type==='air'?60:detailed?48:type==='catapult'?48:29,cargo:detailed?68:48};
 }

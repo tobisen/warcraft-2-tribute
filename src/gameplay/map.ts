@@ -6,7 +6,7 @@ import type { Footprint } from './placement';
 
 export interface Tile { column: number; row: number }
 export interface WorldMap {
-  enemyPassageBlocks?:Footprint[];bodyHalf?:number;
+  ignoreAttackOcclusion?:boolean;enemyPassageBlocks?:Footprint[];bodyHalf?:number;
   id?:MapId;
   width: number; height: number; tileSize: number;
   revision: number;

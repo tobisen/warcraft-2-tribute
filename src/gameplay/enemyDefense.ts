@@ -1,3 +1,4 @@
+import {canAttackDomain,movementMap,isAir} from './domains';
 import {enemyUnitStats} from './enemyUnits';
 import type {FactionId} from '../config/factions';
 import type { EnemyAIState,Defender } from './enemyAI';
@@ -23,20 +24,20 @@ export function updateEnemyDefense(state:EnemyAIState,combat:CombatState,map:Wor
  }
  const threats=base?.footprint?player.filter(u=>u.kind==='soldier'&&u.hp>0&&visible(u,base)&&footprintDistance(u.position,base.footprint!)<=settings.defenseRange)
   .sort((a,b)=>footprintDistance(a.position,base.footprint!)-footprintDistance(b.position,base.footprint!)||a.id.localeCompare(b.id,'en',{numeric:true})):[];
- const reachableThreats=threats.filter(u=>{const size=u.kind==='soldier'?combatUnitStats(u).size:24,foot={x:u.position.x-size/2,y:u.position.y-size/2,width:size,height:size};return produced.some(e=>approachRoute({...map,bodyHalf:enemyUnitStats(e,faction).size/2},e.position,foot,enemyUnitStats(e,faction).range).status!=='blocked');});
+ const reachableThreats=threats.filter(u=>{const size=u.kind==='soldier'?combatUnitStats(u).size:24,foot={x:u.position.x-size/2,y:u.position.y-size/2,width:size,height:size};return produced.some(e=>canAttackDomain(e,u,faction)&&approachRoute({...movementMap(map,e),ignoreAttackOcclusion:isAir(u),bodyHalf:enemyUnitStats(e,faction).size/2},e.position,foot,enemyUnitStats(e,faction).range).status!=='blocked');});
  const threat=reachableThreats.find(u=>u.id===state.threatId)??reachableThreats[0];
  const release=(d:Defender)=>{
   const e=enemies.find(e=>e.id===d.id);if(!e||reserve.includes(d.id))return;
   const group=groups.find(g=>g.id===d.groupId&&g.members.length<settings.groupSize);
   if(group){const destination=d.destination??settings.muster;
    groups=groups.map(g=>g.id===group.id?{...g,members:[...g.members,e.id],destinations:{...g.destinations,[e.id]:destination}}:g);
-   enemies=enemies.map(u=>u.id===e.id?{...u,navigation:group.status==='attack'?undefined:planRoute({...map,bodyHalf:enemyUnitStats(u,faction).size/2},u.position,destination),order:{kind:group.status==='attack'?'attack-move':'muster',destination:group.status==='attack'?{...playerBase}:{...destination}}}:u);
+   enemies=enemies.map(u=>u.id===e.id?{...u,navigation:group.status==='attack'?undefined:planRoute({...movementMap(map,u),bodyHalf:enemyUnitStats(u,faction).size/2},u.position,destination),order:{kind:group.status==='attack'?'attack-move':'muster',destination:group.status==='attack'?{...playerBase}:{...destination}}}:u);
   }else enemies=enemies.map(u=>u.id===e.id?{...u,navigation:undefined,order:{kind:'idle'}}:u);
  };
  if(threat){
   const size=threat.kind==='soldier'?combatUnitStats(threat).size:24;
   const footprint={x:threat.position.x-size/2,y:threat.position.y-size/2,width:size,height:size};
-  const candidates=produced.filter(e=>approachRoute({...map,bodyHalf:enemyUnitStats(e,faction).size/2},e.position,footprint,enemyUnitStats(e,faction).range).status!=='blocked')
+  const candidates=produced.filter(e=>canAttackDomain(e,threat,faction)&&approachRoute({...movementMap(map,e),ignoreAttackOcclusion:isAir(threat),bodyHalf:enemyUnitStats(e,faction).size/2},e.position,footprint,enemyUnitStats(e,faction).range).status!=='blocked')
    .sort((a,b)=>Number(reserve.includes(b.id))-Number(reserve.includes(a.id))||Number(defenders.some(d=>d.id===b.id))-Number(defenders.some(d=>d.id===a.id))
     ||Math.hypot(a.position.x-threat.position.x,a.position.y-threat.position.y)-Math.hypot(b.position.x-threat.position.x,b.position.y-threat.position.y)||a.id.localeCompare(b.id,'en',{numeric:true}));
   const chosen=candidates.slice(0,settings.maxDefenders);
@@ -49,7 +50,7 @@ export function updateEnemyDefense(state:EnemyAIState,combat:CombatState,map:Wor
  if(base?.footprint){const home={x:base.footprint.x-32,y:base.position.y};
   for(const id of reserve.filter(id=>!defenders.some(d=>d.id===id))){enemies=enemies.map(e=>{
    if(e.id!==id)return e;if(e.order?.kind==='muster'&&e.order.destination.x===home.x&&e.order.destination.y===home.y)return e;
-   return bodyFits(map,home,enemyUnitStats(e,faction).size/2)?{...e,navigation:planRoute({...map,bodyHalf:enemyUnitStats(e,faction).size/2},e.position,home),order:{kind:'muster',destination:home}}:{...e,navigation:undefined,order:{kind:'idle'}};
+   return bodyFits(movementMap(map,e),home,enemyUnitStats(e,faction).size/2)?{...e,navigation:planRoute({...movementMap(map,e),bodyHalf:enemyUnitStats(e,faction).size/2},e.position,home),order:{kind:'muster',destination:home}}:{...e,navigation:undefined,order:{kind:'idle'}};
   });}
  }
  defenders=defenders.map(d=>d.groupId&&!groups.some(g=>g.id===d.groupId)?{id:d.id}:d);

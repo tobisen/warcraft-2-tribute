@@ -1,3 +1,5 @@
+import {isAir} from './domains';
+import {airPresentation} from '../config/air';
 import type { Position } from './movement';
 
 export interface CommandState {
@@ -44,13 +46,13 @@ export function selectUnitsInRectangle<T extends SelectableUnit>(units: T[], sta
   return units.map(unit => ({
     ...unit,
     selected: unit.position.x >= rect.x && unit.position.x <= rect.x + rect.width
-      && unit.position.y >= rect.y && unit.position.y <= rect.y + rect.height,
+      && unit.position.y-(isAir(unit)?airPresentation.height:0) >= rect.y && unit.position.y-(isAir(unit)?airPresentation.height:0) <= rect.y + rect.height,
   }));
 }
 
 export function selectUnitAt<T extends SelectableUnit>(units: T[], click: Position, size: number|((unit:T)=>number)): T[] {
   // Last rendered unit wins when placeholders overlap.
-  const hit = [...units].reverse().find(unit => selectAt(unit, click, unit.position, typeof size==='function'?size(unit):size).selected);
+  const hit = [...units].reverse().find(unit => selectAt(unit, click, isAir(unit)?{x:unit.position.x,y:unit.position.y-airPresentation.height}:unit.position, typeof size==='function'?size(unit):size).selected);
   return units.map(unit => ({ ...unit, selected: unit.id === hit?.id }));
 }
 
