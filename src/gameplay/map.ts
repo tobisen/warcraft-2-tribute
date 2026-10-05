@@ -1,4 +1,4 @@
-import {maps,type MapId} from '../config/maps';
+import {maps,type MapId,type TerrainPatch} from '../config/maps';
 import { arenaConfig } from '../config/arena';
 import { worldConfig } from '../config/buildings';
 import type { Position } from './movement';
@@ -7,15 +7,18 @@ import type { Footprint } from './placement';
 export interface Tile { column: number; row: number }
 export interface WorldMap {
   ignoreAttackOcclusion?:boolean;enemyPassageBlocks?:Footprint[];bodyHalf?:number;
+  terrainLayout?:'reference'|'legacy';
   id?:MapId;
   width: number; height: number; tileSize: number;
   revision: number;
   obstacles: Footprint[];
 }
 
-export function createMap(id:MapId='arena'): WorldMap {
-  return {id, ...(maps[id].world??worldConfig), tileSize: arenaConfig.tileSize, revision: 0,
-    obstacles: maps[id].terrain.map(p => ({ x: p.column * arenaConfig.tileSize,
+export function terrainPatches(map:Pick<WorldMap,'id'|'terrainLayout'>):readonly TerrainPatch[]{const m=maps[map.id??'arena'];return map.terrainLayout==='reference'?m.referenceTerrain??m.terrain:m.terrain;}
+export function createMap(id:MapId='arena',layout?:WorldMap['terrainLayout']): WorldMap {
+  const terrainLayout=maps[id].referenceTerrain?(layout??'reference'):undefined;
+  return {id,...(terrainLayout?{terrainLayout}:{}), ...(maps[id].world??worldConfig), tileSize: arenaConfig.tileSize, revision: 0,
+    obstacles: terrainPatches({id,terrainLayout}).map(p => ({ x: p.column * arenaConfig.tileSize,
       y: p.row * arenaConfig.tileSize, width: p.columns * arenaConfig.tileSize,
       height: p.rows * arenaConfig.tileSize })) };
 }

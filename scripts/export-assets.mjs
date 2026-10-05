@@ -1,3 +1,4 @@
+import './export-reference-terrain.mjs';
 import { readFileSync,writeFileSync,mkdirSync } from 'node:fs';
 import {navalFrames,navalDirections} from '../assets/sources/naval.mjs';
 import { Surface,png } from './pixelArt.mjs';

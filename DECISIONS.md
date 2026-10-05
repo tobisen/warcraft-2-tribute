@@ -1418,3 +1418,7 @@ Standard är befintlig policy för äldre/utelämnade val. Defensive:4-armé fö
 - Catapult prioriterar synliga tower/wall/gate inom aggro vid fria anfall; explicit defense-target behålls. Befintliga faction-spells använder samma mana/range/fog/cooldown-villkor vid0.5s-beslut.
 - Sjökartor återanvänder den befintliga betalda transportinvasionen/två landplatser. Sitsarnas cap/supply hindrar inte air; för tunga landroller är inte transportpassagerare. Inget nytt warship-/fleet-system införs.
 - Save45 migrerar44, sparar armévikter och nästa beslutsgräns (högst en sekund framåt). Äldre paid jobs/entities behålls. Actual supply kan begränsa antalet samtidiga roller; full-rosterbench med explicitbank/cap skiljs från normal helmatchekonomi.
+
+## PRIO-03 – Frontier som första referenskarta
+
+Nya Frontier-matcher använder egna terrängkonturer och skördbara groves kopplade till befintliga stocks/entréer. Tilefringe öppnas proportionellt med stock; inga extra resurser eller nytt höjdgameplay. Fog sparar senast observerade crowns. Save46 låter äldre Frontier behålla legacyterräng/AI-waypoints/rendering. Den torra mittpassagen skiljer sjöbasinerna; skepp följer waterunion och seglar inte över den. Övriga kartor ändras först efter separat verifiering.

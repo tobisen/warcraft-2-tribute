@@ -1,3 +1,5 @@
+import {referenceTile} from '../presentation/referenceTerrain';
+import {forestVisuals} from '../presentation/forestVisuals';
 import {renderActionIcons} from '../presentation/actionIcons';
 import {setActionLabel} from '../presentation/actionLabel';
 import {aiProfiles,isAIProfile} from '../config/aiProfiles';
@@ -216,6 +218,7 @@ export class BootScene extends Phaser.Scene {
   private productionStatus!: HTMLElement;
   private goldVisual!: Phaser.GameObjects.Image;
   private nodeVisual!: Phaser.GameObjects.Image;
+  private forestImages=new Map<string,Phaser.GameObjects.Image>();
   private extraResourceVisuals=new Map<string,{body:Phaser.GameObjects.Image;label:Phaser.GameObjects.Text}>();
 
   private visuals = new Map<string, { body: Phaser.GameObjects.Image; ring: Phaser.GameObjects.Arc; cargo: Phaser.GameObjects.Text }>();
@@ -240,14 +243,14 @@ export class BootScene extends Phaser.Scene {
     super('BootScene');
   }
 
-  preload():void {for(const key of ['world','buildings','units','ui','naval'])if(!this.textures.exists(key))this.load.atlas(key,`${import.meta.env.BASE_URL}assets/${key}-atlas.png`,`${import.meta.env.BASE_URL}assets/${key}-atlas.json`);}
+  preload():void {for(const key of ['world','buildings','units','ui','naval','reference-terrain'])if(!this.textures.exists(key))this.load.atlas(key,`${import.meta.env.BASE_URL}assets/${key}-atlas.png`,`${import.meta.env.BASE_URL}assets/${key}-atlas.json`);}
 
   create(): void {
     createAirIcons(this.textures);
     this.audioSnapshot=undefined;this.combatSoundSnapshot=undefined;gameAudio.setPhase('menu');gameAudio.reset();
     this.spellGraphics=this.add.graphics().setDepth(45);
     this.warningState=createWarningState();this.warningVisual=this.add.graphics().setDepth(9);
-    this.habitats=[];this.wildlifeVisuals.clear();this.wildlifeProps=[];this.visualTime=0;this.extraResourceVisuals.clear();this.hitSnapshot=undefined;this.motions.clear();this.deaths.clear();this.impacts.clear();this.nextImpact=1;
+    this.forestImages.clear();this.habitats=[];this.wildlifeVisuals.clear();this.wildlifeProps=[];this.visualTime=0;this.extraResourceVisuals.clear();this.hitSnapshot=undefined;this.motions.clear();this.deaths.clear();this.impacts.clear();this.nextImpact=1;
     this.hpBars=this.add.graphics().setDepth(7);
     this.operationGraphics=this.add.graphics().setDepth(6);this.operationLabels=[];
     const loaded=this.pendingLoad;this.pendingLoad=undefined;
@@ -351,11 +354,12 @@ export class BootScene extends Phaser.Scene {
     });
     this.enemyVisuals.clear();
     this.habitats=wildlifeHabitats(this.map);
-    const sceneryMap=createMap(this.map.id);
+    const sceneryMap=createMap(this.map.id,this.map.terrainLayout);
     for (let row = 0; row < Math.ceil(this.map.height / this.map.tileSize); row++) {
       for (let column = 0; column < Math.ceil(this.map.width / this.map.tileSize); column++) {
         const detail=wildlifeDetails(column,row,sceneryMap);if(detail)this.wildlifeProps.push(this.add.image((column+.5)*this.map.tileSize,(row+.5)*this.map.tileSize,'world',detail).setOrigin(.5,.75).setDepth(-1));
         const rect = tileFootprint(this.map, { column, row })!;
+        if(this.map.terrainLayout==='reference'){const tile=referenceTile(column,row,sceneryMap);this.add.image(rect.x,rect.y,'reference-terrain',tile.frame).setOrigin(0).setDepth(-10);for(const edge of tile.edges)this.add.image(rect.x,rect.y,'reference-terrain',edge).setOrigin(0).setDepth(-9);continue;}
         this.add.image(rect.x,rect.y,'world',terrainImageFrame(column,row,this.map.id)).setOrigin(0).setDepth(-10);
         for(const detail of terrainDetails(column,row,this.map.id))this.add.image(rect.x,rect.y,'world',detail).setOrigin(0).setDepth(-9.5);
         for(const edge of terrainEdges(column,row,this.map.id))this.add.image(rect.x,rect.y,'world',edge).setOrigin(0).setDepth(-9);
@@ -679,7 +683,7 @@ export class BootScene extends Phaser.Scene {
       }
       const ownBuilding=inspectBuildingAt(this.currentMatch(),world);if(ownBuilding&&inspectedBuilding(this.currentMatch(),ownBuilding)?.team==='player'&&this.gathering.units.some(u=>u.kind==='worker'&&u.selected)){this.applyMatch(orderRepair(this.currentMatch(),ownBuilding));this.syncVisuals();return;}
       const enemy = enemyAt(this.combat.enemies.filter(e=>entityVisible(this.fog,'player',e)), world);
-      const resource = resourceNodes(this.gathering).find(n=> knownResource(this.fog,n.position)&&isNodeHit(world,n));
+      const resource = resourceNodes(this.gathering).find(n=> (knownResource(this.fog,n.position)||!!n.grove&&isVisible(this.fog,'player',world))&&isNodeHit(world,n));
       this.applyMatch(issueOrder(this.currentMatch(),enemy?{kind:'attack',enemyId:enemy.id}:resource?{kind:'gather',nodeId:resource.id}:{kind:'move',destination:world},'shiftKey' in pointer.event&&pointer.event.shiftKey));
     }
   }
@@ -739,7 +743,7 @@ export class BootScene extends Phaser.Scene {
       if(!this.drag.shift||this.allSelectable().some(u=>u.selected))this.selectedBuilding = null;
     } else {
       const selected = selectWorldTarget(this.allSelectable(), end, this.gathering.base,
-        this.placement.barracks, u=>u.kind==='ship'?navyConfig.ship.size:u.kind==='worker'?unitStats.size:combatUnitStats(u).size,this.navy?.harbor?.footprint,resourceNodes(this.gathering),n=>knownResource(this.fog,n.position));
+        this.placement.barracks, u=>u.kind==='ship'?navyConfig.ship.size:u.kind==='worker'?unitStats.size:combatUnitStats(u).size,this.navy?.harbor?.footprint,resourceNodes(this.gathering),n=>knownResource(this.fog,n.position)||!!n.grove&&isVisible(this.fog,'player',end));
       if(!selected.units.some(u=>u.selected)){const building=inspectBuildingAt(this.currentMatch(),end);selected.building=building;if(building)selected.resource=null;}
       this.selectedResource=selected.resource;
       if(this.drag.shift&&!selected.building&&!selected.resource){
@@ -841,12 +845,13 @@ export class BootScene extends Phaser.Scene {
     const definition=scenarioConfig[this.scenario];
     this.matchStatus.textContent=this.outcome==='defeat'?uiText.defeatYourBaseWasDestroyed:this.outcome==='victory'?definition.victory==='enemy-base'?uiText.victoryTheEnemyBaseWasDestroyed:definition.victory==='timer'?uiText.victoryTheOutpostSurvivedFor90Seconds:uiText.victoryAllWavesDefeated:this.scenario==='skirmish'?(maps[this.map.id??'arena'].instruction??definition.instruction):definition.instruction;
     this.syncPlacement();this.syncNavy();
+    const crowns=forestVisuals(this.gathering,this.fog),crownIds=new Set(crowns.map(c=>c.id));for(const [id,image] of this.forestImages)if(!crownIds.has(id)){image.destroy();this.forestImages.delete(id);}for(const crown of crowns){if(!this.forestImages.has(crown.id))this.forestImages.set(crown.id,this.add.image(crown.x,crown.y,'reference-terrain',crown.frame).setOrigin(.5,1));this.forestImages.get(crown.id)!.setFrame(crown.frame).setDepth(crown.y);}
     this.goldVisual.setFrame(resourceFrame('gold',this.gathering.gold!.remaining,isVisible(this.fog,'player',this.gathering.gold!.position)));
-    this.nodeVisual.setFrame(resourceFrame('wood',this.gathering.node.remaining,isVisible(this.fog,'player',this.gathering.node.position)));
+    if(this.gathering.node.grove)this.nodeVisual.setTexture('reference-terrain',this.gathering.node.remaining<=0&&isVisible(this.fog,'player',this.gathering.node.position)?'stump':'forest-0').setOrigin(.5,.75);else this.nodeVisual.setFrame(resourceFrame('wood',this.gathering.node.remaining,isVisible(this.fog,'player',this.gathering.node.position)));
     for(const node of this.gathering.extraNodes??[]){
       const type=node.resource??'wood',visible=isVisible(this.fog,'player',node.position),known=knownResource(this.fog,node.position);
       if(!this.extraResourceVisuals.has(node.id))this.extraResourceVisuals.set(node.id,{body:this.add.image(node.position.x,node.position.y,'world',resourceFrame(type,node.remaining,visible)).setOrigin(resourceOrigin.x,resourceOrigin.y),label:this.add.text(node.position.x,node.position.y-64,'',{fontSize:'12px',color:'#d6eef1'}).setOrigin(.5)});
-      const visual=this.extraResourceVisuals.get(node.id)!;visual.body.setFrame(resourceFrame(type,node.remaining,visible)).setVisible(known);visual.label.setVisible(known).setText(`${type==='wood'?'Wood':'Gold'}${visible?' '+Math.ceil(node.remaining):''}`);
+      const visual=this.extraResourceVisuals.get(node.id)!;if(node.grove)visual.body.setTexture('reference-terrain',node.remaining<=0&&visible?'stump':'forest-1').setOrigin(.5,.75);else visual.body.setFrame(resourceFrame(type,node.remaining,visible));visual.body.setVisible(known);visual.label.setVisible(known).setText(`${type==='wood'?'Wood':'Gold'}${visible?' '+Math.ceil(node.remaining):''}`);
     }
     this.trainButton.parentElement!.style.visibility = this.selectedBuilding === 'base' ? 'visible' : 'hidden';
     this.soldierButton.parentElement!.style.visibility = this.selectedBuilding === 'barracks' ? 'visible' : 'hidden';

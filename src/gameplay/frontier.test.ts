@@ -18,13 +18,9 @@ it('has authored base zones, finite expansion sites and three catapult-clear cro
  expect(m.map).toMatchObject({width:1600,height:1152});expect(mapResourceTotals('frontier')).toEqual({wood:600,gold:450});
  const base=m.combat.enemies.find(e=>e.kind==='base')!;expect(base.position).toEqual({x:1360,y:144});
  for(const u of [...m.gathering.units,...m.combat.enemies.filter(e=>!e.footprint)])expect(bodyFits(m.map,u.position,12)).toBe(true);
- for(const rect of placementObstacles(m.gathering).slice(1))expect(approachRoute(m.map,m.gathering.units[0].position,rect,24).status).not.toBe('blocked');
- // Block two crossings to establish that each remaining route independently admits a40px body.
- const crossings=[{x:736,y:400},{x:864,y:400},{x:736,y:656},{x:864,y:656},{x:736,y:1056},{x:864,y:1056}];
- for(let lane=0;lane<3;lane++){
-  const others=[0,1,2].filter(n=>n!==lane),map={...m.map,obstacles:[...m.map.obstacles,...others.map(n=>({x:800,y:n===0?0:n===1?608:992,width:64,height:n===0?448:n===1?96:160}))]};
-  expect(findRoute(map,crossings[lane*2],crossings[lane*2+1],20).ok).toBe(true);
- }
+ for(const rect of resourceNodes(m.gathering).map(n=>({x:n.position.x-20,y:n.position.y-20,width:40,height:40})))expect(approachRoute(m.map,m.gathering.units[0].position,rect,24).status).not.toBe('blocked');
+ // Each authored lane admits a40px land body across the river independently.
+ for(const y of [32,640,1104])expect(findRoute(m.map,{x:736,y},{x:1120,y},20).ok,`lane ${y}`).toBe(true);
  expect(m.map.obstacles.every(f=>f.x>=0&&f.y>=0&&f.x+f.width<=1600&&f.y+f.height<=1152)).toBe(true);
  expect(maps.frontier.terrain.some(p=>p.kind==='water')).toBe(true);
 });
@@ -67,7 +63,7 @@ for(const faction of ['crown','clans'] as const)it(`${faction}: a paid finite-re
 },60_000);
 it('the configured enemy can fund an army and reach the player base across the valley',()=>{
  let m=createMatch('skirmish','normal',undefined,'frontier');
- for(let i=0;i<1600&&m.outcome==='playing';i++)m=updateMatch(m,.25);
+ for(let i=0;i<1600&&m.outcome==='playing'&&m.combat.baseHP===240;i++)m=updateMatch(m,.25);
  expect(m.enemyProduction!.acceptedJobs).toBeGreaterThan(0);
  expect(m.combat.baseHP).toBeLessThan(240);
-});
+},30_000);

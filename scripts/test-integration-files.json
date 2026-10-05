@@ -65,6 +65,7 @@
   "src/gameplay/population.test.ts",
   "src/gameplay/productionQueue.test.ts",
   "src/gameplay/rally.test.ts",
+  "src/gameplay/referenceTerrain.test.ts",
   "src/gameplay/releaseMatrix.test.ts",
   "src/gameplay/repair.test.ts",
   "src/gameplay/research.test.ts",
@@ -82,5 +83,6 @@
   "src/gameplay/transport.test.ts",
   "src/gameplay/tutorial.test.ts",
   "src/gameplay/visibility.test.ts",
-  "src/presentation/wildlifeSave.test.ts"
+  "src/presentation/wildlifeSave.test.ts",
+  "tests/referenceTerrain.test.mjs"
 ]

@@ -1,3 +1,4 @@
+import {forestContains} from './forestTerrain';
 import type {OrderState as importOrderState} from './commandOrders';
 import type {SpellState} from './spells';
 import type {ResourceService} from './resourceQueue';
@@ -46,6 +47,7 @@ export interface Soldier extends SelectableUnit, SpellState, importOrderState {
 }
 export type Unit = Worker | Soldier;
 export interface ResourceNode {
+  grove?:import('../config/referenceTerrain').GroveId;
   resource?: ResourceType;
   id: string;
   position: Position;
@@ -70,6 +72,7 @@ export interface GatheringState {
 export function resourceNodes(state:GatheringState):ResourceNode[]{return [state.node,...(state.gold?[state.gold]:[]),...(state.extraNodes??[])];}
 
 export function isNodeHit(point: Position, node: ResourceNode): boolean {
+  if(forestContains(node,point))return true;
   return Math.hypot(point.x - node.position.x, point.y - node.position.y) <= gatheringConfig.nodeRadius;
 }
 

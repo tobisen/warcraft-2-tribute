@@ -1,0 +1,58 @@
+[
+  {
+    "width": 800,
+    "height": 600,
+    "physicalForestSelection": true,
+    "physicalGatherOrder": true,
+    "harvest": {
+      "before": 90,
+      "after": 78,
+      "wood": 40,
+      "remaining": 345.16173857453816,
+      "revision": 12
+    },
+    "saveLoadRestart": true,
+    "navalFixture": true,
+    "site": {
+      "x": 928,
+      "y": 64
+    },
+    "sailed": {
+      "position": {
+        "x": 896,
+        "y": 496
+      },
+      "order": "idle",
+      "fits": true
+    },
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "height": 720,
+    "physicalForestSelection": true,
+    "physicalGatherOrder": true,
+    "harvest": {
+      "before": 90,
+      "after": 78,
+      "wood": 40,
+      "remaining": 345.16173190787146,
+      "revision": 12
+    },
+    "saveLoadRestart": true,
+    "navalFixture": true,
+    "site": {
+      "x": 928,
+      "y": 64
+    },
+    "sailed": {
+      "position": {
+        "x": 896,
+        "y": 496
+      },
+      "order": "idle",
+      "fits": true
+    },
+    "errors": []
+  }
+]

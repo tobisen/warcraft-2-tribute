@@ -1,3 +1,4 @@
+import {forestRectangles} from './forestTerrain';
 import {isAir} from './domains';
 import {defenseConfig} from '../config/defenses';
 import {buildingAvailability} from './productionPrerequisites';
@@ -60,7 +61,7 @@ export function placementObstacles(state: GatheringState): Footprint[] {
   return [
     { x: state.base.x - baseSize / 2, y: state.base.y - baseSize / 2,
       width: baseSize, height: baseSize },
-    ...resourceNodes(state).map(node=>({x:node.position.x-gatheringConfig.nodeRadius,y:node.position.y-gatheringConfig.nodeRadius,width:gatheringConfig.nodeRadius*2,height:gatheringConfig.nodeRadius*2})),
+    ...resourceNodes(state).flatMap(node=>[...(!node.grove||node.remaining>0?[{x:node.position.x-gatheringConfig.nodeRadius,y:node.position.y-gatheringConfig.nodeRadius,width:gatheringConfig.nodeRadius*2,height:gatheringConfig.nodeRadius*2}]:[]),...forestRectangles(node)]),
   ];
 }
 
@@ -94,7 +95,7 @@ export function placementError(state: PlacementState, point: Position, wood: num
     if(context.gathering.units.some(u=>!isAir(u)&&overlaps(rect,unitBody(u.position,u.kind==='worker'?unitStats.size:combatUnitStats(u).size)))
       || context.enemies.some(e=>!isAir(e)&&overlaps(rect,unitBody(e.position,otherBodySize(e)))))return uiText.overlapsAUnit;
     const after=replaceObstacles(context.map,[...context.map.obstacles,rect]);
-    const [base,...nodes]=placementObstacles(context.gathering);
+    const [base]=placementObstacles(context.gathering);const nodes=resourceNodes(context.gathering).map(node=>({x:node.position.x-20,y:node.position.y-20,width:40,height:40}));
     for(const worker of context.gathering.units.filter((u):u is Extract<Unit,{kind:'worker'}>=>u.kind==='worker')) {
       for(const [target,range] of [[base,gatheringConfig.deliveryRange],
         ...nodes.flatMap((node,i)=>resourceNodes(context.gathering)[i].remaining>0?[[node,gatheringConfig.range] as const]:[])] as const) {

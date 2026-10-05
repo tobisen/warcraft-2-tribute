@@ -1776,3 +1776,7 @@ Warshipdefs har explicit targets och damageByDomain.air=.75, transports targets=
 ## RTS-173 – sammansatta AI-arméer
 
 `config/combinedArmy.ts` definierar stabila roller/vikter/tidsgränser. `gameplay/combinedArmy.ts` observerar enemy-team-fog högst1/s och väljer nästa betalda recipe efter egna live/reservationskvoter och tech. Match passerar plan till befintlig enemyProduction; naval cap och actual supply bevaras. enemyAI återanvänder muster/grupporder för sekundbegränsad retreat/retry; combat prioriterar synliga försvar för siege. Befintlig enemySpells är oförändrad. Save45 validerar plan/clock, scene speglar endast detta matchstate. Ingen ny scen eller separat pathfinder.
+
+## PRIO-03 – gemensamt terrängunderlag
+
+`referenceTerrain.ts` config äger authored Frontier-contours/groves. `terrainPatches` väljer reference/legacy för navigation, fog, renderer och minimap. `forestTerrain` härleder livecrowncollision från befintlig stock och reviderar endast ändrade hinder; `forestFog` sparar senaste synliga crownstatus per team. Egna Surface-brushes/export ger separat reference-terrain-atlas. BootScene binder renderer/input till pure helpers; övriga kartors atlas behålls. Save46 validerar layout/grove/fogmemory och migrerar äldre Frontier till legacy.

@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**Nytt prioriterat mandat PRIO-01–04:** RTS-174–176 pausade enligt användarens nya uppdrag. PRIO-01–02 Done;03–04 Todo. En task åt gången, docs/checks/browser/commit/push; stopp efter04,174 startas inte. PRIO-03:s två bildreferenser är godkända; referenskarta verifieras före spridning. Användarens CSS/docs bevaras.
+**Nytt prioriterat mandat PRIO-01–04:** RTS-174–176 pausade enligt användarens nya uppdrag. PRIO-01–03 Done;04 Todo. En task åt gången, docs/checks/browser/commit/push; stopp efter04,174 startas inte. PRIO-03:s två bildreferenser är godkända; referenskarta verifieras före spridning. Användarens CSS/docs bevaras.
 
 **CI-korrigering efter RTS-173 (2026-10-05):** Användaren rapporterar flera röda pushar. Senaste GitHub-jobbet fallerar enbart på femsekunderstimeout i factionArt-testet; äldre air-assertions är rättade i173. Samma uttömmande assetkontroller delas i16 faction/type/owner-fall, utan höjd timeout eller ändrade assets/runtime. Riktade17/1, unit450/79 och build/strict typecheck/diff PASS lokalt. Fix `b79d1fd` pushad. Ny [GitHub-fullregression/build/Pages-deploy](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37300780990) PASS; teststeget12m05s.174 startas inte.
 
@@ -4716,7 +4716,9 @@ Granska ikoner i faktisk knappstorlek vid native 800×600 och större visningsl�
 
 ## PRIO-03 – Kartdesign med mer djup och naturliga former
 
-**Status:** Todo.
+**Status:** Done.
+
+**Avgränsning:** Frontier Valley är spelbar referenskarta. Ny authored terränglayout, egna tile-/skogskällor; övriga kartor behåller sin layout/grafik tills referensen verifierats. Befintliga stockar/IDs/start/objectives bevaras; äldre Frontier-saves behåller sin ursprungliga layout via explicit migration.
 
 Referens:
 https://classic.battle.net/war2/lp/c2-4.shtml
@@ -4758,6 +4760,8 @@ Visa före/efter av samma områden i browsern. Slutför och verifiera referenska
 **Checks/leverans:** Riktade beteendetester, faktisk browserkontroll när relevant, unit-suite, build med strict typecheck och diffkontroll. Uppdatera BACKLOG/DEV_LOG/HANDOFF; commit/push efter verifierad task. Inga orelaterade roadmap-features.
 
 **Godkänt förtydligande:** Två bifogade kartbilder styr formspråket: sammanhängande skogar, organiska kustlinjer, strand/grunt/djupt vatten och diskret marktextur. Både grafik och layout förbättras; fler isolerade träd på enfärgad mark räcker inte. Egna assets och karta, ingen kopierad bakgrund. Spelbar referenskarta först med närbilder av skogsbryn/kust och översikt, grafik/resurser/byggbarhet/land-/sjönavigation verifieras före spridning.
+
+Leverans: spelbar Frontier-referenskarta med egna reproducerbara terrängassets, sammanhängande skördbara groves, glänta, oregelbundna flodbasiner/strand/djup/ö, tre landvägar och befintliga stockar. Avverkning öppnar kroppssäkra ytor och reviderar routes endast när hinder ändras. Save46 bevarar äldre Frontier-layout och fogminne; minimap/AI-scoutpunkter följer ny layout. Alla12 faktiska referensbilder granskade; inget raster importerat. Riktade75/8 inklusive två betalda matcher till seger PASS; slutliga ändringschecks60/6 + overlap3/1 PASS, unit457/81/build strict/diff PASS. Browser800/1280 fysisk skogsselection/gather, faktisk avverkning, SaveLoad/restart samt betald naval-fixture hamn/produktion/sjöpassage PASS. Före/efter samma forest/coast/overview i artifacts/prio-03; alla tre slutliga vyer visuellt granskade. Endast referenskartan sprids här; inget nytt höjdgameplay.
 
 ## PRIO-04 – Interaktiva djur
 

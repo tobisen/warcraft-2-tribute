@@ -1,3 +1,5 @@
+import {observeForest} from './forestFog';
+import {terrainPatches} from './map';
 import {isAir} from './domains';
 import {maps} from '../config/maps';
 import { fogConfig } from '../config/fog';
@@ -19,6 +21,6 @@ export function visionObservers(state:MatchState):VisionObserver[]{
  return observers;
 }
 export function matchFog(state:MatchState){
- const blockers=maps[state.map.id??'arena'].terrain.filter(t=>t.kind==='rock').map(t=>({x:t.column*arenaConfig.tileSize,y:t.row*arenaConfig.tileSize,width:t.columns*arenaConfig.tileSize,height:t.rows*arenaConfig.tileSize}));
- return updateFog(state.fog??createFog(state.map),visionObservers(state),blockers);
+ const blockers=terrainPatches(state.map).filter(t=>t.kind==='rock').map(t=>({x:t.column*arenaConfig.tileSize,y:t.row*arenaConfig.tileSize,width:t.columns*arenaConfig.tileSize,height:t.rows*arenaConfig.tileSize}));
+ return observeForest(updateFog(state.fog??createFog(state.map),visionObservers(state),blockers),state.gathering);
 }

@@ -1,10 +1,11 @@
+import {frontierReferenceTerrain} from './referenceTerrain';
 import {text as uiText} from '../text';
 import {gatheringConfig,goldConfig} from './gathering';
 import {arenaConfig} from './arena';
 export type MapId='arena'|'forest'|'river'|'islands'|'frontier'|'plains96'|'plains128'|'highlands'|'coast';
 export interface TerrainPatch {column:number;row:number;columns:number;rows:number;kind:'rock'|'water'}
 export interface MapResource {id:string;resource:'wood'|'gold';position:{x:number;y:number};amount:number}
-export interface MapDefinition {enemyNaval?:boolean;enemyBuildSites?:readonly {x:number;y:number}[];enemyMuster?:{x:number;y:number};attackEntry?:{x:number;y:number};world?:{width:number;height:number};enemyBase?:{x:number;y:number;width:number;height:number};extraResources?:readonly MapResource[];label:string;wood:number;gold:number;terrain:readonly TerrainPatch[];instruction?:string;goldPosition?:{x:number;y:number};enemyAttackWaypoints?:readonly {x:number;y:number}[];enemyResourceWaypoints?:readonly {x:number;y:number}[]}
+export interface MapDefinition {referenceResourceWaypoints?:readonly {x:number;y:number}[];referenceAttackWaypoints?:readonly {x:number;y:number}[];referenceTerrain?:readonly TerrainPatch[];enemyNaval?:boolean;enemyBuildSites?:readonly {x:number;y:number}[];enemyMuster?:{x:number;y:number};attackEntry?:{x:number;y:number};world?:{width:number;height:number};enemyBase?:{x:number;y:number;width:number;height:number};extraResources?:readonly MapResource[];label:string;wood:number;gold:number;terrain:readonly TerrainPatch[];instruction?:string;goldPosition?:{x:number;y:number};enemyAttackWaypoints?:readonly {x:number;y:number}[];enemyResourceWaypoints?:readonly {x:number;y:number}[]}
 export const maps:Record<MapId,MapDefinition>={
  coast:{label:'Shattered Coast',enemyNaval:true,world:{width:4096,height:4096},wood:800,gold:400,goldPosition:{x:600,y:300},
   instruction:'Build a harbor on the eastern shore of your western island. Transport troops across the northern channel, or sail south to the continent and resource islands. The enemy holds the northeast coast.',
@@ -46,7 +47,7 @@ export const maps:Record<MapId,MapDefinition>={
  plains128:{label:'Plains 128 × 128',world:{width:4096,height:4096},wood:400,gold:300,
   instruction:'Largest open size-test map. The familiar start and enemy zones lie in the northwest; explore the full plains.',
   terrain:[...arenaConfig.terrain,{column:90,row:90,columns:3,rows:3,kind:'rock'}]},
- frontier:{label:'Frontier Valley',attackEntry:{x:1248,y:144},world:{width:1600,height:1152},wood:400,gold:300,
+ frontier:{referenceResourceWaypoints:[{x:1120,y:448},{x:848,y:240},{x:656,y:240},{x:1184,y:592},{x:1216,y:944}],referenceAttackWaypoints:[{x:1008,y:640},{x:736,y:640},{x:448,y:480}],referenceTerrain:frontierReferenceTerrain,label:'Frontier Valley',attackEntry:{x:1248,y:144},world:{width:1600,height:1152},wood:400,gold:300,
   enemyBase:{x:1312,y:96,width:96,height:96},
   extraResources:[{id:'wood-2',resource:'wood',position:{x:1216,y:896},amount:200},{id:'gold-2',resource:'gold',position:{x:1184,y:640},amount:150}],
   instruction:'Explore the larger valley. The north flank, central dry crossing and south flank reach the eastern base. Extra wood and gold lie beyond the river.',

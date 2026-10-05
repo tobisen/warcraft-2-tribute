@@ -1,3 +1,5 @@
+import {groveForNode} from '../config/referenceTerrain';
+import {syncForestObstacles} from './forestTerrain';
 import {prepareArmyPlan,type ArmyPlan} from './combinedArmy';
 import {combinedArmyConfig} from '../config/combinedArmy';
 import {isAIProfile,profileAISettings,type AIProfileId} from '../config/aiProfiles';
@@ -130,6 +132,7 @@ export function createMatch(scenario:MatchScenario='survival',difficulty:Difficu
   };
   if(scenarioConfig[scenario].enemyBase){state.enemyProduction=createEnemyProduction({...difficultyProfiles[difficulty],budget:enemyStartingBudget(difficultyProfiles[difficulty].budget,maps[mapId].enemyNaval===true)},scenario!=='siege-test');if(maps[mapId].enemyNaval===true)state.enemyNaval=createEnemyNaval();state.enemyAI=createEnemyAI();const footprint={...(maps[mapId].enemyBase??enemyBaseConfig.footprint)};state.combat.enemies.push({id:enemyBaseConfig.id,kind:'base',owner:'enemy',hp:scenario==='siege-test'?enemyBaseConfig.hp:factionDefinitions[factions.enemy].buildings.base.hp,...(scenario==='siege-test'?{legacyProfile:true as const}:{}),footprint,position:{x:footprint.x+footprint.width/2,y:footprint.y+footprint.height/2}});state.map.obstacles.push(footprint);}
   if(scenario==='tutorial')state.tutorial=createTutorial();
+  if(state.map.terrainLayout==='reference')for(const node of [state.gathering.node,...(state.gathering.extraNodes??[])])node.grove=groveForNode(node.id);
   state.map.obstacles.push(...placementObstacles(state.gathering));
   if(scenarioConfig[scenario].enemyBase&&scenario!=='siege-test'){addEnemyWorkers(state);state.enemyConstruction=createEnemyConstruction();state.enemyPolicy=createEnemyPolicy();state.enemyRecovery=createEnemyRecovery();state.enemyKnowledge=createEnemyKnowledge();}
   initializeOperation(state);
@@ -171,8 +174,9 @@ function advance(state: MatchState, delta: number): MatchState {
   state=prepareEnemyScout(state);
   const gateFor=trafficGates(state.map,[...state.gathering.units.filter(u=>!isAir(u)).map(u=>({id:`player:${u.id}`,position:u.position,fixed:u.commandMode?.kind==='hold',half:(u.kind==='worker'?workerStats(state.gathering.faction):combatUnitStats(u,state.gathering.faction)).size/2,speed:(u.kind==='worker'?workerStats(state.gathering.faction):combatUnitStats(u,state.gathering.faction)).speed,active:u.order.kind!=='idle',waypoints:u.navigation?.waypoints??[u.target]})),...state.combat.enemies.filter(e=>!isAir(e)&&e.kind!=='ship'&&!e.footprint&&e.hp>0).map(e=>({id:`enemy:${e.id}`,position:e.position,half:enemySize(e)/2,speed:e.kind==='worker'?workerStats(state.factions?.enemy??defaultFactions.enemy).speed:enemyUnitStats(e,state.factions?.enemy).speed,active:e.work?e.work.order.kind!=='idle':e.order?.kind!=='idle',waypoints:e.navigation?.waypoints??(e.work?[e.work.target]:undefined)??(e.order?.kind==='muster'||e.order?.kind==='attack-move'?[e.order.destination]:[])}))],state.waves.elapsedSeconds,delta);
   const services=resourceServices({...state.gathering,units:[...state.gathering.units,...state.combat.enemies.flatMap(e=>{const worker=enemyWorker(e);return worker?[worker]:[];})]},state.map,state.waves.elapsedSeconds);
+  const forestBefore=state.gathering;
   let gathering = updateGathering(state.gathering, delta, state.map,{elapsedSeconds:state.waves.elapsedSeconds,gateFor,services});
-  state=updateEnemyGathering({...state,gathering},delta,gateFor,services);const enemyBuilding=updateEnemyConstruction(state,delta,gateFor);state=enemyBuilding.match;gathering=state.gathering;
+  state=updateEnemyGathering({...state,gathering},delta,gateFor,services);state={...state,map:syncForestObstacles(forestBefore,state.gathering,state.map)};const enemyBuilding=updateEnemyConstruction(state,delta,gateFor);state=enemyBuilding.match;gathering=state.gathering;
   state=updateEnemyExpansion(state,delta,gateFor);gathering=state.gathering;
   state=updateEnemyNaval(state,delta);gathering=state.gathering;
   state=updateTowers(state,delta);gathering=state.gathering;
