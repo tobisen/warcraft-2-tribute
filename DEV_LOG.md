@@ -3184,3 +3184,33 @@ Signifikant designjustering redovisad före ändring: finite-wave-schemat börja
 Riktade nya faser19/1 PASS; slutliga campaign/Save/team93/6 PASS2.63s, tidigare berörda115/9 PASS10.01s. Sju Normal-missioner slutförda med betald produktion/order och Save genom riktade omkörningar av faktiska fel (Forest/Outpost42.84s; Siege/Ridge/Valley tidigare delkörningar; Crossing/Coast14.35s). Ingen mänsklig20–40min/balansclaim. Unit461/83 PASS9.53s och build inklusive strict typecheck PASS351ms; bundlevarning kvar. Extra slutchecks efter review av legacyfield-injektion, förtida capture och felaktigt menykartnamn. Diff/manifest PASS. Full regression först vid180, samlad kampanjgranskning i179.
 
 Slutlig Chrome native800/1280 PASS:14 riktiga kampanjstarter, rätt storymap/briefing/objective, explicit historisk phase1 + explorationfixture via updateMatch, fysiska Save/load till paused, restart till phase0, quit utan campaignRun. scripts/check-campaign-phases.mjs och artifacts/rts-178/browser.json; åtta active/pausedbilder, active Forest800/Coast1280 visuellt granskade. Detta är fokuserad browserkontroll och automatisk paid completion, inte mänsklig helspeltest/ljudlyssning/FPS. CSS SHA95c372…a5e och användarens docs/ bevarade.178 Done;179 nästa.
+
+## 2026-10-05 — RTS-179 klar
+
+Samlad slutlig kampanjgranskning53/6 PASS85.95s: alla åtta Beginner/Normal med
+betald ekonomi/order, transporter, målsekvenser, Saves och load/Fog-regression.
+Första Beginner-batch8/1 PASS98.04s före optimering; omkörning motiverad av faktisk
+fogkodändring. Ingen ny bank/HP/costtuning behövdes utöver178:s redovisade finite
+pressure efter preparation/exploration. Mänsklig tid/difficulty/fun/mixlyssning
+är inte utförd och kvarstår uttryckligen enligt användarens179-avgränsning.
+
+Chrome native800/1280 för alla fem raser: tio fysiska workerselect/right-click/
+F6hold/Stop-fall, bibehållen selection, visible iconrätt ras/bounds, currentgoal.
+Final audioinstans instrumenterad i externt script:18 laddade buffers, inga clipped
+samples, paused/suspendedcontext. Dynamisk testimport gav en sidoinstans; rättad
+verifieringsmetod använder appens faktiska audioinstans. Musikens buffrade source
+behålls suspenderad för resume, inte ett fel. Inga nya gameplay-/audioassets.
+Tio UIbilder/två stressbilder i artifacts/rts-179, fyra faktiska screenshots
+visuellt granskade. Technical signalcheck ersätter inte faktisk lyssning.
+
+Perf:128-unit explicit Highlands-fixtur gav23.3FPS/50.1ms CPU p95. Avgränsad fogfix
+skippar redan synliga celler endast samma owner/frame.37/4 fog/visibility/team/
+spectator PASS; uniontest täcker ground/air/occluders/order/removal. Ny mätning
+64:60.0FPS/9.4ms,128:50.9FPS/18.9ms (150+ frames, efter30warmup). Baseline/efter
+JSON och testscript sparade; ingen allhårdvaru-/helmatch-/paid-armyclaim.
+
+Slutlig unit461/83 PASS15.51s, build med strict typecheck PASS508ms, befintlig
+bundlevarning; diff/manifest PASS. Extra slutchecks efter faktisk perf-fix, inte
+omotiverade fullregressioner.178 CI37350880157 ännu in_progress vid avläsning;
+176:s37346778616 är success.179 Done teknisk granskning med explicit humanpending;
+180 nästa. CSS SHA95c372…a5e/docs bevarade.

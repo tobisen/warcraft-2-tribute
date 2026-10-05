@@ -111,3 +111,13 @@ transitions in the browser at native 800×600 and a larger viewport. RTS-179 add
 Beginner/Normal completion and presentation review; broad campaign regression
 runs together once campaign changes are finished. Human duration, difficulty and
 fun remain unverified until actual human play testing.
+
+## RTS-179 review outcome
+
+All eight missions complete in paid automated Beginner and Normal scenarios,
+including phase saves and real landings. This does not verify the estimated
+human duration or perceived difficulty. Human play testing remains, particularly
+the finite-wave missions'20–40-minute design targets. Native800/1280 campaign UI
+and actual audio asset loading/pause reviewed; no new listening claim. A bounded
+fog union optimization improves measured64/128-unit Highlands stress performance
+without changing visibility rules. See QUALITY_REVIEW.md and artifacts/rts-179.

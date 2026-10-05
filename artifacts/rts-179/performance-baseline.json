@@ -1,0 +1,21 @@
+{
+  "method": "Actual headless Chrome Scene.update, Highlands3072, explicit extra-unit/HP fixture, 150+ samples after30 warmup; captured before fog union optimization",
+  "profiles": [
+    {
+      "combatUnits": 64,
+      "cpuP95": 16.100000143051147,
+      "cpuMedian": 15.099999904632568,
+      "frameP95": 33.399999999999636,
+      "fps": 49.72485579791819,
+      "samples": 151
+    },
+    {
+      "combatUnits": 128,
+      "cpuP95": 50.09999990463257,
+      "cpuMedian": 35.89999985694885,
+      "frameP95": 66.60000000000036,
+      "fps": 23.257256263954357,
+      "samples": 151
+    }
+  ]
+}

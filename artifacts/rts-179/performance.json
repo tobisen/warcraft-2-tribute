@@ -1,0 +1,37 @@
+{
+  "browser": "154.0.8037.93",
+  "headless": true,
+  "profiles": [
+    {
+      "total": 64,
+      "map": "highlands",
+      "width": 3072,
+      "height": 3072,
+      "cpuP95": 9.399999856948853,
+      "cpuMedian": 8,
+      "frameP95": 16.700000000000728,
+      "fps": 60.00322164948453,
+      "samples": 150,
+      "own": 52,
+      "enemies": 13,
+      "gameplaySeconds": 2.997429999999996,
+      "explicitExtraUnitsAndHPFixture": true
+    },
+    {
+      "total": 128,
+      "map": "highlands",
+      "width": 3072,
+      "height": 3072,
+      "cpuP95": 18.90000009536743,
+      "cpuMedian": 15.099999904632568,
+      "frameP95": 33.400000000000546,
+      "fps": 50.8509051461116,
+      "samples": 151,
+      "own": 116,
+      "enemies": 13,
+      "gameplaySeconds": 3.5898299999999996,
+      "explicitExtraUnitsAndHPFixture": true
+    }
+  ],
+  "errors": []
+}

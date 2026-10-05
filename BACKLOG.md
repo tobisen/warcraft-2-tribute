@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**Aktuellt mandat RTS-177–180:** Nytt användaruppdrag ersätter stoppet efter176.177 Done/push8fafce5;178 Done;179 nästa. En task åt gången, riktad/browser-verifiering, docs och commit/push. Samlad kampanjregression när kampanjändringarna är klara; full releasekontroll vid180. Uppdatera HANDOFF/QUALITY_REVIEW efter180 och stanna. CSS/docs bevaras.
+**Aktuellt mandat RTS-177–180:** Nytt användaruppdrag ersätter stoppet efter176.177 Done/push8fafce5;178 Done/push598478f;179 Done;180 nästa. En task åt gången, riktad/browser-verifiering, docs och commit/push. Samlad kampanjregression när kampanjändringarna är klara; full releasekontroll vid180. Uppdatera HANDOFF/QUALITY_REVIEW efter180 och stanna. CSS/docs bevaras.
 
 **Aktuellt mandat RTS-174–176:** Användaren återupptar174–176 efter färdiga PRIO-01–04.174 Done/push416cfa9;175 Done/push0a5b422,176 Done. Etappen avslutad; stanna före177. En task åt gången, riktade tester/browser, slutchecks/docs och commit/push. HANDOFF efter176; stopp före177. CSS/docs bevaras.
 
@@ -4907,7 +4907,7 @@ Delmål fungerar korrekt efter save/load.
 
 ## RTS-179 – Campaign- och presentationsgranskning
 
-**Status:** Todo.
+**Status:** Done (2026-10-05), teknisk kampanj-/presentationsgranskning. Mänsklig speltid, svårighetskänsla, underhållningsvärde och ny mixlyssning är uttryckligen återstående enligt användarens avgränsning.
 
 **Goal:** Campaign- och presentationsgranskning.
 
@@ -4926,6 +4926,8 @@ Skilj automatiska simuleringar från mänskligt speltest.
 **Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
 
 **Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+**Verifiering179:** Samlad slutlig kampanj/fog/load53/6 PASS85.95s: alla åtta Beginner och Normal via betald automation, fas-Saves och faktiska goals. Unit461/83 PASS15.51s; build/strict typecheck PASS508ms; diff/manifest PASS. Browser800/1280 för fem raser: fysisk selection/right-click/F6/Stop, samtliga synliga action-ikoner inom bottom bar och tydlig objective.18 faktiska audioassets decode utan clipped samples, riktig appinstans paused/suspended. Highlands3072 explicit64/128-unit stressfixtur: CPU p95 efter9.4/18.9ms, FPS60.0/50.9; före16.1/50.1ms och49.7/23.3FPS. Avgränsad fog-unionoptimering med relations/occlusion/removaltest37/4. Artefakter i artifacts/rts-179. Ingen mänsklig20–40min eller allhårdvaru-/långmatch-FPS-claim.
 
 ## RTS-180 – Samlad release
 

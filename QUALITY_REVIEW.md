@@ -44,3 +44,49 @@ Humans-designreferensen är inte bifogad i detta uppdrag.155 måste söka tillg�
 underlag och redovisa om det saknas; dess innehåll är inte rekonstruerat här.
 Ljud- och större matchlyssning kvarstår för157/179. Bundlevarningen kvarstår.
 Inventeringen ger inga nya features eller bred refaktorering i151.
+
+## RTS-179 — Ny kampanj- och presentationsgranskning 2026-10-05
+
+Ny verifiering på178:s kampanj plus179:s fogoptimering; äldre151-belägg ovan är
+historiska. Samlad slutlig53/6 PASS innehåller alla åtta Beginner/Normal-missioner
+med betald produktion, faktiska order/landstigningar och fas-/resultat-Saves.
+First Steps är tryckfri introduktion. Forest Watch/Outpost ger preparation och
+exploration före finite waves; Beginner minskar antal och ökar intervall enligt
+befintlig difficulty. Övriga missioner behåller paid AI eller fasta två guards.
+Inga fler bank-/HP-/coständringar motiverades av dessa scenarier. Återhämtning
+betyder återbyggnad/träning med finite resurser; kurirförlust är explicit defeat.
+
+Chrome native800/1280: tio kampanjfall över alla fem raser; fysisk workerselect,
+högerklick move, F6hold och fysisk Stop med bibehållen selection. Synliga ikoner
+laddade för rätt ras och ligger inom bottom bar. Engelska phasegoals synliga utan
+dold enemyposition/stock. Elf/Dwarf800 och Goblin1280 samt stress128-bilden
+visuellt granskade; artifacts/rts-179 har tio UI-bilder, två stressbilder och JSON.
+Frontier behåller godkänd sammanhängande skog; Highlands/Islands/Coast har äldre
+terrängpresentation och befintliga sprites. Ingen ny assetkvalitet hävdas.
+
+Faktisk appaudioinstans:18 assets decode, ingen PCMsample >=1 (maxpeak cirka.467),
+standardmaster.65/effects.7/music.35/voices.65; context suspended och phase paused
+vid paus. Detta är teknisk nivå-/laddningskontroll, inte mänsklig mixlyssning.
+Tidigare användargodkännande av kartor/djurljud kvarstår; egna slutliga voices och
+flygaranimationer samt ny lång stridslyssning är fortfarande kvalitetsbegränsningar.
+
+Prestandafynd och åtgärd: fog gjorde redundant LoS för varje överlappande observer.
+Celler som redan är synliga för samma ägare i samma frame behöver inte en andra
+LoS. Per-frame/per-owner union bevaras; tests verifierar occluders, ground/air,
+reordered observers, borttagning och explored memory samt team/Spectator.
+
+| Explicit Highlands3072 load | CPU p95 före → efter | FPS före → efter |
+| --- | --- | --- |
+|64 combat units + base|16.1 → 9.4ms|49.7 → 60.0|
+|128 combat units + base|50.1 → 18.9ms|23.3 → 50.9|
+
+150+ frameprover efter30 warmup i headless Chrome på denna dator. Extra HP/units
+över supply används uttryckligen som stressfixtur. Inte betald armé, mänsklig
+långmatch eller generell hårdvarugaranti. Baseline/efter i performance JSON;
+profileringen visar faktisk Scene.update och frame-tid, inte bara kodantaganden.
+
+**Mänskligt speltest återstår:** faktisk20–40min/mission, upplevd svårighet,
+underhållningsvärde och längre mixlyssning. Särskilt waveuppdragen riskerar kortare
+tid.179 slutför teknisk granskning enligt användarens uttryckliga tillåtelse att
+dokumentera mänskligt test som återstående; dessa aspekter markeras inte verifierade.
+Slutlig unit461/83/build/typecheck/diff PASS, full release-regression i180.

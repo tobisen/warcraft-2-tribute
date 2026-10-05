@@ -29,9 +29,12 @@ export function updateFog(fog:FogState,observers:readonly VisionObserver[],block
   const minCol=Math.max(0,Math.floor((rect.x-o.radius)/fog.tileSize)),maxCol=Math.min(fog.columns-1,Math.floor((rect.x+rect.width+o.radius)/fog.tileSize));
   const minRow=Math.max(0,Math.floor((rect.y-o.radius)/fog.tileSize)),maxRow=Math.min(fog.rows-1,Math.floor((rect.y+rect.height+o.radius)/fog.tileSize));
   for(let row=minRow;row<=maxRow;row++)for(let col=minCol;col<=maxCol;col++){
+   const i=row*fog.columns+col;
+   // Visibility is a union for this frame and owner: another observer already proved this cell.
+   if(next.teams[o.owner].visible[i])continue;
    const x=col*fog.tileSize,y=row*fog.tileSize,point={x:x+Math.min(fog.tileSize,fog.width-x)/2,y:y+Math.min(fog.tileSize,fog.height-y)/2};
    if(footprintDistance(point,rect)>o.radius+1e-9||!o.airborne&&!visionLine(fog,o.position,point,blockers))continue;
-   const i=row*fog.columns+col;next.teams[o.owner].visible[i]=true;next.teams[o.owner].explored[i]=true;
+   next.teams[o.owner].visible[i]=true;next.teams[o.owner].explored[i]=true;
   }
  }
  return next;

@@ -1,0 +1,2932 @@
+[
+  {
+    "width": 800,
+    "id": "forest-watch",
+    "faction": "clans",
+    "icons": [
+      {
+        "id": "build-wall",
+        "icon": "clans:build-wall",
+        "loaded": true,
+        "rect": {
+          "x": 343.875,
+          "y": 450,
+          "right": 387.875,
+          "bottom": 490
+        }
+      },
+      {
+        "id": "build-gate",
+        "icon": "clans:build-gate",
+        "loaded": true,
+        "rect": {
+          "x": 391.875,
+          "y": 450,
+          "right": 435.875,
+          "bottom": 490
+        }
+      },
+      {
+        "id": "build-tower",
+        "icon": "clans:build-tower",
+        "loaded": true,
+        "rect": {
+          "x": 439.875,
+          "y": 450,
+          "right": 483.875,
+          "bottom": 490
+        }
+      },
+      {
+        "id": "build-barracks",
+        "icon": "clans:build-barracks",
+        "loaded": true,
+        "rect": {
+          "x": 343.875,
+          "y": 494,
+          "right": 387.875,
+          "bottom": 534
+        }
+      },
+      {
+        "id": "build-farm",
+        "icon": "clans:build-farm",
+        "loaded": true,
+        "rect": {
+          "x": 391.875,
+          "y": 494,
+          "right": 435.875,
+          "bottom": 534
+        }
+      },
+      {
+        "id": "build-forge",
+        "icon": "clans:build-forge",
+        "loaded": true,
+        "rect": {
+          "x": 439.875,
+          "y": 494,
+          "right": 483.875,
+          "bottom": 534
+        }
+      },
+      {
+        "id": "build-harbor",
+        "icon": "clans:build-harbor",
+        "loaded": true,
+        "rect": {
+          "x": 343.875,
+          "y": 538,
+          "right": 387.875,
+          "bottom": 578
+        }
+      },
+      {
+        "id": "repair-building",
+        "icon": "clans:repair-building",
+        "loaded": true,
+        "rect": {
+          "x": 247.875,
+          "y": 450,
+          "right": 289.875,
+          "bottom": 490
+        }
+      },
+      {
+        "id": "hold-position",
+        "icon": "clans:hold-position",
+        "loaded": true,
+        "rect": {
+          "x": 293.875,
+          "y": 450,
+          "right": 335.875,
+          "bottom": 490
+        }
+      },
+      {
+        "id": "patrol-units",
+        "icon": "clans:patrol-units",
+        "loaded": true,
+        "rect": {
+          "x": 247.875,
+          "y": 494,
+          "right": 289.875,
+          "bottom": 534
+        }
+      },
+      {
+        "id": "stop-units",
+        "icon": "clans:stop-units",
+        "loaded": true,
+        "rect": {
+          "x": 293.875,
+          "y": 494,
+          "right": 335.875,
+          "bottom": 534
+        }
+      },
+      {
+        "id": "dismiss-units",
+        "icon": "clans:dismiss-units",
+        "loaded": true,
+        "rect": {
+          "x": 247.875,
+          "y": 538,
+          "right": 289.875,
+          "bottom": 578
+        }
+      }
+    ],
+    "bar": {
+      "x": 0,
+      "y": 440,
+      "right": 800,
+      "bottom": 600
+    },
+    "objective": "Phase 1/4 · Build your barracks and field two living land combatants. Gather wood and gold; add supply before training more troops.",
+    "physicalSelectionMoveHoldStop": true,
+    "audio": {
+      "status": {
+        "state": "suspended",
+        "loaded": 18,
+        "music": true,
+        "effects": 1,
+        "phase": "paused",
+        "settings": {
+          "master": 0.65,
+          "effects": 0.7,
+          "music": 0.35,
+          "voices": 0.65,
+          "muted": false
+        }
+      },
+      "buffers": [
+        {
+          "id": "animal-deer",
+          "seconds": 0.65,
+          "peak": 0.18992257118225098,
+          "rms": 0.08019331917188396,
+          "clipped": 0
+        },
+        {
+          "id": "animal-rabbit",
+          "seconds": 0.22,
+          "peak": 0.1590917408466339,
+          "rms": 0.0673305626974031,
+          "clipped": 0
+        },
+        {
+          "id": "animal-fox",
+          "seconds": 0.4,
+          "peak": 0.05877823010087013,
+          "rms": 0.022127253722392177,
+          "clipped": 0
+        },
+        {
+          "id": "music",
+          "seconds": 16,
+          "peak": 0.23845234513282776,
+          "rms": 0.08692514376616274,
+          "clipped": 0
+        },
+        {
+          "id": "command",
+          "seconds": 0.12933333333333333,
+          "peak": 0.12529456615447998,
+          "rms": 0.06391465626013226,
+          "clipped": 0
+        },
+        {
+          "id": "impact",
+          "seconds": 0.17066666666666666,
+          "peak": 0.46730297803878784,
+          "rms": 0.11745412301305545,
+          "clipped": 0
+        },
+        {
+          "id": "complete",
+          "seconds": 0.48933333333333334,
+          "peak": 0.11800354719161987,
+          "rms": 0.03290425843477952,
+          "clipped": 0
+        },
+        {
+          "id": "victory",
+          "seconds": 0.9973333333333333,
+          "peak": 0.07149291038513184,
+          "rms": 0.016424025785478753,
+          "clipped": 0
+        },
+        {
+          "id": "defeat",
+          "seconds": 0.9973333333333333,
+          "peak": 0.05795031040906906,
+          "rms": 0.01607162557046044,
+          "clipped": 0
+        },
+        {
+          "id": "cannon",
+          "seconds": 0.3893333333333333,
+          "peak": 0.4234578013420105,
+          "rms": 0.12221832909939366,
+          "clipped": 0
+        },
+        {
+          "id": "splash",
+          "seconds": 0.48933333333333334,
+          "peak": 0.22565411031246185,
+          "rms": 0.05282755062067928,
+          "clipped": 0
+        },
+        {
+          "id": "gather",
+          "seconds": 0.11733333333333333,
+          "peak": 0.19760006666183472,
+          "rms": 0.05388513241825766,
+          "clipped": 0
+        },
+        {
+          "id": "build",
+          "seconds": 0.14933333333333335,
+          "peak": 0.24950644373893738,
+          "rms": 0.08546180036398385,
+          "clipped": 0
+        },
+        {
+          "id": "train",
+          "seconds": 0.3393333333333333,
+          "peak": 0.09891617298126221,
+          "rms": 0.03417411077015131,
+          "clipped": 0
+        },
+        {
+          "id": "melee",
+          "seconds": 0.21866666666666668,
+          "peak": 0.20577889680862427,
+          "rms": 0.04660759862593437,
+          "clipped": 0
+        },
+        {
+          "id": "bow",
+          "seconds": 0.18933333333333333,
+          "peak": 0.18291257321834564,
+          "rms": 0.050995714516078296,
+          "clipped": 0
+        },
+        {
+          "id": "siege",
+          "seconds": 0.496,
+          "peak": 0.22194921970367432,
+          "rms": 0.06122795465740062,
+          "clipped": 0
+        },
+        {
+          "id": "buildingHit",
+          "seconds": 0.37333333333333335,
+          "peak": 0.4479994773864746,
+          "rms": 0.10791828911666979,
+          "clipped": 0
+        }
+      ]
+    },
+    "actualListening": false,
+    "errors": []
+  },
+  {
+    "width": 800,
+    "id": "the-siege",
+    "faction": "elves",
+    "icons": [
+      {
+        "id": "build-wall",
+        "icon": "elves:build-wall",
+        "loaded": true,
+        "rect": {
+          "x": 343.875,
+          "y": 450,
+          "right": 387.875,
+          "bottom": 490
+        }
+      },
+      {
+        "id": "build-gate",
+        "icon": "elves:build-gate",
+        "loaded": true,
+        "rect": {
+          "x": 391.875,
+          "y": 450,
+          "right": 435.875,
+          "bottom": 490
+        }
+      },
+      {
+        "id": "build-tower",
+        "icon": "elves:build-tower",
+        "loaded": true,
+        "rect": {
+          "x": 439.875,
+          "y": 450,
+          "right": 483.875,
+          "bottom": 490
+        }
+      },
+      {
+        "id": "build-barracks",
+        "icon": "elves:build-barracks",
+        "loaded": true,
+        "rect": {
+          "x": 343.875,
+          "y": 494,
+          "right": 387.875,
+          "bottom": 534
+        }
+      },
+      {
+        "id": "build-farm",
+        "icon": "elves:build-farm",
+        "loaded": true,
+        "rect": {
+          "x": 391.875,
+          "y": 494,
+          "right": 435.875,
+          "bottom": 534
+        }
+      },
+      {
+        "id": "build-forge",
+        "icon": "elves:build-forge",
+        "loaded": true,
+        "rect": {
+          "x": 439.875,
+          "y": 494,
+          "right": 483.875,
+          "bottom": 534
+        }
+      },
+      {
+        "id": "build-harbor",
+        "icon": "elves:build-harbor",
+        "loaded": true,
+        "rect": {
+          "x": 343.875,
+          "y": 538,
+          "right": 387.875,
+          "bottom": 578
+        }
+      },
+      {
+        "id": "repair-building",
+        "icon": "elves:repair-building",
+        "loaded": true,
+        "rect": {
+          "x": 247.875,
+          "y": 450,
+          "right": 289.875,
+          "bottom": 490
+        }
+      },
+      {
+        "id": "hold-position",
+        "icon": "elves:hold-position",
+        "loaded": true,
+        "rect": {
+          "x": 293.875,
+          "y": 450,
+          "right": 335.875,
+          "bottom": 490
+        }
+      },
+      {
+        "id": "patrol-units",
+        "icon": "elves:patrol-units",
+        "loaded": true,
+        "rect": {
+          "x": 247.875,
+          "y": 494,
+          "right": 289.875,
+          "bottom": 534
+        }
+      },
+      {
+        "id": "stop-units",
+        "icon": "elves:stop-units",
+        "loaded": true,
+        "rect": {
+          "x": 293.875,
+          "y": 494,
+          "right": 335.875,
+          "bottom": 534
+        }
+      },
+      {
+        "id": "dismiss-units",
+        "icon": "elves:dismiss-units",
+        "loaded": true,
+        "rect": {
+          "x": 247.875,
+          "y": 538,
+          "right": 289.875,
+          "bottom": 578
+        }
+      }
+    ],
+    "bar": {
+      "x": 0,
+      "y": 440,
+      "right": 800,
+      "bottom": 600
+    },
+    "objective": "Phase 1/4 · Build your barracks and field two living land combatants. Gather wood and gold; add supply before training more troops.",
+    "physicalSelectionMoveHoldStop": true,
+    "audio": {
+      "status": {
+        "state": "suspended",
+        "loaded": 18,
+        "music": true,
+        "effects": 1,
+        "phase": "paused",
+        "settings": {
+          "master": 0.65,
+          "effects": 0.7,
+          "music": 0.35,
+          "voices": 0.65,
+          "muted": false
+        }
+      },
+      "buffers": [
+        {
+          "id": "animal-deer",
+          "seconds": 0.65,
+          "peak": 0.18992257118225098,
+          "rms": 0.08019331917188396,
+          "clipped": 0
+        },
+        {
+          "id": "animal-rabbit",
+          "seconds": 0.22,
+          "peak": 0.1590917408466339,
+          "rms": 0.0673305626974031,
+          "clipped": 0
+        },
+        {
+          "id": "animal-fox",
+          "seconds": 0.4,
+          "peak": 0.05877823010087013,
+          "rms": 0.022127253722392177,
+          "clipped": 0
+        },
+        {
+          "id": "music",
+          "seconds": 16,
+          "peak": 0.23845234513282776,
+          "rms": 0.08692514376616274,
+          "clipped": 0
+        },
+        {
+          "id": "command",
+          "seconds": 0.12933333333333333,
+          "peak": 0.12529456615447998,
+          "rms": 0.06391465626013226,
+          "clipped": 0
+        },
+        {
+          "id": "impact",
+          "seconds": 0.17066666666666666,
+          "peak": 0.46730297803878784,
+          "rms": 0.11745412301305545,
+          "clipped": 0
+        },
+        {
+          "id": "complete",
+          "seconds": 0.48933333333333334,
+          "peak": 0.11800354719161987,
+          "rms": 0.03290425843477952,
+          "clipped": 0
+        },
+        {
+          "id": "victory",
+          "seconds": 0.9973333333333333,
+          "peak": 0.07149291038513184,
+          "rms": 0.016424025785478753,
+          "clipped": 0
+        },
+        {
+          "id": "defeat",
+          "seconds": 0.9973333333333333,
+          "peak": 0.05795031040906906,
+          "rms": 0.01607162557046044,
+          "clipped": 0
+        },
+        {
+          "id": "cannon",
+          "seconds": 0.3893333333333333,
+          "peak": 0.4234578013420105,
+          "rms": 0.12221832909939366,
+          "clipped": 0
+        },
+        {
+          "id": "splash",
+          "seconds": 0.48933333333333334,
+          "peak": 0.22565411031246185,
+          "rms": 0.05282755062067928,
+          "clipped": 0
+        },
+        {
+          "id": "gather",
+          "seconds": 0.11733333333333333,
+          "peak": 0.19760006666183472,
+          "rms": 0.05388513241825766,
+          "clipped": 0
+        },
+        {
+          "id": "build",
+          "seconds": 0.14933333333333335,
+          "peak": 0.24950644373893738,
+          "rms": 0.08546180036398385,
+          "clipped": 0
+        },
+        {
+          "id": "train",
+          "seconds": 0.3393333333333333,
+          "peak": 0.09891617298126221,
+          "rms": 0.03417411077015131,
+          "clipped": 0
+        },
+        {
+          "id": "melee",
+          "seconds": 0.21866666666666668,
+          "peak": 0.20577889680862427,
+          "rms": 0.04660759862593437,
+          "clipped": 0
+        },
+        {
+          "id": "bow",
+          "seconds": 0.18933333333333333,
+          "peak": 0.18291257321834564,
+          "rms": 0.050995714516078296,
+          "clipped": 0
+        },
+        {
+          "id": "siege",
+          "seconds": 0.496,
+          "peak": 0.22194921970367432,
+          "rms": 0.06122795465740062,
+          "clipped": 0
+        },
+        {
+          "id": "buildingHit",
+          "seconds": 0.37333333333333335,
+          "peak": 0.4479994773864746,
+          "rms": 0.10791828911666979,
+          "clipped": 0
+        }
+      ]
+    },
+    "actualListening": false,
+    "errors": []
+  },
+  {
+    "width": 800,
+    "id": "the-outpost",
+    "faction": "dwarves",
+    "icons": [
+      {
+        "id": "build-wall",
+        "icon": "dwarves:build-wall",
+        "loaded": true,
+        "rect": {
+          "x": 343.875,
+          "y": 450,
+          "right": 387.875,
+          "bottom": 490
+        }
+      },
+      {
+        "id": "build-gate",
+        "icon": "dwarves:build-gate",
+        "loaded": true,
+        "rect": {
+          "x": 391.875,
+          "y": 450,
+          "right": 435.875,
+          "bottom": 490
+        }
+      },
+      {
+        "id": "build-tower",
+        "icon": "dwarves:build-tower",
+        "loaded": true,
+        "rect": {
+          "x": 439.875,
+          "y": 450,
+          "right": 483.875,
+          "bottom": 490
+        }
+      },
+      {
+        "id": "build-barracks",
+        "icon": "dwarves:build-barracks",
+        "loaded": true,
+        "rect": {
+          "x": 343.875,
+          "y": 494,
+          "right": 387.875,
+          "bottom": 534
+        }
+      },
+      {
+        "id": "build-farm",
+        "icon": "dwarves:build-farm",
+        "loaded": true,
+        "rect": {
+          "x": 391.875,
+          "y": 494,
+          "right": 435.875,
+          "bottom": 534
+        }
+      },
+      {
+        "id": "build-forge",
+        "icon": "dwarves:build-forge",
+        "loaded": true,
+        "rect": {
+          "x": 439.875,
+          "y": 494,
+          "right": 483.875,
+          "bottom": 534
+        }
+      },
+      {
+        "id": "build-harbor",
+        "icon": "dwarves:build-harbor",
+        "loaded": true,
+        "rect": {
+          "x": 343.875,
+          "y": 538,
+          "right": 387.875,
+          "bottom": 578
+        }
+      },
+      {
+        "id": "repair-building",
+        "icon": "dwarves:repair-building",
+        "loaded": true,
+        "rect": {
+          "x": 247.875,
+          "y": 450,
+          "right": 289.875,
+          "bottom": 490
+        }
+      },
+      {
+        "id": "hold-position",
+        "icon": "dwarves:hold-position",
+        "loaded": true,
+        "rect": {
+          "x": 293.875,
+          "y": 450,
+          "right": 335.875,
+          "bottom": 490
+        }
+      },
+      {
+        "id": "patrol-units",
+        "icon": "dwarves:patrol-units",
+        "loaded": true,
+        "rect": {
+          "x": 247.875,
+          "y": 494,
+          "right": 289.875,
+          "bottom": 534
+        }
+      },
+      {
+        "id": "stop-units",
+        "icon": "dwarves:stop-units",
+        "loaded": true,
+        "rect": {
+          "x": 293.875,
+          "y": 494,
+          "right": 335.875,
+          "bottom": 534
+        }
+      },
+      {
+        "id": "dismiss-units",
+        "icon": "dwarves:dismiss-units",
+        "loaded": true,
+        "rect": {
+          "x": 247.875,
+          "y": 538,
+          "right": 289.875,
+          "bottom": 578
+        }
+      }
+    ],
+    "bar": {
+      "x": 0,
+      "y": 440,
+      "right": 800,
+      "bottom": 600
+    },
+    "objective": "Phase 1/4 · Build your barracks and field two living land combatants. Gather wood and gold; add supply before training more troops.",
+    "physicalSelectionMoveHoldStop": true,
+    "audio": {
+      "status": {
+        "state": "suspended",
+        "loaded": 18,
+        "music": true,
+        "effects": 1,
+        "phase": "paused",
+        "settings": {
+          "master": 0.65,
+          "effects": 0.7,
+          "music": 0.35,
+          "voices": 0.65,
+          "muted": false
+        }
+      },
+      "buffers": [
+        {
+          "id": "animal-deer",
+          "seconds": 0.65,
+          "peak": 0.18992257118225098,
+          "rms": 0.08019331917188396,
+          "clipped": 0
+        },
+        {
+          "id": "animal-rabbit",
+          "seconds": 0.22,
+          "peak": 0.1590917408466339,
+          "rms": 0.0673305626974031,
+          "clipped": 0
+        },
+        {
+          "id": "animal-fox",
+          "seconds": 0.4,
+          "peak": 0.05877823010087013,
+          "rms": 0.022127253722392177,
+          "clipped": 0
+        },
+        {
+          "id": "music",
+          "seconds": 16,
+          "peak": 0.23845234513282776,
+          "rms": 0.08692514376616274,
+          "clipped": 0
+        },
+        {
+          "id": "command",
+          "seconds": 0.12933333333333333,
+          "peak": 0.12529456615447998,
+          "rms": 0.06391465626013226,
+          "clipped": 0
+        },
+        {
+          "id": "impact",
+          "seconds": 0.17066666666666666,
+          "peak": 0.46730297803878784,
+          "rms": 0.11745412301305545,
+          "clipped": 0
+        },
+        {
+          "id": "complete",
+          "seconds": 0.48933333333333334,
+          "peak": 0.11800354719161987,
+          "rms": 0.03290425843477952,
+          "clipped": 0
+        },
+        {
+          "id": "victory",
+          "seconds": 0.9973333333333333,
+          "peak": 0.07149291038513184,
+          "rms": 0.016424025785478753,
+          "clipped": 0
+        },
+        {
+          "id": "defeat",
+          "seconds": 0.9973333333333333,
+          "peak": 0.05795031040906906,
+          "rms": 0.01607162557046044,
+          "clipped": 0
+        },
+        {
+          "id": "cannon",
+          "seconds": 0.3893333333333333,
+          "peak": 0.4234578013420105,
+          "rms": 0.12221832909939366,
+          "clipped": 0
+        },
+        {
+          "id": "splash",
+          "seconds": 0.48933333333333334,
+          "peak": 0.22565411031246185,
+          "rms": 0.05282755062067928,
+          "clipped": 0
+        },
+        {
+          "id": "gather",
+          "seconds": 0.11733333333333333,
+          "peak": 0.19760006666183472,
+          "rms": 0.05388513241825766,
+          "clipped": 0
+        },
+        {
+          "id": "build",
+          "seconds": 0.14933333333333335,
+          "peak": 0.24950644373893738,
+          "rms": 0.08546180036398385,
+          "clipped": 0
+        },
+        {
+          "id": "train",
+          "seconds": 0.3393333333333333,
+          "peak": 0.09891617298126221,
+          "rms": 0.03417411077015131,
+          "clipped": 0
+        },
+        {
+          "id": "melee",
+          "seconds": 0.21866666666666668,
+          "peak": 0.20577889680862427,
+          "rms": 0.04660759862593437,
+          "clipped": 0
+        },
+        {
+          "id": "bow",
+          "seconds": 0.18933333333333333,
+          "peak": 0.18291257321834564,
+          "rms": 0.050995714516078296,
+          "clipped": 0
+        },
+        {
+          "id": "siege",
+          "seconds": 0.496,
+          "peak": 0.22194921970367432,
+          "rms": 0.06122795465740062,
+          "clipped": 0
+        },
+        {
+          "id": "buildingHit",
+          "seconds": 0.37333333333333335,
+          "peak": 0.4479994773864746,
+          "rms": 0.10791828911666979,
+          "clipped": 0
+        }
+      ]
+    },
+    "actualListening": false,
+    "errors": []
+  },
+  {
+    "width": 800,
+    "id": "the-crossing",
+    "faction": "goblins",
+    "icons": [
+      {
+        "id": "build-wall",
+        "icon": "goblins:build-wall",
+        "loaded": true,
+        "rect": {
+          "x": 343.875,
+          "y": 450,
+          "right": 387.875,
+          "bottom": 490
+        }
+      },
+      {
+        "id": "build-gate",
+        "icon": "goblins:build-gate",
+        "loaded": true,
+        "rect": {
+          "x": 391.875,
+          "y": 450,
+          "right": 435.875,
+          "bottom": 490
+        }
+      },
+      {
+        "id": "build-tower",
+        "icon": "goblins:build-tower",
+        "loaded": true,
+        "rect": {
+          "x": 439.875,
+          "y": 450,
+          "right": 483.875,
+          "bottom": 490
+        }
+      },
+      {
+        "id": "build-barracks",
+        "icon": "goblins:build-barracks",
+        "loaded": true,
+        "rect": {
+          "x": 343.875,
+          "y": 494,
+          "right": 387.875,
+          "bottom": 534
+        }
+      },
+      {
+        "id": "build-farm",
+        "icon": "goblins:build-farm",
+        "loaded": true,
+        "rect": {
+          "x": 391.875,
+          "y": 494,
+          "right": 435.875,
+          "bottom": 534
+        }
+      },
+      {
+        "id": "build-forge",
+        "icon": "goblins:build-forge",
+        "loaded": true,
+        "rect": {
+          "x": 439.875,
+          "y": 494,
+          "right": 483.875,
+          "bottom": 534
+        }
+      },
+      {
+        "id": "build-harbor",
+        "icon": "goblins:build-harbor",
+        "loaded": true,
+        "rect": {
+          "x": 343.875,
+          "y": 538,
+          "right": 387.875,
+          "bottom": 578
+        }
+      },
+      {
+        "id": "repair-building",
+        "icon": "goblins:repair-building",
+        "loaded": true,
+        "rect": {
+          "x": 247.875,
+          "y": 450,
+          "right": 289.875,
+          "bottom": 490
+        }
+      },
+      {
+        "id": "hold-position",
+        "icon": "goblins:hold-position",
+        "loaded": true,
+        "rect": {
+          "x": 293.875,
+          "y": 450,
+          "right": 335.875,
+          "bottom": 490
+        }
+      },
+      {
+        "id": "patrol-units",
+        "icon": "goblins:patrol-units",
+        "loaded": true,
+        "rect": {
+          "x": 247.875,
+          "y": 494,
+          "right": 289.875,
+          "bottom": 534
+        }
+      },
+      {
+        "id": "stop-units",
+        "icon": "goblins:stop-units",
+        "loaded": true,
+        "rect": {
+          "x": 293.875,
+          "y": 494,
+          "right": 335.875,
+          "bottom": 534
+        }
+      },
+      {
+        "id": "dismiss-units",
+        "icon": "goblins:dismiss-units",
+        "loaded": true,
+        "rect": {
+          "x": 247.875,
+          "y": 538,
+          "right": 289.875,
+          "bottom": 578
+        }
+      }
+    ],
+    "bar": {
+      "x": 0,
+      "y": 440,
+      "right": 800,
+      "bottom": 600
+    },
+    "objective": "Phase 1/4 · Build your barracks and field two living land combatants. Gather wood and gold; add supply before training more troops.",
+    "physicalSelectionMoveHoldStop": true,
+    "audio": {
+      "status": {
+        "state": "suspended",
+        "loaded": 18,
+        "music": true,
+        "effects": 1,
+        "phase": "paused",
+        "settings": {
+          "master": 0.65,
+          "effects": 0.7,
+          "music": 0.35,
+          "voices": 0.65,
+          "muted": false
+        }
+      },
+      "buffers": [
+        {
+          "id": "animal-deer",
+          "seconds": 0.65,
+          "peak": 0.18992257118225098,
+          "rms": 0.08019331917188396,
+          "clipped": 0
+        },
+        {
+          "id": "animal-rabbit",
+          "seconds": 0.22,
+          "peak": 0.1590917408466339,
+          "rms": 0.0673305626974031,
+          "clipped": 0
+        },
+        {
+          "id": "animal-fox",
+          "seconds": 0.4,
+          "peak": 0.05877823010087013,
+          "rms": 0.022127253722392177,
+          "clipped": 0
+        },
+        {
+          "id": "music",
+          "seconds": 16,
+          "peak": 0.23845234513282776,
+          "rms": 0.08692514376616274,
+          "clipped": 0
+        },
+        {
+          "id": "command",
+          "seconds": 0.12933333333333333,
+          "peak": 0.12529456615447998,
+          "rms": 0.06391465626013226,
+          "clipped": 0
+        },
+        {
+          "id": "impact",
+          "seconds": 0.17066666666666666,
+          "peak": 0.46730297803878784,
+          "rms": 0.11745412301305545,
+          "clipped": 0
+        },
+        {
+          "id": "complete",
+          "seconds": 0.48933333333333334,
+          "peak": 0.11800354719161987,
+          "rms": 0.03290425843477952,
+          "clipped": 0
+        },
+        {
+          "id": "victory",
+          "seconds": 0.9973333333333333,
+          "peak": 0.07149291038513184,
+          "rms": 0.016424025785478753,
+          "clipped": 0
+        },
+        {
+          "id": "defeat",
+          "seconds": 0.9973333333333333,
+          "peak": 0.05795031040906906,
+          "rms": 0.01607162557046044,
+          "clipped": 0
+        },
+        {
+          "id": "cannon",
+          "seconds": 0.3893333333333333,
+          "peak": 0.4234578013420105,
+          "rms": 0.12221832909939366,
+          "clipped": 0
+        },
+        {
+          "id": "splash",
+          "seconds": 0.48933333333333334,
+          "peak": 0.22565411031246185,
+          "rms": 0.05282755062067928,
+          "clipped": 0
+        },
+        {
+          "id": "gather",
+          "seconds": 0.11733333333333333,
+          "peak": 0.19760006666183472,
+          "rms": 0.05388513241825766,
+          "clipped": 0
+        },
+        {
+          "id": "build",
+          "seconds": 0.14933333333333335,
+          "peak": 0.24950644373893738,
+          "rms": 0.08546180036398385,
+          "clipped": 0
+        },
+        {
+          "id": "train",
+          "seconds": 0.3393333333333333,
+          "peak": 0.09891617298126221,
+          "rms": 0.03417411077015131,
+          "clipped": 0
+        },
+        {
+          "id": "melee",
+          "seconds": 0.21866666666666668,
+          "peak": 0.20577889680862427,
+          "rms": 0.04660759862593437,
+          "clipped": 0
+        },
+        {
+          "id": "bow",
+          "seconds": 0.18933333333333333,
+          "peak": 0.18291257321834564,
+          "rms": 0.050995714516078296,
+          "clipped": 0
+        },
+        {
+          "id": "siege",
+          "seconds": 0.496,
+          "peak": 0.22194921970367432,
+          "rms": 0.06122795465740062,
+          "clipped": 0
+        },
+        {
+          "id": "buildingHit",
+          "seconds": 0.37333333333333335,
+          "peak": 0.4479994773864746,
+          "rms": 0.10791828911666979,
+          "clipped": 0
+        }
+      ]
+    },
+    "actualListening": false,
+    "errors": []
+  },
+  {
+    "width": 800,
+    "id": "coastal-banner",
+    "faction": "crown",
+    "icons": [
+      {
+        "id": "build-wall",
+        "icon": "crown:build-wall",
+        "loaded": true,
+        "rect": {
+          "x": 343.875,
+          "y": 450,
+          "right": 387.875,
+          "bottom": 490
+        }
+      },
+      {
+        "id": "build-gate",
+        "icon": "crown:build-gate",
+        "loaded": true,
+        "rect": {
+          "x": 391.875,
+          "y": 450,
+          "right": 435.875,
+          "bottom": 490
+        }
+      },
+      {
+        "id": "build-tower",
+        "icon": "crown:build-tower",
+        "loaded": true,
+        "rect": {
+          "x": 439.875,
+          "y": 450,
+          "right": 483.875,
+          "bottom": 490
+        }
+      },
+      {
+        "id": "build-barracks",
+        "icon": "crown:build-barracks",
+        "loaded": true,
+        "rect": {
+          "x": 343.875,
+          "y": 494,
+          "right": 387.875,
+          "bottom": 534
+        }
+      },
+      {
+        "id": "build-farm",
+        "icon": "crown:build-farm",
+        "loaded": true,
+        "rect": {
+          "x": 391.875,
+          "y": 494,
+          "right": 435.875,
+          "bottom": 534
+        }
+      },
+      {
+        "id": "build-forge",
+        "icon": "crown:build-forge",
+        "loaded": true,
+        "rect": {
+          "x": 439.875,
+          "y": 494,
+          "right": 483.875,
+          "bottom": 534
+        }
+      },
+      {
+        "id": "build-harbor",
+        "icon": "crown:build-harbor",
+        "loaded": true,
+        "rect": {
+          "x": 343.875,
+          "y": 538,
+          "right": 387.875,
+          "bottom": 578
+        }
+      },
+      {
+        "id": "repair-building",
+        "icon": "crown:repair-building",
+        "loaded": true,
+        "rect": {
+          "x": 247.875,
+          "y": 450,
+          "right": 289.875,
+          "bottom": 490
+        }
+      },
+      {
+        "id": "hold-position",
+        "icon": "crown:hold-position",
+        "loaded": true,
+        "rect": {
+          "x": 293.875,
+          "y": 450,
+          "right": 335.875,
+          "bottom": 490
+        }
+      },
+      {
+        "id": "patrol-units",
+        "icon": "crown:patrol-units",
+        "loaded": true,
+        "rect": {
+          "x": 247.875,
+          "y": 494,
+          "right": 289.875,
+          "bottom": 534
+        }
+      },
+      {
+        "id": "stop-units",
+        "icon": "crown:stop-units",
+        "loaded": true,
+        "rect": {
+          "x": 293.875,
+          "y": 494,
+          "right": 335.875,
+          "bottom": 534
+        }
+      },
+      {
+        "id": "dismiss-units",
+        "icon": "crown:dismiss-units",
+        "loaded": true,
+        "rect": {
+          "x": 247.875,
+          "y": 538,
+          "right": 289.875,
+          "bottom": 578
+        }
+      }
+    ],
+    "bar": {
+      "x": 0,
+      "y": 440,
+      "right": 800,
+      "bottom": 600
+    },
+    "objective": "Phase 1/5 · Build your barracks and field two living land combatants. Gather wood and gold; add supply before training more troops.",
+    "physicalSelectionMoveHoldStop": true,
+    "audio": {
+      "status": {
+        "state": "suspended",
+        "loaded": 18,
+        "music": true,
+        "effects": 1,
+        "phase": "paused",
+        "settings": {
+          "master": 0.65,
+          "effects": 0.7,
+          "music": 0.35,
+          "voices": 0.65,
+          "muted": false
+        }
+      },
+      "buffers": [
+        {
+          "id": "animal-deer",
+          "seconds": 0.65,
+          "peak": 0.18992257118225098,
+          "rms": 0.08019331917188396,
+          "clipped": 0
+        },
+        {
+          "id": "animal-rabbit",
+          "seconds": 0.22,
+          "peak": 0.1590917408466339,
+          "rms": 0.0673305626974031,
+          "clipped": 0
+        },
+        {
+          "id": "animal-fox",
+          "seconds": 0.4,
+          "peak": 0.05877823010087013,
+          "rms": 0.022127253722392177,
+          "clipped": 0
+        },
+        {
+          "id": "music",
+          "seconds": 16,
+          "peak": 0.23845234513282776,
+          "rms": 0.08692514376616274,
+          "clipped": 0
+        },
+        {
+          "id": "command",
+          "seconds": 0.12933333333333333,
+          "peak": 0.12529456615447998,
+          "rms": 0.06391465626013226,
+          "clipped": 0
+        },
+        {
+          "id": "impact",
+          "seconds": 0.17066666666666666,
+          "peak": 0.46730297803878784,
+          "rms": 0.11745412301305545,
+          "clipped": 0
+        },
+        {
+          "id": "complete",
+          "seconds": 0.48933333333333334,
+          "peak": 0.11800354719161987,
+          "rms": 0.03290425843477952,
+          "clipped": 0
+        },
+        {
+          "id": "victory",
+          "seconds": 0.9973333333333333,
+          "peak": 0.07149291038513184,
+          "rms": 0.016424025785478753,
+          "clipped": 0
+        },
+        {
+          "id": "defeat",
+          "seconds": 0.9973333333333333,
+          "peak": 0.05795031040906906,
+          "rms": 0.01607162557046044,
+          "clipped": 0
+        },
+        {
+          "id": "cannon",
+          "seconds": 0.3893333333333333,
+          "peak": 0.4234578013420105,
+          "rms": 0.12221832909939366,
+          "clipped": 0
+        },
+        {
+          "id": "splash",
+          "seconds": 0.48933333333333334,
+          "peak": 0.22565411031246185,
+          "rms": 0.05282755062067928,
+          "clipped": 0
+        },
+        {
+          "id": "gather",
+          "seconds": 0.11733333333333333,
+          "peak": 0.19760006666183472,
+          "rms": 0.05388513241825766,
+          "clipped": 0
+        },
+        {
+          "id": "build",
+          "seconds": 0.14933333333333335,
+          "peak": 0.24950644373893738,
+          "rms": 0.08546180036398385,
+          "clipped": 0
+        },
+        {
+          "id": "train",
+          "seconds": 0.3393333333333333,
+          "peak": 0.09891617298126221,
+          "rms": 0.03417411077015131,
+          "clipped": 0
+        },
+        {
+          "id": "melee",
+          "seconds": 0.21866666666666668,
+          "peak": 0.20577889680862427,
+          "rms": 0.04660759862593437,
+          "clipped": 0
+        },
+        {
+          "id": "bow",
+          "seconds": 0.18933333333333333,
+          "peak": 0.18291257321834564,
+          "rms": 0.050995714516078296,
+          "clipped": 0
+        },
+        {
+          "id": "siege",
+          "seconds": 0.496,
+          "peak": 0.22194921970367432,
+          "rms": 0.06122795465740062,
+          "clipped": 0
+        },
+        {
+          "id": "buildingHit",
+          "seconds": 0.37333333333333335,
+          "peak": 0.4479994773864746,
+          "rms": 0.10791828911666979,
+          "clipped": 0
+        }
+      ]
+    },
+    "actualListening": false,
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "id": "forest-watch",
+    "faction": "clans",
+    "icons": [
+      {
+        "id": "build-wall",
+        "icon": "clans:build-wall",
+        "loaded": true,
+        "rect": {
+          "x": 553.875,
+          "y": 570,
+          "right": 597.875,
+          "bottom": 610
+        }
+      },
+      {
+        "id": "build-gate",
+        "icon": "clans:build-gate",
+        "loaded": true,
+        "rect": {
+          "x": 601.875,
+          "y": 570,
+          "right": 645.875,
+          "bottom": 610
+        }
+      },
+      {
+        "id": "build-tower",
+        "icon": "clans:build-tower",
+        "loaded": true,
+        "rect": {
+          "x": 649.875,
+          "y": 570,
+          "right": 693.875,
+          "bottom": 610
+        }
+      },
+      {
+        "id": "build-barracks",
+        "icon": "clans:build-barracks",
+        "loaded": true,
+        "rect": {
+          "x": 553.875,
+          "y": 614,
+          "right": 597.875,
+          "bottom": 654
+        }
+      },
+      {
+        "id": "build-farm",
+        "icon": "clans:build-farm",
+        "loaded": true,
+        "rect": {
+          "x": 601.875,
+          "y": 614,
+          "right": 645.875,
+          "bottom": 654
+        }
+      },
+      {
+        "id": "build-forge",
+        "icon": "clans:build-forge",
+        "loaded": true,
+        "rect": {
+          "x": 649.875,
+          "y": 614,
+          "right": 693.875,
+          "bottom": 654
+        }
+      },
+      {
+        "id": "build-harbor",
+        "icon": "clans:build-harbor",
+        "loaded": true,
+        "rect": {
+          "x": 553.875,
+          "y": 658,
+          "right": 597.875,
+          "bottom": 698
+        }
+      },
+      {
+        "id": "repair-building",
+        "icon": "clans:repair-building",
+        "loaded": true,
+        "rect": {
+          "x": 457.875,
+          "y": 570,
+          "right": 499.875,
+          "bottom": 610
+        }
+      },
+      {
+        "id": "hold-position",
+        "icon": "clans:hold-position",
+        "loaded": true,
+        "rect": {
+          "x": 503.875,
+          "y": 570,
+          "right": 545.875,
+          "bottom": 610
+        }
+      },
+      {
+        "id": "patrol-units",
+        "icon": "clans:patrol-units",
+        "loaded": true,
+        "rect": {
+          "x": 457.875,
+          "y": 614,
+          "right": 499.875,
+          "bottom": 654
+        }
+      },
+      {
+        "id": "stop-units",
+        "icon": "clans:stop-units",
+        "loaded": true,
+        "rect": {
+          "x": 503.875,
+          "y": 614,
+          "right": 545.875,
+          "bottom": 654
+        }
+      },
+      {
+        "id": "dismiss-units",
+        "icon": "clans:dismiss-units",
+        "loaded": true,
+        "rect": {
+          "x": 457.875,
+          "y": 658,
+          "right": 499.875,
+          "bottom": 698
+        }
+      }
+    ],
+    "bar": {
+      "x": 0,
+      "y": 560,
+      "right": 1280,
+      "bottom": 720
+    },
+    "objective": "Phase 1/4 · Build your barracks and field two living land combatants. Gather wood and gold; add supply before training more troops.",
+    "physicalSelectionMoveHoldStop": true,
+    "audio": {
+      "status": {
+        "state": "suspended",
+        "loaded": 18,
+        "music": true,
+        "effects": 1,
+        "phase": "paused",
+        "settings": {
+          "master": 0.65,
+          "effects": 0.7,
+          "music": 0.35,
+          "voices": 0.65,
+          "muted": false
+        }
+      },
+      "buffers": [
+        {
+          "id": "animal-deer",
+          "seconds": 0.65,
+          "peak": 0.18992257118225098,
+          "rms": 0.08019331917188396,
+          "clipped": 0
+        },
+        {
+          "id": "animal-rabbit",
+          "seconds": 0.22,
+          "peak": 0.1590917408466339,
+          "rms": 0.0673305626974031,
+          "clipped": 0
+        },
+        {
+          "id": "animal-fox",
+          "seconds": 0.4,
+          "peak": 0.05877823010087013,
+          "rms": 0.022127253722392177,
+          "clipped": 0
+        },
+        {
+          "id": "music",
+          "seconds": 16,
+          "peak": 0.23845234513282776,
+          "rms": 0.08692514376616274,
+          "clipped": 0
+        },
+        {
+          "id": "command",
+          "seconds": 0.12933333333333333,
+          "peak": 0.12529456615447998,
+          "rms": 0.06391465626013226,
+          "clipped": 0
+        },
+        {
+          "id": "impact",
+          "seconds": 0.17066666666666666,
+          "peak": 0.46730297803878784,
+          "rms": 0.11745412301305545,
+          "clipped": 0
+        },
+        {
+          "id": "complete",
+          "seconds": 0.48933333333333334,
+          "peak": 0.11800354719161987,
+          "rms": 0.03290425843477952,
+          "clipped": 0
+        },
+        {
+          "id": "victory",
+          "seconds": 0.9973333333333333,
+          "peak": 0.07149291038513184,
+          "rms": 0.016424025785478753,
+          "clipped": 0
+        },
+        {
+          "id": "defeat",
+          "seconds": 0.9973333333333333,
+          "peak": 0.05795031040906906,
+          "rms": 0.01607162557046044,
+          "clipped": 0
+        },
+        {
+          "id": "cannon",
+          "seconds": 0.3893333333333333,
+          "peak": 0.4234578013420105,
+          "rms": 0.12221832909939366,
+          "clipped": 0
+        },
+        {
+          "id": "splash",
+          "seconds": 0.48933333333333334,
+          "peak": 0.22565411031246185,
+          "rms": 0.05282755062067928,
+          "clipped": 0
+        },
+        {
+          "id": "gather",
+          "seconds": 0.11733333333333333,
+          "peak": 0.19760006666183472,
+          "rms": 0.05388513241825766,
+          "clipped": 0
+        },
+        {
+          "id": "build",
+          "seconds": 0.14933333333333335,
+          "peak": 0.24950644373893738,
+          "rms": 0.08546180036398385,
+          "clipped": 0
+        },
+        {
+          "id": "train",
+          "seconds": 0.3393333333333333,
+          "peak": 0.09891617298126221,
+          "rms": 0.03417411077015131,
+          "clipped": 0
+        },
+        {
+          "id": "melee",
+          "seconds": 0.21866666666666668,
+          "peak": 0.20577889680862427,
+          "rms": 0.04660759862593437,
+          "clipped": 0
+        },
+        {
+          "id": "bow",
+          "seconds": 0.18933333333333333,
+          "peak": 0.18291257321834564,
+          "rms": 0.050995714516078296,
+          "clipped": 0
+        },
+        {
+          "id": "siege",
+          "seconds": 0.496,
+          "peak": 0.22194921970367432,
+          "rms": 0.06122795465740062,
+          "clipped": 0
+        },
+        {
+          "id": "buildingHit",
+          "seconds": 0.37333333333333335,
+          "peak": 0.4479994773864746,
+          "rms": 0.10791828911666979,
+          "clipped": 0
+        }
+      ]
+    },
+    "actualListening": false,
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "id": "the-siege",
+    "faction": "elves",
+    "icons": [
+      {
+        "id": "build-wall",
+        "icon": "elves:build-wall",
+        "loaded": true,
+        "rect": {
+          "x": 553.875,
+          "y": 570,
+          "right": 597.875,
+          "bottom": 610
+        }
+      },
+      {
+        "id": "build-gate",
+        "icon": "elves:build-gate",
+        "loaded": true,
+        "rect": {
+          "x": 601.875,
+          "y": 570,
+          "right": 645.875,
+          "bottom": 610
+        }
+      },
+      {
+        "id": "build-tower",
+        "icon": "elves:build-tower",
+        "loaded": true,
+        "rect": {
+          "x": 649.875,
+          "y": 570,
+          "right": 693.875,
+          "bottom": 610
+        }
+      },
+      {
+        "id": "build-barracks",
+        "icon": "elves:build-barracks",
+        "loaded": true,
+        "rect": {
+          "x": 553.875,
+          "y": 614,
+          "right": 597.875,
+          "bottom": 654
+        }
+      },
+      {
+        "id": "build-farm",
+        "icon": "elves:build-farm",
+        "loaded": true,
+        "rect": {
+          "x": 601.875,
+          "y": 614,
+          "right": 645.875,
+          "bottom": 654
+        }
+      },
+      {
+        "id": "build-forge",
+        "icon": "elves:build-forge",
+        "loaded": true,
+        "rect": {
+          "x": 649.875,
+          "y": 614,
+          "right": 693.875,
+          "bottom": 654
+        }
+      },
+      {
+        "id": "build-harbor",
+        "icon": "elves:build-harbor",
+        "loaded": true,
+        "rect": {
+          "x": 553.875,
+          "y": 658,
+          "right": 597.875,
+          "bottom": 698
+        }
+      },
+      {
+        "id": "repair-building",
+        "icon": "elves:repair-building",
+        "loaded": true,
+        "rect": {
+          "x": 457.875,
+          "y": 570,
+          "right": 499.875,
+          "bottom": 610
+        }
+      },
+      {
+        "id": "hold-position",
+        "icon": "elves:hold-position",
+        "loaded": true,
+        "rect": {
+          "x": 503.875,
+          "y": 570,
+          "right": 545.875,
+          "bottom": 610
+        }
+      },
+      {
+        "id": "patrol-units",
+        "icon": "elves:patrol-units",
+        "loaded": true,
+        "rect": {
+          "x": 457.875,
+          "y": 614,
+          "right": 499.875,
+          "bottom": 654
+        }
+      },
+      {
+        "id": "stop-units",
+        "icon": "elves:stop-units",
+        "loaded": true,
+        "rect": {
+          "x": 503.875,
+          "y": 614,
+          "right": 545.875,
+          "bottom": 654
+        }
+      },
+      {
+        "id": "dismiss-units",
+        "icon": "elves:dismiss-units",
+        "loaded": true,
+        "rect": {
+          "x": 457.875,
+          "y": 658,
+          "right": 499.875,
+          "bottom": 698
+        }
+      }
+    ],
+    "bar": {
+      "x": 0,
+      "y": 560,
+      "right": 1280,
+      "bottom": 720
+    },
+    "objective": "Phase 1/4 · Build your barracks and field two living land combatants. Gather wood and gold; add supply before training more troops.",
+    "physicalSelectionMoveHoldStop": true,
+    "audio": {
+      "status": {
+        "state": "suspended",
+        "loaded": 18,
+        "music": true,
+        "effects": 1,
+        "phase": "paused",
+        "settings": {
+          "master": 0.65,
+          "effects": 0.7,
+          "music": 0.35,
+          "voices": 0.65,
+          "muted": false
+        }
+      },
+      "buffers": [
+        {
+          "id": "animal-deer",
+          "seconds": 0.65,
+          "peak": 0.18992257118225098,
+          "rms": 0.08019331917188396,
+          "clipped": 0
+        },
+        {
+          "id": "animal-rabbit",
+          "seconds": 0.22,
+          "peak": 0.1590917408466339,
+          "rms": 0.0673305626974031,
+          "clipped": 0
+        },
+        {
+          "id": "animal-fox",
+          "seconds": 0.4,
+          "peak": 0.05877823010087013,
+          "rms": 0.022127253722392177,
+          "clipped": 0
+        },
+        {
+          "id": "music",
+          "seconds": 16,
+          "peak": 0.23845234513282776,
+          "rms": 0.08692514376616274,
+          "clipped": 0
+        },
+        {
+          "id": "command",
+          "seconds": 0.12933333333333333,
+          "peak": 0.12529456615447998,
+          "rms": 0.06391465626013226,
+          "clipped": 0
+        },
+        {
+          "id": "impact",
+          "seconds": 0.17066666666666666,
+          "peak": 0.46730297803878784,
+          "rms": 0.11745412301305545,
+          "clipped": 0
+        },
+        {
+          "id": "complete",
+          "seconds": 0.48933333333333334,
+          "peak": 0.11800354719161987,
+          "rms": 0.03290425843477952,
+          "clipped": 0
+        },
+        {
+          "id": "victory",
+          "seconds": 0.9973333333333333,
+          "peak": 0.07149291038513184,
+          "rms": 0.016424025785478753,
+          "clipped": 0
+        },
+        {
+          "id": "defeat",
+          "seconds": 0.9973333333333333,
+          "peak": 0.05795031040906906,
+          "rms": 0.01607162557046044,
+          "clipped": 0
+        },
+        {
+          "id": "cannon",
+          "seconds": 0.3893333333333333,
+          "peak": 0.4234578013420105,
+          "rms": 0.12221832909939366,
+          "clipped": 0
+        },
+        {
+          "id": "splash",
+          "seconds": 0.48933333333333334,
+          "peak": 0.22565411031246185,
+          "rms": 0.05282755062067928,
+          "clipped": 0
+        },
+        {
+          "id": "gather",
+          "seconds": 0.11733333333333333,
+          "peak": 0.19760006666183472,
+          "rms": 0.05388513241825766,
+          "clipped": 0
+        },
+        {
+          "id": "build",
+          "seconds": 0.14933333333333335,
+          "peak": 0.24950644373893738,
+          "rms": 0.08546180036398385,
+          "clipped": 0
+        },
+        {
+          "id": "train",
+          "seconds": 0.3393333333333333,
+          "peak": 0.09891617298126221,
+          "rms": 0.03417411077015131,
+          "clipped": 0
+        },
+        {
+          "id": "melee",
+          "seconds": 0.21866666666666668,
+          "peak": 0.20577889680862427,
+          "rms": 0.04660759862593437,
+          "clipped": 0
+        },
+        {
+          "id": "bow",
+          "seconds": 0.18933333333333333,
+          "peak": 0.18291257321834564,
+          "rms": 0.050995714516078296,
+          "clipped": 0
+        },
+        {
+          "id": "siege",
+          "seconds": 0.496,
+          "peak": 0.22194921970367432,
+          "rms": 0.06122795465740062,
+          "clipped": 0
+        },
+        {
+          "id": "buildingHit",
+          "seconds": 0.37333333333333335,
+          "peak": 0.4479994773864746,
+          "rms": 0.10791828911666979,
+          "clipped": 0
+        }
+      ]
+    },
+    "actualListening": false,
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "id": "the-outpost",
+    "faction": "dwarves",
+    "icons": [
+      {
+        "id": "build-wall",
+        "icon": "dwarves:build-wall",
+        "loaded": true,
+        "rect": {
+          "x": 553.875,
+          "y": 570,
+          "right": 597.875,
+          "bottom": 610
+        }
+      },
+      {
+        "id": "build-gate",
+        "icon": "dwarves:build-gate",
+        "loaded": true,
+        "rect": {
+          "x": 601.875,
+          "y": 570,
+          "right": 645.875,
+          "bottom": 610
+        }
+      },
+      {
+        "id": "build-tower",
+        "icon": "dwarves:build-tower",
+        "loaded": true,
+        "rect": {
+          "x": 649.875,
+          "y": 570,
+          "right": 693.875,
+          "bottom": 610
+        }
+      },
+      {
+        "id": "build-barracks",
+        "icon": "dwarves:build-barracks",
+        "loaded": true,
+        "rect": {
+          "x": 553.875,
+          "y": 614,
+          "right": 597.875,
+          "bottom": 654
+        }
+      },
+      {
+        "id": "build-farm",
+        "icon": "dwarves:build-farm",
+        "loaded": true,
+        "rect": {
+          "x": 601.875,
+          "y": 614,
+          "right": 645.875,
+          "bottom": 654
+        }
+      },
+      {
+        "id": "build-forge",
+        "icon": "dwarves:build-forge",
+        "loaded": true,
+        "rect": {
+          "x": 649.875,
+          "y": 614,
+          "right": 693.875,
+          "bottom": 654
+        }
+      },
+      {
+        "id": "build-harbor",
+        "icon": "dwarves:build-harbor",
+        "loaded": true,
+        "rect": {
+          "x": 553.875,
+          "y": 658,
+          "right": 597.875,
+          "bottom": 698
+        }
+      },
+      {
+        "id": "repair-building",
+        "icon": "dwarves:repair-building",
+        "loaded": true,
+        "rect": {
+          "x": 457.875,
+          "y": 570,
+          "right": 499.875,
+          "bottom": 610
+        }
+      },
+      {
+        "id": "hold-position",
+        "icon": "dwarves:hold-position",
+        "loaded": true,
+        "rect": {
+          "x": 503.875,
+          "y": 570,
+          "right": 545.875,
+          "bottom": 610
+        }
+      },
+      {
+        "id": "patrol-units",
+        "icon": "dwarves:patrol-units",
+        "loaded": true,
+        "rect": {
+          "x": 457.875,
+          "y": 614,
+          "right": 499.875,
+          "bottom": 654
+        }
+      },
+      {
+        "id": "stop-units",
+        "icon": "dwarves:stop-units",
+        "loaded": true,
+        "rect": {
+          "x": 503.875,
+          "y": 614,
+          "right": 545.875,
+          "bottom": 654
+        }
+      },
+      {
+        "id": "dismiss-units",
+        "icon": "dwarves:dismiss-units",
+        "loaded": true,
+        "rect": {
+          "x": 457.875,
+          "y": 658,
+          "right": 499.875,
+          "bottom": 698
+        }
+      }
+    ],
+    "bar": {
+      "x": 0,
+      "y": 560,
+      "right": 1280,
+      "bottom": 720
+    },
+    "objective": "Phase 1/4 · Build your barracks and field two living land combatants. Gather wood and gold; add supply before training more troops.",
+    "physicalSelectionMoveHoldStop": true,
+    "audio": {
+      "status": {
+        "state": "suspended",
+        "loaded": 18,
+        "music": true,
+        "effects": 1,
+        "phase": "paused",
+        "settings": {
+          "master": 0.65,
+          "effects": 0.7,
+          "music": 0.35,
+          "voices": 0.65,
+          "muted": false
+        }
+      },
+      "buffers": [
+        {
+          "id": "animal-deer",
+          "seconds": 0.65,
+          "peak": 0.18992257118225098,
+          "rms": 0.08019331917188396,
+          "clipped": 0
+        },
+        {
+          "id": "animal-rabbit",
+          "seconds": 0.22,
+          "peak": 0.1590917408466339,
+          "rms": 0.0673305626974031,
+          "clipped": 0
+        },
+        {
+          "id": "animal-fox",
+          "seconds": 0.4,
+          "peak": 0.05877823010087013,
+          "rms": 0.022127253722392177,
+          "clipped": 0
+        },
+        {
+          "id": "music",
+          "seconds": 16,
+          "peak": 0.23845234513282776,
+          "rms": 0.08692514376616274,
+          "clipped": 0
+        },
+        {
+          "id": "command",
+          "seconds": 0.12933333333333333,
+          "peak": 0.12529456615447998,
+          "rms": 0.06391465626013226,
+          "clipped": 0
+        },
+        {
+          "id": "impact",
+          "seconds": 0.17066666666666666,
+          "peak": 0.46730297803878784,
+          "rms": 0.11745412301305545,
+          "clipped": 0
+        },
+        {
+          "id": "complete",
+          "seconds": 0.48933333333333334,
+          "peak": 0.11800354719161987,
+          "rms": 0.03290425843477952,
+          "clipped": 0
+        },
+        {
+          "id": "victory",
+          "seconds": 0.9973333333333333,
+          "peak": 0.07149291038513184,
+          "rms": 0.016424025785478753,
+          "clipped": 0
+        },
+        {
+          "id": "defeat",
+          "seconds": 0.9973333333333333,
+          "peak": 0.05795031040906906,
+          "rms": 0.01607162557046044,
+          "clipped": 0
+        },
+        {
+          "id": "cannon",
+          "seconds": 0.3893333333333333,
+          "peak": 0.4234578013420105,
+          "rms": 0.12221832909939366,
+          "clipped": 0
+        },
+        {
+          "id": "splash",
+          "seconds": 0.48933333333333334,
+          "peak": 0.22565411031246185,
+          "rms": 0.05282755062067928,
+          "clipped": 0
+        },
+        {
+          "id": "gather",
+          "seconds": 0.11733333333333333,
+          "peak": 0.19760006666183472,
+          "rms": 0.05388513241825766,
+          "clipped": 0
+        },
+        {
+          "id": "build",
+          "seconds": 0.14933333333333335,
+          "peak": 0.24950644373893738,
+          "rms": 0.08546180036398385,
+          "clipped": 0
+        },
+        {
+          "id": "train",
+          "seconds": 0.3393333333333333,
+          "peak": 0.09891617298126221,
+          "rms": 0.03417411077015131,
+          "clipped": 0
+        },
+        {
+          "id": "melee",
+          "seconds": 0.21866666666666668,
+          "peak": 0.20577889680862427,
+          "rms": 0.04660759862593437,
+          "clipped": 0
+        },
+        {
+          "id": "bow",
+          "seconds": 0.18933333333333333,
+          "peak": 0.18291257321834564,
+          "rms": 0.050995714516078296,
+          "clipped": 0
+        },
+        {
+          "id": "siege",
+          "seconds": 0.496,
+          "peak": 0.22194921970367432,
+          "rms": 0.06122795465740062,
+          "clipped": 0
+        },
+        {
+          "id": "buildingHit",
+          "seconds": 0.37333333333333335,
+          "peak": 0.4479994773864746,
+          "rms": 0.10791828911666979,
+          "clipped": 0
+        }
+      ]
+    },
+    "actualListening": false,
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "id": "the-crossing",
+    "faction": "goblins",
+    "icons": [
+      {
+        "id": "build-wall",
+        "icon": "goblins:build-wall",
+        "loaded": true,
+        "rect": {
+          "x": 553.875,
+          "y": 570,
+          "right": 597.875,
+          "bottom": 610
+        }
+      },
+      {
+        "id": "build-gate",
+        "icon": "goblins:build-gate",
+        "loaded": true,
+        "rect": {
+          "x": 601.875,
+          "y": 570,
+          "right": 645.875,
+          "bottom": 610
+        }
+      },
+      {
+        "id": "build-tower",
+        "icon": "goblins:build-tower",
+        "loaded": true,
+        "rect": {
+          "x": 649.875,
+          "y": 570,
+          "right": 693.875,
+          "bottom": 610
+        }
+      },
+      {
+        "id": "build-barracks",
+        "icon": "goblins:build-barracks",
+        "loaded": true,
+        "rect": {
+          "x": 553.875,
+          "y": 614,
+          "right": 597.875,
+          "bottom": 654
+        }
+      },
+      {
+        "id": "build-farm",
+        "icon": "goblins:build-farm",
+        "loaded": true,
+        "rect": {
+          "x": 601.875,
+          "y": 614,
+          "right": 645.875,
+          "bottom": 654
+        }
+      },
+      {
+        "id": "build-forge",
+        "icon": "goblins:build-forge",
+        "loaded": true,
+        "rect": {
+          "x": 649.875,
+          "y": 614,
+          "right": 693.875,
+          "bottom": 654
+        }
+      },
+      {
+        "id": "build-harbor",
+        "icon": "goblins:build-harbor",
+        "loaded": true,
+        "rect": {
+          "x": 553.875,
+          "y": 658,
+          "right": 597.875,
+          "bottom": 698
+        }
+      },
+      {
+        "id": "repair-building",
+        "icon": "goblins:repair-building",
+        "loaded": true,
+        "rect": {
+          "x": 457.875,
+          "y": 570,
+          "right": 499.875,
+          "bottom": 610
+        }
+      },
+      {
+        "id": "hold-position",
+        "icon": "goblins:hold-position",
+        "loaded": true,
+        "rect": {
+          "x": 503.875,
+          "y": 570,
+          "right": 545.875,
+          "bottom": 610
+        }
+      },
+      {
+        "id": "patrol-units",
+        "icon": "goblins:patrol-units",
+        "loaded": true,
+        "rect": {
+          "x": 457.875,
+          "y": 614,
+          "right": 499.875,
+          "bottom": 654
+        }
+      },
+      {
+        "id": "stop-units",
+        "icon": "goblins:stop-units",
+        "loaded": true,
+        "rect": {
+          "x": 503.875,
+          "y": 614,
+          "right": 545.875,
+          "bottom": 654
+        }
+      },
+      {
+        "id": "dismiss-units",
+        "icon": "goblins:dismiss-units",
+        "loaded": true,
+        "rect": {
+          "x": 457.875,
+          "y": 658,
+          "right": 499.875,
+          "bottom": 698
+        }
+      }
+    ],
+    "bar": {
+      "x": 0,
+      "y": 560,
+      "right": 1280,
+      "bottom": 720
+    },
+    "objective": "Phase 1/4 · Build your barracks and field two living land combatants. Gather wood and gold; add supply before training more troops.",
+    "physicalSelectionMoveHoldStop": true,
+    "audio": {
+      "status": {
+        "state": "suspended",
+        "loaded": 18,
+        "music": true,
+        "effects": 1,
+        "phase": "paused",
+        "settings": {
+          "master": 0.65,
+          "effects": 0.7,
+          "music": 0.35,
+          "voices": 0.65,
+          "muted": false
+        }
+      },
+      "buffers": [
+        {
+          "id": "animal-deer",
+          "seconds": 0.65,
+          "peak": 0.18992257118225098,
+          "rms": 0.08019331917188396,
+          "clipped": 0
+        },
+        {
+          "id": "animal-rabbit",
+          "seconds": 0.22,
+          "peak": 0.1590917408466339,
+          "rms": 0.0673305626974031,
+          "clipped": 0
+        },
+        {
+          "id": "animal-fox",
+          "seconds": 0.4,
+          "peak": 0.05877823010087013,
+          "rms": 0.022127253722392177,
+          "clipped": 0
+        },
+        {
+          "id": "music",
+          "seconds": 16,
+          "peak": 0.23845234513282776,
+          "rms": 0.08692514376616274,
+          "clipped": 0
+        },
+        {
+          "id": "command",
+          "seconds": 0.12933333333333333,
+          "peak": 0.12529456615447998,
+          "rms": 0.06391465626013226,
+          "clipped": 0
+        },
+        {
+          "id": "impact",
+          "seconds": 0.17066666666666666,
+          "peak": 0.46730297803878784,
+          "rms": 0.11745412301305545,
+          "clipped": 0
+        },
+        {
+          "id": "complete",
+          "seconds": 0.48933333333333334,
+          "peak": 0.11800354719161987,
+          "rms": 0.03290425843477952,
+          "clipped": 0
+        },
+        {
+          "id": "victory",
+          "seconds": 0.9973333333333333,
+          "peak": 0.07149291038513184,
+          "rms": 0.016424025785478753,
+          "clipped": 0
+        },
+        {
+          "id": "defeat",
+          "seconds": 0.9973333333333333,
+          "peak": 0.05795031040906906,
+          "rms": 0.01607162557046044,
+          "clipped": 0
+        },
+        {
+          "id": "cannon",
+          "seconds": 0.3893333333333333,
+          "peak": 0.4234578013420105,
+          "rms": 0.12221832909939366,
+          "clipped": 0
+        },
+        {
+          "id": "splash",
+          "seconds": 0.48933333333333334,
+          "peak": 0.22565411031246185,
+          "rms": 0.05282755062067928,
+          "clipped": 0
+        },
+        {
+          "id": "gather",
+          "seconds": 0.11733333333333333,
+          "peak": 0.19760006666183472,
+          "rms": 0.05388513241825766,
+          "clipped": 0
+        },
+        {
+          "id": "build",
+          "seconds": 0.14933333333333335,
+          "peak": 0.24950644373893738,
+          "rms": 0.08546180036398385,
+          "clipped": 0
+        },
+        {
+          "id": "train",
+          "seconds": 0.3393333333333333,
+          "peak": 0.09891617298126221,
+          "rms": 0.03417411077015131,
+          "clipped": 0
+        },
+        {
+          "id": "melee",
+          "seconds": 0.21866666666666668,
+          "peak": 0.20577889680862427,
+          "rms": 0.04660759862593437,
+          "clipped": 0
+        },
+        {
+          "id": "bow",
+          "seconds": 0.18933333333333333,
+          "peak": 0.18291257321834564,
+          "rms": 0.050995714516078296,
+          "clipped": 0
+        },
+        {
+          "id": "siege",
+          "seconds": 0.496,
+          "peak": 0.22194921970367432,
+          "rms": 0.06122795465740062,
+          "clipped": 0
+        },
+        {
+          "id": "buildingHit",
+          "seconds": 0.37333333333333335,
+          "peak": 0.4479994773864746,
+          "rms": 0.10791828911666979,
+          "clipped": 0
+        }
+      ]
+    },
+    "actualListening": false,
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "id": "coastal-banner",
+    "faction": "crown",
+    "icons": [
+      {
+        "id": "build-wall",
+        "icon": "crown:build-wall",
+        "loaded": true,
+        "rect": {
+          "x": 553.875,
+          "y": 570,
+          "right": 597.875,
+          "bottom": 610
+        }
+      },
+      {
+        "id": "build-gate",
+        "icon": "crown:build-gate",
+        "loaded": true,
+        "rect": {
+          "x": 601.875,
+          "y": 570,
+          "right": 645.875,
+          "bottom": 610
+        }
+      },
+      {
+        "id": "build-tower",
+        "icon": "crown:build-tower",
+        "loaded": true,
+        "rect": {
+          "x": 649.875,
+          "y": 570,
+          "right": 693.875,
+          "bottom": 610
+        }
+      },
+      {
+        "id": "build-barracks",
+        "icon": "crown:build-barracks",
+        "loaded": true,
+        "rect": {
+          "x": 553.875,
+          "y": 614,
+          "right": 597.875,
+          "bottom": 654
+        }
+      },
+      {
+        "id": "build-farm",
+        "icon": "crown:build-farm",
+        "loaded": true,
+        "rect": {
+          "x": 601.875,
+          "y": 614,
+          "right": 645.875,
+          "bottom": 654
+        }
+      },
+      {
+        "id": "build-forge",
+        "icon": "crown:build-forge",
+        "loaded": true,
+        "rect": {
+          "x": 649.875,
+          "y": 614,
+          "right": 693.875,
+          "bottom": 654
+        }
+      },
+      {
+        "id": "build-harbor",
+        "icon": "crown:build-harbor",
+        "loaded": true,
+        "rect": {
+          "x": 553.875,
+          "y": 658,
+          "right": 597.875,
+          "bottom": 698
+        }
+      },
+      {
+        "id": "repair-building",
+        "icon": "crown:repair-building",
+        "loaded": true,
+        "rect": {
+          "x": 457.875,
+          "y": 570,
+          "right": 499.875,
+          "bottom": 610
+        }
+      },
+      {
+        "id": "hold-position",
+        "icon": "crown:hold-position",
+        "loaded": true,
+        "rect": {
+          "x": 503.875,
+          "y": 570,
+          "right": 545.875,
+          "bottom": 610
+        }
+      },
+      {
+        "id": "patrol-units",
+        "icon": "crown:patrol-units",
+        "loaded": true,
+        "rect": {
+          "x": 457.875,
+          "y": 614,
+          "right": 499.875,
+          "bottom": 654
+        }
+      },
+      {
+        "id": "stop-units",
+        "icon": "crown:stop-units",
+        "loaded": true,
+        "rect": {
+          "x": 503.875,
+          "y": 614,
+          "right": 545.875,
+          "bottom": 654
+        }
+      },
+      {
+        "id": "dismiss-units",
+        "icon": "crown:dismiss-units",
+        "loaded": true,
+        "rect": {
+          "x": 457.875,
+          "y": 658,
+          "right": 499.875,
+          "bottom": 698
+        }
+      }
+    ],
+    "bar": {
+      "x": 0,
+      "y": 560,
+      "right": 1280,
+      "bottom": 720
+    },
+    "objective": "Phase 1/5 · Build your barracks and field two living land combatants. Gather wood and gold; add supply before training more troops.",
+    "physicalSelectionMoveHoldStop": true,
+    "audio": {
+      "status": {
+        "state": "suspended",
+        "loaded": 18,
+        "music": true,
+        "effects": 1,
+        "phase": "paused",
+        "settings": {
+          "master": 0.65,
+          "effects": 0.7,
+          "music": 0.35,
+          "voices": 0.65,
+          "muted": false
+        }
+      },
+      "buffers": [
+        {
+          "id": "animal-deer",
+          "seconds": 0.65,
+          "peak": 0.18992257118225098,
+          "rms": 0.08019331917188396,
+          "clipped": 0
+        },
+        {
+          "id": "animal-rabbit",
+          "seconds": 0.22,
+          "peak": 0.1590917408466339,
+          "rms": 0.0673305626974031,
+          "clipped": 0
+        },
+        {
+          "id": "animal-fox",
+          "seconds": 0.4,
+          "peak": 0.05877823010087013,
+          "rms": 0.022127253722392177,
+          "clipped": 0
+        },
+        {
+          "id": "music",
+          "seconds": 16,
+          "peak": 0.23845234513282776,
+          "rms": 0.08692514376616274,
+          "clipped": 0
+        },
+        {
+          "id": "command",
+          "seconds": 0.12933333333333333,
+          "peak": 0.12529456615447998,
+          "rms": 0.06391465626013226,
+          "clipped": 0
+        },
+        {
+          "id": "impact",
+          "seconds": 0.17066666666666666,
+          "peak": 0.46730297803878784,
+          "rms": 0.11745412301305545,
+          "clipped": 0
+        },
+        {
+          "id": "complete",
+          "seconds": 0.48933333333333334,
+          "peak": 0.11800354719161987,
+          "rms": 0.03290425843477952,
+          "clipped": 0
+        },
+        {
+          "id": "victory",
+          "seconds": 0.9973333333333333,
+          "peak": 0.07149291038513184,
+          "rms": 0.016424025785478753,
+          "clipped": 0
+        },
+        {
+          "id": "defeat",
+          "seconds": 0.9973333333333333,
+          "peak": 0.05795031040906906,
+          "rms": 0.01607162557046044,
+          "clipped": 0
+        },
+        {
+          "id": "cannon",
+          "seconds": 0.3893333333333333,
+          "peak": 0.4234578013420105,
+          "rms": 0.12221832909939366,
+          "clipped": 0
+        },
+        {
+          "id": "splash",
+          "seconds": 0.48933333333333334,
+          "peak": 0.22565411031246185,
+          "rms": 0.05282755062067928,
+          "clipped": 0
+        },
+        {
+          "id": "gather",
+          "seconds": 0.11733333333333333,
+          "peak": 0.19760006666183472,
+          "rms": 0.05388513241825766,
+          "clipped": 0
+        },
+        {
+          "id": "build",
+          "seconds": 0.14933333333333335,
+          "peak": 0.24950644373893738,
+          "rms": 0.08546180036398385,
+          "clipped": 0
+        },
+        {
+          "id": "train",
+          "seconds": 0.3393333333333333,
+          "peak": 0.09891617298126221,
+          "rms": 0.03417411077015131,
+          "clipped": 0
+        },
+        {
+          "id": "melee",
+          "seconds": 0.21866666666666668,
+          "peak": 0.20577889680862427,
+          "rms": 0.04660759862593437,
+          "clipped": 0
+        },
+        {
+          "id": "bow",
+          "seconds": 0.18933333333333333,
+          "peak": 0.18291257321834564,
+          "rms": 0.050995714516078296,
+          "clipped": 0
+        },
+        {
+          "id": "siege",
+          "seconds": 0.496,
+          "peak": 0.22194921970367432,
+          "rms": 0.06122795465740062,
+          "clipped": 0
+        },
+        {
+          "id": "buildingHit",
+          "seconds": 0.37333333333333335,
+          "peak": 0.4479994773864746,
+          "rms": 0.10791828911666979,
+          "clipped": 0
+        }
+      ]
+    },
+    "actualListening": false,
+    "errors": []
+  }
+]

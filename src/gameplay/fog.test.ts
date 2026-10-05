@@ -30,3 +30,14 @@ describe('team visibility and explored memory',()=>{
   s.fog=fog;const fresh=createMatch('skirmish');expect(fresh.fog!.teams.enemy.explored.some(Boolean)).toBe(true);expect(createMatch().fog!.teams.enemy.explored.some(Boolean)).toBe(false);expect(fresh.fog!.teams.player.explored).not.toBe(fog.teams.player.explored);
  });
 });
+it('overlapping ground/air observers preserve the visibility union per owner through occlusion and removal',()=>{
+ const fog=createFog({width:640,height:640}),blockers=[{x:288,y:96,width:64,height:256}],observers=[
+  {id:'ground-west',owner:'player' as const,position:{x:240,y:240},radius:180},
+  {id:'ground-east',owner:'player' as const,position:{x:400,y:240},radius:180},
+  {id:'air',owner:'player' as const,position:{x:320,y:240},radius:120,airborne:true as const},
+  {id:'hostile',owner:'enemy' as const,position:{x:320,y:440},radius:160},
+ ];
+ const singles=observers.map(o=>updateFog(fog,[o],blockers)),combined=updateFog(fog,observers,blockers),reversed=updateFog(fog,[...observers].reverse(),blockers);
+ for(const owner of ['player','enemy'] as const){const union=fog.teams[owner].visible.map((_,i)=>singles.some(f=>f.teams[owner].visible[i]));expect(combined.teams[owner].visible).toEqual(union);expect(reversed.teams[owner].visible).toEqual(union);}
+ const removed=updateFog(combined,[observers[3]],blockers);expect(removed.teams.player.visible.every(v=>!v)).toBe(true);expect(removed.teams.player.explored).toEqual(combined.teams.player.explored);
+});
