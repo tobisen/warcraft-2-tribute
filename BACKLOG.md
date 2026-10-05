@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**CI-korrigering efter RTS-173 (2026-10-05):** Användaren rapporterar flera röda pushar. Senaste GitHub-jobbet fallerar enbart på femsekunderstimeout i factionArt-testet; äldre air-assertions är rättade i173. Samma uttömmande assetkontroller delas i16 faction/type/owner-fall, utan höjd timeout eller ändrade assets/runtime. Riktade17/1, unit450/79 och build/strict typecheck/diff PASS lokalt. Ny GitHub-fullregression verifieras efter push;174 startas inte.
+**CI-korrigering efter RTS-173 (2026-10-05):** Användaren rapporterar flera röda pushar. Senaste GitHub-jobbet fallerar enbart på femsekunderstimeout i factionArt-testet; äldre air-assertions är rättade i173. Samma uttömmande assetkontroller delas i16 faction/type/owner-fall, utan höjd timeout eller ändrade assets/runtime. Riktade17/1, unit450/79 och build/strict typecheck/diff PASS lokalt. Fix `b79d1fd` pushad. Ny [GitHub-fullregression/build/Pages-deploy](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37300780990) PASS; teststeget12m05s.174 startas inte.
 
 **Aktuellt mandat RTS-170–173:** Nytt uttryckligt uppdrag ersätter stoppet efter169.170–173 Done; etappen avslutad före174. En task åt gången med riktade tester/browser, slutchecks, docs och commit/push till origin/main. Stopp efter173 med HANDOFF;174 startas inte.160–164 och165–169 återimplementeras inte. Befintlig style.css och otrackade docs/ bevaras.
 
