@@ -1,6 +1,6 @@
 # RTS-186 klar
 
-185 push7b7e9fc;186 flöde/innehållsspärrar klar. Riktade138/12, unit468/84, strict build/diff och fem raser×800/1920/3440 browser PASS. UI+gameplay+hotkeys spärrade; positiv hotkeykontroll.40 nya taktiska mål/queues fixturetestade, inte40 mänskligt/betalt genomspelade kampanjer. Nästa187 flera AI-menyn och slutregression. CSS/docs bevaras.
+185 push7b7e9fc;186 flöde/innehållsspärrar klar. Riktade138/12, unit468/84, strict build/diff och fem raser×800/1920/3440 browser PASS. UI+gameplay+hotkeys spärrade; positiv hotkeykontroll PASS med explicit100wood-fixtur.40 nya taktiska mål/queues fixturetestade, inte40 mänskligt/betalt genomspelade kampanjer. Nästa187 flera AI-menyn och slutregression. CSS/docs bevaras.
 
 # RTS-185 klar
 

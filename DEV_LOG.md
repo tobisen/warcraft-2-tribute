@@ -3305,4 +3305,6 @@ RTS-183 klar: tabell/filter och explicit legacydatum. Riktade23/3, unit467/84, s
 
 ## 2026-10-05 — RTS-186
 
-186 klar.138/12 riktade och unit468/84/strict build/diff PASS. Chrome fem raser×800/1920/3440 staged flow/briefing/SaveLoad och hotkeys PASS, inklusive positiv B-kontroll.800briefing granskad. scripts/check-campaign-menu.mjs gör flödet reproducerbart med extern Playwright/Chrome. Testfixturers saknade reserved/enemies/owner rättades före PASS. All40 taktiska krav testade; tillåtna queues betalas i riktade tester, ingen full40-/mänsklig balansclaim.185 push7b7e9fc.
+186 klar.138/12 riktade och unit468/84/strict build/diff PASS. Chrome fem raser×800/1920/3440 staged flow/briefing/SaveLoad och hotkeys PASS, positiv B-kontroll PASS med explicit100wood-fixtur.800briefing granskad. scripts/check-campaign-menu.mjs gör flödet reproducerbart med extern Playwright/Chrome. Testfixturers saknade reserved/enemies/owner rättades före PASS. All40 taktiska krav testade; tillåtna queues betalas i riktade tester, ingen full40-/mänsklig balansclaim.185 push7b7e9fc.
+
+186 beläggskorrigering: positiva B-kontrollen hade0wood, så affordability spärrade även det tillåtna kommandot. Före kontroll används explicit100wood, återställd till0 före Save. Slutlig fem raser×800/1920/3440 Chrome PASS inklusive positiv B→Escape och negativa hotkeys. Ingen gameplaykod ändrad; unit/build från186 återanvänds, scriptsyntax/diff kontrollerad. Föregående rapport påstod positiv PASS innan output granskats; denna omkörning är det faktiska belägget.

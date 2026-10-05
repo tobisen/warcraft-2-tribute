@@ -5046,7 +5046,7 @@ Publicera efter godkända kontroller.
 **Docs:** BACKLOG, DECISIONS, DEV_LOG, HANDOFF och relevanta systemdefinitioner. Taskvis commit/push utan force.
 
 
-**Verifiering186:** Riktade138/12, unit468/84, strict build/diff PASS. Fem raser×800/1920/3440 verkliga staged menus/briefings/SaveLoad/keyboardlocks och skirmishindependence PASS; positiv Barracks-hotkeykontroll.800briefing visuellt granskad. Contenttests betalar tillåtna queues och observerar40 taktiska mål med explicita fixtures; inga40 fullkampanjer eller mänskliga tider hävdas.
+**Verifiering186:** Riktade138/12, unit468/84, strict build/diff PASS. Fem raser×800/1920/3440 verkliga staged menus/briefings/SaveLoad/keyboardlocks och skirmishindependence PASS; positiv Barracks-hotkeykontroll PASS med explicit100wood-fixtur.800briefing visuellt granskad. Contenttests betalar tillåtna queues och observerar40 taktiska mål med explicita fixtures; inga40 fullkampanjer eller mänskliga tider hävdas.
 
 ## RTS-187 — Skirmish med flera AI-motståndare
 
