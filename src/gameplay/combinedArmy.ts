@@ -16,7 +16,7 @@ export function prepareArmyPlan(m:MatchState):MatchState {
  const visibleUnits=m.gathering.units.filter(u=>(u.hp??0)>0&&(!m.fog||entityVisible(m.fog,'enemy',u)));
  if(visibleUnits.some(isAir))weights.archer=Math.max(weights.archer,4);
  if(visibleUnits.filter(u=>u.kind==='soldier'&&u.archetype!=='archer'&&!isAir(u)).length>=4){weights.archer=Math.max(weights.archer,3);weights.specialist=2;}
- const visibleDefense=m.placement.defenses?.some(t=>t.hp>0&&(!m.fog||entityVisible(m.fog,'enemy',{position:{x:t.footprint.x+t.footprint.width/2,y:t.footprint.y+t.footprint.height/2},footprint:t.footprint})));
+ const visibleDefense=m.aiContext?.humanHostile!==false&&m.placement.defenses?.some(t=>t.hp>0&&(!m.fog||entityVisible(m.fog,'enemy',{position:{x:t.footprint.x+t.footprint.width/2,y:t.footprint.y+t.footprint.height/2},footprint:t.footprint})));
  if(visibleDefense)weights.catapult=3;
  return {...m,armyPlan:{weights,nextDecisionSeconds:m.waves.elapsedSeconds+combinedArmyConfig.decisionSeconds}};
 }

@@ -1,0 +1,2 @@
+#minimap-player-legend { display: flex; justify-content: space-between; gap: 3px; font: 10px/1.3 sans-serif; padding: 2px 3px; background: #182a24; }
+#minimap-player-legend:empty { display: none; }

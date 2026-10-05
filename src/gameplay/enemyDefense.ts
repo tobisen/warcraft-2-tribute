@@ -22,8 +22,9 @@ export function updateEnemyDefense(state:EnemyAIState,combat:CombatState,map:Wor
  if(base)for(const e of [...produced].sort((a,b)=>Math.hypot(a.position.x-base.position.x,a.position.y-base.position.y)-Math.hypot(b.position.x-base.position.x,b.position.y-base.position.y)||a.id.localeCompare(b.id,'en',{numeric:true}))){
   if(reserve.length>=settings.reserveCount)break;if(!reserve.includes(e.id))reserve.push(e.id);
  }
- const threats=base?.footprint?player.filter(u=>u.kind==='soldier'&&u.hp>0&&visible(u,base)&&footprintDistance(u.position,base.footprint!)<=settings.defenseRange)
-  .sort((a,b)=>footprintDistance(a.position,base.footprint!)-footprintDistance(b.position,base.footprint!)||a.id.localeCompare(b.id,'en',{numeric:true})):[];
+ const dangerDistance=(u:Unit)=>Math.min(base?.footprint?footprintDistance(u.position,base.footprint):Infinity,...(settings.helpBases??[]).map(f=>footprintDistance(u.position,f)));
+ const threats=base?.footprint?player.filter(u=>u.kind==='soldier'&&u.hp>0&&visible(u,base)&&dangerDistance(u)<=settings.defenseRange)
+  .sort((a,b)=>dangerDistance(a)-dangerDistance(b)||a.id.localeCompare(b.id,'en',{numeric:true})):[];
  const reachableThreats=threats.filter(u=>{const size=u.kind==='soldier'?combatUnitStats(u).size:24,foot={x:u.position.x-size/2,y:u.position.y-size/2,width:size,height:size};return produced.some(e=>canAttackDomain(e,u,faction)&&approachRoute({...movementMap(map,e),ignoreAttackOcclusion:isAir(u),bodyHalf:enemyUnitStats(e,faction).size/2},e.position,foot,enemyUnitStats(e,faction).range).status!=='blocked');});
  const threat=reachableThreats.find(u=>u.id===state.threatId)??reachableThreats[0];
  const release=(d:Defender)=>{

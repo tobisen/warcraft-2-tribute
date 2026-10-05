@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**Aktuellt mandat RTS-174–176:** Användaren återupptar174–176 efter färdiga PRIO-01–04.174 Done;175 nästa,176 Todo. En task åt gången, riktade tester/browser, slutchecks/docs och commit/push. HANDOFF efter176; stopp före177. CSS/docs bevaras.
+**Aktuellt mandat RTS-174–176:** Användaren återupptar174–176 efter färdiga PRIO-01–04.174 Done/push416cfa9;175 Done,176 nästa. En task åt gången, riktade tester/browser, slutchecks/docs och commit/push. HANDOFF efter176; stopp före177. CSS/docs bevaras.
 
 **Nytt prioriterat mandat PRIO-01–04:** RTS-174–176 pausade enligt användarens nya uppdrag. PRIO-01–04 Done. Användaren har godkänt kartorna och djurljuden tills resterande ljudarbete genomförs. En task åt gången, docs/checks/browser/commit/push; stopp efter04,174 startas inte. PRIO-03:s två bildreferenser är godkända; referenskarta verifieras före spridning. Användarens CSS/docs bevaras.
 
@@ -4813,7 +4813,7 @@ Verifiera targeting, fog of war, minimap och statistik.
 
 ## RTS-175 – Lag och allierad AI
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Lag och allierad AI.
 
@@ -4827,6 +4827,8 @@ Allierade attackerar inte varandra automatiskt.
 **Acceptance Criteria:** Fasta lag, tydliga färger och definierad delning av vision. Allierade attackerar inte varandra automatiskt.
 
 **Dependencies:** RTS-174. Befintliga relevanta system återanvänds efter inventering.
+
+**Leverans:** Individuella team-ID:n, delad aktuell/utforskad vision, central ally/enemy-regel för attack/spells/splash, egen kontroll/repair och allierad passage genom öppna portar. AI hjälper vid synliga angrepp nära allierad bas. Save49 sparar relationer/vision; lagutfall hör till176. Native800/1280 verifierat i artifacts/rts-175/browser.json.
 
 **Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
 

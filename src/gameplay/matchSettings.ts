@@ -3,7 +3,7 @@ import {validatePlayerStarts} from './players';
 import {isAIProfile} from '../config/aiProfiles';
 import {isMapId} from '../config/maps';
 import {isGameSpeed} from '../config/gameSpeed';
-import {isFactionId} from '../config/factions';
+import {isFactionId,factionsForPlayer,defaultFactions} from '../config/factions';
 import {scenarioConfig,scenarioMapAllowed} from '../config/scenarios';
 import {difficultyProfiles} from '../config/difficulty';
 import type {MatchOptions} from './session';
@@ -18,7 +18,7 @@ export function patchMatchOptions(current:MatchOptions,patch:Partial<MatchOption
  const next={...current,...patch};if(patch.scenario!==undefined&&patch.scenario!=='skirmish'&&patch.map===undefined)next.map=scenarioConfig[patch.scenario].map;
  if(next.players){
   if(!supportedPlayerCounts(next.map,next.scenario).includes(next.players.length))next.players=undefined;
-  else next.players=next.players.map((p,i)=>({...p,...(i===0&&patch.faction?{faction:patch.faction}:{}),...(i===1?{...(patch.enemyFaction?{faction:patch.enemyFaction}:{}),...(patch.aiProfile?{profile:patch.aiProfile}:{})}:{})}));
+  else {const factions=factionsForPlayer(next.faction??defaultFactions.player,next.enemyFaction);next.players=next.players.map((p,i)=>({...p,...(i===0?{faction:factions.player}:{}),...(i===1?{faction:factions.enemy,...(patch.aiProfile?{profile:patch.aiProfile}:{})}:{})}));}
  }
  return validMatchOptions(next)?next:null;
 }
@@ -26,5 +26,5 @@ export function patchMatchOptions(current:MatchOptions,patch:Partial<MatchOption
 export function validPlayers(value:unknown,options:Record<string,unknown>):boolean{
  if(!Array.isArray(value)||!isMapId(options.map)||!supportedPlayerCounts(options.map,String(options.scenario)).includes(value.length))return false;
  const ids=['player','enemy','ai-2'];
- return value.every((p,i)=>p&&typeof p==='object'&&Object.keys(p).every(k=>['id','controller','faction','color','profile'].includes(k))&&p.id===ids[i]&&p.controller===(i===0?'human':'ai')&&isFactionId(p.faction)&&isAIProfile(p.profile)&&p.color===playerColors[i])&&validatePlayerStarts(options.map,value);
+ return value.every((p,i)=>p&&typeof p==='object'&&Object.keys(p).every(k=>['id','controller','faction','color','profile','teamId'].includes(k))&&p.id===ids[i]&&p.controller===(i===0?'human':'ai')&&isFactionId(p.faction)&&isAIProfile(p.profile)&&p.color===playerColors[i]&&(p.teamId===undefined||Number.isInteger(p.teamId)&&p.teamId>=1&&p.teamId<=3))&&new Set(value.map((p,i)=>p.teamId??i+1)).size>1&&validatePlayerStarts(options.map,value);
 }

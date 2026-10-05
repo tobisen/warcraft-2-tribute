@@ -282,8 +282,9 @@ export class BootScene extends Phaser.Scene {
     const changeScenario=()=>{if(!playableScenarios.includes(this.scenarioSelect.value as MatchScenario))return;this.session=changeOptions(this.session,{scenario:this.scenarioSelect.value as MatchScenario});this.scenario=this.session.options.scenario;this.syncSession();};
     const playerCount=document.getElementById('player-count-select') as HTMLSelectElement;
     const secondFaction=document.getElementById('ai-2-faction-select') as HTMLSelectElement,secondProfile=document.getElementById('ai-2-profile-select') as HTMLSelectElement;
-    const changePlayers=()=>{if(this.session.phase!=='menu')return;const count=Number(playerCount.value),roster=matchPlayers(this.factions,this.session.options.aiProfile,count);if(count===3&&isFactionId(secondFaction.value)&&isAIProfile(secondProfile.value)){roster[2]={...roster[2],faction:secondFaction.value,profile:secondProfile.value};}this.session=changeOptions(this.session,{players:count===3?roster:undefined});this.syncSession();};
-    for(const select of [playerCount,secondFaction,secondProfile]){select.addEventListener('change',changePlayers);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>select.removeEventListener('change',changePlayers));}
+    const teamSelects=['player','enemy','ai-2'].map(id=>document.getElementById(`${id}-team-select`) as HTMLSelectElement);
+    const changePlayers=()=>{if(this.session.phase!=='menu')return;const count=Number(playerCount.value),roster=matchPlayers(this.factions,this.session.options.aiProfile,count);if(count===3&&isFactionId(secondFaction.value)&&isAIProfile(secondProfile.value)){roster[2]={...roster[2],faction:secondFaction.value,profile:secondProfile.value};}for(let i=0;i<roster.length;i++)roster[i].teamId=Number(teamSelects[i].value);this.session=changeOptions(this.session,{players:count===3?roster:undefined});this.syncSession();};
+    for(const select of [playerCount,secondFaction,secondProfile,...teamSelects]){select.addEventListener('change',changePlayers);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>select.removeEventListener('change',changePlayers));}
     const mapSelect=document.querySelector<HTMLSelectElement>('#map-select')!;
     const changeMap=()=>{if(this.session.phase==='menu'&&this.session.options.scenario==='skirmish'&&isMapId(mapSelect.value)){this.session=changeOptions(this.session,{map:mapSelect.value});this.syncSession();}};
     mapSelect.addEventListener('change',changeMap);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>mapSelect.removeEventListener('change',changeMap));
@@ -599,10 +600,13 @@ export class BootScene extends Phaser.Scene {
     playerCount.parentElement!.hidden=this.session.options.scenario!=='skirmish';
     playerCount.value=String(this.session.options.players?.length??2);playerCount.disabled=!menu;
     document.getElementById('additional-ai-settings')!.hidden=!this.session.options.players;
+    document.getElementById('team-settings')!.hidden=!this.session.options.players;
+    if(this.session.options.players)for(const p of this.session.options.players){const select=document.getElementById(`${p.id}-team-select`) as HTMLSelectElement;select.value=String(p.teamId);select.disabled=!menu;}
     const secondFaction=document.getElementById('ai-2-faction-select') as HTMLSelectElement,secondProfile=document.getElementById('ai-2-profile-select') as HTMLSelectElement;
     secondFaction.disabled=secondProfile.disabled=!menu;
     if(this.session.options.players){secondFaction.value=this.session.options.players[2].faction;secondProfile.value=this.session.options.players[2].profile;}
-    document.getElementById('player-color-summary')!.textContent=this.session.options.players?'Blue: You · Red: AI 1 · Gold: AI 2':'Blue: You · Red: AI 1';
+    const legend=document.getElementById('minimap-player-legend')!;legend.replaceChildren(...(this.session.options.players??[]).map(p=>{const span=document.createElement('span');span.textContent=`${p.id==='player'?'You':p.id==='enemy'?'AI1':'AI2'} T${p.teamId}`;span.style.color=p.color;return span;}));
+    document.getElementById('player-color-summary')!.textContent=this.session.options.players?this.session.options.players.map(p=>`${p.id==='player'?'Blue: You':p.id==='enemy'?'Red: AI 1':'Gold: AI 2'} · Team ${p.teamId}`).join(' / '):'Blue: You · Red: AI 1';
     const mapSelect=document.querySelector<HTMLSelectElement>('#map-select')!;mapSelect.disabled=!menu||this.session.options.scenario!=='skirmish';mapSelect.value=this.session.options.map;
     const factionSelect=document.querySelector<HTMLSelectElement>('#faction-select')!;factionSelect.disabled=!menu||!!preset;factionSelect.value=shown.faction??defaultFactions.player;const enemyFactionSelect=document.querySelector<HTMLSelectElement>('#enemy-faction-select')!;enemyFactionSelect.disabled=!menu||!!preset;enemyFactionSelect.value=shown.enemyFaction??'';
     this.scenarioSelect.disabled=!menu;this.scenarioSelect.value=this.session.options.scenario==='siege-test'?'survival':this.session.options.scenario;

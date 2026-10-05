@@ -84,19 +84,20 @@ export function combatApproach(map: WorldMap, position: Position, target: Footpr
 const unitFootprint=(position:Position,size:number):Footprint=>({x:position.x-size/2,
   y:position.y-size/2,width:size,height:size});
 
-export interface CombatScope {side:'player'|'enemy';targets?:PlayerTarget[];onDamage?:(damage:Map<string,number>)=>void}
+export interface CombatScope {side:'player'|'enemy';canTarget?:(enemy:Enemy)=>boolean;targets?:PlayerTarget[];onDamage?:(damage:Map<string,number>)=>void}
 
 export function updateCombat(gathering: GatheringState, combat: CombatState, deltaSeconds: number, map?: WorldMap, placement?:PlacementState, visible?:EnemyVisibility,playerVisible:(target:PlayerTarget,enemy:Enemy)=>boolean=()=>true,projectileVisible?:(enemy:Enemy,projectile:Projectile)=>boolean,gateFor?:GateFor,navy?:NavyState,navalVisible:(enemy:Enemy)=>boolean=()=>true,enemyFaction:FactionId='clans',towerVisible:(e:Enemy)=>boolean=()=>!visible,scope?:CombatScope) {
   const delta = Math.max(0, deltaSeconds);
   const damage = new Map<string, number>();
+  const attackableEnemies=combat.enemies.filter(e=>!scope?.canTarget||scope.canTarget(e));
   const player=factions[gathering.faction??'crown'],opponent=factions[enemyFaction];
   const attackMultiplier=combat.upgrades?.attack?player.upgrades.attack.multiplier:1;
   const defenseMultiplier=combat.upgrades?.defense?player.upgrades.defense.multiplier:1;
   let nextProjectileNumber=combat.nextProjectileNumber??1;
-  const naval=prepareNavalCombat(navy,combat.enemies,scope?.side==='enemy'?0:delta,map,nextProjectileNumber,attackMultiplier,navalVisible,player.naval.units.warship);nextProjectileNumber=naval.nextProjectileNumber;
-  const towers=towerShots(placement,combat.enemies,scope?.side==='enemy'?0:delta,nextProjectileNumber,towerVisible);placement=towers.placement;nextProjectileNumber=towers.next;
+  const naval=prepareNavalCombat(navy,attackableEnemies,scope?.side==='enemy'?0:delta,map,nextProjectileNumber,attackMultiplier,navalVisible,player.naval.units.warship);nextProjectileNumber=naval.nextProjectileNumber;
+  const towers=towerShots(placement,attackableEnemies,scope?.side==='enemy'?0:delta,nextProjectileNumber,towerVisible);placement=towers.placement;nextProjectileNumber=towers.next;
   const shots:{projectile:Projectile;time:number}[]=[...naval.shots,...towers.shots];
-  let units = (scope?.side==='enemy'?gathering.units:delta>0?acquireTargets(gathering.units,combat.enemies,map,visible,gathering.faction):gathering.units).map(unit => {
+  let units = (scope?.side==='enemy'?gathering.units:delta>0?acquireTargets(gathering.units,attackableEnemies,map,visible,gathering.faction):gathering.units).map(unit => {
     if(scope?.side==='enemy')return unit;
     if(unit.kind==='soldier'&&unit.attackMoveTarget&&unit.order.kind==='move') {
       const moved=map?updateMappedMove(unit,map,delta,gateFor?.(`player:${unit.id}`),gathering.faction):{...unit,position:moveTowards(unit.position,unit.target,combatUnitStats(unit,gathering.faction).speed,delta)};
@@ -105,7 +106,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
     }
     if(unit.kind==='soldier'&&unit.order.kind==='hunt')return unit;
     if (unit.kind !== 'soldier' || unit.hp <= 0 || unit.order.kind !== 'attack') return unit.kind==='soldier'&&rangedStats(unit,gathering.faction)?{...unit,attackCooldown:Math.max(0,(unit.attackCooldown??0)-delta)}:unit;
-    const enemy = combat.enemies.find(e => e.id === (unit.order.kind === 'attack' ? unit.order.enemyId : '') && e.hp > 0);
+    const enemy = attackableEnemies.find(e => e.id === (unit.order.kind === 'attack' ? unit.order.enemyId : '') && e.hp > 0);
     if (!enemy||!canAttackDomain(unit,enemy,gathering.faction??'crown')||visible&&!visible(enemy,unit)) return { ...unit, autoOrigin:undefined,navigation: undefined, order: { kind: 'idle' as const } };
     const ranged=rangedStats(unit,gathering.faction);
     const range=ranged?.range??combatUnitStats(unit,gathering.faction).range??combatConfig.soldierRange;
@@ -191,7 +192,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
   const enemyProjectileVisible=(body:Enemy,p:Projectile)=>{const target=originalTargets.find(t=>t.id===body.id),shooter=movingEnemies.find(e=>e.id===p.shooterId)??combat.enemies.find(e=>e.id===p.shooterId)??{id:p.shooterId??'historical-shooter',position:p.position,hp:1};return !!target&&playerVisible({...target,footprint:body.footprint??unitFootprint(body.position,target.footprint.width)},shooter);};
   const projectiles:Projectile[]=[];
   const advanceShot=(list:Projectile[],time:number,owner?:'enemy')=>{
-    const advanced=advanceProjectiles(list,owner?ownBodies:movingEnemies,time,map,owner?enemyProjectileVisible:visibleProjectile);
+    const advanced=advanceProjectiles(list,owner?ownBodies:movingEnemies.filter(e=>!scope?.canTarget||scope.canTarget(e)),time,map,owner?enemyProjectileVisible:visibleProjectile);
     projectiles.push(...advanced.projectiles);const amounts=owner?playerDamage:damage;
     for(const [id,amount] of advanced.damage)amounts.set(id,(amounts.get(id)??0)+amount);
   };

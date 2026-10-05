@@ -1788,3 +1788,7 @@ Warshipdefs har explicit targets och damageByDomain.air=.75, transports targets=
 ## RTS-174 — flera aktörer
 
 [players.ts](src/gameplay/players.ts) och [playerconfig](src/config/players.ts) definierar ID/relation/färg och validerade slots. [multiplePlayers.ts](src/gameplay/multiplePlayers.ts) äger separata AI-MatchState-vyer, delad värld/resurslager och snapshotbaserad skadesammanföring. CombatScope styr vem som tickar/skjuter; riktade tester verifierar att AI-projektiler inte tickar två gånger. [multipleSave.ts](src/gameplay/multipleSave.ts) validerar varje aktör via befintlig strikt Save, återbildar globala IDs och den mänskliga UI-vyn. Scenes lagrar denna roster/state tillsammans med övrig matchstate; gameplaykalkylen ligger utanför Phaser. Tvåspelarmatcher och kampanjen följer befintlig updateMatch utan multiplayeradapter.
+
+## RTS-175 — lagvy
+
+players.ts centraliserar teamrelation/kontroll. multiplePlayers delar observer/current/explored-vyer och härleder actor-specifika hostile targets/gate-blocks/helpBases. CombatScope.canTarget skyddar auto/manual/projectile/splash; commandOrders/spells använder samma relation. multipleSave validerar lag och globala attackreferenser. Meny/minimap visar team och separata färger; playerUI.css kompletterar utan ändring av användarens style.css.

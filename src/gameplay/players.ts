@@ -11,16 +11,16 @@ import type {Position} from './movement';
 
 export interface PlayerOwned {playerId?:PlayerId}
 export function ownerOf(entity:PlayerOwned&{owner?:string}):PlayerId{return entity.playerId??(entity.owner==='enemy'?'enemy':'player');}
-/** During free-for-all each distinct player is hostile. RTS-175 adds team relations here. */
-export function playerRelation(a:PlayerId,b:PlayerId):'own'|'enemy'{return a===b?'own':'enemy';}
-export const canControl=(actor:PlayerId,target:PlayerId)=>playerRelation(actor,target)==='own';
-export const canHarm=(actor:PlayerId,target:PlayerId)=>playerRelation(actor,target)==='enemy';
-export const canSupport=(actor:PlayerId,target:PlayerId)=>playerRelation(actor,target)==='own';
+export function playerTeam(id:PlayerId,roster?:readonly PlayerDefinition[]):number{return roster?.find(p=>p.id===id)?.teamId??({'player':1,enemy:2,'ai-2':3} as const)[id];}
+export function playerRelation(a:PlayerId,b:PlayerId,roster?:readonly PlayerDefinition[]):'own'|'ally'|'enemy'{return a===b?'own':playerTeam(a,roster)===playerTeam(b,roster)?'ally':'enemy';}
+export const canControl=(actor:PlayerId,target:PlayerId)=>actor===target;
+export const canHarm=(actor:PlayerId,target:PlayerId,roster?:readonly PlayerDefinition[])=>playerRelation(actor,target,roster)==='enemy';
+export const canSupport=(actor:PlayerId,target:PlayerId,roster?:readonly PlayerDefinition[])=>playerRelation(actor,target,roster)!=='enemy';
 export function matchPlayers(factions:MatchFactions=defaultFactions,profile:AIProfileId='balanced',count=2):PlayerDefinition[]{
  if(count!==2&&count!==3)throw Error('Unsupported player count');
- return [{id:'player',controller:'human',faction:factions.player,color:playerColors[0],profile},
-  {id:'enemy',controller:'ai',faction:factions.enemy,color:playerColors[1],profile},
-  ...(count===3?[{id:'ai-2' as const,controller:'ai' as const,faction:'elves' as const,color:playerColors[2],profile}]:[])];
+ return [{teamId:1,id:'player',controller:'human',faction:factions.player,color:playerColors[0],profile},
+  {teamId:2,id:'enemy',controller:'ai',faction:factions.enemy,color:playerColors[1],profile},
+  ...(count===3?[{teamId:3,id:'ai-2' as const,controller:'ai' as const,faction:'elves' as const,color:playerColors[2],profile}]:[])];
 }
 export function playerStart(map:MapId,id:PlayerId):Position{
  if(id==='player')return {...gatheringConfig.basePosition};

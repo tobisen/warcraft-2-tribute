@@ -1,3 +1,4 @@
+import './presentation/playerUI.css';
 import {bindDisplayControls} from './presentation/displaySettings';
 import {bindReleaseInfo} from './presentation/releaseInfo';
 import {bindResultScreen} from './presentation/resultScreen';

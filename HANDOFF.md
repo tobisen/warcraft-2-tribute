@@ -1,8 +1,10 @@
 # Aktuellt mandat RTS-174–176
 
-174 Done enligt slutliga riktade97/6, unit461/83, strict typecheck/build/diff och browser800/1280 i artifacts/rts-174. Commit med titeln `RTS-174: support independent AI players and stable ownership`; hash rapporteras efter push.175 nästa;176 Todo. Nytt mandat ersätter tidigare paus/stopp efterPRIO04. Bevara användarens CSS/docs; ingen delegering. Efter176 slutlig fullregression/HANDOFF och stopp före177.
+174 Done enligt slutliga riktade97/6, unit461/83, strict typecheck/build/diff och browser800/1280 i artifacts/rts-174. Push416cfa9, faktisk CI37321500841 success.175 Done enligt nedan;176 nästa. Nytt mandat ersätter tidigare paus/stopp efterPRIO04. Bevara användarens CSS/docs; ingen delegering. Efter176 slutlig fullregression/HANDOFF och stopp före177.
 
 Tre spelare stöds på Plains96/128 skirmish; andra kartor fortsatt två. Separata AI-banker/tech/queues/knowledge/fog, FFA relationer, distinct playercolors, cross-AI combat/projectiles och strikt Save48. Lokal browser använder explicit stridsfixture och delvis fryst Scene.update men ordinarie updateMatch, inga nya mänskliga balans-/FPS-/publik Pages-browserbelägg.168–173 ochPRIO01–04 färdiga enligt historiken nedan; tidigare asset-/balansbegränsningar kvarstår.
+
+175 Done: team-ID/menu, shared current/explored vision, individual economy/control, allied immunity (inklusive spells/splash), friendly spells och öppna allierade portar. AI hjälper synliga hot nära allierad bas. Save49. Riktade152/8 och sista43/3 PASS, unit461/83, strict build/diff PASS. Native800/1280 i artifacts/rts-175/browser.json PASS; teams800/shared-vision1280 granskade. Lagutfall/spectator/statistiksummor genomförs i176.
 
 ---
 

@@ -1,0 +1,552 @@
+[
+  {
+    "width": 800,
+    "height": 600,
+    "physicalTeamSettings": true,
+    "shared": {
+      "sameVisible": true,
+      "sameExplored": true,
+      "thirdBaseVisible": true
+    },
+    "independentControl": true,
+    "manualAllyAttackBlocked": true,
+    "physicalFriendlySpellHP": 45,
+    "saveLoadTeams": true,
+    "physicalOpenGate": true,
+    "passage": [
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 650.6564013547028,
+            "y": 487.1247968603963
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 689.5,
+            "y": 496
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 664.2594484269206,
+            "y": 478.70119250412307
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 707,
+            "y": 496
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 677.8624954991384,
+            "y": 470.2775881478498
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 724.5,
+            "y": 496
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 692.0761956381776,
+            "y": 464
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 742,
+            "y": 496
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 708.0761956381776,
+            "y": 464
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 759.5,
+            "y": 496
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 724.0761956381776,
+            "y": 464
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 777,
+            "y": 496
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 740.0761956381776,
+            "y": 464
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 794.5,
+            "y": 496
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 756.0761956381776,
+            "y": 464
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 812,
+            "y": 496
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 772.0761956381776,
+            "y": 464
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 829.5,
+            "y": 496
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 788.0761956381776,
+            "y": 464
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 832,
+            "y": 496
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 804.0761956381776,
+            "y": 464
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 832,
+            "y": 496
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 817.8229301073106,
+            "y": 467.64586021462134
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 832,
+            "y": 496
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 824.97834763531,
+            "y": 477.15669527062
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 832,
+            "y": 496
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 830.5652082589294,
+            "y": 487.3495932017156
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 832,
+            "y": 498.57834863531
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 832,
+            "y": 491.2
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 832,
+            "y": 500.8
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 832,
+            "y": 491.2
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 832,
+            "y": 500.8
+          }
+        }
+      ]
+    ],
+    "explicitUnitGateFixtures": true,
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "height": 720,
+    "physicalTeamSettings": true,
+    "shared": {
+      "sameVisible": true,
+      "sameExplored": true,
+      "thirdBaseVisible": true
+    },
+    "independentControl": true,
+    "manualAllyAttackBlocked": true,
+    "physicalFriendlySpellHP": 45,
+    "saveLoadTeams": true,
+    "physicalOpenGate": true,
+    "passage": [
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 650.6564013547028,
+            "y": 487.1247968603963
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 689.5,
+            "y": 496
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 664.2594484269206,
+            "y": 478.70119250412307
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 707,
+            "y": 496
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 677.8624954991384,
+            "y": 470.2775881478498
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 724.5,
+            "y": 496
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 692.0761956381776,
+            "y": 464
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 742,
+            "y": 496
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 708.0761956381776,
+            "y": 464
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 759.5,
+            "y": 496
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 724.0761956381776,
+            "y": 464
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 777,
+            "y": 496
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 740.0761956381776,
+            "y": 464
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 794.5,
+            "y": 496
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 756.0761956381776,
+            "y": 464
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 812,
+            "y": 496
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 772.0761956381776,
+            "y": 464
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 829.5,
+            "y": 496
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 788.0761956381776,
+            "y": 464
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 832,
+            "y": 496
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 804.0761956381776,
+            "y": 464
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 832,
+            "y": 496
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 817.8229301073106,
+            "y": 467.64586021462134
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 832,
+            "y": 496
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 824.97834763531,
+            "y": 477.15669527062
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 832,
+            "y": 496
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 830.5652082589294,
+            "y": 487.3495932017156
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 832,
+            "y": 498.57834863531
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 832,
+            "y": 491.2
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 832,
+            "y": 500.8
+          }
+        }
+      ],
+      [
+        {
+          "id": "enemy",
+          "position": {
+            "x": 832,
+            "y": 491.2
+          }
+        },
+        {
+          "id": "ai-2",
+          "position": {
+            "x": 832,
+            "y": 500.8
+          }
+        }
+      ]
+    ],
+    "explicitUnitGateFixtures": true,
+    "errors": []
+  }
+]
