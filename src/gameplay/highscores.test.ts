@@ -3,7 +3,7 @@ import {startCampaignMission} from './campaign';
 import {saveConfig as currentSaveConfig} from '../config/save';
 import {expect,it} from 'vitest';
 import {createMatch} from './match';
-import {scoreFor,resultScore,scorePartition,validHighscore,createHighscoreStore,highscoreKey,rankedScores} from './highscores';
+import {scoreFor,resultScore,scorePartition,validHighscore,createHighscoreStore,highscoreKey,rankedScores,filteredScores} from './highscores';
 const id=(n:number)=>`00000000-0000-4000-8000-${String(n).padStart(12,'0')}`;
 const ended=(n=1)=>({...createMatch('skirmish'),matchId:id(n),outcome:'victory' as const});
 it('scoring is outcome/time only, floors gameplay seconds, caps long matches and grants no kill/removal/production bonus',()=>{
@@ -37,4 +37,10 @@ it.each(['forest-watch','the-siege','the-outpost'] as const)('%s: moved campaign
  const score=resultScore(m)!;expect(validHighscore(score)).toBe(true);expect(validHighscore({...score,config:'tribute-config-50'})).toBe(false);
  let writes=0;const memory=new Map<string,string>(),store=createHighscoreStore(()=>({getItem:k=>memory.get(k)??null,setItem:(k,v)=>{writes++;memory.set(k,v);}}));store.load();store.record(m);store.record(m);expect(writes).toBe(1);expect(store.get()).toHaveLength(1);
  expect(validHighscore({...score,map:'arena'})).toBe(true); // Legacy campaign loaded under new rules keeps its historical map.
+});
+
+it('filters exact mode/map/difficulty, ranks ties and preserves missing historical dates',()=>{
+ const a=resultScore(ended(2))!,b=resultScore(ended(1))!;
+ expect(filteredScores([a,b,{...a,difficulty:'beginner'},{...a,map:'forest',goal:'forest'},{...a,kind:'campaign'}],{kind:'skirmish',map:a.map,difficulty:a.difficulty}).map(s=>s.id)).toEqual([b.id,a.id]);
+ const raw=JSON.stringify({version:1,entries:[a]});let saved=raw;const store=createHighscoreStore(()=>({getItem:()=>saved,setItem:(_k,v)=>{saved=v;}}));expect(store.load()[0].recordedAt).toBeUndefined();store.record(ended(3));const entries=JSON.parse(saved).entries;expect(entries[0]).toEqual(a);expect(entries[1].recordedAt).toMatch(/T/);expect(validHighscore(entries[1])).toBe(true);
 });

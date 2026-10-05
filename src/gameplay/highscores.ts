@@ -14,7 +14,7 @@ import type {MatchState} from './match';
 export const highscoreKey='warcraft-2-tribute.highscores.v1';
 export const scoreModel=1;
 export const validMatchId=(v:unknown):v is string=>typeof v==='string'&&/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(v);
-export interface Highscore {players?:PlayerDefinition[];aiProfile?:AIProfileId;id:string;model:1;config:string;kind:'campaign'|'skirmish';goal:string;map:string;difficulty:string;speed:number;player:string;enemy:string;outcome:'victory'|'defeat';seconds:number;score:number;stats:MatchStats}
+export interface Highscore {recordedAt?:string;players?:PlayerDefinition[];aiProfile?:AIProfileId;id:string;model:1;config:string;kind:'campaign'|'skirmish';goal:string;map:string;difficulty:string;speed:number;player:string;enemy:string;outcome:'victory'|'defeat';seconds:number;score:number;stats:MatchStats}
 export const scoreFor=(outcome:'victory'|'defeat',seconds:number)=>outcome==='victory'?10000+Math.max(0,3600-Math.floor(Math.max(0,seconds))):0;
 export function resultScore(m:MatchState):Highscore|null{
  const mission=campaignMission(m.campaignMission);
@@ -38,7 +38,8 @@ function validStats(value:unknown):value is MatchStats{
 }
 export function validHighscore(value:unknown):value is Highscore{
  if(!value||typeof value!=='object'||Array.isArray(value))return false;const s=value as Highscore;
- if((s.aiProfile!==undefined&&!isAIProfile(s.aiProfile))||(s.players!==undefined&&!validPlayers(s.players,{scenario:'skirmish',map:s.map}))||Object.keys(s).filter(k=>k!=='aiProfile'&&k!=='players').sort().join()!=='config,difficulty,enemy,goal,id,kind,map,model,outcome,player,score,seconds,speed,stats')return false;
+ if(s.recordedAt!==undefined&&(typeof s.recordedAt!=='string'||!/^\d{4}-\d{2}-\d{2}T/.test(s.recordedAt)||!Number.isFinite(Date.parse(s.recordedAt))))return false;
+ if((s.aiProfile!==undefined&&!isAIProfile(s.aiProfile))||(s.players!==undefined&&!validPlayers(s.players,{scenario:'skirmish',map:s.map}))||Object.keys(s).filter(k=>k!=='aiProfile'&&k!=='players'&&k!=='recordedAt').sort().join()!=='config,difficulty,enemy,goal,id,kind,map,model,outcome,player,score,seconds,speed,stats')return false;
  if(!validStats(s.stats))return false;
  if(s.players){if(!s.stats?.players||!s.stats.teams)return false;const expected:Record<number,import('./matchStats').TeamStats>={};for(const p of s.players){const stat=s.stats.players[p.id];if(!stat)return false;const team=p.teamId??s.players.indexOf(p)+1;expected[team]=expected[team]?sumStats(expected[team],stat):stat;}if(Object.keys(s.stats.teams).sort().join()!==Object.keys(expected).sort().join()||Object.entries(expected).some(([id,stat])=>JSON.stringify(s.stats.teams![Number(id)])!==JSON.stringify(stat)))return false;}
  const mission=campaignMission(s.goal);
@@ -53,7 +54,10 @@ export function createHighscoreStore(storage:()=>Storage){
   get(){return structuredClone(entries);},signature(){return `${entries.length}:${error??''}`;},error(){return error;},
   record(m:MatchState){const s=resultScore(m);if(!s||!validHighscore(s)||entries.some(e=>e.id===s.id))return;
    if(entries.length>=5000){error='Highscore storage is full (5000 results). This result was not registered.';return;}
-   entries=[...entries,s];try{storage().setItem(highscoreKey,JSON.stringify({version:1,entries}));error=null;}catch{error='Highscores could not be stored. This result is available for this session only.';}
+   entries=[...entries,{...s,recordedAt:new Date().toISOString()}];try{storage().setItem(highscoreKey,JSON.stringify({version:1,entries}));error=null;}catch{error='Highscores could not be stored. This result is available for this session only.';}
   },
  };
 }
+
+export interface ScoreFilter {kind:Highscore['kind'];map:string;difficulty:string}
+export function filteredScores(entries:readonly Highscore[],filter:ScoreFilter):Highscore[]{return rankedScores(entries.filter(s=>s.kind===filter.kind&&s.map===filter.map&&s.difficulty===filter.difficulty));}

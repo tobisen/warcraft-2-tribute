@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**Nytt mandat RTS-182–187 (2026-10-05):** Bilagans sex meny-/kampanjuppgifter, en i taget med riktad/browser-verifiering, docs och commit/push. RTS-180 är historiskt Done/publicerad;181 redan Done.182 Done,183 In Progress,184–187 Todo. Stanna efter187. CSS/docs bevaras.
+**Nytt mandat RTS-182–187 (2026-10-05):** Bilagans sex meny-/kampanjuppgifter, en i taget med riktad/browser-verifiering, docs och commit/push. RTS-180 är historiskt Done/publicerad;181 redan Done.182 Done/push90df09f,183 Done,184–187 Todo. Stanna efter187. CSS/docs bevaras.
 
 **Aktuellt avgränsat uppdrag RTS-181:** Done. Startinställning1920×1080/Fit to Window. Tidigare180 Done enligt HANDOFF; historiska releasebelägg återanvänds endast som status. Bilagans bredare meny-/kampanjfas genomförs inte i denna avgränsade ändring. CSS/docs bevaras.
 
@@ -4985,10 +4985,12 @@ Publicera efter godkända kontroller.
 
 **Docs:** BACKLOG, DECISIONS, DEV_LOG, HANDOFF och relevanta systemdefinitioner. Taskvis commit/push utan force.
 
+**Verifiering182:** Riktade9/3, unit466/84, build med strict typecheck/diff PASS. Lokal Chrome800/1920: titel, rasval och match-HUD utan gamla rasnamn/pageerrors PASS;800-HUD visuellt granskad. Tekniska IDs/saves oförändrade. Ingen ny CI/Pages eller helkampanjsimulering.
+
 
 ## RTS-183 — Highscores per karta och svårighet
 
-**Status:** Todo.
+**Status:** Done.
 
 **Krav/acceptance:** Tabell med filter karta/svårighet och separata campaign/skirmish. Placering, poäng, ras, resultat, tid och känd datum/version. Befintlig sortering och tie-break; bevara data och redovisa okänd metadata. Ingen dubbelregistrering vid replay/save/load/återbesök.
 
@@ -4998,6 +5000,8 @@ Publicera efter godkända kontroller.
 
 **Docs:** BACKLOG, DECISIONS, DEV_LOG, HANDOFF och relevanta systemdefinitioner. Taskvis commit/push utan force.
 
+
+**Verifiering183:** Highscore/save/team23/3, unit467/84, strict build/diff PASS. Chrome800 faktisk tabell/filter/map/difficulty/mode/empty/legacy PASS; screenshot granskad. Äldre datum Unknown; configversion och partition bevaras. Match-ID-dedup oförändrad.
 
 ## RTS-184 — Större upplösningar och ultrawide
 
@@ -5049,5 +5053,3 @@ Publicera efter godkända kontroller.
 **Verifiering:** Riktade system-/integrationstester och verkliga browserflöden. Slutlig unit/build med strict typecheck/diff före commit. Full regression vid etappslut. Gemensam meny/HUD/input vid800×600,1920×1080,3440×1440. Inga fulla kampanjsimuleringar för rena menyändringar.
 
 **Docs:** BACKLOG, DECISIONS, DEV_LOG, HANDOFF och relevanta systemdefinitioner. Taskvis commit/push utan force.
-
-**Verifiering182:** Riktade9/3, unit466/84, build med strict typecheck/diff PASS. Lokal Chrome800/1920: titel, rasval och match-HUD utan gamla rasnamn/pageerrors PASS;800-HUD visuellt granskad. Tekniska IDs/saves oförändrade. Ingen ny CI/Pages eller helkampanjsimulering.

@@ -1,3 +1,7 @@
+# RTS-183 klar
+
+182 push90df09f;183 tabell/filter klar. Riktade23/3, unit467/84, strict build/diff och Chrome800 filters/legacy/empty PASS. Nästa184. CSS/docs bevaras.
+
 # Aktuell fas RTS-182–187
 
 182 Done;183 nästa. RTS-180:s releasebelägg är historiska.182: riktade9/3, unit466/84, strict build/diff och Chrome800/1920 home/skirmish/HUD PASS. CSS/docs bevaras. Ingen ny CI/Pages.

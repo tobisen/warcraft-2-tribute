@@ -1,0 +1,5 @@
+.score-filters { display:flex; flex-wrap:wrap; gap:12px; margin:12px 0; }
+.score-tables { overflow-x:auto; }
+.score-tables table { width:100%; border-collapse:collapse; margin:16px 0; text-align:left; }
+.score-tables caption { text-align:left; padding:8px 0; font-weight:bold; }
+.score-tables th,.score-tables td { padding:8px; border-bottom:1px solid #657263; }

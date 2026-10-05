@@ -1477,3 +1477,8 @@ som tidigare. Ingen tvingad reset av lokala spelarval.
 ## 2026-10-05 — RTS-182
 
 Synlig titel Warborn — A Tribute to Warcraft II och rasnamn Human/Orcs. Interna crown/clans, textnycklar, repo och Pages-adress bevaras; sparformat ändras inte.
+
+
+## 2026-10-05 — RTS-183
+
+Highscores filtreras exakt mode/map/difficulty; inom urvalet behålls jämförbara rules-partitioner och top10 per grupp. Sortering poäng fallande, tid stigande, match-ID. Äldre poster har giltig karta/difficulty/config men inget datum; Unknown visas utan gissning. Nya registreringar får recordedAt endast vid första ID-registrering.
