@@ -1796,3 +1796,15 @@ players.ts centraliserar teamrelation/kontroll. multiplePlayers delar observer/c
 ## RTS-176 — gemensamt lagresultat
 
 [teamResults.ts](src/gameplay/teamResults.ts) härleder playerEliminated/teamOutcome/isSpectating från befintliga baser och roster. multiplePlayers tickar aktiva aktörer, tar bort eliminerades vision/targets och fryser kvarvarande tillgångar; aktuella gemensamma worldclock hålls synkroniserad även för inerta actor-saves. Public elimination pensionerar remembered AI-destination. MatchStats summerar per-team-counters; presentation/matchResults visar separat player- och teamtabell. Highscores lagrar roster och strikt validerade lagsummor, med samma idempotenta ID-regel. Save50 använder samma scoped validators plus teamOutcome.49-migration verifierar gammal outcome innan omräkning; refreshTeamVision bygger current från aktiva observatörer och bevarar explored. BootScene skiljer simulationActive från gameplayActive, så AI tickar och kamera/minimap fungerar i spectator medan order/input är spärrade. Återgång till menu rensar live-state; konfiguration bevaras för nästa match.
+
+## RTS-178 — Campaign phase adapter
+
+`config/campaignPhases.ts` defines the seven expanded mission plans.
+`gameplay/campaignPhases.ts` reads existing match/operation/fog/naval state; a
+versioned `campaignRun` stores permanent phase completion and one finite-wave
+start timestamp. `match.ts` applies campaign outcome priority and calls the same
+existing simulation systems. Fresh campaign starts choose their plan map; legacy
+saves without a run keep the old scenario. Save51 validates authored map/identity,
+phase bounds, wave timestamp and capture timing; UI renders the current phase
+without owning objective state. Campaign progress IDs and skirmish teams remain
+separate. No repeating reward/entity trigger registry is introduced.

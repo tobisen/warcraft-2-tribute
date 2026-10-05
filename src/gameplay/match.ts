@@ -1,3 +1,6 @@
+import {campaignMission} from '../config/campaign';
+import {campaignPlans} from '../config/campaignPhases';
+import {advanceCampaignPhases,campaignWaveSchedule,campaignPlan,campaignPhase,type CampaignRun} from './campaignPhases';
 import {initializeMultiplePlayers,updateMultiplePlayers,type MultiplePlayers,type AIContext} from './multiplePlayers';
 import type {PlayerDefinition} from '../config/players';
 import type {CombatScope} from './combat';
@@ -77,6 +80,7 @@ export interface MatchState {
   armyPlan?:ArmyPlan;
   matchId?:string;
   capture?:CaptureState;
+  campaignRun?:CampaignRun;
   campaignMission?:import('../config/campaign').CampaignMissionId;
   statLedger?:StatLedger;
   speed?:GameSpeed;
@@ -107,12 +111,15 @@ export interface MatchState {
 }
 
 /** A fresh state owns every mutable position/array; restart never reuses a previous match. */
-export function createMatch(scenario:MatchScenario='survival',difficulty:Difficulty='normal',factions:MatchFactions={...defaultFactions},mapId:MapId=scenarioConfig[scenario].map,speed:GameSpeed=1,aiProfile:AIProfileId='balanced',players?:PlayerDefinition[]): MatchState {
+export function createMatch(scenario:MatchScenario='survival',difficulty:Difficulty='normal',factions:MatchFactions={...defaultFactions},mapId:MapId=scenarioConfig[scenario].map,speed:GameSpeed=1,aiProfile:AIProfileId='balanced',players?:PlayerDefinition[],campaignId?:import('../config/campaign').CampaignMissionId): MatchState {
+  if(campaignId&&campaignMission(campaignId)?.scenario!==scenario)throw Error('Invalid campaign scenario');
+  if(campaignId&&players)throw Error('Campaign player configuration is fixed');
   if(!isGameSpeed(speed))throw Error('Invalid game speed');
-  if(!isMapId(mapId)||!scenarioMapAllowed(scenario,mapId))throw Error('Unknown or unsupported map');
+  if(!isMapId(mapId)||!(campaignId&&campaignPlans[campaignId]?campaignPlans[campaignId]!.map===mapId:scenarioMapAllowed(scenario,mapId)))throw Error('Unknown or unsupported map');
   if(!isFactionId(factions.player)||!isFactionId(factions.enemy))throw Error('Unknown faction');
   if(!isAIProfile(aiProfile))throw Error('Unknown AI profile');
   const state: MatchState = {wildlife:{},
+    ...(campaignId?{campaignMission:campaignId,...(campaignPlans[campaignId]?{campaignRun:{version:1 as const,phase:0}}:{})}:{}),
     ...(aiProfile!=='balanced'?{aiProfile}:{}),
     statLedger:createStatLedger(),
     speed,
@@ -148,9 +155,11 @@ export function createMatch(scenario:MatchScenario='survival',difficulty:Difficu
 }
 
 function resolveOutcome(state: MatchState): MatchState {
+  state=advanceCampaignPhases(state);
   const definition=scenarioConfig[state.scenario??'survival'];
   const operation=operationOutcome(state);
-  const victory=definition.victory==='operation'?operation==='victory':definition.victory==='tutorial'?state.tutorial?.step===6:definition.victory==='enemy-base'? !state.combat.enemies.some(e=>e.kind==='base'&&e.hp>0)
+  const plan=campaignPlan(state);
+  const victory=plan?state.campaignRun!.phase===plan.phases.length:definition.victory==='operation'?operation==='victory':definition.victory==='tutorial'?state.tutorial?.step===6:definition.victory==='enemy-base'? !state.combat.enemies.some(e=>e.kind==='base'&&e.hp>0)
     :definition.victory==='timer'?state.waves.elapsedSeconds+1e-10>=definition.holdSeconds!
     :state.waves.nextWave===scenarioWaves(state.scenario??'survival',state.difficulty??'normal').length&&state.combat.enemies.every(e=>e.kind==='base');
   const outcome:MatchOutcome=state.combat.baseHP<=0||operation==='defeat'?'defeat':victory?'victory':'playing';
@@ -207,7 +216,7 @@ function advance(state: MatchState, delta: number, scope?:CombatScope): MatchSta
   const nextUnitNumber=Math.max(worker.production.nextUnitNumber,soldier.production.nextUnitNumber);
   const enemy=cleaned.enemyProduction?updateEnemyProduction(cleaned.enemyProduction,cleaned.combat,soldier.gathering,enemyNavigationMap(cleaned.map),enemyBuilding.productionDelta,(cleaned.factions??defaultFactions).enemy,cleaned.enemyConstruction?{armyPlan:cleaned.armyPlan,airThreat:cleaned.gathering.units.some(u=>isAir(u)&&u.hp!>0&&!!cleaned.fog&&entityVisible(cleaned.fog,'enemy',u)),technology:technologyFor(cleaned,'enemy'),site:cleaned.combat.enemies.find(e=>e.buildingType==='barracks'),population:enemyPopulation(cleaned),maxArmy:cleaned.enemyNaval?2:undefined,embarked:cleaned.enemyNaval?.passengers.length??0,workerReservations:cleaned.enemyRecovery?.production.queue?.reduce((n,j)=>n+(j.supply??1),0)??0,startAllowed:!cleaned.enemyPolicy||enemyPriority(cleaned)==='army',reserveForFarm:cleaned.combat.enemies.some(e=>e.buildingType==='farm'&&e.construction?.remainingSeconds===0)?undefined:enemyConstructionConfig.supplyMargin}:undefined):{combat:cleaned.combat,state:undefined};
   const ai=cleaned.enemyAI?updateEnemyAI(cleaned.enemyAI,enemy.combat,enemyNavigationMap(cleaned.map),cleaned.enemyKnowledge?enemyAttackDestination(cleaned):soldier.gathering.base,delta,soldier.gathering.units,profileAISettings({...difficultyProfiles[cleaned.difficulty??'normal'].ai,...(cleaned.aiContext?{muster:cleaned.aiContext.muster,helpBases:cleaned.aiContext.helpBases}:{}),...(maps[cleaned.map.id??'arena'].enemyMuster?{muster:maps[cleaned.map.id??'arena'].enemyMuster!}:{}),firstAttackSeconds:difficultyProfiles[cleaned.difficulty??'normal'].ai.firstAttackSeconds+(cleaned.enemyProduction?.extracted?(cleaned.enemyProduction.roster?enemyEconomyConfig.rosterAttackGraceSeconds:enemyEconomyConfig.attackGraceSeconds):0),...((cleaned.armyPlan&&technologyFor(cleaned,'enemy').buildings.includes('forge'))?{groupSize:Math.max(difficultyProfiles[cleaned.difficulty??'normal'].ai.groupSize,combinedArmyConfig.groupSize),musterTimeout:combinedArmyConfig.musterTimeout}:{}),regroup:!!cleaned.armyPlan},cleaned.aiProfile),vision?((u)=>entityVisible(vision,'enemy',u)):undefined,(cleaned.factions??defaultFactions).enemy):{combat:enemy.combat,state:undefined};
-  const incoming=scenarioConfig[cleaned.scenario??'survival'].waves?updateWaves(cleaned.waves,ai.combat,delta,scenarioWaves(cleaned.scenario??'survival',cleaned.difficulty??'normal')):{combat:ai.combat,waves:{...cleaned.waves,elapsedSeconds:cleaned.waves.elapsedSeconds+delta}};
+  const incoming=scenarioConfig[cleaned.scenario??'survival'].waves?updateWaves(cleaned.waves,ai.combat,delta,campaignWaveSchedule(cleaned),cleaned.campaignRun&&cleaned.map.id==='frontier'?{x:1248,y:144,spacing:32}:undefined):{combat:ai.combat,waves:{...cleaned.waves,elapsedSeconds:cleaned.waves.elapsedSeconds+delta}};
   let updated:MatchState={...cleaned,...(enemyPolicy?{enemyPolicy}:{}),...(vision?{fog:vision}:{}),research,...(enemy.state?{enemyProduction:enemy.state}:{}),...(ai.state?{enemyAI:ai.state}:{}),gathering:soldier.gathering,combat:incoming.combat,waves:incoming.waves,
     production:{...worker.production,nextUnitNumber},soldierProduction:{...soldier.production,nextUnitNumber}};
   const beforeNavyCompletion=readyBuildings(updated);
@@ -216,7 +225,7 @@ function advance(state: MatchState, delta: number, scope?:CombatScope): MatchSta
   updated=updateEnemyExploration(updated);updated=updateWildlife(updated,ownDelta);
   const separated=separateBodies(updated.map,[...updated.gathering.units.filter(u=>!isAir(u)).map(u=>({id:`player:${u.id}`,position:u.position,fixed:u.commandMode?.kind==='hold',half:(u.kind==='worker'?workerStats(state.gathering.faction):combatUnitStats(u,state.gathering.faction)).size/2})),...updated.combat.enemies.filter(e=>!isAir(e)&&e.kind!=='ship'&&!e.footprint).map(e=>({id:`enemy:${e.id}`,position:e.position,half:enemySize(e)/2}))],delta);
   if(separated.size){updated.gathering={...updated.gathering,units:updated.gathering.units.map(u=>{const position=separated.get(`player:${u.id}`);return position?{...u,position,navigation:correctedNavigation(updated.map,position,(u.kind==='worker'?workerStats(state.gathering.faction):combatUnitStats(u,state.gathering.faction)).size/2,u.navigation)}:u;})};updated.combat={...updated.combat,enemies:updated.combat.enemies.map(e=>{const position=separated.get(`enemy:${e.id}`);return position?{...e,position,navigation:correctedNavigation(updated.map,position,enemySize(e)/2,e.navigation)}:e;})};}
-  updated=advanceSpells(updated,delta);updated=advanceEnemyAbilities(updated,delta);updated.gathering=advanceAbilities(updated.gathering,delta);updated.fog=matchFog(updated);const taught=updateTutorial(updated);if(taught!==updated){updated=taught;updated.fog=matchFog(updated);}return scope?updated:resolveOutcome(advanceCapture(state,updated,delta));
+  updated=advanceSpells(updated,delta);updated=advanceEnemyAbilities(updated,delta);updated.gathering=advanceAbilities(updated.gathering,delta);updated.fog=matchFog(updated);const taught=updateTutorial(updated);if(taught!==updated){updated=taught;updated.fog=matchFog(updated);}return scope?updated:resolveOutcome(updated.campaignRun&&campaignPhase(updated)?.goal!=='operation'?{...updated,...(updated.capture?{capture:{holdSeconds:0}}:{})}:advanceCapture(state,updated,delta));
 }
 
 /** Split at existing gameplay and spell/AI boundaries, retaining delta-based gameplay rather than a fixed timestep. */
@@ -228,16 +237,16 @@ export function updateMatch(state: MatchState, deltaSeconds: number, scope?:Comb
   if(cleaned.fog&&(deltaSeconds<=0||current.outcome!=='playing'))current={...current,fog:matchFog(cleaned)};
   let remaining = Math.max(0, deltaSeconds);
   while (remaining > 0 && current.outcome === 'playing') {
-    const next = scenarioConfig[current.scenario??'survival'].waves?scenarioWaves(current.scenario??'survival',current.difficulty??'normal')[current.waves.nextWave]:undefined;
+    const next = scenarioConfig[current.scenario??'survival'].waves?campaignWaveSchedule(current)[current.waves.nextWave]:undefined;
     const untilWave = next ? Math.max(0, next.atSeconds - current.waves.elapsedSeconds) : Infinity;
     if (untilWave === 0) {
-      const incoming = updateWaves(current.waves, current.combat, 0,scenarioWaves(current.scenario??'survival',current.difficulty??'normal'));
+      const incoming = updateWaves(current.waves, current.combat, 0,campaignWaveSchedule(current),current.campaignRun&&current.map.id==='frontier'?{x:1248,y:144,spacing:32}:undefined);
       current = { ...current, ...incoming };
       continue;
     }
     const definition=scenarioConfig[current.scenario??'survival'];
     const capture=operationFor(current.scenario);
-    const untilObjective=definition.victory==='timer'?Math.max(0,definition.holdSeconds!-current.waves.elapsedSeconds):capture?.kind==='capture'&&controlsCapture(current)?Math.max(0,capture.holdSeconds-(current.capture?.holdSeconds??0)):Infinity;
+    const untilObjective=!current.campaignRun&&definition.victory==='timer'?Math.max(0,definition.holdSeconds!-current.waves.elapsedSeconds):capture?.kind==='capture'&&(!current.campaignRun||campaignPhase(current)?.goal==='operation')&&controlsCapture(current)?Math.max(0,capture.holdSeconds-(current.capture?.holdSeconds??0)):Infinity;
     const untilService=(Math.floor((current.waves.elapsedSeconds+1e-9)/trafficConfig.resourceWindowSeconds)+1)*trafficConfig.resourceWindowSeconds-current.waves.elapsedSeconds;
     if(scope?.side!=='player'){current=prepareEnemySpells(current);current=prepareEnemyAbilities(current);}
     const untilAbility=Math.min(Infinity,...current.combat.enemies.flatMap(e=>[e.ability?.activeSeconds??0,e.ability?.cooldownSeconds??0].filter(t=>t>1e-9)),...current.gathering.units.flatMap(u=>u.kind==='soldier'&&(u.ability?.activeSeconds??0)>1e-9?[u.ability!.activeSeconds]:[]));

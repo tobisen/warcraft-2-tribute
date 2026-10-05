@@ -1410,3 +1410,7 @@ Warship är nu också sjöbaserad AA:16 normal skada men12 mot luft, samma192ran
 ## RTS-177 — Utökad kampanj
 
 [CAMPAIGN_DESIGN.md](CAMPAIGN_DESIGN.md) definierar exakt de åtta missionerna för178, flerfasmål, kartor, återanvända system och verifieringskontrakt. Tider20–40min är uppskattningar, inte speltestbelägg. Äldre sparade kampanjmatcher behåller legacy-mål/kartor; completion-ID:n bevaras.
+
+## RTS-178 — Flerfasmål spelbara
+
+Nya starter följer [CAMPAIGN_DESIGN.md](CAMPAIGN_DESIGN.md): fyra faser för sex missioner, fem för Coastal Banner; First Steps behåller sin tutorial. Forest Watch/Outpost använder Frontier och Siege Highlands. Finite waves startar efter preparation/exploration (samma count/intervall); Save51 bevarar start och permanent phase. HUD visar engelskt aktuellt mål utan enemy/fog-leak. Äldre sparade matcher behåller tidigare mål/kartor. Uppskattad mänsklig20–40min är fortfarande inte verifierad.

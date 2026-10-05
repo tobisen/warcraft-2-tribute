@@ -1450,3 +1450,16 @@ Människans eliminering med levande allierad ger obligatoriskt begränsat specta
 ## 2026-10-05 — RTS-177: kampanjfaser och tidsuppskattningar
 
 Behåll åtta mission-ID:n och fraktionsprofiler. Introduktion oförändrad; sju missioner får permanenta faser. Nya kampanjstarter för Forest Watch/Outpost flyttas till Frontier och Siege till Highlands; fristående scenarier och äldre saves behåller ursprungliga regler. Inga extra resursdepåer, gratis arméer eller HP-/väntetidspadding. Utvidgning betyder säkrade resurser och framflyttade positioner. Användarens nya förtydligande tillåter designuppskattningar i177 trots äldre backlogtext; faktisk mänsklig tid/balans återstår till speltest och får inte hävdas från automation. Se CAMPAIGN_DESIGN.md.
+
+## 2026-10-05 — RTS-178: permanent phase state and finite pressure
+
+Phase completion itself is the one-shot transition ledger; no new rewardspawns or
+repeat waves. Preparation/exploration use living owned units and explored authored
+resource positions, not node stock that enemies could exhaust. Seven fresh plans
+override scenario maps/outcomes only when versioned campaignRun exists. Save51
+keeps old saves on legacy rules; completed IDs stay unchanged. Targeted Outpost
+playthrough found early worker/economy losses, so finite schedules now start after
+preparation/exploration, preserving counts/intervals and persisting the start.
+Frontier waves need a clear map-specific entry rather than Arena's forest-covered
+entry. Human durations/difficulty remain for actual playtest; bot times are not
+evidence for20–40min estimates.

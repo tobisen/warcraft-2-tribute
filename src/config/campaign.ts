@@ -1,4 +1,6 @@
+import {campaignPlans} from './campaignPhases';
 import type {MatchFactions} from './factions';
+import {maps} from './maps';
 import {scenarioConfig} from './scenarios';
 
 /** The existing playable missions, in order. New missions belong to RTS-143–145. */
@@ -15,7 +17,7 @@ export const campaignMissions=[
 export type CampaignMissionId=typeof campaignMissions[number]['id'];
 export function campaignMission(id:unknown){return campaignMissions.find(m=>m.id===id);}
 export function campaignMissionForScenario(scenario:unknown){return campaignMissions.find(m=>m.scenario===scenario);}
-export function campaignDetails(id:CampaignMissionId){const m=campaignMission(id)!;return {...m,title:scenarioConfig[m.scenario].label,goal:scenarioConfig[m.scenario].instruction};}
+export function campaignDetails(id:CampaignMissionId){const m=campaignMission(id)!;const plan=campaignPlans[id];return {...m,...(plan?{briefing:`${plan.intro} Map: ${maps[plan.map].label}. ${plan.phases.map(p=>p.text).join(' ')} Keep your base alive.`,map:plan.map}:{}),title:scenarioConfig[m.scenario].label,goal:plan?.phases[0].text??scenarioConfig[m.scenario].instruction};}
 
 /** Presets only constrain new campaign starts; loaded match factions remain authoritative. */
 export function campaignPreset(id:unknown):MatchFactions|undefined {const mission=campaignMission(id);return mission&&'factions' in mission?{...mission.factions}:undefined;}

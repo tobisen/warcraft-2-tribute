@@ -1,3 +1,5 @@
+import {playExpandedCampaign} from './expandedCampaign';
+import {matchStats} from '../matchStats';
 import {canAttackDomain} from '../domains';
 import {campaignMission,campaignMissions,campaignPreset,type CampaignMissionId} from '../../config/campaign';
 import {startCampaignMission} from '../campaign';
@@ -23,6 +25,7 @@ import { encodeSave, decodeSave } from '../save';
 /** Deterministic accelerated release playthrough. Only player commands change state;
  * no injected resources/units/HP, and target decisions use player vision. */
 export function releasePlaythrough(scenario: MatchScenario, difficulty: Difficulty, observe?: (match: MatchState) => void,options?:{campaignMission?:CampaignMissionId;enemyFaction?:FactionId;faction?:FactionId;abilities?:boolean;map?:MapId}) {
+  if(options?.campaignMission&&options.campaignMission!=='first-steps'){const result=playExpandedCampaign(options.campaignMission,difficulty),stats=matchStats(result.match);observe?.(result.match);return {match:result.match,spentWood:stats.player.wood.spent,spentGold:stats.player.gold.spent,saved:result.saved,abilitiesUsed:result.abilities};}
   const faction=campaignPreset(options?.campaignMission)?.player??options?.faction??'crown';
   const explicitFaction=options?.faction!==undefined||options?.campaignMission!==undefined;
   let match = createMatch(scenario, difficulty,factionsForPlayer(faction,options?.enemyFaction),options?.map??'arena'), spentWood = 0, spentGold = 0, saved = false,abilitiesUsed=0;

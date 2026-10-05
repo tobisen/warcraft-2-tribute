@@ -1,9 +1,11 @@
+import {campaignObjective} from '../gameplay/campaignPhases';
 import {operationFor} from '../config/operations';
 import {isVisible,isExplored} from '../gameplay/fog';
 import {controlsCapture} from '../gameplay/operations';
 import {passengerUnits} from '../gameplay/navy';
 import type {MatchState} from '../gameplay/match';
 export function operationMessage(m:MatchState):string{
+ const objective=campaignObjective(m);if(objective)return objective;
  const o=operationFor(m.scenario);if(!o)return '';
  const remaining=o.guards.filter(g=>m.combat.enemies.some(e=>e.id===g.id&&e.hp>0)).length;
  if(o.kind==='escort')return `Ridge Courier: ${[...m.gathering.units,...passengerUnits(m.navy)].some(u=>u.id===o.courier.id&&(u.hp??0)>0)?'alive':'lost'} · Guards remaining: ${remaining}/2 · Safe zone (${o.zone.x},${o.zone.y}), radius ${o.radius}px.`;
@@ -18,4 +20,4 @@ export function operationMarkers(m:MatchState){
  for(const guard of o.guards){const enemy=m.combat.enemies.find(e=>e.id===guard.id);if(enemy&&enemy.hp>0&&(!m.fog||isVisible(m.fog,'player',enemy.position)))markers.push({position:{...enemy.position},radius:18,color:0xf47c70,label:guard.name});}
  return markers;
 }
-export function renderOperation(m:MatchState):void{const el=document.getElementById('operation-objective')!,message=operationMessage(m);if(el.textContent!==message)el.textContent=message;el.hidden=!message;}
+export function renderOperation(m:MatchState):void{const el=document.getElementById('operation-objective')!,message=operationMessage(m);if(el.textContent!==message)el.textContent=message;el.hidden=!message;if(m.campaignRun)document.getElementById('match-status')!.hidden=true;}

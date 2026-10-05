@@ -9,6 +9,7 @@
   "src/gameplay/campaign.test.ts",
   "src/gameplay/campaignEarly.test.ts",
   "src/gameplay/campaignLate.test.ts",
+  "src/gameplay/campaignPhases.test.ts",
   "src/gameplay/campaignVerification.test.ts",
   "src/gameplay/catapult.test.ts",
   "src/gameplay/coast.test.ts",
@@ -80,6 +81,7 @@
   "src/gameplay/skirmishBalance.test.ts",
   "src/gameplay/spells.test.ts",
   "src/gameplay/statLedger.test.ts",
+  "src/gameplay/teamResults.test.ts",
   "src/gameplay/teams.test.ts",
   "src/gameplay/towers.test.ts",
   "src/gameplay/transport.test.ts",
@@ -87,6 +89,5 @@
   "src/gameplay/visibility.test.ts",
   "src/gameplay/wildlife.test.ts",
   "src/presentation/wildlifeSave.test.ts",
-  "tests/referenceTerrain.test.mjs",
-  "src/gameplay/teamResults.test.ts"
+  "tests/referenceTerrain.test.mjs"
 ]

@@ -39,6 +39,7 @@ export function decodeMultipleSave(raw:unknown):LoadResult{
  try{
  const doc=raw as Record<string,unknown>,migrateTeams=doc?.configVersion==='tribute-config-49';
  if(doc?.configVersion==='tribute-config-48'&&Array.isArray(doc.multiplePlayers)){doc.multiplePlayers=doc.multiplePlayers.map((p,i)=>({...p as object,teamId:i+1}));doc.configVersion=saveConfig.configVersion;}
+ if(doc?.configVersion==='tribute-config-50')doc.configVersion=saveConfig.configVersion;
  if(doc?.configVersion==='tribute-config-49')doc.configVersion=saveConfig.configVersion;
  if(!doc||Object.keys(doc).some(k=>!['schemaVersion','configVersion','map','multiplePlayers','kills','human','ai'].includes(k))||doc.schemaVersion!==saveConfig.schemaVersion||doc.configVersion!==saveConfig.configVersion||typeof doc.human!=='string'||!Array.isArray(doc.ai)||doc.ai.length!==2)throw Error('Invalid multiplayer document');
  const humanRaw=JSON.parse(doc.human) as {state:MatchState};

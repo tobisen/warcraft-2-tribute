@@ -1,0 +1,268 @@
+[
+  {
+    "width": 800,
+    "id": "forest-watch",
+    "map": "frontier",
+    "phase": 0,
+    "expected": "frontier",
+    "total": 4,
+    "phaseReport": {
+      "phase": 2,
+      "goal": "explore"
+    },
+    "loaded": {
+      "phase": 2,
+      "map": "frontier",
+      "session": "paused"
+    },
+    "restart": true,
+    "menuClearsState": true
+  },
+  {
+    "width": 800,
+    "id": "the-siege",
+    "map": "highlands",
+    "phase": 0,
+    "expected": "highlands",
+    "total": 4,
+    "phaseReport": {
+      "phase": 2,
+      "goal": "explore"
+    },
+    "loaded": {
+      "phase": 2,
+      "map": "highlands",
+      "session": "paused"
+    },
+    "restart": true,
+    "menuClearsState": true
+  },
+  {
+    "width": 800,
+    "id": "the-outpost",
+    "map": "frontier",
+    "phase": 0,
+    "expected": "frontier",
+    "total": 4,
+    "phaseReport": {
+      "phase": 2,
+      "goal": "explore"
+    },
+    "loaded": {
+      "phase": 2,
+      "map": "frontier",
+      "session": "paused"
+    },
+    "restart": true,
+    "menuClearsState": true
+  },
+  {
+    "width": 800,
+    "id": "the-crossing",
+    "map": "islands",
+    "phase": 0,
+    "expected": "islands",
+    "total": 4,
+    "phaseReport": {
+      "phase": 1,
+      "goal": "transport"
+    },
+    "loaded": {
+      "phase": 1,
+      "map": "islands",
+      "session": "paused"
+    },
+    "restart": true,
+    "menuClearsState": true
+  },
+  {
+    "width": 800,
+    "id": "ridge-convoy",
+    "map": "highlands",
+    "phase": 0,
+    "expected": "highlands",
+    "total": 4,
+    "phaseReport": {
+      "phase": 2,
+      "goal": "explore"
+    },
+    "loaded": {
+      "phase": 2,
+      "map": "highlands",
+      "session": "paused"
+    },
+    "restart": true,
+    "menuClearsState": true
+  },
+  {
+    "width": 800,
+    "id": "valley-rescue",
+    "map": "frontier",
+    "phase": 0,
+    "expected": "frontier",
+    "total": 4,
+    "phaseReport": {
+      "phase": 2,
+      "goal": "explore"
+    },
+    "loaded": {
+      "phase": 2,
+      "map": "frontier",
+      "session": "paused"
+    },
+    "restart": true,
+    "menuClearsState": true
+  },
+  {
+    "width": 800,
+    "id": "coastal-banner",
+    "map": "coast",
+    "phase": 0,
+    "expected": "coast",
+    "total": 5,
+    "phaseReport": {
+      "phase": 1,
+      "goal": "transport"
+    },
+    "loaded": {
+      "phase": 1,
+      "map": "coast",
+      "session": "paused"
+    },
+    "restart": true,
+    "menuClearsState": true
+  },
+  {
+    "width": 1280,
+    "id": "forest-watch",
+    "map": "frontier",
+    "phase": 0,
+    "expected": "frontier",
+    "total": 4,
+    "phaseReport": {
+      "phase": 2,
+      "goal": "explore"
+    },
+    "loaded": {
+      "phase": 2,
+      "map": "frontier",
+      "session": "paused"
+    },
+    "restart": true,
+    "menuClearsState": true
+  },
+  {
+    "width": 1280,
+    "id": "the-siege",
+    "map": "highlands",
+    "phase": 0,
+    "expected": "highlands",
+    "total": 4,
+    "phaseReport": {
+      "phase": 2,
+      "goal": "explore"
+    },
+    "loaded": {
+      "phase": 2,
+      "map": "highlands",
+      "session": "paused"
+    },
+    "restart": true,
+    "menuClearsState": true
+  },
+  {
+    "width": 1280,
+    "id": "the-outpost",
+    "map": "frontier",
+    "phase": 0,
+    "expected": "frontier",
+    "total": 4,
+    "phaseReport": {
+      "phase": 2,
+      "goal": "explore"
+    },
+    "loaded": {
+      "phase": 2,
+      "map": "frontier",
+      "session": "paused"
+    },
+    "restart": true,
+    "menuClearsState": true
+  },
+  {
+    "width": 1280,
+    "id": "the-crossing",
+    "map": "islands",
+    "phase": 0,
+    "expected": "islands",
+    "total": 4,
+    "phaseReport": {
+      "phase": 1,
+      "goal": "transport"
+    },
+    "loaded": {
+      "phase": 1,
+      "map": "islands",
+      "session": "paused"
+    },
+    "restart": true,
+    "menuClearsState": true
+  },
+  {
+    "width": 1280,
+    "id": "ridge-convoy",
+    "map": "highlands",
+    "phase": 0,
+    "expected": "highlands",
+    "total": 4,
+    "phaseReport": {
+      "phase": 2,
+      "goal": "explore"
+    },
+    "loaded": {
+      "phase": 2,
+      "map": "highlands",
+      "session": "paused"
+    },
+    "restart": true,
+    "menuClearsState": true
+  },
+  {
+    "width": 1280,
+    "id": "valley-rescue",
+    "map": "frontier",
+    "phase": 0,
+    "expected": "frontier",
+    "total": 4,
+    "phaseReport": {
+      "phase": 2,
+      "goal": "explore"
+    },
+    "loaded": {
+      "phase": 2,
+      "map": "frontier",
+      "session": "paused"
+    },
+    "restart": true,
+    "menuClearsState": true
+  },
+  {
+    "width": 1280,
+    "id": "coastal-banner",
+    "map": "coast",
+    "phase": 0,
+    "expected": "coast",
+    "total": 5,
+    "phaseReport": {
+      "phase": 1,
+      "goal": "transport"
+    },
+    "loaded": {
+      "phase": 1,
+      "map": "coast",
+      "session": "paused"
+    },
+    "restart": true,
+    "menuClearsState": true
+  }
+]

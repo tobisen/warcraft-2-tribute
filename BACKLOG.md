@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**Aktuellt mandat RTS-177–180:** Nytt användaruppdrag ersätter stoppet efter176.177 design klar;178 nästa. En task åt gången, riktad/browser-verifiering, docs och commit/push. Samlad kampanjregression när kampanjändringarna är klara; full releasekontroll vid180. Uppdatera HANDOFF/QUALITY_REVIEW efter180 och stanna. CSS/docs bevaras.
+**Aktuellt mandat RTS-177–180:** Nytt användaruppdrag ersätter stoppet efter176.177 Done/push8fafce5;178 Done;179 nästa. En task åt gången, riktad/browser-verifiering, docs och commit/push. Samlad kampanjregression när kampanjändringarna är klara; full releasekontroll vid180. Uppdatera HANDOFF/QUALITY_REVIEW efter180 och stanna. CSS/docs bevaras.
 
 **Aktuellt mandat RTS-174–176:** Användaren återupptar174–176 efter färdiga PRIO-01–04.174 Done/push416cfa9;175 Done/push0a5b422,176 Done. Etappen avslutad; stanna före177. En task åt gången, riktade tester/browser, slutchecks/docs och commit/push. HANDOFF efter176; stopp före177. CSS/docs bevaras.
 
@@ -4884,7 +4884,7 @@ Speltider är designuppskattningar enligt användarens förtydligande; faktisk m
 
 ## RTS-178 – Implementera längre uppdrag
 
-**Status:** Todo.
+**Status:** Done (2026-10-05). Sju utökade missioner enligt CAMPAIGN_DESIGN.md; First Steps bevarad.
 
 **Goal:** Implementera längre uppdrag.
 
@@ -4902,6 +4902,8 @@ Delmål fungerar korrekt efter save/load.
 **Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
 
 **Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+**Verifiering178:** Slutliga Save/campaign/team93/6 PASS; fas-/engångstryck19/1 PASS, tidigare berörda115/9 PASS. Alla sju betalda Normal-genomspelningar passerar i riktade körningar; detta är automation, inte mänsklig tid/balans. Slutlig unit461/83 och build/strict typecheck PASS; diff/manifest PASS. Browser native800/1280:14 nya starter, faktisk mål-HUD, explicit fas-/explorationfixture, fysiska Save/load/restart/meny. Aktiva och pausedbilder granskade; artifacts/rts-178. Save51 bevarar phase/wave-start; gamla50 behåller legacy-mål/kartor. Samlad Beginner/Normal-kampanjgranskning i179.
 
 ## RTS-179 – Campaign- och presentationsgranskning
 

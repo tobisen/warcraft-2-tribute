@@ -4,7 +4,7 @@ import type { CombatState, Enemy } from './combat';
 
 export interface WaveState { elapsedSeconds: number; nextWave: number; nextEnemyNumber: number }
 
-export function updateWaves(waves: WaveState, combat: CombatState, deltaSeconds: number,schedule:readonly {atSeconds:number;count:number}[]=waveSchedule) {
+export function updateWaves(waves: WaveState, combat: CombatState, deltaSeconds: number,schedule:readonly {atSeconds:number;count:number}[]=waveSchedule,spawn:{x:number;y:number;spacing:number}=waveSpawn) {
   const elapsedSeconds = waves.elapsedSeconds + Math.max(0, deltaSeconds);
   let nextWave = waves.nextWave;
   let nextEnemyNumber = waves.nextEnemyNumber;
@@ -13,7 +13,7 @@ export function updateWaves(waves: WaveState, combat: CombatState, deltaSeconds:
     const wave = schedule[nextWave];
     for (let i = 0; i < wave.count; i++) spawned.push({
       owner:'enemy',id: `enemy-${nextEnemyNumber++}`, hp: combatConfig.enemyHP,
-      position: { x: waveSpawn.x, y: waveSpawn.y + i * waveSpawn.spacing },
+      position: { x: spawn.x, y: spawn.y + i * spawn.spacing },
     });
     nextWave++;
   }

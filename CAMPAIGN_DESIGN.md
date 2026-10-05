@@ -71,8 +71,11 @@ live enemies and marker visibility still obey fog.
 | valley-rescue / Elves free a camp held by Orcs | Frontier, 40 / 20; two named guards | 20–30 min | Build a Ranger Lodge and field two land combatants; discover the eastern grove and mine; defeat both named camp guards; bring a living land combatant to the existing rescue camp (1088,640). Camp is a noncombat marker, not a reward army. |
 | coastal-banner / Humans seize a Dwarf-held coast | Coast, 60 / 30; two named guards | 25–40 min | Build Barracks and field two land combatants; build Harbor and a living Transport; discover the eastern coastal grove and mine (1600,300 and 1728,448); clear the named banner guards; hold the existing banner zone (1600,384) for 30 uninterrupted gameplay seconds. Only living unembarked land combatants hold it; absence or hostile contest resets the timer. |
 
-The two finite-wave missions reuse existing wave schedules; no wave waits are
-added to achieve a duration. Exploration and production can overlap waves.
+RTS-178 targeted playthrough correction: the two finite-wave missions reuse
+existing counts and intervals, starting the finite schedule once preparation and
+exploration are complete. The start timestamp persists; loading cannot replay it.
+This avoids wiping the new economy before its preparation goals can be achieved.
+No wave waits are added to achieve a duration.
 Consequently their duration estimates carry particular risk: human testing may
 show that they are much shorter than 20 minutes. Record that honestly rather than
 pad the clock or label a fast simulation as measured Normal play time.

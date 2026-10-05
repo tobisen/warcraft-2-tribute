@@ -1,3 +1,4 @@
+import {campaignPlans} from '../config/campaignPhases';
 import {expect,it} from 'vitest';
 import {campaignMissions,campaignPreset} from '../config/campaign';
 import {scenarioConfig,scenarioWaves} from '../config/scenarios';
@@ -12,7 +13,7 @@ for(const [index,mission] of early.entries()){
  it(`${mission.id}: new campaign starts use their story profiles, not unrelated Skirmish preferences`,()=>{
   const progress={version:1 as const,completed:early.slice(0,index).map(m=>m.id)},pair=campaignPreset(mission.id)!;
   const m=startCampaignMission(progress,mission.id,'normal',{player:'goblins',enemy:'dwarves'})!;
-  expect(m.factions).toEqual(pair);expect(m.map.id).toBe('arena');expect(m.gathering.wood).toBe(scenarioConfig[mission.scenario].initial.wood);expect(m.gathering.units[0].hp).toBe(factions[pair.player].units.worker.hp);expect(m.combat.baseHP).toBe(factions[pair.player].buildings.base.hp);
+  expect(m.factions).toEqual(pair);expect(m.map.id).toBe(campaignPlans[mission.id]?.map??'arena');expect(m.gathering.wood).toBe(scenarioConfig[mission.scenario].initial.wood);expect(m.gathering.units[0].hp).toBe(factions[pair.player].units.worker.hp);expect(m.combat.baseHP).toBe(factions[pair.player].buildings.base.hp);
  });
  it(`${mission.id}: paid normal playthrough completes the actual goal, Save checkpoint, progression and fresh replay`,()=>{
   const pair=campaignPreset(mission.id)!,r=releasePlaythrough(mission.scenario,'normal',undefined,{campaignMission:mission.id,abilities:true}),m=r.match;
@@ -21,7 +22,7 @@ for(const [index,mission] of early.entries()){
   if(mission.scenario==='tutorial')expect(m.tutorial?.step).toBe(6);
   if(mission.scenario==='mission-waves'){expect(m.waves.nextWave).toBe(scenarioWaves(mission.scenario,'normal').length);expect(m.combat.enemies).toHaveLength(0);}
   if(mission.scenario==='mission-base')expect(m.combat.enemies.some(e=>e.kind==='base')).toBe(false);
-  if(mission.scenario==='mission-outpost')expect(m.waves.elapsedSeconds).toBeCloseTo(90,6);
+  if(mission.scenario!=='tutorial')expect(m.campaignRun!.phase).toBe(4);
   expect(updateMatch(m,100)).toBe(m);
   const loaded=decodeSave(encodeSave(m,view));expect(loaded.ok,loaded.ok?'':loaded.error).toBe(true);if(loaded.ok){expect(loaded.match.campaignMission).toBe(mission.id);expect(loaded.match.factions).toEqual(pair);}
   const before={version:1 as const,completed:early.slice(0,index).map(v=>v.id)},after=completeCampaignMission(before,m);expect(after.completed).toEqual(early.slice(0,index+1).map(v=>v.id));expect(completeCampaignMission(after,m)).toBe(after);

@@ -1,3 +1,5 @@
+import {campaignPlans} from '../config/campaignPhases';
+import {campaignObjective} from '../gameplay/campaignPhases';
 import {isSpectating,playerEliminated} from '../gameplay/teamResults';
 import {supportedPlayerCounts} from '../config/players';
 import {matchPlayers} from '../gameplay/players';
@@ -134,6 +136,7 @@ export class BootScene extends Phaser.Scene {
   private capture?:CaptureState;
   private operationGraphics?:Phaser.GameObjects.Graphics;
   private operationLabels:Phaser.GameObjects.Text[]=[];
+  private campaignRun?:MatchState['campaignRun'];
   private campaignMission?:CampaignMissionId;
   private statLedger?:StatLedger;
   private factions:MatchFactions=factionsForPlayer(getPreferences().game.faction,getPreferences().game.enemyFaction);
@@ -265,7 +268,7 @@ export class BootScene extends Phaser.Scene {
     this.operationGraphics=this.add.graphics().setDepth(6);this.operationLabels=[];
     const loaded=this.pendingLoad;this.pendingLoad=undefined;
     if(!loaded)document.getElementById('save-status')!.textContent='';
-    const fresh=()=>({matchId:crypto.randomUUID(),...createMatch(this.scenario,this.difficulty,this.factions,this.session.options.map,this.session.options.speed??1,this.session.options.aiProfile,this.session.options.players),...(this.campaignMission?{campaignMission:this.campaignMission}:{})});
+    const fresh=()=>({matchId:crypto.randomUUID(),...createMatch(this.scenario,this.difficulty,this.factions,(this.campaignMission?campaignPlans[this.campaignMission]?.map:undefined)??this.session.options.map,this.session.options.speed??1,this.session.options.aiProfile,this.session.options.players,this.campaignMission),...(this.campaignMission?{campaignMission:this.campaignMission}:{})});
     this.applyMatch(loaded?.match??fresh());
     this.game.canvas.tabIndex=0;this.game.canvas.setAttribute('aria-label',uiText.gameWorld);
     const groupKey=(event:KeyboardEvent)=>{
@@ -580,7 +583,7 @@ export class BootScene extends Phaser.Scene {
     if(action==='start'||action==='restart'){this.awaitingLoadedResume=false;this.scenario=next.options.scenario;this.difficulty=next.options.difficulty;this.skipGameplayFrame=true;this.restartPending=true;this.restartButton.disabled=true;this.scene.restart();return;}
     if(action==='resume'){this.skipGameplayFrame=true;if(this.awaitingLoadedResume){document.getElementById('save-status')!.textContent=uiText.loadedMatchResumed;this.awaitingLoadedResume=false;}}
     if(action==='pause'||action==='new-match'){this.placement=cancelPlacement(this.placement);this.unloadMode=null;this.attackMoveMode=false;this.patrolMode=false;this.repairMode=false;this.spellMode=null;this.spellFeedback='';this.drag=undefined;this.cameraDrag=undefined;this.dragBox.setVisible(false);}
-    if(action==='new-match'){this.applyMatch(createMatch(this.session.options.scenario,this.session.options.difficulty,factionsForPlayer(this.session.options.faction??defaultFactions.player,this.session.options.enemyFaction),this.session.options.map,this.session.options.speed??1,this.session.options.aiProfile));this.selectedBuilding=null;this.controlGroups={};}
+    if(action==='new-match'){if(this.session.options.scenario!=='skirmish')this.session={...this.session,options:{...this.session.options,map:scenarioConfig[this.session.options.scenario].map}};this.applyMatch(createMatch(this.session.options.scenario,this.session.options.difficulty,factionsForPlayer(this.session.options.faction??defaultFactions.player,this.session.options.enemyFaction),this.session.options.map,this.session.options.speed??1,this.session.options.aiProfile));this.selectedBuilding=null;this.controlGroups={};}
     this.syncVisuals();
   }
   private saveGamePreferences():void {if(this.session.phase==='menu')updatePreferences({game:{aiProfile:this.session.options.aiProfile,difficulty:this.session.options.difficulty,faction:this.session.options.faction??defaultFactions.player,enemyFaction:this.session.options.enemyFaction,speed:this.session.options.speed??1}});}
@@ -595,7 +598,7 @@ export class BootScene extends Phaser.Scene {
     renderHighscorePanels(this.currentMatch(),phase==='ended');
     renderMatchResults(document.getElementById('match-results')!,this.currentMatch(),phase==='ended');
     const preset=menu&&currentHomePage()==='campaign'?campaignPreset(campaignMissionForScenario(this.session.options.scenario)?.id):undefined;
-    const shown=preset?{...this.session.options,faction:preset.player,enemyFaction:preset.enemy}:this.session.options;
+    const shown=preset?{...this.session.options,map:campaignPlans[campaignMissionForScenario(this.session.options.scenario)!.id]?.map??this.session.options.map,faction:preset.player,enemyFaction:preset.enemy}:this.session.options;
     const details=matchSettingDetails(shown);document.getElementById('map-description')!.textContent=details.map;document.getElementById('difficulty-description')!.textContent=details.difficulty;
     const summary=document.getElementById('match-options-summary')!;summary.textContent=matchSettingsSummary(shown);summary.hidden=!menu;
     const counts=supportedPlayerCounts(this.session.options.map,this.session.options.scenario),playerCount=document.getElementById('player-count-select') as HTMLSelectElement;
@@ -610,7 +613,7 @@ export class BootScene extends Phaser.Scene {
     if(this.session.options.players){secondFaction.value=this.session.options.players[2].faction;secondProfile.value=this.session.options.players[2].profile;}
     const legend=document.getElementById('minimap-player-legend')!;legend.replaceChildren(...(this.session.options.players??[]).map(p=>{const span=document.createElement('span');span.textContent=`${p.id==='player'?'You':p.id==='enemy'?'AI1':'AI2'} T${p.teamId}`;const eliminated=!!this.multiplePlayers&&playerEliminated(this.currentMatch(),p.id);if(eliminated)span.textContent+=' ×';span.title=eliminated?'Eliminated: base destroyed; surviving assets inactive':'Active player';span.style.color=p.color;return span;}));
     document.getElementById('player-color-summary')!.textContent=this.session.options.players?this.session.options.players.map(p=>`${p.id==='player'?'Blue: You':p.id==='enemy'?'Red: AI 1':'Gold: AI 2'} · Team ${p.teamId}`).join(' / '):'Blue: You · Red: AI 1';
-    const mapSelect=document.querySelector<HTMLSelectElement>('#map-select')!;mapSelect.disabled=!menu||this.session.options.scenario!=='skirmish';mapSelect.value=this.session.options.map;
+    const mapSelect=document.querySelector<HTMLSelectElement>('#map-select')!;mapSelect.disabled=!menu||this.session.options.scenario!=='skirmish';mapSelect.value=shown.map;
     const factionSelect=document.querySelector<HTMLSelectElement>('#faction-select')!;factionSelect.disabled=!menu||!!preset;factionSelect.value=shown.faction??defaultFactions.player;const enemyFactionSelect=document.querySelector<HTMLSelectElement>('#enemy-faction-select')!;enemyFactionSelect.disabled=!menu||!!preset;enemyFactionSelect.value=shown.enemyFaction??'';
     this.scenarioSelect.disabled=!menu;this.scenarioSelect.value=this.session.options.scenario==='siege-test'?'survival':this.session.options.scenario;
     const speed=document.querySelector<HTMLSelectElement>('#speed-select')!;speed.disabled=!menu;speed.value=String(this.session.options.speed??1);
@@ -621,7 +624,7 @@ export class BootScene extends Phaser.Scene {
     document.getElementById('hud')!.hidden=menu||phase==='ended';const game=document.getElementById('game')!,wasHidden=game.hidden;game.hidden=menu||phase==='ended';
     if(wasHidden&&!menu)this.scale.refresh();
     document.getElementById('mission-instruction')!.textContent=this.session.options.scenario==='skirmish'?(maps[this.session.options.map??'arena'].instruction??scenarioConfig.skirmish.instruction):scenarioConfig[this.session.options.scenario].instruction;
-    document.getElementById('session-status')!.textContent=isSpectating(this.currentMatch())?"Spectating your team · Your base was destroyed. Camera only; no gameplay orders. Use the match menu to leave.":menu?uiText.chooseAScenarioAndDifficultyThenStartMatch:phase==='paused'?uiText.pausedSimulationIsFrozen:phase==='ended'?uiText.theMatchHasEndedRestartOrChooseA:`${scenarioConfig[this.session.options.scenario].label} · ${this.session.options.difficulty} · ${aiProfiles[this.session.options.aiProfile??'balanced'].label} AI · ${maps[this.session.options.map].label}`;
+    document.getElementById('session-status')!.textContent=isSpectating(this.currentMatch())?"Spectating your team · Your base was destroyed. Camera only; no gameplay orders. Use the match menu to leave.":menu?uiText.chooseAScenarioAndDifficultyThenStartMatch:phase==='paused'?uiText.pausedSimulationIsFrozen:phase==='ended'?uiText.theMatchHasEndedRestartOrChooseA:`${scenarioConfig[this.session.options.scenario].label} · ${this.session.options.difficulty} · ${aiProfiles[this.session.options.aiProfile??'balanced'].label} AI · ${maps[(menu?this.session.options.map:this.map.id)??'arena'].label}`;
     syncHomeMenu(phase);syncResultScreen(phase);
   }
 
@@ -889,7 +892,7 @@ export class BootScene extends Phaser.Scene {
     this.restartButton.hidden = this.session.phase!=='paused'&&this.session.phase!=='ended';
     this.restartButton.disabled = this.restartPending;
     const definition=scenarioConfig[this.scenario];
-    this.matchStatus.textContent=this.outcome==='defeat'?uiText.defeatYourBaseWasDestroyed:this.outcome==='victory'?definition.victory==='enemy-base'?uiText.victoryTheEnemyBaseWasDestroyed:definition.victory==='timer'?uiText.victoryTheOutpostSurvivedFor90Seconds:uiText.victoryAllWavesDefeated:this.scenario==='skirmish'?(maps[this.map.id??'arena'].instruction??definition.instruction):definition.instruction;
+    this.matchStatus.textContent=this.campaignRun?(this.outcome==='victory'?'Victory — all campaign objectives complete.':this.outcome==='defeat'?'Defeat — your base or required courier was lost.':campaignObjective(this.currentMatch())):this.outcome==='defeat'?uiText.defeatYourBaseWasDestroyed:this.outcome==='victory'?definition.victory==='enemy-base'?uiText.victoryTheEnemyBaseWasDestroyed:definition.victory==='timer'?uiText.victoryTheOutpostSurvivedFor90Seconds:uiText.victoryAllWavesDefeated:this.scenario==='skirmish'?(maps[this.map.id??'arena'].instruction??definition.instruction):definition.instruction;
     this.syncPlacement();this.syncNavy();
     const crowns=forestVisuals(this.gathering,this.fog),crownIds=new Set(crowns.map(c=>c.id));for(const [id,image] of this.forestImages)if(!crownIds.has(id)){image.destroy();this.forestImages.delete(id);}for(const crown of crowns){if(!this.forestImages.has(crown.id))this.forestImages.set(crown.id,this.add.image(crown.x,crown.y,'reference-terrain',crown.frame).setOrigin(.5,1));this.forestImages.get(crown.id)!.setFrame(crown.frame).setDepth(crown.y);}
     this.goldVisual.setFrame(resourceFrame('gold',this.gathering.gold!.remaining,isVisible(this.fog,'player',this.gathering.gold!.position)));
@@ -1041,7 +1044,7 @@ export class BootScene extends Phaser.Scene {
     this.syncVisuals();
   }
 
-  private currentMatch():MatchState {return {...(this.session.options.aiProfile&&this.session.options.aiProfile!=='balanced'?{aiProfile:this.session.options.aiProfile}:{}),multiplePlayers:this.multiplePlayers,wildlife:this.wildlife,armyPlan:this.armyPlan,matchId:this.matchId,capture:this.capture,campaignMission:this.campaignMission,statLedger:this.statLedger,tutorial:this.tutorial,speed:this.session.options.speed??1,enemyNaval:this.enemyNaval,navy:this.navy,factions:{...this.factions},map:this.map,gathering:this.gathering,combat:this.combat,waves:this.waves,production:this.production,soldierProduction:this.soldierProduction,placement:this.placement,outcome:this.outcome,paused:!this.simulationActive(),controlGroups:this.controlGroups,fog:this.fog,research:this.research,scenario:this.scenario,difficulty:this.difficulty,enemyProduction:this.enemyProduction,enemyAI:this.enemyAI,enemyConstruction:this.enemyConstruction,enemyPolicy:this.enemyPolicy,enemyRecovery:this.enemyRecovery,enemyKnowledge:this.enemyKnowledge};}
+  private currentMatch():MatchState {return {...(this.session.options.aiProfile&&this.session.options.aiProfile!=='balanced'?{aiProfile:this.session.options.aiProfile}:{}),multiplePlayers:this.multiplePlayers,wildlife:this.wildlife,armyPlan:this.armyPlan,matchId:this.matchId,capture:this.capture,campaignMission:this.campaignMission,campaignRun:this.campaignRun,statLedger:this.statLedger,tutorial:this.tutorial,speed:this.session.options.speed??1,enemyNaval:this.enemyNaval,navy:this.navy,factions:{...this.factions},map:this.map,gathering:this.gathering,combat:this.combat,waves:this.waves,production:this.production,soldierProduction:this.soldierProduction,placement:this.placement,outcome:this.outcome,paused:!this.simulationActive(),controlGroups:this.controlGroups,fog:this.fog,research:this.research,scenario:this.scenario,difficulty:this.difficulty,enemyProduction:this.enemyProduction,enemyAI:this.enemyAI,enemyConstruction:this.enemyConstruction,enemyPolicy:this.enemyPolicy,enemyRecovery:this.enemyRecovery,enemyKnowledge:this.enemyKnowledge};}
 
   private addImpact(impact:Impact):void {
     if(!canAddImpact([...this.impacts.values()].map(e=>e.impact),impact))return;
@@ -1100,7 +1103,7 @@ export class BootScene extends Phaser.Scene {
     this.wildlife=match.wildlife??{};this.armyPlan=match.armyPlan;
     this.matchId=match.matchId;
     this.capture=match.capture;
-    this.campaignMission=match.campaignMission;
+    this.campaignMission=match.campaignMission;this.campaignRun=match.campaignRun;
     this.statLedger=match.statLedger;
     this.tutorial=match.tutorial;
     this.navy=match.navy;this.enemyNaval=match.enemyNaval;

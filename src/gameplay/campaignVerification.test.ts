@@ -23,14 +23,14 @@ for(const scenario of Object.keys(operationConfig) as (keyof typeof operationCon
  m.combat.enemies.shift();const loaded=roundtrip(m);expect(loaded.combat.enemies.map(e=>e.id)).toEqual(['enemy-2']);expect(updateMatch(loaded,0).outcome).toBe('playing');expect(matchStats(loaded).enemy).toMatchObject({added:0,lost:1});expect(loaded.gathering.wood).toBe(m.gathering.wood);
 });
 it('saved partial banner progress survives pause/load but absence starts a new full hold',()=>{
- let m=startCampaignMission(admission,'coastal-banner','normal',campaignPreset('coastal-banner')!)!;m.combat.enemies=[];
+ let m=startCampaignMission(admission,'coastal-banner','normal',campaignPreset('coastal-banner')!)!;m.combat.enemies=[];m.campaignRun!.phase=4;
  const zone=operationConfig['mission-capture'].zone,id=`unit-${m.production.nextUnitNumber}`;m.production.nextUnitNumber++;m.soldierProduction.nextUnitNumber=m.production.nextUnitNumber;
  m.gathering.units.push({id,owner:'player',kind:'soldier',hp:factions.crown.units.soldier.hp,position:{...zone},target:{...zone},selected:false,cargo:0,order:{kind:'idle'}});
  m=updateMatch(m,8);m=roundtrip({...m,paused:true});expect(updateMatch(m,100)).toBe(m);expect(m.capture?.holdSeconds).toBe(8);
  m.paused=false;m.gathering.units.find(u=>u.id===id)!.position={x:zone.x+100,y:zone.y};m=updateMatch(m,0);expect(m.capture?.holdSeconds).toBe(0);m=roundtrip(m);m.gathering.units.find(u=>u.id===id)!.position={...zone};m=updateMatch(m,29);expect(m.outcome).toBe('playing');m=updateMatch(m,1);expect(m.outcome).toBe('victory');expect(m.capture?.holdSeconds).toBe(30);
 });
 it('actual escort goal and repeated loaded results write one completion without mutating bank, cargo or statistics',()=>{
- const m=startCampaignMission(admission,'ridge-convoy','normal',campaignPreset('ridge-convoy')!)!;m.combat.enemies=[];m.gathering.units.find(u=>u.id==='unit-4')!.position={...operationConfig['mission-escort'].zone};
+ const m=startCampaignMission(admission,'ridge-convoy','normal',campaignPreset('ridge-convoy')!)!;m.campaignRun!.phase=3;m.combat.enemies=[];m.gathering.units.find(u=>u.id==='unit-4')!.position={...operationConfig['mission-escort'].zone};
  const ended=updateMatch(m,0),memory=new Map<string,string>();let writes=0;const storage={getItem:(k:string)=>memory.get(k)??null,setItem:(k:string,v:string)=>{writes++;memory.set(k,v);}};
  const store=createCampaignStore(()=>storage);store.load();const loaded=roundtrip(ended),before=JSON.stringify(loaded),stats=matchStats(loaded);
  store.record(loaded);store.record(roundtrip(loaded));const reload=createCampaignStore(()=>storage);reload.load();reload.record(roundtrip(loaded));expect(writes).toBe(1);expect(reload.get().completed).toEqual(['ridge-convoy']);expect(campaignMissionStatus(reload.get(),'valley-rescue')).toBe('available');expect(campaignMissionStatus(reload.get(),'the-crossing')).toBe('locked');expect(JSON.stringify(loaded)).toBe(before);expect(matchStats(loaded)).toEqual(stats);
