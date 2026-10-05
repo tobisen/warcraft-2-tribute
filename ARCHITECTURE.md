@@ -1768,3 +1768,7 @@ Warshipdefs har explicit targets och damageByDomain.air=.75, transports targets=
 ## RTS-171 – formationer
 
 `gameplay/formations.ts` adapterar FormationMember(id/body/domain/map) till separata RouteState, återanvänds av groupMovement och commandShips. `navigation.findFormationRoute` gör en bounded sökning över fria kandidatanslutningar med befintlig swept-body/BFS. Domänkartor och deras hinder ändras inte. commandOrders adapterar fördelade slutplatser för Shift/Patrol, Save43-format behålls. Befintlig trafik/separation och revisionsstyrd routing sköter själva förflyttningen.
+
+## RTS-172 – profiladapter
+
+`config/aiProfiles.ts` innehåller stabila IDs, presentation och policydata. Match adapterar difficulty-AISettings med profileAISettings; enemyPolicy/enemyExpansion läser minArmy/research/expansionvillkor från samma config. MatchOptions/preferenser/scene binder separat val, Save44 validerar/migrerar43. Highscores får valfri profile i partition och visning, äldre records behålls. Inget nytt ekonomisystem eller ny scen.

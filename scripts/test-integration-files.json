@@ -1,6 +1,7 @@
 [
   "src/config/factions.test.ts",
   "src/gameplay/abilities.test.ts",
+  "src/gameplay/aiProfiles.test.ts",
   "src/gameplay/air.test.ts",
   "src/gameplay/archer.test.ts",
   "src/gameplay/baseUpgrade.test.ts",

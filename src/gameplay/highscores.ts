@@ -1,3 +1,4 @@
+import {isAIProfile,type AIProfileId} from '../config/aiProfiles';
 import {campaignMission} from '../config/campaign';
 import {isMapId} from '../config/maps';
 import {isFactionId} from '../config/factions';
@@ -10,15 +11,15 @@ import type {MatchState} from './match';
 export const highscoreKey='warcraft-2-tribute.highscores.v1';
 export const scoreModel=1;
 export const validMatchId=(v:unknown):v is string=>typeof v==='string'&&/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(v);
-export interface Highscore {id:string;model:1;config:string;kind:'campaign'|'skirmish';goal:string;map:string;difficulty:string;speed:number;player:string;enemy:string;outcome:'victory'|'defeat';seconds:number;score:number;stats:MatchStats}
+export interface Highscore {aiProfile?:AIProfileId;id:string;model:1;config:string;kind:'campaign'|'skirmish';goal:string;map:string;difficulty:string;speed:number;player:string;enemy:string;outcome:'victory'|'defeat';seconds:number;score:number;stats:MatchStats}
 export const scoreFor=(outcome:'victory'|'defeat',seconds:number)=>outcome==='victory'?10000+Math.max(0,3600-Math.floor(Math.max(0,seconds))):0;
 export function resultScore(m:MatchState):Highscore|null{
  const mission=campaignMission(m.campaignMission);
  if(!validMatchId(m.matchId)||m.outcome==='playing'||!m.factions||(!mission&&m.scenario!=='skirmish')||mission&&mission.scenario!==m.scenario)return null;
  const stats=matchStats(m);
- return {id:m.matchId,model:1,config:saveConfig.configVersion,kind:mission?'campaign':'skirmish',goal:mission?.id??m.map.id!,map:m.map.id!,difficulty:m.difficulty!,speed:m.speed??1,player:m.factions.player,enemy:m.factions.enemy,outcome:m.outcome,seconds:stats.seconds,score:scoreFor(m.outcome,stats.seconds),stats};
+ return {...(m.aiProfile?{aiProfile:m.aiProfile}:{}),id:m.matchId,model:1,config:saveConfig.configVersion,kind:mission?'campaign':'skirmish',goal:mission?.id??m.map.id!,map:m.map.id!,difficulty:m.difficulty!,speed:m.speed??1,player:m.factions.player,enemy:m.factions.enemy,outcome:m.outcome,seconds:stats.seconds,score:scoreFor(m.outcome,stats.seconds),stats};
 }
-export const scorePartition=(s:Highscore)=>JSON.stringify([s.kind,s.goal,s.map,s.difficulty,s.speed,s.player,s.enemy,s.config,s.model]);
+export const scorePartition=(s:Highscore)=>JSON.stringify([s.kind,s.goal,s.map,s.difficulty,s.speed,s.player,s.enemy,s.config,s.model,...(s.aiProfile&&s.aiProfile!=='balanced'?[s.aiProfile]:[])]);
 const finite=(v:unknown)=>typeof v==='number'&&Number.isFinite(v)&&v>=0&&v<=1e12;
 function validStats(value:unknown):value is MatchStats{
  if(!value||typeof value!=='object')return false;const s=value as MatchStats;
@@ -32,7 +33,7 @@ function validStats(value:unknown):value is MatchStats{
 }
 export function validHighscore(value:unknown):value is Highscore{
  if(!value||typeof value!=='object'||Array.isArray(value))return false;const s=value as Highscore;
- if(Object.keys(s).sort().join()!=='config,difficulty,enemy,goal,id,kind,map,model,outcome,player,score,seconds,speed,stats')return false;
+ if((s.aiProfile!==undefined&&!isAIProfile(s.aiProfile))||Object.keys(s).filter(k=>k!=='aiProfile').sort().join()!=='config,difficulty,enemy,goal,id,kind,map,model,outcome,player,score,seconds,speed,stats')return false;
  const mission=campaignMission(s.goal);
  return validMatchId(s.id)&&s.model===1&&typeof s.config==='string'&&/^tribute-config-[1-9][0-9]{0,3}$/.test(s.config)&&isMapId(s.map)&&Object.hasOwn(difficultyProfiles,s.difficulty)&&isGameSpeed(s.speed)&&isFactionId(s.player)&&isFactionId(s.enemy)&&(s.outcome==='victory'||s.outcome==='defeat')&&finite(s.seconds)&&s.score===scoreFor(s.outcome,s.seconds)&&validStats(s.stats)&&s.stats.seconds===s.seconds&&(s.kind==='campaign'?!!mission&&s.map===scenarioConfig[mission.scenario].map:s.kind==='skirmish'&&s.goal===s.map);
 }

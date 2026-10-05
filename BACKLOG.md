@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**Aktuellt mandat RTS-170–173:** Nytt uttryckligt uppdrag ersätter stoppet efter169.170–171 Done;172 In Progress;173 Todo. En task åt gången med riktade tester/browser, slutchecks, docs och commit/push till origin/main. Stopp efter173 med HANDOFF;174 startas inte.160–164 och165–169 återimplementeras inte. Befintlig style.css och otrackade docs/ bevaras.
+**Aktuellt mandat RTS-170–173:** Nytt uttryckligt uppdrag ersätter stoppet efter169.170–172 Done;173 In Progress. En task åt gången med riktade tester/browser, slutchecks, docs och commit/push till origin/main. Stopp efter173 med HANDOFF;174 startas inte.160–164 och165–169 återimplementeras inte. Befintlig style.css och otrackade docs/ bevaras.
 
 **Nytt mandat RTS-165–169:**165 Done (`838f729`),166 Done (`2cd36a6`),167 Done (`fd9dfd3`),168 Done gameplay (`83d01fe`, pushad);169 Done som preliminärt första balanspass. Slutlig flygargrafik återstår separat. Användarens bifogade uppdrag för165–173 anger etappstopp efter169 och ny chatt170–173.160–164 är verifierade och pushade;164 `874f761`. Befintliga ändringar bevaras.
 
@@ -4623,7 +4623,9 @@ Anpassa formationer vid passager och combat.
 
 ## RTS-172 – AI-personligheter
 
-**Status:** Todo.
+**Status:** Done.
+
+**Leverans:** Datadriven Defensive/Offensive/Economic samt befintlig Standard. Separat från difficulty; egna armémål/researchprioritet/expansionsvillkor och attack/grupp/reserv/försvarsregler. Samma kostnader, tech, fog och produktionssystem. Val/description i matchmeny, sessionstatus/preferenser/Save44/restart och highscorepartition. Riktade152/10, unit435/79 och build inklusive strict typecheck PASS. Chromium tre profiler×800/1280 fysisk selection, oberoende difficulty, Save/Load/restart och betald produktion/research/expansion PASS; [artefakter](artifacts/rts-172), Economic800 visuellt granskad. Deterministiska matchuppdateringar och faktisk dispatchtiming testade.
 
 **Goal:** AI-personligheter.
 

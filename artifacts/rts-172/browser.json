@@ -1,0 +1,204 @@
+[
+  {
+    "width": 800,
+    "profile": "defensive",
+    "decision": {
+      "priority": "defense",
+      "before": {
+        "wood": 300,
+        "gold": 200
+      },
+      "after": {
+        "wood": 260,
+        "gold": 190
+      },
+      "research": {
+        "attack": 0,
+        "defense": 0,
+        "job": {
+          "kind": "defense",
+          "remainingSeconds": 7.9
+        }
+      }
+    },
+    "errors": [],
+    "fixture": "Explicit own bank/completed sites/army to observe actual paid profile decision; not a whole economy playthrough."
+  },
+  {
+    "width": 800,
+    "profile": "offensive",
+    "decision": {
+      "priority": "army",
+      "before": {
+        "wood": 300,
+        "gold": 200
+      },
+      "after": {
+        "wood": 246,
+        "gold": 182
+      },
+      "head": {
+        "id": "barracks-job-1",
+        "kind": "soldier",
+        "supply": 1,
+        "cost": {
+          "wood": 18,
+          "gold": 6
+        },
+        "durationSeconds": 6,
+        "remainingSeconds": 5.9
+      },
+      "research": {
+        "attack": 0,
+        "defense": 0,
+        "job": null
+      }
+    },
+    "errors": [],
+    "fixture": "Explicit own bank/completed sites/army to observe actual paid profile decision; not a whole economy playthrough."
+  },
+  {
+    "width": 800,
+    "profile": "economic",
+    "decision": {
+      "priority": "expansion",
+      "before": {
+        "wood": 300,
+        "gold": 200
+      },
+      "after": {
+        "wood": 220,
+        "gold": 180
+      },
+      "research": {
+        "attack": 0,
+        "defense": 0,
+        "job": null
+      },
+      "outpost": {
+        "id": "enemy-outpost",
+        "owner": "enemy",
+        "kind": "building",
+        "buildingType": "outpost",
+        "hp": 240,
+        "position": {
+          "x": 784,
+          "y": 144
+        },
+        "footprint": {
+          "x": 736,
+          "y": 96,
+          "width": 96,
+          "height": 96
+        },
+        "construction": {
+          "remainingSeconds": 10,
+          "builderId": "enemy-worker-1"
+        }
+      }
+    },
+    "errors": [],
+    "fixture": "Explicit own bank/completed sites/army to observe actual paid profile decision; not a whole economy playthrough."
+  },
+  {
+    "width": 1280,
+    "profile": "defensive",
+    "decision": {
+      "priority": "defense",
+      "before": {
+        "wood": 300,
+        "gold": 200
+      },
+      "after": {
+        "wood": 260,
+        "gold": 190
+      },
+      "research": {
+        "attack": 0,
+        "defense": 0,
+        "job": {
+          "kind": "defense",
+          "remainingSeconds": 7.9
+        }
+      }
+    },
+    "errors": [],
+    "fixture": "Explicit own bank/completed sites/army to observe actual paid profile decision; not a whole economy playthrough."
+  },
+  {
+    "width": 1280,
+    "profile": "offensive",
+    "decision": {
+      "priority": "army",
+      "before": {
+        "wood": 300,
+        "gold": 200
+      },
+      "after": {
+        "wood": 246,
+        "gold": 182
+      },
+      "head": {
+        "id": "barracks-job-1",
+        "kind": "soldier",
+        "supply": 1,
+        "cost": {
+          "wood": 18,
+          "gold": 6
+        },
+        "durationSeconds": 6,
+        "remainingSeconds": 5.9
+      },
+      "research": {
+        "attack": 0,
+        "defense": 0,
+        "job": null
+      }
+    },
+    "errors": [],
+    "fixture": "Explicit own bank/completed sites/army to observe actual paid profile decision; not a whole economy playthrough."
+  },
+  {
+    "width": 1280,
+    "profile": "economic",
+    "decision": {
+      "priority": "expansion",
+      "before": {
+        "wood": 300,
+        "gold": 200
+      },
+      "after": {
+        "wood": 220,
+        "gold": 180
+      },
+      "research": {
+        "attack": 0,
+        "defense": 0,
+        "job": null
+      },
+      "outpost": {
+        "id": "enemy-outpost",
+        "owner": "enemy",
+        "kind": "building",
+        "buildingType": "outpost",
+        "hp": 240,
+        "position": {
+          "x": 784,
+          "y": 144
+        },
+        "footprint": {
+          "x": 736,
+          "y": 96,
+          "width": 96,
+          "height": 96
+        },
+        "construction": {
+          "remainingSeconds": 10,
+          "builderId": "enemy-worker-1"
+        }
+      }
+    },
+    "errors": [],
+    "fixture": "Explicit own bank/completed sites/army to observe actual paid profile decision; not a whole economy playthrough."
+  }
+]

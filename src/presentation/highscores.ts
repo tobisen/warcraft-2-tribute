@@ -1,10 +1,11 @@
+import {aiProfiles} from '../config/aiProfiles';
 import {createHighscoreStore,resultScore,rankedScores,scorePartition,type Highscore} from '../gameplay/highscores';
 import {campaignDetails,campaignMission} from '../config/campaign';
 import {maps,type MapId} from '../config/maps';
 import {factions,type FactionId} from '../config/factions';
 import type {MatchState} from '../gameplay/match';
 export const highscoreStore=createHighscoreStore(()=>window.localStorage);
-export function scoreHeading(s:Highscore):string{return `${s.kind==='campaign'?campaignDetails(s.goal as NonNullable<ReturnType<typeof campaignMission>>['id']).title:maps[s.map as MapId].label} · ${s.difficulty} · ${s.speed}× · ${factions[s.player as FactionId].label} vs ${factions[s.enemy as FactionId].label} · ${s.config} · scoring v${s.model}`;}
+export function scoreHeading(s:Highscore):string{return `${s.kind==='campaign'?campaignDetails(s.goal as NonNullable<ReturnType<typeof campaignMission>>['id']).title:maps[s.map as MapId].label} · ${s.difficulty}${s.aiProfile?` · ${aiProfiles[s.aiProfile].label} AI`:""} · ${s.speed}× · ${factions[s.player as FactionId].label} vs ${factions[s.enemy as FactionId].label} · ${s.config} · scoring v${s.model}`;}
 function render(target:HTMLElement,entries:Highscore[],message:string){
  target.replaceChildren();const intro=document.createElement('p');intro.textContent='Local results. Victory: 10000 + max(0, 3600 − whole gameplay seconds). Defeat: 0. Groups separate difficulty, speed, factions and rules version.';target.append(intro);
  const groups=new Map<string,Highscore[]>();for(const s of rankedScores(entries)){const key=scorePartition(s);groups.set(key,[...(groups.get(key)??[]),s]);}

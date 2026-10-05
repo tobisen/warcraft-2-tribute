@@ -1,3 +1,4 @@
+import {aiProfile} from '../config/aiProfiles';
 import {nextEnemyRole} from './enemyProduction';
 import {technologyFor} from './productionPrerequisites';
 import {knownEnemyNode} from './enemyKnowledge';
@@ -23,11 +24,11 @@ export function enemyPriority(m:MatchState):EnemyPriority {
  const p=enemyBuildingView(m),pop=enemyPopulation(m),r=m.enemyPolicy.research;
  if(!p.barracks||p.construction?.remainingSeconds)return 'barracks';
  if(!p.farms?.some(f=>f.construction.remainingSeconds===0)&&pop.used+pop.reserved>=pop.cap-enemyConstructionConfig.supplyMargin)return 'supply';
- if(m.combat.enemies.filter(e=>!e.footprint&&e.kind!=='worker'&&e.hp>0).length<config.minLiveArmy)return 'army';
+ if(m.combat.enemies.filter(e=>!e.footprint&&e.kind!=='worker'&&e.hp>0).length<aiProfile(m).minArmy)return 'army';
  if(wantsEnemyExpansion(m))return 'expansion';
  if(r.job||r.attack>=factions[(m.factions??defaultFactions).enemy].upgrades.attack.maxLevel&&r.defense>=factions[(m.factions??defaultFactions).enemy].upgrades.defense.maxLevel)return 'army';
  if(!p.forge||p.forge.construction.remainingSeconds>0)return 'forge';
- return r.attack<factions[(m.factions??defaultFactions).enemy].upgrades.attack.maxLevel?'attack':'defense';
+ const first=aiProfile(m).researchFirst;return r[first]<factions[(m.factions??defaultFactions).enemy].upgrades[first].maxLevel?first:first==='attack'?'defense':'attack';
 }
 export function prepareEnemyPolicy(m:MatchState):MatchState {
  if(!m.enemyPolicy||!m.enemyProduction||!m.combat.enemies.some(e=>e.kind==='base'&&e.hp>0))return m;

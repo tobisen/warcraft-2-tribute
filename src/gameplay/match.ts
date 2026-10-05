@@ -1,3 +1,4 @@
+import {isAIProfile,profileAISettings,type AIProfileId} from '../config/aiProfiles';
 import {prepareOrders} from './commandOrders';
 import {isAir} from './domains';
 import {prepareEnemySpells,untilSpellBoundary} from './enemySpells';
@@ -61,6 +62,7 @@ import { updateWaves, type WaveState } from './waves';
 
 export type MatchOutcome = 'playing' | 'defeat' | 'victory';
 export interface MatchState {
+  aiProfile?:AIProfileId;
   matchId?:string;
   capture?:CaptureState;
   campaignMission?:import('../config/campaign').CampaignMissionId;
@@ -93,11 +95,13 @@ export interface MatchState {
 }
 
 /** A fresh state owns every mutable position/array; restart never reuses a previous match. */
-export function createMatch(scenario:MatchScenario='survival',difficulty:Difficulty='normal',factions:MatchFactions={...defaultFactions},mapId:MapId=scenarioConfig[scenario].map,speed:GameSpeed=1): MatchState {
+export function createMatch(scenario:MatchScenario='survival',difficulty:Difficulty='normal',factions:MatchFactions={...defaultFactions},mapId:MapId=scenarioConfig[scenario].map,speed:GameSpeed=1,aiProfile:AIProfileId='balanced'): MatchState {
   if(!isGameSpeed(speed))throw Error('Invalid game speed');
   if(!isMapId(mapId)||!scenarioMapAllowed(scenario,mapId))throw Error('Unknown or unsupported map');
   if(!isFactionId(factions.player)||!isFactionId(factions.enemy))throw Error('Unknown faction');
+  if(!isAIProfile(aiProfile))throw Error('Unknown AI profile');
   const state: MatchState = {
+    ...(aiProfile!=='balanced'?{aiProfile}:{}),
     statLedger:createStatLedger(),
     speed,
     factions:{...factions},
@@ -187,7 +191,7 @@ function advance(state: MatchState, delta: number): MatchState {
     {map:cleaned.map,enemies:cleaned.combat.enemies}):{gathering:worker.gathering,production:cleaned.soldierProduction};
   const nextUnitNumber=Math.max(worker.production.nextUnitNumber,soldier.production.nextUnitNumber);
   const enemy=cleaned.enemyProduction?updateEnemyProduction(cleaned.enemyProduction,cleaned.combat,soldier.gathering,enemyNavigationMap(cleaned.map),enemyBuilding.productionDelta,(cleaned.factions??defaultFactions).enemy,cleaned.enemyConstruction?{airThreat:cleaned.gathering.units.some(u=>isAir(u)&&u.hp!>0&&!!cleaned.fog&&entityVisible(cleaned.fog,'enemy',u)),technology:technologyFor(cleaned,'enemy'),site:cleaned.combat.enemies.find(e=>e.buildingType==='barracks'),population:enemyPopulation(cleaned),maxArmy:cleaned.enemyNaval?2:undefined,embarked:cleaned.enemyNaval?.passengers.length??0,workerReservations:cleaned.enemyRecovery?.production.queue?.reduce((n,j)=>n+(j.supply??1),0)??0,startAllowed:!cleaned.enemyPolicy||enemyPriority(cleaned)==='army',reserveForFarm:cleaned.combat.enemies.some(e=>e.buildingType==='farm'&&e.construction?.remainingSeconds===0)?undefined:enemyConstructionConfig.supplyMargin}:undefined):{combat:cleaned.combat,state:undefined};
-  const ai=cleaned.enemyAI?updateEnemyAI(cleaned.enemyAI,enemy.combat,enemyNavigationMap(cleaned.map),cleaned.enemyKnowledge?enemyAttackDestination(cleaned):soldier.gathering.base,delta,soldier.gathering.units,{...difficultyProfiles[cleaned.difficulty??'normal'].ai,...(maps[cleaned.map.id??'arena'].enemyMuster?{muster:maps[cleaned.map.id??'arena'].enemyMuster!}:{}),firstAttackSeconds:difficultyProfiles[cleaned.difficulty??'normal'].ai.firstAttackSeconds+(cleaned.enemyProduction?.extracted?(cleaned.enemyProduction.roster?enemyEconomyConfig.rosterAttackGraceSeconds:enemyEconomyConfig.attackGraceSeconds):0)},vision?((u)=>entityVisible(vision,'enemy',u)):undefined,(cleaned.factions??defaultFactions).enemy):{combat:enemy.combat,state:undefined};
+  const ai=cleaned.enemyAI?updateEnemyAI(cleaned.enemyAI,enemy.combat,enemyNavigationMap(cleaned.map),cleaned.enemyKnowledge?enemyAttackDestination(cleaned):soldier.gathering.base,delta,soldier.gathering.units,profileAISettings({...difficultyProfiles[cleaned.difficulty??'normal'].ai,...(maps[cleaned.map.id??'arena'].enemyMuster?{muster:maps[cleaned.map.id??'arena'].enemyMuster!}:{}),firstAttackSeconds:difficultyProfiles[cleaned.difficulty??'normal'].ai.firstAttackSeconds+(cleaned.enemyProduction?.extracted?(cleaned.enemyProduction.roster?enemyEconomyConfig.rosterAttackGraceSeconds:enemyEconomyConfig.attackGraceSeconds):0)},cleaned.aiProfile),vision?((u)=>entityVisible(vision,'enemy',u)):undefined,(cleaned.factions??defaultFactions).enemy):{combat:enemy.combat,state:undefined};
   const incoming=scenarioConfig[cleaned.scenario??'survival'].waves?updateWaves(cleaned.waves,ai.combat,delta,scenarioWaves(cleaned.scenario??'survival',cleaned.difficulty??'normal')):{combat:ai.combat,waves:{...cleaned.waves,elapsedSeconds:cleaned.waves.elapsedSeconds+delta}};
   let updated:MatchState={...cleaned,...(enemyPolicy?{enemyPolicy}:{}),...(vision?{fog:vision}:{}),research,...(enemy.state?{enemyProduction:enemy.state}:{}),...(ai.state?{enemyAI:ai.state}:{}),gathering:soldier.gathering,combat:incoming.combat,waves:incoming.waves,
     production:{...worker.production,nextUnitNumber},soldierProduction:{...soldier.production,nextUnitNumber}};
