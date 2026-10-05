@@ -1808,3 +1808,7 @@ saves without a run keep the old scenario. Save51 validates authored map/identit
 phase bounds, wave timestamp and capture timing; UI renders the current phase
 without owning objective state. Campaign progress IDs and skirmish teams remain
 separate. No repeating reward/entity trigger registry is introduced.
+
+## 2026-10-05 — RTS-188
+
+Permanent HUD-sidebar borttagen från layout i separat matchWorkspace.css; användarens style.css orörd. Mission-topbar öppnar pausad undermeny med befintlig mission/tutorial/operation/status, tech-tree/command-guide under Menu. Transient feedback/warnings bibehålls ovan kartan; actions/minimap oförändrade. Back/Escape återgår till pausmenyn och Resume fortsätter matchen. Browser Native800/1280/1920 samt Fit800 PASS (scripts/check-match-workspace.mjs), full kartbredd/mission/tech/paus/resume och inga pageerrors. Native800-bild visuellt granskad. Riktade11/3, unit468/84 och strict typecheck/build/diff PASS. Ingen gameplay/full campaign-simulering behövs för denna DOM/layoutändring. Docs före commit; CSS/docs bevarade.189 grafikinventering påbörjad; imagegen används för transparenta sprites, stilantagande detaljerad pixelgrafik medan användarens val är frivilligt.

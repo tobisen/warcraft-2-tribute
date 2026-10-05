@@ -2,6 +2,24 @@
 
 ## Current Focus
 
+**Nytt grafik-/layoutmandat RTS-188–190:** Användaren beställer tydligare spelyta, bättre fullständig enhets-/byggnadsgrafik inklusive flyg och roligare djur. En task i taget med browser/checks/docs/commit/push. Bevara style.css/docs och gameplay/balans/Save. Ingen delegering.
+
+### RTS-188 — Frigör spelytan — Done
+- Ta bort permanent sidebar från matchlayout; karta använder hela bredden.
+- Tech tree i undermeny under matchmenyn. Mission-knapp i top bar öppnar uppdrag, mål och status.
+- Behåll actions, minimap, feedback, paus/fokus/Escape och live uppdragsuppdateringar. Fungerar Native800/1280/1920 och Fit.
+- Non-goals: nya gameplayregler, ändring av användarens style.css, nya uppdrag.
+
+### RTS-189 — Sammanhängande och komplett spelgrafik — In Progress
+- Inventera samtliga fem fraktioners roster och byggnader; ersätt otillräckliga/saknade motiv med tydliga detaljerade sprites, även Gryphon/Wyvern/Eagle/Gyrocopter/Airship.
+- Bevara riktningar, relevanta animationer, teamfärg, ankare, fog/selection/porträtt och logical footprints. Kontrollera alla motiv i spelbrowser; inga flygtextikoner som slutgrafik.
+- Dokumentera källor/prompt/export och faktiska belägg. Non-goals: balans-/rosterändringar.
+
+### RTS-190 — Livfulla djur — Todo
+- Ny särskiljbar design för deer/rabbit/fox med igenkännbara poser och befintlig idle/walk/flee/hunt/död-presentation.
+- Bevara interaktion, sparning, fog, ljud och gameplay. Visuell browserkontroll och riktade regressioner.
+- Samlade slutchecks och HANDOFF efter190; inga nya tasks.
+
 **AI-antalbugfix efter187:** Done. Extra knapp borttagen; dropdown1/2AI med förklarat Plains96-byte när tredje start saknas. Ny browser/native-popup, unit468/84, riktade97/4 och strict build/diff PASS. Inga nya roadmaptasks. CSS/docs bevaras.
 
 **Dropdownbugfix efter186/187:** Done. Ras-/svårighetsmenyer bevarar native popup mellan bildrutor; inga senare roadmaptasks startas. Ny synlig Chrome800/1280-popupkontroll, separat värdepersistens, unit468/84 och strict build/diff PASS. Se DEV_LOG/HANDOFF för testmetodens begränsningar. CSS/docs bevaras.

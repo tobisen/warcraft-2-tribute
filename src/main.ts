@@ -11,6 +11,7 @@ import './style.css';
 import './presentation/menuImprovements.css';
 import './presentation/spells.css';
 import './presentation/actionIcons.css';
+import './presentation/matchWorkspace.css';
 import Phaser from 'phaser';
 import { BootScene } from './scenes/BootScene';
 import { viewportConfig } from './config/camera';
