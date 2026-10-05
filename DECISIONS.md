@@ -1426,3 +1426,11 @@ Nya Frontier-matcher använder egna terrängkonturer och skördbara groves koppl
 ## PRIO-04 – neutrala djurmål
 
 Djur är neutrala med separat sparse HP-state, utan resurser/killscore/vision/blockering. Soldater/luft och krigsfartyg använder befintliga weaponstats, combat approach/marina firing-position; transports/workers får inga hunts. Normal order ersätter jakt/kö och Shift kan köa den. Dött/försvunnet/dolt/onåbart mål avslutas; nästa order startar nästa steg. Inspektion håller markerade trupper kvar, så nästa högerklick kan attackera samma djur. Ranged neutral hits visar attack-/impactfeedback och applicerar profildamage direkt; inga neutrala projektiler eller loot införs. Save47 sparar hälsa/hit/death men fortsätter härleda wandering från befintlig clock. Egna stiliserade WAVs får tekniska checks och kräver separat faktisk lyssning före Done.
+
+## RTS-174 — självständiga AI-spelare
+
+Tre spelare erbjuds initialt endast i skirmish på Plains96/128, med authored tredje start och validerad footprint/spawnexit. Övriga kartor behåller två platser. Människan behåller stabilt player-ID; AI1 enemy, AI2 ai-2. Ras och spelarfärg är separata. FFA är relation mellan olika IDs; gemensamma kontroll/support/harm-regler förbereder175 utan att införa lag i174.
+
+Varje AI äger befintlig ekonomi/produktion/research/armyplan/scout/defense-state och egna aktuella/utforskade fogceller. Tillfälliga actor-vyer återanvänder befintliga ekonomi/tech/combat-system. En gemensam högst0.25s-slice, delad ytterligare vid spell-/abilitygränser, tickar varje aktör en gång och sammanför utgående skada efter samma snapshot. Resursuttag sker sekventiellt i stabil spelarordning mot samma kvarvarande lager. Target-IDs prefixas för AI2; projektionsvyn är för input/rendering, inte en andra ekonomi. Forskning/förmågor/spellförsvar appliceras hos målets egen ägare.
+
+Save48 använder ett multiplayer-envelope med roster, kills och individuella dokument som valideras av befintlig strikt Save-regel med härledda start-/externa mål-/hinderkontexter. Ingen untrusted Save bestämmer tillåtna starts eller recipes. Äldre47-saves migrerar som befintliga tvåspelarmatcher. Avvikande spelare/raser/referenser/clock/outcome avvisas. Statistik skiljer ägare, unitloss och kill; neutral wildlife ger fortsatt inga kills. Multi-save använder2MB-slotgränsen som tidigare.

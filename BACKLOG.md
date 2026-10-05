@@ -2,6 +2,8 @@
 
 ## Current Focus
 
+**Aktuellt mandat RTS-174–176:** Användaren återupptar174–176 efter färdiga PRIO-01–04.174 Done;175 nästa,176 Todo. En task åt gången, riktade tester/browser, slutchecks/docs och commit/push. HANDOFF efter176; stopp före177. CSS/docs bevaras.
+
 **Nytt prioriterat mandat PRIO-01–04:** RTS-174–176 pausade enligt användarens nya uppdrag. PRIO-01–04 Done. Användaren har godkänt kartorna och djurljuden tills resterande ljudarbete genomförs. En task åt gången, docs/checks/browser/commit/push; stopp efter04,174 startas inte. PRIO-03:s två bildreferenser är godkända; referenskarta verifieras före spridning. Användarens CSS/docs bevaras.
 
 **CI-korrigering efter RTS-173 (2026-10-05):** Användaren rapporterar flera röda pushar. Senaste GitHub-jobbet fallerar enbart på femsekunderstimeout i factionArt-testet; äldre air-assertions är rättade i173. Samma uttömmande assetkontroller delas i16 faction/type/owner-fall, utan höjd timeout eller ändrade assets/runtime. Riktade17/1, unit450/79 och build/strict typecheck/diff PASS lokalt. Fix `b79d1fd` pushad. Ny [GitHub-fullregression/build/Pages-deploy](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37300780990) PASS; teststeget12m05s.174 startas inte.
@@ -4788,7 +4790,7 @@ Teknisk del: synligt sprite-/huvudklick visar namn/HP och rätt eget läte, beh�
 
 ## RTS-174 – Flera AI-spelare
 
-**Status:** Todo.
+**Status:** Done.
 
 **Goal:** Flera AI-spelare.
 
@@ -4806,6 +4808,8 @@ Verifiera targeting, fog of war, minimap och statistik.
 **Tests:** Riktade beteendetester och berörda integrationer; browser-/speltest för kriterierna. Slutlig unit-suite, build inklusive strict typecheck och diffkontroll före kodcommit; docs-only kontrolleras för text/länkar/diff. Ej utförda checks redovisas.
 
 **Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
+
+**Leverans2026-10-05:** En människa + två självständiga AI på validerade Plains96/128-startplatser. Stabilt owner-ID, individuell ras/färg/bank/supply/kö/research/AI/fog; gemensamma relationer och scoped återanvändning av befintlig AI/combat. AI strider mot AI, projektiler/skademodifierare och offensiva spell-effekter bevaras hos rätt ägare. Setup, minimap och statistik per spelare; Save48 strikt validerade aktörsdokument/ägarreferenser och äldre47-migration. Riktade97/6 + modifierare31/3 PASS, slutlig unit461/83/build inklusive strict typecheck/diff PASS. Browser800/1280 faktiska menyval/betalda AI-banker, explicit AI-stridsfixture, save/load med mål/ägare och två omstarter PASS; settings800/AI-colors1280 granskade. artifacts/rts-174. Övriga kartor erbjuder fortsatt två spelare; lag och lagresultat levereras separat175/176. Ingen mänsklig helmatch/FPS-mätning hävdas.
 
 ## RTS-175 – Lag och allierad AI
 

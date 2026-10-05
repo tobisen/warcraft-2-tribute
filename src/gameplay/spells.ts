@@ -1,3 +1,5 @@
+import {syncProjectedCombat} from './multiplePlayers';
+import {canHarm,canSupport,ownerOf} from './players';
 import {isAir} from './domains';
 import {factionSpells,spellDefinition,spellIds,type SpellId} from '../config/spells';
 import {factions,defaultFactions,type FactionId} from '../config/factions';
@@ -26,6 +28,7 @@ export function spellTargetReason(m:MatchState,casterId:string,id:SpellId,target
  const reason=spellCasterReason(m,casterId,id,team);if(reason)return reason;
  const cfg=spellDefinition(id,teamFaction(m,team)),targetTeam=cfg.targetTeam==='ally'?team:team==='player'?'enemy':'player',target=combatant(m,targetId,targetTeam),caster=combatant(m,casterId,team)!;
  if(!target||target.hp<=0)return 'Choose a living '+(cfg.targetTeam==='ally'?'allied':'hostile')+' ground combat unit';
+ if(m.multiplePlayers){const casterOwner=team==='player'?'player':ownerOf(caster as Enemy),targetOwner=targetTeam==='player'?'player':ownerOf(target as Enemy);if(cfg.targetTeam==='ally'?!canSupport(casterOwner,targetOwner):!canHarm(casterOwner,targetOwner))return 'Invalid player relation';}
  if(m.fog&&!entityVisible(m.fog,team,target))return 'Target outside current vision';
  if(Math.hypot(target.position.x-caster.position.x,target.position.y-caster.position.y)>cfg.range+1e-9)return `Target outside ${cfg.range}px range`;
  if(cfg.kind==='heal'){const role='kind'in target&&target.kind==='soldier'?target.archetype??'soldier':'role'in target?target.role??'soldier':'soldier';const maximum=targetTeam==='player'?factions[teamFaction(m,targetTeam)].units[role].hp:enemyMaximumHP(target as Enemy,teamFaction(m,targetTeam));if(target.hp>=maximum)return 'Target at full HP';}
@@ -37,7 +40,7 @@ export function castSpell(m:MatchState,casterId:string,id:SpellId,targetId:strin
  const faction=teamFaction(m,team),cfg=spellDefinition(id,faction),targetTeam=cfg.targetTeam==='ally'?team:team==='player'?'enemy':'player';
  const change=(u:Combatant,unitTeam:'player'|'enemy'):Combatant=>{let next=u;if(u.id===casterId&&unitTeam===team)next={...next,mana:(u.mana??factions[faction].units.specialist.mana!.initial)-cfg.manaCost,spellCooldowns:{...u.spellCooldowns,[id]:cfg.cooldown}};
   if(u.id===targetId&&unitTeam===targetTeam){if(cfg.kind==='heal'){const role='kind'in u&&u.kind==='soldier'?u.archetype??'soldier':'role'in u?u.role??'soldier':'soldier';next={...next,hp:Math.min(targetTeam==='player'?factions[teamFaction(m,targetTeam)].units[role].hp:enemyMaximumHP(u as Enemy,teamFaction(m,targetTeam)),u.hp+cfg.healHP!)};}else next={...next,spellEffects:[...(next.spellEffects??[]).filter(e=>spellDefinition(e.spell,e.sourceFaction).kind!==cfg.kind),{spell:id,sourceFaction:faction,remainingSeconds:cfg.duration}]};}return next;};
- return {reason:null,match:{...m,gathering:{...m.gathering,units:m.gathering.units.map((u):Unit=>u.kind==='soldier'?change(u,'player') as Soldier:u)},combat:{...m.combat,enemies:m.combat.enemies.map(e=>change(e,'enemy') as Enemy)}}};
+ return {reason:null,match:syncProjectedCombat({...m,gathering:{...m.gathering,units:m.gathering.units.map((u):Unit=>u.kind==='soldier'?change(u,'player') as Soldier:u)},combat:{...m.combat,enemies:m.combat.enemies.map(e=>change(e,'enemy') as Enemy)}})};
 }
 export function spellTargetAt(m:MatchState,id:SpellId,point:Position,team:'player'|'enemy'='player'):string|undefined{const cfg=spellDefinition(id,teamFaction(m,team)),targetTeam=cfg.targetTeam==='ally'?team:team==='player'?'enemy':'player',candidates=targetTeam==='player'?m.gathering.units.filter(u=>u.kind==='soldier'&&!isAir(u)):m.combat.enemies.filter(e=>!isAir(e)&&!e.footprint&&(e.kind===undefined||e.kind==='unit'));return candidates.find(u=>u.hp!>0&&(!m.fog||entityVisible(m.fog,team,u))&&Math.abs(u.position.x-point.x)<=16&&Math.abs(u.position.y-point.y)<=16)?.id;}
 export function spellModifiers(u:SpellState,elapsed=0){let attack=1,defense=1;for(const effect of u.spellEffects??[])if(effect.remainingSeconds>elapsed+1e-9){const cfg=spellDefinition(effect.spell,effect.sourceFaction);attack*=cfg.attackMultiplier??1;defense*=cfg.defenseMultiplier??1;}return {attack,defense};}

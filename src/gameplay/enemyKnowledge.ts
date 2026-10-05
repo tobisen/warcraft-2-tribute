@@ -8,7 +8,7 @@ import {resourceNodes,type ResourceNode,type Worker} from './gathering';
 import type {Position} from './movement';
 import type {MatchState} from './match';
 export interface EnemyKnowledgeState {nodes:ResourceNode[];playerBase:Position|null;resourceScoutIndex:number;attackScoutIndex:number}
-function searchWaypoints(m:MatchState,kind:'resource'|'attack'){const map=maps[m.map.id??'arena'];return (m.map.terrainLayout==='reference'?(kind==='resource'?map.referenceResourceWaypoints:map.referenceAttackWaypoints):undefined)??(kind==='resource'?map.enemyResourceWaypoints??config.resourceWaypoints:map.enemyAttackWaypoints??config.attackWaypoints);}
+function searchWaypoints(m:MatchState,kind:'resource'|'attack'){if(kind==='attack'&&m.aiContext)return m.aiContext.attackWaypoints;const map=maps[m.map.id??'arena'];return (m.map.terrainLayout==='reference'?(kind==='resource'?map.referenceResourceWaypoints:map.referenceAttackWaypoints):undefined)??(kind==='resource'?map.enemyResourceWaypoints??config.resourceWaypoints:map.enemyAttackWaypoints??config.attackWaypoints);}
 export const createEnemyKnowledge=():EnemyKnowledgeState=>({nodes:[],playerBase:null,resourceScoutIndex:0,attackScoutIndex:0});
 export function knownEnemyNode(m:MatchState,node:ResourceNode|undefined):ResourceNode|undefined {return node?(m.enemyKnowledge?m.enemyKnowledge.nodes.find(n=>n.id===node.id):node):undefined;}
 export function observeEnemyKnowledge(m:MatchState):MatchState {

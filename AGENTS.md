@@ -134,3 +134,7 @@ RTS-170–173 är Done och verifierade. Full regression1355/163, unit435/79 och 
 ## Prioriterat mandat PRIO-01–04
 
 Användaren pausar174–176 och beställer separata PRIO-01–04 enligt BACKLOG. Musklick, egna särskiljbara actionikoner, spelbar referenskarta med godkända terrängbilder och interaktiva djur. En task åt gången, relevant verifiering/browser, docs och commit/push till origin/main. Bevara befintlig CSS/docs, ingen automatisk delegering. Stanna efter04;174 startas inte.
+
+## Mandat RTS-174–176
+
+Nytt uttryckligt uppdrag återupptar174–176 efter färdiga PRIO-01–04. En task åt gången med riktade tester/browser, slutlig unit/build inklusive strict typecheck/diff, docs och commit/push till origin/main utan force. Full regression vid etappslut. HANDOFF efter176; stanna före177. Bevara användarens style.css och docs/. Ingen automatisk delegering.

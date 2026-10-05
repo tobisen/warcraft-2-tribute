@@ -1,3 +1,4 @@
+import type {PlayerId} from '../config/players';
 import {operationFor} from '../config/operations';
 import {enemyStartingBudget} from '../config/enemyNaval';
 import {passengerUnits} from './navy';
@@ -10,10 +11,20 @@ import type {ResourceType} from './gathering';
 import type {MatchState} from './match';
 export interface ResourceStats {gathered:number;delivered:number;spent:number}
 export interface TeamStats {wood:ResourceStats;gold:ResourceStats;added:number;lost:number;killed:number;built:number;destroyed:number;removed:number}
-export interface MatchStats {seconds:number;player:TeamStats;enemy:TeamStats}
+export interface MatchStats {seconds:number;player:TeamStats;enemy:TeamStats;players?:Partial<Record<PlayerId,TeamStats>>}
 const nonnegative=(n:number)=>Math.max(0,Math.abs(n)<1e-8?0:n);
 /** All totals derive from existing authoritative counters/finite resource accounting. */
 export function matchStats(m:MatchState):MatchStats {
+ if(m.multiplePlayers){
+  const multi=m.multiplePlayers,extracted={wood:0,gold:0};
+  for(const bot of multi.ai)for(const resource of ['wood','gold'] as const)extracted[resource]+=bot.state.enemyProduction?.extracted?.[resource]??0;
+  const human=matchStats({...m,multiplePlayers:undefined,enemyProduction:m.enemyProduction?{...m.enemyProduction,extracted}:undefined}).player;
+  const players:Partial<Record<PlayerId,TeamStats>>={player:{...human,killed:multi.kills.player}};
+  for(const bot of multi.ai)players[bot.id]={...matchStats({...bot.state,multiplePlayers:undefined}).enemy,killed:multi.kills[bot.id]};
+  const enemy=multi.ai.map(bot=>players[bot.id]!).reduce((a,b)=>({wood:{gathered:a.wood.gathered+b.wood.gathered,delivered:a.wood.delivered+b.wood.delivered,spent:a.wood.spent+b.wood.spent},gold:{gathered:a.gold.gathered+b.gold.gathered,delivered:a.gold.delivered+b.gold.delivered,spent:a.gold.spent+b.gold.spent},added:a.added+b.added,lost:a.lost+b.lost,killed:a.killed+b.killed,built:a.built+b.built,destroyed:a.destroyed+b.destroyed,removed:a.removed+b.removed}));
+  return {seconds:m.waves.elapsedSeconds,player:players.player!,enemy,players};
+ }
+
  const definition=mapResourceTotals(m.map.id??'arena'),initial=scenarioConfig[m.scenario??'survival'].initial,profile=difficultyProfiles[m.difficulty??'normal'],bank=m.enemyProduction,budget=enemyStartingBudget(profile.budget,!!m.enemyNaval);
  const playerResource=(type:ResourceType):ResourceStats=>{
   const enemyGathered=bank?.extracted?.[type]??0,remaining=resourceNodes(m.gathering).filter(n=>(n.resource??'wood')===type).reduce((sum,n)=>sum+n.remaining,0);

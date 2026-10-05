@@ -1,3 +1,6 @@
+import {supportedPlayerCounts} from '../config/players';
+import {matchPlayers} from '../gameplay/players';
+import type {MultiplePlayers} from '../gameplay/multiplePlayers';
 import {animalAt,visibleAnimals,type WildlifeState} from '../gameplay/wildlife';
 import {referenceTile} from '../presentation/referenceTerrain';
 import {forestVisuals} from '../presentation/forestVisuals';
@@ -188,6 +191,7 @@ export class BootScene extends Phaser.Scene {
   private combat!: CombatState;
   private enemyPolicy?:EnemyPolicyState;
   private enemyRecovery?:EnemyRecoveryState;
+  private multiplePlayers?:MultiplePlayers;
   private enemyKnowledge?:EnemyKnowledgeState;
   private enemyConstruction?:EnemyConstructionState;
   private enemyVisuals = new Map<string, { body: Phaser.GameObjects.Image; label: Phaser.GameObjects.Text }>();
@@ -260,7 +264,7 @@ export class BootScene extends Phaser.Scene {
     this.operationGraphics=this.add.graphics().setDepth(6);this.operationLabels=[];
     const loaded=this.pendingLoad;this.pendingLoad=undefined;
     if(!loaded)document.getElementById('save-status')!.textContent='';
-    const fresh=()=>({matchId:crypto.randomUUID(),...createMatch(this.scenario,this.difficulty,this.factions,this.session.options.map,this.session.options.speed??1,this.session.options.aiProfile),...(this.campaignMission?{campaignMission:this.campaignMission}:{})});
+    const fresh=()=>({matchId:crypto.randomUUID(),...createMatch(this.scenario,this.difficulty,this.factions,this.session.options.map,this.session.options.speed??1,this.session.options.aiProfile,this.session.options.players),...(this.campaignMission?{campaignMission:this.campaignMission}:{})});
     this.applyMatch(loaded?.match??fresh());
     this.game.canvas.tabIndex=0;this.game.canvas.setAttribute('aria-label',uiText.gameWorld);
     const groupKey=(event:KeyboardEvent)=>{
@@ -276,6 +280,10 @@ export class BootScene extends Phaser.Scene {
     this.scenarioSelect.replaceChildren(...playableScenarios.map(id=>{const option=document.createElement('option');option.value=id;option.textContent=scenarioConfig[id].label;return option;}));
     this.scenarioSelect.value=this.scenario==='siege-test'?'survival':this.scenario;
     const changeScenario=()=>{if(!playableScenarios.includes(this.scenarioSelect.value as MatchScenario))return;this.session=changeOptions(this.session,{scenario:this.scenarioSelect.value as MatchScenario});this.scenario=this.session.options.scenario;this.syncSession();};
+    const playerCount=document.getElementById('player-count-select') as HTMLSelectElement;
+    const secondFaction=document.getElementById('ai-2-faction-select') as HTMLSelectElement,secondProfile=document.getElementById('ai-2-profile-select') as HTMLSelectElement;
+    const changePlayers=()=>{if(this.session.phase!=='menu')return;const count=Number(playerCount.value),roster=matchPlayers(this.factions,this.session.options.aiProfile,count);if(count===3&&isFactionId(secondFaction.value)&&isAIProfile(secondProfile.value)){roster[2]={...roster[2],faction:secondFaction.value,profile:secondProfile.value};}this.session=changeOptions(this.session,{players:count===3?roster:undefined});this.syncSession();};
+    for(const select of [playerCount,secondFaction,secondProfile]){select.addEventListener('change',changePlayers);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>select.removeEventListener('change',changePlayers));}
     const mapSelect=document.querySelector<HTMLSelectElement>('#map-select')!;
     const changeMap=()=>{if(this.session.phase==='menu'&&this.session.options.scenario==='skirmish'&&isMapId(mapSelect.value)){this.session=changeOptions(this.session,{map:mapSelect.value});this.syncSession();}};
     mapSelect.addEventListener('change',changeMap);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>mapSelect.removeEventListener('change',changeMap));
@@ -520,7 +528,7 @@ export class BootScene extends Phaser.Scene {
     const saveButton=document.getElementById('save-match') as HTMLButtonElement;
     const loadButton=document.getElementById('load-match') as HTMLButtonElement;
     const save=()=>{if(this.session.phase==='menu'||this.restartPending)return;const result=storeSave(()=>window.localStorage,this.currentMatch(),{camera:{x:this.cameras.main.scrollX,y:this.cameras.main.scrollY},building:savedBuildingSelection(this.selectedBuilding)});document.getElementById('save-status')!.textContent=result.ok?uiText.savedLocallyInSlot1:uiText.couldNotSaveLocallyCheckBrowserStorage;};
-    const load=()=>{if(this.restartPending)return;const result=readSave(()=>window.localStorage);if(!result.ok){document.getElementById('save-status')!.textContent=result.code==='missing'?result.error:result.code==='version'?uiText.thisSaveUsesAnUnsupportedFormatOrGame:uiText.couldNotReadTheSaveTheActiveMatch;return;}this.awaitingLoadedResume=result.match.outcome==='playing';this.pendingLoad={match:{...result.match,paused:true},view:result.view};this.scenario=result.match.scenario!;this.difficulty=result.match.difficulty!;this.session={options:{aiProfile:result.match.aiProfile,scenario:this.scenario,difficulty:this.difficulty,map:result.match.map.id??'arena',faction:result.match.factions?.player??defaultFactions.player,enemyFaction:result.match.factions?.enemy??defaultFactions.enemy,speed:result.match.speed??1},phase:result.match.outcome==='playing'?'paused':'ended'};this.skipGameplayFrame=true;this.restartPending=true;this.restartButton.disabled=true;gameAudio.setPhase(this.session.phase);document.getElementById('save-status')!.textContent=result.match.outcome==='playing'?uiText.loadedPausedNoGameplayTimePassesUntilResume:uiText.loadedCompletedMatch;this.scene.restart();};
+    const load=()=>{if(this.restartPending)return;const result=readSave(()=>window.localStorage);if(!result.ok){document.getElementById('save-status')!.textContent=result.code==='missing'?result.error:result.code==='version'?uiText.thisSaveUsesAnUnsupportedFormatOrGame:uiText.couldNotReadTheSaveTheActiveMatch;return;}this.awaitingLoadedResume=result.match.outcome==='playing';this.pendingLoad={match:{...result.match,paused:true},view:result.view};this.scenario=result.match.scenario!;this.difficulty=result.match.difficulty!;this.session={options:{players:result.match.multiplePlayers?.roster,aiProfile:result.match.aiProfile,scenario:this.scenario,difficulty:this.difficulty,map:result.match.map.id??'arena',faction:result.match.factions?.player??defaultFactions.player,enemyFaction:result.match.factions?.enemy??defaultFactions.enemy,speed:result.match.speed??1},phase:result.match.outcome==='playing'?'paused':'ended'};this.skipGameplayFrame=true;this.restartPending=true;this.restartButton.disabled=true;gameAudio.setPhase(this.session.phase);document.getElementById('save-status')!.textContent=result.match.outcome==='playing'?uiText.loadedPausedNoGameplayTimePassesUntilResume:uiText.loadedCompletedMatch;this.scene.restart();};
     saveButton.addEventListener('click',save);loadButton.addEventListener('click',load);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{saveButton.removeEventListener('click',save);loadButton.removeEventListener('click',load);});
     for(const [id,action] of [['start-match','start'],['pause-match','pause'],['resume-match','resume'],['new-match','new-match']] as const){const button=document.getElementById(id)!;const handler=()=>this.sessionAction(action);button.addEventListener('click',handler);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>button.removeEventListener('click',handler));}
     document.getElementById('command-guide-text')!.textContent=commandGuide;
@@ -586,6 +594,15 @@ export class BootScene extends Phaser.Scene {
     const shown=preset?{...this.session.options,faction:preset.player,enemyFaction:preset.enemy}:this.session.options;
     const details=matchSettingDetails(shown);document.getElementById('map-description')!.textContent=details.map;document.getElementById('difficulty-description')!.textContent=details.difficulty;
     const summary=document.getElementById('match-options-summary')!;summary.textContent=matchSettingsSummary(shown);summary.hidden=!menu;
+    const counts=supportedPlayerCounts(this.session.options.map,this.session.options.scenario),playerCount=document.getElementById('player-count-select') as HTMLSelectElement;
+    if(playerCount.dataset.map!==counts.join(',')){playerCount.replaceChildren(...counts.map(n=>new Option(`You + ${n-1} AI`,String(n))));playerCount.dataset.map=counts.join(',');}
+    playerCount.parentElement!.hidden=this.session.options.scenario!=='skirmish';
+    playerCount.value=String(this.session.options.players?.length??2);playerCount.disabled=!menu;
+    document.getElementById('additional-ai-settings')!.hidden=!this.session.options.players;
+    const secondFaction=document.getElementById('ai-2-faction-select') as HTMLSelectElement,secondProfile=document.getElementById('ai-2-profile-select') as HTMLSelectElement;
+    secondFaction.disabled=secondProfile.disabled=!menu;
+    if(this.session.options.players){secondFaction.value=this.session.options.players[2].faction;secondProfile.value=this.session.options.players[2].profile;}
+    document.getElementById('player-color-summary')!.textContent=this.session.options.players?'Blue: You · Red: AI 1 · Gold: AI 2':'Blue: You · Red: AI 1';
     const mapSelect=document.querySelector<HTMLSelectElement>('#map-select')!;mapSelect.disabled=!menu||this.session.options.scenario!=='skirmish';mapSelect.value=this.session.options.map;
     const factionSelect=document.querySelector<HTMLSelectElement>('#faction-select')!;factionSelect.disabled=!menu||!!preset;factionSelect.value=shown.faction??defaultFactions.player;const enemyFactionSelect=document.querySelector<HTMLSelectElement>('#enemy-faction-select')!;enemyFactionSelect.disabled=!menu||!!preset;enemyFactionSelect.value=shown.enemyFaction??'';
     this.scenarioSelect.disabled=!menu;this.scenarioSelect.value=this.session.options.scenario==='siege-test'?'survival':this.session.options.scenario;
@@ -924,18 +941,21 @@ export class BootScene extends Phaser.Scene {
     for(const shot of visibleShots){if(!this.projectileVisuals.has(shot.id))this.projectileVisuals.set(shot.id,this.add.graphics().setDepth(effectConfig.projectileDepth));drawProjectile(this.projectileVisuals.get(shot.id)!,shot);}
     for (const enemy of visibleEnemies) {
       if (!this.enemyVisuals.has(enemy.id)) this.enemyVisuals.set(enemy.id, {
-        body: enemy.footprint?this.add.image(enemy.position.x,enemy.position.y,'buildings',buildingFrame((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base','enemy',enemy.construction?.remainingSeconds??0,enemy.buildingType==='outpost'?10:5,this.factions.enemy)).setOrigin(buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').x,buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').y):enemy.kind==='ship'?this.add.image(enemy.position.x,enemy.position.y,'naval',`${factions[this.factions.enemy].artPrefix}transport-enemy-s-idle-0`).setOrigin(.5,40/64):this.add.image(enemy.position.x,enemy.position.y,isAir(enemy)?'air':'units',isAir(enemy)?`${this.factions.enemy}-air-enemy-placeholder`:`${factions[this.factions.enemy].artPrefix}${enemy.kind==='worker'?'worker':enemy.role??'soldier'}-enemy-s-idle-0`).setOrigin(unitOrigin(enemy.kind==='worker'?'worker':enemy.role??'soldier').x,unitOrigin(enemy.kind==='worker'?'worker':enemy.role??'soldier').y),
+        body: enemy.footprint?this.add.image(enemy.position.x,enemy.position.y,'buildings',buildingFrame((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base','enemy',enemy.construction?.remainingSeconds??0,enemy.buildingType==='outpost'?10:5,(enemy.faction??this.factions.enemy))).setOrigin(buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').x,buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').y):enemy.kind==='ship'?this.add.image(enemy.position.x,enemy.position.y,'naval',`${factions[(enemy.faction??this.factions.enemy)].artPrefix}transport-enemy-s-idle-0`).setOrigin(.5,40/64):this.add.image(enemy.position.x,enemy.position.y,isAir(enemy)?'air':'units',isAir(enemy)?`${(enemy.faction??this.factions.enemy)}-air-enemy-placeholder`:`${factions[(enemy.faction??this.factions.enemy)].artPrefix}${enemy.kind==='worker'?'worker':enemy.role??'soldier'}-enemy-s-idle-0`).setOrigin(unitOrigin(enemy.kind==='worker'?'worker':enemy.role??'soldier').x,unitOrigin(enemy.kind==='worker'?'worker':enemy.role??'soldier').y),
         label: this.add.text(0, 0, '', { fontSize: '14px', color: '#ffffff' }).setOrigin(0.5, 0),
       });
+      const playerColor=this.multiplePlayers?.roster.find(p=>p.id===enemy.playerId)?.color;
+      const tint=playerColor?Number.parseInt(playerColor.slice(1),16):0xcf7770;
+      this.hpBars?.lineStyle(2,tint,.9).strokeEllipse(enemy.position.x,enemy.position.y+8,enemy.footprint?80:28,enemy.footprint?24:10);
       const visual = this.enemyVisuals.get(enemy.id)!;
       visual.body.setPosition(enemy.position.x, enemy.position.y);
-      if(enemy.footprint)visual.body.setFrame(buildingFrame(enemy.buildingType==='outpost'?'base':enemy.buildingType??'base','enemy',enemy.construction?.remainingSeconds??0,enemy.buildingType==='outpost'?10:5,this.factions.enemy,enemy.hp));
-      if(enemy.kind==='ship')this.animateUnit(enemy.id,visual.body,enemy.position,'idle','transport','enemy');
-      if(!enemy.footprint&&enemy.kind!=='ship'){const target=enemy.order?.kind==='defend'?this.gathering.units.find(u=>enemy.order?.kind==='defend'&&u.id===enemy.order.targetId)?.position:enemy.navigation?.targetId==='base'?this.gathering.base:undefined;const action:Action=enemy.navigation?.targetId&&enemy.navigation.targetId!=='explore-goal'&&enemy.navigation.status==='arrived'?'attack':enemy.work?.order.kind==='gather'?'gather':'idle';this.animateUnit(enemy.id,visual.body,enemy.position,action,enemy.kind==='worker'?'worker':enemy.role??'soldier','enemy',target);}
-      visual.label.setPosition(enemy.position.x,enemy.position.y-(enemy.kind==='ship'?48:90)).setVisible(!!enemy.footprint||enemy.kind==='ship').setText(`${enemy.buildingType==='outpost'?uiText.resourceOutpost:''}${enemy.kind==='ship'?'Transport':enemy.buildingType==='harbor'?uiText.harbor:factions[this.factions.enemy].buildingNames[(enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base']} ${Math.ceil(enemy.hp)} HP`);
+      if(enemy.footprint)visual.body.setFrame(buildingFrame(enemy.buildingType==='outpost'?'base':enemy.buildingType??'base','enemy',enemy.construction?.remainingSeconds??0,enemy.buildingType==='outpost'?10:5,(enemy.faction??this.factions.enemy),enemy.hp));
+      if(enemy.kind==='ship')this.animateUnit(enemy.id,visual.body,enemy.position,'idle','transport','enemy',undefined,enemy.faction);
+      if(!enemy.footprint&&enemy.kind!=='ship'){const target=enemy.order?.kind==='defend'?this.gathering.units.find(u=>enemy.order?.kind==='defend'&&u.id===enemy.order.targetId)?.position:enemy.navigation?.targetId==='base'?this.gathering.base:undefined;const action:Action=enemy.navigation?.targetId&&enemy.navigation.targetId!=='explore-goal'&&enemy.navigation.status==='arrived'?'attack':enemy.work?.order.kind==='gather'?'gather':'idle';this.animateUnit(enemy.id,visual.body,enemy.position,action,enemy.kind==='worker'?'worker':enemy.role??'soldier','enemy',target,enemy.faction);}
+      visual.label.setPosition(enemy.position.x,enemy.position.y-(enemy.kind==='ship'?48:90)).setVisible(!!enemy.footprint||enemy.kind==='ship').setText(`${enemy.buildingType==='outpost'?uiText.resourceOutpost:''}${enemy.kind==='ship'?'Transport':enemy.buildingType==='harbor'?uiText.harbor:factions[(enemy.faction??this.factions.enemy)].buildingNames[(enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base']} ${Math.ceil(enemy.hp)} HP`);
       for(const kind of ['buff','debuff'])if(enemy.spellEffects?.some(e=>spellDefinition(e.spell,e.sourceFaction).kind===kind))this.hpBars?.lineStyle(2,kind==='buff'?0x86dbe6:0xc18ce5,.9).strokeCircle(enemy.position.x,enemy.position.y,kind==='buff'?18:21);
       if(isAir(enemy)){visual.body.setY(enemy.position.y-airPresentation.height).setDepth(12);this.hpBars?.fillStyle(0x091311,.45).fillEllipse(enemy.position.x,enemy.position.y,28,9);}
-      this.drawHP(enemy.position,enemy.hp,enemyMaximumHP(enemy,this.factions.enemy),enemy.footprint?64:24,enemy.footprint?70:enemy.kind==='ship'?29:unitOverlayOffsets(enemy.kind==='worker'?'worker':enemy.role??'soldier',this.factions.enemy).hp,0xcf7770);
+      this.drawHP(enemy.position,enemy.hp,enemyMaximumHP(enemy,(enemy.faction??this.factions.enemy)),enemy.footprint?64:24,enemy.footprint?70:enemy.kind==='ship'?29:unitOverlayOffsets(enemy.kind==='worker'?'worker':enemy.role??'soldier',(enemy.faction??this.factions.enemy)).hp,tint);
     }
     for (const unit of this.gathering.units) {
       if (!this.visuals.has(unit.id)) {
@@ -1014,7 +1034,7 @@ export class BootScene extends Phaser.Scene {
     this.syncVisuals();
   }
 
-  private currentMatch():MatchState {return {...(this.session.options.aiProfile&&this.session.options.aiProfile!=='balanced'?{aiProfile:this.session.options.aiProfile}:{}),wildlife:this.wildlife,armyPlan:this.armyPlan,matchId:this.matchId,capture:this.capture,campaignMission:this.campaignMission,statLedger:this.statLedger,tutorial:this.tutorial,speed:this.session.options.speed??1,enemyNaval:this.enemyNaval,navy:this.navy,factions:{...this.factions},map:this.map,gathering:this.gathering,combat:this.combat,waves:this.waves,production:this.production,soldierProduction:this.soldierProduction,placement:this.placement,outcome:this.outcome,paused:!this.gameplayActive(),controlGroups:this.controlGroups,fog:this.fog,research:this.research,scenario:this.scenario,difficulty:this.difficulty,enemyProduction:this.enemyProduction,enemyAI:this.enemyAI,enemyConstruction:this.enemyConstruction,enemyPolicy:this.enemyPolicy,enemyRecovery:this.enemyRecovery,enemyKnowledge:this.enemyKnowledge};}
+  private currentMatch():MatchState {return {...(this.session.options.aiProfile&&this.session.options.aiProfile!=='balanced'?{aiProfile:this.session.options.aiProfile}:{}),multiplePlayers:this.multiplePlayers,wildlife:this.wildlife,armyPlan:this.armyPlan,matchId:this.matchId,capture:this.capture,campaignMission:this.campaignMission,statLedger:this.statLedger,tutorial:this.tutorial,speed:this.session.options.speed??1,enemyNaval:this.enemyNaval,navy:this.navy,factions:{...this.factions},map:this.map,gathering:this.gathering,combat:this.combat,waves:this.waves,production:this.production,soldierProduction:this.soldierProduction,placement:this.placement,outcome:this.outcome,paused:!this.gameplayActive(),controlGroups:this.controlGroups,fog:this.fog,research:this.research,scenario:this.scenario,difficulty:this.difficulty,enemyProduction:this.enemyProduction,enemyAI:this.enemyAI,enemyConstruction:this.enemyConstruction,enemyPolicy:this.enemyPolicy,enemyRecovery:this.enemyRecovery,enemyKnowledge:this.enemyKnowledge};}
 
   private addImpact(impact:Impact):void {
     if(!canAddImpact([...this.impacts.values()].map(e=>e.impact),impact))return;
@@ -1035,11 +1055,11 @@ export class BootScene extends Phaser.Scene {
     this.audioSnapshot=next;
   }
 
-  private animateUnit(id:string,body:Phaser.GameObjects.Image,position:Position,action:Action,type:UnitArt,owner:'player'|'enemy',aim?:Position):void {
+  private animateUnit(id:string,body:Phaser.GameObjects.Image,position:Position,action:Action,type:UnitArt,owner:'player'|'enemy',aim?:Position,artFaction?:import('../config/factions').FactionId):void {
     const previous=this.motions.get(id);
     if(previous&&!this.gameplayActive()){body.setFrame(unitFrame(previous,this.visualTime));return;}
     // syncVisuals also runs on DOM input; preserve walk pose until the next simulation frame.
-    const m=motion(previous,position,action,this.visualTime,type,owner,aim,this.factions[owner]);
+    const m=motion(previous,position,action,this.visualTime,type,owner,aim,artFaction??this.factions[owner]);
     this.motions.set(id,m);body.setFrame(unitFrame(m,this.visualTime));
   }
   private removedVisual(id:string,removed:boolean):void {
@@ -1069,6 +1089,7 @@ export class BootScene extends Phaser.Scene {
     }
   }
   private applyMatch(match: MatchState): void {
+    this.multiplePlayers=match.multiplePlayers;
     this.wildlife=match.wildlife??{};this.armyPlan=match.armyPlan;
     this.matchId=match.matchId;
     this.capture=match.capture;

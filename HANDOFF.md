@@ -1,3 +1,11 @@
+# Aktuellt mandat RTS-174–176
+
+174 Done enligt slutliga riktade97/6, unit461/83, strict typecheck/build/diff och browser800/1280 i artifacts/rts-174. Commit med titeln `RTS-174: support independent AI players and stable ownership`; hash rapporteras efter push.175 nästa;176 Todo. Nytt mandat ersätter tidigare paus/stopp efterPRIO04. Bevara användarens CSS/docs; ingen delegering. Efter176 slutlig fullregression/HANDOFF och stopp före177.
+
+Tre spelare stöds på Plains96/128 skirmish; andra kartor fortsatt två. Separata AI-banker/tech/queues/knowledge/fog, FFA relationer, distinct playercolors, cross-AI combat/projectiles och strikt Save48. Lokal browser använder explicit stridsfixture och delvis fryst Scene.update men ordinarie updateMatch, inga nya mänskliga balans-/FPS-/publik Pages-browserbelägg.168–173 ochPRIO01–04 färdiga enligt historiken nedan; tidigare asset-/balansbegränsningar kvarstår.
+
+---
+
 # Aktuellt mandat PRIO-01–04
 
 PRIO-01–04 Done. Användaren godkände kartorna och djurljuden 2026-10-05; ljuden accepteras tills resterande ljudarbete. RTS-174–176 vilande och174 startas inte. Användarens bifogade uppdrag och två godkända terrängreferenser återges i BACKLOG. En task åt gången, verifiering/docs/commit/push; stopp efter04. Ingen agentdelegering.

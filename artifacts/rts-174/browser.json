@@ -1,0 +1,252 @@
+[
+  {
+    "width": 800,
+    "height": 600,
+    "menuThreePlayers": true,
+    "mapCountConstraint": true,
+    "separatePaidBanks": [
+      {
+        "id": "enemy",
+        "bank": {
+          "roster": true,
+          "wood": 2,
+          "gold": 9,
+          "cap": 6,
+          "durationSeconds": 5,
+          "production": {
+            "remainingSeconds": 1.313808891403391,
+            "nextUnitNumber": 1,
+            "queue": [
+              {
+                "id": "barracks-job-1",
+                "kind": "soldier",
+                "supply": 1,
+                "cost": {
+                  "wood": 18,
+                  "gold": 6
+                },
+                "durationSeconds": 6,
+                "remainingSeconds": 1.313808891403391
+              },
+              {
+                "id": "barracks-job-2",
+                "kind": "archer",
+                "supply": 1,
+                "cost": {
+                  "wood": 20,
+                  "gold": 10
+                },
+                "durationSeconds": 6,
+                "remainingSeconds": 6
+              }
+            ],
+            "nextJobNumber": 3
+          },
+          "acceptedJobs": 2,
+          "extracted": {
+            "wood": 1.7864485201213824,
+            "gold": 6.756581398719106
+          },
+          "spent": {
+            "wood": 78,
+            "gold": 16
+          },
+          "lostCargo": {
+            "wood": 0,
+            "gold": 0
+          }
+        },
+        "base": {
+          "x": 1008,
+          "y": 144
+        }
+      },
+      {
+        "id": "ai-2",
+        "bank": {
+          "roster": true,
+          "wood": 11,
+          "gold": 15,
+          "cap": 6,
+          "durationSeconds": 5,
+          "production": {
+            "remainingSeconds": 2.8535090536243697,
+            "nextUnitNumber": 1,
+            "queue": [
+              {
+                "id": "barracks-job-1",
+                "kind": "soldier",
+                "supply": 1,
+                "cost": {
+                  "wood": 24,
+                  "gold": 5
+                },
+                "durationSeconds": 6,
+                "remainingSeconds": 2.8535090536243697
+              }
+            ],
+            "nextJobNumber": 2
+          },
+          "acceptedJobs": 1,
+          "extracted": {
+            "wood": 0,
+            "gold": 2.178571428571445
+          },
+          "spent": {
+            "wood": 69,
+            "gold": 5
+          },
+          "lostCargo": {
+            "wood": 0,
+            "gold": 0
+          }
+        },
+        "base": {
+          "x": 1664,
+          "y": 384
+        }
+      }
+    ],
+    "independentRacesProfiles": true,
+    "aiAgainstAI": {
+      "before": [
+        60,
+        80
+      ],
+      "after": [
+        51.5,
+        73.75
+      ]
+    },
+    "saveLoadOwners": true,
+    "pausedLoad": true,
+    "twoRestarts": true,
+    "explicitCombatFixture": true,
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "height": 720,
+    "menuThreePlayers": true,
+    "mapCountConstraint": true,
+    "separatePaidBanks": [
+      {
+        "id": "enemy",
+        "bank": {
+          "roster": true,
+          "wood": 2,
+          "gold": 9,
+          "cap": 6,
+          "durationSeconds": 5,
+          "production": {
+            "remainingSeconds": 1.3138155580700577,
+            "nextUnitNumber": 1,
+            "queue": [
+              {
+                "id": "barracks-job-1",
+                "kind": "soldier",
+                "supply": 1,
+                "cost": {
+                  "wood": 18,
+                  "gold": 6
+                },
+                "durationSeconds": 6,
+                "remainingSeconds": 1.3138155580700577
+              },
+              {
+                "id": "barracks-job-2",
+                "kind": "archer",
+                "supply": 1,
+                "cost": {
+                  "wood": 20,
+                  "gold": 10
+                },
+                "durationSeconds": 6,
+                "remainingSeconds": 6
+              }
+            ],
+            "nextJobNumber": 3
+          },
+          "acceptedJobs": 2,
+          "extracted": {
+            "wood": 1.7864468325109328,
+            "gold": 6.756582802895878
+          },
+          "spent": {
+            "wood": 78,
+            "gold": 16
+          },
+          "lostCargo": {
+            "wood": 0,
+            "gold": 0
+          }
+        },
+        "base": {
+          "x": 1008,
+          "y": 144
+        }
+      },
+      {
+        "id": "ai-2",
+        "bank": {
+          "roster": true,
+          "wood": 11,
+          "gold": 15,
+          "cap": 6,
+          "durationSeconds": 5,
+          "production": {
+            "remainingSeconds": 2.8535157202910373,
+            "nextUnitNumber": 1,
+            "queue": [
+              {
+                "id": "barracks-job-1",
+                "kind": "soldier",
+                "supply": 1,
+                "cost": {
+                  "wood": 24,
+                  "gold": 5
+                },
+                "durationSeconds": 6,
+                "remainingSeconds": 2.8535157202910373
+              }
+            ],
+            "nextJobNumber": 2
+          },
+          "acceptedJobs": 1,
+          "extracted": {
+            "wood": 0,
+            "gold": 2.178571428571445
+          },
+          "spent": {
+            "wood": 69,
+            "gold": 5
+          },
+          "lostCargo": {
+            "wood": 0,
+            "gold": 0
+          }
+        },
+        "base": {
+          "x": 1664,
+          "y": 384
+        }
+      }
+    ],
+    "independentRacesProfiles": true,
+    "aiAgainstAI": {
+      "before": [
+        60,
+        80
+      ],
+      "after": [
+        51.5,
+        73.75
+      ]
+    },
+    "saveLoadOwners": true,
+    "pausedLoad": true,
+    "twoRestarts": true,
+    "explicitCombatFixture": true,
+    "errors": []
+  }
+]

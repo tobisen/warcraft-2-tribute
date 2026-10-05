@@ -1,3 +1,6 @@
+import {initializeMultiplePlayers,updateMultiplePlayers,type MultiplePlayers,type AIContext} from './multiplePlayers';
+import type {PlayerDefinition} from '../config/players';
+import type {CombatScope} from './combat';
 import {updateWildlife,type WildlifeState} from './wildlife';
 import {groveForNode} from '../config/referenceTerrain';
 import {syncForestObstacles} from './forestTerrain';
@@ -67,6 +70,8 @@ import { updateWaves, type WaveState } from './waves';
 
 export type MatchOutcome = 'playing' | 'defeat' | 'victory';
 export interface MatchState {
+ multiplePlayers?:MultiplePlayers;
+ aiContext?:AIContext;
  wildlife?:WildlifeState;
   aiProfile?:AIProfileId;
   armyPlan?:ArmyPlan;
@@ -102,7 +107,7 @@ export interface MatchState {
 }
 
 /** A fresh state owns every mutable position/array; restart never reuses a previous match. */
-export function createMatch(scenario:MatchScenario='survival',difficulty:Difficulty='normal',factions:MatchFactions={...defaultFactions},mapId:MapId=scenarioConfig[scenario].map,speed:GameSpeed=1,aiProfile:AIProfileId='balanced'): MatchState {
+export function createMatch(scenario:MatchScenario='survival',difficulty:Difficulty='normal',factions:MatchFactions={...defaultFactions},mapId:MapId=scenarioConfig[scenario].map,speed:GameSpeed=1,aiProfile:AIProfileId='balanced',players?:PlayerDefinition[]): MatchState {
   if(!isGameSpeed(speed))throw Error('Invalid game speed');
   if(!isMapId(mapId)||!scenarioMapAllowed(scenario,mapId))throw Error('Unknown or unsupported map');
   if(!isFactionId(factions.player)||!isFactionId(factions.enemy))throw Error('Unknown faction');
@@ -139,7 +144,7 @@ export function createMatch(scenario:MatchScenario='survival',difficulty:Difficu
   if(scenarioConfig[scenario].enemyBase&&scenario!=='siege-test'){addEnemyWorkers(state);state.enemyConstruction=createEnemyConstruction();state.enemyPolicy=createEnemyPolicy();state.enemyRecovery=createEnemyRecovery();state.enemyKnowledge=createEnemyKnowledge();}
   initializeOperation(state);
   state.fog=matchFog(state);
-  return state;
+  return players?initializeMultiplePlayers(state,players):state;
 }
 
 function resolveOutcome(state: MatchState): MatchState {
@@ -161,11 +166,12 @@ function correctedNavigation(map:WorldMap,position:Position,half:number,route?:R
   return route.waypoints[0]&&segmentFits(map,position,route.waypoints[0],half)?route:undefined;
 }
 
-function advance(state: MatchState, delta: number): MatchState {
+function advance(state: MatchState, delta: number, scope?:CombatScope): MatchState {
+  const ownDelta=scope?.side==='enemy'?0:delta;
   state=prepareOrders(withGateRules(cleanDestroyed(state)));
   const readyBefore=readyBuildings(state);
   state=advanceMana(state,delta);
-  state=updateRepair(state,delta);
+  state=updateRepair(state,ownDelta);
   state=prepareArmyPlan(observeEnemyKnowledge(state));
   state=prepareEnemyNaval(state);
   state=prepareEnemyRecovery(state);
@@ -177,47 +183,48 @@ function advance(state: MatchState, delta: number): MatchState {
   const gateFor=trafficGates(state.map,[...state.gathering.units.filter(u=>!isAir(u)).map(u=>({id:`player:${u.id}`,position:u.position,fixed:u.commandMode?.kind==='hold',half:(u.kind==='worker'?workerStats(state.gathering.faction):combatUnitStats(u,state.gathering.faction)).size/2,speed:(u.kind==='worker'?workerStats(state.gathering.faction):combatUnitStats(u,state.gathering.faction)).speed,active:u.order.kind!=='idle',waypoints:u.navigation?.waypoints??[u.target]})),...state.combat.enemies.filter(e=>!isAir(e)&&e.kind!=='ship'&&!e.footprint&&e.hp>0).map(e=>({id:`enemy:${e.id}`,position:e.position,half:enemySize(e)/2,speed:e.kind==='worker'?workerStats(state.factions?.enemy??defaultFactions.enemy).speed:enemyUnitStats(e,state.factions?.enemy).speed,active:e.work?e.work.order.kind!=='idle':e.order?.kind!=='idle',waypoints:e.navigation?.waypoints??(e.work?[e.work.target]:undefined)??(e.order?.kind==='muster'||e.order?.kind==='attack-move'?[e.order.destination]:[])}))],state.waves.elapsedSeconds,delta);
   const services=resourceServices({...state.gathering,units:[...state.gathering.units,...state.combat.enemies.flatMap(e=>{const worker=enemyWorker(e);return worker?[worker]:[];})]},state.map,state.waves.elapsedSeconds);
   const forestBefore=state.gathering;
-  let gathering = updateGathering(state.gathering, delta, state.map,{elapsedSeconds:state.waves.elapsedSeconds,gateFor,services});
+  let gathering = updateGathering(state.gathering, ownDelta, state.map,{elapsedSeconds:state.waves.elapsedSeconds,gateFor,services});
   state=updateEnemyGathering({...state,gathering},delta,gateFor,services);state={...state,map:syncForestObstacles(forestBefore,state.gathering,state.map)};const enemyBuilding=updateEnemyConstruction(state,delta,gateFor);state=enemyBuilding.match;gathering=state.gathering;
   state=updateEnemyExpansion(state,delta,gateFor);gathering=state.gathering;
   state=updateEnemyNaval(state,delta);gathering=state.gathering;
-  state=updateTowers(state,delta);gathering=state.gathering;
-  const building = updateConstruction(gathering,state.placement,state.map,delta,gateFor);
+  state=updateTowers(state,ownDelta);gathering=state.gathering;
+  const building = updateConstruction(gathering,state.placement,state.map,ownDelta,gateFor);
   state={...state,statLedger:recordCompletions(readyBefore,{...state,gathering:building.gathering,placement:building.placement})};
   let combat=state.research&&(state.research.attack||state.research.defense||state.combat.upgrades)?{...state.combat,upgrades:{attack:state.research.attack,defense:state.research.defense}}:state.combat;
   if(state.enemyPolicy&&(state.enemyPolicy.research.attack||state.enemyPolicy.research.defense||combat.enemyUpgrades))combat={...combat,enemyUpgrades:{attack:state.enemyPolicy.research.attack,defense:state.enemyPolicy.research.defense}};
   const vision=state.fog?matchFog({...state,gathering:building.gathering,combat,placement:building.placement}):undefined;
-  const fight=updateCombat(building.gathering,combat,delta,state.map,building.placement,vision?(e=>entityVisible(vision,'player',e)):undefined,vision?((t)=>entityVisible(vision,'enemy',{position:{x:t.footprint.x+t.footprint.width/2,y:t.footprint.y+t.footprint.height/2},...(t.kind==='ship'||t.kind==='worker'||t.kind==='soldier'?{}:{footprint:t.footprint})})):undefined,vision?(e=>entityVisible(vision,'player',e)):undefined,gateFor,state.navy,vision?(e=>entityVisible(vision,'player',e)):undefined,state.factions?.enemy??defaultFactions.enemy,vision?e=>entityVisible(vision,'player',e):undefined);
+  const fight=updateCombat(building.gathering,combat,delta,state.map,building.placement,vision?(e=>entityVisible(vision,'player',e)):undefined,vision?((t)=>entityVisible(vision,'enemy',{position:{x:t.footprint.x+t.footprint.width/2,y:t.footprint.y+t.footprint.height/2},...(t.kind==='ship'||t.kind==='worker'||t.kind==='soldier'?{}:{footprint:t.footprint})})):undefined,vision?(e=>entityVisible(vision,'player',e)):undefined,gateFor,state.navy,vision?(e=>entityVisible(vision,'player',e)):undefined,state.factions?.enemy??defaultFactions.enemy,vision?e=>entityVisible(vision,'player',e):undefined,scope);
   let cleaned=cleanDestroyed({...state,...(fight.navy?{navy:fight.navy}:{}),gathering:fight.gathering,combat:fight.combat,placement:fight.placement??building.placement});
   cleaned=advanceEnemyRecovery(cleaned,delta);
   const enemyPolicy=advanceEnemyPolicy(cleaned,delta);
-  const research=updateResearch(cleaned.research??createResearch(),cleaned.placement,delta,true,cleaned.factions?.player??defaultFactions.player);
-  const baseStep=advanceBaseUpgrade(cleaned,delta);cleaned=baseStep.match;
+  const research=updateResearch(cleaned.research??createResearch(),cleaned.placement,ownDelta,true,cleaned.factions?.player??defaultFactions.player);
+  const baseStep=advanceBaseUpgrade(cleaned,ownDelta);cleaned=baseStep.match;
   const worker=cleaned.combat.baseHP>0?updateQueuedProduction(cleaned.gathering,cleaned.production,baseStep.productionSeconds,{kind:'base'},
     {map:cleaned.map,enemies:cleaned.combat.enemies}):{gathering:cleaned.gathering,production:cleaned.production};
-  const soldier=cleaned.combat.baseHP>0?updateQueuedProduction(worker.gathering,cleaned.soldierProduction,delta,
+  const soldier=cleaned.combat.baseHP>0?updateQueuedProduction(worker.gathering,cleaned.soldierProduction,ownDelta,
     {kind:'barracks',bounds:cleaned.map,footprint:cleaned.placement.barracks,ready:barracksReady(cleaned.placement)},
     {map:cleaned.map,enemies:cleaned.combat.enemies}):{gathering:worker.gathering,production:cleaned.soldierProduction};
   const nextUnitNumber=Math.max(worker.production.nextUnitNumber,soldier.production.nextUnitNumber);
   const enemy=cleaned.enemyProduction?updateEnemyProduction(cleaned.enemyProduction,cleaned.combat,soldier.gathering,enemyNavigationMap(cleaned.map),enemyBuilding.productionDelta,(cleaned.factions??defaultFactions).enemy,cleaned.enemyConstruction?{armyPlan:cleaned.armyPlan,airThreat:cleaned.gathering.units.some(u=>isAir(u)&&u.hp!>0&&!!cleaned.fog&&entityVisible(cleaned.fog,'enemy',u)),technology:technologyFor(cleaned,'enemy'),site:cleaned.combat.enemies.find(e=>e.buildingType==='barracks'),population:enemyPopulation(cleaned),maxArmy:cleaned.enemyNaval?2:undefined,embarked:cleaned.enemyNaval?.passengers.length??0,workerReservations:cleaned.enemyRecovery?.production.queue?.reduce((n,j)=>n+(j.supply??1),0)??0,startAllowed:!cleaned.enemyPolicy||enemyPriority(cleaned)==='army',reserveForFarm:cleaned.combat.enemies.some(e=>e.buildingType==='farm'&&e.construction?.remainingSeconds===0)?undefined:enemyConstructionConfig.supplyMargin}:undefined):{combat:cleaned.combat,state:undefined};
-  const ai=cleaned.enemyAI?updateEnemyAI(cleaned.enemyAI,enemy.combat,enemyNavigationMap(cleaned.map),cleaned.enemyKnowledge?enemyAttackDestination(cleaned):soldier.gathering.base,delta,soldier.gathering.units,profileAISettings({...difficultyProfiles[cleaned.difficulty??'normal'].ai,...(maps[cleaned.map.id??'arena'].enemyMuster?{muster:maps[cleaned.map.id??'arena'].enemyMuster!}:{}),firstAttackSeconds:difficultyProfiles[cleaned.difficulty??'normal'].ai.firstAttackSeconds+(cleaned.enemyProduction?.extracted?(cleaned.enemyProduction.roster?enemyEconomyConfig.rosterAttackGraceSeconds:enemyEconomyConfig.attackGraceSeconds):0),...((cleaned.armyPlan&&technologyFor(cleaned,'enemy').buildings.includes('forge'))?{groupSize:Math.max(difficultyProfiles[cleaned.difficulty??'normal'].ai.groupSize,combinedArmyConfig.groupSize),musterTimeout:combinedArmyConfig.musterTimeout}:{}),regroup:!!cleaned.armyPlan},cleaned.aiProfile),vision?((u)=>entityVisible(vision,'enemy',u)):undefined,(cleaned.factions??defaultFactions).enemy):{combat:enemy.combat,state:undefined};
+  const ai=cleaned.enemyAI?updateEnemyAI(cleaned.enemyAI,enemy.combat,enemyNavigationMap(cleaned.map),cleaned.enemyKnowledge?enemyAttackDestination(cleaned):soldier.gathering.base,delta,soldier.gathering.units,profileAISettings({...difficultyProfiles[cleaned.difficulty??'normal'].ai,...(cleaned.aiContext?{muster:cleaned.aiContext.muster}:{}),...(maps[cleaned.map.id??'arena'].enemyMuster?{muster:maps[cleaned.map.id??'arena'].enemyMuster!}:{}),firstAttackSeconds:difficultyProfiles[cleaned.difficulty??'normal'].ai.firstAttackSeconds+(cleaned.enemyProduction?.extracted?(cleaned.enemyProduction.roster?enemyEconomyConfig.rosterAttackGraceSeconds:enemyEconomyConfig.attackGraceSeconds):0),...((cleaned.armyPlan&&technologyFor(cleaned,'enemy').buildings.includes('forge'))?{groupSize:Math.max(difficultyProfiles[cleaned.difficulty??'normal'].ai.groupSize,combinedArmyConfig.groupSize),musterTimeout:combinedArmyConfig.musterTimeout}:{}),regroup:!!cleaned.armyPlan},cleaned.aiProfile),vision?((u)=>entityVisible(vision,'enemy',u)):undefined,(cleaned.factions??defaultFactions).enemy):{combat:enemy.combat,state:undefined};
   const incoming=scenarioConfig[cleaned.scenario??'survival'].waves?updateWaves(cleaned.waves,ai.combat,delta,scenarioWaves(cleaned.scenario??'survival',cleaned.difficulty??'normal')):{combat:ai.combat,waves:{...cleaned.waves,elapsedSeconds:cleaned.waves.elapsedSeconds+delta}};
   let updated:MatchState={...cleaned,...(enemyPolicy?{enemyPolicy}:{}),...(vision?{fog:vision}:{}),research,...(enemy.state?{enemyProduction:enemy.state}:{}),...(ai.state?{enemyAI:ai.state}:{}),gathering:soldier.gathering,combat:incoming.combat,waves:incoming.waves,
     production:{...worker.production,nextUnitNumber},soldierProduction:{...soldier.production,nextUnitNumber}};
   const beforeNavyCompletion=readyBuildings(updated);
-  updated=updateNavy(updated,delta);
+  updated=updateNavy(updated,ownDelta);
   updated={...updated,statLedger:recordCompletions(beforeNavyCompletion,updated)};
-  updated=updateEnemyExploration(updated);updated=updateWildlife(updated,delta);
+  updated=updateEnemyExploration(updated);updated=updateWildlife(updated,ownDelta);
   const separated=separateBodies(updated.map,[...updated.gathering.units.filter(u=>!isAir(u)).map(u=>({id:`player:${u.id}`,position:u.position,fixed:u.commandMode?.kind==='hold',half:(u.kind==='worker'?workerStats(state.gathering.faction):combatUnitStats(u,state.gathering.faction)).size/2})),...updated.combat.enemies.filter(e=>!isAir(e)&&e.kind!=='ship'&&!e.footprint).map(e=>({id:`enemy:${e.id}`,position:e.position,half:enemySize(e)/2}))],delta);
   if(separated.size){updated.gathering={...updated.gathering,units:updated.gathering.units.map(u=>{const position=separated.get(`player:${u.id}`);return position?{...u,position,navigation:correctedNavigation(updated.map,position,(u.kind==='worker'?workerStats(state.gathering.faction):combatUnitStats(u,state.gathering.faction)).size/2,u.navigation)}:u;})};updated.combat={...updated.combat,enemies:updated.combat.enemies.map(e=>{const position=separated.get(`enemy:${e.id}`);return position?{...e,position,navigation:correctedNavigation(updated.map,position,enemySize(e)/2,e.navigation)}:e;})};}
-  updated=advanceSpells(updated,delta);updated=advanceEnemyAbilities(updated,delta);updated.gathering=advanceAbilities(updated.gathering,delta);updated.fog=matchFog(updated);const taught=updateTutorial(updated);if(taught!==updated){updated=taught;updated.fog=matchFog(updated);}return resolveOutcome(advanceCapture(state,updated,delta));
+  updated=advanceSpells(updated,delta);updated=advanceEnemyAbilities(updated,delta);updated.gathering=advanceAbilities(updated.gathering,delta);updated.fog=matchFog(updated);const taught=updateTutorial(updated);if(taught!==updated){updated=taught;updated.fog=matchFog(updated);}return scope?updated:resolveOutcome(advanceCapture(state,updated,delta));
 }
 
 /** Split at existing gameplay and spell/AI boundaries, retaining delta-based gameplay rather than a fixed timestep. */
-export function updateMatch(state: MatchState, deltaSeconds: number): MatchState {
+export function updateMatch(state: MatchState, deltaSeconds: number, scope?:CombatScope): MatchState {
+  if(state.multiplePlayers&&!scope)return updateMultiplePlayers(state,deltaSeconds);
   if (state.paused||state.outcome !== 'playing') return state;
   const cleaned=advanceCapture(state,updateTutorial(cleanDestroyed(state)),0);
-  let current = resolveOutcome(cleaned);
+  let current = scope?cleaned:resolveOutcome(cleaned);
   if(cleaned.fog&&(deltaSeconds<=0||current.outcome!=='playing'))current={...current,fog:matchFog(cleaned)};
   let remaining = Math.max(0, deltaSeconds);
   while (remaining > 0 && current.outcome === 'playing') {
@@ -232,10 +239,10 @@ export function updateMatch(state: MatchState, deltaSeconds: number): MatchState
     const capture=operationFor(current.scenario);
     const untilObjective=definition.victory==='timer'?Math.max(0,definition.holdSeconds!-current.waves.elapsedSeconds):capture?.kind==='capture'&&controlsCapture(current)?Math.max(0,capture.holdSeconds-(current.capture?.holdSeconds??0)):Infinity;
     const untilService=(Math.floor((current.waves.elapsedSeconds+1e-9)/trafficConfig.resourceWindowSeconds)+1)*trafficConfig.resourceWindowSeconds-current.waves.elapsedSeconds;
-    current=prepareEnemySpells(current);current=prepareEnemyAbilities(current);
+    if(scope?.side!=='player'){current=prepareEnemySpells(current);current=prepareEnemyAbilities(current);}
     const untilAbility=Math.min(Infinity,...current.combat.enemies.flatMap(e=>[e.ability?.activeSeconds??0,e.ability?.cooldownSeconds??0].filter(t=>t>1e-9)),...current.gathering.units.flatMap(u=>u.kind==='soldier'&&(u.ability?.activeSeconds??0)>1e-9?[u.ability!.activeSeconds]:[]));
     const step = Math.min(untilSpellBoundary(current),current.enemyPolicy?.research.job?.remainingSeconds??Infinity,untilAbility,remaining, untilWave,untilObjective,untilService,current.research?.job?.remainingSeconds??Infinity);
-    current = advance(current, step);
+    current = advance(current, step,scope);
     remaining = Math.max(0, remaining - step);
   }
   return current;

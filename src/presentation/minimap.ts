@@ -39,9 +39,9 @@ export function minimapData(state:MatchState,visible:MinimapVisibility=()=>true)
  for(const ship of state.navy?.ships??[])markers.push({id:ship.id,owner:'player',position:{...ship.position},color:'#77c4cf'});
  for(const node of resourceNodes(state.gathering))if(node)markers.push({id:node.id,owner:'neutral',position:{...node.position},color:(node.resource??'wood')==='wood'?'#b8894e':'#e0bf4d'});
  for(const unit of state.gathering.units)markers.push({id:unit.id,owner:'player',position:{...unit.position},color:isAir(unit)?'#86dbe6':'#9cda8f'});
- for(const enemy of state.combat.enemies)markers.push({id:enemy.id,owner:'enemy',position:{...enemy.position},...(enemy.footprint?{footprint:{...enemy.footprint}}:{}),color:isAir(enemy)?'#edb0e9':'#f47c70'});
+ for(const enemy of state.combat.enemies)markers.push({id:enemy.id,owner:'enemy',position:{...enemy.position},...(enemy.footprint?{footprint:{...enemy.footprint}}:{}),color:state.multiplePlayers?.roster.find(p=>p.id===enemy.playerId)?.color??(isAir(enemy)?'#edb0e9':'#f47c70')});
  const scenery=state.map.terrainLayout==='reference'?[...terrainPatches(state.map).map(p=>({x:p.column*32,y:p.row*32,width:p.columns*32,height:p.rows*32,color:p.kind==='water'?'#30667f':'#787d78'})),...(state.fog?forestVisuals(state.gathering,state.fog).filter(c=>c.frame!=='stump').map(c=>({x:c.x-16,y:c.y-32,width:32,height:32,color:'#173d2a'})):[])]:[];
- return {scenery,world:{width:state.map.width,height:state.map.height},terrain:createMap(state.map.id,state.map.terrainLayout).obstacles.map(o=>({...o})),markers:markers.filter(visible)};
+ return {scenery,world:{width:state.map.width,height:state.map.height},terrain:createMap(state.map.id,state.map.terrainLayout).obstacles.map(o=>({...o})),markers:markers.filter(visible).map(marker=>state.multiplePlayers&&marker.owner==='player'?{...marker,color:state.multiplePlayers.roster[0].color}:marker)};
 }
 export type MinimapData=ReturnType<typeof visibleMinimapData>;
 

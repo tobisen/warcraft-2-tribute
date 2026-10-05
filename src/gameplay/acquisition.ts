@@ -1,3 +1,4 @@
+import {canHarm} from './players';
 import {canInteract} from './approach';
 import {enemyBody} from './enemyBody';
 import {canAttackDomain,movementMap,isAir} from './domains';
@@ -31,7 +32,7 @@ export function acquireTargets(units: Unit[], enemies: Enemy[], map?: WorldMap,
     // An explicit attack has priority and is never replaced by proximity targeting.
     if(unit.order.kind==='attack'&&!unit.autoOrigin&&unit.commandMode?.kind!=='hold') return unit;
     const origin=unit.autoOrigin??unit.position;
-    const valid=(enemy:Enemy)=>visible(enemy,unit)&&enemy.hp>0&&canAttackDomain(unit,enemy,faction??'crown')
+    const valid=(enemy:Enemy)=>canHarm('player',enemy.playerId??'enemy')&&visible(enemy,unit)&&enemy.hp>0&&canAttackDomain(unit,enemy,faction??'crown')
       &&distance(origin,enemy.position)<=(rangedStats(unit,faction)?.aggroRange??combatUnitStats(unit,faction).aggroRange??combatConfig.soldierAggroRange)
       &&(unit.commandMode?.kind==='hold'?(map?canInteract({...movementMap(map,unit),ignoreAttackOcclusion:isAir(enemy)},unit.position,enemyBody(enemy),rangedStats(unit,faction)?.range??combatUnitStats(unit,faction).range??combatConfig.soldierRange):distance(unit.position,enemy.position)<=(rangedStats(unit,faction)?.range??combatUnitStats(unit,faction).range??combatConfig.soldierRange)):reachable(unit,enemy,map,faction));
     const current=unit.order.kind==='attack'?enemies.find(e=>unit.order.kind==='attack'&&e.id===unit.order.enemyId):undefined;
