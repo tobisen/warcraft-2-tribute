@@ -1,3 +1,4 @@
+import {syncSkirmishMenu} from '../presentation/skirmishMenu';
 import {campaignActionReason,campaignContentFor} from '../config/campaignContent';
 import {identityFor,seriesMissionPlan} from '../config/campaignSeries';
 import {campaignPlans} from '../config/campaignPhases';
@@ -288,9 +289,10 @@ export class BootScene extends Phaser.Scene {
     const changeScenario=()=>{if(!playableScenarios.includes(this.scenarioSelect.value as MatchScenario))return;this.session=changeOptions(this.session,{scenario:this.scenarioSelect.value as MatchScenario});this.scenario=this.session.options.scenario;this.syncSession();};
     const playerCount=document.getElementById('player-count-select') as HTMLSelectElement;
     const secondFaction=document.getElementById('ai-2-faction-select') as HTMLSelectElement,secondProfile=document.getElementById('ai-2-profile-select') as HTMLSelectElement;
+    const secondDifficulty=document.getElementById('ai-2-difficulty-select') as HTMLSelectElement;
     const teamSelects=['player','enemy','ai-2'].map(id=>document.getElementById(`${id}-team-select`) as HTMLSelectElement);
-    const changePlayers=()=>{if(this.session.phase!=='menu')return;const count=Number(playerCount.value),roster=matchPlayers(this.factions,this.session.options.aiProfile,count);if(count===3&&isFactionId(secondFaction.value)&&isAIProfile(secondProfile.value)){roster[2]={...roster[2],faction:secondFaction.value,profile:secondProfile.value};}for(let i=0;i<roster.length;i++)roster[i].teamId=Number(teamSelects[i].value);this.session=changeOptions(this.session,{players:count===3?roster:undefined});this.syncSession();};
-    for(const select of [playerCount,secondFaction,secondProfile,...teamSelects]){select.addEventListener('change',changePlayers);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>select.removeEventListener('change',changePlayers));}
+    const changePlayers=()=>{if(this.session.phase!=='menu')return;const count=Number(playerCount.value),roster=matchPlayers(this.factions,this.session.options.aiProfile,count);if(count===3&&isFactionId(secondFaction.value)&&isAIProfile(secondProfile.value)){roster[2]={...roster[2],faction:secondFaction.value,profile:secondProfile.value,...(Object.hasOwn(difficultyProfiles,secondDifficulty.value)?{difficulty:secondDifficulty.value as Difficulty}:{})};}for(let i=0;i<roster.length;i++)roster[i].teamId=Number(teamSelects[i].value);this.session=changeOptions(this.session,{players:count===3?roster:undefined});this.syncSession();};
+    for(const select of [playerCount,secondFaction,secondProfile,secondDifficulty,...teamSelects]){select.addEventListener('change',changePlayers);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>select.removeEventListener('change',changePlayers));}
     const mapSelect=document.querySelector<HTMLSelectElement>('#map-select')!;
     const changeMap=()=>{if(this.session.phase==='menu'&&this.session.options.scenario==='skirmish'&&isMapId(mapSelect.value)){this.session=changeOptions(this.session,{map:mapSelect.value});this.syncSession();}};
     mapSelect.addEventListener('change',changeMap);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>mapSelect.removeEventListener('change',changeMap));
@@ -613,8 +615,9 @@ export class BootScene extends Phaser.Scene {
     document.getElementById('team-settings')!.hidden=!this.session.options.players;
     if(this.session.options.players)for(const p of this.session.options.players){const select=document.getElementById(`${p.id}-team-select`) as HTMLSelectElement;select.value=String(p.teamId);select.disabled=!menu;}
     const secondFaction=document.getElementById('ai-2-faction-select') as HTMLSelectElement,secondProfile=document.getElementById('ai-2-profile-select') as HTMLSelectElement;
-    secondFaction.disabled=secondProfile.disabled=!menu;
-    if(this.session.options.players){secondFaction.value=this.session.options.players[2].faction;secondProfile.value=this.session.options.players[2].profile;}
+    const secondDifficulty=document.getElementById('ai-2-difficulty-select') as HTMLSelectElement;
+    secondFaction.disabled=secondProfile.disabled=secondDifficulty.disabled=!menu;
+    if(this.session.options.players){secondFaction.value=this.session.options.players[2].faction;secondProfile.value=this.session.options.players[2].profile;secondDifficulty.value=this.session.options.players[2].difficulty??'';}
     const legend=document.getElementById('minimap-player-legend')!;legend.replaceChildren(...(this.session.options.players??[]).map(p=>{const span=document.createElement('span');span.textContent=`${p.id==='player'?'You':p.id==='enemy'?'AI1':'AI2'} T${p.teamId}`;const eliminated=!!this.multiplePlayers&&playerEliminated(this.currentMatch(),p.id);if(eliminated)span.textContent+=' ×';span.title=eliminated?'Eliminated: base destroyed; surviving assets inactive':'Active player';span.style.color=p.color;return span;}));
     document.getElementById('player-color-summary')!.textContent=this.session.options.players?this.session.options.players.map(p=>`${p.id==='player'?'Blue: You':p.id==='enemy'?'Red: AI 1':'Gold: AI 2'} · Team ${p.teamId}`).join(' / '):'Blue: You · Red: AI 1';
     const mapSelect=document.querySelector<HTMLSelectElement>('#map-select')!;mapSelect.disabled=!menu||this.session.options.scenario!=='skirmish';mapSelect.value=shown.map;
@@ -629,7 +632,7 @@ export class BootScene extends Phaser.Scene {
     if(wasHidden&&!menu)this.scale.refresh();
     document.getElementById('mission-instruction')!.textContent=this.session.options.scenario==='skirmish'?(maps[this.session.options.map??'arena'].instruction??scenarioConfig.skirmish.instruction):scenarioConfig[this.session.options.scenario].instruction;
     document.getElementById('session-status')!.textContent=isSpectating(this.currentMatch())?"Spectating your team · Your base was destroyed. Camera only; no gameplay orders. Use the match menu to leave.":menu?uiText.chooseAScenarioAndDifficultyThenStartMatch:phase==='paused'?uiText.pausedSimulationIsFrozen:phase==='ended'?uiText.theMatchHasEndedRestartOrChooseA:`${scenarioConfig[this.session.options.scenario].label} · ${this.session.options.difficulty} · ${aiProfiles[this.session.options.aiProfile??'balanced'].label} AI · ${maps[(menu?this.session.options.map:this.map.id)??'arena'].label}`;
-    syncHomeMenu(phase);syncResultScreen(phase);
+    syncHomeMenu(phase);syncSkirmishMenu(menu&&currentHomePage()==='skirmish',this.session.options);syncResultScreen(phase);
   }
 
   private worldPoint(pointer: Phaser.Input.Pointer): Position {

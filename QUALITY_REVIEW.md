@@ -1,3 +1,15 @@
+# RTS-182–187 — Ny teknisk slutgranskning2026-10-05
+
+Full regression1489/178, unit468/84, strict build/diff/manifest/länkar PASS. Riktade/native browserflöden för fem campaignraser, scoped Save/replay/progression, content/hotkeys och två verkliga AI-aktörer med olika difficulty/profile/team PASS vid800/1920/3440. Highscorefilter/tabell/legacydatum och3840-rendering/fullscreen/windowläge verifierade separat. Se [HANDOFF.md](HANDOFF.md) för exakta belägg, commits och harness.
+
+Slutgranskningen rättade identiska rubriker för separata AI-config-scoregrupper. Tidigare positiv B-hotkeyrapport var för tidig: fixture saknade resurser; korrigerad explicit100wood/återställning och actual fysisk B→Escape plus negativa hotkeys passerar. Första fullkörningen och misslyckade browserharnessförsök räknas inte som PASS. Inga återstående blockerande kodfynd i granskad diff.
+
+40 nya missionsvarianter är fixture-/queue-/Save-testade, inte40 hela betalda eller mänskliga genomspelningar. Mänsklig tempo/balans/ljudgranskning och tidigare återstående assets kvarstår. Ingen ny CI/Pages-verifiering;180:s releasebelägg är historiska. Användarens CSS/docs bevarade. Fasen avslutas efter187.
+
+---
+
+Historisk kvalitetsinventering nedan.
+
 # RTS-151 – Kvalitetsinventering av version 0.2.0
 
 Inventerad 2026-10-04 på kodbas0d9cf64 (publicerad kod53267ef). Ingen gameplaykod ändrad.

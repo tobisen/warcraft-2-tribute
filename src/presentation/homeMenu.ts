@@ -1,3 +1,4 @@
+import {bindSkirmishMenu} from './skirmishMenu';
 import {bindCampaignFlow} from './campaignFlow';
 import {highscoreStore} from './highscores';
 import {campaignStore,syncCampaignMenu} from './campaign';
@@ -34,10 +35,10 @@ export function syncHomeMenu(nextPhase:SessionPhase):void{
  syncPauseMenu(phase);
 }
 export function bindHomeMenu():void{
- campaignStore.load();highscoreStore.load();bindCampaignFlow();
+ campaignStore.load();highscoreStore.load();bindSkirmishMenu();bindCampaignFlow();
  element('home-peoples').textContent=homePeoples.map(p=>p.label).join(' · ')+' — artwork. Playable factions: Human, Orcs, Elves, Dwarves and Goblins.';
  bindActionPanel();bindCameraSettings();bindPauseMenu();bindFullscreen();
- const open=(page:HomePage)=>{if(phase!=='menu')return;current=page;if(page==='campaign'||page==='skirmish'){const select=element('scenario-select') as HTMLSelectElement;if(!homeScenarios[page].includes(select.value as never)){select.value=homeScenarios[page][0];select.dispatchEvent(new Event('change'));}}syncHomeMenu(phase);(page==='home'?element('menu-campaign'):element('menu-back')).focus();};
+ const open=(page:HomePage)=>{if(phase!=='menu')return;current=page;if(page==='campaign'||page==='skirmish'){const select=element('scenario-select') as HTMLSelectElement;if(page==='skirmish'||!homeScenarios[page].includes(select.value as never)){select.value=homeScenarios[page][0];select.dispatchEvent(new Event('change'));}}syncHomeMenu(phase);(page==='home'?element('menu-campaign'):element('menu-back')).focus();};
  for(const page of ['campaign','skirmish','load','settings','changelog','highscores'] as const)element(`menu-${page}`).addEventListener('click',()=>open(page));
  element('match-menu-button').addEventListener('click',()=>{if(phase==='playing')element('pause-match').click();else if(phase==='paused')element('resume-match').click();});
  element('menu-back').addEventListener('click',()=>open('home'));

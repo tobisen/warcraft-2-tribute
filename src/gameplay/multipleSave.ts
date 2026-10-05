@@ -37,8 +37,10 @@ export function encodeMultipleSave(m:MatchState,view:SavedView):string{
 /** Validate every scoped document with the existing strict economy/tech/ID checks. */
 export function decodeMultipleSave(raw:unknown):LoadResult{
  try{
- const doc=raw as Record<string,unknown>,migrateTeams=doc?.configVersion==='tribute-config-49';
+ const doc=raw as Record<string,unknown>;if(doc?.configVersion!==saveConfig.configVersion&&Array.isArray(doc?.multiplePlayers)&&doc.multiplePlayers.some(p=>(p as Record<string,unknown>).difficulty!==undefined))throw Error('Legacy player difficulty');
+ const migrateTeams=doc?.configVersion==='tribute-config-49';
  if(doc?.configVersion==='tribute-config-48'&&Array.isArray(doc.multiplePlayers)){doc.multiplePlayers=doc.multiplePlayers.map((p,i)=>({...p as object,teamId:i+1}));doc.configVersion=saveConfig.configVersion;}
+ if(doc?.configVersion==='tribute-config-51'||doc?.configVersion==='tribute-config-52')doc.configVersion=saveConfig.configVersion;
  if(doc?.configVersion==='tribute-config-50')doc.configVersion=saveConfig.configVersion;
  if(doc?.configVersion==='tribute-config-49')doc.configVersion=saveConfig.configVersion;
  if(!doc||Object.keys(doc).some(k=>!['schemaVersion','configVersion','map','multiplePlayers','kills','human','ai'].includes(k))||doc.schemaVersion!==saveConfig.schemaVersion||doc.configVersion!==saveConfig.configVersion||typeof doc.human!=='string'||!Array.isArray(doc.ai)||doc.ai.length!==2)throw Error('Invalid multiplayer document');
@@ -51,6 +53,7 @@ export function decodeMultipleSave(raw:unknown):LoadResult{
  const part=value as {id:PlayerId;document:string};
  if(!part||Object.keys(part).some(k=>!['id','document'].includes(k))||part.id!==roster[index+1].id||typeof part.document!=='string')throw Error('Invalid AI identity');
  const parsed=JSON.parse(part.document) as {state:MatchState};
+ if(parsed.state.difficulty!==(roster[index+1].difficulty??humanRaw.state.difficulty))throw Error('AI difficulty mismatch');
  if(parsed.state.factions?.enemy!==roster[index+1].faction||parsed.state.aiProfile!==undefined&&parsed.state.aiProfile!==roster[index+1].profile)throw Error('AI faction/profile mismatch');
  return {id:part.id as 'enemy'|'ai-2',state:parsed.state,vision:parsed.state.fog!.teams.enemy};
  });

@@ -1497,3 +1497,8 @@ Nya fem campaign-ID:n i config/campaignSeries, åtta operationer vardera med ege
 ## 2026-10-05 — RTS-186
 
 Campaign: faction→difficulty→start/continue→briefing→mission. Endast current/completed visas; replay använder valt missionsinnehåll. Åtta steg: infantry/supply, ranged/fortifications/ability, Forge/research/baseupgrade, specialist/spells, transport/landing, siege, air, warships/combined arms. Rasens faktiska recipes/names och taktiska mål används. campaignContent är härledd admissionpolicy på GatheringState/TechnologyState, exkluderas från Save och rekonstrueras från authored runidentity vid start/load/apply. Produktion/placement/research/naval/ability/spell/upgrade validerar policy; actionPanel visar samma spärr. Accepterade jobb och äldre legacy/skirmish behåller tidigare gameplay. Ingen ny configversion för härledda fält.
+
+
+## 2026-10-05 — RTS-187
+
+Skirmish-sidan öppnas uttryckligen i Skirmish, medan Survival är separat scenarioval med fasta slots. Authored Plains96/128 har tredje start; tvåplatskartor visar orsaken och direktval för Plains96+2AI. Varje AI:s faction/profile/team visas tillsammans; befintligt difficultyval styr AI1 och default. AI2 har valfri difficulty override. Actor-MatchState använder p.difficulty annars default; root difficulty speglar explicit AI1 override. Save53 validates roster/actual actor difficulty och migrerar51/52 multi-envelopes utan att hitta på overrides. Highscorepartition/rubrik inkluderar explicit AI-difficulty samt roster/profil/lag. Teams/start-footprints valideras innan matchstart. Ingen ny AI eller ny karta införs.

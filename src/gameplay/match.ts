@@ -112,6 +112,7 @@ export interface MatchState {
 
 /** A fresh state owns every mutable position/array; restart never reuses a previous match. */
 export function createMatch(scenario:MatchScenario='survival',difficulty:Difficulty='normal',factions:MatchFactions={...defaultFactions},mapId:MapId=scenarioConfig[scenario].map,speed:GameSpeed=1,aiProfile:AIProfileId='balanced',players?:PlayerDefinition[],campaignId?:import('../config/campaign').CampaignMissionId): MatchState {
+  difficulty=players?.[1]?.difficulty??difficulty;
   if(campaignId&&campaignMission(campaignId)?.scenario!==scenario)throw Error('Invalid campaign scenario');
   if(campaignId&&players)throw Error('Campaign player configuration is fixed');
   if(!isGameSpeed(speed))throw Error('Invalid game speed');

@@ -21,7 +21,7 @@ De mindre kartorna är1280×960 world pixels; Frontier Valley1600×1152, Highlan
 
 ## Spela matchen
 
-I huvudmenyn väljer du Campaign (åtta upplåsbara operationer), Skirmish eller Wave-survival. Campaign låser första matchprofilen till uppdragets fraktionspar; Skirmish låter dig välja fem fraktioner, fiende och karta. Välj Beginner/Normal/Hard och gameplayhastighet. Nya kampanjstarter har permanenta faser: preparation, spaning, försvar, passage, transport, eskort, räddning och kustkontroll. Läs aktuellt engelskt phasegoal. Fristående scenarier och äldre kampanj-saves behåller tidigare villkor. Förlust vid basens död har företräde.
+I huvudmenyn väljer du Campaign eller Skirmish (med separat Wave-survival-val). Campaign går via ras → svårighet → start/fortsätt → briefing. Alla fem raser har varsin åttauppdragsserie med egen berättelse och taktiska mål; progression är separat för kampanj, ras och svårighet. Skirmish låter dig välja fem raser, karta och AI-spelare. Välj Beginner/Easy/Normal/Hard och gameplayhastighet. Nya kampanjstarter har permanenta faser: preparation, spaning, försvar, passage, transport, eskort, räddning och kustkontroll. Läs aktuellt engelskt phasegoal. Fristående scenarier och äldre kampanj-saves behåller tidigare villkor. Förlust vid basens död har företräde.
 
 1. Välj workers och utforska nära basen. Högerklicka upptäckt wood/gold. På de flesta kartor finns wood vid(650,180), gold vid(850,220); på kust-/ö-kartor ligger startgruvan vid(600,300). Workers samlar och levererar automatiskt.
 2. Välj en worker och Build Barracks. Placera grön preview nära basen, exempelvis(528,400) om platsen är fri. Worker bygger; ge därefter ny gather-order. Kostnader/tider varierar med fraktion och visas på knapparna. Escape/högerklick avbryter preview.
@@ -827,3 +827,18 @@ release-/Pages-verifiering.
 
 
 Release **0.3.0 / Build6a96227** är [publicerad på GitHub Pages](https://tobisen.github.io/warcraft-2-tribute/), med [grön CI/Pages-körning](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37355621323) och faktisk [browserkontroll](artifacts/rts-180/public.md). Se HANDOFF.md för slutstatus och återstående mänsklig tids-/balans-/ljudgranskning.
+
+
+## RTS-182–187 — Meny och kampanj
+
+Spelets visningstitel är **Warborn — A Tribute to Warcraft II**. Human och Orcs har fortsatt stabila interna ID:n crown/clans. Repo, Pages-adress och lokala datanycklar bevaras.
+
+Local Highscores har mode-, kart- och svårighetsfilter och tabeller för jämförbara rulesgrupper. Poäng sorteras fallande, sedan gameplaytid stigande och stabilt match-ID. Äldre poster behåller metadata; datum som inte sparats visas som Unknown. Registrering sker en gång per match-ID. Nya resultat får registreringsdatum; multiplayergrupper visar ras/difficulty/profil/lag.
+
+Display behåller800×600 som lägsta val och erbjuder dessutom2560×1440,2560×1080,3440×1440,3840×1600 och3840×2160. Available window area följer fönstret inom800×600–3840×2160. Native visar vald rendering i motsvarande CSS-storlek när den ryms; Fit skalar proportionellt. Större rendering visar mer karta med samma spritepixlar. Valet sparas.
+
+Campaign visar bara aktuellt uppdrag och klarade replay-val. Briefing beskriver mål, introducerat innehåll och nästa victoryupplåsning. Innehållsplanen i [CAMPAIGN_DESIGN.md](CAMPAIGN_DESIGN.md) gäller både UI och gameplay, inklusive hotkeys; prerequisites inom matchen gäller fortfarande. Replay använder valt uppdrags plan; Skirmish behåller hela sitt techträd. Äldre metadatafria progressionv1 bevaras separat från de nya serierna och kopieras inte till okända ras-/svårighetskombinationer. Äldre saves behåller legacykampanjen; Save53 bevarar campaign-ID, ras/difficulty och AI2:s egna difficultyval.
+
+Skirmish öppnas i Skirmish-läge. Kartans faktiska authored startplatser avgör kapaciteten. Plains96/128 erbjuder människan + två AI; övriga kartor har två platser. Menyn förklarar begränsningen och har ett direktval för Plains96 med två AI. Varje AI har ras/profil/difficulty och lagval i trepersonsmatcher; AI2 kan följa AI1:s difficulty eller ha eget val. Advanced match settings samlar lagförklaring och gameplayhastighet.
+
+Browserregressioner: [kampanjmeny](scripts/check-campaign-menu.mjs) och [skirmishmeny](scripts/check-skirmish-menu.mjs), med extern Playwright/Chrome via W2T_PLAYWRIGHT_MODULE/W2T_BROWSER_EXECUTABLE och W2T_UI_URL. Menytester och explicita fixtures är inte mänskliga helkampanjer eller balans-/speltidsbelägg. Se [HANDOFF.md](HANDOFF.md) för aktuella checks och begränsningar.

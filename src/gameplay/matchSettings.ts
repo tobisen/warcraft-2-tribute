@@ -26,5 +26,5 @@ export function patchMatchOptions(current:MatchOptions,patch:Partial<MatchOption
 export function validPlayers(value:unknown,options:Record<string,unknown>):boolean{
  if(!Array.isArray(value)||!isMapId(options.map)||!supportedPlayerCounts(options.map,String(options.scenario)).includes(value.length))return false;
  const ids=['player','enemy','ai-2'];
- return value.every((p,i)=>p&&typeof p==='object'&&Object.keys(p).every(k=>['id','controller','faction','color','profile','teamId'].includes(k))&&p.id===ids[i]&&p.controller===(i===0?'human':'ai')&&isFactionId(p.faction)&&isAIProfile(p.profile)&&p.color===playerColors[i]&&(p.teamId===undefined||Number.isInteger(p.teamId)&&p.teamId>=1&&p.teamId<=3))&&new Set(value.map((p,i)=>p.teamId??i+1)).size>1&&validatePlayerStarts(options.map,value);
+ return value.every((p,i)=>p&&typeof p==='object'&&Object.keys(p).every(k=>['id','controller','faction','color','profile','teamId','difficulty'].includes(k))&&p.id===ids[i]&&p.controller===(i===0?'human':'ai')&&isFactionId(p.faction)&&isAIProfile(p.profile)&&p.color===playerColors[i]&&(p.difficulty===undefined||i>0&&typeof p.difficulty==='string'&&Object.hasOwn(difficultyProfiles,p.difficulty))&&(p.teamId===undefined||Number.isInteger(p.teamId)&&p.teamId>=1&&p.teamId<=3))&&new Set(value.map((p,i)=>p.teamId??i+1)).size>1&&validatePlayerStarts(options.map,value);
 }

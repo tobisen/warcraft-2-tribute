@@ -8,3 +8,10 @@
 #campaign-flow [data-campaign-step][hidden] { display:none; }
 #campaign-flow p { line-height:1.5; white-space:pre-line; }
 #campaign-flow button { margin:6px 0; }
+
+#skirmish-opponents fieldset,#skirmish-human { border:1px solid #657263; padding:12px; margin:12px 0; min-width:0; }
+#skirmish-opponents legend,#skirmish-human legend { font-weight:bold; padding:0 6px; }
+#skirmish-opponents p,#skirmish-human p { line-height:1.5; }
+#skirmish-opponents label { display:flex; align-items:center; justify-content:space-between; gap:8px; margin:10px 0; }
+#skirmish-opponents select { max-width:65%; }
+#skirmish-advanced { margin:12px 0; }

@@ -1,3 +1,34 @@
+# Överlämning RTS-182–187 — avslutad meny-/kampanjfas
+
+2026-10-05. Bilagans sex tasks genomförda i ordning. RTS-181 fanns redan;182–187 lades till utan att skriva över tasks. RTS-180 är historiskt Done/publicerad0.3.0/Build6a96227, inte ny releaseverifiering. Stanna efter denna fas; inga nya tasks/karteditor.
+
+- **182** `90df09f`: Warborn — A Tribute to Warcraft II, Human/Orcs. Interna IDs/repo/Pages/saves bevarade.
+- **183** `c3f691b`: highscoretabell, mode/map/difficulty-filter, rulespartition/tie-break och Unknown för äldre datum.
+- **184** `289cc9f`: ultrawide/4K och sparat bounded window rendering; Native/Fit bevarade.
+- **185** `7b7e9fc`: fem egna berättelser/taktiska åttauppdragsserier och separat campaign-ID/faction/difficulty-progression. Save52.
+- **186** `ae5e361` + beläggskorrigering `f43688d`: staged campaignflöde och missionvis contentadmission i UI/gameplay/hotkeys.
+- **187** levereras med commit `RTS-187: expose multiple AI slots and persist independent difficulty`; hash redovisas efter push. DefaultSkirmish, authoredkapacitet, direkt Plains96+2AI, grupperade ras/profile/difficulty/team-inställningar, Save53 och tydliga highscorerostergrupper.
+
+## Ny faktisk verifiering
+
+Taskvisa riktade:182:9/3,183:23/3,184:21/4,185:88/6,186:138/12,187:127/7 PASS. Slutlig unit468/84 PASS10.28s; build inklusive strict TypeScript PASS360ms; full regression1489/178 PASS419.51s. Manifest84 unit/94 integration, diff, Markdownlänkar och browserharnesssyntax PASS. Befintlig bundlevarning kvar. Första fullkörningen avbröts för konkret scoregrupp-rubrikfynd och räknas inte som PASS.
+
+Lokal Chrome: fem rasers staged campaign/briefing/SaveLoad/hotkeylocks och positiv B-kontroll vid800×600,1920×1080,3440×1440. Separat actual SaveLoad→terminalfixture→PlayAgain→menyreplay bevarar identitet/policy/progress, endast current/completed och exakt en score. Highscore800/Native map/difficulty/mode/legacy-date/empty/AI2-config PASS. Skirmish vid samma tre native-storlekar startar två verkliga självständiga aktörer med olika raser/Beginner/Hard/profiler/lag, unika baser, fysisk worker/minimap och SaveLoad PASS.184:s separata fullscreen/windowresize/reload/4K-probe PASS; kamera520/1640/3160/3560 logical pixels och kort≈60FPS startmatch, ingen massarmégaranti. Representativa tabell/briefing/settings/HUD-bilder granskade.
+
+[scripts/check-campaign-menu.mjs](scripts/check-campaign-menu.mjs), [replay](scripts/check-campaign-replay.mjs), [skirmish](scripts/check-skirmish-menu.mjs), [highscores](scripts/check-highscore-menu.mjs) använder extern Playwright/Chrome via W2T_PLAYWRIGHT_MODULE/W2T_BROWSER_EXECUTABLE och lokal W2T_UI_URL. Debuggame exponeras endast genom browserroute i harnessen. Screenshots/loggar finns lokalt i /tmp/rts18*. Ingen skeppad debug-API.
+
+## Migration och begränsningar
+
+V1-progression har bara mission-ID:n. Den gamla mixed-serien bevaras separat/oförändrad och kopieras inte till okända ras-/svårighetskombinationer. V2 partitions campaign-ID/faction/difficulty. Äldre saves behåller legacyregler; nya run-ID:n valideras mot ras och sparad difficulty. Härledd innehållspolicy serialiseras inte. Save53 migrerar51/52 multi-envelopes med befintlig difficulty, utan fabricerade AI-overrides. Gamla highscoreposter behåller config/statistik/dedup; saknade datum förblir Unknown.
+
+De40 nya missionsvarianternas identiteter, tillåtna betalda queues och taktiska livekrav är riktat testade med explicita fixtures. Detta är inte40 betalda helgenomspelningar eller mänskligt tempo-/balansspeltest. Full regression inkluderar de befintliga kampanj-/matchsimuleringarna. Nya längre mänskliga playthroughs/ljudlyssning och tidigare återstående caster/naval/flyer/voiceassets kvarstår; inga nya assetclaim. Tre spelarplatser fortfarande endast Plains96/128. Menyerna kan scrolla i Native800.
+
+Ingen ny CI-/Pages-build verifierad i denna fas. Lokala browser/buildchecks använder arbetskatalogen inklusive användarens befintliga CSS. `src/style.css` SHA25695c3725250221ef8386519adecfb05db601103697d421e78e1b2bdf057141a5e och otrackade docs/ är bevarade och inte committade.
+
+---
+
+Historiska överlämningar följer nedan.
+
 # RTS-186 klar
 
 185 push7b7e9fc;186 flöde/innehållsspärrar klar. Riktade138/12, unit468/84, strict build/diff och fem raser×800/1920/3440 browser PASS. UI+gameplay+hotkeys spärrade; positiv hotkeykontroll PASS med explicit100wood-fixtur.40 nya taktiska mål/queues fixturetestade, inte40 mänskligt/betalt genomspelade kampanjer. Nästa187 flera AI-menyn och slutregression. CSS/docs bevaras.

@@ -95,3 +95,14 @@ it('continues and saves when one AI base is destroyed but a hostile player remai
  m=updateMatch(m,.25);expect(m.outcome).toBe('playing');
  const loaded=decodeSave(encodeSave(m,{camera:{x:0,y:0},building:null}));expect(loaded.ok,loaded.ok?'':loaded.error).toBe(true);
 });
+
+it('independent AI difficulties select real budgets/production and roundtrip, rejecting mismatched saved metadata',()=>{
+ const roster=matchPlayers(undefined,undefined,3);roster[1].difficulty='beginner';roster[2].difficulty='hard';let m=createMatch('skirmish','normal',undefined,'plains96',1,'balanced',roster);
+ expect(m.difficulty).toBe('beginner');expect(m.multiplePlayers!.ai.map(b=>b.state.difficulty)).toEqual(['beginner','hard']);expect(m.multiplePlayers!.ai.map(b=>b.state.enemyProduction!.wood)).toEqual([20,120]);m=updateMatch(m,.25);
+ const json=encodeSave(m,{camera:{x:0,y:0},building:null}),loaded=decodeSave(json);expect(loaded.ok,loaded.ok?'':loaded.error).toBe(true);if(loaded.ok)expect(loaded.match.multiplePlayers!.ai.map(b=>b.state.difficulty)).toEqual(['beginner','hard']);
+ const bad=JSON.parse(json);bad.multiplePlayers[2].difficulty='beginner';expect(decodeSave(JSON.stringify(bad)).ok).toBe(false);
+});
+it.each(['tribute-config-51','tribute-config-52'])('migrates %s multiplayer envelopes without assigning different AI difficulties',version=>{
+ const m=createMatch('skirmish','normal',undefined,'plains96',1,'balanced',matchPlayers(undefined,undefined,3)),doc=JSON.parse(encodeSave(m,{camera:{x:0,y:0},building:null}));doc.configVersion=version;for(const part of [doc,...doc.ai]){if(part.document){const nested=JSON.parse(part.document);nested.configVersion=version;part.document=JSON.stringify(nested);}}const human=JSON.parse(doc.human);human.configVersion=version;doc.human=JSON.stringify(human);
+ const result=decodeSave(JSON.stringify(doc));expect(result.ok,result.ok?'':result.error).toBe(true);if(result.ok){expect(result.match.multiplePlayers!.roster[2].difficulty).toBeUndefined();expect(result.match.multiplePlayers!.ai[1].state.difficulty).toBe('normal');}
+});

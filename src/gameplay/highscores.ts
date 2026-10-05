@@ -23,7 +23,7 @@ export function resultScore(m:MatchState):Highscore|null{
  const stats=matchStats(m);
  return {...(m.campaignRun?.campaignId?{campaignId:m.campaignRun.campaignId}:{}),...(m.multiplePlayers?{players:structuredClone(m.multiplePlayers.roster)}:{}),...(m.aiProfile?{aiProfile:m.aiProfile}:{}),id:m.matchId,model:1,config:saveConfig.configVersion,kind:mission?'campaign':'skirmish',goal:mission?.id??m.map.id!,map:m.map.id!,difficulty:m.difficulty!,speed:m.speed??1,player:m.factions.player,enemy:m.factions.enemy,outcome:m.outcome,seconds:stats.seconds,score:scoreFor(m.outcome,stats.seconds),stats};
 }
-export const scorePartition=(s:Highscore)=>JSON.stringify([s.kind,s.goal,s.map,s.difficulty,s.speed,s.player,s.enemy,s.config,s.model,...(s.campaignId?[s.campaignId]:[]),...(s.players?[s.players.map(p=>[p.id,p.teamId,p.faction,p.profile])]:[]),...(s.aiProfile&&s.aiProfile!=='balanced'?[s.aiProfile]:[])]);
+export const scorePartition=(s:Highscore)=>JSON.stringify([s.kind,s.goal,s.map,s.difficulty,s.speed,s.player,s.enemy,s.config,s.model,...(s.campaignId?[s.campaignId]:[]),...(s.players?[s.players.map(p=>[p.id,p.teamId,p.faction,p.profile,...(p.difficulty?[p.difficulty]:[])])]:[]),...(s.aiProfile&&s.aiProfile!=='balanced'?[s.aiProfile]:[])]);
 const finite=(v:unknown)=>typeof v==='number'&&Number.isFinite(v)&&v>=0&&v<=1e12;
 function validStats(value:unknown):value is MatchStats{
  if(!value||typeof value!=='object')return false;const s=value as MatchStats;

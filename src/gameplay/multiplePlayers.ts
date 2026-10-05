@@ -1,3 +1,4 @@
+import {validPlayers} from './matchSettings';
 import {playerEliminated,teamOutcome} from './teamResults';
 import {matchFog} from './matchFog';
 import {withGateRules} from './gates';
@@ -42,9 +43,9 @@ export function aiContext(m:MatchState,id:PlayerId):AIContext{
 }
 export function initializeMultiplePlayers(m:MatchState,roster:PlayerDefinition[]):MatchState{
  if(roster.length<3)return m;
- if(m.scenario!=='skirmish'||!supportedPlayerCounts(m.map.id??'arena',m.scenario).includes(roster.length)||!validatePlayerStarts(m.map.id??'arena',roster))throw Error('Unsupported player starts');
+ if(!validPlayers(roster,{scenario:m.scenario,map:m.map.id})||m.scenario!=='skirmish'||!supportedPlayerCounts(m.map.id??'arena',m.scenario).includes(roster.length)||!validatePlayerStarts(m.map.id??'arena',roster))throw Error('Unsupported player starts');
  const ai:AIPlayer[]=roster.filter(p=>p.controller==='ai').map(p=>{
-  let state=createMatch('skirmish',m.difficulty,{player:m.factions!.player,enemy:p.faction},m.map.id,m.speed,p.profile);
+  let state=createMatch('skirmish',p.difficulty??m.difficulty,{player:m.factions!.player,enemy:p.faction},m.map.id,m.speed,p.profile);
   const from=playerStart(m.map.id??'arena','enemy'),to=playerStart(m.map.id??'arena',p.id),dx=to.x-from.x,dy=to.y-from.y;
   const shift=(point:Position)=>({x:point.x+dx,y:point.y+dy});
   state={...state,combat:{...state.combat,enemies:state.combat.enemies.map(e=>({...e,position:shift(e.position),...(e.footprint?{footprint:{...e.footprint,...shift(e.footprint)}}:{}),...(e.work?{work:{...e.work,target:shift(e.work.target)}}:{})}))}};

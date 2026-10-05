@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**Nytt mandat RTS-182–187 (2026-10-05):** Bilagans sex meny-/kampanjuppgifter, en i taget med riktad/browser-verifiering, docs och commit/push. RTS-180 är historiskt Done/publicerad;181 redan Done.182 Done/push90df09f,183 Done/pushc3f691b,184 Done/push289cc9f,185 Done/push7b7e9fc,186 Done,187 Todo. Stanna efter187. CSS/docs bevaras.
+**Nytt mandat RTS-182–187 (2026-10-05):** Bilagans sex meny-/kampanjuppgifter, en i taget med riktad/browser-verifiering, docs och commit/push. RTS-180 är historiskt Done/publicerad;181 redan Done.182 Done/push90df09f,183 Done/pushc3f691b,184 Done/push289cc9f,185 Done/push7b7e9fc,186 Done/pushae5e361 + beläggsf43688d,187 Done; fasen avslutad, inga nya tasks startas. Stanna efter187. CSS/docs bevaras.
 
 **Aktuellt avgränsat uppdrag RTS-181:** Done. Startinställning1920×1080/Fit to Window. Tidigare180 Done enligt HANDOFF; historiska releasebelägg återanvänds endast som status. Bilagans bredare meny-/kampanjfas genomförs inte i denna avgränsade ändring. CSS/docs bevaras.
 
@@ -5050,7 +5050,7 @@ Publicera efter godkända kontroller.
 
 ## RTS-187 — Skirmish med flera AI-motståndare
 
-**Status:** Todo.
+**Status:** Done (2026-10-05).
 
 **Krav/acceptance:** Undersök meny/matchstart. Faktiska startplatser styr max; tydlig kapacitet/orsak, per-AI ras/difficulty/profil/lag enligt system. Unika starter/giltiga lag; alla AI startar. Minst en karta human+2AI, rasbeskrivningar och samlade avancerade val.
 
@@ -5059,3 +5059,8 @@ Publicera efter godkända kontroller.
 **Verifiering:** Riktade system-/integrationstester och verkliga browserflöden. Slutlig unit/build med strict typecheck/diff före commit. Full regression vid etappslut. Gemensam meny/HUD/input vid800×600,1920×1080,3440×1440. Inga fulla kampanjsimuleringar för rena menyändringar.
 
 **Docs:** BACKLOG, DECISIONS, DEV_LOG, HANDOFF och relevanta systemdefinitioner. Taskvis commit/push utan force.
+
+
+**Verifiering187/etappslut:** Riktade127/7 PASS. Slutlig unit468/84 PASS10.28s; build inklusive strict typecheck PASS360ms (befintlig bundlevarning); full regression1489/178 PASS419.51s på slutlig spelkod. Diff/manifest84unit+94integration/länkar/browser-script-syntax PASS. Chrome native800/1920/3440: faktiska två AI med egna raser/profile/team och Beginner/Hard, unika baspositioner, SaveLoad och fysisk worker/minimap/HUD PASS. Campaignbrowser fem raser×tre storlekar återkontrollerad efter omgruppering PASS; Highscore800/Native filters/legacy/tomläge/AI-config-rubrik PASS. Actual SaveLoad→terminalfixture→PlayAgain→completed-replay/current-only behåller identitet/policy/progress och exakt en score PASS. Representativa settings/tabell/briefingbilder visuellt granskade. Ingen ny CI/Pages eller mänsklig helkampanj-/balans-/ljudclaim.
+
+**Stopp:** RTS-182–187 klara; fasen avslutad. Inga nya roadmaptasks eller karteditor. HANDOFF/QUALITY_REVIEW skiljer ny verifiering från RTS-180:s historiska releasebelägg. CSS/docs bevaras.
