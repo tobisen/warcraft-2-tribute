@@ -1,3 +1,4 @@
+import {organicTerrain,organicWorld,type TerrainDesign} from '../config/organicTerrain';
 import {expandedWorld,extensionTerrain} from '../config/mapExtensions';
 import {mapExtensionTerrain,maps,type MapId,type TerrainPatch} from '../config/maps';
 import { arenaConfig } from '../config/arena';
@@ -10,6 +11,7 @@ export interface WorldMap {
   ignoreAttackOcclusion?:boolean;enemyPassageBlocks?:Footprint[];bodyHalf?:number;
   linearCollision?:true;
   interactionTarget?:Footprint;
+  design?:TerrainDesign;
   worldLayout?:'expanded';
   resourceLayout?:'trees';
   terrainLayout?:'reference'|'legacy';
@@ -20,11 +22,11 @@ export interface WorldMap {
 }
 
 const terrainCache=new Map<string,readonly TerrainPatch[]>();
-export function terrainPatches(map:Pick<WorldMap,'id'|'terrainLayout'|'worldLayout'>):readonly TerrainPatch[]{const id=map.id??'arena',key=`${id}:${map.terrainLayout}:${map.worldLayout}`,cached=terrainCache.get(key);if(cached)return cached;const m=maps[id],base=map.terrainLayout==='reference'?m.referenceTerrain??(id==='forest'?m.terrain.filter(p=>!(p.kind==='rock'&&p.column===5&&p.row===4)):m.terrain):m.terrain;const patches=map.worldLayout==='expanded'?[...base,...mapExtensionTerrain(id)]:base;terrainCache.set(key,patches);return patches;}
-export function createMap(id:MapId='arena',layout?:WorldMap['terrainLayout'],resources:'trees'|'groves'='trees',world:'expanded'|'original'='expanded'): WorldMap {
+export function terrainPatches(map:Pick<WorldMap,'id'|'terrainLayout'|'worldLayout'|'design'>):readonly TerrainPatch[]{const id=map.id??'arena',key=`${id}:${map.terrainLayout}:${map.worldLayout}:${map.design}`,cached=terrainCache.get(key);if(cached)return cached;if(map.design==='organic'){const patches=organicTerrain(id);terrainCache.set(key,patches);return patches;}const m=maps[id],base=map.terrainLayout==='reference'?m.referenceTerrain??(id==='forest'?m.terrain.filter(p=>!(p.kind==='rock'&&p.column===5&&p.row===4)):m.terrain):m.terrain;const patches=map.worldLayout==='expanded'?[...base,...mapExtensionTerrain(id)]:base;terrainCache.set(key,patches);return patches;}
+export function createMap(id:MapId='arena',layout?:WorldMap['terrainLayout'],resources:'trees'|'groves'='trees',world:'expanded'|'original'='expanded',design?:TerrainDesign): WorldMap {
  const terrainLayout=layout??'reference',worldLayout=world==='expanded'&&terrainLayout==='reference'&&resources==='trees'?'expanded' as const:undefined;
- return {id,...(worldLayout?{worldLayout}:{}),...(terrainLayout==='reference'&&resources==='trees'?{resourceLayout:'trees' as const}:{}),terrainLayout,...(worldLayout?expandedWorld:maps[id].world??worldConfig),tileSize:arenaConfig.tileSize,revision:0,
-  obstacles:terrainPatches({id,terrainLayout,worldLayout}).map(p=>({x:p.column*32,y:p.row*32,width:p.columns*32,height:p.rows*32}))};
+ return {id,...(design?{design}:{}),...(worldLayout?{worldLayout}:{}),...(terrainLayout==='reference'&&resources==='trees'?{resourceLayout:'trees' as const}:{}),terrainLayout,...(design?organicWorld(id):worldLayout?expandedWorld:maps[id].world??worldConfig),tileSize:arenaConfig.tileSize,revision:0,
+  obstacles:terrainPatches({id,terrainLayout,worldLayout,design}).map(p=>({x:p.column*32,y:p.row*32,width:p.columns*32,height:p.rows*32}))};
 }
 
 export function worldTile(map: WorldMap, point: Position): Tile | null {

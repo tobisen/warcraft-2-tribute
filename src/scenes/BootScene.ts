@@ -12,7 +12,7 @@ import {supportedPlayerCounts} from '../config/players';
 import {matchPlayers} from '../gameplay/players';
 import type {MultiplePlayers} from '../gameplay/multiplePlayers';
 import {animalAt,visibleAnimals,type WildlifeState} from '../gameplay/wildlife';
-import {referenceTile} from '../presentation/referenceTerrain';
+import {referenceKind,referenceTile} from '../presentation/referenceTerrain';
 import {forestVisuals} from '../presentation/forestVisuals';
 import {renderActionIcons} from '../presentation/actionIcons';
 import {setActionLabel} from '../presentation/actionLabel';
@@ -388,19 +388,21 @@ export class BootScene extends Phaser.Scene {
     });
     this.enemyVisuals.clear();
     this.habitats=wildlifeHabitats(this.map);
-    const sceneryMap=createMap(this.map.id,this.map.terrainLayout??'legacy',this.map.resourceLayout??'groves',this.map.worldLayout??'original');
+    const sceneryMap=createMap(this.map.id,this.map.terrainLayout??'legacy',this.map.resourceLayout??'groves',this.map.worldLayout??'original',this.map.design);
     const terrainChunks=new Map<string,Phaser.Textures.CanvasTexture>();
+    const terrainOverlays:{texture:Phaser.Textures.CanvasTexture;edge:string;x:number;y:number}[]=[];
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{for(const key of terrainChunks.keys())this.textures.remove(key);});
     for (let row = 0; row < Math.ceil(this.map.height / this.map.tileSize); row++) {
       for (let column = 0; column < Math.ceil(this.map.width / this.map.tileSize); column++) {
         const detail=wildlifeDetails(column,row,sceneryMap);if(detail)this.wildlifeProps.push(this.add.image((column+.5)*this.map.tileSize,(row+.5)*this.map.tileSize,'world',detail).setOrigin(.5,.75).setDepth(-1));
         const rect = tileFootprint(this.map, { column, row })!;
-        if(this.map.terrainLayout==='reference'){const chunkX=Math.floor(rect.x/512)*512,chunkY=Math.floor(rect.y/512)*512,key=`map-terrain-${chunkX}-${chunkY}`;let texture=terrainChunks.get(key);if(!texture){texture=this.textures.createCanvas(key,Math.min(512,this.map.width-chunkX),Math.min(512,this.map.height-chunkY))!;texture.setFilter(Phaser.Textures.FilterMode.NEAREST);terrainChunks.set(key,texture);this.add.image(chunkX,chunkY,key).setOrigin(0).setDepth(-10);}const tile=referenceTile(column,row,sceneryMap);texture.drawFrame('reference-terrain',tile.frame,rect.x-chunkX,rect.y-chunkY,false);for(const edge of tile.edges)texture.drawFrame('reference-terrain',edge,rect.x-chunkX,rect.y-chunkY,false);continue;}
+        if(this.map.terrainLayout==='reference'){const chunkX=Math.floor(rect.x/512)*512,chunkY=Math.floor(rect.y/512)*512,key=`map-terrain-${chunkX}-${chunkY}`;let texture=terrainChunks.get(key);if(!texture){texture=this.textures.createCanvas(key,Math.min(512,this.map.width-chunkX),Math.min(512,this.map.height-chunkY))!;texture.setFilter(Phaser.Textures.FilterMode.NEAREST);terrainChunks.set(key,texture);this.add.image(chunkX,chunkY,key).setOrigin(0).setDepth(-10);}const tile=referenceTile(column,row,sceneryMap);texture.drawFrame('reference-terrain',tile.frame,rect.x-chunkX,rect.y-chunkY,false);for(const edge of tile.edges)terrainOverlays.push({texture,edge,x:rect.x-chunkX,y:rect.y-chunkY});if(referenceKind(column,row,sceneryMap)==='rock'&&(column+row)%2===0&&[[0,-1],[1,0],[0,1],[-1,0]].every(([dx,dy])=>referenceKind(column+dx,row+dy,sceneryMap)==='rock'))this.add.image(rect.x+12+((column*13^row*7)%9),rect.y+20+((column*11^row*17)%7),'reference-terrain',`crag-${((Math.imul(column+17,73856093)^Math.imul(row+31,19349663))>>>8)%4}`).setOrigin(.5,.75).setDepth(-9+row/this.map.height);continue;}
         this.add.image(rect.x,rect.y,'world',terrainImageFrame(column,row,this.map.id)).setOrigin(0).setDepth(-10);
         for(const detail of terrainDetails(column,row,this.map.id))this.add.image(rect.x,rect.y,'world',detail).setOrigin(0).setDepth(-9.5);
         for(const edge of terrainEdges(column,row,this.map.id))this.add.image(rect.x,rect.y,'world',edge).setOrigin(0).setDepth(-9);
       }
     }
+    for(const o of terrainOverlays)o.texture.drawFrame('reference-terrain',o.edge,o.x,o.y,false);
     for(const texture of terrainChunks.values())texture.refresh();
     const upgradeButton=document.getElementById('upgrade-base') as HTMLButtonElement;
     const upgrade=()=>{if(selectedBase(this.currentMatch(),this.selectedBuilding)&&this.gameplayActive()){this.applyMatch(startBaseUpgrade(this.currentMatch()));this.syncVisuals();}};

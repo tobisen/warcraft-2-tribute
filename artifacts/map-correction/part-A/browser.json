@@ -1,0 +1,38 @@
+[
+  {
+    "width": 800,
+    "trees": 2220,
+    "selection": [
+      "wood-1",
+      "wood-1-tree-19-4",
+      "wood-1-tree-20-3"
+    ],
+    "physicalGather": true,
+    "harvest": {
+      "remaining": 0,
+      "open": true,
+      "revision": 7,
+      "wood": 26.666666666666664
+    },
+    "saveLoad": true,
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "trees": 2220,
+    "selection": [
+      "wood-1",
+      "wood-1-tree-19-4",
+      "wood-1-tree-20-3"
+    ],
+    "physicalGather": true,
+    "harvest": {
+      "remaining": 0,
+      "open": true,
+      "revision": 7,
+      "wood": 26.666666666666664
+    },
+    "saveLoad": true,
+    "errors": []
+  }
+]

@@ -9,6 +9,9 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
+**Prioriterad kart-/HUD-korrigering (2026-10-06):** A Done: gemensam terränggrafik och Frontier Valley (se HANDOFF). B In Progress: övriga åtta kartor, fiendestarter, betalda expansioner och kantpanorering. C Todo: större byggknappar och samlad slutverifiering. Taskvis commit/push; stopp efter C. Bevara style.css/units.mjs/docs. Ingen delegering. Tidigare kartreferensbilagor saknas lokalt; dokumenterad Battle.net-referens finns. Äldre sparningar ska behålla sin geometri.
+
+
 **Gameplayfas RTS-195–204 avslutad:** Samtliga tio tasks är Done. Slutlig fullregression1586/186, unit475/85, strict build och faktisk Native800/1280 browser PASS. [GAMEPLAY_PHASE.md](GAMEPLAY_PHASE.md) samlar leverans/bilder/commits/begränsningar. Stanna efter204; inga nya tasks startas automatiskt. HANDOFF.md styr överlämningen.
 
 **Nytt gameplaymandat RTS-195–204:** Användarens önskemål2026-10-06 ersätter kartfasens stopp. En task åt gången; konkreta UI/transport/placement/navigation-problem före nytt innehåll. Bevara befintlig style.css/docs. Ingen delegering. Innehållspaket för204 detaljeras före beroende kod. Tidigare kartfasens belägg är historik.

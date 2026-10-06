@@ -47,10 +47,10 @@ import {orderUnits,updateGathering} from './gathering';
 import {selectionInfo} from '../presentation/selectionInfo';
 it('fresh Frontier has one stable selectable resource per crown and conserves authored wood',()=>{
  const m=createMatch('skirmish','normal',undefined,'frontier'),trees=resourceNodes(m.gathering).filter(n=>n.tree);
- expect(trees.filter(n=>!n.id.startsWith('expansion-')).length).toBe(Object.values(frontierGroves).reduce((s,g)=>s+g.cells.length,0));
- expect(new Set(trees.map(n=>n.id)).size).toBe(trees.length);expect(trees.reduce((s,n)=>s+n.remaining,0)).toBeCloseTo(mapResourceTotals('frontier','trees',m.map.worldLayout).wood);
+ expect(trees.filter(n=>!n.id.startsWith('expansion-')&&!n.id.startsWith('organic-')).length).toBe(Object.values(frontierGroves).reduce((s,g)=>s+g.cells.length,0));
+ expect(new Set(trees.map(n=>n.id)).size).toBe(trees.length);expect(trees.reduce((s,n)=>s+n.remaining,0)).toBeCloseTo(mapResourceTotals('frontier','trees',m.map.worldLayout,m.map.design).wood);
  for(const n of trees){expect(isNodeHit(n.position,n)).toBe(true);expect(bodyFits(m.map,n.position,12)).toBe(false);}
- expect(mapResources('frontier','trees',m.map.worldLayout).map(n=>n.id)).toEqual(resourceNodes(m.gathering).map(n=>n.id));
+ expect(mapResources('frontier','trees',m.map.worldLayout,m.map.design).map(n=>n.id)).toEqual(resourceNodes(m.gathering).map(n=>n.id));
  expect(decodeSave(encodeSave(m,view)).ok).toBe(true);
 });
 it('interior tree is blocked, felling boundary opens access, multiple workers harvest and Save preserves individual stocks',()=>{

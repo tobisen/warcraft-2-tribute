@@ -73,6 +73,7 @@
   "src/gameplay/navy.test.ts",
   "src/gameplay/operations.test.ts",
   "src/gameplay/orders.test.ts",
+  "src/gameplay/organicTerrain.test.ts",
   "src/gameplay/population.test.ts",
   "src/gameplay/productionQueue.test.ts",
   "src/gameplay/rally.test.ts",

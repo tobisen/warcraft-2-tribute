@@ -22,3 +22,7 @@ or extra resource is added. At depletion the resource entrance and crowns open.
 Before/after screenshots use identical camera positions with an explicit fully
 revealed art fixture, separate from the physical gathering/naval browser checks.
 See `artifacts/prio-03/`. Existing maps keep their previous artwork/layout.
+
+## Kartkorrigering2026-10-06
+
+Originalkodade lövträd, klippkrön och kantvarianter i samma atlas. River Fork-bilden från den dokumenterade Battle.net-sidan hämtad och faktiskt granskad; tidigare användarbilagor saknas lokalt. Inga originalpixlar kopieras. Frontier organic-layout och Save63 separat från äldre geometri. Faktiska före/efterbilder: artifacts/map-correction; kvaliteten är enklare och mer regelbunden än originalet.

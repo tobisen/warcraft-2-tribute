@@ -1,3 +1,13 @@
+# Kartkorrigering pågår — A klar, B nästa
+
+## Kartkorrigering A — 2026-10-06
+
+Frontier Valley använder ny organic-design: separata konturer för sjöar/klippryggar, sammanhängande skogar med gläntor och individuellt skördbara träd. Gemensam atlas får lövkronor, klippkrön med ovansida/vägg/skugga och kusthörn. Terrängoverlays målas efter marken. Save63 behåller äldre geometri utan designflagga; begränsad strukturgräns200000 stödjer fullt observerade täta skogar (bytesgränsen2MB består). Tidigare kartbilagor saknas i repo; dokumenterad Battle.net River Fork hämtad/granskad i denna körning, utan import/spårning av originalbilden.
+
+Ny riktad regression58/5 PASS, unit475/85 PASS13.10s, senare atlas/design4/2 PASS och strict build PASS. Slutliga grafikändringar motiverade extra asset/buildcheck; tidigare gameplay/browserbelägg gäller oförändrad simulering. Native800/1280 fysisk selection/gather/depletion/open-ground/SaveLoad PASS; artifacts/map-correction/part-A/browser.json. Faktiska forest/coast/crestbilder visuellt granskade, inklusive korrigerad ritordning. assets/sources/reference-terrain.mjs är egna pixelpenslar. Resultatet är fortfarande mer regelbundet och enklare än Warcraft II-originalet; likvärdig konstnärlig kvalitet hävdas inte. B/C återstår. Style.css/units.mjs/docs bevarade. Full regression efter C.
+
+---
+
 # RTS-195–204 klara — stopp efter gameplayfasen
 
 ## CI-timeoutkorrigering efter RTS-204 — 2026-10-06
