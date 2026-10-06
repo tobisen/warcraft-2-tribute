@@ -3490,3 +3490,24 @@ Ingen bred campaignregression nu; full regression efter207. style.css SHA
 205 slutlig `npm run test:unit`479/87 PASS, strict build PASS och diff PASS.
 Granskad diff: bara grafik/export/presentation och motsvarande tester/docs;
 footprints, gameplay och resource quantities oförändrade.205 Done,206 nästa.
+
+## RTS-206 — tydliga actiongrupper (2026-10-06)
+
+Orders/Actions, Build, Train, Research, Spells får synliga rubriker/ramar i
+separat actionGroups.css; användarens style.css bevaras. Ikonraster40px och
+visning40/44px, minst44px knappar.184px bar,216px vid mixedworker/caster för
+separata Build/Spells; befintlig canvasResizeObserver används. Action callbacks,
+cost/admission, selection och hotkeydispatch oförändrade.
+
+Native800/1280 fysisk click/F→farmplacement/Escape, oförändrade orders och
+sex selection-/köstates PASS utan scroll/klippning/överlapp/pageerrors;
+artifacts/rts-206/browser.json, bilder visuellt granskade.18/3 riktade PASS.
+Browser fann äldre36px/contents casterregel och32px flex-basis på ikoner;
+rättade i separata CSS. Harness rättade syntax och DOM-vs-visualordning före
+slutlig PASS; misslyckade harnesskörningar räknas inte verifiering.205 push
+ a87d781.205:s slutliga unitduration rättad till faktiska14.69s i BATCH_1.
+Slutlig unit/build/diff kompletteras före206commit. Ingen campaignbatch/CIclaim.
+
+206 slutlig unit479/87 PASS16.44s, build inklusive strict typecheck PASS446ms,
+`git diff --check` PASS. Granskning utan kvarvarande layout-/actionfynd.
+206 Done;207 nästa. Full regression vid batchslut.

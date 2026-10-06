@@ -52,7 +52,32 @@ läsbarhet är visuellt granskad; pixelidentisk Warcraft II-kvalitet hävdas int
 Checks och taskhashar kompletteras vid respektive leverans. Full regression
 körs samlat efter207; inga breda kampanjsimuleringar under grafik/UI-arbetet.
 
-205 slutchecks: `npm run test:unit`479/87 PASS16.44s;
+205 slutchecks: `npm run test:unit`479/87 PASS14.69s;
 `npm run build` med strict typecheck PASS (befintlig bundlevarning);
 `git diff --check` PASS. Sampler-/crop, asset/source, resource-selection och
-fyndintegrationer riktat PASS; faktisk browser enligt ovan. Taskhash efter push.
+fyndintegrationer riktat PASS; faktisk browser enligt ovan. Taskcommit a87d781 pushad till origin/main.
+
+## RTS-206 — actiongrupper
+
+Orders / Actions, Build, Train, Research och Spells har synliga rubriker och
+egna ramar. Orders skiljs visuellt från Build; grupper utan relevanta actions
+för selection döljs.40px ikonraster/40–44px visning och minst44px klickytor;
+befintliga click handlers/hotkeydispatch oförändrade. Äldre mixed-caster-regeln
+som plattade ut grupper och satte36px knappar ersätts. Bottom bar är184px,
+216px enbart när worker/caster behöver både Build och Spells; horisontell
+panelordning och minimap består, kartviewport anpassas via befintlig observer.
+
+Native800×600/1280×720: worker, bas med full3-jobbkö, barracks, forge,
+worker+caster och tom selection, samtliga utan scroll/klippning/överlapp.
+Fysiskt farmclick och F via ordinarie callback startar samma placement,
+Escape avbryter, order/selection bevaras. Explicit fryst UI-fixture med bank,
+byggnader och caster är inte en betald full match.
+[Browserverifiering](artifacts/rts-206/browser.json),
+[worker](artifacts/rts-206/worker-800.png),
+[mixed](artifacts/rts-206/mixed-800.png),
+[full queue](artifacts/rts-206/base-full-queue-800.png).
+Riktade actionPanel/selectionCollection/hotkeys18/3 PASS.
+
+206 slutlig unit479/87 PASS16.44s, build inklusive strict typecheck PASS446ms,
+`git diff --check` PASS. Granskning utan kvarvarande layout-/actionfynd.
+206 Done;207 nästa. Full regression vid batchslut.

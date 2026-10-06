@@ -1,0 +1,32 @@
+/* RTS-206: visible boundaries, with compact horizontal panels at native800. */
+#app:not([data-phase='menu']):not([data-phase='ended']) { grid-template-rows:48px auto minmax(0,1fr) 184px; }
+#bottom-bar { height:184px; grid-template-columns:minmax(130px,1fr) max-content max-content max-content 134px; gap:8px; }
+#action-panel [data-action-group] { padding:4px; border:1px solid #718366; background:#101e1bcc; align-content:start; }
+#action-panel [data-action-group='Orders'] { grid-template-columns:repeat(3,44px); border-color:#7398c1; }
+#action-panel [data-action-group='Build'] { border-color:#bd9858; }
+#action-panel [data-action-group='Research'] { border-color:#b18cbd; }
+#action-panel [data-action-group='Spells'] { border-color:#83bcb6; }
+#action-panel [data-action-group] h3 { display:block; grid-column:1 / -1; margin:0; font:600 11px/14px system-ui; color:#ecd5a1; }
+#context-actions { gap:4px; align-content:start; }
+#context-actions:has([data-action-group='Train']:not([hidden])):has([data-action-group='Research']:not([hidden])) { grid-auto-flow:column; align-items:start; }
+#bottom-bar:has([data-action-group='Build']:not([hidden])):has([data-action-group='Spells']:not([hidden])) { height:216px; }
+#app:has(#bottom-bar [data-action-group='Build']:not([hidden])):has(#bottom-bar [data-action-group='Spells']:not([hidden])):not([data-phase='menu']):not([data-phase='ended']) { grid-template-rows:48px auto minmax(0,1fr) 216px; }
+#production-queue { width:120px; }
+#production-queue[hidden] { display:none; }
+#action-panel button[data-action-icon]::before { width:40px; height:40px; background-size:40px 40px; }
+@media (min-width:1200px) {
+ #action-panel [data-action-group]:not([data-action-group='Orders']) button[data-action-icon]::before { width:44px;height:44px;background-size:44px 44px; }
+}
+#action-panel [data-action-group] button { padding:1px; }
+#action-panel button[data-action-icon]::before { flex:0 0 40px; }
+@media (min-width:1200px) {
+ #action-panel [data-action-group]:not([data-action-group='Orders']) button { padding:2px 2px 13px; }
+ #action-panel [data-action-group]:not([data-action-group='Orders']) button[data-action-icon]::before { flex-basis:44px; }
+}
+/* Replace the older mixed-caster flattening rule; groups stay visible. */
+#action-panel #context-actions.spell-context { grid-template-columns:none; grid-auto-flow:row; }
+#action-panel #context-actions.spell-context [data-action-group]:not([hidden]) { display:grid; }
+#action-panel #context-actions.spell-context [data-action-group] button { height:44px; min-height:44px; }
+@media (min-width:1200px) {
+ #action-panel #context-actions.spell-context [data-action-group] button { height:64px; min-height:64px; }
+}

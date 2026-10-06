@@ -17,11 +17,11 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 - Börja med worker/melee/ranged/base/barracks/träd/gruva/skatt och granska i browser vid normal storlek före spridning. Tydliga silhuetter, material, skuggning, roll/ras/funktion; bibehållen lagfärg, animation, footprint/collision/gameplay. Enbart förstoring räcker inte.
 - Ikoner/porträtt följer grafiken; separata porträtt tillåtna. Redovisa konkret kvarvarande slutgrafik och före/efterbilder; tekniska tests ersätter inte visuell granskning.
 
-### RTS-206 — Avgränsade actiongrupper — In Progress
+### RTS-206 — Avgränsade actiongrupper — Done
 
 - Orders/Actions och Build får tydliga separata grupper; Train/Research visas för relevant selection. Större ikoner och klickytor, horisontell800×600 utan scroll/klippning; musklick/hotkeys använder samma befintliga logik. Browser selection/action/kompaktlayout.
 
-### RTS-207 — Tech Tree och Commands i top bar — Todo
+### RTS-207 — Tech Tree och Commands i top bar — In Progress
 
 - Separata knappar bredvid Mission. Flytta omfattande hjälp till stängbara modalvyer; Escape och inget klickgenomsläpp.
 - Tech Tree: vald ras, ordnade nivåer/grenar/beroenden, upplåst/tillgängligt/låst, nodval med kostnad/funktion/saknade krav/kampanjbegränsningar.

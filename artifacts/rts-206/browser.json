@@ -1,0 +1,1208 @@
+[
+  {
+    "width": 800,
+    "height": 600,
+    "state": "worker",
+    "layout": {
+      "bar": {
+        "left": 0,
+        "right": 800,
+        "bottom": 600
+      },
+      "scroll": false,
+      "panels": [
+        {
+          "id": "selection-info",
+          "left": 8,
+          "right": 230,
+          "bottom": 519.625,
+          "scroll": false
+        },
+        {
+          "id": "minimap-overlay",
+          "left": 658,
+          "right": 792,
+          "bottom": 530,
+          "scroll": false
+        }
+      ],
+      "groups": [
+        {
+          "name": "Orders",
+          "left": 238,
+          "right": 388,
+          "bottom": 546,
+          "heading": "block",
+          "border": "1px",
+          "buttons": [
+            {
+              "id": "repair-building",
+              "width": 44,
+              "height": 44,
+              "bottom": 493,
+              "icon": 40
+            },
+            {
+              "id": "hold-position",
+              "width": 44,
+              "height": 44,
+              "bottom": 493,
+              "icon": 40
+            },
+            {
+              "id": "patrol-units",
+              "width": 44,
+              "height": 44,
+              "bottom": 493,
+              "icon": 40
+            },
+            {
+              "id": "stop-units",
+              "width": 44,
+              "height": 44,
+              "bottom": 541,
+              "icon": 40
+            },
+            {
+              "id": "dismiss-units",
+              "width": 44,
+              "height": 44,
+              "bottom": 541,
+              "icon": 40
+            }
+          ]
+        },
+        {
+          "name": "Build",
+          "left": 396,
+          "right": 642,
+          "bottom": 546,
+          "heading": "block",
+          "border": "1px",
+          "buttons": [
+            {
+              "id": "build-wall",
+              "width": 44,
+              "height": 44,
+              "bottom": 493,
+              "icon": 40
+            },
+            {
+              "id": "build-gate",
+              "width": 44,
+              "height": 44,
+              "bottom": 493,
+              "icon": 40
+            },
+            {
+              "id": "build-tower",
+              "width": 44,
+              "height": 44,
+              "bottom": 493,
+              "icon": 40
+            },
+            {
+              "id": "build-academy",
+              "width": 44,
+              "height": 44,
+              "bottom": 493,
+              "icon": 40
+            },
+            {
+              "id": "build-base",
+              "width": 44,
+              "height": 44,
+              "bottom": 493,
+              "icon": 40
+            },
+            {
+              "id": "build-barracks",
+              "width": 44,
+              "height": 44,
+              "bottom": 541,
+              "icon": 40
+            },
+            {
+              "id": "build-farm",
+              "width": 44,
+              "height": 44,
+              "bottom": 541,
+              "icon": 40
+            },
+            {
+              "id": "build-forge",
+              "width": 44,
+              "height": 44,
+              "bottom": 541,
+              "icon": 40
+            },
+            {
+              "id": "build-harbor",
+              "width": 44,
+              "height": 44,
+              "bottom": 541,
+              "icon": 40
+            }
+          ]
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "width": 800,
+    "height": 600,
+    "state": "base-full-queue",
+    "layout": {
+      "bar": {
+        "left": 0,
+        "right": 800,
+        "bottom": 600
+      },
+      "scroll": false,
+      "panels": [
+        {
+          "id": "selection-info",
+          "left": 8,
+          "right": 202,
+          "bottom": 574.625,
+          "scroll": false
+        },
+        {
+          "id": "production-queue",
+          "left": 530,
+          "right": 650,
+          "bottom": 566,
+          "scroll": false
+        },
+        {
+          "id": "minimap-overlay",
+          "left": 658,
+          "right": 792,
+          "bottom": 530,
+          "scroll": false
+        }
+      ],
+      "groups": [
+        {
+          "name": "Train",
+          "left": 218,
+          "right": 368,
+          "bottom": 498,
+          "heading": "block",
+          "border": "1px",
+          "buttons": [
+            {
+              "id": "train-worker",
+              "width": 44,
+              "height": 44,
+              "bottom": 493,
+              "icon": 40
+            }
+          ]
+        },
+        {
+          "name": "Research",
+          "left": 372,
+          "right": 522,
+          "bottom": 498,
+          "heading": "block",
+          "border": "1px",
+          "buttons": [
+            {
+              "id": "upgrade-base",
+              "width": 44,
+              "height": 44,
+              "bottom": 493,
+              "icon": 40
+            },
+            {
+              "id": "research-attack",
+              "width": 44,
+              "height": 44,
+              "bottom": 493,
+              "icon": 40
+            },
+            {
+              "id": "research-defense",
+              "width": 44,
+              "height": 44,
+              "bottom": 493,
+              "icon": 40
+            }
+          ]
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "width": 800,
+    "height": 600,
+    "state": "army",
+    "layout": {
+      "bar": {
+        "left": 0,
+        "right": 800,
+        "bottom": 600
+      },
+      "scroll": false,
+      "panels": [
+        {
+          "id": "selection-info",
+          "left": 8,
+          "right": 356,
+          "bottom": 533.375,
+          "scroll": false
+        },
+        {
+          "id": "production-queue",
+          "left": 530,
+          "right": 650,
+          "bottom": 452,
+          "scroll": false
+        },
+        {
+          "id": "minimap-overlay",
+          "left": 658,
+          "right": 792,
+          "bottom": 530,
+          "scroll": false
+        }
+      ],
+      "groups": [
+        {
+          "name": "Train",
+          "left": 372,
+          "right": 522,
+          "bottom": 546,
+          "heading": "block",
+          "border": "1px",
+          "buttons": [
+            {
+              "id": "train-soldier",
+              "width": 44,
+              "height": 44,
+              "bottom": 493,
+              "icon": 40
+            },
+            {
+              "id": "train-archer",
+              "width": 44,
+              "height": 44,
+              "bottom": 493,
+              "icon": 40
+            },
+            {
+              "id": "train-catapult",
+              "width": 44,
+              "height": 44,
+              "bottom": 493,
+              "icon": 40
+            },
+            {
+              "id": "train-specialist",
+              "width": 44,
+              "height": 44,
+              "bottom": 541,
+              "icon": 40
+            },
+            {
+              "id": "train-air",
+              "width": 44,
+              "height": 44,
+              "bottom": 541,
+              "icon": 40
+            }
+          ]
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "width": 800,
+    "height": 600,
+    "state": "forge",
+    "layout": {
+      "bar": {
+        "left": 0,
+        "right": 800,
+        "bottom": 600
+      },
+      "scroll": false,
+      "panels": [
+        {
+          "id": "selection-info",
+          "left": 8,
+          "right": 476,
+          "bottom": 519.625,
+          "scroll": false
+        },
+        {
+          "id": "minimap-overlay",
+          "left": 658,
+          "right": 792,
+          "bottom": 530,
+          "scroll": false
+        }
+      ],
+      "groups": [
+        {
+          "name": "Research",
+          "left": 492,
+          "right": 642,
+          "bottom": 498,
+          "heading": "block",
+          "border": "1px",
+          "buttons": [
+            {
+              "id": "research-attack",
+              "width": 44,
+              "height": 44,
+              "bottom": 493,
+              "icon": 40
+            },
+            {
+              "id": "research-defense",
+              "width": 44,
+              "height": 44,
+              "bottom": 493,
+              "icon": 40
+            }
+          ]
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "width": 800,
+    "height": 600,
+    "state": "mixed",
+    "layout": {
+      "bar": {
+        "left": 0,
+        "right": 800,
+        "bottom": 600
+      },
+      "scroll": false,
+      "panels": [
+        {
+          "id": "selection-info",
+          "left": 8,
+          "right": 230,
+          "bottom": 471.015625,
+          "scroll": false
+        },
+        {
+          "id": "minimap-overlay",
+          "left": 658,
+          "right": 792,
+          "bottom": 498,
+          "scroll": false
+        }
+      ],
+      "groups": [
+        {
+          "name": "Orders",
+          "left": 238,
+          "right": 388,
+          "bottom": 562,
+          "heading": "block",
+          "border": "1px",
+          "buttons": [
+            {
+              "id": "repair-building",
+              "width": 44,
+              "height": 44,
+              "bottom": 461,
+              "icon": 40
+            },
+            {
+              "id": "attack-move",
+              "width": 44,
+              "height": 44,
+              "bottom": 461,
+              "icon": 40
+            },
+            {
+              "id": "unit-ability",
+              "width": 44,
+              "height": 44,
+              "bottom": 461,
+              "icon": 40
+            },
+            {
+              "id": "hold-position",
+              "width": 44,
+              "height": 44,
+              "bottom": 509,
+              "icon": 40
+            },
+            {
+              "id": "patrol-units",
+              "width": 44,
+              "height": 44,
+              "bottom": 509,
+              "icon": 40
+            },
+            {
+              "id": "stop-units",
+              "width": 44,
+              "height": 44,
+              "bottom": 509,
+              "icon": 40
+            },
+            {
+              "id": "dismiss-units",
+              "width": 44,
+              "height": 44,
+              "bottom": 557,
+              "icon": 40
+            }
+          ]
+        },
+        {
+          "name": "Build",
+          "left": 396,
+          "right": 642,
+          "bottom": 514,
+          "heading": "block",
+          "border": "1px",
+          "buttons": [
+            {
+              "id": "build-wall",
+              "width": 44,
+              "height": 44,
+              "bottom": 461,
+              "icon": 40
+            },
+            {
+              "id": "build-gate",
+              "width": 44,
+              "height": 44,
+              "bottom": 461,
+              "icon": 40
+            },
+            {
+              "id": "build-tower",
+              "width": 44,
+              "height": 44,
+              "bottom": 461,
+              "icon": 40
+            },
+            {
+              "id": "build-academy",
+              "width": 44,
+              "height": 44,
+              "bottom": 461,
+              "icon": 40
+            },
+            {
+              "id": "build-base",
+              "width": 44,
+              "height": 44,
+              "bottom": 461,
+              "icon": 40
+            },
+            {
+              "id": "build-barracks",
+              "width": 44,
+              "height": 44,
+              "bottom": 509,
+              "icon": 40
+            },
+            {
+              "id": "build-farm",
+              "width": 44,
+              "height": 44,
+              "bottom": 509,
+              "icon": 40
+            },
+            {
+              "id": "build-forge",
+              "width": 44,
+              "height": 44,
+              "bottom": 509,
+              "icon": 40
+            },
+            {
+              "id": "build-harbor",
+              "width": 44,
+              "height": 44,
+              "bottom": 509,
+              "icon": 40
+            }
+          ]
+        },
+        {
+          "name": "Spells",
+          "left": 396,
+          "right": 642,
+          "bottom": 590,
+          "heading": "block",
+          "border": "1px",
+          "buttons": [
+            {
+              "id": "cast-heal",
+              "width": 44,
+              "height": 44,
+              "bottom": 585,
+              "icon": 40
+            },
+            {
+              "id": "cast-ward",
+              "width": 44,
+              "height": 44,
+              "bottom": 585,
+              "icon": 40
+            },
+            {
+              "id": "cast-hex",
+              "width": 44,
+              "height": 44,
+              "bottom": 585,
+              "icon": 40
+            }
+          ]
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "width": 800,
+    "height": 600,
+    "state": "none",
+    "layout": {
+      "bar": {
+        "left": 0,
+        "right": 800,
+        "bottom": 600
+      },
+      "scroll": false,
+      "panels": [
+        {
+          "id": "selection-info",
+          "left": 8,
+          "right": 626,
+          "bottom": 466.9375,
+          "scroll": false
+        },
+        {
+          "id": "minimap-overlay",
+          "left": 658,
+          "right": 792,
+          "bottom": 530,
+          "scroll": false
+        }
+      ],
+      "groups": []
+    },
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "height": 720,
+    "state": "worker",
+    "layout": {
+      "bar": {
+        "left": 0,
+        "right": 1280,
+        "bottom": 720
+      },
+      "scroll": false,
+      "panels": [
+        {
+          "id": "selection-info",
+          "left": 8,
+          "right": 338,
+          "bottom": 639.625,
+          "scroll": false
+        },
+        {
+          "id": "minimap-overlay",
+          "left": 1138,
+          "right": 1272,
+          "bottom": 650,
+          "scroll": false
+        }
+      ],
+      "groups": [
+        {
+          "name": "Orders",
+          "left": 346,
+          "right": 496,
+          "bottom": 666,
+          "heading": "block",
+          "border": "1px",
+          "buttons": [
+            {
+              "id": "repair-building",
+              "width": 44,
+              "height": 44,
+              "bottom": 613,
+              "icon": 40
+            },
+            {
+              "id": "hold-position",
+              "width": 44,
+              "height": 44,
+              "bottom": 613,
+              "icon": 40
+            },
+            {
+              "id": "patrol-units",
+              "width": 44,
+              "height": 44,
+              "bottom": 613,
+              "icon": 40
+            },
+            {
+              "id": "stop-units",
+              "width": 44,
+              "height": 44,
+              "bottom": 661,
+              "icon": 40
+            },
+            {
+              "id": "dismiss-units",
+              "width": 44,
+              "height": 44,
+              "bottom": 661,
+              "icon": 40
+            }
+          ]
+        },
+        {
+          "name": "Build",
+          "left": 504,
+          "right": 1122,
+          "bottom": 638,
+          "heading": "block",
+          "border": "1px",
+          "buttons": [
+            {
+              "id": "build-wall",
+              "width": 64,
+              "height": 64,
+              "bottom": 633,
+              "icon": 44
+            },
+            {
+              "id": "build-gate",
+              "width": 64,
+              "height": 64,
+              "bottom": 633,
+              "icon": 44
+            },
+            {
+              "id": "build-tower",
+              "width": 64,
+              "height": 64,
+              "bottom": 633,
+              "icon": 44
+            },
+            {
+              "id": "build-academy",
+              "width": 64,
+              "height": 64,
+              "bottom": 633,
+              "icon": 44
+            },
+            {
+              "id": "build-base",
+              "width": 64,
+              "height": 64,
+              "bottom": 633,
+              "icon": 44
+            },
+            {
+              "id": "build-barracks",
+              "width": 64,
+              "height": 64,
+              "bottom": 633,
+              "icon": 44
+            },
+            {
+              "id": "build-farm",
+              "width": 64,
+              "height": 64,
+              "bottom": 633,
+              "icon": 44
+            },
+            {
+              "id": "build-forge",
+              "width": 64,
+              "height": 64,
+              "bottom": 633,
+              "icon": 44
+            },
+            {
+              "id": "build-harbor",
+              "width": 64,
+              "height": 64,
+              "bottom": 633,
+              "icon": 44
+            }
+          ]
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "height": 720,
+    "state": "base-full-queue",
+    "layout": {
+      "bar": {
+        "left": 0,
+        "right": 1280,
+        "bottom": 720
+      },
+      "scroll": false,
+      "panels": [
+        {
+          "id": "selection-info",
+          "left": 8,
+          "right": 562,
+          "bottom": 639.625,
+          "scroll": false
+        },
+        {
+          "id": "production-queue",
+          "left": 1010,
+          "right": 1130,
+          "bottom": 686,
+          "scroll": false
+        },
+        {
+          "id": "minimap-overlay",
+          "left": 1138,
+          "right": 1272,
+          "bottom": 650,
+          "scroll": false
+        }
+      ],
+      "groups": [
+        {
+          "name": "Train",
+          "left": 578,
+          "right": 788,
+          "bottom": 638,
+          "heading": "block",
+          "border": "1px",
+          "buttons": [
+            {
+              "id": "train-worker",
+              "width": 64,
+              "height": 64,
+              "bottom": 633,
+              "icon": 44
+            }
+          ]
+        },
+        {
+          "name": "Research",
+          "left": 792,
+          "right": 1002,
+          "bottom": 638,
+          "heading": "block",
+          "border": "1px",
+          "buttons": [
+            {
+              "id": "upgrade-base",
+              "width": 64,
+              "height": 64,
+              "bottom": 633,
+              "icon": 44
+            },
+            {
+              "id": "research-attack",
+              "width": 64,
+              "height": 64,
+              "bottom": 633,
+              "icon": 44
+            },
+            {
+              "id": "research-defense",
+              "width": 64,
+              "height": 64,
+              "bottom": 633,
+              "icon": 44
+            }
+          ]
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "height": 720,
+    "state": "army",
+    "layout": {
+      "bar": {
+        "left": 0,
+        "right": 1280,
+        "bottom": 720
+      },
+      "scroll": false,
+      "panels": [
+        {
+          "id": "selection-info",
+          "left": 8,
+          "right": 648,
+          "bottom": 639.625,
+          "scroll": false
+        },
+        {
+          "id": "production-queue",
+          "left": 1010,
+          "right": 1130,
+          "bottom": 572,
+          "scroll": false
+        },
+        {
+          "id": "minimap-overlay",
+          "left": 1138,
+          "right": 1272,
+          "bottom": 650,
+          "scroll": false
+        }
+      ],
+      "groups": [
+        {
+          "name": "Train",
+          "left": 792,
+          "right": 1002,
+          "bottom": 706,
+          "heading": "block",
+          "border": "1px",
+          "buttons": [
+            {
+              "id": "train-soldier",
+              "width": 64,
+              "height": 64,
+              "bottom": 633,
+              "icon": 44
+            },
+            {
+              "id": "train-archer",
+              "width": 64,
+              "height": 64,
+              "bottom": 633,
+              "icon": 44
+            },
+            {
+              "id": "train-catapult",
+              "width": 64,
+              "height": 64,
+              "bottom": 633,
+              "icon": 44
+            },
+            {
+              "id": "train-specialist",
+              "width": 64,
+              "height": 64,
+              "bottom": 701,
+              "icon": 44
+            },
+            {
+              "id": "train-air",
+              "width": 64,
+              "height": 64,
+              "bottom": 701,
+              "icon": 44
+            }
+          ]
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "height": 720,
+    "state": "forge",
+    "layout": {
+      "bar": {
+        "left": 0,
+        "right": 1280,
+        "bottom": 720
+      },
+      "scroll": false,
+      "panels": [
+        {
+          "id": "selection-info",
+          "left": 8,
+          "right": 648,
+          "bottom": 639.625,
+          "scroll": false
+        },
+        {
+          "id": "minimap-overlay",
+          "left": 1138,
+          "right": 1272,
+          "bottom": 650,
+          "scroll": false
+        }
+      ],
+      "groups": [
+        {
+          "name": "Research",
+          "left": 912,
+          "right": 1122,
+          "bottom": 638,
+          "heading": "block",
+          "border": "1px",
+          "buttons": [
+            {
+              "id": "research-attack",
+              "width": 64,
+              "height": 64,
+              "bottom": 633,
+              "icon": 44
+            },
+            {
+              "id": "research-defense",
+              "width": 64,
+              "height": 64,
+              "bottom": 633,
+              "icon": 44
+            }
+          ]
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "height": 720,
+    "state": "mixed",
+    "layout": {
+      "bar": {
+        "left": 0,
+        "right": 1280,
+        "bottom": 720
+      },
+      "scroll": false,
+      "panels": [
+        {
+          "id": "selection-info",
+          "left": 8,
+          "right": 338,
+          "bottom": 603.015625,
+          "scroll": false
+        },
+        {
+          "id": "minimap-overlay",
+          "left": 1138,
+          "right": 1272,
+          "bottom": 618,
+          "scroll": false
+        }
+      ],
+      "groups": [
+        {
+          "name": "Orders",
+          "left": 346,
+          "right": 496,
+          "bottom": 682,
+          "heading": "block",
+          "border": "1px",
+          "buttons": [
+            {
+              "id": "repair-building",
+              "width": 44,
+              "height": 44,
+              "bottom": 581,
+              "icon": 40
+            },
+            {
+              "id": "attack-move",
+              "width": 44,
+              "height": 44,
+              "bottom": 581,
+              "icon": 40
+            },
+            {
+              "id": "unit-ability",
+              "width": 44,
+              "height": 44,
+              "bottom": 581,
+              "icon": 40
+            },
+            {
+              "id": "hold-position",
+              "width": 44,
+              "height": 44,
+              "bottom": 629,
+              "icon": 40
+            },
+            {
+              "id": "patrol-units",
+              "width": 44,
+              "height": 44,
+              "bottom": 629,
+              "icon": 40
+            },
+            {
+              "id": "stop-units",
+              "width": 44,
+              "height": 44,
+              "bottom": 629,
+              "icon": 40
+            },
+            {
+              "id": "dismiss-units",
+              "width": 44,
+              "height": 44,
+              "bottom": 677,
+              "icon": 40
+            }
+          ]
+        },
+        {
+          "name": "Build",
+          "left": 504,
+          "right": 1122,
+          "bottom": 606,
+          "heading": "block",
+          "border": "1px",
+          "buttons": [
+            {
+              "id": "build-wall",
+              "width": 64,
+              "height": 64,
+              "bottom": 601,
+              "icon": 44
+            },
+            {
+              "id": "build-gate",
+              "width": 64,
+              "height": 64,
+              "bottom": 601,
+              "icon": 44
+            },
+            {
+              "id": "build-tower",
+              "width": 64,
+              "height": 64,
+              "bottom": 601,
+              "icon": 44
+            },
+            {
+              "id": "build-academy",
+              "width": 64,
+              "height": 64,
+              "bottom": 601,
+              "icon": 44
+            },
+            {
+              "id": "build-base",
+              "width": 64,
+              "height": 64,
+              "bottom": 601,
+              "icon": 44
+            },
+            {
+              "id": "build-barracks",
+              "width": 64,
+              "height": 64,
+              "bottom": 601,
+              "icon": 44
+            },
+            {
+              "id": "build-farm",
+              "width": 64,
+              "height": 64,
+              "bottom": 601,
+              "icon": 44
+            },
+            {
+              "id": "build-forge",
+              "width": 64,
+              "height": 64,
+              "bottom": 601,
+              "icon": 44
+            },
+            {
+              "id": "build-harbor",
+              "width": 64,
+              "height": 64,
+              "bottom": 601,
+              "icon": 44
+            }
+          ]
+        },
+        {
+          "name": "Spells",
+          "left": 504,
+          "right": 1122,
+          "bottom": 702,
+          "heading": "block",
+          "border": "1px",
+          "buttons": [
+            {
+              "id": "cast-heal",
+              "width": 64,
+              "height": 64,
+              "bottom": 697,
+              "icon": 44
+            },
+            {
+              "id": "cast-ward",
+              "width": 64,
+              "height": 64,
+              "bottom": 697,
+              "icon": 44
+            },
+            {
+              "id": "cast-hex",
+              "width": 64,
+              "height": 64,
+              "bottom": 697,
+              "icon": 44
+            }
+          ]
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "height": 720,
+    "state": "none",
+    "layout": {
+      "bar": {
+        "left": 0,
+        "right": 1280,
+        "bottom": 720
+      },
+      "scroll": false,
+      "panels": [
+        {
+          "id": "selection-info",
+          "left": 8,
+          "right": 648,
+          "bottom": 586.9375,
+          "scroll": false
+        },
+        {
+          "id": "minimap-overlay",
+          "left": 1138,
+          "right": 1272,
+          "bottom": 650,
+          "scroll": false
+        }
+      ],
+      "groups": []
+    },
+    "errors": []
+  }
+]
