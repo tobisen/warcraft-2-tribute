@@ -23,7 +23,7 @@ it('requires contact, carries at most five and credits only actual base deliveri
  expect(carried).toBe(true);expect(delivered).toBe(true);expect(m.enemyProduction!.wood).toBe(bank+5);expect(m.enemyProduction!.extracted!.wood).toBeCloseTo(5);
 });
 it.each([.05,.1,.5])('repeats finite shared wood/gold deliveries with timestep %s',delta=>{
- let m=economy();m.gathering.node.remaining=7;m.gathering.gold!.remaining=7;
+ let m=economy();delete m.gathering.extraNodes;m.gathering.node.remaining=7;m.gathering.gold!.remaining=7;
  for(let t=0;t<40;t+=delta)m=updateEnemyGathering(m,delta);
  expect(m.gathering.node.remaining).toBe(0);expect(m.gathering.gold!.remaining).toBe(0);expect(m.enemyProduction!.wood).toBeCloseTo(87);expect(m.enemyProduction!.gold).toBeCloseTo(27);expect(m.combat.enemies.filter(e=>e.work).every(e=>e.work!.cargo===0&&e.work!.order.kind==='idle')).toBe(true);
 });

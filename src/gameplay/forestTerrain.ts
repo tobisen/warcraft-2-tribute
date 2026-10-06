@@ -21,7 +21,9 @@ const key=(r:Footprint)=>`${r.x},${r.y},${r.width},${r.height}`;
 /** Only when a crown disappears: one map revision wakes blocked routes; structures stay untouched. */
 export function syncForestObstacles(before:GatheringState,after:GatheringState,map:WorldMap):WorldMap {
  if(!before.node.grove&&!before.node.tree&&!before.extraNodes?.some(n=>n.grove||n.tree))return map;
- const nextNodes=new Map(nodes(after).map(n=>[n.id,n]));
+ const oldNodes=nodes(before),newNodes=nodes(after);
+ if(oldNodes.length===newNodes.length&&oldNodes.every((n,i)=>n.id===newNodes[i].id&&(n.tree?(n.remaining>0)===(newNodes[i].remaining>0):n.remaining===newNodes[i].remaining)))return map;
+ const nextNodes=new Map(newNodes.map(n=>[n.id,n]));
  if(nodes(before).every(n=>n.tree?(n.remaining>0)===(nextNodes.get(n.id)!.remaining>0):nextNodes.get(n.id)?.remaining===n.remaining))return map;
  const old=bodies(before),next=bodies(after);if(old.map(key).join(';')===next.map(key).join(';'))return map;
  const removed=new Set(old.map(key));return replaceObstacles(map,[...map.obstacles.filter(r=>!removed.has(key(r))),...next]);

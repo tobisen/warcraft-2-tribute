@@ -37,6 +37,7 @@
   "src/gameplay/enemyPolicy.test.ts",
   "src/gameplay/enemyProduction.test.ts",
   "src/gameplay/enemyRecovery.test.ts",
+  "src/gameplay/expandedMaps.test.ts",
   "src/gameplay/factionBalance.test.ts",
   "src/gameplay/factionMatchups.test.ts",
   "src/gameplay/factionProduction.test.ts",

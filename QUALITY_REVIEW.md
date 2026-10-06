@@ -1,3 +1,11 @@
+# Kartfas RTS-191–194 — verifieringsgränser2026-10-06
+
+Individuella träd, gruventré/klickpolygon/djup, gemensam verklig terräng och128² geometri finns på samtliga nio kartor. Browserinput, Save/legacy, navigation/collision, gruvåtkomst, minimap och koordinatberoende kampanjpunkter har riktade belägg. Spelkodens unit472/85 och strict build PASS; slutlig fullregression1528/181 PASS523.12s efter två korrigerade navalcontrollers. Detaljer och bilder i [MAP_PHASE.md](MAP_PHASE.md), [HANDOFF.md](HANDOFF.md) och [DEV_LOG.md](DEV_LOG.md).
+
+Chrome793träd/18workers visar~59.4fps/4.1ms median/4.6ms p95 över~300 varma frames. Detta stöder kort spelbarhet i tät skog på testmaskinen; det är ingen långtids- eller hårdvarugaranti. Kampanjtesternas betalda ersättningsanfall är teknisk completion, inte mänsklig balans-/tidsgranskning. Historiska CI/Pages/ljud- och releasebelägg återanvänds inte som ny kontroll. CSS/docs bevaras. Fasstopp efter194.
+
+---
+
 # RTS-188–190 — Grafik och tydligare spelyta (2026-10-06)
 
 Lokala belägg:188 full-width Native800/1280/1920 och Fit800, Mission→paus→Back/Escape samt Menu→Tech tree→Resume PASS.189 alla fem faction-land/byggnad/sjö/flyg-gallerier båda teams, uttömmande runtimeframe-coverage och faktisk paid flygproduktion/selection/flight/SaveLoad vid800/1280 PASS.190 fysisk djurinspection/hunt/damage/death/SaveLoad/restart/warship hunt vid800/1280 PASS. Ny unit476/86 och build med strict typecheck PASS. Fullregression1497/180 PASS391.02s; reproducerbar full assetexport16 PNG/JSON bytevis oförändrade PASS.

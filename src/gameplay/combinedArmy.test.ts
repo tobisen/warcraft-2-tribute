@@ -45,3 +45,12 @@ describe('adaptive paid combined armies',()=>{
   m={...m,paused:true};expect(updateMatch(m,10)).toBe(m);expect(prepareArmyPlan(m)).toBe(m);
  });
 });
+it('a healthy force dispatched below nominal group size crosses a large map without repeated recall',()=>{
+ const m=createMatch('skirmish','normal',undefined,'highlands'),member:Enemy={id:'enemy-produced-1',role:'soldier',hp:66,position:{x:2000,y:544},order:{kind:'attack-move',destination:{x:1504,y:544}}};
+ const group={id:'enemy-group-1',status:'attack' as const,members:[member.id],destinations:{[member.id]:member.position},startedAt:0,dispatchedAt:0,dispatchedSize:1};
+ const r=updateEnemyAI({...createEnemyAI(),elapsedSeconds:11.9,groups:[group]},{...m.combat,enemies:[...m.combat.enemies.filter(e=>e.kind==='base'),member]},m.map,m.gathering.base,.1,[],{...enemyAIConfig,muster:{x:2592,y:512},groupSize:6,reserveCount:0,regroup:true});expect(r.state.groups[0].status).toBe('attack');expect(r.combat.enemies.find(e=>e.id===member.id)!.order?.kind).toBe('attack-move');
+});
+it('the short introductory route retains its existing regroup threshold',()=>{
+ const m=createMatch('skirmish'),member:Enemy={id:'enemy-produced-1',role:'soldier',hp:66,position:{x:900,y:400},order:{kind:'attack-move',destination:m.gathering.base}},group={id:'enemy-group-1',status:'attack' as const,members:[member.id],destinations:{[member.id]:member.position},startedAt:0,dispatchedAt:0,dispatchedSize:1};
+ const r=updateEnemyAI({...createEnemyAI(),elapsedSeconds:11.9,groups:[group]},{...m.combat,enemies:[...m.combat.enemies.filter(e=>e.kind==='base'),member]},m.map,m.gathering.base,.1,[],{...enemyAIConfig,groupSize:6,reserveCount:0,regroup:true});expect(r.state.groups[0].status).toBe('muster');
+});

@@ -22,7 +22,8 @@ export function visionObservers(state:MatchState):VisionObserver[]{
  for(const enemy of state.combat.enemies)if(enemy.hp>0)observers.push({...(isAir(enemy)?{airborne:true as const}:{}),id:enemy.id,owner:'enemy',position:{...enemy.position},footprint:enemy.footprint,radius:enemy.kind==='base'||enemy.buildingType==='outpost'?fogConfig.baseRadius:enemy.kind==='worker'?fogConfig.workerRadius:enemy.buildingType==='barracks'?fogConfig.barracksRadius:enemy.buildingType==='forge'?fogConfig.forgeRadius:enemy.buildingType==='farm'?fogConfig.farmRadius:fogConfig.combatRadius});
  return observers;
 }
+const blockerCache=new WeakMap<object,{x:number;y:number;width:number;height:number}[]>();
 export function matchFog(state:MatchState){
- const blockers=terrainPatches(state.map).filter(t=>t.kind==='rock').map(t=>({x:t.column*arenaConfig.tileSize,y:t.row*arenaConfig.tileSize,width:t.columns*arenaConfig.tileSize,height:t.rows*arenaConfig.tileSize}));
+ const patches=terrainPatches(state.map);let blockers=blockerCache.get(patches);if(!blockers){blockers=patches.filter(t=>t.kind==='rock').map(t=>({x:t.column*arenaConfig.tileSize,y:t.row*arenaConfig.tileSize,width:t.columns*arenaConfig.tileSize,height:t.rows*arenaConfig.tileSize}));blockerCache.set(patches,blockers);}
  return observeForest(updateFog(state.fog??createFog(state.map),[...visionObservers(state).filter(o=>!state.multiplePlayers||!playerEliminated(state,o.owner==='player'?'player':state.combat.enemies.find(e=>e.id===o.id)?.playerId??'enemy')),...(state.multiplePlayers?.ai.filter(bot=>!playerEliminated(state,bot.id)&&canSupport('player',bot.id,state.multiplePlayers!.roster)).flatMap(bot=>visionObservers(bot.state).filter(o=>o.owner==='enemy').map(o=>({...o,owner:'player' as const})))??[]),...(state.aiContext?.sharedObservers??[]).map(o=>({...o,owner:state.aiContext?.visionSide??'enemy'}))],blockers),state.gathering);
 }

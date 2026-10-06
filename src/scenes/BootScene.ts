@@ -374,17 +374,20 @@ export class BootScene extends Phaser.Scene {
     });
     this.enemyVisuals.clear();
     this.habitats=wildlifeHabitats(this.map);
-    const sceneryMap=createMap(this.map.id,this.map.terrainLayout);
+    const sceneryMap=createMap(this.map.id,this.map.terrainLayout??'legacy',this.map.resourceLayout??'groves',this.map.worldLayout??'original');
+    const terrainChunks=new Map<string,Phaser.Textures.CanvasTexture>();
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{for(const key of terrainChunks.keys())this.textures.remove(key);});
     for (let row = 0; row < Math.ceil(this.map.height / this.map.tileSize); row++) {
       for (let column = 0; column < Math.ceil(this.map.width / this.map.tileSize); column++) {
         const detail=wildlifeDetails(column,row,sceneryMap);if(detail)this.wildlifeProps.push(this.add.image((column+.5)*this.map.tileSize,(row+.5)*this.map.tileSize,'world',detail).setOrigin(.5,.75).setDepth(-1));
         const rect = tileFootprint(this.map, { column, row })!;
-        if(this.map.terrainLayout==='reference'){const tile=referenceTile(column,row,sceneryMap);this.add.image(rect.x,rect.y,'reference-terrain',tile.frame).setOrigin(0).setDepth(-10);for(const edge of tile.edges)this.add.image(rect.x,rect.y,'reference-terrain',edge).setOrigin(0).setDepth(-9);continue;}
+        if(this.map.terrainLayout==='reference'){const chunkX=Math.floor(rect.x/512)*512,chunkY=Math.floor(rect.y/512)*512,key=`map-terrain-${chunkX}-${chunkY}`;let texture=terrainChunks.get(key);if(!texture){texture=this.textures.createCanvas(key,Math.min(512,this.map.width-chunkX),Math.min(512,this.map.height-chunkY))!;texture.setFilter(Phaser.Textures.FilterMode.NEAREST);terrainChunks.set(key,texture);this.add.image(chunkX,chunkY,key).setOrigin(0).setDepth(-10);}const tile=referenceTile(column,row,sceneryMap);texture.drawFrame('reference-terrain',tile.frame,rect.x-chunkX,rect.y-chunkY,false);for(const edge of tile.edges)texture.drawFrame('reference-terrain',edge,rect.x-chunkX,rect.y-chunkY,false);continue;}
         this.add.image(rect.x,rect.y,'world',terrainImageFrame(column,row,this.map.id)).setOrigin(0).setDepth(-10);
         for(const detail of terrainDetails(column,row,this.map.id))this.add.image(rect.x,rect.y,'world',detail).setOrigin(0).setDepth(-9.5);
         for(const edge of terrainEdges(column,row,this.map.id))this.add.image(rect.x,rect.y,'world',edge).setOrigin(0).setDepth(-9);
       }
     }
+    for(const texture of terrainChunks.values())texture.refresh();
     const upgradeButton=document.getElementById('upgrade-base') as HTMLButtonElement;
     const upgrade=()=>{if(this.selectedBuilding==='base'&&this.gameplayActive()){this.applyMatch(startBaseUpgrade(this.currentMatch()));this.syncVisuals();}};
     upgradeButton.addEventListener('click',upgrade);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>upgradeButton.removeEventListener('click',upgrade));

@@ -1,3 +1,5 @@
+import {approachRoute} from './approach';
+import {nodeRadius} from './gathering';
 import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {it,expect} from 'vitest';
 import {createMatch,updateMatch} from './match';
@@ -22,8 +24,8 @@ it('owner removals are separate from combat losses and opponent kills',()=>{
  m.gathering.units.pop();expect(matchStats(m).player.lost).toBe(1);expect(matchStats(m).enemy.killed).toBe(1);
 });
 it('Frontier expansion extraction and cargo are not mislabelled as spending',()=>{
- const m=createMatch('skirmish','normal',undefined,'frontier');const node=resourceNodes(m.gathering).find(n=>n.id==='wood-2')!;
- const u=m.gathering.units[0];u.position={x:node.position.x-40,y:node.position.y};u.order={kind:'gather',nodeId:node.id};
+ const m=createMatch('skirmish','normal',undefined,'frontier');const node=resourceNodes(m.gathering).find(n=>n.tree&&n.position.x<600&&n.position.y>600)!;
+ const u=m.gathering.units[0];const r=nodeRadius(node),route=approachRoute(m.map,u.position,{x:node.position.x-r,y:node.position.y-r,width:r*2,height:r*2},24);expect(route.status).not.toBe('blocked');u.position=route.destination;u.order={kind:'gather',nodeId:node.id};
  m.gathering=updateGathering(m.gathering,1,m.map);expect(matchStats(m).player.wood).toEqual({gathered:1,delivered:0,spent:0});
 });
 it('roundtrips counters, resets new matches and migrates genuine config19 without invented history',()=>{

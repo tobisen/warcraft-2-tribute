@@ -1,3 +1,4 @@
+import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {expect,it} from 'vitest';
 import {campaignMissions} from '../config/campaign';
 import {campaignSeries,identityFor,identityKey,seriesMissionPlan} from '../config/campaignSeries';
@@ -32,5 +33,5 @@ it('tactical goals observe live units/research/fleet and permanent advancement p
  const identity=identityFor('clans','normal'),m=startCampaignMission({version:1,identity,completed:campaignMissions.map(m=>m.id)},'the-siege','normal',{player:'clans',enemy:'crown'})!,plan=campaignPlan(m)!,phase=plan.phases.findIndex(p=>p.goal==='research');m.campaignRun!.phase=phase;expect(campaignPhaseMet(m,plan.phases[phase])).toBe(false);m.research!.attack=1;const next=advanceCampaignPhases(m);expect(next.campaignRun!.phase).toBe(phase+1);expect(next.campaignRun!.campaignId).toBe(identity.campaignId);
 });
 it('Save51 migrates as legacy without assigning an unknown campaign identity',()=>{
- const m=startCampaignMission({version:1,completed:[]},'first-steps','normal',{player:'crown',enemy:'clans'})!,doc=JSON.parse(encodeSave(m,{camera:{x:0,y:0},building:null}));doc.configVersion='tribute-config-51';const loaded=decodeSave(JSON.stringify(doc));expect(loaded.ok).toBe(true);if(loaded.ok)expect(loaded.match.campaignRun?.campaignId).toBeUndefined();
+ const m=startCampaignMission({version:1,completed:[]},'first-steps','normal',{player:'crown',enemy:'clans'})!,doc=JSON.parse(encodeSave(m,{camera:{x:0,y:0},building:null}));legacyTerrainFixture(doc);doc.configVersion='tribute-config-51';const loaded=decodeSave(JSON.stringify(doc));expect(loaded.ok).toBe(true);if(loaded.ok)expect(loaded.match.campaignRun?.campaignId).toBeUndefined();
 });

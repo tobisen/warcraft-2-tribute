@@ -1,3 +1,4 @@
+import {canReachFootprint} from '../approach';
 import {playExpandedCampaign} from './expandedCampaign';
 import {matchStats} from '../matchStats';
 import {canAttackDomain} from '../domains';
@@ -9,7 +10,7 @@ import {maps,type MapId} from '../../config/maps';
 import {factionsForPlayer,factions,type FactionId} from '../../config/factions';
 import {useAbility} from '../abilities';
 import { createMatch, updateMatch, type MatchState } from '../match';
-import { orderUnits } from '../gathering';
+import { resourceNodes,orderUnits } from '../gathering';
 import { orderAttack } from '../combat';
 import { commandGroupMove } from '../groupMovement';
 import { commandAttackMove } from '../attackMove';
@@ -56,10 +57,10 @@ export function releasePlaythrough(scenario: MatchScenario, difficulty: Difficul
         }
         if (worker.order.kind === 'build') continue;
         const goldWorker = match.gathering.units.filter(u => u.kind === 'worker').at(-1)?.id;
-        const node = (barracksReady(match.placement)||(modern||explicitFaction)&&!!match.placement.barracks) && worker.id === goldWorker && (match.gathering.goldBalance ?? 0) < goldNeeded ? match.gathering.gold! : match.gathering.node;
+        const node = (barracksReady(match.placement)||(modern||explicitFaction)&&!!match.placement.barracks) && worker.id === goldWorker && (match.gathering.goldBalance ?? 0) < goldNeeded ? match.gathering.gold! : resourceNodes(match.gathering).find(n=>(n.resource??'wood')==='wood'&&n.remaining>0&&knownResource(match.fog!,n.position)&&(!n.tree||canReachFootprint(match.map,worker.position,{x:n.position.x-16,y:n.position.y-16,width:32,height:32},24)))??match.gathering.node;
         if (!knownResource(match.fog!, node.position)) {
           if (worker.order.kind !== 'move') match.gathering.units = commandGroupMove(match.gathering.units, node.resource === 'gold' ? { x: 780, y: 240 } : { x: 600, y: 220 }, match.map);
-        } else if (!('nodeId' in worker.order) || worker.order.nodeId !== node.id) {
+        } else if (!('nodeId' in worker.order) || !resourceNodes(match.gathering).some(n=>n.id===('nodeId' in worker.order?worker.order.nodeId:undefined)&&n.remaining>0&&(n.resource??'wood')===(node.resource??'wood'))) {
           match.gathering.units = orderUnits(match.gathering.units, node.position, node);
         }
       }

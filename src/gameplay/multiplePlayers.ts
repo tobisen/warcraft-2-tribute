@@ -64,11 +64,11 @@ export function projectMultiplePlayers(m:MatchState):MatchState{
  const multi=m.multiplePlayers!;
  const enemies=projectedEnemies(m);
  const own=[...placementObstacles(m.gathering).slice(m.combat.baseHP>0?0:1),...(m.placement.barracks?[m.placement.barracks]:[]),...(m.placement.forge?[m.placement.forge.footprint]:[]),...(m.placement.farms??[]).map(f=>f.footprint),...(m.placement.defenses??[]).filter(t=>t.kind!=='gate'||!t.open).map(t=>t.footprint),...(m.navy?.harbor?[m.navy.harbor.footprint]:[])];
- const obstacles=[...createMap(m.map.id,m.map.terrainLayout).obstacles,...own,...enemies.flatMap(e=>e.footprint?[e.footprint]:[])];
+ const obstacles=[...createMap(m.map.id,m.map.terrainLayout,m.map.resourceLayout==='trees'?'trees':'groves',m.map.worldLayout==='expanded'?'expanded':'original').obstacles,...own,...enemies.flatMap(e=>e.footprint?[e.footprint]:[])];
  const unchanged=JSON.stringify(obstacles)===JSON.stringify(m.map.obstacles);
  const primary=multi.ai.find(p=>p.id==='enemy')!.state;
- return withGateRules({...m,aiContext:undefined,map:{...m.map,obstacles,revision:m.map.revision+Number(!unchanged)},combat:{...m.combat,enemies,projectiles:[...(m.combat.projectiles??[]).filter(p=>!p.owner),...multi.ai.flatMap(bot=>(bot.state.combat.projectiles??[]).filter(p=>p.owner==='enemy').map(p=>({...p,id:globalEntityId(bot.id,p.id),shooterId:p.shooterId?globalEntityId(bot.id,p.shooterId):undefined})))]},
-  ...(m.fog?{fog:{...m.fog,teams:{...m.fog.teams,enemy:multi.ai.find(p=>p.id==='enemy')!.vision}}}:{}),
+ return withGateRules({...m,aiContext:undefined,map:{...m.map,obstacles:unchanged?m.map.obstacles:obstacles,revision:m.map.revision+Number(!unchanged)},combat:{...m.combat,enemies,projectiles:[...(m.combat.projectiles??[]).filter(p=>!p.owner),...multi.ai.flatMap(bot=>(bot.state.combat.projectiles??[]).filter(p=>p.owner==='enemy').map(p=>({...p,id:globalEntityId(bot.id,p.id),shooterId:p.shooterId?globalEntityId(bot.id,p.shooterId):undefined})))]},
+  ...(m.fog?{fog:{...m.fog,...(m.fog.forest?{forest:{player:m.fog.forest.player,enemy:primary.fog?.forest?.enemy??{}}}:{}),teams:{...m.fog.teams,enemy:multi.ai.find(p=>p.id==='enemy')!.vision}}}:{}),
   enemyProduction:primary.enemyProduction,enemyAI:primary.enemyAI,enemyConstruction:primary.enemyConstruction,enemyPolicy:primary.enemyPolicy,enemyRecovery:primary.enemyRecovery,enemyKnowledge:primary.enemyKnowledge,armyPlan:primary.armyPlan});
 }
 /** Commit human spell effects into the authoritative owning AI, preserving local IDs. */
@@ -131,7 +131,7 @@ export function updateMultiplePlayers(m:MatchState,delta:number):MatchState{
   const ai=snapshot.multiplePlayers!.ai.map(bot=>{
    if(playerEliminated(snapshot,bot.id))return {...bot,state:{...bot.state,waves:{...human.waves},combat:{...bot.state.combat,projectiles:[]}}};
    const roster=snapshot.multiplePlayers!.roster.find(p=>p.id===bot.id)!;
-   const vision=actorVision(snapshot,bot),fog=createFog(snapshot.map);fog.teams.enemy=vision;
+   const vision=actorVision(snapshot,bot),fog=createFog(snapshot.map);fog.teams.enemy=vision;if(bot.state.fog?.forest)fog.forest={player:{},enemy:{...bot.state.fog.forest.enemy}};
    const hostiles=targets(snapshot,bot.id),foreign=snapshot.multiplePlayers!.ai.filter(other=>!playerEliminated(snapshot,other.id)&&canHarm(bot.id,other.id,snapshot.multiplePlayers!.roster)).flatMap(other=>other.state.combat.enemies.flatMap(e=>{
     if(e.footprint)return [];const u=e.kind==='worker'?enemyWorker(e):enemySoldier(e,snapshot.multiplePlayers!.roster.find(p=>p.id===other.id)!.faction);return u?[{...u,id:globalEntityId(other.id,e.id)}]:[];
    }));

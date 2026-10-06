@@ -10,8 +10,7 @@ export function footprintDistance(point: Position, rect: Footprint): number {
 }
 
 function targetFreeMap(map: WorldMap, target: Footprint): WorldMap {
-  return {...map,obstacles:map.obstacles.filter(o=>o.x!==target.x || o.y!==target.y
-    || o.width!==target.width || o.height!==target.height)};
+  return {...map,interactionTarget:target};
 }
 
 export function canInteract(map: WorldMap, point: Position, target: Footprint, range: number): boolean {

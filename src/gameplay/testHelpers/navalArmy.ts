@@ -1,7 +1,8 @@
+import {canReachFootprint} from '../approach';
 import {canAttackDomain} from '../domains';
 import {factions} from '../../config/factions';
 import {updateMatch,type MatchState} from '../match';
-import {orderUnits} from '../gathering';
+import {resourceNodes,orderUnits} from '../gathering';
 import {commandGroupMove} from '../groupMovement';
 import {orderAttack} from '../combat';
 import {useAbility} from '../abilities';
@@ -20,9 +21,10 @@ export function prepareNavalArmy(initial:MatchState):MatchState{
    const visible=m.combat.enemies.filter(e=>entityVisible(m.fog!,'player',e));
    for(const worker of [...m.gathering.units].filter(u=>u.kind==='worker')){
     if(worker.order.kind==='build')continue;
-    const node=worker.id==='unit-3'?m.gathering.gold!:m.gathering.node;select(worker.id);
+    const current='nodeId' in worker.order?resourceNodes(m.gathering).find(n=>n.id===('nodeId' in worker.order?worker.order.nodeId:undefined)):undefined;
+    const node=worker.id==='unit-3'?m.gathering.gold!:current&&(current.resource??'wood')==='wood'&&current.remaining>0?current:resourceNodes(m.gathering).find(n=>(n.resource??'wood')==='wood'&&n.remaining>0&&knownResource(m.fog!,n.position)&&(!n.tree||canReachFootprint(m.map,worker.position,{x:n.position.x-16,y:n.position.y-16,width:32,height:32},24)))??m.gathering.node;select(worker.id);
     if(!knownResource(m.fog!,node.position)){if(worker.order.kind!=='move')m.gathering.units=commandGroupMove(m.gathering.units,node.resource==='gold'&&m.map.id!=='islands'&&m.map.id!=='coast'?{x:780,y:240}:{x:600,y:220},m.map);}
-    else if(!('nodeId' in worker.order)||worker.order.nodeId!==node.id)m.gathering.units=orderUnits(m.gathering.units,node.position,node);
+    else if(!('nodeId' in worker.order)||!resourceNodes(m.gathering).some(n=>n.id===('nodeId' in worker.order?worker.order.nodeId:undefined)&&n.remaining>0&&(n.resource??'wood')===(node.resource??'wood')))m.gathering.units=orderUnits(m.gathering.units,node.position,node);
    }
    const kind=!m.placement.barracks?'barracks':!m.placement.farms?.length&&army.length+pending>=3?'farm':null;
    if(kind&&m.gathering.wood>=f.buildings[kind].cost.wood){

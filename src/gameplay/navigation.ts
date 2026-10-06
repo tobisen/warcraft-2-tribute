@@ -4,7 +4,7 @@ import { navigationConfig } from '../config/navigation';
 import type { MovementGate } from './traffic';
 import { soldierStats, combatUnitStats, unitStats,workerStats } from '../config/unit';
 import type { Unit } from './gathering';
-import { bodyFits, tileCenter, worldTile, type Tile, type WorldMap } from './map';
+import { nearbyObstacles, bodyFits, tileCenter, worldTile, type Tile, type WorldMap } from './map';
 import { moveTowards, type Position } from './movement';
 
 export type RouteError = 'outside-world' | 'blocked-target' | 'blocked-start' | 'unreachable' | 'no-space';
@@ -26,7 +26,7 @@ const same = (a: Position, b: Position) => a.x === b.x && a.y === b.y;
 /** Swept square-body collision, including the connector between a point and a tile center. */
 export function segmentFits(map: WorldMap, a: Position, b: Position, half = map.bodyHalf??navigationConfig.halfBody): boolean {
   if (!bodyFits(map, a, half) || !bodyFits(map, b, half)) return false;
-  for (const obstacle of map.obstacles) {
+  for (const obstacle of nearbyObstacles(map,{x:Math.min(a.x,b.x)-half,y:Math.min(a.y,b.y)-half,width:Math.abs(b.x-a.x)+half*2,height:Math.abs(b.y-a.y)+half*2})) {
     let enter = 0, exit = 1;
     for (const axis of ['x', 'y'] as const) {
       const extent = axis === 'x' ? obstacle.width : obstacle.height;
@@ -60,6 +60,8 @@ function connectors(map: WorldMap, point: Position, half: number): Tile[] {
   });
 }
 
+interface GoalTree {queue:Tile[];cursor:number;parent:Map<string,Tile|null>;depth:Map<string,number>}
+const goalCache=new WeakMap<WorldMap['obstacles'],{length:number;goals:Map<string,GoalTree>}>();
 /** Bounded synchronous four-neighbor BFS; stable tie order, no diagonal corner cutting. */
 export function findRoute(map: WorldMap, start: Position, destination: Position,
   half = map.bodyHalf??navigationConfig.halfBody): RouteResult {
@@ -69,26 +71,22 @@ export function findRoute(map: WorldMap, start: Position, destination: Position,
   if (same(start, destination)) return { ok: true, waypoints: [] };
   // Avoid backtracking to tile centers when the exact destination already has a safe direct segment.
   if (segmentFits(map,start,destination,half)) return {ok:true,waypoints:[{...destination}]};
-  const goals = new Set(connectors(map, destination, half).map(key));
-  const queue = connectors(map, start, half);
-  const parent = new Map<string, Tile | null>(queue.map(t => [key(t), null]));
-  for (let index = 0; index < queue.length && index < navigationConfig.maxVisited; index++) {
-    const tile = queue[index], center = tileCenter(map, tile)!;
-    if (goals.has(key(tile))) {
-      const route: Position[] = [];
-      let current: Tile | null = tile;
-      while (current) { route.unshift(tileCenter(map,current)!); current = parent.get(key(current)) ?? null; }
-      if (!same(route[route.length-1],destination)) route.push({...destination});
-      return { ok: true, waypoints: route.filter((p,i)=> i !== 0 || !same(p,start)) };
-    }
-    for (const [dx,dy] of [[0,-1],[1,0],[0,1],[-1,0]]) {
-      const neighbor={column:tile.column+dx,row:tile.row+dy};
-      if (parent.has(key(neighbor))) continue;
-      const next=tileCenter(map,neighbor);
-      if (next && segmentFits(map,center,next,half)) { parent.set(key(neighbor),tile);queue.push(neighbor); }
-    }
+  const target=map.interactionTarget;
+  const cacheKey=`${target?`${target.x},${target.y},${target.width},${target.height}`:''}:${map.width}:${map.height}:${map.tileSize}:${map.revision}:${half}:${destination.x},${destination.y}`;
+  let cache=goalCache.get(map.obstacles);if(!cache||cache.length!==map.obstacles.length){cache={length:map.obstacles.length,goals:new Map()};goalCache.set(map.obstacles,cache);}
+  let tree=cache.goals.get(cacheKey);if(!tree){const queue=connectors(map,destination,half);tree={queue,cursor:0,parent:new Map(queue.map(t=>[key(t),null])),depth:new Map(queue.map(t=>[key(t),0]))};if(cache.goals.size>=8)cache.goals.delete(cache.goals.keys().next().value!);cache.goals.set(cacheKey,tree);}
+  const starts=connectors(map,start,half),startKeys=new Set(starts.map(key));
+  let bestDepth=Math.min(...starts.map(t=>tree!.depth.get(key(t))??Infinity));
+  // A single bounded reverse BFS serves carriers sharing a delivery point. Finish
+  // the preceding level so equal-depth tie order never depends on earlier queries.
+  while(tree.cursor<tree.queue.length&&tree.cursor<navigationConfig.maxVisited&&(bestDepth===Infinity||(tree.depth.get(key(tree.queue[tree.cursor]))??Infinity)<bestDepth)){
+    const tile=tree.queue[tree.cursor++],center=tileCenter(map,tile)!,depth=tree.depth.get(key(tile))!;
+    for(const [dx,dy]of [[0,-1],[1,0],[0,1],[-1,0]]){const neighbor={column:tile.column+dx,row:tile.row+dy},id=key(neighbor);if(tree.parent.has(id))continue;const next=tileCenter(map,neighbor);if(next&&segmentFits(map,center,next,half)){tree.parent.set(id,tile);tree.depth.set(id,depth+1);tree.queue.push(neighbor);if(startKeys.has(id))bestDepth=Math.min(bestDepth,depth+1);}}
   }
-  return { ok: false, error: 'unreachable' };
+  const first=starts.find(t=>tree!.depth.get(key(t))===bestDepth);if(!first)return {ok:false,error:'unreachable'};
+  const route:Position[]=[];let current:Tile|null=first;while(current){route.push(tileCenter(map,current)!);current=tree.parent.get(key(current))??null;}
+  if(!same(route[route.length-1],destination))route.push({...destination});
+  return {ok:true,waypoints:route.filter((p,i)=>i!==0||!same(p,start))};
 }
 
 export function planRoute(map: WorldMap, position: Position, destination: Position, commandNumber=1): RouteState {

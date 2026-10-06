@@ -1,10 +1,13 @@
+import {expansionSites} from '../config/mapExtensions';
 import {terrainPatches,type WorldMap} from '../gameplay/map';
 import {mapResources} from '../config/maps';
 import {frontierGroves} from '../config/referenceTerrain';
-export function referenceKind(column:number,row:number,map:WorldMap):'water'|'rock'|'grass'{return terrainPatches(map).find(p=>column>=p.column&&column<p.column+p.columns&&row>=p.row&&row<p.row+p.rows)?.kind??'grass';}
+const kindCache=new Map<string,Map<string,'water'|'rock'>>();
+export function referenceKind(column:number,row:number,map:WorldMap):'water'|'rock'|'grass'{const key=`${map.id}:${map.terrainLayout}:${map.worldLayout}`;let cells=kindCache.get(key);if(!cells){cells=new Map();for(const p of terrainPatches(map))for(let r=p.row;r<p.row+p.rows;r++)for(let c=p.column;c<p.column+p.columns;c++)if(!cells.has(`${c},${r}`))cells.set(`${c},${r}`,p.kind);kindCache.set(key,cells);}return cells.get(`${column},${row}`)??'grass';}
+
 const sides=[[0,-1,'n'],[1,0,'e'],[0,1,'s'],[-1,0,'w']] as const;
 const earthCache=new Map<string,Set<string>>();
-function earth(c:number,r:number,map:WorldMap):boolean{const key=`${map.id}:${map.resourceLayout}`,id=map.id??'arena';let cells=earthCache.get(key);if(!cells){cells=new Set<string>();const nodes=mapResources(id,map.resourceLayout);for(const n of nodes){const column=Math.floor(n.position.x/32),row=Math.floor(n.position.y/32);for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++)cells.add(`${column+dx},${row+dy}`);}if(id==='frontier')for(const g of Object.values(frontierGroves))for(const n of g.cells)for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++)cells.add(`${n.column+dx},${n.row+dy}`);earthCache.set(key,cells);}return cells.has(`${c},${r}`)||(id==='frontier'&&(r>=13&&r<=15&&c>=12&&c<=28||c>=27&&c<=29&&r>=13&&r<=22));}
+function earth(c:number,r:number,map:WorldMap):boolean{const key=`${map.id}:${map.resourceLayout}:${map.worldLayout}`,id=map.id??'arena';let cells=earthCache.get(key);if(!cells){cells=new Set<string>();const nodes=mapResources(id,map.resourceLayout,map.worldLayout);for(const n of nodes){const column=Math.floor(n.position.x/32),row=Math.floor(n.position.y/32);for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++)cells.add(`${column+dx},${row+dy}`);}if(id==='frontier')for(const g of Object.values(frontierGroves))for(const n of g.cells)for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++)cells.add(`${n.column+dx},${n.row+dy}`);if(map.worldLayout==='expanded')for(const site of expansionSites(id)){for(let c=site.column-5;c<=site.column+12;c++)cells.add(`${c},${site.row+6}`);for(let r=site.row-5;r<=site.row+13;r++)cells.add(`${site.column+8},${r}`);}earthCache.set(key,cells);}return cells.has(`${c},${r}`)||(id==='frontier'&&(r>=13&&r<=15&&c>=12&&c<=28||c>=27&&c<=29&&r>=13&&r<=22));}
 
 export function referenceTile(c:number,r:number,map:WorldMap):{frame:string;edges:string[]}{
  const kind=referenceKind(c,r,map),variant=((Math.imul(c+17,73856093)^Math.imul(r+31,19349663))>>>0)%4,near=(radius:number,target:string)=>{for(let dy=-radius;dy<=radius;dy++)for(let dx=-radius;dx<=radius;dx++)if(referenceKind(c+dx,r+dy,map)===target)return true;return false;};

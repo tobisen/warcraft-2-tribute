@@ -1,3 +1,4 @@
+import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {expect,it} from 'vitest';
 import {maps} from '../config/maps';
 import {groveForNode} from '../config/referenceTerrain';
@@ -12,7 +13,7 @@ import {observeForest} from './forestFog';
 import {encodeSave,decodeSave} from './save';
 import {referenceTile} from '../presentation/referenceTerrain';
 import {forestVisuals} from '../presentation/forestVisuals';
-function legacyMatch(){const m=createMatch('skirmish','normal',undefined,'frontier');m.map=createMap('frontier','reference','groves');m.gathering.node={id:'wood-1',resource:'wood',grove:groveForNode('wood-1'),position:{x:650,y:180},remaining:400};m.gathering.extraNodes=maps.frontier.extraResources!.map(n=>({id:n.id,resource:n.resource,grove:groveForNode(n.id),position:{...n.position},remaining:n.amount}));delete m.gathering.gold!.mine;delete m.fog!.forest;m.map.obstacles.push(...placementObstacles(m.gathering),...m.combat.enemies.flatMap(e=>e.footprint?[e.footprint]:[]));return m;}
+function legacyMatch(){const m=createMatch('skirmish','normal',undefined,'frontier');legacyTerrainFixture({map:'frontier',state:m});m.map=createMap('frontier','reference','groves','original');m.gathering.node={id:'wood-1',resource:'wood',grove:groveForNode('wood-1'),position:{x:650,y:180},remaining:400};m.gathering.extraNodes=maps.frontier.extraResources!.map(n=>({id:n.id,resource:n.resource,grove:groveForNode(n.id),position:{...n.position},remaining:n.amount}));delete m.gathering.gold!.mine;delete m.fog!.forest;m.map.obstacles.push(...placementObstacles(m.gathering),...m.combat.enemies.flatMap(e=>e.footprint?[e.footprint]:[]));return m;}
 const view={camera:{x:0,y:0},building:null};
 it('forest crowns, actual obstacles and water/rock tiles agree, with connected harvestable groves',()=>{
  const m=legacyMatch();
@@ -46,10 +47,10 @@ import {orderUnits,updateGathering} from './gathering';
 import {selectionInfo} from '../presentation/selectionInfo';
 it('fresh Frontier has one stable selectable resource per crown and conserves authored wood',()=>{
  const m=createMatch('skirmish','normal',undefined,'frontier'),trees=resourceNodes(m.gathering).filter(n=>n.tree);
- expect(trees.length).toBe(Object.values(frontierGroves).reduce((s,g)=>s+g.cells.length,0));
- expect(new Set(trees.map(n=>n.id)).size).toBe(trees.length);expect(trees.reduce((s,n)=>s+n.remaining,0)).toBeCloseTo(mapResourceTotals('frontier').wood);
+ expect(trees.filter(n=>!n.id.startsWith('expansion-')).length).toBe(Object.values(frontierGroves).reduce((s,g)=>s+g.cells.length,0));
+ expect(new Set(trees.map(n=>n.id)).size).toBe(trees.length);expect(trees.reduce((s,n)=>s+n.remaining,0)).toBeCloseTo(mapResourceTotals('frontier','trees',m.map.worldLayout).wood);
  for(const n of trees){expect(isNodeHit(n.position,n)).toBe(true);expect(bodyFits(m.map,n.position,12)).toBe(false);}
- expect(mapResources('frontier','trees').map(n=>n.id)).toEqual(resourceNodes(m.gathering).map(n=>n.id));
+ expect(mapResources('frontier','trees',m.map.worldLayout).map(n=>n.id)).toEqual(resourceNodes(m.gathering).map(n=>n.id));
  expect(decodeSave(encodeSave(m,view)).ok).toBe(true);
 });
 it('interior tree is blocked, felling boundary opens access, multiple workers harvest and Save preserves individual stocks',()=>{
@@ -77,7 +78,6 @@ it('mine visual hit polygon excludes transparent corners while its work footprin
  expect(approachRoute(m.map,m.gathering.units[2].position,{x:mine.position.x-20,y:mine.position.y-20,width:40,height:40},24).status).not.toBe('blocked');
 });
 
-it('every playable map uses reference ground, physical harvestable trees and strict Save, with Forest Pass canopy replacing its old rock block',()=>{
- for(const id of Object.keys(maps) as (keyof typeof maps)[]){const m=createMatch('skirmish','beginner',undefined,id);expect(m.map.terrainLayout).toBe('reference');const nodes=resourceNodes(m.gathering);expect(nodes.filter(n=>n.resource==='wood').every(n=>n.tree)).toBe(true);expect(nodes.filter(n=>n.resource==='gold').every(n=>n.mine)).toBe(true);for(const n of nodes.filter(n=>n.tree))expect(bodyFits(m.map,n.position,12)).toBe(false);expect(decodeSave(encodeSave(m,view)).ok).toBe(true);}
- const m=createMatch('skirmish','beginner',undefined,'forest');expect(resourceNodes(m.gathering).filter(n=>n.id.startsWith('forest-tree-'))).toHaveLength(21);expect(terrainPatches(m.map).some(p=>p.column===5&&p.row===4)).toBe(false);
+it.each(Object.keys(maps) as (keyof typeof maps)[])('%s uses reference ground, physical harvestable trees and strict Save',id=>{const m=createMatch('skirmish','beginner',undefined,id);expect(m.map.terrainLayout).toBe('reference');const nodes=resourceNodes(m.gathering);expect(nodes.filter(n=>n.resource==='wood').every(n=>n.tree)).toBe(true);expect(nodes.filter(n=>n.resource==='gold').every(n=>n.mine)).toBe(true);for(const n of nodes.filter(n=>n.tree))expect(bodyFits(m.map,n.position,12)).toBe(false);expect(decodeSave(encodeSave(m,view)).ok).toBe(true);
+ if(id==='forest'){expect(resourceNodes(m.gathering).filter(n=>n.id.startsWith('forest-tree-'))).toHaveLength(21);expect(terrainPatches(m.map).some(p=>p.column===5&&p.row===4)).toBe(false);}
 });

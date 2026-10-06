@@ -13,9 +13,9 @@ import {releasePlaythrough} from './testHelpers/releaseBot';
 
 it('authored highlands have clear start/build zones, finite reachable independent expansion pockets',()=>{
  const m=createMatch('skirmish','beginner',undefined,'highlands');
- expect(m.map).toMatchObject({width:3072,height:3072,tileSize:32});expect(mapResourceTotals('highlands')).toEqual({wood:1150,gold:850});
- const nodes=resourceNodes(m.gathering);expect(nodes.filter(n=>n.resource==='wood')).toHaveLength(4);expect(nodes.filter(n=>n.resource==='gold')).toHaveLength(4);
- for(const rect of m.map.obstacles)expect(rect.x>=0&&rect.y>=0&&rect.x+rect.width<=3072&&rect.y+rect.height<=3072).toBe(true);
+ expect(m.map).toMatchObject({width:4096,height:4096,tileSize:32});expect(mapResourceTotals('highlands')).toEqual({wood:1150,gold:850});
+ const nodes=resourceNodes(m.gathering).filter(n=>!n.id.startsWith('expansion-'));expect(nodes.filter(n=>n.resource==='wood')).toHaveLength(4);expect(nodes.filter(n=>n.resource==='gold')).toHaveLength(4);
+ for(const rect of m.map.obstacles)expect(rect.x>=0&&rect.y>=0&&rect.x+rect.width<=4096&&rect.y+rect.height<=4096).toBe(true);
  for(const u of [...m.gathering.units,...m.combat.enemies.filter(e=>!e.footprint)])expect(bodyFits(m.map,u.position,12)).toBe(true);
  for(const node of nodes){const rect={x:node.position.x-20,y:node.position.y-20,width:40,height:40};expect(createMap('highlands').obstacles.some(o=>overlaps(o,rect))).toBe(false);expect(approachRoute(m.map,m.gathering.units[0].position,rect,24).status).not.toBe('blocked');}
  for(const rect of [{x:512,y:384,width:64,height:64},{x:576,y:384,width:64,height:64},{x:2816,y:192,width:64,height:64}])expect([...m.map.obstacles,...placementObstacles(m.gathering),...m.combat.enemies.flatMap(e=>e.footprint?[e.footprint]:[])].some(o=>overlaps(o,rect))).toBe(false);
@@ -34,9 +34,9 @@ it('strict save preserves the new authored map and migrates21 without rewriting 
 for(const faction of ['crown','clans'] as const)it(`${faction}: paid finite-resource highlands skirmish reaches victory`,()=>{
  const result=releasePlaythrough('skirmish','normal',undefined,{map:'highlands',faction,abilities:true}),m=result.match;
  expect(m.outcome).toBe('victory');expect(result.spentWood).toBeGreaterThan(40);expect(result.spentGold).toBeGreaterThan(0);expect(m.enemyProduction!.acceptedJobs).toBeGreaterThan(0);
- for(const type of ['wood','gold'] as const){const cargo=m.gathering.units.reduce((n,u)=>n+(u.kind==='worker'&&(u.cargoType??'wood')===type?u.cargo:0),0),stock=resourceNodes(m.gathering).filter(n=>n.resource===type).reduce((n,node)=>n+node.remaining,0);expect(stock+cargo+(type==='wood'?m.gathering.wood:m.gathering.goldBalance!)+(type==='wood'?result.spentWood:result.spentGold)+(m.enemyProduction?.extracted?.[type]??0)+(m.gathering.lostCargo?.[type]??0)).toBeCloseTo(mapResourceTotals('highlands')[type]);}
+ for(const type of ['wood','gold'] as const){const cargo=m.gathering.units.reduce((n,u)=>n+(u.kind==='worker'&&(u.cargoType??'wood')===type?u.cargo:0),0),stock=resourceNodes(m.gathering).filter(n=>n.resource===type).reduce((n,node)=>n+node.remaining,0);expect(stock+cargo+(type==='wood'?m.gathering.wood:m.gathering.goldBalance!)+(type==='wood'?result.spentWood:result.spentGold)+(m.enemyProduction?.extracted?.[type]??0)+(m.gathering.lostCargo?.[type]??0)).toBeCloseTo(mapResourceTotals('highlands','trees','expanded')[type]);}
  expect(decodeSave(encodeSave(m,{camera:{x:0,y:0},building:null})).ok).toBe(true);expect(updateMatch(m,10)).toBe(m);
- expect(createMatch('skirmish','normal',undefined,'highlands').gathering.extraNodes!.map(n=>n.remaining)).toEqual(mapResources('highlands').slice(2).map(n=>n.amount));
+ expect(createMatch('skirmish','normal',undefined,'highlands').gathering.extraNodes!.map(n=>n.remaining)).toEqual(mapResources('highlands','trees','expanded').slice(2).map(n=>n.amount));
 },120_000);
 it('enemy scouts nearby authored resources, funds an army and reaches the player across the ridge',()=>{
  let m=createMatch('skirmish','normal',undefined,'highlands');for(let i=0;i<1200&&m.outcome==='playing';i++)m=updateMatch(m,.25);

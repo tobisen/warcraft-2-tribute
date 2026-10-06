@@ -42,3 +42,9 @@ it('normalizes an old saved search destination without changing observed knowled
  const m=createMatch('skirmish');m.combat.enemies.push({id:'searcher',owner:'enemy',hp:36,position:{x:896,y:320},order:{kind:'attack-move',destination:{x:704,y:400}}});
  const updated=updateEnemyExploration(m);expect(updated.enemyKnowledge).toEqual(m.enemyKnowledge);expect(updated.combat.enemies.at(-1)!.order).toEqual({kind:'attack-move',destination:{x:704,y:480}});
 });
+it('known finite wood and gold keep gatherers working rather than scouting hundreds of unseen expansion trees',()=>{
+ let m=createMatch('skirmish','normal',undefined,'plains128');m.enemyKnowledge!.nodes=[{...m.gathering.node},{...m.gathering.gold!}];const w=m.combat.enemies.find(e=>e.work)!;w.work!.order={kind:'gather',nodeId:'wood-1'};const next=prepareEnemyScout(m);expect(next.combat.enemies.find(e=>e.id===w.id)!.work!.order).toEqual(w.work!.order);expect(next.combat.enemies.some(e=>e.work?.order.kind==='move')).toBe(false);
+});
+it('ranged scouts advance from a reached safe interaction position',()=>{
+ const m=createMatch('skirmish','normal',undefined,'highlands');m.combat.enemies.push({id:'searcher',role:'archer',owner:'enemy',hp:40,position:{x:1648,y:496},order:{kind:'attack-move',destination:{x:1504,y:544}},navigation:{commandNumber:1,destination:{x:1648,y:496},waypoints:[],revision:m.map.revision,status:'arrived',targetId:'explore-goal'}});expect(updateEnemyExploration(m).enemyKnowledge!.attackScoutIndex).toBe(1);
+});

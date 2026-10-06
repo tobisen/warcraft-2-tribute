@@ -78,3 +78,8 @@ describe('bounded navigation', () => {
   });
 
 });
+it('shared destination searches remain deterministic across callers and obstacle revisions',()=>{
+ const map=replaceObstacles(open(),[{x:160,y:64,width:32,height:256}]),goal={x:600,y:100},a={x:100,y:100},b={x:100,y:400};
+ const fresh={...map,obstacles:map.obstacles.map(o=>({...o}))};const expected=findRoute(fresh,a,goal);findRoute(map,b,goal);expect(findRoute(map,a,goal)).toEqual(expected);
+ const closed=replaceObstacles(map,[{x:160,y:0,width:32,height:600}]);expect(findRoute(closed,a,goal)).toEqual({ok:false,error:'unreachable'});
+});

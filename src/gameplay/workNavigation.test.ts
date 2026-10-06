@@ -2,12 +2,12 @@ import { describe, expect, it } from 'vitest';
 import { createMatch } from './match';
 import { orderUnits, updateGathering, type GatheringState } from './gathering';
 import { bodyFits, replaceObstacles } from './map';
-import { placementObstacles } from './placement';
+import { resourceWorkMap,placementObstacles } from './placement';
 import { approachRoute, canInteract } from './approach';
 import { commandMappedMove } from './navigation';
 
 function working() {
-  const match=createMatch();
+  const match=createMatch();delete match.gathering.extraNodes;
   match.gathering.units=match.gathering.units.map(u=>({...u,selected:true}));
   match.gathering.units=orderUnits(match.gathering.units,match.gathering.node.position,match.gathering.node);
   return match;
@@ -70,4 +70,9 @@ describe('navigated gathering and delivery', () => {
     expect(resumed.wood).toBeGreaterThanOrEqual(5);
     expect(resumed.units[0].cargo).toBeLessThanOrEqual(5);expect(total(resumed)).toBeCloseTo(405);
   });
+});
+it('a verified resource map detects later missing footprints and changed resource positions',()=>{
+ const m=createMatch();const first=resourceWorkMap(m.map,m.gathering);expect(first).toBe(m.map);
+ const n=m.gathering.node,rect={x:n.position.x-16,y:n.position.y-16,width:32,height:32};m.map.obstacles.splice(m.map.obstacles.findIndex(o=>o.x===rect.x&&o.y===rect.y),1);const restored=resourceWorkMap(m.map,m.gathering);expect(bodyFits(restored,n.position,12)).toBe(false);
+ const moved={...m.gathering,node:{...n,position:{x:3000,y:3000}}};expect(bodyFits(resourceWorkMap(first,moved),moved.node.position,12)).toBe(false);
 });

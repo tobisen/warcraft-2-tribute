@@ -1,7 +1,8 @@
 import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {legacyEnemyFixture} from './testHelpers/legacyEnemyFixture';
 import {expect,it} from 'vitest';
-import {maps,type MapId} from '../config/maps';
+import {resourceNodes} from './gathering';
+import {maps,mapResourceTotals,type MapId} from '../config/maps';
 import {factionsForPlayer} from '../config/factions';
 import {createMatch,updateMatch} from './match';
 import {bodyFits,createMap} from './map';
@@ -18,7 +19,7 @@ for(const id of ['arena','forest','river'] as MapId[])for(const faction of ['cro
   const m=createMatch('skirmish','normal',factionsForPlayer(faction),id);expect(m.map.id).toBe(id);expect(m.gathering.node.remaining).toBe(maps[id].wood);expect(m.gathering.gold!.remaining).toBe(maps[id].gold);for(const u of [...m.gathering.units,...m.combat.enemies.filter(e=>!e.footprint)])expect(bodyFits(m.map,u.position,12)).toBe(true);const rects=placementObstacles({...m.gathering,extraNodes:undefined}).slice(1);for(const rect of rects)expect(approachRoute(m.map,m.gathering.units[0].position,rect,24).status).not.toBe('blocked');expect(findRoute(m.map,{x:448,y:480},{x:944,y:208}).ok).toBe(true);expect(minimapData(m).terrain).toEqual(createMap(id).obstacles);const patch=maps[id].terrain[0];expect(terrainFrame(patch.column,patch.row,id)).toBe(patch.kind);
  });
  it(`${id}/${faction} completes a paid finite-resource skirmish and roundtrips its own map`,()=>{
-  const r=releasePlaythrough('skirmish','normal',undefined,{faction,abilities:true,map:id}),m=r.match;expect(m.outcome).toBe('victory');expect(r.spentWood).toBeGreaterThan(40);expect(r.spentGold).toBeGreaterThan(0);const cargo=(type:string)=>m.gathering.units.reduce((n,u)=>n+(u.kind==='worker'&&(u.cargoType??'wood')===type?u.cargo:0),0);expect(m.gathering.wood+m.gathering.node.remaining+cargo('wood')+(m.enemyProduction?.extracted?.wood??0)+r.spentWood+(m.gathering.lostCargo?.wood??0)).toBeCloseTo(maps[id].wood);expect((m.gathering.goldBalance??0)+m.gathering.gold!.remaining+cargo('gold')+(m.enemyProduction?.extracted?.gold??0)+r.spentGold+(m.gathering.lostCargo?.gold??0)).toBeCloseTo(maps[id].gold);const loaded=decodeSave(encodeSave(m,view));expect(loaded.ok).toBe(true);if(loaded.ok)expect(loaded.match.map.id).toBe(id);
+  const r=releasePlaythrough('skirmish','normal',undefined,{faction,abilities:true,map:id}),m=r.match;expect(m.outcome).toBe('victory');expect(r.spentWood).toBeGreaterThan(40);expect(r.spentGold).toBeGreaterThan(0);const cargo=(type:string)=>m.gathering.units.reduce((n,u)=>n+(u.kind==='worker'&&(u.cargoType??'wood')===type?u.cargo:0),0);expect(m.gathering.wood+resourceNodes(m.gathering).filter(n=>n.resource==='wood').reduce((sum,n)=>sum+n.remaining,0)+cargo('wood')+(m.enemyProduction?.extracted?.wood??0)+r.spentWood+(m.gathering.lostCargo?.wood??0)).toBeCloseTo(mapResourceTotals(id,'trees','expanded').wood);expect((m.gathering.goldBalance??0)+resourceNodes(m.gathering).filter(n=>n.resource==='gold').reduce((sum,n)=>sum+n.remaining,0)+cargo('gold')+(m.enemyProduction?.extracted?.gold??0)+r.spentGold+(m.gathering.lostCargo?.gold??0)).toBeCloseTo(mapResourceTotals(id,'trees','expanded').gold);const loaded=decodeSave(encodeSave(m,view));expect(loaded.ok).toBe(true);if(loaded.ok)expect(loaded.match.map.id).toBe(id);
  },30_000);
 }
 it('different profiles own different terrain and amounts, strict identity and legacy arena migration',()=>{

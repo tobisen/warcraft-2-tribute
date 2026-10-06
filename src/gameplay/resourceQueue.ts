@@ -5,15 +5,15 @@ import {nodeRadius,resourceNodes,type GatheringState} from './gathering';
 import {bodyFits,tileCenter,type WorldMap} from './map';
 import {canInteract,footprintDistance} from './approach';
 import {findRoute,segmentFits} from './navigation';
-import {placementObstacles} from './placement';
+import {resourceWorkMap} from './placement';
 import type {Position} from './movement';
 export interface ResourceService {point:Position;working:boolean}
 /** Bounded service places, rotated by saved gameplay time; no serialized queue/refs. */
 export function resourceServices(state:GatheringState,map:WorldMap,elapsed:number):Map<string,ResourceService>{
  const result=new Map<string,ResourceService>();
- map={...map,obstacles:[...map.obstacles,...placementObstacles(state)]};
+ map=resourceWorkMap(map,state);const cohorts=new Map<string,typeof state.units>();for(const u of state.units)if(u.kind==='worker'&&(u.hp===undefined||u.hp>0)&&(u.order.kind==='gather'||u.order.kind==='deliver')){const group=cohorts.get(u.order.nodeId)??[];group.push(u);cohorts.set(u.order.nodeId,group);}
  for(const node of resourceNodes(state)){
-  const cohort=state.units.filter(u=>u.kind==='worker'&&(u.hp===undefined||u.hp>0)&&(u.order.kind==='gather'||u.order.kind==='deliver')&&u.order.nodeId===node.id);
+  const cohort=cohorts.get(node.id);if(!cohort)continue;
   const workers=cohort.filter(u=>u.order.kind==='gather').sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}));
   // Delivery takes no active slot. A returning carrier waits for the next snapshot
   // rather than bypassing admission inside a large gathering delta.

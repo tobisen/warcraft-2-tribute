@@ -22,7 +22,7 @@ function singleView(m:MatchState,id:PlayerId):MatchState{
  return {...state,multiplePlayers:undefined,aiContext:undefined,map:m.map,waves:m.waves,paused:m.paused,outcome:m.outcome,
   gathering:m.gathering,placement:m.placement,production:m.production,soldierProduction:m.soldierProduction,navy:m.navy,research:m.research,controlGroups:m.controlGroups,wildlife:m.wildlife,
   combat:{...state.combat,projectiles:id==='player'?[...(m.combat.projectiles??[]).filter(p=>!p.owner),...(bot.state.combat.projectiles??[])]:bot.state.combat.projectiles,baseHP:m.combat.baseHP,enemies:bot.state.combat.enemies},
-  fog:state.fog?{...state.fog,teams:{player:m.fog!.teams.player,enemy:bot.vision}}:undefined,
+  fog:state.fog?{...state.fog,...(state.fog.forest?{forest:{player:m.fog?.forest?.player??{},enemy:bot.state.fog?.forest?.enemy??{}}}:{}),teams:{player:m.fog!.teams.player,enemy:bot.vision}}:undefined,
   factions:{player:m.factions!.player,enemy:bot.state.factions!.enemy}};
 }
 export function encodeMultipleSave(m:MatchState,view:SavedView):string{
@@ -37,8 +37,8 @@ export function encodeMultipleSave(m:MatchState,view:SavedView):string{
 /** Validate every scoped document with the existing strict economy/tech/ID checks. */
 export function decodeMultipleSave(raw:unknown):LoadResult{
  try{
- const doc=raw as Record<string,unknown>;if(doc?.configVersion!==saveConfig.configVersion&&doc?.configVersion!=='tribute-config-53'&&doc?.configVersion!=='tribute-config-54'&&doc?.configVersion!=='tribute-config-55'&&Array.isArray(doc?.multiplePlayers)&&doc.multiplePlayers.some(p=>(p as Record<string,unknown>).difficulty!==undefined))throw Error('Legacy player difficulty');
- if(doc?.configVersion==='tribute-config-53'||doc?.configVersion==='tribute-config-54'||doc?.configVersion==='tribute-config-55')doc.configVersion=saveConfig.configVersion;
+ const doc=raw as Record<string,unknown>;if(doc?.configVersion!==saveConfig.configVersion&&doc?.configVersion!=='tribute-config-53'&&doc?.configVersion!=='tribute-config-54'&&doc?.configVersion!=='tribute-config-55'&&doc?.configVersion!=='tribute-config-56'&&Array.isArray(doc?.multiplePlayers)&&doc.multiplePlayers.some(p=>(p as Record<string,unknown>).difficulty!==undefined))throw Error('Legacy player difficulty');
+ if(doc?.configVersion==='tribute-config-53'||doc?.configVersion==='tribute-config-54'||doc?.configVersion==='tribute-config-55'||doc?.configVersion==='tribute-config-56')doc.configVersion=saveConfig.configVersion;
  const migrateTeams=doc?.configVersion==='tribute-config-49';
  if(doc?.configVersion==='tribute-config-48'&&Array.isArray(doc.multiplePlayers)){doc.multiplePlayers=doc.multiplePlayers.map((p,i)=>({...p as object,teamId:i+1}));doc.configVersion=saveConfig.configVersion;}
  if(doc?.configVersion==='tribute-config-51'||doc?.configVersion==='tribute-config-52')doc.configVersion=saveConfig.configVersion;

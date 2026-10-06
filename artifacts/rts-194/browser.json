@@ -1,0 +1,380 @@
+[
+  {
+    "id": "arena",
+    "previous": {
+      "width": 1280,
+      "height": 960
+    },
+    "resources": {
+      "wood": 13420,
+      "gold": 3450
+    },
+    "width": 4096,
+    "height": 4096,
+    "trees": 652,
+    "expansion": {
+      "x": 432,
+      "y": 1488
+    },
+    "expansionMine": {
+      "x": 720,
+      "y": 1712
+    },
+    "wood": {
+      "x": 650,
+      "y": 180
+    },
+    "mine": {
+      "x": 850,
+      "y": 220
+    },
+    "rock": {
+      "x": 144,
+      "y": 160
+    },
+    "coast": {
+      "x": 1152,
+      "y": 336
+    },
+    "layout": "reference",
+    "expansionLandRoutes": true,
+    "saveLoad": true,
+    "errors": []
+  },
+  {
+    "id": "forest",
+    "previous": {
+      "width": 1280,
+      "height": 960
+    },
+    "resources": {
+      "wood": 13730,
+      "gold": 3400
+    },
+    "width": 4096,
+    "height": 4096,
+    "trees": 673,
+    "expansion": {
+      "x": 432,
+      "y": 1488
+    },
+    "expansionMine": {
+      "x": 720,
+      "y": 1712
+    },
+    "wood": {
+      "x": 650,
+      "y": 180
+    },
+    "mine": {
+      "x": 850,
+      "y": 220
+    },
+    "rock": {
+      "x": 720,
+      "y": 400
+    },
+    "coast": {
+      "x": 224,
+      "y": 592
+    },
+    "layout": "reference",
+    "expansionLandRoutes": true,
+    "saveLoad": true,
+    "errors": []
+  },
+  {
+    "id": "river",
+    "previous": {
+      "width": 1280,
+      "height": 960
+    },
+    "resources": {
+      "wood": 13370,
+      "gold": 3550
+    },
+    "width": 4096,
+    "height": 4096,
+    "trees": 652,
+    "expansion": {
+      "x": 432,
+      "y": 1488
+    },
+    "expansionMine": {
+      "x": 720,
+      "y": 1712
+    },
+    "wood": {
+      "x": 650,
+      "y": 180
+    },
+    "mine": {
+      "x": 850,
+      "y": 220
+    },
+    "rock": {
+      "x": 352,
+      "y": 176
+    },
+    "coast": {
+      "x": 448,
+      "y": 544
+    },
+    "layout": "reference",
+    "expansionLandRoutes": true,
+    "saveLoad": true,
+    "errors": []
+  },
+  {
+    "id": "islands",
+    "previous": {
+      "width": 1280,
+      "height": 960
+    },
+    "resources": {
+      "wood": 10100,
+      "gold": 2650
+    },
+    "width": 4096,
+    "height": 4096,
+    "trees": 466,
+    "expansion": {
+      "x": 432,
+      "y": 1488
+    },
+    "expansionMine": {
+      "x": 720,
+      "y": 1712
+    },
+    "wood": {
+      "x": 650,
+      "y": 180
+    },
+    "mine": {
+      "x": 600,
+      "y": 300
+    },
+    "rock": {
+      "x": 208,
+      "y": 176
+    },
+    "coast": {
+      "x": 640,
+      "y": 32
+    },
+    "layout": "reference",
+    "expansionLandRoutes": false,
+    "saveLoad": true,
+    "errors": []
+  },
+  {
+    "id": "frontier",
+    "previous": {
+      "width": 1600,
+      "height": 1152
+    },
+    "resources": {
+      "wood": 13620,
+      "gold": 3600
+    },
+    "width": 4096,
+    "height": 4096,
+    "trees": 793,
+    "expansion": {
+      "x": 432,
+      "y": 1488
+    },
+    "expansionMine": {
+      "x": 720,
+      "y": 1712
+    },
+    "wood": {
+      "x": 656,
+      "y": 144
+    },
+    "mine": {
+      "x": 850,
+      "y": 220
+    },
+    "rock": {
+      "x": 656,
+      "y": 336
+    },
+    "coast": {
+      "x": 1056,
+      "y": 80
+    },
+    "layout": "reference",
+    "expansionLandRoutes": true,
+    "saveLoad": true,
+    "errors": []
+  },
+  {
+    "id": "plains96",
+    "previous": {
+      "width": 3072,
+      "height": 3072
+    },
+    "resources": {
+      "wood": 5980,
+      "gold": 1950
+    },
+    "width": 4096,
+    "height": 4096,
+    "trees": 280,
+    "expansion": {
+      "x": 432,
+      "y": 3408
+    },
+    "expansionMine": {
+      "x": 720,
+      "y": 3632
+    },
+    "wood": {
+      "x": 650,
+      "y": 180
+    },
+    "mine": {
+      "x": 850,
+      "y": 220
+    },
+    "rock": {
+      "x": 144,
+      "y": 160
+    },
+    "coast": {
+      "x": 1152,
+      "y": 336
+    },
+    "layout": "reference",
+    "expansionLandRoutes": true,
+    "saveLoad": true,
+    "errors": []
+  },
+  {
+    "id": "plains128",
+    "previous": {
+      "width": 4096,
+      "height": 4096
+    },
+    "resources": {
+      "wood": 13420,
+      "gold": 3450
+    },
+    "width": 4096,
+    "height": 4096,
+    "trees": 652,
+    "expansion": {
+      "x": 432,
+      "y": 1488
+    },
+    "expansionMine": {
+      "x": 720,
+      "y": 1712
+    },
+    "wood": {
+      "x": 650,
+      "y": 180
+    },
+    "mine": {
+      "x": 850,
+      "y": 220
+    },
+    "rock": {
+      "x": 144,
+      "y": 160
+    },
+    "coast": {
+      "x": 1152,
+      "y": 336
+    },
+    "layout": "reference",
+    "expansionLandRoutes": true,
+    "saveLoad": true,
+    "errors": []
+  },
+  {
+    "id": "highlands",
+    "previous": {
+      "width": 3072,
+      "height": 3072
+    },
+    "resources": {
+      "wood": 6570,
+      "gold": 2350
+    },
+    "width": 4096,
+    "height": 4096,
+    "trees": 275,
+    "expansion": {
+      "x": 432,
+      "y": 3408
+    },
+    "expansionMine": {
+      "x": 720,
+      "y": 3632
+    },
+    "wood": {
+      "x": 650,
+      "y": 180
+    },
+    "mine": {
+      "x": 850,
+      "y": 220
+    },
+    "rock": {
+      "x": 1344,
+      "y": 240
+    },
+    "coast": {
+      "x": 2192,
+      "y": 1840
+    },
+    "layout": "reference",
+    "expansionLandRoutes": true,
+    "saveLoad": true,
+    "errors": []
+  },
+  {
+    "id": "coast",
+    "previous": {
+      "width": 4096,
+      "height": 4096
+    },
+    "resources": {
+      "wood": 4110,
+      "gold": 1600
+    },
+    "width": 4096,
+    "height": 4096,
+    "trees": 118,
+    "expansion": {
+      "x": 304,
+      "y": 1680
+    },
+    "expansionMine": {
+      "x": 592,
+      "y": 1904
+    },
+    "wood": {
+      "x": 650,
+      "y": 180
+    },
+    "mine": {
+      "x": 600,
+      "y": 300
+    },
+    "rock": {
+      "x": 208,
+      "y": 176
+    },
+    "coast": {
+      "x": 2048,
+      "y": 32
+    },
+    "layout": "reference",
+    "expansionLandRoutes": false,
+    "saveLoad": true,
+    "errors": []
+  }
+]

@@ -27,7 +27,7 @@ export function matchStats(m:MatchState):MatchStats {
   return {seconds:m.waves.elapsedSeconds,player:players.player!,enemy,players,teams};
  }
 
- const definition=mapResourceTotals(m.map.id??'arena',m.map.resourceLayout??'legacy'),initial=scenarioConfig[m.scenario??'survival'].initial,profile=difficultyProfiles[m.difficulty??'normal'],bank=m.enemyProduction,budget=enemyStartingBudget(profile.budget,!!m.enemyNaval);
+ const definition=mapResourceTotals(m.map.id??'arena',m.map.resourceLayout??'legacy',m.map.worldLayout),initial=scenarioConfig[m.scenario??'survival'].initial,profile=difficultyProfiles[m.difficulty??'normal'],bank=m.enemyProduction,budget=enemyStartingBudget(profile.budget,!!m.enemyNaval);
  const playerResource=(type:ResourceType):ResourceStats=>{
   const enemyGathered=bank?.extracted?.[type]??0,remaining=resourceNodes(m.gathering).filter(n=>(n.resource??'wood')===type).reduce((sum,n)=>sum+n.remaining,0);
   const gathered=nonnegative(definition[type]-remaining-enemyGathered),balance=type==='wood'?m.gathering.wood:m.gathering.goldBalance??0;

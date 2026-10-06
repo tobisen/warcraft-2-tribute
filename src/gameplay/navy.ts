@@ -4,7 +4,7 @@ import type {OrderState} from './commandOrders';
 import {isAir} from './domains';
 import {factionForTeam} from '../config/factions';
 import {text as uiText} from '../text';
-import {resourceNodes,type Unit} from './gathering';
+import {nodeRadius,resourceNodes,type Unit} from './gathering';
 import {placementVisible} from './visibility';
 import {navyConfig} from '../config/navy';
 import {queueConfig} from '../config/production';
@@ -14,11 +14,11 @@ import {productionJobCount} from './productionQueue';
 import type {ProductionState} from './production';
 import type {SelectableUnit} from './selection';
 import type {Footprint,ConstructionJob} from './placement';
-import {buildingFootprint,placementObstacles} from './placement';
+import {workerResourceTargets,buildingFootprint,placementObstacles} from './placement';
 import {replaceObstacles,overlaps} from './map';
 import {unitBody,spawnCandidates,hasSpawnExit} from './spawning';
 import {unitStats,combatUnitStats} from '../config/unit';
-import {approachRoute} from './approach';
+import {canReachFootprint,approachRoute} from './approach';
 import {updateSite} from './construction';
 import {domainMap,coastalFootprint,planDomainRoute,advanceDomainRoute} from './terrainNavigation';
 import type {RouteState} from './navigation';
@@ -48,9 +48,8 @@ export function harborPlacementError(m:MatchState,point:Position):string|null {
  if(!builder)return uiText.selectAWorkerToBuild;
  const after={...m,map:replaceObstacles(m.map,[...m.map.obstacles,rect])};
  if(approachRoute(after.map,builder.position,rect,factionForTeam(m,'player').naval.harbor.constructionRange).status==='blocked')return uiText.theBuildingSiteCannotBeReached;
- for(const worker of m.gathering.units.filter(u=>u.kind==='worker'))for(const [i,target] of [placementObstacles(m.gathering)[0],...resourceNodes(m.gathering).map(n=>({x:n.position.x-20,y:n.position.y-20,width:40,height:40}))].entries()){
-  if(i>0&&resourceNodes(m.gathering)[i-1]?.remaining===0)continue;
-  if(approachRoute(m.map,worker.position,target,24).status!=='blocked'&&approachRoute(after.map,worker.position,target,24).status==='blocked')return uiText.blocksAWorkerRouteToTheBaseOr;
+ for(const worker of m.gathering.units.filter((u):u is Extract<Unit,{kind:'worker'}>=>u.kind==='worker'))for(const target of [placementObstacles(m.gathering)[0],...workerResourceTargets(m.gathering,worker).map(n=>({x:n.position.x-nodeRadius(n),y:n.position.y-nodeRadius(n),width:nodeRadius(n)*2,height:nodeRadius(n)*2}))]){
+  if(canReachFootprint(m.map,worker.position,target,24)&&!canReachFootprint(after.map,worker.position,target,24))return uiText.blocksAWorkerRouteToTheBaseOr;
  }
  const base=placementObstacles(m.gathering)[0];
  const exit=(map:typeof m.map,foot:Footprint,kind:'base'|'barracks')=>spawnCandidates(map,foot,kind).some(p=>hasSpawnExit(map,p));

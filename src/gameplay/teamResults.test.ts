@@ -1,3 +1,4 @@
+import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {enemyAttackDestination} from './enemyKnowledge';
 import {it,expect} from 'vitest';
 import {createMatch,updateMatch} from './match';
@@ -66,8 +67,8 @@ it('migrates valid config49 individual outcomes to team victory or continuing sp
  for(const eliminated of ['player','enemy'] as const){
   const m=updateMatch(eliminate(match(),eliminated),.25),raw=JSON.parse(encodeSave(m,{camera:{x:0,y:0},building:null}));raw.configVersion='tribute-config-49';
   const oldOutcome=eliminated==='player'?'defeat':'playing';
-  for(const key of ['human']){const doc=JSON.parse(raw[key]);doc.configVersion='tribute-config-49';doc.state.outcome=oldOutcome;raw[key]=JSON.stringify(doc);}
-  for(const part of raw.ai){const doc=JSON.parse(part.document);doc.configVersion='tribute-config-49';doc.state.outcome=oldOutcome;part.document=JSON.stringify(doc);}
+  for(const key of ['human']){const doc=JSON.parse(raw[key]);legacyTerrainFixture(doc);doc.configVersion='tribute-config-49';doc.state.outcome=oldOutcome;raw[key]=JSON.stringify(doc);}
+  for(const part of raw.ai){const doc=JSON.parse(part.document);legacyTerrainFixture(doc);doc.configVersion='tribute-config-49';doc.state.outcome=oldOutcome;part.document=JSON.stringify(doc);}
   const loaded=decodeSave(JSON.stringify(raw));expect(loaded.ok,loaded.ok?'':loaded.error).toBe(true);if(!loaded.ok)throw Error(loaded.error);expect(loaded.match.outcome).toBe(eliminated==='player'?'playing':'victory');expect(isSpectating(loaded.match)).toBe(eliminated==='player');roundtrip(loaded.match);
  }
 });

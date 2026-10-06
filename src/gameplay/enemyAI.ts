@@ -8,7 +8,7 @@ import type { CombatState,Enemy } from './combat';
 import type { Unit } from './gathering';
 import type { WorldMap } from './map';
 import type { Position } from './movement';
-export interface EnemyGroup {id:string;status:'muster'|'ready'|'attack';members:string[];destinations:Record<string,Position>;startedAt:number;dispatchedAt?:number}
+export interface EnemyGroup {id:string;status:'muster'|'ready'|'attack';members:string[];destinations:Record<string,Position>;startedAt:number;dispatchedAt?:number;dispatchedSize?:number}
 export interface Defender {id:string;groupId?:string;destination?:Position}
 export interface EnemyAIState {reserve:string[];defenders:Defender[];threatId:string|null;elapsedSeconds:number;nextGroupNumber:number;groups:EnemyGroup[];lastDispatchSeconds:number|null}
 export const createEnemyAI=():EnemyAIState=>({reserve:[],defenders:[],threatId:null,elapsedSeconds:0,nextGroupNumber:1,groups:[],lastDispatchSeconds:null});
@@ -21,7 +21,8 @@ export function updateEnemyAI(state:EnemyAIState,combat:CombatState,map:WorldMap
  if(settings.regroup&&Math.floor(elapsedSeconds)!==Math.floor(state.elapsedSeconds))groups=groups.map(g=>{
   if(g.status!=='attack')return g;
   const time=elapsedSeconds-(g.dispatchedAt??elapsedSeconds),members=enemies.filter(e=>g.members.includes(e.id));
-  const weakened=g.members.length<Math.ceil(settings.groupSize/2)&&time>=combinedArmyConfig.retreatAfterSeconds;
+  const longRoute=Math.hypot(settings.muster.x-playerBase.x,settings.muster.y-playerBase.y)>1024;
+  const weakened=g.members.length<Math.ceil((longRoute?g.dispatchedSize??settings.groupSize:settings.groupSize)/2)&&time>=combinedArmyConfig.retreatAfterSeconds;
   const blocked=members.length>0&&members.every(e=>e.navigation?.status==='blocked')&&time>=combinedArmyConfig.blockedAfterSeconds;
   if(!weakened&&!blocked)return g;
   const orders=commandGroupMove(members.map(e=>({...enemySoldier(e,faction),selected:true})),settings.muster,map),byId=new Map(orders.map(u=>[u.id,u]));
@@ -47,7 +48,7 @@ export function updateEnemyAI(state:EnemyAIState,combat:CombatState,map:WorldMap
   }
   if(!defense.threat&&g.status==='ready'&&elapsedSeconds+1e-9>=settings.firstAttackSeconds&&(lastDispatchSeconds===null||elapsedSeconds-lastDispatchSeconds+1e-9>=settings.dispatchGapSeconds)){
    enemies=enemies.map(e=>g.members.includes(e.id)?{...e,navigation:undefined,order:{kind:'attack-move' as const,destination:{...playerBase}}}:e);
-   lastDispatchSeconds=elapsedSeconds;return {...g,status:'attack',dispatchedAt:elapsedSeconds};
+   lastDispatchSeconds=elapsedSeconds;return {...g,status:'attack',dispatchedAt:elapsedSeconds,dispatchedSize:g.members.length};
   }
   return g;
  });

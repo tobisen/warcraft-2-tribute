@@ -41,3 +41,9 @@ it('overlapping ground/air observers preserve the visibility union per owner thr
  for(const owner of ['player','enemy'] as const){const union=fog.teams[owner].visible.map((_,i)=>singles.some(f=>f.teams[owner].visible[i]));expect(combined.teams[owner].visible).toEqual(union);expect(reversed.teams[owner].visible).toEqual(union);}
  const removed=updateFog(combined,[observers[3]],blockers);expect(removed.teams.player.visible.every(v=>!v)).toBe(true);expect(removed.teams.player.explored).toEqual(combined.teams.player.explored);
 });
+it('stationary observer reuse matches fresh LOS after movement, owner/air changes and blocker replacement',()=>{
+ const f=createFog({width:640,height:640}),blockers=[{x:288,y:96,width:64,height:256}],ground={id:'reused',owner:'player' as const,position:{x:240,y:240},radius:180};
+ const compare=(observers:VisionObserver[],terrain=blockers)=>expect(updateFog(f,observers,terrain)).toEqual(updateFog(f,observers,terrain.map(p=>({...p}))));
+ compare([ground]);compare([ground]);compare([{...ground,position:{x:400,y:240}}]);compare([{...ground,owner:'enemy',airborne:true}]);compare([]);compare([ground],[]);
+ blockers.push({x:128,y:0,width:32,height:640});compare([ground]);
+});

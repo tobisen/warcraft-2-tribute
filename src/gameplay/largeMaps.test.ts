@@ -13,7 +13,7 @@ import {cameraIndicator,minimapCamera,worldToMinimap,visibleMinimapData} from '.
 import {clampCamera} from '../presentation/camera';
 import {releasePlaythrough} from './testHelpers/releaseBot';
 
-for(const [id,tiles] of [['plains96',96],['plains128',128]] as const){
+for(const [id,tiles] of [['plains96',128],['plains128',128]] as const){
  it(`${id}: full bounds, fog, camera and minimap use authored dimensions`,()=>{
   const m=createMatch('skirmish','beginner',undefined,id),size=tiles*32,last={x:size-16,y:size-16};
   expect(m.map).toMatchObject({width:size,height:size,tileSize:32});

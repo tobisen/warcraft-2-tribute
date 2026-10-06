@@ -11,7 +11,7 @@ describe('building rally',()=>{
     expect(p.rally).toEqual({x:48,y:144});expect(p.rallyError).toBeUndefined();
     const invalid=setRally(p,{x:120,y:120},s.map,baseFootprint(s.gathering.base),'base');
     expect(invalid.rally).toEqual(p.rally);expect(invalid.rallyError).toBeTruthy();
-    expect(setRally(p,{x:1280,y:960},s.map,baseFootprint(s.gathering.base),'base').rallyError).toBeTruthy();
+    expect(setRally(p,{x:4096,y:4096},s.map,baseFootprint(s.gathering.base),'base').rallyError).toBeTruthy();
     expect(setRally(s.soldierProduction,{x:600,y:300},s.map,null,'barracks').rally).toBeUndefined();
   });
   it('spawn remains safe, unselected and uses the current rally without implicit gather',()=>{

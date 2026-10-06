@@ -50,7 +50,19 @@ export function playExpandedCampaign(id:CampaignMissionId,difficulty:Difficulty=
    const operation=operationFor(m.scenario)!;group(operation.zone);
    if(operation.kind==='escort'&&p.goal==='operation'){select(id=>id===operation.courier.id);m.gathering.units=commandGroupMove(m.gathering.units,operation.zone,m.map);}
    until(()=>m.campaignRun!.phase!==phase||m.outcome!=='playing');
-  }else if(p.goal==='base'){const target=m.combat.enemies.find(e=>e.kind==='base');if(target)group(target.position);until(()=>m.campaignRun!.phase!==phase||m.outcome!=='playing');}
+  }else if(p.goal==='base'){
+   for(let attempt=0;attempt<4&&m.campaignRun!.phase===phase&&m.outcome==='playing';attempt++){
+    const target=m.combat.enemies.find(e=>e.kind==='base');if(target)group(target.position);
+    until(()=>m.campaignRun!.phase!==phase||m.outcome!=='playing'||!m.gathering.units.some(u=>u.kind==='soldier'));
+    if(m.campaignRun!.phase!==phase||m.outcome!=='playing')break;
+    if(m.scenario!=='mission-sea')throw Error(`${id}: assault lost its army`);
+    // Replace combat losses through paid jobs and another real ferry trip.
+    m=prepareNavalArmy(m);combatEnabled=false;destination=undefined;select((_,kind)=>kind==='ship');m.navy=commandShips(m,{x:720,y:432});until(()=>m.navy!.ships[0].order.kind==='idle');
+    select((_,kind)=>kind==='soldier');m.gathering.units=orderUnits(m.gathering.units,{x:688,y:432});until(()=>{select((_,kind)=>kind==='soldier');m=loadTransport(m,'ship-1');if(m.gathering.units.some(u=>u.kind==='soldier'))m.gathering.units=orderUnits(m.gathering.units,{x:688,y:432});return m.navy!.ships[0].passengers?.length===4;});
+    select((_,kind)=>kind==='ship');m.navy=commandShips(m,{x:880,y:432});until(()=>m.navy!.ships[0].order.kind==='idle');m=unloadTransport(m,'ship-1',{x:912,y:432});if(m.navy!.ships[0].passengers?.length)throw Error(`${id}: reinforcement landing failed`);combatEnabled=true;
+   }
+   if(m.campaignRun!.phase===phase&&m.outcome==='playing')throw Error(`${id}: paid assaults did not finish the base`);
+  }
   else until(()=>m.campaignRun!.phase!==phase||m.outcome!=='playing');
   const loaded=decodeSave(encodeSave({...m,paused:true},{camera:{x:0,y:0},building:null}));if(!loaded.ok)throw Error(`${id}: save ${loaded.error}`);m={...loaded.match,paused:false};saved=true;
  }

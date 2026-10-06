@@ -1,3 +1,4 @@
+import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {expect,it} from 'vitest';
 import {campaignMissions,campaignPreset} from '../config/campaign';
 import {campaignPlans} from '../config/campaignPhases';
@@ -49,7 +50,7 @@ it('base loss and missing courier override phase completion; early escort arriva
 });
 it('malformed phase state and changed maps are rejected; config50 retains old rules',()=>{
  const m=start('forest-watch'),doc=JSON.parse(encodeSave(m,view));for(const run of [{version:2,phase:0},{version:1,phase:-1},{version:1,phase:5},{version:1,phase:.5},{version:1,phase:0,reward:true}]){doc.state.campaignRun=run;expect(decodeSave(JSON.stringify(doc)).ok).toBe(false);}
- const legacy={...createMatch('mission-waves'),campaignMission:'forest-watch' as const},old=JSON.parse(encodeSave(legacy,view));old.configVersion='tribute-config-50';const loaded=decodeSave(JSON.stringify(old));expect(loaded.ok).toBe(true);if(loaded.ok){expect(loaded.match.map.id).toBe('arena');expect(loaded.match.campaignRun).toBeUndefined();}
+ const legacy={...createMatch('mission-waves'),campaignMission:'forest-watch' as const},old=JSON.parse(encodeSave(legacy,view));legacyTerrainFixture(old);old.configVersion='tribute-config-50';const loaded=decodeSave(JSON.stringify(old));expect(loaded.ok).toBe(true);if(loaded.ok){expect(loaded.match.map.id).toBe('arena');expect(loaded.match.campaignRun).toBeUndefined();}
  old.state.campaignRun={version:1,phase:0};expect(decodeSave(JSON.stringify(old)).ok).toBe(false);
 });
 it('finite pressure begins once after exploration, survives load, and never respawns a fired wave',()=>{

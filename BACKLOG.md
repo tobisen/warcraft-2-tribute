@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**Aktuellt kartmandat RTS-191–194:** Fyra beställda kartförbättringar, en i taget. Frontier träd/gruva/berg färdigställs och browsergranskas först. Taskvisa checks/docs/commit/push till origin/main. Bevara style.css/docs; ingen delegering. Stanna efter194. Tidigare grafikfas är historisk status.
+**Kartfas RTS-191–194 avslutad:** Alla fyra beställda kartförbättringar är Done. Alla nio kartor använder skördbara skogar, gemensam terräng/gruva/berg och128×128/4096² värld. Full regression1528/181, unit472/85, strict build/diff och native browser PASS. [MAP_PHASE.md](MAP_PHASE.md) redovisar dimensioner/bilder/prestanda; HANDOFF styr stoppet efter194. Style.css/docs bevarade; inga nya tasks/karteditor.
 
 **Nytt grafik-/layoutmandat RTS-188–190:** Användaren beställer tydligare spelyta, bättre fullständig enhets-/byggnadsgrafik inklusive flyg och roligare djur. En task i taget med browser/checks/docs/commit/push. Bevara style.css/docs och gameplay/balans/Save. Ingen delegering.188 push0779d8b,189 push9af4724,190 Done; etappen avslutas här. Full regression1497/180, unit476/86, strict build/diff och browser PASS. HANDOFF styr överlämningen; inga nya tasks.
 
@@ -19,7 +19,7 @@
 - Inventera nio skirmishkartor och kampanjens faktiska kartval. Sprid Frontiers gräs/jord/skog/kust/vatten/gruva/berg med individuella träd; bevara layout och strategisk variation.
 - Grafik/collision/byggbarhet/land och sjö stämmer; riktade navigation/objective-tester och visuell browsergranskning.
 
-### RTS-194 — Minst128×128 spelbara tiles på alla kartor — In Progress
+### RTS-194 — Minst128×128 spelbara tiles på alla kartor — Done
 - Befintligt maximum Plains128/Shattered Coast:128×128 tiles,4096×4096px,32px tiles. Utvidga mindre kartors verkliga terräng med meningsfulla expansioner, skogar, vägar, kust och passager.
 - Anpassa starts/resurser/AI/kamera/minimap; bevara introduktion/missionsmål/triggers, verifiera koordinater och Save-version. Ingen skalning av tiles/sprites eller tom utfyllnad.
 - Stor tät skog/flera workers prestandamäts; samlade slutchecks och BACKLOG/DECISIONS/DEV_LOG/HANDOFF. Taskvis commit/push; stanna efter194 utan nya tasks/karteditor.

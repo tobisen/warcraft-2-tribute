@@ -1,5 +1,6 @@
 import {expect,it} from 'vitest';
-import {maps,type MapId} from '../config/maps';
+import {resourceNodes} from './gathering';
+import {maps,mapResourceTotals,type MapId} from '../config/maps';
 import {difficultyProfiles,type Difficulty} from '../config/difficulty';
 import {factionsForPlayer} from '../config/factions';
 import {createMatch,updateMatch,type MatchState} from './match';
@@ -9,9 +10,9 @@ import {matchStats} from './matchStats';
 import {releasePlaythrough} from './testHelpers/releaseBot';
 
 function conserved(m:MatchState){
- const stats=matchStats(m),profile=maps[m.map.id??'arena'];
+ const stats=matchStats(m),profile=mapResourceTotals(m.map.id??'arena',m.map.resourceLayout??'legacy',m.map.worldLayout);
  for(const type of ['wood','gold'] as const){
-  const remaining=type==='wood'?m.gathering.node.remaining:m.gathering.gold!.remaining;
+  const remaining=resourceNodes(m.gathering).filter(n=>(n.resource??'wood')===type).reduce((sum,n)=>sum+n.remaining,0);
   expect(stats.player[type].gathered+stats.enemy[type].gathered+remaining).toBeCloseTo(profile[type],6);
   const cargo=m.combat.enemies.reduce((n,e)=>n+(e.work&&(e.work.cargoType??'wood')===type?e.work.cargo:0),0);
   const bank=m.enemyProduction!;

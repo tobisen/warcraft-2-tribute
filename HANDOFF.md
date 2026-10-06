@@ -1,3 +1,17 @@
+# Kartfas RTS-191–194 avslutad
+
+2026-10-06. Alla fyra tasks är Done.191 push036e306,192 push461597e,193 push1b06889;194 levereras i denna commit (hash rapporteras vid push). Alla nio skirmish-/kampanjkartunderlag är128×128 tiles/4096²px med32px tiles. [MAP_PHASE.md](MAP_PHASE.md) redovisar alla gamla/nya dimensioner, avverkning, kompatibilitet och före/efterbilder. Stanna här: inga nya tasks eller karteditor.
+
+Slutlig fullregression `npm test`1528/181 PASS523.12s. Unit `npm run test:unit`472/85 PASS18.33s; `npm run build` med strict typecheck PASS785ms, befintlig bundlevarning. Unit/browser/prestanda återanvänds efter enbart två integrationscontrollerändringar; spelkoden och buildens spelbundle är oförändrade. Manifest85/96, syntax, Markdownfilreferenser och diff PASS; egen diff-/kravgranskning utan kvarvarande blockerande fynd.
+
+Native800/1280 Frontier fysisk selection/gather/uttömning/öppnad mark/mine-depth/SaveLoad PASS. Alla nio kartors native1280 galleri/minimap/SaveLoad och första/sista expansionsgruvors landvägar på sju inlandskartor PASS; Islands/Coast är transportberoende.793träd,3/18 arbetande workers: median3.8/4.1ms, p954.5/4.6ms,59.8/59.4fps på~300 varma frames; artifacts/rts-194/performance.json. Kort faktisk Phaser-test, ingen lång mänsklig match. Browser körd med användarens befintliga CSS, som inte ingår i kartcommits.
+
+Tidigare regression601.82s hade1526PASS/2FAIL; navalcontrollers rättades med betald ersättning och en andra faktisk färjetur. Riktade fall samt ny sammanhängande fullregression PASS. Inga fiender/skadevärden/objectives/stock/Save-krav ändrades för att få tester gröna; misslyckat Overcharge-controllerförsök återtaget. Äldre avbrutna/fallande checks räknas inte PASS.
+
+Save57 behåller äldre sparningars originalgeometri och avvisar gamla versionsmarkeringar med expanded layout. Originalstarts/objectives/triggers består. Mänsklig introduktions-/helkampanjbalans, speltid, ljud och långtidsperformance på annan hårdvara återstår; ingen ny CI/Pages/release hävdas. Användarens style.css SHA25695c3725250221ef8386519adecfb05db601103697d421e78e1b2bdf057141a5e och otrackade docs/ bevaras.
+
+---
+
 # RTS-193 klar — kartfas fortsätter med194
 
 191 push036e306,192 push461597e.193 alla nio skirmishkartor och kampanjernas kartunderlag använder reference ground/tree/mines, med bibehållna layouts/dimensions. Forest Pass21 tidigare dekorativa tiles är21×10wood actual resources utöver500. Save56 behåller historiska geometrival. Riktade73/6 +60/5, slutlig unit471/85, strict build/diff PASS. Native1280 actual-size36bilder + fysisk SaveLoad på alla nio kartor PASS i artifacts/rts-193. Nästa194 förstorar mindre till128×128/4096px, strategiska extensions, versionsskydd, slutregression och performance. CSS/docs bevarade; ingen ny CI/Pagesclaim.

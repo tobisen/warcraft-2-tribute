@@ -1,3 +1,7 @@
+import {canInteract} from './approach';
+import {baseFootprint} from './buildingSelection';
+import {enemyUnitStats} from './enemyUnits';
+import {expansionSites} from '../config/mapExtensions';
 import {enemyNavigationMap} from './map';
 import {maps} from '../config/maps';
 import {enemyKnowledgeConfig as config} from '../config/enemyKnowledge';
@@ -8,7 +12,7 @@ import {resourceNodes,type ResourceNode,type Worker} from './gathering';
 import type {Position} from './movement';
 import type {MatchState} from './match';
 export interface EnemyKnowledgeState {nodes:ResourceNode[];playerBase:Position|null;resourceScoutIndex:number;attackScoutIndex:number}
-function searchWaypoints(m:MatchState,kind:'resource'|'attack'){if(kind==='attack'&&m.aiContext)return m.aiContext.attackWaypoints;const map=maps[m.map.id??'arena'];return (m.map.terrainLayout==='reference'?(kind==='resource'?map.referenceResourceWaypoints:map.referenceAttackWaypoints):undefined)??(kind==='resource'?map.enemyResourceWaypoints??config.resourceWaypoints:map.enemyAttackWaypoints??config.attackWaypoints);}
+export function searchWaypoints(m:MatchState,kind:'resource'|'attack'){if(kind==='attack'&&m.aiContext)return m.aiContext.attackWaypoints;const map=maps[m.map.id??'arena'];const base=(m.map.terrainLayout==='reference'?(kind==='resource'?map.referenceResourceWaypoints:map.referenceAttackWaypoints):undefined)??(kind==='resource'?map.enemyResourceWaypoints??config.resourceWaypoints:map.enemyAttackWaypoints??config.attackWaypoints);return kind==='resource'&&m.map.worldLayout==='expanded'?[...base,...expansionSites(m.map.id??'arena').map(s=>({x:(s.column+10.5)*32,y:(s.row+5.5)*32}))]:base;}
 export const createEnemyKnowledge=():EnemyKnowledgeState=>({nodes:[],playerBase:null,resourceScoutIndex:0,attackScoutIndex:0});
 export function knownEnemyNode(m:MatchState,node:ResourceNode|undefined):ResourceNode|undefined {return node?(m.enemyKnowledge?m.enemyKnowledge.nodes.find(n=>n.id===node.id):node):undefined;}
 export function observeEnemyKnowledge(m:MatchState):MatchState {
@@ -21,6 +25,8 @@ export function enemyAttackDestination(m:MatchState):Position {return m.enemyKno
 /** At most one empty non-builder worker searches; loaded work is never discarded. */
 export function prepareEnemyScout(m:MatchState):MatchState {
  if(!m.enemyKnowledge||resourceNodes(m.gathering).filter(Boolean).every(node=>knownEnemyNode(m,node)))return m;
+ const supplied=['wood','gold'].every(type=>m.enemyKnowledge!.nodes.some(n=>(n.resource??'wood')===type&&n.remaining>0));
+ if(supplied)return {...m,combat:{...m.combat,enemies:m.combat.enemies.map(e=>e.kind==='worker'&&e.work?.order.kind==='move'?{...e,navigation:undefined,work:{...e.work,order:{kind:'idle' as const}}}:e)}};
  const workers=m.combat.enemies.filter(e=>e.kind==='worker'&&e.hp>0&&e.work!.cargo===0&&['idle','move','gather'].includes(e.work!.order.kind)).sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}));const scout=workers.find(e=>e.work!.order.kind==='move')??workers[0];if(!scout)return m;
  const waypoints=searchWaypoints(m,'resource');let index=m.enemyKnowledge.resourceScoutIndex;const goal=waypoints[index];if(Math.hypot(scout.position.x-goal.x,scout.position.y-goal.y)<=config.arrivalRange||scout.navigation?.status==='blocked')index=Math.min(index+1,waypoints.length-1);
  const target=waypoints[index];if(scout.work!.order.kind==='move'&&scout.work!.target.x===target.x&&scout.work!.target.y===target.y)return {...m,enemyKnowledge:{...m.enemyKnowledge,resourceScoutIndex:index}};
@@ -29,7 +35,7 @@ export function prepareEnemyScout(m:MatchState):MatchState {
 }
 export function updateEnemyExploration(m:MatchState):MatchState {
  if(!m.enemyKnowledge)return m;
- const waypoints=searchWaypoints(m,'attack');const goal=enemyAttackDestination(m);const reached=m.combat.enemies.some(e=>e.order?.kind==='attack-move'&&Math.hypot(e.position.x-goal.x,e.position.y-goal.y)<=config.attackArrivalRange);
+ const waypoints=searchWaypoints(m,'attack');const goal=enemyAttackDestination(m);const reached=m.combat.enemies.some(e=>e.order?.kind==='attack-move'&&Math.hypot(e.position.x-goal.x,e.position.y-goal.y)<=config.attackArrivalRange||e.order?.kind==='attack-move'&&e.navigation?.targetId==='explore-goal'&&e.navigation.status==='arrived'&&canInteract({...enemyNavigationMap(m.map),bodyHalf:enemyUnitStats(e,m.factions?.enemy).size/2},e.position,baseFootprint(goal),enemyUnitStats(e,m.factions?.enemy).range));
  const attackScoutIndex=m.enemyKnowledge.playerBase?m.enemyKnowledge.attackScoutIndex:reached?Math.min(m.enemyKnowledge.attackScoutIndex+1,waypoints.length-1):m.enemyKnowledge.attackScoutIndex;
  const destination=m.enemyKnowledge.playerBase??waypoints[attackScoutIndex];
  const oldDestination=[{x:704,y:400},{x:448,y:528},{x:208,y:320}][m.enemyKnowledge.attackScoutIndex];

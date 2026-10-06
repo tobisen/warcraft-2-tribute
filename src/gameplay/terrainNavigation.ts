@@ -11,15 +11,16 @@ function terrain(map:WorldMap){return terrainPatches(map).map(p=>({kind:p.kind,x
 function dynamicObstacles(map:WorldMap){const patches=terrain(map);return map.obstacles.filter(o=>{const index=patches.findIndex(p=>sameRect(p,o));if(index<0)return true;patches.splice(index,1);return false;});}
 /** Partition at terrain boundaries: adjacent water rectangles form a union, not separate islands.
  * Derived adapter only; authoritative map and its revision are never modified or persisted twice. */
+const waterCache=new WeakMap<Footprint[],{key:string;length:number;obstacles:Footprint[]}>();
 export function domainMap(map:WorldMap,domain:MovementDomain):WorldMap {
- if(domain==='land')return map;
+ if(domain==='land')return map;const key=`${map.id}:${map.terrainLayout}:${map.worldLayout}:${map.width}:${map.height}:${map.revision}`,cached=waterCache.get(map.obstacles);if(cached?.key===key&&cached.length===map.obstacles.length)return {...map,obstacles:cached.obstacles};
  const patches=terrain(map),xs=[...new Set([0,map.width,...patches.flatMap(p=>[p.x,p.x+p.width]).filter(x=>x>0&&x<map.width)])].sort((a,b)=>a-b),ys=[...new Set([0,map.height,...patches.flatMap(p=>[p.y,p.y+p.height]).filter(y=>y>0&&y<map.height)])].sort((a,b)=>a-b);
  const blocked:Footprint[]=[];
  for(let y=0;y<ys.length-1;y++)for(let x=0;x<xs.length-1;x++){
   const point={x:(xs[x]+xs[x+1])/2,y:(ys[y]+ys[y+1])/2};
   if(!patches.some(p=>p.kind==='water'&&contains(p,point))||patches.some(p=>p.kind==='rock'&&contains(p,point)))blocked.push({x:xs[x],y:ys[y],width:xs[x+1]-xs[x],height:ys[y+1]-ys[y]});
  }
- return {...map,obstacles:[...blocked,...dynamicObstacles(map)]};
+ const obstacles=[...blocked,...dynamicObstacles(map)];waterCache.set(map.obstacles,{key,length:map.obstacles.length,obstacles});return {...map,obstacles};
 }
 export function domainBodyFits(map:WorldMap,domain:MovementDomain,point:Position,half:number){return bodyFits(domainMap(map,domain),point,half);}
 export function findDomainRoute(map:WorldMap,domain:MovementDomain,start:Position,target:Position,half:number){return findRoute({...domainMap(map,domain),bodyHalf:half},start,target,half);}

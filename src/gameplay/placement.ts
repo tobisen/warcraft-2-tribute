@@ -97,10 +97,10 @@ export function placementError(state: PlacementState, point: Position, wood: num
     if(context.gathering.units.some(u=>!isAir(u)&&overlaps(rect,unitBody(u.position,u.kind==='worker'?unitStats.size:combatUnitStats(u).size)))
       || context.enemies.some(e=>!isAir(e)&&overlaps(rect,unitBody(e.position,otherBodySize(e)))))return uiText.overlapsAUnit;
     const after=replaceObstacles(context.map,[...context.map.obstacles,rect]);
-    const [base]=placementObstacles(context.gathering);const nodes=resourceNodes(context.gathering).map(node=>({x:node.position.x-20,y:node.position.y-20,width:40,height:40}));
+    const [base]=placementObstacles(context.gathering);
     for(const worker of context.gathering.units.filter((u):u is Extract<Unit,{kind:'worker'}>=>u.kind==='worker')) {
-      for(const [target,range] of [[base,gatheringConfig.deliveryRange],
-        ...nodes.flatMap((node,i)=>resourceNodes(context.gathering)[i].remaining>0?[[node,gatheringConfig.range] as const]:[])] as const) {
+      const nodes=workerResourceTargets(context.gathering,worker);
+      for(const [target,range] of [[base,gatheringConfig.deliveryRange],...nodes.map(node=>[{x:node.position.x-nodeRadius(node),y:node.position.y-nodeRadius(node),width:nodeRadius(node)*2,height:nodeRadius(node)*2},gatheringConfig.range] as const)] as const) {
         if(canReachFootprint(context.map,worker.position,target,range)
           && !canReachFootprint(after,worker.position,target,range))return uiText.blocksAWorkerRouteToTheBaseOr;
       }
@@ -155,3 +155,22 @@ export function placeBuilding(state: PlacementState, point: Position, wood: numb
 }
 
 export const placeBarracks = placeBuilding;
+
+/** Actual Match maps already carry resource bodies; standalone work fixtures add only missing bodies. */
+const verifiedWorkMaps=new WeakMap<Footprint[],Map<string,{length:number;revision:number;nodes:{x:number;y:number;radius:number;alive:boolean}[]}>>();
+export function resourceWorkMap(map:WorldMap,state:GatheringState):WorldMap {
+ const nodes=resourceNodes(state),baseKey=`${state.base.x}:${state.base.y}:${state.baseSize??gatheringConfig.baseSize}`;
+ let cache=verifiedWorkMaps.get(map.obstacles);const entry=cache?.get(baseKey),verified=entry?.nodes;
+ const simple=!nodes.some(n=>n.grove);
+ if(simple&&entry?.length===map.obstacles.length&&entry.revision===map.revision&&verified?.length===nodes.length&&nodes.every((n,i)=>verified[i].x===n.position.x&&verified[i].y===n.position.y&&verified[i].radius===nodeRadius(n)&&verified[i].alive===(!n.tree||n.remaining>0)))return map;
+ const bodies=placementObstacles(state),keys=new Set(map.obstacles.map(o=>`${o.x},${o.y},${o.width},${o.height}`));
+ const missing=bodies.filter(o=>!keys.has(`${o.x},${o.y},${o.width},${o.height}`));
+ if(!missing.length&&simple){if(!cache){cache=new Map();verifiedWorkMaps.set(map.obstacles,cache);}cache.set(baseKey,{length:map.obstacles.length,revision:map.revision,nodes:nodes.map(n=>({x:n.position.x,y:n.position.y,radius:nodeRadius(n),alive:!n.tree||n.remaining>0}))});}
+ return missing.length?{...map,obstacles:[...map.obstacles,...missing]}:map;
+}
+
+/** Current/queued jobs and the local economy share one admission policy for land and harbor placement. */
+export function workerResourceTargets(state:GatheringState,worker:Extract<Unit,{kind:'worker'}>):import('./gathering').ResourceNode[]{
+ const nodeId=worker.order.kind==='gather'||worker.order.kind==='deliver'?worker.order.nodeId:undefined;
+ return resourceNodes(state).filter((node,i)=>node.remaining>0&&(i<2||node.id===nodeId||worker.orderQueue?.some(o=>o.kind==='gather'&&o.nodeId===node.id)||Math.hypot(node.position.x-worker.position.x,node.position.y-worker.position.y)<=384));
+}

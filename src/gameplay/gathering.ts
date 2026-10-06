@@ -9,7 +9,7 @@ import { resourceServices } from './resourceQueue';
 import type { GateFor } from './traffic';
 import { advanceRoute } from './navigation';
 import type {Footprint} from './placement';
-import { placementObstacles } from './placement';
+import { resourceWorkMap, placementObstacles } from './placement';
 import { updateMappedMove, planRoute, type RouteState } from './navigation';
 import type { WorldMap } from './map';
 import { gatheringConfig } from '../config/gathering';
@@ -103,7 +103,8 @@ export function orderUnits(units: Unit[], target: Position, node?: ResourceNode)
 export function updateGathering(state: GatheringState, deltaSeconds: number, map?: WorldMap,queue?:{elapsedSeconds:number;gateFor?:GateFor;team?:'player'|'enemy';services?:Map<string,ResourceService>;nodeVisible?:(node:ResourceNode)=>boolean;knownRemaining?:(node:ResourceNode)=>number}): GatheringState {
   const services=queue?.services??(map&&queue?resourceServices(state,map,queue.elapsedSeconds):undefined);
   const nodes = resourceNodes(state).map(node=>({...node}));
-  const workMap=map?{...map,obstacles:[...map.obstacles,...placementObstacles(state)]}:undefined;
+  const workMap=map?resourceWorkMap(map,state):undefined;
+  const baseSize=state.baseSize??gatheringConfig.baseSize,baseRect={x:state.base.x-baseSize/2,y:state.base.y-baseSize/2,width:baseSize,height:baseSize};
   const nextTree=(worker:Worker,node:ResourceNode)=>node.tree?nodes.filter(n=>n.tree&&n.remaining>0&&(!queue?.nodeVisible||queue.nodeVisible(n))).sort((a,b)=>Math.hypot(a.position.x-worker.position.x,a.position.y-worker.position.y)-Math.hypot(b.position.x-worker.position.x,b.position.y-worker.position.y)).find(n=>!workMap||canReachFootprint(workMap,worker.position,{x:n.position.x-16,y:n.position.y-16,width:32,height:32},gatheringConfig.range)):undefined;
   let goldBalance = state.goldBalance ?? 0;
   let wood = state.wood;
@@ -140,13 +141,13 @@ export function updateGathering(state: GatheringState, deltaSeconds: number, map
         continue;
       }
       const delivering = worker.order.kind === 'deliver';
-      const deliveryRects=[placementObstacles(state)[0],...(delivering?state.dropoffs??[]:[])].sort((a,b)=>Math.hypot(worker.position.x-a.x-a.width/2,worker.position.y-a.y-a.height/2)-Math.hypot(worker.position.x-b.x-b.width/2,worker.position.y-b.y-b.height/2));
+      const deliveryRects=[baseRect,...(delivering?state.dropoffs??[]:[])].sort((a,b)=>Math.hypot(worker.position.x-a.x-a.width/2,worker.position.y-a.y-a.height/2)-Math.hypot(worker.position.x-b.x-b.width/2,worker.position.y-b.y-b.height/2));
       const cachedDelivery=worker.navigation?.revision===map?.revision?deliveryRects.find(rect=>worker.navigation?.goalKey===`deliver:${nodeId}:${rect.x}:${rect.y}`):undefined;
       const deliveryRect=delivering&&map&&state.dropoffs?.length?(cachedDelivery??deliveryRects.find(rect=>approachRoute(map,worker.position,rect,gatheringConfig.deliveryRange).status!=='blocked')??deliveryRects[0]):deliveryRects[0];
       const destination = delivering ? {x:deliveryRect.x+deliveryRect.width/2,y:deliveryRect.y+deliveryRect.height/2} : node.position;
       const range = delivering ? gatheringConfig.deliveryRange : gatheringConfig.range;
       if (map) {
-        const workMap = { ...map, obstacles: [...map.obstacles, ...placementObstacles(state)] };
+        const workMapForStep=workMap!;
         const rect = delivering ? deliveryRect : {
           x:node.position.x-nodeRadius(node), y:node.position.y-nodeRadius(node),
           width:nodeRadius(node)*2, height:nodeRadius(node)*2 };
@@ -154,12 +155,12 @@ export function updateGathering(state: GatheringState, deltaSeconds: number, map
         const goalKey = `${worker.order.kind}:${nodeId}:${rect.x}:${rect.y}${service?`:service:${service.point.x}:${service.point.y}:${service.working}`:''}`;
         const cached = worker.navigation;
         const route = cached?.goalKey === goalKey && cached.revision === map.revision ? cached
-          : { ...(service?planRoute(workMap,worker.position,service.point,cached?.commandNumber??1):approachRoute(workMap, worker.position, rect, range, cached?.commandNumber ?? 1)), goalKey };
-        const step = advanceRoute(workMap, worker.position, route, workerStats(state.faction).speed, time,queue?.gateFor?.(`${queue?.team??'player'}:${worker.id}`));
+          : { ...(service?planRoute(workMapForStep,worker.position,service.point,cached?.commandNumber??1):approachRoute(workMapForStep, worker.position, rect, range, cached?.commandNumber ?? 1)), goalKey };
+        const step = advanceRoute(workMapForStep, worker.position, route, workerStats(state.faction).speed, time,queue?.gateFor?.(`${queue?.team??'player'}:${worker.id}`));
         worker.position = step.position;
         worker.navigation = { ...step.route, goalKey };
         time = step.remaining;
-        if (step.route.status !== 'arrived' || service&&!service.working || !canInteract(workMap, worker.position, rect, range)) break;
+        if (step.route.status !== 'arrived' || service&&!service.working || !canInteract(workMapForStep, worker.position, rect, range)) break;
       } else {
         const distance = Math.hypot(worker.position.x - destination.x, worker.position.y - destination.y);
         const travel = Math.max(0, distance - range) / workerStats(state.faction).speed;
