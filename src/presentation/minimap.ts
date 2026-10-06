@@ -1,3 +1,4 @@
+import {visibleDiscoveries} from './discoveries';
 import {forestVisuals} from './forestVisuals';
 import {terrainPatches} from '../gameplay/map';
 import {isAir} from '../gameplay/domains';
@@ -48,5 +49,6 @@ export type MinimapData=ReturnType<typeof visibleMinimapData>;
 export function visibleMinimapData(state:MatchState){
  const fog=state.fog;
  const data=minimapData(state,m=>!fog||m.owner==='player'||(m.owner==='enemy'?entityVisible(fog,'player',m):knownResource(fog,m.position)));
+ data.markers.push(...visibleDiscoveries(state).map(d=>({id:d.id,owner:'neutral' as const,position:d.position,color:d.opened?'#82775b':'#ebc863'})));
  return {...data,...(fog?{fog:{tileSize:fog.tileSize,columns:fog.columns,rows:fog.rows,visible:[...fog.teams.player.visible],explored:[...fog.teams.player.explored]}}:{})};
 }

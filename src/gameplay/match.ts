@@ -1,3 +1,4 @@
+import {createDiscoveries,updateDiscoveries,type DiscoveryState} from './discoveries';
 import {updateTransportTransfers} from './autoTransport';
 import {mapResources} from '../config/maps';
 import {campaignMission} from '../config/campaign';
@@ -75,6 +76,7 @@ import { updateWaves, type WaveState } from './waves';
 
 export type MatchOutcome = 'playing' | 'defeat' | 'victory';
 export interface MatchState {
+ discoveries?:DiscoveryState;
  multiplePlayers?:MultiplePlayers;
  aiContext?:AIContext;
  wildlife?:WildlifeState;
@@ -122,6 +124,7 @@ export function createMatch(scenario:MatchScenario='survival',difficulty:Difficu
   if(!isFactionId(factions.player)||!isFactionId(factions.enemy))throw Error('Unknown faction');
   if(!isAIProfile(aiProfile))throw Error('Unknown AI profile');
   const state: MatchState = {wildlife:{},
+    ...(scenario==='skirmish'&&!campaignId?{discoveries:createDiscoveries()}:{}),
     ...(campaignId?{campaignMission:campaignId,...(campaignPlans[campaignId]?{campaignRun:{version:1 as const,phase:0}}:{})}:{}),
     ...(aiProfile!=='balanced'?{aiProfile}:{}),
     statLedger:createStatLedger(),
@@ -229,7 +232,7 @@ function advance(state: MatchState, delta: number, scope?:CombatScope): MatchSta
   updated=updateEnemyExploration(updated);updated=updateWildlife(updated,ownDelta);
   const separated=separateBodies(updated.map,[...updated.gathering.units.filter(u=>!isAir(u)).map(u=>({id:`player:${u.id}`,position:u.position,fixed:u.commandMode?.kind==='hold'||u.order.kind==='idle'&&u.navigation?.status==='arrived',half:(u.kind==='worker'?workerStats(state.gathering.faction):combatUnitStats(u,state.gathering.faction)).size/2})),...updated.combat.enemies.filter(e=>!isAir(e)&&e.kind!=='ship'&&!e.footprint).map(e=>({id:`enemy:${e.id}`,position:e.position,half:enemySize(e)/2}))],delta);
   if(separated.size){updated.gathering={...updated.gathering,units:updated.gathering.units.map(u=>{const position=separated.get(`player:${u.id}`);return position?{...u,position,navigation:correctedNavigation(updated.map,position,(u.kind==='worker'?workerStats(state.gathering.faction):combatUnitStats(u,state.gathering.faction)).size/2,u.navigation)}:u;})};updated.combat={...updated.combat,enemies:updated.combat.enemies.map(e=>{const position=separated.get(`enemy:${e.id}`);return position?{...e,position,navigation:correctedNavigation(updated.map,position,enemySize(e)/2,e.navigation)}:e;})};}
-  updated=advanceSpells(updated,delta);updated=advanceEnemyAbilities(updated,delta);updated.gathering=advanceAbilities(updated.gathering,delta);updated.fog=matchFog(updated);const taught=updateTutorial(updated);if(taught!==updated){updated=taught;updated.fog=matchFog(updated);}return scope?updated:resolveOutcome(updated.campaignRun&&campaignPhase(updated)?.goal!=='operation'?{...updated,...(updated.capture?{capture:{holdSeconds:0}}:{})}:advanceCapture(state,updated,delta));
+  updated=advanceSpells(updated,delta);updated=advanceEnemyAbilities(updated,delta);updated.gathering=advanceAbilities(updated.gathering,delta);updated.fog=matchFog(updated);if(scope?.side!=='enemy')updated=updateDiscoveries(updated);const taught=updateTutorial(updated);if(taught!==updated){updated=taught;updated.fog=matchFog(updated);}return scope?updated:resolveOutcome(updated.campaignRun&&campaignPhase(updated)?.goal!=='operation'?{...updated,...(updated.capture?{capture:{holdSeconds:0}}:{})}:advanceCapture(state,updated,delta));
 }
 
 /** Split at existing gameplay and spell/AI boundaries, retaining delta-based gameplay rather than a fixed timestep. */

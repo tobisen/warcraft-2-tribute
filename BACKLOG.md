@@ -32,9 +32,11 @@
 - Workers kan få manuell attackorder med låg melee-skada; separera från soldierstats. Gathering/byggarbete kan avbrytas och återupptas enligt befintliga regler.
 - Fog, damage/domains, Save/load, selection och dubbla worker/army-grupper verifieras.
 
-### RTS-202 — Dolda skatter och upptäckbara allierade — Todo
+### RTS-202 — Dolda skatter och upptäckbara allierade — Done
 - Fasta kartconfigfynd som upptäcks genom faktisk spelarvision; engångsbelöning och ett begränsat urval gömda enheter som övergår till spelarens kontroll.
 - Ingen dold information genom minimap/UI; resursledger, population, kampanjmål, ägarskap och Save/load bevaras. Innehåll och belöningsnivå dokumenteras före implementation.
+
+- Innehåll202: endast nya expanded-skirmishmatcher på nio kartor; två kistor ×20wood+10gold och en fraktionsgrundsoldat per karta. Faktiskt synfält + egen markenhet inom48px öppnar/rekryterar. Full supply eller blockerad spawn väntar utan kostnad/duplication; render visar varför. Kampanj och äldre matcher behåller sitt innehåll. Stable config-ID/platser, intjänad bonus räknas separat från utvunnen stock i statistik, rekryt räknas som tillagd enhet.
 
 ### RTS-203 — Flera huvudbyggnader — Todo
 - Bygg ytterligare egna baser genom betalda workerjobb. Återanvänd byggbarhet, resursleverans, produktion, ownership/fog, selection, destruction och Save-version.

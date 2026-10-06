@@ -25,6 +25,7 @@
   "src/gameplay/controlGroups.test.ts",
   "src/gameplay/destruction.test.ts",
   "src/gameplay/difficulty.test.ts",
+  "src/gameplay/discoveries.test.ts",
   "src/gameplay/dismiss.test.ts",
   "src/gameplay/enemyAI.test.ts",
   "src/gameplay/enemyBase.test.ts",

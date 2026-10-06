@@ -1826,3 +1826,6 @@ Presentationens camerahelpers översätter Phaser centrumorigin till synlig top-
 
 ## RTS-201 — Workerattack genom befintlig combat
 WorkerOrder inkluderar attack; updateGathering lämnar denna till updateCombat som väljer workerCombatConfig och workerStats för melee/routing. EnemyVisibility tar Unit-observatörer, acquisition är fortfarande soldier-only. Commands/Save/markers återanvänder gemensam enemyId; Save59 skyddar äldre versioners workerorder. Ingen separat combatupdater eller worker-AI tillförs.
+
+## RTS-202 — Finita fynd
+config/discoveries.ts äger nio kartors authored platser och bonusnivå. gameplay/discoveries.ts updaterar optional MatchState.discoveries efter livefog i match-loopens playerscope; bounded tre finds, egna IDs/counters/supply via befintlig spawn/production. StatBonus härleds från claimed IDs. Presentation/discoveries.ts härleder endast current-visible sprites/labels/minimap och målar original32px CanvasTexture-kistor; BootScene adapterar Phaser. Save60 validerar identity/explored/treasury/recruitrefs; äldre state utan discoveries aktiveras inte automatiskt.

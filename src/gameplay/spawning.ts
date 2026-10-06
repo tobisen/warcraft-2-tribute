@@ -42,9 +42,9 @@ export function hasSpawnExit(map:WorldMap,point:Position):boolean {
 }
 
 export function chooseSpawn(map:WorldMap,footprint:Footprint,kind:'base'|'barracks',
-  units:Unit[],enemies:readonly PositionedBody[],size=kind==='base'?unitStats.size:soldierStats.size):Position|null {
+  units:Unit[],enemies:readonly PositionedBody[],size=kind==='base'?unitStats.size:soldierStats.size,eligible:(point:Position)=>boolean=()=>true):Position|null {
   const mapWithBuilding={...map,bodyHalf:size/2,obstacles:[...map.obstacles,footprint]};
-  return spawnCandidates(mapWithBuilding,footprint,kind,size).find(p=>hasSpawnExit(mapWithBuilding,p)
+  return spawnCandidates(mapWithBuilding,footprint,kind,size).find(p=>eligible(p)&&hasSpawnExit(mapWithBuilding,p)
     && !units.some(u=>overlaps(unitBody(p,size),unitBody(u.position,u.kind==='worker'?unitStats.size:combatUnitStats(u).size)))
     && !enemies.some(e=>overlaps(unitBody(p,size),unitBody(e.position,otherBodySize(e)))))??null;
 }

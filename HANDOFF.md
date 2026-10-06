@@ -1,3 +1,9 @@
+# RTS-202 klar — fortsätt203
+
+202 nya skirmishfynd på alla nio kartor: två20wood+10goldkistor och en grundsoldat, vision/närkontakt/supply/säker spawn/Save60. Unit475/85, riktade86/7 och tidigare47/5, strict build/diff, Chrome800/1280 fysisk utforskning/claim/recruit/SaveLoad PASS; artifacts/rts-202.201 pushd95468b;202 hash rapporteras vid push. Nästa203 fler huvudbyggnader: detaljera kostnad/kö/dropoff/defeat före implementation. Campaign/äldre matcher får inga nya fynd; AI samlar dem inte. CSS/docs bevarade; fullregression vid etappslut.
+
+---
+
 # RTS-201 klar — fortsätt202
 
 201 manuellt workermelee2DPS/16px, cargo/orderbyte/fog/domän/Save59. Riktade89/7 + slutlig workercombat7/1, unit475/85, strict build/diff och fysisk Chrome800/1280 attack/SaveLoad/gather PASS; artifacts/rts-201.200 push30f9734;201 hash rapporteras vid push. Nästa202: detaljera begränsade skatter/upptäckbara enheter före config/state/assets. Ingen autonom enemyworkercombat. CSS/docs bevarade; samlad fullregression vid etappslut.

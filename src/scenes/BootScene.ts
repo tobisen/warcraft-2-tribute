@@ -1,3 +1,5 @@
+import {visibleDiscoveries,paintDiscoveryChest} from '../presentation/discoveries';
+import type {DiscoveryState} from '../gameplay/discoveries';
 import {workerCombatConfig} from '../config/unit';
 import {cancelSelectedTransfers,requestTransport} from '../gameplay/autoTransport';
 import {syncSkirmishMenu} from '../presentation/skirmishMenu';
@@ -185,6 +187,8 @@ export class BootScene extends Phaser.Scene {
   private selectedResource:string|null=null;
   private selectedAnimal:string|null=null;
   private wildlife:WildlifeState={};
+  private discoveries?:DiscoveryState;
+  private discoveryVisuals=new Map<string,{image:Phaser.GameObjects.Image;label:Phaser.GameObjects.Text}>();
   private animalFeedback?:Phaser.GameObjects.Graphics;
   private animalHP=new Map<string,number>();
   private rallyMarker!: Phaser.GameObjects.Arc;
@@ -274,6 +278,8 @@ export class BootScene extends Phaser.Scene {
     if(!loaded)document.getElementById('save-status')!.textContent='';
     const fresh=()=>({matchId:crypto.randomUUID(),...createMatch(this.scenario,this.difficulty,this.factions,(this.campaignMission?campaignPlans[this.campaignMission]?.map:undefined)??this.session.options.map,this.session.options.speed??1,this.session.options.aiProfile,this.session.options.players,this.campaignMission),...(this.campaignMission?{campaignMission:this.campaignMission,...(this.campaignRun?.campaignId?{campaignRun:{version:1 as const,phase:0,campaignId:this.campaignRun.campaignId}}:{})}:{})});
     this.applyMatch(loaded?.match??fresh());
+    this.discoveryVisuals.clear();
+    for(const opened of [false,true]){const key=opened?'discovery-open':'discovery-chest';if(!this.textures.exists(key)){const texture=this.textures.createCanvas(key,32,32)!;paintDiscoveryChest(texture.context,opened);texture.refresh();}}
     this.game.canvas.tabIndex=0;this.game.canvas.setAttribute('aria-label',uiText.gameWorld);
     const groupKey=(event:KeyboardEvent)=>{
       if(!gameplayKeyAllowed(keyboardContext(event,this.gameplayActive()))||!validGroup(event.key))return;
@@ -820,6 +826,17 @@ export class BootScene extends Phaser.Scene {
     this.placementAttempt=reason?{x:rect.x,y:rect.y,reason}:null;
   }
 
+  private syncDiscoveries():void {
+    const finds=visibleDiscoveries(this.currentMatch()),ids=new Set(finds.map(d=>d.id));
+    for(const [id,v]of this.discoveryVisuals)if(!ids.has(id)){v.image.destroy();v.label.destroy();this.discoveryVisuals.delete(id);}
+    for(const d of finds){
+      const frame=d.kind==='recruit'?unitFrame(motion(undefined,d.position,'idle',0,'soldier','player',undefined,this.factions.player),0):undefined,key=d.kind==='recruit'?'units':d.opened?'discovery-open':'discovery-chest';
+      let v=this.discoveryVisuals.get(d.id);if(!v){v={image:this.add.image(d.position.x,d.position.y,key,frame).setOrigin(.5,d.kind==='recruit'?22/32:.75),label:this.add.text(d.position.x,d.position.y-30,d.label,{fontSize:'11px',color:'#efdaa4',backgroundColor:'#17271dcc'}).setOrigin(.5,1)};this.discoveryVisuals.set(d.id,v);}
+      v.image.setTexture(key,frame).setDepth(1+d.position.y/this.map.height*4);if(d.kind==='recruit')v.image.setTint(0xd5c391);
+      v.label.setText(d.label).setDepth(8);
+    }
+  }
+
   private syncPlacement(): void {
     const forge=this.placement.forge;
     if(!forge&&this.forgeVisual){this.forgeVisual.destroy();this.forgeVisual=undefined;}
@@ -918,7 +935,7 @@ export class BootScene extends Phaser.Scene {
     this.restartButton.disabled = this.restartPending;
     const definition=scenarioConfig[this.scenario];
     this.matchStatus.textContent=this.campaignRun?(this.outcome==='victory'?'Victory — all campaign objectives complete.':this.outcome==='defeat'?'Defeat — your base or required courier was lost.':campaignObjective(this.currentMatch())):this.outcome==='defeat'?uiText.defeatYourBaseWasDestroyed:this.outcome==='victory'?definition.victory==='enemy-base'?uiText.victoryTheEnemyBaseWasDestroyed:definition.victory==='timer'?uiText.victoryTheOutpostSurvivedFor90Seconds:uiText.victoryAllWavesDefeated:this.scenario==='skirmish'?(maps[this.map.id??'arena'].instruction??definition.instruction):definition.instruction;
-    this.syncPlacement();this.syncNavy();
+    this.syncPlacement();this.syncNavy();this.syncDiscoveries();
     const crowns=forestVisuals(this.gathering,this.fog),crownIds=new Set(crowns.map(c=>c.id));for(const [id,image] of this.forestImages)if(!crownIds.has(id)){image.destroy();this.forestImages.delete(id);}for(const crown of crowns){if(!this.forestImages.has(crown.id))this.forestImages.set(crown.id,this.add.image(crown.x,crown.y,'reference-terrain',crown.frame).setOrigin(.5,1));this.forestImages.get(crown.id)!.setFrame(crown.frame).setDepth(1+crown.y/this.map.height*4);}
     const gold=this.gathering.gold!;if(gold.mine)this.goldVisual.setTexture('reference-terrain',gold.remaining<=0&&isVisible(this.fog,'player',gold.position)?'mine-empty':'mine-full').setOrigin(.5,.75).setDepth(1+(gold.position.y+20)/this.map.height*4);else this.goldVisual.setFrame(resourceFrame('gold',gold.remaining,isVisible(this.fog,'player',gold.position)));
     this.nodeVisual.setVisible(!this.gathering.node.tree&&knownResource(this.fog,this.gathering.node.position));
@@ -1071,7 +1088,7 @@ export class BootScene extends Phaser.Scene {
     this.syncVisuals();
   }
 
-  private currentMatch():MatchState {return {...(this.session.options.aiProfile&&this.session.options.aiProfile!=='balanced'?{aiProfile:this.session.options.aiProfile}:{}),multiplePlayers:this.multiplePlayers,wildlife:this.wildlife,armyPlan:this.armyPlan,matchId:this.matchId,capture:this.capture,campaignMission:this.campaignMission,campaignRun:this.campaignRun,statLedger:this.statLedger,tutorial:this.tutorial,speed:this.session.options.speed??1,enemyNaval:this.enemyNaval,navy:this.navy,factions:{...this.factions},map:this.map,gathering:this.gathering,combat:this.combat,waves:this.waves,production:this.production,soldierProduction:this.soldierProduction,placement:this.placement,outcome:this.outcome,paused:!this.simulationActive(),controlGroups:this.controlGroups,fog:this.fog,research:this.research,scenario:this.scenario,difficulty:this.difficulty,enemyProduction:this.enemyProduction,enemyAI:this.enemyAI,enemyConstruction:this.enemyConstruction,enemyPolicy:this.enemyPolicy,enemyRecovery:this.enemyRecovery,enemyKnowledge:this.enemyKnowledge};}
+  private currentMatch():MatchState {return {discoveries:this.discoveries,...(this.session.options.aiProfile&&this.session.options.aiProfile!=='balanced'?{aiProfile:this.session.options.aiProfile}:{}),multiplePlayers:this.multiplePlayers,wildlife:this.wildlife,armyPlan:this.armyPlan,matchId:this.matchId,capture:this.capture,campaignMission:this.campaignMission,campaignRun:this.campaignRun,statLedger:this.statLedger,tutorial:this.tutorial,speed:this.session.options.speed??1,enemyNaval:this.enemyNaval,navy:this.navy,factions:{...this.factions},map:this.map,gathering:this.gathering,combat:this.combat,waves:this.waves,production:this.production,soldierProduction:this.soldierProduction,placement:this.placement,outcome:this.outcome,paused:!this.simulationActive(),controlGroups:this.controlGroups,fog:this.fog,research:this.research,scenario:this.scenario,difficulty:this.difficulty,enemyProduction:this.enemyProduction,enemyAI:this.enemyAI,enemyConstruction:this.enemyConstruction,enemyPolicy:this.enemyPolicy,enemyRecovery:this.enemyRecovery,enemyKnowledge:this.enemyKnowledge};}
 
   private addImpact(impact:Impact):void {
     if(!canAddImpact([...this.impacts.values()].map(e=>e.impact),impact))return;
@@ -1128,7 +1145,7 @@ export class BootScene extends Phaser.Scene {
   }
   private applyMatch(match: MatchState): void {
     this.multiplePlayers=match.multiplePlayers;
-    this.wildlife=match.wildlife??{};this.armyPlan=match.armyPlan;
+    this.discoveries=match.discoveries;this.wildlife=match.wildlife??{};this.armyPlan=match.armyPlan;
     this.matchId=match.matchId;
     this.capture=match.capture;
     this.campaignMission=match.campaignMission;this.campaignRun=match.campaignRun;

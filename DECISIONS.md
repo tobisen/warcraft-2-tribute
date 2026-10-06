@@ -1551,3 +1551,6 @@ Tidigare beslut om ingen efterhands-smoothing ersätts inom denna task: linjär 
 
 ## RTS-201 — Manuellt workermelee
 Alla fem fraktioners workers har2damage/s och16px surface-range, egen config utanför soldierstats. Endast manuella attacker/Shift-attackqueue; inga military researchbonus eller auto-acquisition. Arbetsorder ersätts medan last bevaras, ny arbetsorder återupptar enligt befintliga regler. Land/buildingtargets, Save59 med explicit pre59-innehållskontroll. EnemyAI-workpolicy oförändrad.
+
+## RTS-202 — Avgränsade skirmishfynd
+Nya skirmishmatcher på alla nio kartor: två20wood+10goldkistor och en fraktionsgrundsoldat per karta, fasta authored ID/platser i config/discoveries.ts. Vision+own living ground inom48px och kroppsgiltig direktaccess krävs. Rekryt använder vanlig supply och reachable/ledig spawn; full cap väntar. Kampanj och laddade äldre matcher får inga nya bonusar, så intro/objectives består. Claimed/recruit-ledger är separat från finite minedstock; resource spent inkluderar bonus, gathered mäter fortfarande utvinning. Save60 migrerar59 utan aktivering av nya fynd. Ingen ny neutral-AI eller randomisering.
