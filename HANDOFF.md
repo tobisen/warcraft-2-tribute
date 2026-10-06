@@ -6,7 +6,7 @@ ny egen källgrafik.206 separerar actiongrupper och större ikoner.207 ger
 separata Tech Tree/Commands med noddetaljer, faktiska bindings och blockerande
 stängbara hjälpdialoger. [BATCH_1.md](BATCH_1.md) samlar före/efterbilder,
 proveniens och taskvis verifiering.205 push a87d781;206 push a1b5cd7.
-207:s leveranshash kompletteras efter taskcommit.
+207 push e4343b9.
 
 Ny verifiering: full `npm test`1616/192 PASS652.44s; slutlig unit481/88
 PASS15.96s; build inklusive strict typecheck PASS487ms (befintlig bundlevarning);

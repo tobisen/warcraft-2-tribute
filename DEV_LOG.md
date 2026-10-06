@@ -3538,3 +3538,6 @@ snapshots uppdaterade till slutlig topbar. Markdownreferenser/diff PASS.
 Review utan kvarstående blockerande fynd; gameplay/Save/terränggeometri
 oförändrade och användarens CSS/units.mjs/docs bevarade.207 Done och batchstopp
 före208. Ingen ny CI/Pages/release eller mänsklig ljud-/balansverifiering.
+
+207 taskcommit e4343b9 pushad till origin/main utan force. Slutlig handoff
+kompletterad med de tre taskhasharna; enbart Markdown, diff/textchecks gäller.

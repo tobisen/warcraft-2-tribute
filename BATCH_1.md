@@ -111,3 +111,5 @@ Första dialogens detaljer kom för långt ned i800; tätare header och separat
 nodscroll rättade detta och slutbilderna granskades.31/5 riktade PASS;
 unit481/88 PASS15.96s; build med strict typecheck PASS487ms och befintlig
 bundlevarning. Slutlig `npm test`:1616/192 PASS652.44s; `git diff --check` och Markdownreferenser PASS. Actiongrupps-browsern återkörd efter topbarändringen PASS;206-bilderna visar slutlig207-topbar. Ingen ny CI-/Pages-/releaseverifiering. Batch1 avslutad; stanna före208.
+
+Leveranscommits till origin/main:205 `a87d781`,206 `a1b5cd7`,207 `e4343b9`.
