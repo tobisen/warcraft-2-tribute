@@ -1,0 +1,16 @@
+[
+  {
+    "width": 800,
+    "physicalBoarding": true,
+    "automaticUnload": true,
+    "saveLoad": true,
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "physicalBoarding": true,
+    "automaticUnload": true,
+    "saveLoad": true,
+    "errors": []
+  }
+]

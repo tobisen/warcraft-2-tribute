@@ -8,7 +8,7 @@
 - Samla alla synliga byggknappar på en rad när utrymmet räcker, annars två. Behåll ikoner, hotkeys, disabled-status och selectionflöde.
 - Granska actual Native800/1280/1920 med worker vald; ändra separat layout-CSS, bevara befintlig style.css.
 
-### RTS-196 — Automatisk närkontakt för transport — Todo
+### RTS-196 — Automatisk närkontakt för transport — Done
 - Load/Unload hittar närmaste synliga nåbara strand inom begränsad radie; båt/trupper går dit och genomför lastning utan pixelprecision.
 - Återanvänd land-/sjövägar, kapacitet och säker landstigning. Inga teleporter genom hinder eller fog; avbrutna order, full båt, blockerad strand och Save/load verifieras.
 

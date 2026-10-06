@@ -3387,3 +3387,9 @@ Slutliga resultat redovisas nedan; misslyckade/avbrutna förkontroller är histo
 ## 2026-10-06 — RTS-195
 
 Separat matchWorkspace.css samlar sju byggknappar på en rad över1100px och två under; bottom-bar reserverar faktisk actionbredd. Befintlig style.css/docs bevarade. Chrome Native800/1280/1920 sju actions/radantal/labels/status PASS, screenshots i artifacts/rts-195;800bild visuellt granskad. Harnessen rättades efter syntaxfel och felaktigt överlappstest mot dold kö; felkörningarna är inte PASS. Unit472/85 PASS11.63s, strict build PASS375ms, diff PASS. Ren layout kräver ingen bred kampanjsimulering. Egen layout-/diffreview utan blockerande fynd. Nästa196 automatisk transportkontakt.
+
+## 2026-10-06 — RTS-196
+
+Automatisk strandplanering för högerklicksboarding och Unload/L. Tvåsidig förflyttning med vanliga routes, kapacitet och befintlig faktisk load/unload. Jobs är knutna till valda landunits/ursprungliga targets och avbryts av ersättningsorder, Stop/Hold, död eller30s. Save58 bevarar aktiva jobb, validates refs/geometri och migrerar57; README/hotkey-guide uppdaterade.
+
+Slutlig riktad autoTransport/commandOrders/transport/save/destruction63/5 PASS3.00s; tidigare multiplayer/save/transport49/3 och utökat67/5 PASS innan slutliga cancellationfixar. Slutlig unit472/85 PASS11.55s, strict build PASS336ms, manifest85/97 och diff PASS. Faktisk Chrome800/1280 två-truppsval→högerklick båt→Stop→ny lastning→automatisk Unload→SaveLoad PASS, artifacts/rts-196.800landstigningsbild visuellt granskad. Extra verifiering efter konkret exakt-Stop/dödsref-fynd; första Savefixture hade fel fartygsHP/obetald stock och browserns snabba Shiftval var instabilt, rättade utan att räkna felkörningar PASS. Egen API/Save/cancellation/diffreview utan kvarvarande blockerande fynd. Ingen ny bred kampanjregression/CI/Pages; samlad regression vid gameplayetappens slut. CSS/docs bevarade. Nästa197 placementrespons.

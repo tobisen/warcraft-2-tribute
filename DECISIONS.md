@@ -1532,3 +1532,7 @@ RTS-194 slutlig prestandahantering: exakta observer-/terrain-LOS-resultat återa
 ## 2026-10-06 — RTS-195
 
 Buildgruppen använder sju44px-kolumner på bred viewport, fyra40px-kolumner vid max1100px (två rader). Bottom-bar reserverar max-content för actiongruppen så ikoner inte skjuter in i kö/minimap. Befintlig användar-CSS ändras inte; separat matchWorkspace.css har senare kaskad.
+
+## 2026-10-06 — RTS-196
+
+Separat autoTransport planerar lokalt synligt nåbart coastmöte inom256px från båt och512px från boardingtrupp. Befintlig load/unload implementerar faktisk övergång/capacity/HP/last/supply; inga teleporter. Planerade landformationer och sjövägar används tills båda sidor är framme. Jobbet har30s gräns; nya order/Stop/Hold eller deltagardöd avbryter. Båten behåller vald status; ombordstigna/landsatta units är inte automatiskt valda. Saknad automatisk unloadplats behåller tidigare manuellt läge. Save58 lagrar jobb/goalrefs/timer, validerar land/sjö/contact/order/capacity och migrerar57 utan nya order. Alla äldre versioner avvisar transferfält.

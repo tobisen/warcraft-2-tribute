@@ -48,7 +48,7 @@ export function issueOrder(m:MatchState,o:QueuedOrder,append=false):MatchState {
   if(append&&(u.order.kind!=='idle'||u.commandMode||u.orderQueue?.length))return {...u,orderQueue:[...(u.orderQueue??[]),structuredClone(command)].slice(0,orderQueueLimit)};
   return (o.kind==='move'||o.kind==='attack-move')&&allocated?{...allocated,selected:u.selected}:start(m,u,command);
  };
- return {...m,gathering:{...m.gathering,units:m.gathering.units.map(u=>apply(u) as Unit)},...(m.navy?{navy:{...m.navy,ships:m.navy.ships.map(u=>apply(u) as Ship)}}:{})};
+ return {...m,gathering:{...m.gathering,units:m.gathering.units.map(u=>apply(u) as Unit)},...(m.navy?{navy:{...m.navy,ships:m.navy.ships.map(u=>{const ship=apply(u) as Ship;return !append&&u.transfer&&(u.selected&&supports(u,o)||m.gathering.units.some(unit=>unit.selected&&supports(unit,o)&&u.transfer!.unitIds.includes(unit.id)))?{...ship,transfer:undefined}:ship;})}}:{})};
 }
 /** Completion starts the next order on the next simulation step, without inventing elapsed work. */
 export function prepareOrders(m:MatchState):MatchState {

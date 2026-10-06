@@ -4,6 +4,7 @@
   "src/gameplay/aiProfiles.test.ts",
   "src/gameplay/air.test.ts",
   "src/gameplay/archer.test.ts",
+  "src/gameplay/autoTransport.test.ts",
   "src/gameplay/baseUpgrade.test.ts",
   "src/gameplay/beginner.test.ts",
   "src/gameplay/campaign.test.ts",

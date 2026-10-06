@@ -17,7 +17,7 @@ export const hotkeys=[
  {key:'H',button:'build-harbor',label:'Build a harbor with a selected worker at a visible, valid coastal site. Pay the displayed cost at placement.'},
  {key:'J',button:'train-transport',label:'Train a transport at the selected completed harbor. Requires resources, supply and a free queue slot.'},
  {key:'K',button:'train-ship',label:'Train a warship at the selected completed harbor. Requires resources, supply and a free queue slot.'},
- {key:'L',button:'unload-transport',label:'Unload the selected transport. Click a visible free landing within 64 world pixels; all passengers must fit.'},
+ {key:'L',button:'unload-transport',label:'Unload at the nearest visible reachable coast within 256px. All passengers must fit; choose land manually if no coast is found.'},
  {key:'V',button:'train-specialist',label:'Train the faction specialist at selected barracks. Requires its forge/research prerequisites, resources, supply and queue capacity.'},
  {key:'DELETE',button:'dismiss-units',label:'Dismiss selected own units. Confirmation includes transport passengers; no refund or kill credit.'},
  {key:'E',button:'unit-ability',label:uiText.factionAbilitySelectedCombatUnitsThatAreReady},

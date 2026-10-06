@@ -24,7 +24,7 @@ import {domainMap,coastalFootprint,planDomainRoute,advanceDomainRoute} from './t
 import type {RouteState} from './navigation';
 import type {Position} from './movement';
 import type {MatchState} from './match';
-export interface Ship extends SelectableUnit, OrderState {kind:'ship';role?:'warship'|'transport';passengers?:Unit[];owner:'player';hp:number;attackCooldown?:number;order:{kind:'idle'|'move'}|{kind:'attack';enemyId:string}|{kind:'hunt';animalId:string};navigation?:RouteState}
+export interface Ship extends SelectableUnit, OrderState {transfer?:import('./autoTransport').TransportTransfer;kind:'ship';role?:'warship'|'transport';passengers?:Unit[];owner:'player';hp:number;attackCooldown?:number;order:{kind:'idle'|'move'}|{kind:'attack';enemyId:string}|{kind:'hunt';animalId:string};navigation?:RouteState}
 export interface Harbor {owner:'player';hp:number;footprint:Footprint;construction:ConstructionJob}
 export interface NavyState {harbor:Harbor|null;ships:Ship[];production:ProductionState}
 export const createNavy=():NavyState=>({harbor:null,ships:[],production:{remainingSeconds:null,nextUnitNumber:1}});
@@ -70,7 +70,7 @@ export function trainShip(m:MatchState,role:'warship'|'transport'='warship'):Mat
 export function commandShips(m:MatchState,target:Position):NavyState|undefined {
  if(!m.navy)return undefined;
  const water=domainMap(m.map,'water'),routes=allocateFormation(m.navy.ships.filter(s=>s.selected).map(s=>({id:s.id,position:s.position,half:shipRecipe(m,s.role).size/2,domain:'water',map:water,commandNumber:(s.navigation?.commandNumber??0)+1})),target);
- return {...m.navy,ships:m.navy.ships.map(s=>{const navigation=routes.get(s.id);return navigation?{...s,commandMode:undefined,orderQueue:undefined,target:{...navigation.destination},navigation,order:{kind:navigation.status==='moving'?'move' as const:'idle' as const}}:s;})};
+ return {...m.navy,ships:m.navy.ships.map(s=>{const navigation=routes.get(s.id);return navigation?{...s,transfer:undefined,commandMode:undefined,orderQueue:undefined,target:{...navigation.destination},navigation,order:{kind:navigation.status==='moving'?'move' as const:'idle' as const}}:s;})};
 }
 export function updateNavy(m:MatchState,delta:number):MatchState {
  if(!m.navy||m.outcome!=='playing'||m.paused||!!m.multiplePlayers&&m.combat.baseHP<=0||m.combat.baseHP<=0)return m;
@@ -95,8 +95,8 @@ export function resumeHarbor(m:MatchState):MatchState {
  if(!builder||approachRoute(m.map,builder.position,harbor.footprint,factionForTeam(m,'player').naval.harbor.constructionRange).status==='blocked')return m;
  return {...m,navy:{...m.navy!,harbor:{...harbor,construction:{...harbor.construction,builderId:builder.id}}},gathering:{...m.gathering,units:m.gathering.units.map(u=>u.kind==='worker'&&u.id===builder.id?{...u,commandMode:undefined,orderQueue:undefined,navigation:undefined,order:{kind:'build' as const,buildingId:'harbor' as const}}:u.order.kind==='build'&&u.order.buildingId==='harbor'?{...u,commandMode:undefined,orderQueue:undefined,navigation:undefined,order:{kind:'idle' as const}}:u)}};
 }
-export function stopShips(navy:NavyState|undefined){return navy?{...navy,ships:navy.ships.map(s=>s.selected?{...s,commandMode:undefined,orderQueue:undefined,navigation:undefined,target:{...s.position},order:{kind:'idle' as const}}:s)}:undefined;}
+export function stopShips(navy:NavyState|undefined){return navy?{...navy,ships:navy.ships.map(s=>s.selected?{...s,transfer:undefined,commandMode:undefined,orderQueue:undefined,navigation:undefined,target:{...s.position},order:{kind:'idle' as const}}:s)}:undefined;}
 
-export function attackShips(m:MatchState,enemyId:string):NavyState|undefined {return m.navy?{...m.navy,ships:m.navy.ships.map(s=>s.selected&&s.role!=='transport'?{...s,commandMode:undefined,orderQueue:undefined,navigation:undefined,order:{kind:'attack' as const,enemyId}}:s)}:undefined;}
+export function attackShips(m:MatchState,enemyId:string):NavyState|undefined {return m.navy?{...m.navy,ships:m.navy.ships.map(s=>s.selected&&s.role!=='transport'?{...s,transfer:undefined,commandMode:undefined,orderQueue:undefined,navigation:undefined,order:{kind:'attack' as const,enemyId}}:s)}:undefined;}
 
 export function passengerUnits(navy:NavyState|undefined):Unit[]{return navy?.ships.flatMap(s=>s.passengers??[])??[];}

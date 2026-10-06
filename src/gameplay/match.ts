@@ -1,3 +1,4 @@
+import {updateTransportTransfers} from './autoTransport';
 import {mapResources} from '../config/maps';
 import {campaignMission} from '../config/campaign';
 import {campaignPlans} from '../config/campaignPhases';
@@ -223,7 +224,7 @@ function advance(state: MatchState, delta: number, scope?:CombatScope): MatchSta
   let updated:MatchState={...cleaned,...(enemyPolicy?{enemyPolicy}:{}),...(vision?{fog:vision}:{}),research,...(enemy.state?{enemyProduction:enemy.state}:{}),...(ai.state?{enemyAI:ai.state}:{}),gathering:soldier.gathering,combat:incoming.combat,waves:incoming.waves,
     production:{...worker.production,nextUnitNumber},soldierProduction:{...soldier.production,nextUnitNumber}};
   const beforeNavyCompletion=readyBuildings(updated);
-  updated=updateNavy(updated,ownDelta);
+  updated=updateTransportTransfers(updateNavy(updated,ownDelta),ownDelta);
   updated={...updated,statLedger:recordCompletions(beforeNavyCompletion,updated)};
   updated=updateEnemyExploration(updated);updated=updateWildlife(updated,ownDelta);
   const separated=separateBodies(updated.map,[...updated.gathering.units.filter(u=>!isAir(u)).map(u=>({id:`player:${u.id}`,position:u.position,fixed:u.commandMode?.kind==='hold',half:(u.kind==='worker'?workerStats(state.gathering.faction):combatUnitStats(u,state.gathering.faction)).size/2})),...updated.combat.enemies.filter(e=>!isAir(e)&&e.kind!=='ship'&&!e.footprint).map(e=>({id:`enemy:${e.id}`,position:e.position,half:enemySize(e)/2}))],delta);
