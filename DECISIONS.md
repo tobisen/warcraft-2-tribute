@@ -1506,3 +1506,7 @@ Skirmish-sidan öppnas uttryckligen i Skirmish, medan Survival är separat scena
 ## 2026-10-06 — RTS-191: individuella skogsträd
 
 Nya Frontier-matcher använder resourceLayout=trees och Save54. Ett träd per tidigare crowncell har stabilt resurs-ID och32×32 markfootprint; befintliga400/200wood delas mellan cellerna utan extra ekonomi. Källatlas har ett synligt träd per sprite. Stock0 ger stubbe och borttaget hinder; en gemensam obstacle-revision per simulationsslice invaliderar routes. Byte efter uttömning/leverans väljer närmaste synliga nåbara träd, AI-jobbtilldelning kräver nåbarhet. Äldre saves utan resourceLayout behåller tidigare groves och konturer; inga gamla order-ID:n/koordinater omtolkas. Gemensamt underlag sprids till övriga kartor i193.
+
+## 2026-10-06 — RTS-192: gruvmotiv och berg
+
+Originala Surface-pixelbrushes utökar referenceatlas med96px gruva (entré/timmer/rails/malm, ljus nordväst) och sammanhängande plana klipptoppar med mörka syd-/östsidor. Gruvans synliga polygon styr hit,40px footprint styr arbete/navigation; ingen ny blockering/byggbarhetsändring. Normaliserad world-y-djupsortering för markenheter/träd/gruva ligger under befintliga effekter/luft/overlay. Save55 migrerar54:s gold presentationmarkering; äldre grovematcher behåller tidigare gruvhit.

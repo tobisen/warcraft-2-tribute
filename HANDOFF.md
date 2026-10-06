@@ -1,3 +1,9 @@
+# RTS-192 klar — kartfas fortsätter med193
+
+191 push036e306.192 Frontier-gruva/berg/korrekt workerdepth/Save55 klar: riktade18/3, unit471/85, strict build/diff och fysisk Chrome800/1280 PASS. Före/efter artifacts/rts-191/rts-192. Gruva96px visuell storlek,40px collision/arbete bevaras. Nästa193 sprider systemet till alla spelkartor;194 förstorar och samlar slutregression/performance. CSS/docs bevarade, ingen CI/Pagesclaim.
+
+---
+
 # Pågående kartfas RTS-191–194
 
 191 klar:142 individuellt valbara/skördbara Frontierträd, bevarad600woodtotal,32px collision, stubbe/öppnad mark, nåbart nästa träd och AI-val, per-träd fog/Save54. Äldre sparningar behåller groves. Riktade65/7, unit471/85, strict build/diff och Chrome800/1280 PASS; artifacts/rts-191 har före/efter och browser.json. Nästa192 gruva/berg i Frontier, därefter193 spridning och194 verklig kartförstoring till128×128/4096px. CSS/docs bevarade. Ingen ny CI/Pages eller fullregression hävdas; slutregression/prestanda efter194. Stanna efter194.

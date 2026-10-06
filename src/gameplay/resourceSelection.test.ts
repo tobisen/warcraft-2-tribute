@@ -36,7 +36,7 @@ it.each(['wood','gold'] as const)('bottom bar displays live %s stock and depleti
 });
 it('expansion nodes use the same selection and visibility rules',()=>{
  const m=createMatch('skirmish','beginner',undefined,'frontier');
- for(const node of m.gathering.extraNodes!){expect(pick(m,node.position).resource).toBeNull();reveal(m,node.position);expect(pick(m,node.position).resource).toBe(node.id);expect(selectionInfo(m,null,node.id).detail).toContain(String(node.remaining));}
+ for(const node of m.gathering.extraNodes!){m.fog!.teams.player.explored.fill(false);m.fog!.teams.player.visible.fill(false);expect(pick(m,node.position).resource).toBeNull();reveal(m,node.position);expect(pick(m,node.position).resource).toBe(node.id);expect(selectionInfo(m,null,node.id).detail).toContain(String(Math.ceil(node.remaining)));}
 });
 
 it('inspects every farm and forge, preserving orders and unit priority',async()=>{

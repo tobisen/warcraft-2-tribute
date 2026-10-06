@@ -11,11 +11,11 @@
 - Nåbara arbetsplatser, tät blockerande skog, tydlig onåbarhet; uttömning öppnar collision/navigation och visar stubbe. Nåbart nästa träd, befintlig last/leverans, fog och strikt Save-kompatibilitet.
 - Frontier först; riktade flera-träd/workers/uttömning/passage/Save-tester och browser. Gemensamt underlag för övriga kartor i193. Ingen separat tung per-träd-tick.
 
-### RTS-192 — Detaljerad gruva och sammanhängande berg — In Progress
+### RTS-192 — Detaljerad gruva och sammanhängande berg — Done
 - Frontier först: egna större gruvassets med entré, klippvolym/material och konsekvent ljus. Klickyta följer motiv; workers/entré nåbara och synliga, korrekt djupsortering.
 - Separera visuell storlek från footprint; ändra collision endast vid behov med navigation/byggbarhetsbelägg. Selection visar stock. Före/efter och browser i faktisk spelstorlek.
 
-### RTS-193 — Gemensam terräng på alla spelkartor — Todo
+### RTS-193 — Gemensam terräng på alla spelkartor — In Progress
 - Inventera nio skirmishkartor och kampanjens faktiska kartval. Sprid Frontiers gräs/jord/skog/kust/vatten/gruva/berg med individuella träd; bevara layout och strategisk variation.
 - Grafik/collision/byggbarhet/land och sjö stämmer; riktade navigation/objective-tester och visuell browsergranskning.
 

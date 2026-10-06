@@ -902,15 +902,15 @@ export class BootScene extends Phaser.Scene {
     const definition=scenarioConfig[this.scenario];
     this.matchStatus.textContent=this.campaignRun?(this.outcome==='victory'?'Victory — all campaign objectives complete.':this.outcome==='defeat'?'Defeat — your base or required courier was lost.':campaignObjective(this.currentMatch())):this.outcome==='defeat'?uiText.defeatYourBaseWasDestroyed:this.outcome==='victory'?definition.victory==='enemy-base'?uiText.victoryTheEnemyBaseWasDestroyed:definition.victory==='timer'?uiText.victoryTheOutpostSurvivedFor90Seconds:uiText.victoryAllWavesDefeated:this.scenario==='skirmish'?(maps[this.map.id??'arena'].instruction??definition.instruction):definition.instruction;
     this.syncPlacement();this.syncNavy();
-    const crowns=forestVisuals(this.gathering,this.fog),crownIds=new Set(crowns.map(c=>c.id));for(const [id,image] of this.forestImages)if(!crownIds.has(id)){image.destroy();this.forestImages.delete(id);}for(const crown of crowns){if(!this.forestImages.has(crown.id))this.forestImages.set(crown.id,this.add.image(crown.x,crown.y,'reference-terrain',crown.frame).setOrigin(.5,1));this.forestImages.get(crown.id)!.setFrame(crown.frame).setDepth(crown.y);}
-    this.goldVisual.setFrame(resourceFrame('gold',this.gathering.gold!.remaining,isVisible(this.fog,'player',this.gathering.gold!.position)));
+    const crowns=forestVisuals(this.gathering,this.fog),crownIds=new Set(crowns.map(c=>c.id));for(const [id,image] of this.forestImages)if(!crownIds.has(id)){image.destroy();this.forestImages.delete(id);}for(const crown of crowns){if(!this.forestImages.has(crown.id))this.forestImages.set(crown.id,this.add.image(crown.x,crown.y,'reference-terrain',crown.frame).setOrigin(.5,1));this.forestImages.get(crown.id)!.setFrame(crown.frame).setDepth(1+crown.y/this.map.height*4);}
+    const gold=this.gathering.gold!;if(gold.mine)this.goldVisual.setTexture('reference-terrain',gold.remaining<=0&&isVisible(this.fog,'player',gold.position)?'mine-empty':'mine-full').setOrigin(.5,.75).setDepth(1+(gold.position.y+20)/this.map.height*4);else this.goldVisual.setFrame(resourceFrame('gold',gold.remaining,isVisible(this.fog,'player',gold.position)));
     this.nodeVisual.setVisible(!this.gathering.node.tree&&knownResource(this.fog,this.gathering.node.position));
     if(this.gathering.node.grove)this.nodeVisual.setTexture('reference-terrain',this.gathering.node.remaining<=0&&isVisible(this.fog,'player',this.gathering.node.position)?'stump':'forest-0').setOrigin(.5,.75);else this.nodeVisual.setFrame(resourceFrame('wood',this.gathering.node.remaining,isVisible(this.fog,'player',this.gathering.node.position)));
     for(const node of this.gathering.extraNodes??[]){
       if(node.tree)continue;
       const type=node.resource??'wood',visible=isVisible(this.fog,'player',node.position),known=knownResource(this.fog,node.position);
       if(!this.extraResourceVisuals.has(node.id))this.extraResourceVisuals.set(node.id,{body:this.add.image(node.position.x,node.position.y,'world',resourceFrame(type,node.remaining,visible)).setOrigin(resourceOrigin.x,resourceOrigin.y),label:this.add.text(node.position.x,node.position.y-64,'',{fontSize:'12px',color:'#d6eef1'}).setOrigin(.5)});
-      const visual=this.extraResourceVisuals.get(node.id)!;if(node.grove)visual.body.setTexture('reference-terrain',node.remaining<=0&&visible?'stump':'forest-1').setOrigin(.5,.75);else visual.body.setFrame(resourceFrame(type,node.remaining,visible));visual.body.setVisible(known);visual.label.setVisible(known).setText(`${type==='wood'?'Wood':'Gold'}${visible?' '+Math.ceil(node.remaining):''}`);
+      const visual=this.extraResourceVisuals.get(node.id)!;if(node.mine)visual.body.setTexture('reference-terrain',node.remaining<=0&&visible?'mine-empty':'mine-full').setOrigin(.5,.75).setDepth(1+(node.position.y+20)/this.map.height*4);else if(node.grove)visual.body.setTexture('reference-terrain',node.remaining<=0&&visible?'stump':'forest-1').setOrigin(.5,.75);else visual.body.setFrame(resourceFrame(type,node.remaining,visible));visual.body.setVisible(known);visual.label.setVisible(known).setText(`${type==='wood'?'Wood':'Gold'}${visible?' '+Math.ceil(node.remaining):''}`);
     }
     this.trainButton.parentElement!.style.visibility = this.selectedBuilding === 'base' ? 'visible' : 'hidden';
     this.soldierButton.parentElement!.style.visibility = this.selectedBuilding === 'barracks' ? 'visible' : 'hidden';
@@ -1076,6 +1076,7 @@ export class BootScene extends Phaser.Scene {
   }
 
   private animateUnit(id:string,body:Phaser.GameObjects.Image,position:Position,action:Action,type:UnitArt,owner:'player'|'enemy',aim?:Position,artFaction?:import('../config/factions').FactionId):void {
+    body.setDepth(1+position.y/this.map.height*4);
     const previous=this.motions.get(id);
     if(previous&&!this.gameplayActive()){body.setFrame(unitFrame(previous,this.visualTime));return;}
     // syncVisuals also runs on DOM input; preserve walk pose until the next simulation frame.

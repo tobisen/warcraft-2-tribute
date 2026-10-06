@@ -47,6 +47,7 @@ export interface Soldier extends SelectableUnit, SpellState, importOrderState {
 }
 export type Unit = Worker | Soldier;
 export interface ResourceNode {
+  mine?:true;
   tree?:true;
   grove?:import('../config/referenceTerrain').GroveId;
   resource?: ResourceType;
@@ -76,6 +77,7 @@ export function resourceNodes(state:GatheringState):ResourceNode[]{return [state
 
 export const nodeRadius=(node:ResourceNode)=>node.tree?16:gatheringConfig.nodeRadius;
 export function isNodeHit(point: Position, node: ResourceNode): boolean {
+  if(node.mine){const x=point.x-node.position.x+48,y=point.y-node.position.y+72,points=[[8,79],[12,49],[27,23],[48,10],[70,23],[86,47],[89,80],[72,88],[24,88]];let inside=false;for(let i=0,j=points.length-1;i<points.length;j=i++){const a=points[i],b=points[j];if((a[1]>y)!==(b[1]>y)&&x<(b[0]-a[0])*(y-a[1])/(b[1]-a[1])+a[0])inside=!inside;}return inside;}
   if(node.tree)return Math.abs(point.x-node.position.x)<=16&&Math.abs(point.y-node.position.y)<=16;
   if(forestContains(node,point))return true;
   return Math.hypot(point.x - node.position.x, point.y - node.position.y) <= gatheringConfig.nodeRadius;

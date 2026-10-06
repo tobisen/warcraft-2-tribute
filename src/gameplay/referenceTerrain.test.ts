@@ -12,7 +12,7 @@ import {observeForest} from './forestFog';
 import {encodeSave,decodeSave} from './save';
 import {referenceTile} from '../presentation/referenceTerrain';
 import {forestVisuals} from '../presentation/forestVisuals';
-function legacyMatch(){const m=createMatch('skirmish','normal',undefined,'frontier');m.map=createMap('frontier','reference','groves');m.gathering.node={id:'wood-1',resource:'wood',grove:groveForNode('wood-1'),position:{x:650,y:180},remaining:400};m.gathering.extraNodes=maps.frontier.extraResources!.map(n=>({id:n.id,resource:n.resource,grove:groveForNode(n.id),position:{...n.position},remaining:n.amount}));delete m.fog!.forest;m.map.obstacles.push(...placementObstacles(m.gathering),...m.combat.enemies.flatMap(e=>e.footprint?[e.footprint]:[]));return m;}
+function legacyMatch(){const m=createMatch('skirmish','normal',undefined,'frontier');m.map=createMap('frontier','reference','groves');m.gathering.node={id:'wood-1',resource:'wood',grove:groveForNode('wood-1'),position:{x:650,y:180},remaining:400};m.gathering.extraNodes=maps.frontier.extraResources!.map(n=>({id:n.id,resource:n.resource,grove:groveForNode(n.id),position:{...n.position},remaining:n.amount}));delete m.gathering.gold!.mine;delete m.fog!.forest;m.map.obstacles.push(...placementObstacles(m.gathering),...m.combat.enemies.flatMap(e=>e.footprint?[e.footprint]:[]));return m;}
 const view={camera:{x:0,y:0},building:null};
 it('forest crowns, actual obstacles and water/rock tiles agree, with connected harvestable groves',()=>{
  const m=legacyMatch();
@@ -67,4 +67,12 @@ it('interior tree is blocked, felling boundary opens access, multiple workers ha
  m.fog=observeForest(m.fog!,m.gathering);expect(forestVisuals(m.gathering,m.fog).find(n=>n.id===edge.id)?.frame).toBe('stump');
  const loaded=decodeSave(encodeSave(m,view));expect(loaded.ok).toBe(true);if(loaded.ok){expect(resourceNodes(loaded.match.gathering)).toEqual(resourceNodes(m.gathering));expect(loaded.match.map.obstacles).toEqual(m.map.obstacles);}
  const bad=JSON.parse(encodeSave(m,view));bad.state.gathering.node.position.x+=32;expect(decodeSave(JSON.stringify(bad)).ok).toBe(false);
+});
+
+it('mine visual hit polygon excludes transparent corners while its work footprint stays40px and reachable',()=>{
+ const m=createMatch('skirmish','normal',undefined,'frontier'),mine=m.gathering.gold!;
+ expect(mine.mine).toBe(true);expect(isNodeHit({x:mine.position.x,y:mine.position.y-55},mine)).toBe(true);
+ expect(isNodeHit({x:mine.position.x-45,y:mine.position.y-65},mine)).toBe(false);
+ expect(m.map.obstacles).toContainEqual({x:mine.position.x-20,y:mine.position.y-20,width:40,height:40});
+ expect(approachRoute(m.map,m.gathering.units[2].position,{x:mine.position.x-20,y:mine.position.y-20,width:40,height:40},24).status).not.toBe('blocked');
 });
