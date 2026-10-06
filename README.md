@@ -152,7 +152,7 @@ en faktisk fiendebas/match kommer i RTS-041. Dessa värden är preliminära.
 Välj worker och bygg Forge: 40 wood/10 gold, 64 px footprint, 5 s arbete,
 HP 120 och högst en. Stop/ny order pausar; högerklick med worker återupptar.
 Färdig Forge öppnar globala researchknappar, utan ändrad selection/order.
-Attack och defense har en nivå vardera (40 wood/10 gold, 8 s, ett jobb utan
+Historisk nivå I: attack och defense kostar40 wood/10 gold,8s (ett jobb utan
 kö). Attack ger ×1,25 damage; defense ger ×0,75 mottagen damage för combat-
 units. Workers/byggnader påverkas inte och inga HP återställs. Bonusar gäller
 både gamla och nya units dynamiskt. Redan avfyrade projektiler behåller
@@ -850,3 +850,21 @@ Välj landtrupper och högerklicka transporten: valda trupper inom512px från en
 RTS-201: selected workers can right-click visible hostile ground units or buildings to attack manually:2damage/s,16px surface range, no automatic acquisition or military research bonus. Cargo is preserved; new gather/build/repair/move orders replace attack. Shift queues attacks using the existing FIFO rules. Workers cannot attack sea/air targets. Save59 preserves these orders and migrates genuine58 saves.
 
 RTS-202: new skirmish matches on all nine expanded maps contain two hidden supply chests (20wood+10gold each) and one stranded faction soldier. A living own ground unit must see the find and approach within48px along clear terrain. The recruit needs ordinary supply and a reachable free spawn; the label explains waiting. Finds are absent from campaign and old matches. Each reward/recruit is claimed once; Save60 preserves claims, and collected bonuses do not deplete forest/mine stock.
+
+## RTS-204 — Akademi och militär teknik II
+
+Efter färdig forge och både attack/försvar I kan en worker bygga fraktionens akademi
+(F8):80wood+40gold,10s arbete,64×64 footprint,140HP och högst en levande.
+U/D forskar nästa attack/försvarsnivå; nivå II kräver både färdig forge och akademi,
+kostar dubbla fraktionens nivå I-kostnad och tar12s. Befintliga soldater, specialister
+och krigsfartyg får bonusen direkt; workers behåller sina svaga attacker.
+Multiplikatorn för nivå II är fraktionens nivå I-multiplikator i kvadrat.
+Byggnadens död avbryter pågående avancerad forskning utan återbetalning;
+färdiga nivåer består. Tech tree och selection visar kedjan och aktuell nivå0–2.
+AI använder samma kedja. Kampanjens fem första uppdrag behåller nivå I;
+akademin är tillåten från uppdrag6. Save62 migrerar genuin61 och skyddar
+nya byggnader/teknik från att tolkas som äldre format.
+
+Akademiernas fyrastegs pixelgrafik finns i [academies.mjs](assets/sources/academies.mjs).
+`node scripts/export-buildings.mjs` uppdaterar akademierna och bevarar övriga
+byggnadspixlar samt separata unitassets. Browserbilder/checks: [HANDOFF.md](HANDOFF.md).

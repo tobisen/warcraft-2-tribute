@@ -12,20 +12,21 @@ export function inspectedBuilding(m:MatchState,selection:BuildingSelection){
  if(selection.startsWith('enemy:')&&(!enemy||!m.fog||!entityVisible(m.fog,'player',enemy)))return null;
  const team=enemy?'enemy':'player',faction=factionForTeam(m,team);
  const expansion=m.placement.bases?.find(b=>b.id===selection);
- if(selection.startsWith('base-')&&!expansion)return null;
+ if(selection.startsWith('base-')&&!expansion||selection==='academy'&&!m.placement.academy)return null;
  const tower=m.placement.defenses?.find(t=>t.id===selection);
- const kind=expansion?'base':tower?tower.kind:enemy?(enemy.kind==='base'?'base':enemy.buildingType??'barracks'):selection.startsWith('farm-')?'farm':selection as 'base'|'barracks'|'forge'|'harbor';
+ const kind=expansion?'base':tower?tower.kind:enemy?(enemy.kind==='base'?'base':enemy.buildingType??'barracks'):selection.startsWith('farm-')?'farm':selection as 'academy'|'base'|'barracks'|'forge'|'harbor';
  const farm=m.placement.farms?.find(f=>f.id===selection),forge=m.placement.forge,harbor=m.navy?.harbor;
- const footprint=expansion?.footprint??tower?.footprint??enemy?.footprint??(kind==='base'?m.combat.baseHP>0?baseFootprint(m.gathering.base):null:kind==='barracks'?m.placement.barracks:kind==='farm'?farm?.footprint:kind==='forge'?forge?.footprint:harbor?.footprint);
+ const academy=selection==='academy'?m.placement.academy:undefined;
+ const footprint=academy?.footprint??expansion?.footprint??tower?.footprint??enemy?.footprint??(kind==='base'?m.combat.baseHP>0?baseFootprint(m.gathering.base):null:kind==='barracks'?m.placement.barracks:kind==='farm'?farm?.footprint:kind==='forge'?forge?.footprint:harbor?.footprint);
  const maxHP=kind==='tower'||kind==='wall'||kind==='gate'?defenseConfig[kind].hp:enemy?enemyMaximumHP(enemy,faction.id):kind==='harbor'?faction.naval.harbor.hp:kind==='outpost'?0:faction.buildings[kind].hp;
- const hp=expansion?.hp??tower?.hp??enemy?.hp??(kind==='base'?m.combat.baseHP:kind==='barracks'?m.placement.barracksHP??maxHP:kind==='farm'?farm?.hp??maxHP:kind==='forge'?forge?.hp:harbor?.hp);
+ const hp=academy?.hp??expansion?.hp??tower?.hp??enemy?.hp??(kind==='base'?m.combat.baseHP:kind==='barracks'?m.placement.barracksHP??maxHP:kind==='farm'?farm?.hp??maxHP:kind==='forge'?forge?.hp:harbor?.hp);
  if(!footprint||hp===undefined||hp<=0)return null;
- const remaining=expansion?.construction.remainingSeconds??tower?.construction.remainingSeconds??enemy?.construction?.remainingSeconds??(kind==='barracks'?m.placement.construction?.remainingSeconds:kind==='farm'?farm?.construction.remainingSeconds:kind==='forge'?forge?.construction.remainingSeconds:kind==='harbor'?harbor?.construction.remainingSeconds:0)??0;
+ const remaining=academy?.construction.remainingSeconds??expansion?.construction.remainingSeconds??tower?.construction.remainingSeconds??enemy?.construction?.remainingSeconds??(kind==='barracks'?m.placement.construction?.remainingSeconds:kind==='farm'?farm?.construction.remainingSeconds:kind==='forge'?forge?.construction.remainingSeconds:kind==='harbor'?harbor?.construction.remainingSeconds:0)??0;
  return {team,kind,faction,footprint,hp,maxHP,remaining} as const;
 }
 export function inspectBuildingAt(m:MatchState,point:Position):BuildingSelection{
  const hit=(r:Footprint)=>point.x>=r.x&&point.x<=r.x+r.width&&point.y>=r.y&&point.y<=r.y+r.height;
- const candidates:BuildingSelection[]=[...(m.placement.bases??[]).map(b=>b.id),...(m.placement.defenses??[]).map(t=>t.id),'harbor','forge',...(m.placement.farms??[]).map(f=>f.id),'barracks','base',...m.combat.enemies.filter(e=>e.footprint).map(e=>`enemy:${e.id}` as const)];
+ const candidates:BuildingSelection[]=[...(m.placement.bases??[]).map(b=>b.id),...(m.placement.defenses??[]).map(t=>t.id),'academy','harbor','forge',...(m.placement.farms??[]).map(f=>f.id),'barracks','base',...m.combat.enemies.filter(e=>e.footprint).map(e=>`enemy:${e.id}` as const)];
  return candidates.find(id=>{const b=inspectedBuilding(m,id);return b&&hit(b.footprint);})??null;
 }
 /** New inspection-only selections are transient; preserve the established Save33 view format. */

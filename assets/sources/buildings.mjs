@@ -1,3 +1,4 @@
+import {academyFrames} from './academies.mjs';
 import {wallFrames} from './walls.mjs';
 import {towerFrames} from './towers.mjs';
 import {baseLevelFrames} from './base-levels.mjs';
@@ -654,5 +655,6 @@ export function buildingFrames(Surface, p) {
         }
   const bases=[...frames,...baseLevelFrames(Surface,p,frames)];
   const towers=[...bases,...towerFrames(Surface,p,bases.length)];
-  return [...towers,...wallFrames(Surface,p,towers.length)];
+  const existing=[...towers,...wallFrames(Surface,p,towers.length)];
+  return [...existing,...academyFrames(Surface,p,Math.ceil(Math.max(...existing.map(f=>f.y+f.image.height))/128)*8)];
 }

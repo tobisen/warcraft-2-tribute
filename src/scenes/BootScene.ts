@@ -129,6 +129,7 @@ import { gatheringConfig } from '../config/gathering';
 import { productionConfig, soldierProductionConfig } from '../config/production';
 import { barracksConfig, farmConfig } from '../config/buildings';
 import {hasMainBase,selectedBase,trainBaseWorker} from '../gameplay/extraBases';
+import {researchRecipe} from '../gameplay/research';
 import {extraBaseConfig} from '../config/extraBases';
 import { buildingFootprint, beginPlacement, cancelPlacement, placementPreviewError, placementError, placementObstacles, placeBuilding, type PlacementState } from '../gameplay/placement';
 import { canStartProduction, startProduction, type ProductionState } from '../gameplay/production';
@@ -227,6 +228,7 @@ export class BootScene extends Phaser.Scene {
   private placementPreview!: Phaser.GameObjects.Rectangle;
   private barracksVisual?: Phaser.GameObjects.Image;
   private farmVisuals = new Map<string, Phaser.GameObjects.Image>();
+  private academyVisual?:Phaser.GameObjects.Image;
   private extraBaseVisuals=new Map<string,{body:Phaser.GameObjects.Image;label:Phaser.GameObjects.Text}>();
   private farmButton!:HTMLButtonElement;
   private buildButton!: HTMLButtonElement;
@@ -410,7 +412,7 @@ export class BootScene extends Phaser.Scene {
     this.goldVisual=this.add.image(this.gathering.gold!.position.x,this.gathering.gold!.position.y,'world','gold-available').setOrigin(resourceOrigin.x,resourceOrigin.y);
     this.add.text(this.gathering.gold!.position.x, this.gathering.gold!.position.y+26, 'Gold',
       {fontSize:'16px',color:'#ffffff'}).setOrigin(.5,0);
-    this.extraBaseVisuals.clear();this.visuals.clear();this.defenseVisuals.clear();this.repairMode=false;this.spellMode=null;this.spellFeedback='';
+    this.academyVisual=undefined;this.extraBaseVisuals.clear();this.visuals.clear();this.defenseVisuals.clear();this.repairMode=false;this.spellMode=null;this.spellFeedback='';
     this.drag = undefined;
     this.dragBox = this.add.rectangle(0, 0, 0, 0, 0xffdc73, 0.1)
       .setOrigin(0).setStrokeStyle(1, 0xffdc73).setVisible(false).setDepth(60);
@@ -422,7 +424,7 @@ export class BootScene extends Phaser.Scene {
     this.buildButton = document.querySelector<HTMLButtonElement>('#build-barracks')!;
     this.placementStatus = document.querySelector<HTMLElement>('#placement-status')!;
     setActionLabel(this.buildButton,`Build ${factions[this.factions.player].buildingNames.barracks} – ${costLabel(factions[this.factions.player].buildings.barracks.cost)}`);
-    const begin = (kind:'base'|'harbor'|'barracks'|'farm'|'forge'|'tower'|'wall'|'gate'='barracks') => {
+    const begin = (kind:'academy'|'base'|'harbor'|'barracks'|'farm'|'forge'|'tower'|'wall'|'gate'='barracks') => {
       if (!this.gameplayActive()) return;
       if (!this.gathering.units.some(u=>u.kind==='worker' && u.selected)) return;
       this.unloadMode=null;this.attackMoveMode=false;this.patrolMode=false;this.repairMode=false;this.spellMode=null;this.spellFeedback='';
@@ -460,6 +462,7 @@ export class BootScene extends Phaser.Scene {
       this.researchButtons.set(kind,button);button.addEventListener('click',research);
       this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>button.removeEventListener('click',research));
     }
+    const academyButton=document.getElementById('build-academy') as HTMLButtonElement,beginAcademy=()=>begin('academy');setActionLabel(academyButton,`Build ${factions[this.factions.player].buildingNames.academy} – ${costLabel(factions[this.factions.player].buildings.academy.cost)}`);academyButton.addEventListener('click',beginAcademy);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>academyButton.removeEventListener('click',beginAcademy));
     const beginBase=()=>begin('base'),baseButton=document.getElementById('build-base') as HTMLButtonElement;setActionLabel(baseButton,`Build ${factions[this.factions.player].buildingNames.base} – ${costLabel(extraBaseConfig.cost)}`);baseButton.addEventListener('click',beginBase);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>baseButton.removeEventListener('click',beginBase));
     const beginFarm=()=>begin('farm');
     this.farmButton=document.querySelector<HTMLButtonElement>('#build-farm')!;
@@ -738,6 +741,7 @@ export class BootScene extends Phaser.Scene {
       const tower=this.placement.defenses?.find(t=>t.construction.remainingSeconds>0&&world.x>=t.footprint.x&&world.x<=t.footprint.x+t.footprint.width&&world.y>=t.footprint.y&&world.y<=t.footprint.y+32);if(tower){const result=resumeConstruction(this.gathering,this.placement,this.map,tower.id);this.gathering=result.gathering;this.placement=result.placement;this.syncVisuals();return;}
       const forge=this.placement.forge;
       if(forge&&forge.construction.remainingSeconds>0&&world.x>=forge.footprint.x&&world.x<=forge.footprint.x+forge.footprint.width&&world.y>=forge.footprint.y&&world.y<=forge.footprint.y+forge.footprint.height){const result=resumeConstruction(this.gathering,this.placement,this.map,'forge');this.gathering=result.gathering;this.placement=result.placement;this.syncVisuals();return;}
+      const academy=this.placement.academy;if(academy&&academy.construction.remainingSeconds>0&&world.x>=academy.footprint.x&&world.x<=academy.footprint.x+64&&world.y>=academy.footprint.y&&world.y<=academy.footprint.y+64){const r=resumeConstruction(this.gathering,this.placement,this.map,'academy');this.gathering=r.gathering;this.placement=r.placement;this.syncVisuals();return;}
       const expansion=this.placement.bases?.find(b=>b.construction.remainingSeconds>0&&world.x>=b.footprint.x&&world.x<=b.footprint.x+b.footprint.width&&world.y>=b.footprint.y&&world.y<=b.footprint.y+b.footprint.height);if(expansion){const r=resumeConstruction(this.gathering,this.placement,this.map,expansion.id);this.gathering=r.gathering;this.placement=r.placement;this.syncVisuals();return;}
       const farm=this.placement.farms?.find(f=>f.construction.remainingSeconds>0 && world.x>=f.footprint.x && world.x<=f.footprint.x+f.footprint.width && world.y>=f.footprint.y && world.y<=f.footprint.y+f.footprint.height);
       if (farm) {
@@ -848,7 +852,7 @@ export class BootScene extends Phaser.Scene {
     if(forge)this.forgeVisual!.setFrame(buildingFrame('forge','player',forge.construction.remainingSeconds,5,this.factions.player,forge.hp));
     this.forgeButton.disabled=!this.gameplayActive()||this.placement.active||!!forge||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected);
     document.getElementById('research-status')!.textContent=forge?`Forge ${Math.ceil(forge.hp)} HP · construction ${forge.construction.remainingSeconds.toFixed(1)} s · Attack ${this.research.attack} / Defense ${this.research.defense}${this.research.job?` · ${this.research.job.kind} ${this.research.job.remainingSeconds.toFixed(1)} s`:''}`:uiText.buildAForgeForUpgrades;
-    for(const [kind,button] of this.researchButtons){button.disabled=!canResearch(this.gathering,this.research,this.placement,kind,this.gameplayActive());setActionLabel(button,`${factions[this.factions.player].upgrades[kind].name} – ${costLabel(factions[this.factions.player].upgrades[kind].cost)}`);}
+    for(const [kind,button] of this.researchButtons){button.disabled=!canResearch(this.gathering,this.research,this.placement,kind,this.gameplayActive());setActionLabel(button,`${factions[this.factions.player].upgrades[kind].name} ${this.research[kind]===0?'I':'II'} – ${costLabel(researchRecipe(factions[this.factions.player],kind,this.research[kind]).cost)}`);}
 
     if(!this.placement.barracks&&this.barracksVisual){this.barracksVisual.destroy();this.barracksVisual=undefined;}
     const rect = buildingFootprint(this.previewPoint,this.placement.kind??'barracks');
@@ -869,6 +873,8 @@ export class BootScene extends Phaser.Scene {
       const building = this.placement.barracks;
       this.barracksVisual = this.add.image(building.x+building.width/2,building.y+building.height/2,'buildings',buildingFrame('barracks','player',this.placement.construction?.remainingSeconds,5,this.factions.player,this.placement.barracksHP??combatConfig.barracksHP)).setOrigin(.5,.75);
     }
+    const academy=this.placement.academy;if(!academy&&this.academyVisual){this.academyVisual.destroy();this.academyVisual=undefined;}if(academy){if(!this.academyVisual)this.academyVisual=this.add.image(academy.footprint.x+32,academy.footprint.y+32,'buildings',buildingFrame('academy','player',academy.construction.remainingSeconds,10,this.factions.player,academy.hp)).setOrigin(.5,.75);this.academyVisual.setFrame(buildingFrame('academy','player',academy.construction.remainingSeconds,10,this.factions.player,academy.hp)).setDepth(1+(academy.footprint.y+32)/this.map.height*4);}
+    const academyButton=document.getElementById('build-academy') as HTMLButtonElement;academyButton.disabled=!this.gameplayActive()||this.placement.active||!!academy||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected);academyButton.setAttribute('aria-pressed',String(this.placement.active&&this.placement.kind==='academy'));
     (document.getElementById('build-base') as HTMLButtonElement).disabled=!this.gameplayActive()||this.placement.active||(this.placement.bases?.length??0)>=extraBaseConfig.maxCount||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected);
     this.farmButton.disabled=!this.gameplayActive()||this.placement.active
       ||(this.placement.farms?.length??0)>=farmConfig.maxCount||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected);
@@ -927,7 +933,7 @@ export class BootScene extends Phaser.Scene {
     (document.getElementById('dismiss-units') as HTMLButtonElement).disabled=!dismissProposal(this.currentMatch());
     this.hpBars?.clear();
     const visibleEnemies=this.combat.enemies.filter(e=>entityVisible(this.fog,'player',e));
-    const markers = orderMarkers(this.gathering, {...this.combat,enemies:visibleEnemies}, this.outcome==='playing',this.placement.barracks,this.placement.farms,this.placement.forge?.footprint,this.navy?.harbor?.footprint,this.placement.bases);
+    const markers = orderMarkers(this.gathering, {...this.combat,enemies:visibleEnemies}, this.outcome==='playing',this.placement.barracks,this.placement.farms,this.placement.forge?.footprint,this.navy?.harbor?.footprint,this.placement.bases,this.placement.academy?.footprint);
     markers.push(...navalOrderMarkers(this.navy,{...this.combat,enemies:visibleEnemies},this.outcome==='playing'));
     for (const [id, visual] of this.orderVisuals) {
       if (!markers.some(m=>m.id===id)) { visual.destroy(); this.orderVisuals.delete(id); }
@@ -1003,7 +1009,7 @@ export class BootScene extends Phaser.Scene {
     for(const shot of visibleShots){if(!this.projectileVisuals.has(shot.id))this.projectileVisuals.set(shot.id,this.add.graphics().setDepth(effectConfig.projectileDepth));drawProjectile(this.projectileVisuals.get(shot.id)!,shot);}
     for (const enemy of visibleEnemies) {
       if (!this.enemyVisuals.has(enemy.id)) this.enemyVisuals.set(enemy.id, {
-        body: enemy.footprint?this.add.image(enemy.position.x,enemy.position.y,'buildings',buildingFrame((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base','enemy',enemy.construction?.remainingSeconds??0,enemy.buildingType==='outpost'?10:5,(enemy.faction??this.factions.enemy))).setOrigin(buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').x,buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').y):enemy.kind==='ship'?this.add.image(enemy.position.x,enemy.position.y,'naval',`${factions[(enemy.faction??this.factions.enemy)].artPrefix}transport-enemy-s-idle-0`).setOrigin(.5,40/64):this.add.image(enemy.position.x,enemy.position.y,isAir(enemy)?'air':'units',isAir(enemy)?`${(enemy.faction??this.factions.enemy)}-air-enemy-s-idle-0`:`${factions[(enemy.faction??this.factions.enemy)].artPrefix}${enemy.kind==='worker'?'worker':enemy.role??'soldier'}-enemy-s-idle-0`).setOrigin(unitOrigin(enemy.kind==='worker'?'worker':enemy.role??'soldier').x,unitOrigin(enemy.kind==='worker'?'worker':enemy.role??'soldier').y),
+        body: enemy.footprint?this.add.image(enemy.position.x,enemy.position.y,'buildings',buildingFrame((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base','enemy',enemy.construction?.remainingSeconds??0,enemy.buildingType==='outpost'||enemy.buildingType==='academy'?10:5,(enemy.faction??this.factions.enemy))).setOrigin(buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').x,buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').y):enemy.kind==='ship'?this.add.image(enemy.position.x,enemy.position.y,'naval',`${factions[(enemy.faction??this.factions.enemy)].artPrefix}transport-enemy-s-idle-0`).setOrigin(.5,40/64):this.add.image(enemy.position.x,enemy.position.y,isAir(enemy)?'air':'units',isAir(enemy)?`${(enemy.faction??this.factions.enemy)}-air-enemy-s-idle-0`:`${factions[(enemy.faction??this.factions.enemy)].artPrefix}${enemy.kind==='worker'?'worker':enemy.role??'soldier'}-enemy-s-idle-0`).setOrigin(unitOrigin(enemy.kind==='worker'?'worker':enemy.role??'soldier').x,unitOrigin(enemy.kind==='worker'?'worker':enemy.role??'soldier').y),
         label: this.add.text(0, 0, '', { fontSize: '14px', color: '#ffffff' }).setOrigin(0.5, 0),
       });
       const playerColor=this.multiplePlayers?.roster.find(p=>p.id===enemy.playerId)?.color;
@@ -1011,7 +1017,7 @@ export class BootScene extends Phaser.Scene {
       this.hpBars?.lineStyle(2,tint,.9).strokeEllipse(enemy.position.x,enemy.position.y+8,enemy.footprint?80:28,enemy.footprint?24:10);
       const visual = this.enemyVisuals.get(enemy.id)!;
       visual.body.setPosition(enemy.position.x, enemy.position.y);
-      if(enemy.footprint)visual.body.setFrame(buildingFrame(enemy.buildingType==='outpost'?'base':enemy.buildingType??'base','enemy',enemy.construction?.remainingSeconds??0,enemy.buildingType==='outpost'?10:5,(enemy.faction??this.factions.enemy),enemy.hp));
+      if(enemy.footprint)visual.body.setFrame(buildingFrame(enemy.buildingType==='outpost'?'base':enemy.buildingType??'base','enemy',enemy.construction?.remainingSeconds??0,enemy.buildingType==='outpost'||enemy.buildingType==='academy'?10:5,(enemy.faction??this.factions.enemy),enemy.hp));
       if(enemy.kind==='ship')this.animateUnit(enemy.id,visual.body,enemy.position,'idle','transport','enemy',undefined,enemy.faction);
       if(!enemy.footprint&&enemy.kind!=='ship'){const target=enemy.order?.kind==='defend'?this.gathering.units.find(u=>enemy.order?.kind==='defend'&&u.id===enemy.order.targetId)?.position:enemy.navigation?.targetId==='base'?this.gathering.base:undefined;const action:Action=enemy.navigation?.targetId&&enemy.navigation.targetId!=='explore-goal'&&enemy.navigation.status==='arrived'?'attack':enemy.work?.order.kind==='gather'?'gather':'idle';this.animateUnit(enemy.id,visual.body,enemy.position,action,enemy.kind==='worker'?'worker':enemy.role??'soldier','enemy',target,enemy.faction);}
       visual.label.setPosition(enemy.position.x,enemy.position.y-(enemy.kind==='ship'?48:90)).setVisible(!!enemy.footprint||enemy.kind==='ship').setText(`${enemy.buildingType==='outpost'?uiText.resourceOutpost:''}${enemy.kind==='ship'?'Transport':enemy.buildingType==='harbor'?uiText.harbor:factions[(enemy.faction??this.factions.enemy)].buildingNames[(enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base']} ${Math.ceil(enemy.hp)} HP`);

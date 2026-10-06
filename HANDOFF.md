@@ -1,3 +1,19 @@
+# RTS-195–204 klara — stopp efter gameplayfasen
+
+Alla tio beställda gameplaytasks är Done.203 push485e9e5;204 taskcommit/hash rapporteras efter push. [GAMEPLAY_PHASE.md](GAMEPLAY_PHASE.md) samlar ändringar, taskhashar, före/efterbilder och begränsningar. Kartfasens nio kartor och tidigare/nya dimensioner finns i [MAP_PHASE.md](MAP_PHASE.md); inga kartdimensioner ändras i denna gameplayfas.
+
+204: en fraktionsakademi efter forge+attack/försvar I,80wood+40gold/10s/64×64/140HP; nivå II kostar2× fraktionens nivå I och tar12s. Militärbonus använder multiplikator^nivå; workers förblir2DPS utan researchbonus. Betalda jobb/byggnad/damage/repair/fog/minimap/selection/UI/AI/Save62 ingår. Kampanjadmission från mission6 gäller även äldre storyidentiteter; övriga legacyregler bevaras.40 egna academyframes,450 tidigare byggnadssprites pixel-identiska. Separatexport bevarar samtidig unitkällredigering.
+
+Slutlig fullregression1586/186 PASS472.93s, unit475/85 PASS19.65s och slutlig strict build PASS416ms efter metadataassertionsjusteringarna. Diff/text/länkar kontrollerade. Riktade academy/AI/earlycampaign/expandedMaps58/4 PASS24.90s; senare två metadataassertions ingår i fullregressionen. Native800/1280 fysisk workerbuild/attack-II/defense-II/SaveLoad mitt under forskning, två/en byggrader och0pageerrors PASS på slutlig spelkod. Alla fem actual game academyvarianter och kompakt800/1280 visuellt granskade. artifacts/rts-204/browser.json och bilder. Ingen ny CI/Pages-release eller faktisk ljud-/mänsklig balansgranskning hävdas; bundlevarningen består.
+
+Första kompletta regressionen1582PASS/2FAIL hittade legacy-storyAI som fick avancerad teknik i earlymission samt moderna discoveries i Save56-testfixture. Isolerad203-baseline verifierade skillnaden. Korrigeringarna och nya legacyadmissionstester passerar; fullregression omkörd på slutlig kod. Tidigare avbrutna/failed browser/checkkörningar räknas inte PASS; DEV_LOG redovisar orsakerna.
+
+Kända begränsningar: lokala transportmöten256/512px med30s gräns; skatter/rekrutt endast i nya skirmishmatcher och AI samlar inte fynd; zoom återställs1× vid Load; BFS+smoothing garanterar inte globalt kortaste Euclidean-väg; inga nya unitroller. Kampanjgenomspelningar är tekniska completiontester, inte mänsklig balans-/tidsgranskning.195–204-mandatet avslutas här, ingen nästa task startas.
+
+Användarens src/style.css (SHA2568f6e1323…), assets/sources/units.mjs (a24680e7…) och otrackade docs/ bevaras utanför commit. docs-fasen väntade tills sprites/grafik var klar. Befintlig remote origin/main, utan force/amend/history rewrite.
+
+---
+
 # RTS-203 klar — fortsätt204
 
 203 betalda extra huvudbyggnader: max två extras,100wood+60gold/12s, separata workerköer/rally, delad supply/tech/ekonomi, färdiga basleveranser/vision, destruction/repair/team och Save61. Campaign skyddar originalbasen, skirmish sista färdiga basen. Riktade243/22 före sista selectionguard + slutliga32/4, unit475/85, strict build/diff och Native800/1280 fysisk build/queue/rally/SaveLoad PASS; artifacts/rts-203.202 push7954e2e;203 hash rapporteras vid push. Slutlig browser efter ikon/selectionguard inklusive borttagen markerad bas PASS utan errors. Nästa204 avgränsat bygg-/techpaket ska detaljeras före kod. Fullregression vid etappslut; inga CI/Pages-/mänsklig balansclaims. CSS/docs och samtidigt ändrad assets/sources/units.mjs bevaras utanför commit.

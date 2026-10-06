@@ -2,6 +2,8 @@
 
 ## Current Focus
 
+**Gameplayfas RTS-195–204 avslutad:** Samtliga tio tasks är Done. Slutlig fullregression1586/186, unit475/85, strict build och faktisk Native800/1280 browser PASS. [GAMEPLAY_PHASE.md](GAMEPLAY_PHASE.md) samlar leverans/bilder/commits/begränsningar. Stanna efter204; inga nya tasks startas automatiskt. HANDOFF.md styr överlämningen.
+
 **Nytt gameplaymandat RTS-195–204:** Användarens önskemål2026-10-06 ersätter kartfasens stopp. En task åt gången; konkreta UI/transport/placement/navigation-problem före nytt innehåll. Bevara befintlig style.css/docs. Ingen delegering. Innehållspaket för204 detaljeras före beroende kod. Tidigare kartfasens belägg är historik.
 
 ### RTS-195 — Byggknappar på en eller två rader — Done
@@ -44,10 +46,12 @@
 
 - Design203: högst två extra baser,100wood+60gold/st och12s workerbyggande,64px footprint. Separata FIFO-workerköer/rally, delad ekonomi/supply/basnivå. Färdig bas ger fraktionsbasens supply och leverans/vision; grund ger inget. Skirmish/team kräver sista färdiga basens förlust, kampanj skyddar ursprungsbasen.
 
-### RTS-204 — Utökat bygg-/tech-/uppgraderingspaket — Todo
+### RTS-204 — Utökat bygg-/tech-/uppgraderingspaket — Done
 - Föreslå ett avgränsat sammanhängande paket för de fem fraktionerna eller använd uttrycklig användarspecifikation innan nya recipes/assets byggs.
 - Tydliga prerequisitekedjor, betalda uppgraderingar för byggnader/enheter, UI/tech tree, AI, campaign admission och Save-kompatibilitet. Befintliga roster/system återanvänds.
 
+
+- Paket204: en academy per spelare,80wood+40gold/10s/64px/140HP. Kräver forge + attack1 + defense1. Attack/defense nivå2 kostar dubbla fraktionens nivå1kostnad och tar12s, kräver färdig academy. Effekt är befintlig fraktionsmultiplikator upphöjd till nivån för militär (workers oförändrade). AI bygger/forskar enligt samma kedja. Kampanj tillåter academy först från mission6; befintliga tidiga recipes/roster består. Egna pixelmålade academyassets i fem fraktionsvarianter, ingen ny unitroster. Save62 skyddar äldre snapshots. Stopp efter204 och fullregression.
 
 **Kartfas RTS-191–194 avslutad:** Alla fyra beställda kartförbättringar är Done. Alla nio kartor använder skördbara skogar, gemensam terräng/gruva/berg och128×128/4096² värld. Full regression1528/181, unit472/85, strict build/diff och native browser PASS. [MAP_PHASE.md](MAP_PHASE.md) redovisar dimensioner/bilder/prestanda; HANDOFF styr stoppet efter194. Style.css/docs bevarade; inga nya tasks/karteditor.
 

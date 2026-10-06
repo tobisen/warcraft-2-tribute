@@ -26,7 +26,7 @@ it('required supply precedes forge and no second construction starts beside an u
 it('forge is paid once and research cannot start until five seconds of actual work complete',()=>{
  const m=prepareEnemyConstruction(fixture());expect(m.enemyProduction!.wood).toBe(60);expect(m.enemyProduction!.gold).toBe(40);expect(prepareEnemyConstruction(m).enemyProduction!.wood).toBe(60);expect(prepareEnemyPolicy(m).enemyPolicy!.research.job).toBeNull();const early=updateEnemyConstruction(m,.1).match;expect(early.combat.enemies.find(e=>e.buildingType==='forge')!.construction!.remainingSeconds).toBe(5);
 });
-it('research costs exactly once, lasts eight gameplay seconds and cannot exceed one level',()=>{
+it('research costs exactly once, lasts eight gameplay seconds and cannot repeat without the academy',()=>{
  let m=prepareEnemyPolicy(forgeReady());expect(m.enemyProduction!.wood).toBe(25);expect(m.enemyProduction!.gold).toBe(25);expect(m.enemyPolicy!.research.job).toEqual({kind:'attack',remainingSeconds:8});const again=prepareEnemyPolicy(m);expect(again.enemyProduction!.wood).toBe(25);m.enemyPolicy=advanceEnemyPolicy(m,7.9);expect(m.enemyPolicy!.research.attack).toBe(0);m.enemyPolicy=advanceEnemyPolicy(m,.1);expect(m.enemyPolicy!.research.attack).toBe(1);expect(m.enemyPolicy!.research.job).toBeNull();m.enemyPolicy=advanceEnemyPolicy(m,100);expect(m.enemyPolicy!.research.attack).toBe(1);expect(prepareEnemyPolicy(m).enemyPolicy!.research.job).toBeNull();
 });
 it('resource choice switches only empty workers and preserves loaded gathering and delivery orders',()=>{
@@ -52,3 +52,12 @@ it('an existing paid production queue advances while the policy saves for a Forg
  let m=fixture();const bar=m.combat.enemies.find(e=>e.buildingType==='barracks')!;const queued=updateEnemyProduction(m.enemyProduction!,m.combat,m.gathering,m.map,0,'clans',{site:bar,population:{...enemyPopulation(m),cap:6}});m={...m,combat:queued.combat,enemyProduction:queued.state};expect(m.enemyProduction!.production.queue).toHaveLength(1);const wood=m.enemyProduction!.wood;
  m=updateMatch(m,.1);expect(m.combat.enemies.some(e=>e.buildingType==='forge')).toBe(true);expect(m.enemyProduction!.wood).toBe(wood-40);expect(m.enemyProduction!.production.queue).toHaveLength(1);expect(m.enemyProduction!.production.remainingSeconds).toBeCloseTo(5.9);expect(m.enemyProduction!.acceptedJobs).toBe(1);
 });
+
+it('AI pays for reachable academy construction and then level II, preserving expansion priority',()=>{
+ let m=forgeReady();m.enemyPolicy!.research={attack:1,defense:1,job:null};delete m.enemyRecovery;m.enemyProduction!.wood=300;m.enemyProduction!.gold=150;m.waves.elapsedSeconds=100;
+ expect(enemyPriority(m)).toBe('academy');m=prepareEnemyConstruction(m);expect(m.combat.enemies.find(e=>e.buildingType==='academy')).toBeDefined();expect(m.enemyProduction!.wood).toBe(220);expect(m.enemyProduction!.gold).toBe(110);expect(prepareEnemyPolicy(m).enemyPolicy!.research.job).toBeNull();
+ for(let i=0;i<300;i++)m=updateEnemyConstruction(m,.1).match;
+ expect(m.combat.enemies.find(e=>e.buildingType==='academy')!.construction!.remainingSeconds).toBe(0);expect(enemyPriority(m)).toBe('attack');m=prepareEnemyPolicy(m);expect(m.enemyProduction!.wood).toBe(150);expect(m.enemyProduction!.gold).toBe(80);expect(m.enemyPolicy!.research.job).toEqual({kind:'attack',remainingSeconds:12});m.enemyPolicy=advanceEnemyPolicy(m,12);expect(m.enemyPolicy!.research.attack).toBe(2);expect(enemyPriority(m)).toBe('defense');
+});
+
+it('legacy early story AI stops at level I without academy construction',()=>{const m=forgeReady();m.campaignMission='the-siege';m.enemyPolicy!.research={attack:1,defense:1,job:null};delete m.enemyRecovery;m.enemyProduction!.wood=300;m.enemyProduction!.gold=150;m.waves.elapsedSeconds=100;expect(enemyPriority(m)).toBe('army');expect(prepareEnemyConstruction(m).combat.enemies.some(e=>e.buildingType==='academy')).toBe(false);});

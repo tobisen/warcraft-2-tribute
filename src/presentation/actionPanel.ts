@@ -1,3 +1,4 @@
+import {researchRecipe} from '../gameplay/research';
 import {extraBaseConfig} from '../config/extraBases';
 import {selectedBase} from '../gameplay/extraBases';
 import {campaignActionReason} from '../config/campaignContent';
@@ -27,7 +28,7 @@ import {forgeReady} from '../gameplay/research';
 import type {BuildingSelection} from '../gameplay/buildingSelection';
 import type {MatchState} from '../gameplay/match';
 import {hotkeys} from './hotkeys';
-export const actionIds=['cast-heal','cast-ward','cast-hex','repair-building','build-wall','build-gate','toggle-gate','build-tower','upgrade-tower','upgrade-base','train-worker','train-soldier','train-archer','train-catapult','train-specialist','train-air','train-transport','train-ship','build-base','build-barracks','build-farm','build-forge','build-harbor','research-attack','research-defense','attack-move','unit-ability','unload-transport','hold-position','patrol-units','stop-units','dismiss-units'] as const;
+export const actionIds=['cast-heal','cast-ward','cast-hex','repair-building','build-wall','build-gate','toggle-gate','build-tower','upgrade-tower','upgrade-base','train-worker','train-soldier','train-archer','train-catapult','train-specialist','train-air','train-transport','train-ship','build-academy','build-base','build-barracks','build-farm','build-forge','build-harbor','research-attack','research-defense','attack-move','unit-ability','unload-transport','hold-position','patrol-units','stop-units','dismiss-units'] as const;
 export type ActionId=typeof actionIds[number];
 export const actionGroups=['Orders','Build','Train','Research','Spells'] as const;
 export function actionGroup(id:ActionId):typeof actionGroups[number]{return id.startsWith('cast-')?'Spells':id.startsWith('build-')?'Build':id.startsWith('train-')?'Train':id.startsWith('research-')||id.startsWith('upgrade-')?'Research':'Orders';}
@@ -59,7 +60,7 @@ export function actionPanel(m:MatchState,building:BuildingSelection,playing:bool
   else if(id==='build-tower'){visible=worker;cost=costLabel(defenseConfig.tower.cost);reason=m.placement.active?'Finish or cancel placement':affordabilityReason(m.gathering,defenseConfig.tower.cost);}
   else if(id==='upgrade-base'){visible=base;const b=baseDevelopment(m);cost=b.level<3?costLabel(baseUpgradeConfig[(b.level+1) as 2|3].cost):undefined;reason=(m.placement.bases?.find(b=>b.id===building)?.construction.remainingSeconds??0)>0?'Construction unfinished':baseUpgradeReason(m)??'';}
   else if(id==='build-base'){visible=worker;cost=costLabel(extraBaseConfig.cost);reason=m.placement.active?'Finish or cancel placement':(m.placement.bases?.length??0)>=extraBaseConfig.maxCount?'Maximum three main buildings':affordabilityReason(m.gathering,extraBaseConfig.cost);}
-  else if(id.startsWith('build-')){visible=worker;const kind=id.slice(6) as 'barracks'|'farm'|'forge'|'harbor';const recipe=kind==='harbor'?faction.naval.harbor.cost:faction.buildings[kind].cost;cost=costLabel(recipe);reason=buildingAvailability(faction,kind,technologyFor(m,'player'))??(m.placement.active?'Finish or cancel placement':kind==='barracks'&&m.placement.barracks||kind==='forge'&&m.placement.forge||kind==='harbor'&&m.navy?.harbor?'Already built':kind==='farm'&&(m.placement.farms?.length??0)>=farmConfig.maxCount?'Farm limit reached':affordabilityReason(m.gathering,recipe));}
+  else if(id.startsWith('build-')){visible=worker;const kind=id.slice(6) as 'academy'|'barracks'|'farm'|'forge'|'harbor';const recipe=kind==='harbor'?faction.naval.harbor.cost:faction.buildings[kind].cost;cost=costLabel(recipe);reason=buildingAvailability(faction,kind,technologyFor(m,'player'))??(m.placement.active?'Finish or cancel placement':kind==='academy'&&m.placement.academy||kind==='barracks'&&m.placement.barracks||kind==='forge'&&m.placement.forge||kind==='harbor'&&m.navy?.harbor?'Already built':kind==='farm'&&(m.placement.farms?.length??0)>=farmConfig.maxCount?'Farm limit reached':affordabilityReason(m.gathering,recipe));}
   else if(id.startsWith('train-')){
    const role=id==='train-ship'?'warship':id.slice(6) as 'worker'|'soldier'|'archer'|'catapult'|'specialist'|'air'|'transport',naval=role==='transport'||role==='warship';
    visible=(role==='worker'?base:naval?harbor:barracks)&&(naval||faction.roster.includes(role as 'worker'|'soldier'|'archer'|'catapult'|'specialist'|'air'));
@@ -70,13 +71,13 @@ export function actionPanel(m:MatchState,building:BuildingSelection,playing:bool
    const prerequisite=naval?null:unitAvailability(faction,role,technologyFor(m,'player'));
    reason=remaining>0?'Construction unfinished':prerequisite??(production&&productionJobCount(production)>=queueConfig.maxJobs?'Queue full':!hasPopulation(population,recipe.supply)?uiText.populationLimitReached:affordabilityReason(m.gathering,recipe.cost));
   }
-  else if(id.startsWith('research-')){visible=base||building==='forge';const kind=id==='research-attack'?'attack':'defense';cost=costLabel(faction.upgrades[kind].cost);reason=researchAvailability(faction,kind,technologyFor(m,'player'))??(m.research?.job?'Research in progress':(m.research?.[kind]??0)>=faction.upgrades[kind].maxLevel?'Already researched':affordabilityReason(m.gathering,faction.upgrades[kind].cost));}
+  else if(id.startsWith('research-')){visible=base||building==='forge'||building==='academy';const kind=id==='research-attack'?'attack':'defense';cost=costLabel(researchRecipe(faction,kind,m.research?.[kind]??0).cost);reason=(m.research?.[kind]??0)>=faction.upgrades[kind].maxLevel?'Already researched':researchAvailability(faction,kind,technologyFor(m,'player'))??(m.research?.job?'Research in progress':(m.research?.[kind]??0)>=faction.upgrades[kind].maxLevel?'Already researched':affordabilityReason(m.gathering,researchRecipe(faction,kind,m.research?.[kind]??0).cost));}
   else if(id==='attack-move')visible=combat;
   else if(id==='unit-ability'){visible=land.some(u=>u.kind==='soldier'&&!isAir(u));reason=!land.some(abilityReady)?'Ability cooling down':'';}
   else if(id==='unload-transport'){visible=!!transport;reason=!transport?.passengers?.length?'Transport is empty':'';}
   else visible=any;
-  if(id.startsWith('build-')){const kind=id.slice(6);active=!!m.placement.active&&(m.placement.kind??'barracks')===kind;if(kind==='barracks'||kind==='farm'||kind==='forge')prerequisites=prerequisiteLabel(faction.buildings[kind].prerequisites);}
-  if(id.startsWith('research-')){const kind=id==='research-attack'?'attack':'defense';prerequisites=prerequisiteLabel(faction.upgrades[kind].prerequisites);active=m.research?.job?.kind===kind;}
+  if(id.startsWith('build-')){const kind=id.slice(6);active=!!m.placement.active&&(m.placement.kind??'barracks')===kind;if(kind==='academy'||kind==='barracks'||kind==='farm'||kind==='forge')prerequisites=prerequisiteLabel(faction.buildings[kind].prerequisites);}
+  if(id.startsWith('research-')){const kind=id==='research-attack'?'attack':'defense';prerequisites=prerequisiteLabel((m.research?.[kind]??0)>=1?{buildings:['forge','academy']}:faction.upgrades[kind].prerequisites);active=m.research?.job?.kind===kind;}
   if(id==='upgrade-base')active=baseDevelopment(m).remainingSeconds!==null;
   if(id==='upgrade-tower')active=!!m.placement.defenses?.find(t=>t.id===building)?.upgradeRemaining;
   reason=campaignActionReason(m,id)??reason;

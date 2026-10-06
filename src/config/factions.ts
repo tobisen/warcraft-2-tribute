@@ -11,19 +11,19 @@ import {gatheringConfig} from './gathering';
 import {costs,type ResourceCost} from './economy';
 import {productionConfig,soldierProductionConfig} from './production';
 import {barracksConfig,farmConfig,populationConfig} from './buildings';
-import {forgeConfig,upgradeConfig} from './upgrades';
+import {forgeConfig,upgradeConfig,academyConfig} from './upgrades';
 
 // Stable identity is independent of team ownership and presentation.
 export const factionIds=['crown','clans','elves','dwarves','goblins'] as const;
 export type FactionId=typeof factionIds[number];
 export type UnitRole='worker'|'soldier'|'archer'|'catapult'|'specialist'|'air';
-export type BuildingRole='base'|'barracks'|'farm'|'forge';
+export type BuildingRole='base'|'barracks'|'farm'|'forge'|'academy';
 export type UpgradeRole='attack'|'defense';
 export interface MatchFactions {player:FactionId;enemy:FactionId}
 export const defaultFactions:Readonly<MatchFactions>={player:'crown',enemy:'clans'};
 export const isFactionId=(value:unknown):value is FactionId=>factionIds.some(id=>id===value);
 
-export interface TechnologyState {campaignContent?:import('./campaignContent').CampaignContent;baseLevel?:number;buildings:readonly BuildingRole[];research:Partial<Record<UpgradeRole,number>>}
+export interface TechnologyState {academyAllowed?:boolean;campaignContent?:import('./campaignContent').CampaignContent;baseLevel?:number;buildings:readonly BuildingRole[];research:Partial<Record<UpgradeRole,number>>}
 export interface UnitPrerequisites {baseLevel?:number;buildings?:readonly BuildingRole[];research?:Partial<Record<UpgradeRole,number>>}
 interface UnitData {
   domain?:'land'|'air';
@@ -83,6 +83,7 @@ const buildings:Record<BuildingRole,BuildingData>={
     placeable:true,constructionSeconds:farmConfig.constructionSeconds,constructionRange:farmConfig.constructionRange,populationCapacity:farmConfig.supply},
   forge:{role:'forge',prerequisites:{buildings:['base']},cost:costs.forge,hp:forgeConfig.hp,size:forgeConfig.tileSize*forgeConfig.footprintTiles,
     placeable:true,constructionSeconds:forgeConfig.constructionSeconds,constructionRange:forgeConfig.constructionRange,populationCapacity:0},
+  academy:{role:'academy',prerequisites:{buildings:['forge'],research:{attack:1,defense:1}},cost:academyConfig.cost,hp:academyConfig.hp,size:64,placeable:true,constructionSeconds:10,constructionRange:24,populationCapacity:0},
 };
 const upgrades:Record<UpgradeRole,UpgradeData>={
   attack:{name:'Attack +25 %',role:'attack',prerequisites:{buildings:['forge']},cost:upgradeConfig.cost,durationSeconds:upgradeConfig.durationSeconds,
@@ -90,7 +91,7 @@ const upgrades:Record<UpgradeRole,UpgradeData>={
   defense:{name:'Defense −25 %',role:'defense',prerequisites:{buildings:['forge']},cost:upgradeConfig.cost,durationSeconds:upgradeConfig.durationSeconds,
     maxLevel:upgradeConfig.maxLevel,multiplier:upgradeConfig.defenseMultiplier},
 };
-const factionNames={crown:{label:uiText.crownAlliance,unitNames:{worker:uiText.worker,soldier:uiText.guard,archer:uiText.archer,catapult:uiText.catapult,specialist:'Banner Guard'},buildingNames:{base:uiText.keep,barracks:uiText.barracks,farm:uiText.farm,forge:uiText.forge}},clans:{label:uiText.ironClan,unitNames:{worker:uiText.clanWorker,soldier:uiText.axeWarrior,archer:uiText.hunter,catapult:uiText.stoneThrower,specialist:'Raider'},buildingNames:{base:uiText.stronghold,barracks:uiText.warHut,farm:uiText.cattlePen,forge:uiText.smithy}},elves:{label:'Elves',unitNames:{worker:'Grove Tender',soldier:'Warden',archer:'Longbow',catapult:'Ballista',specialist:'Marksman'},buildingNames:{base:'Grove Hall',barracks:'Ranger Lodge',farm:'Garden',forge:'Moon Workshop'}},dwarves:{label:'Dwarves',unitNames:{worker:'Miner',soldier:'Iron Guard',archer:'Crossbow',catapult:'Cannon',specialist:'Bulwark'},buildingNames:{base:'Stone Hold',barracks:'Guard Hall',farm:'Storehouse',forge:'Foundry'}},goblins:{label:'Goblins',unitNames:{worker:'Tinkerer',soldier:'Scrapper',archer:'Slinger',catapult:'Mortar',specialist:'Grenadier'},buildingNames:{base:'Workshop Hall',barracks:'Scrap Yard',farm:'Supply Shack',forge:'Lab'}}};
+const factionNames={crown:{label:uiText.crownAlliance,unitNames:{worker:uiText.worker,soldier:uiText.guard,archer:uiText.archer,catapult:uiText.catapult,specialist:'Banner Guard'},buildingNames:{academy:'Royal Academy',base:uiText.keep,barracks:uiText.barracks,farm:uiText.farm,forge:uiText.forge}},clans:{label:uiText.ironClan,unitNames:{worker:uiText.clanWorker,soldier:uiText.axeWarrior,archer:uiText.hunter,catapult:uiText.stoneThrower,specialist:'Raider'},buildingNames:{academy:'War Circle',base:uiText.stronghold,barracks:uiText.warHut,farm:uiText.cattlePen,forge:uiText.smithy}},elves:{label:'Elves',unitNames:{worker:'Grove Tender',soldier:'Warden',archer:'Longbow',catapult:'Ballista',specialist:'Marksman'},buildingNames:{academy:'Moon Archive',base:'Grove Hall',barracks:'Ranger Lodge',farm:'Garden',forge:'Moon Workshop'}},dwarves:{label:'Dwarves',unitNames:{worker:'Miner',soldier:'Iron Guard',archer:'Crossbow',catapult:'Cannon',specialist:'Bulwark'},buildingNames:{academy:'Runestone Academy',base:'Stone Hold',barracks:'Guard Hall',farm:'Storehouse',forge:'Foundry'}},goblins:{label:'Goblins',unitNames:{worker:'Tinkerer',soldier:'Scrapper',archer:'Slinger',catapult:'Mortar',specialist:'Grenadier'},buildingNames:{academy:'Engineering College',base:'Workshop Hall',barracks:'Scrap Yard',farm:'Supply Shack',forge:'Lab'}}};
 function defineFaction(id:FactionId):FactionDefinition {
   const recipes:Record<UnitRole,UnitData>={...units,air:{...airConfig[id],role:'air' as const,domain:'air' as const,combatMode:'projectile' as const,trainedAt:'barracks' as const,size:28,aggroRange:240,projectileSpeed:300,projectileLifetime:3,hitRadius:18,prerequisites:{buildings:['forge'] as const,research:{attack:1,defense:1}}}};
   const unitDefinitions={} as FactionDefinition['units'];

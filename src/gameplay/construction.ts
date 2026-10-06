@@ -7,14 +7,14 @@ import { unitStats,workerStats } from '../config/unit';
 import type { GatheringState, Unit } from './gathering';
 import type { PlacementState, ConstructionJob, Footprint } from './placement';
 import type { WorldMap } from './map';
-type SiteId = `base-${number}`|`wall-${number}`|`gate-${number}`|`tower-${number}`| 'harbor'|'outpost'|'barracks'|'forge'|`farm-${number}`;
+type SiteId = `base-${number}`|`wall-${number}`|`gate-${number}`|`tower-${number}`| 'academy'|'harbor'|'outpost'|'barracks'|'forge'|`farm-${number}`;
 export function barracksReady(placement:PlacementState):boolean {
   return placement.barracks!==null && (!placement.construction || placement.construction.remainingSeconds===0);
 }
 export function resumeConstruction(gathering:GatheringState,placement:PlacementState,map:WorldMap,id:SiteId='barracks') {
   const tower=placement.defenses?.find(t=>t.id===id);
   const expansion=placement.bases?.find(b=>b.id===id);
-  const farm=expansion??tower??(id==='forge'?placement.forge:placement.farms?.find(f=>f.id===id));
+  const farm=expansion??tower??(id==='academy'?placement.academy:undefined)??(id==='forge'?placement.forge:placement.farms?.find(f=>f.id===id));
   const rect=id==='barracks'?placement.barracks:farm?.footprint;
   const job=id==='barracks'?placement.construction:farm?.construction;
   if (!rect || !job || job.remainingSeconds<=0) return {gathering,placement};
@@ -23,7 +23,7 @@ export function resumeConstruction(gathering:GatheringState,placement:PlacementS
   if (!builder || approachRoute(map,builder.position,rect,barracksConfig.constructionRange).status==='blocked') return {gathering,placement};
   const updated={...job,builderId:builder.id};
   return {placement:id==='barracks'?{...placement,construction:updated}
-      :expansion?{...placement,bases:placement.bases!.map(b=>b.id===id?{...b,construction:updated}:b)}:tower?{...placement,defenses:placement.defenses!.map(t=>t.id===id?{...t,construction:updated}:t)}:id==='forge'?{...placement,forge:{...placement.forge!,construction:updated}}:{...placement,farms:placement.farms!.map(f=>f.id===id?{...f,construction:updated}:f)},
+      :id==='academy'?{...placement,academy:{...placement.academy!,construction:updated}}:expansion?{...placement,bases:placement.bases!.map(b=>b.id===id?{...b,construction:updated}:b)}:tower?{...placement,defenses:placement.defenses!.map(t=>t.id===id?{...t,construction:updated}:t)}:id==='forge'?{...placement,forge:{...placement.forge!,construction:updated}}:{...placement,farms:placement.farms!.map(f=>f.id===id?{...f,construction:updated}:f)},
     gathering:{...gathering,units:gathering.units.map((u):Unit=>u.id===builder.id&&u.kind==='worker'
       ? {...u,commandMode:undefined,orderQueue:undefined,navigation:undefined,order:{kind:'build',buildingId:id}}
       : u.order.kind==='build'&&u.order.buildingId===id?{...u,navigation:undefined,target:{...u.position},order:{kind:'idle'}}:u)}};
@@ -50,6 +50,7 @@ export function updateConstruction(gathering:GatheringState,placement:PlacementS
   if (construction && placement.barracks) {
     const result=updateSite(next,construction,placement.barracks,'barracks',map,delta,gateFor);next=result.gathering;construction=result.job;barracksReadyAfter='completedAfterSeconds' in result?result.completedAfterSeconds:undefined;
   }
+  let academy=placement.academy;if(academy){const r=updateSite(next,academy.construction,academy.footprint,'academy',map,delta,gateFor);next=r.gathering;academy={...academy,construction:r.job};}
   let forge=placement.forge;
   if(forge){const result=updateSite(next,forge.construction,forge.footprint,'forge',map,delta,gateFor);next=result.gathering;forge={...forge,construction:result.job};}
   const bases=placement.bases?.map(b=>{const result=updateSite(next,b.construction,b.footprint,b.id,map,delta,gateFor);next=result.gathering;return {...b,construction:result.job};});
@@ -57,5 +58,5 @@ export function updateConstruction(gathering:GatheringState,placement:PlacementS
     const result=updateSite(next,f.construction,f.footprint,f.id,map,delta,gateFor);next=result.gathering;
     return {...f,construction:result.job};
   });
-  return {barracksReadyAfter,gathering:next,placement:{...placement,...(bases?{bases}:{}),...(construction?{construction}:{}),...(farms?{farms}:{}),...(forge?{forge}:{})}};
+  return {barracksReadyAfter,gathering:next,placement:{...placement,...(academy?{academy}:{}),...(bases?{bases}:{}),...(construction?{construction}:{}),...(farms?{farms}:{}),...(forge?{forge}:{})}};
 }

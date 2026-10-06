@@ -1,0 +1,22 @@
+[
+  {
+    "width": 800,
+    "rows": 2,
+    "paidBuild": true,
+    "workerConstruction": true,
+    "attackII": true,
+    "defenseII": true,
+    "midResearchSaveLoad": true,
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "rows": 1,
+    "paidBuild": true,
+    "workerConstruction": true,
+    "attackII": true,
+    "defenseII": true,
+    "midResearchSaveLoad": true,
+    "errors": []
+  }
+]

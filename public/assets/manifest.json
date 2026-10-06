@@ -15,7 +15,7 @@
       "image": "assets/buildings-atlas.png",
       "data": "assets/buildings-atlas.json",
       "width": 1024,
-      "height": 7296,
+      "height": 7936,
       "source": "assets/sources/buildings.mjs",
       "refreshSource": "assets/sources/visual-refresh/README.md"
     },
@@ -147197,6 +147197,726 @@
         "x": 32,
         "y": 32
       }
+    },
+    "academy-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "academy",
+      "stage": "foundation"
+    },
+    "academy-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "academy",
+      "stage": "building"
+    },
+    "academy-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "academy",
+      "stage": "complete"
+    },
+    "academy-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "player",
+      "buildingType": "academy",
+      "stage": "damaged"
+    },
+    "academy-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "academy",
+      "stage": "foundation"
+    },
+    "academy-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "academy",
+      "stage": "building"
+    },
+    "academy-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "academy",
+      "stage": "complete"
+    },
+    "academy-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "crown",
+      "owner": "enemy",
+      "buildingType": "academy",
+      "stage": "damaged"
+    },
+    "clans-academy-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "academy",
+      "stage": "foundation"
+    },
+    "clans-academy-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "academy",
+      "stage": "building"
+    },
+    "clans-academy-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "academy",
+      "stage": "complete"
+    },
+    "clans-academy-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "player",
+      "buildingType": "academy",
+      "stage": "damaged"
+    },
+    "clans-academy-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "academy",
+      "stage": "foundation"
+    },
+    "clans-academy-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "academy",
+      "stage": "building"
+    },
+    "clans-academy-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "academy",
+      "stage": "complete"
+    },
+    "clans-academy-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "clans",
+      "owner": "enemy",
+      "buildingType": "academy",
+      "stage": "damaged"
+    },
+    "elves-academy-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "player",
+      "buildingType": "academy",
+      "stage": "foundation"
+    },
+    "elves-academy-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "player",
+      "buildingType": "academy",
+      "stage": "building"
+    },
+    "elves-academy-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "player",
+      "buildingType": "academy",
+      "stage": "complete"
+    },
+    "elves-academy-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "player",
+      "buildingType": "academy",
+      "stage": "damaged"
+    },
+    "elves-academy-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "enemy",
+      "buildingType": "academy",
+      "stage": "foundation"
+    },
+    "elves-academy-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "enemy",
+      "buildingType": "academy",
+      "stage": "building"
+    },
+    "elves-academy-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "enemy",
+      "buildingType": "academy",
+      "stage": "complete"
+    },
+    "elves-academy-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "elves",
+      "owner": "enemy",
+      "buildingType": "academy",
+      "stage": "damaged"
+    },
+    "dwarves-academy-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "player",
+      "buildingType": "academy",
+      "stage": "foundation"
+    },
+    "dwarves-academy-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "player",
+      "buildingType": "academy",
+      "stage": "building"
+    },
+    "dwarves-academy-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "player",
+      "buildingType": "academy",
+      "stage": "complete"
+    },
+    "dwarves-academy-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "player",
+      "buildingType": "academy",
+      "stage": "damaged"
+    },
+    "dwarves-academy-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "enemy",
+      "buildingType": "academy",
+      "stage": "foundation"
+    },
+    "dwarves-academy-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "enemy",
+      "buildingType": "academy",
+      "stage": "building"
+    },
+    "dwarves-academy-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "enemy",
+      "buildingType": "academy",
+      "stage": "complete"
+    },
+    "dwarves-academy-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "dwarves",
+      "owner": "enemy",
+      "buildingType": "academy",
+      "stage": "damaged"
+    },
+    "goblins-academy-player-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "player",
+      "buildingType": "academy",
+      "stage": "foundation"
+    },
+    "goblins-academy-player-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "player",
+      "buildingType": "academy",
+      "stage": "building"
+    },
+    "goblins-academy-player-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "player",
+      "buildingType": "academy",
+      "stage": "complete"
+    },
+    "goblins-academy-player-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "player",
+      "buildingType": "academy",
+      "stage": "damaged"
+    },
+    "goblins-academy-enemy-foundation": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "enemy",
+      "buildingType": "academy",
+      "stage": "foundation"
+    },
+    "goblins-academy-enemy-building": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "enemy",
+      "buildingType": "academy",
+      "stage": "building"
+    },
+    "goblins-academy-enemy-complete": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "enemy",
+      "buildingType": "academy",
+      "stage": "complete"
+    },
+    "goblins-academy-enemy-damaged": {
+      "atlas": "buildings",
+      "width": 128,
+      "height": 128,
+      "anchor": {
+        "x": 64,
+        "y": 96
+      },
+      "logicalFootprint": {
+        "width": 64,
+        "height": 64
+      },
+      "kind": "building",
+      "faction": "goblins",
+      "owner": "enemy",
+      "buildingType": "academy",
+      "stage": "damaged"
     }
   }
 }

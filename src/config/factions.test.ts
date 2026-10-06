@@ -12,14 +12,14 @@ it('implemented factions define all shared roles with distinct, globally unique 
   const ids=new Set<string>();
   for(const id of factionIds){const f=factions[id];
     expect(Object.keys(f.units)).toEqual(['worker','soldier','archer','catapult','specialist','air']);
-    expect(Object.keys(f.buildings)).toEqual(['base','barracks','farm','forge']);
+    expect(Object.keys(f.buildings)).toEqual(['base','barracks','farm','forge','academy']);
     expect(Object.keys(f.upgrades)).toEqual(['attack','defense']);
     for(const group of [f.units,f.buildings,f.upgrades])for(const [role,type] of Object.entries(group)){
       expect(type.role).toBe(role);expect(type.faction).toBe(id);expect(type.id.startsWith(`${id}:`)).toBe(true);
       expect(ids.has(type.id)).toBe(false);ids.add(type.id);
     }
   }
-  expect(ids.size).toBe(60);
+  expect(ids.size).toBe(65);
 });
 it('catalog values preserve current baseline and costs do not alias the other faction',()=>{
   for(const f of [factions.crown]){

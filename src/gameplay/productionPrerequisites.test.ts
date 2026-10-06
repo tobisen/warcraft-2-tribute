@@ -33,9 +33,9 @@ it('technology requires completed live buildings and completed levels for each o
  const m=createMatch('skirmish');
  m.placement.forge={id:'forge',owner:'player',hp:120,footprint:{x:512,y:384,width:64,height:64},construction:{remainingSeconds:3,builderId:null}};
  m.research!.job={kind:'attack',remainingSeconds:1};
- expect(technologyFor(m,'player')).toEqual({buildings:['base'],research:{attack:0,defense:0}});
+ expect(technologyFor(m,'player')).toEqual({academyAllowed:true,buildings:['base'],research:{attack:0,defense:0}});
  m.placement.forge.construction.remainingSeconds=0;m.research!.attack=1;
- expect(technologyFor(m,'player')).toEqual({buildings:['base','forge'],research:{attack:1,defense:0}});
+ expect(technologyFor(m,'player')).toEqual({academyAllowed:true,buildings:['base','forge'],research:{attack:1,defense:0}});
  m.placement.forge.hp=0;expect(technologyFor(m,'player').buildings).not.toContain('forge');
  m.combat.enemies.push({id:'enemy-forge',kind:'building',buildingType:'forge',hp:120,position:{x:1000,y:400},construction:{remainingSeconds:0,builderId:null}});
  m.enemyPolicy!.research.defense=1;

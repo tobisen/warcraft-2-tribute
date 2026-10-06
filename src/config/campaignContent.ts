@@ -5,13 +5,16 @@ import type {MatchState} from '../gameplay/match';
 export interface CampaignContent {units:readonly UnitRole[];buildings:readonly string[];research:readonly UpgradeRole[];ships:readonly string[];abilities:boolean;spells:boolean;baseUpgrades:boolean}
 export function missionContent(id:CampaignMissionId):CampaignContent{
  const level=campaignMissions.findIndex(m=>m.id===id)+1;
- return {units:['worker','soldier',...(level>=2?['archer' as const]:[]),...(level>=4?['specialist' as const]:[]),...(level>=6?['catapult' as const]:[]),...(level>=7?['air' as const]:[])],buildings:['base','barracks','farm',...(level>=2?['tower','wall','gate']:[]),...(level>=3?['forge']:[]),...(level>=5?['harbor']:[])],research:level>=3?['attack','defense']:[],ships:level>=5?['transport',...(level>=8?['warship']:[])]:[],abilities:level>=2,spells:level>=4,baseUpgrades:level>=3};
+ return {units:['worker','soldier',...(level>=2?['archer' as const]:[]),...(level>=4?['specialist' as const]:[]),...(level>=6?['catapult' as const]:[]),...(level>=7?['air' as const]:[])],buildings:['base','barracks','farm',...(level>=2?['tower','wall','gate']:[]),...(level>=3?['forge']:[]),...(level>=5?['harbor']:[]),...(level>=6?['academy']:[])],research:level>=3?['attack','defense']:[],ships:level>=5?['transport',...(level>=8?['warship']:[])]:[],abilities:level>=2,spells:level>=4,baseUpgrades:level>=3};
 }
 export function campaignContentFor(m:Pick<MatchState,'campaignMission'|'campaignRun'>):CampaignContent|undefined{return m.campaignMission&&seriesForId(m.campaignRun?.campaignId)?missionContent(m.campaignMission):undefined;}
 export function contentReason(content:CampaignContent|undefined,category:'units'|'buildings'|'research'|'ships'|'abilities'|'spells'|'baseUpgrades',item=''):string|null{
  if(!content)return null;const allowed=content[category];return (typeof allowed==='boolean'?allowed:(allowed as readonly string[]).includes(item))?null:'Locked for this campaign mission';
 }
+/** Advanced technology must also respect legacy story missions without a series identity. */
+export function academyCampaignReason(m:Pick<MatchState,'campaignMission'>):string|null{return m.campaignMission?contentReason(missionContent(m.campaignMission),'buildings','academy'):null;}
 export function campaignActionReason(m:MatchState,id:string):string|null{
+ if(id==='build-academy'&&academyCampaignReason(m))return academyCampaignReason(m);
  const c=campaignContentFor(m);
  if(id.startsWith('train-'))return contentReason(c,id==='train-ship'||id==='train-transport'?'ships':'units',id==='train-ship'?'warship':id.slice(6));
  if(id.startsWith('build-'))return contentReason(c,'buildings',id.slice(6));

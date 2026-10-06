@@ -1,3 +1,4 @@
+import {upgradeMultiplier} from '../config/upgrades';
 import {validPlayers} from './matchSettings';
 import {playerEliminated,teamOutcome} from './teamResults';
 import {matchFog} from './matchFog';
@@ -63,7 +64,7 @@ export function projectedEnemies(m:MatchState):Enemy[]{
 export function projectMultiplePlayers(m:MatchState):MatchState{
  const multi=m.multiplePlayers!;
  const enemies=projectedEnemies(m);
- const own=[...placementObstacles(m.gathering).slice(m.combat.baseHP>0?0:1),...(m.placement.barracks?[m.placement.barracks]:[]),...(m.placement.forge?[m.placement.forge.footprint]:[]),...(m.placement.bases??[]).map(b=>b.footprint),...(m.placement.farms??[]).map(f=>f.footprint),...(m.placement.defenses??[]).filter(t=>t.kind!=='gate'||!t.open).map(t=>t.footprint),...(m.navy?.harbor?[m.navy.harbor.footprint]:[])];
+ const own=[...placementObstacles(m.gathering).slice(m.combat.baseHP>0?0:1),...(m.placement.barracks?[m.placement.barracks]:[]),...(m.placement.academy?[m.placement.academy.footprint]:[]),...(m.placement.forge?[m.placement.forge.footprint]:[]),...(m.placement.bases??[]).map(b=>b.footprint),...(m.placement.farms??[]).map(f=>f.footprint),...(m.placement.defenses??[]).filter(t=>t.kind!=='gate'||!t.open).map(t=>t.footprint),...(m.navy?.harbor?[m.navy.harbor.footprint]:[])];
  const obstacles=[...createMap(m.map.id,m.map.terrainLayout,m.map.resourceLayout==='trees'?'trees':'groves',m.map.worldLayout==='expanded'?'expanded':'original').obstacles,...own,...enemies.flatMap(e=>e.footprint?[e.footprint]:[])];
  const unchanged=JSON.stringify(obstacles)===JSON.stringify(m.map.obstacles);
  const primary=multi.ai.find(p=>p.id==='enemy')!.state;
@@ -94,13 +95,13 @@ export function shareTeamVision(m:MatchState):MatchState{
 function playerDefense(m:MatchState,unit:Unit):number{
  if(unit.kind!=='soldier')return 1;
  const original=m.gathering.units.find((old):old is Soldier=>old.kind==='soldier'&&old.id===unit.id)??unit;
- return (m.research?.defense?factions[m.factions!.player].upgrades.defense.multiplier:1)*abilityEffects(m.gathering,original).defenseMultiplier*spellModifiers(original).defense;
+ return (upgradeMultiplier(factions[m.factions!.player].upgrades.defense.multiplier,m.research?.defense))*abilityEffects(m.gathering,original).defenseMultiplier*spellModifiers(original).defense;
 }
 function aiDefense(m:MatchState,id:PlayerId,entity:Enemy):number{
  if(entity.footprint||entity.kind==='worker')return 1;
  const before=m.multiplePlayers!.ai.find(bot=>bot.id===id)!.state;
  const original=before.combat.enemies.find(old=>old.id===entity.id)??entity,faction=before.factions!.enemy;
- return (before.enemyPolicy?.research.defense?factions[faction].upgrades.defense.multiplier:1)*abilityEffects({...before.gathering,faction},enemySoldier(original,faction)).defenseMultiplier*spellModifiers(original).defense;
+ return (upgradeMultiplier(factions[faction].upgrades.defense.multiplier,before.enemyPolicy?.research.defense))*abilityEffects({...before.gathering,faction},enemySoldier(original,faction)).defenseMultiplier*spellModifiers(original).defense;
 }
 function mergeEffects(current:SpellEffect[]|undefined,incoming:SpellEffect[]):SpellEffect[]{
  const channels=new Set(incoming.map(e=>spellDefinition(e.spell,e.sourceFaction).kind));
@@ -151,7 +152,7 @@ export function updateMultiplePlayers(m:MatchState,delta:number):MatchState{
    return {...bot,state:view,vision:view.fog!.teams.enemy};
   });
   human={...human,gathering:{...human.gathering,units:human.gathering.units.map(u=>({...u,...(u.kind==='soldier'&&foreignEffects.has(u.id)?{spellEffects:mergeEffects(u.spellEffects,foreignEffects.get(u.id)!)}:{}),hp:Math.max(0,u.hp!-(damage.get(u.id)??0)*playerDefense(snapshot,u))}))},combat:{...human.combat,baseHP:Math.max(0,human.combat.baseHP-(damage.get('base')??0))},multiplePlayers:{...snapshot.multiplePlayers!,ai:ai.map(bot=>({...bot,state:{...bot.state,combat:{...bot.state.combat,enemies:bot.state.combat.enemies.map(e=>({...e,...(foreignEffects.has(globalEntityId(bot.id,e.id))?{spellEffects:mergeEffects(e.spellEffects,foreignEffects.get(globalEntityId(bot.id,e.id))!)}:{}),hp:Math.max(0,e.hp-(damage.get(globalEntityId(bot.id,e.id))??0)*aiDefense(snapshot,bot.id,e))}))}}}))}};
-  human={...human,placement:{...human.placement,bases:human.placement.bases?.map(b=>({...b,hp:Math.max(0,b.hp-(damage.get(b.id)??0))})),barracksHP:human.placement.barracksHP===undefined?undefined:Math.max(0,human.placement.barracksHP-(damage.get('barracks')??0)),...(human.placement.forge?{forge:{...human.placement.forge,hp:Math.max(0,human.placement.forge.hp-(damage.get('forge')??0))}}:{}),farms:human.placement.farms?.map(f=>({...f,hp:Math.max(0,(f.hp??1)-(damage.get(f.id)??0))})),defenses:human.placement.defenses?.map(t=>({...t,hp:Math.max(0,t.hp-(damage.get(t.id)??0))}))},...(human.navy?{navy:{...human.navy,ships:human.navy.ships.map(s=>({...s,hp:Math.max(0,s.hp-(damage.get(s.id)??0)*(snapshot.research?.defense?factions[human.factions!.player].upgrades.defense.multiplier:1))})),harbor:human.navy.harbor?{...human.navy.harbor,hp:Math.max(0,human.navy.harbor.hp-(damage.get('harbor')??0))}:null}}:{})};
+  human={...human,placement:{...human.placement,...(human.placement.academy?{academy:{...human.placement.academy,hp:Math.max(0,human.placement.academy.hp-(damage.get('academy')??0))}}:{}),bases:human.placement.bases?.map(b=>({...b,hp:Math.max(0,b.hp-(damage.get(b.id)??0))})),barracksHP:human.placement.barracksHP===undefined?undefined:Math.max(0,human.placement.barracksHP-(damage.get('barracks')??0)),...(human.placement.forge?{forge:{...human.placement.forge,hp:Math.max(0,human.placement.forge.hp-(damage.get('forge')??0))}}:{}),farms:human.placement.farms?.map(f=>({...f,hp:Math.max(0,(f.hp??1)-(damage.get(f.id)??0))})),defenses:human.placement.defenses?.map(t=>({...t,hp:Math.max(0,t.hp-(damage.get(t.id)??0))}))},...(human.navy?{navy:{...human.navy,ships:human.navy.ships.map(s=>({...s,hp:Math.max(0,s.hp-(damage.get(s.id)??0)*(upgradeMultiplier(factions[human.factions!.player].upgrades.defense.multiplier,snapshot.research?.defense)))})),harbor:human.navy.harbor?{...human.navy.harbor,hp:Math.max(0,human.navy.harbor.hp-(damage.get('harbor')??0))}:null}}:{})};
   const kills={...snapshot.multiplePlayers!.kills};
   const before=[...snapshot.gathering.units.map(u=>({id:u.id,hp:u.hp!})),...snapshot.combat.enemies.filter(e=>!e.footprint),...(snapshot.navy?.ships??[])];
   const after=new Map([...human.gathering.units.map(u=>[u.id,u.hp!] as const),...human.multiplePlayers!.ai.flatMap(bot=>bot.state.combat.enemies.map(e=>[globalEntityId(bot.id,e.id),e.hp] as const)),...(human.navy?.ships??[]).map(s=>[s.id,s.hp] as const)]);

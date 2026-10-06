@@ -90,7 +90,7 @@ export function releasePlaythrough(scenario: MatchScenario, difficulty: Difficul
         if(builder){select(builder.id);for(const point of [{x:608,y:384},{x:544,y:512},{x:480,y:256}]){const placed=placeBuilding(beginPlacement(match.placement,'forge'),point,match.gathering.wood,placementObstacles(match.gathering),{map:match.map,gathering:match.gathering,enemies:visible});if(placed.gathering&&placed.map){spentWood+=match.gathering.wood-placed.gathering.wood;spentGold+=(match.gathering.goldBalance??0)-(placed.gathering.goldBalance??0);match={...match,map:placed.map,gathering:placed.gathering,placement:placed.placement};break;}}}
       }
       if(tech&&match.placement.forge?.construction.remainingSeconds===0&&!match.research!.job&&(!match.research!.defense||army.length>=4)){
-        const kind=match.research!.defense<definition.upgrades.defense.maxLevel?'defense':'attack';
+        const kind=match.research!.defense<1?'defense':'attack';
         const started=startResearch(match.gathering,match.research!,match.placement,kind);spentWood+=match.gathering.wood-started.gathering.wood;spentGold+=(match.gathering.goldBalance??0)-(started.gathering.goldBalance??0);match={...match,gathering:started.gathering,research:started.research};
       }
       if (barracksReady(match.placement) && army.length + pending < armyLimit&&(!tech||army.length+pending<3||match.research!.defense>0)) {

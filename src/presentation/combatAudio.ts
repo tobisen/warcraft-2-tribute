@@ -14,7 +14,7 @@ export function combatAudioSnapshot(m:MatchState):CombatAudioSnapshot{
  const building=(id:string,hp:number,rect:{x:number;y:number;width:number;height:number})=>bodies.push({id,hp,position:{x:rect.x+rect.width/2,y:rect.y+rect.height/2},building:true});
  if(p.barracks)building('barracks',p.barracksHP??factions[m.factions?.player??'crown'].buildings.barracks.hp,p.barracks);
  for(const f of p.farms??[])building(f.id,f.hp??factions[m.factions?.player??'crown'].buildings.farm.hp,f.footprint);
- if(p.forge)building('forge',p.forge.hp,p.forge.footprint);if(n?.harbor)building('harbor',n.harbor.hp,n.harbor.footprint);
+ if(p.academy)building('academy',p.academy.hp,p.academy.footprint);if(p.forge)building('forge',p.forge.hp,p.forge.footprint);if(n?.harbor)building('harbor',n.harbor.hp,n.harbor.footprint);
  for(const t of p.defenses??[])building(t.id,t.hp,t.footprint);
  const attacks:AudibleAttack[]=[];
  for(const t of p.defenses??[])if(t.kind==='tower'&&t.hp>0&&t.construction.remainingSeconds===0){const position={x:t.footprint.x+16,y:t.footprint.y+16};attacks.push({id:t.id,position,visible:seen(position),cooldown:t.cooldown,sound:'bow',range:t.level===2?192:176});}

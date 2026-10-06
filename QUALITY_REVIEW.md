@@ -1,3 +1,13 @@
+# Gameplayfas RTS-195–204 — avslutad2026-10-06
+
+Slutlig fullregression1586/186 PASS472.93s, unit475/85 PASS19.65s, strict build PASS och slutlig fysisk Chrome Native800/1280 PASS. Akademin/nivå II integrerar building/worker/navigation/repair/targets/destruction/AI/team/fog/minimap/UI/Save. Alla fem fraktioners melee/armor/workeravgränsning/academyHP täcks. Två nya legacy-storyadmissionsfall skyddar introduktionsuppdragen. Paid campaigngenomspelningar och gamla koordinatversioner ingår i fullregressionen; mänsklig balans/tid är separat.
+
+450 tidigare byggnadssprites behållna pixel för pixel,40 egna transparenta fyrastegs academyframes tillagda; reproducerbar building-onlyexport på tre byte-identiska artifacts. Slutlig browser ger betalt bygge, faktiskt workerarbete, både nivå II och SaveLoad under paid research samt två/en byggrader. Alla fem academyvarianter och native800/1280 visuellt granskade. Före/efter, commitlista och gränser i [GAMEPLAY_PHASE.md](GAMEPLAY_PHASE.md), rådata artifacts/rts-204.
+
+Review hittade och korrigerade legacy-storyadmission, gamla atlasbounds/count, native paletteavvikelse, enemyacademyHP fallback, Save56-fixture med moderna skatter och genomspelningsbottens nivå-I-val. Första fullregressionens två fel och omkörning redovisas i DEV_LOG/HANDOFF; ingen misslyckad kontroll räknas PASS. Inga kvarstående blockerande reviewfynd. Ingen ny CI/Pages/ljud-/mänsklig matchbalans hävdas. Native akademier är egna kodmålade pixelvarianter; ingen ny roster eller separat kampanjbalansetapp. Bundlevarning kvarstår. Användar-CSS/unitkällor/docs bevaras. Stanna efter204.
+
+---
+
 # Kartfas RTS-191–194 — verifieringsgränser2026-10-06
 
 Individuella träd, gruventré/klickpolygon/djup, gemensam verklig terräng och128² geometri finns på samtliga nio kartor. Browserinput, Save/legacy, navigation/collision, gruvåtkomst, minimap och koordinatberoende kampanjpunkter har riktade belägg. Spelkodens unit472/85 och strict build PASS; slutlig fullregression1528/181 PASS523.12s efter två korrigerade navalcontrollers. Detaljer och bilder i [MAP_PHASE.md](MAP_PHASE.md), [HANDOFF.md](HANDOFF.md) och [DEV_LOG.md](DEV_LOG.md).

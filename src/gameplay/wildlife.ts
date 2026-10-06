@@ -1,3 +1,4 @@
+import {upgradeMultiplier} from '../config/upgrades';
 import type {TargetDomain} from '../config/domains';
 import type {Ship} from './navy';
 import {attackStep as marineAttackStep} from './navalCombat';
@@ -34,7 +35,7 @@ export function updateWildlife(m:MatchState,delta:number):MatchState{
   const stats=u.kind==='ship'?factions[m.gathering.faction??'crown'].naval.units.warship:combatUnitStats(u,m.gathering.faction),ranged=u.kind==='ship'?factions[m.gathering.faction??'crown'].naval.units.warship:rangedStats(u,m.gathering.faction),range=ranged?.range??stats.range??combatConfig.soldierRange,step=u.kind==='ship'?marineAttackStep(u,{id:animal.id,kind:'unit',position:animal.position,hp},delta,m.map,factions[m.gathering.faction??'crown'].naval.units.warship):combatApproach({...movementMap(m.map,u),bodyHalf:stats.size/2},u.position,{x:animal.position.x-10,y:animal.position.y-10,width:20,height:20},animal.id,stats.speed,range,delta,u.navigation);
   if(step.navigation?.status==='blocked')return stop();
   const domainDamage:Partial<Record<TargetDomain,number>>=stats.damageByDomain??{};
-  const multiplier=(m.combat.upgrades?.attack?factions[m.gathering.faction??'crown'].upgrades.attack.multiplier:1)*(domainDamage.land??1)*(u.kind==='soldier'?abilityEffects(m.gathering,u,delta).attackMultiplier*spellModifiers(u,delta).attack:1);
+  const multiplier=(upgradeMultiplier(factions[m.gathering.faction??'crown'].upgrades.attack.multiplier,m.combat.upgrades?.attack))*(domainDamage.land??1)*(u.kind==='soldier'?abilityEffects(m.gathering,u,delta).attackMultiplier*spellModifiers(u,delta).attack:1);
   let cooldown=Math.max(0,(u.attackCooldown??0)-(delta-step.attackSeconds)),time=step.attackSeconds,remainingHP=hp;
   if(!ranged)remainingHP=Math.max(0,hp-('damagePerSecond' in stats?stats.damagePerSecond??combatConfig.soldierDamagePerSecond:combatConfig.soldierDamagePerSecond)*time*multiplier);
   else while(remainingHP>0&&time>0&&time+1e-9>=cooldown){time=Math.max(0,time-cooldown);remainingHP=Math.max(0,remainingHP-ranged.damage*multiplier);cooldown=ranged.attackInterval;}
