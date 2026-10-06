@@ -1,3 +1,4 @@
+import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {expect,it} from 'vitest';
 import {createMatch,updateMatch,type MatchState} from './match';
 import {placeHarbor,harborPlacementError,trainShip,canTrainShip,commandShips,matchPopulation,updateNavy,resumeHarbor} from './navy';
@@ -50,7 +51,7 @@ it('Save/load persists build, paid queue, ship movement; strict coast/recipe/ide
   const json=encodeSave(m,view),loaded=decodeSave(json);expect(loaded.ok).toBe(true);if(loaded.ok){const expected=JSON.parse(json).state.navy;for(const ship of expected.ships)delete ship.typeId;expect(loaded.match.navy).toEqual(expected);}
   for(const mutate of [(d:any)=>d.state.navy.harbor.footprint.x=400,(d:any)=>d.state.navy.production.nextUnitNumber=0,(d:any)=>d.configVersion='tribute-config-10']){const d=JSON.parse(json);mutate(d);expect(decodeSave(JSON.stringify(d)).ok).toBe(false);}
  }
- const fresh=createMatch('mission-outpost');expect(fresh.navy).toBeUndefined();const old=JSON.parse(encodeSave(fresh,{...view,building:null}));old.configVersion='tribute-config-10';delete old.state.statLedger;expect(decodeSave(JSON.stringify(old)).ok).toBe(true);
+ const fresh=createMatch('mission-outpost');expect(fresh.navy).toBeUndefined();const old=JSON.parse(encodeSave(fresh,{...view,building:null}));legacyTerrainFixture(old);old.configVersion='tribute-config-10';delete old.state.statLedger;expect(decodeSave(JSON.stringify(old)).ok).toBe(true);
 });
 it('pause and game over freeze naval state; dead builder/harbor cleanup removes refs and reservations',()=>{
  const m=trainShip(funded());expect(updateNavy({...m,paused:true},100).navy).toBe(m.navy);expect(updateNavy({...m,outcome:'defeat'},100).navy).toBe(m.navy);const dead={...m,navy:{...m.navy!,harbor:{...m.navy!.harbor!,hp:0}}};const cleaned=cleanDestroyed(dead);expect(cleaned.navy!.harbor).toBeNull();expect(cleaned.navy!.production.queue).toEqual([]);expect(cleaned.gathering.wood).toBe(m.gathering.wood);

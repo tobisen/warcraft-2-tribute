@@ -1,3 +1,4 @@
+import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {it,expect} from 'vitest';
 import {createMatch,updateMatch} from './match';
 import {matchStats} from './matchStats';
@@ -28,7 +29,7 @@ it('Frontier expansion extraction and cargo are not mislabelled as spending',()=
 it('roundtrips counters, resets new matches and migrates genuine config19 without invented history',()=>{
  const m=updateMatch(building(),12),loaded=decodeSave(encodeSave(m,view));expect(loaded.ok).toBe(true);if(loaded.ok)expect(loaded.match.statLedger).toEqual(m.statLedger);
  expect(createMatch().statLedger?.player.built).toBe(0);
- const old=JSON.parse(encodeSave(m,view));old.configVersion='tribute-config-19';delete old.state.statLedger;
+ const old=JSON.parse(encodeSave(m,view));legacyTerrainFixture(old);old.configVersion='tribute-config-19';delete old.state.statLedger;
  const migrated=decodeSave(JSON.stringify(old));expect(migrated.ok).toBe(true);if(migrated.ok){expect(migrated.match.statLedger).toMatchObject({legacy:true,player:{built:0,destroyed:0,removed:0}});expect(decodeSave(encodeSave(migrated.match,view)).ok).toBe(true);}
  for(const bad of [-1,NaN,1.5,'1']){const doc=JSON.parse(encodeSave(m,view));doc.state.statLedger.player.built=bad;expect(decodeSave(JSON.stringify(doc)).ok).toBe(false);}
 });

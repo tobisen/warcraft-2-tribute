@@ -1,3 +1,4 @@
+import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {describe,it,expect} from 'vitest';
 import {abilityReady,useAbility,advanceAbilities} from './abilities';
 import {createMatch,updateMatch} from './match';
@@ -48,6 +49,6 @@ describe('faction self abilities',()=>{
  it('save preserves timers without wall time, legacy config has no ability, restart is fresh and invalid timers are rejected',()=>{
   const m=fixture('clans');m.gathering=advanceAbilities(useAbility(m.gathering),2);m.paused=true;const json=encodeSave(m,view),loaded=decodeSave(json);expect(loaded.ok).toBe(true);if(!loaded.ok)return;expect((loaded.match.gathering.units[3] as Soldier).ability).toEqual({activeSeconds:3,cooldownSeconds:18});expect(updateMatch(loaded.match,1000)).toBe(loaded.match);expect(createMatch('survival','normal',m.factions).gathering.units.every(u=>!('ability' in u))).toBe(true);
   for(const bad of [{activeSeconds:6,cooldownSeconds:21},{activeSeconds:3,cooldownSeconds:3},{activeSeconds:-1,cooldownSeconds:0}]){const d=JSON.parse(json);d.state.gathering.units[3].ability=bad;expect(decodeSave(JSON.stringify(d)).ok).toBe(false);}
-  const d=JSON.parse(json);d.configVersion='tribute-config-3';delete d.state.statLedger;expect(decodeSave(JSON.stringify(d)).ok).toBe(false);delete d.state.gathering.units[3].ability;expect(decodeSave(JSON.stringify(d)).ok).toBe(true);
+  const d=JSON.parse(json);legacyTerrainFixture(d);d.configVersion='tribute-config-3';delete d.state.statLedger;expect(decodeSave(JSON.stringify(d)).ok).toBe(false);delete d.state.gathering.units[3].ability;expect(decodeSave(JSON.stringify(d)).ok).toBe(true);
  });
 });

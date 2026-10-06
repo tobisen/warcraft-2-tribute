@@ -1,3 +1,4 @@
+import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {legacyEnemyFixture} from './testHelpers/legacyEnemyFixture';
 import {expect,it} from 'vitest';
 import {createMatch,updateMatch} from './match';
@@ -54,7 +55,7 @@ it('roundtrips orders/cargo/ledger, pauses, resets, and rejects forged worker st
  expect(createMatch('skirmish').enemyProduction!.extracted).toEqual({wood:0,gold:0});
 });
 it('migrates config four without adding free workers or income',()=>{
- const d=JSON.parse(encodeSave(createMatch('siege-test'),view));d.configVersion='tribute-config-4';legacyEnemyFixture(d);delete d.state.statLedger;const loaded=decodeSave(JSON.stringify(d));expect(loaded.ok).toBe(true);if(loaded.ok){expect(loaded.match.combat.enemies).toHaveLength(1);expect(loaded.match.enemyProduction!.extracted).toBeUndefined();expect(decodeSave(encodeSave(loaded.match,view)).ok).toBe(true);}
+ const d=JSON.parse(encodeSave(createMatch('siege-test'),view));legacyTerrainFixture(d);d.configVersion='tribute-config-4';legacyEnemyFixture(d);delete d.state.statLedger;const loaded=decodeSave(JSON.stringify(d));expect(loaded.ok).toBe(true);if(loaded.ok){expect(loaded.match.combat.enemies).toHaveLength(1);expect(loaded.match.enemyProduction!.extracted).toBeUndefined();expect(decodeSave(encodeSave(loaded.match,view)).ok).toBe(true);}
 });
 it('workers never attack or join army groups and forged military membership is rejected',()=>{
  const m=economy(),w=m.combat.enemies.find(e=>e.work)!;w.position={x:400,y:400};m.combat.enemies=[w];const fight=updateCombat(m.gathering,m.combat,10);expect(fight.combat.baseHP).toBe(240);expect(fight.gathering.units.map(u=>u.hp)).toEqual([30,30,30]);

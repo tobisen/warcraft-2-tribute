@@ -1,3 +1,4 @@
+import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {legacyEnemyFixture} from './testHelpers/legacyEnemyFixture';
 import {updateEnemyProduction} from './enemyProduction';
 import {enemyPopulation} from './enemyConstruction';
@@ -44,7 +45,7 @@ it('save/load preserve paid research and ledger, pause freezes it and restart cl
  for(const mutate of [(d:any)=>d.state.enemyPolicy.research.job.remainingSeconds=9,(d:any)=>d.state.enemyPolicy.research.attack=2,(d:any)=>d.configVersion='tribute-config-6']){const d=JSON.parse(encodeSave(m,view));mutate(d);expect(decodeSave(JSON.stringify(d)).ok).toBe(false);}
 });
 it('config six migrates without free forge, levels, income or altered old construction policy',()=>{
- const m=createMatch('skirmish');delete m.enemyPolicy;delete m.enemyRecovery;delete m.enemyKnowledge;const d=JSON.parse(encodeSave(m,view));d.configVersion='tribute-config-6';legacyEnemyFixture(d);delete d.state.statLedger;const loaded=decodeSave(JSON.stringify(d));expect(loaded.ok).toBe(true);if(loaded.ok){expect(loaded.match.enemyPolicy).toBeUndefined();expect(loaded.match.combat.enemies.some(e=>e.buildingType==='forge')).toBe(false);expect(loaded.match.enemyProduction).toEqual({...m.enemyProduction,roster:undefined});}
+ const m=createMatch('skirmish');delete m.enemyPolicy;delete m.enemyRecovery;delete m.enemyKnowledge;const d=JSON.parse(encodeSave(m,view));legacyTerrainFixture(d);d.configVersion='tribute-config-6';legacyEnemyFixture(d);delete d.state.statLedger;const loaded=decodeSave(JSON.stringify(d));expect(loaded.ok).toBe(true);if(loaded.ok){expect(loaded.match.enemyPolicy).toBeUndefined();expect(loaded.match.combat.enemies.some(e=>e.buildingType==='forge')).toBe(false);expect(loaded.match.enemyProduction).toEqual({...m.enemyProduction,roster:undefined});}
 });
 
 it('an existing paid production queue advances while the policy saves for a Forge',()=>{

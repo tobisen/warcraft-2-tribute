@@ -76,3 +76,8 @@ it('mine visual hit polygon excludes transparent corners while its work footprin
  expect(m.map.obstacles).toContainEqual({x:mine.position.x-20,y:mine.position.y-20,width:40,height:40});
  expect(approachRoute(m.map,m.gathering.units[2].position,{x:mine.position.x-20,y:mine.position.y-20,width:40,height:40},24).status).not.toBe('blocked');
 });
+
+it('every playable map uses reference ground, physical harvestable trees and strict Save, with Forest Pass canopy replacing its old rock block',()=>{
+ for(const id of Object.keys(maps) as (keyof typeof maps)[]){const m=createMatch('skirmish','beginner',undefined,id);expect(m.map.terrainLayout).toBe('reference');const nodes=resourceNodes(m.gathering);expect(nodes.filter(n=>n.resource==='wood').every(n=>n.tree)).toBe(true);expect(nodes.filter(n=>n.resource==='gold').every(n=>n.mine)).toBe(true);for(const n of nodes.filter(n=>n.tree))expect(bodyFits(m.map,n.position,12)).toBe(false);expect(decodeSave(encodeSave(m,view)).ok).toBe(true);}
+ const m=createMatch('skirmish','beginner',undefined,'forest');expect(resourceNodes(m.gathering).filter(n=>n.id.startsWith('forest-tree-'))).toHaveLength(21);expect(terrainPatches(m.map).some(p=>p.column===5&&p.row===4)).toBe(false);
+});

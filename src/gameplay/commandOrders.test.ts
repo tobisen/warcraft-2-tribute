@@ -1,3 +1,4 @@
+import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {replaceObstacles} from './map';
 import {createNavy} from './navy';
 import {prepareNavalCombat} from './navalCombat';
@@ -49,7 +50,7 @@ describe('persistent commands and FIFO',()=>{
   const p=m.gathering.units[0].position;const separated=separateBodies(m.map,[{id:'player:a',position:p,half:8,fixed:true},{id:'player:b',position:p,half:8}],1);expect(separated.has('player:a')).toBe(false);
  });
  it('migrates config42 without pretending old saves contained command modes',()=>{
-  const raw=JSON.parse(encodeSave(fixture(),view));raw.configVersion='tribute-config-42';expect(decodeSave(JSON.stringify(raw)).ok).toBe(true);raw.state.gathering.units[0].commandMode={kind:'hold'};expect(decodeSave(JSON.stringify(raw)).ok).toBe(false);
+  const raw=JSON.parse(encodeSave(fixture(),view));legacyTerrainFixture(raw);raw.configVersion='tribute-config-42';expect(decodeSave(JSON.stringify(raw)).ok).toBe(true);raw.state.gathering.units[0].commandMode={kind:'hold'};expect(decodeSave(JSON.stringify(raw)).ok).toBe(false);
  });
  it('ships hold and fire in range without land pursuit; transports only queue movement',()=>{
   let m=createMatch('mission-outpost','easy');m.navy={...createNavy(),ships:[{id:'ship-1',kind:'ship',owner:'player',hp:90,selected:true,position:{x:208,y:512},target:{x:208,y:512},order:{kind:'idle'}}]};

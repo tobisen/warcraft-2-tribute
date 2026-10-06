@@ -1,3 +1,4 @@
+import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {legacyEnemyFixture} from './testHelpers/legacyEnemyFixture';
 import {expect,it} from 'vitest';
 import {isGameSpeed,initialGameSpeed} from '../config/gameSpeed';
@@ -29,7 +30,7 @@ it('equivalent gameplay time preserves entire gather/combat/wave/AI/navy state',
 it('roundtrips both speeds; migrates older saves to 1× and rejects malformed speed',()=>{
  for(const speed of [.75,1] as const){const m=createMatch('skirmish','beginner',factionsForPlayer('clans'),'islands',speed);const json=encodeSave(m,{camera:{x:0,y:0},building:null});const loaded=decodeSave(json);expect(loaded.ok,loaded.ok?'':loaded.error).toBe(true);if(loaded.ok)expect(loaded.match.speed).toBe(speed);
  for(const value of [undefined,null,0,2,'0.75']){const d=JSON.parse(json);d.state.speed=value;expect(decodeSave(JSON.stringify(d)).ok).toBe(false);}
- const old=JSON.parse(json);old.configVersion='tribute-config-16';legacyEnemyFixture(old);delete old.state.statLedger;delete old.state.speed;const legacy=decodeSave(JSON.stringify(old));expect(legacy.ok).toBe(true);if(legacy.ok)expect(legacy.match.speed).toBe(1);
+ const old=JSON.parse(json);legacyTerrainFixture(old);old.configVersion='tribute-config-16';legacyEnemyFixture(old);delete old.state.statLedger;delete old.state.speed;const legacy=decodeSave(JSON.stringify(old));expect(legacy.ok).toBe(true);if(legacy.ok)expect(legacy.match.speed).toBe(1);
  }
 });
 

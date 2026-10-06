@@ -1,3 +1,4 @@
+import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {saveConfig as currentSaveConfig} from '../config/save';
 import {expect,it} from 'vitest';
 import {factions,factionsForPlayer} from '../config/factions';
@@ -56,6 +57,6 @@ it('Save29 preserves explosive projectiles/Overcharge/type IDs and rejects histo
  m.gathering=useAbility({...done.gathering,units:done.gathering.units.map(u=>({...u,selected:u.kind==='soldier'}))});m.soldierProduction=done.production;m.production.nextUnitNumber=done.production.nextUnitNumber;
  m.combat.projectiles=[{id:'arrow-1',shooterId:'unit-4',targetId:'historical-enemy',position:{x:200,y:200},destination:{x:300,y:200},speed:180,remainingLife:2,damage:35.1,hitRadius:16,splashRadius:32}];m.combat.nextProjectileNumber=2;
  const d=JSON.parse(encodeSave(m,{camera:{x:0,y:0},building:null}));expect(d.configVersion).toBe(currentSaveConfig.configVersion);expect(d.state.gathering.units.at(-1).typeId).toBe('goblins:unit:specialist');expect(decodeSave(JSON.stringify(d)).ok).toBe(true);
- d.configVersion='tribute-config-28';expect(decodeSave(JSON.stringify(d)).ok).toBe(false);
- const old=JSON.parse(encodeSave(createMatch('survival','normal',factionsForPlayer('dwarves')),{camera:{x:0,y:0},building:null}));old.configVersion='tribute-config-28';expect(decodeSave(JSON.stringify(old)).ok).toBe(true);
+ legacyTerrainFixture(d);d.configVersion='tribute-config-28';expect(decodeSave(JSON.stringify(d)).ok).toBe(false);
+ const old=JSON.parse(encodeSave(createMatch('survival','normal',factionsForPlayer('dwarves')),{camera:{x:0,y:0},building:null}));legacyTerrainFixture(old);old.configVersion='tribute-config-28';expect(decodeSave(JSON.stringify(old)).ok).toBe(true);
 });

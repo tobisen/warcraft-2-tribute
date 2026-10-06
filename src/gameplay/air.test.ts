@@ -1,3 +1,4 @@
+import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {expect,it} from 'vitest';
 import {factionIds,factions,type FactionId} from '../config/factions';
 import {airConfig,airPresentation} from '../config/air';
@@ -58,7 +59,7 @@ it('AI chooses an available paid air role, produces it and recruits only legal a
  const defense=updateEnemyAI(createEnemyAI(),{...m.combat,enemies:[base,enemy('enemy-produced-1','soldier'),enemy('enemy-produced-2','archer')]},m.map,m.gathering.base,.1,[threat],undefined,()=>true,'crown');expect(defense.state.defenders.map(d=>d.id)).toEqual(['enemy-produced-2']);
 });
 it('Save41 migrates40 without new air fields and rejects forged air/target masks/passengers',()=>{
- const m=createMatch('skirmish'),old=JSON.parse(encodeSave(m,{camera:{x:0,y:0},building:null}));old.configVersion='tribute-config-40';expect(decodeSave(JSON.stringify(old)).ok).toBe(true);old.state.gathering.units.push({...flyer('crown'),typeId:'crown:unit:air'});expect(decodeSave(JSON.stringify(old)).ok).toBe(false);
+ const m=createMatch('skirmish'),old=JSON.parse(encodeSave(m,{camera:{x:0,y:0},building:null}));legacyTerrainFixture(old);old.configVersion='tribute-config-40';expect(decodeSave(JSON.stringify(old)).ok).toBe(true);old.state.gathering.units.push({...flyer('crown'),typeId:'crown:unit:air'});expect(decodeSave(JSON.stringify(old)).ok).toBe(false);
  const air=fixture(),json=JSON.parse(encodeSave(air,{camera:{x:0,y:0},building:null}));json.state.gathering.units.at(-1).mana=1;expect(decodeSave(JSON.stringify(json)).ok).toBe(false);delete json.state.gathering.units.at(-1).mana;json.state.gathering.units.at(-1).position.x=0;expect(decodeSave(JSON.stringify(json)).ok).toBe(false);
 });
 it('air projectile multipliers, local visibility and in-flight Save/Load preserve actual impacts',()=>{

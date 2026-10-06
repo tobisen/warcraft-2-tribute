@@ -15,11 +15,11 @@
 - Frontier först: egna större gruvassets med entré, klippvolym/material och konsekvent ljus. Klickyta följer motiv; workers/entré nåbara och synliga, korrekt djupsortering.
 - Separera visuell storlek från footprint; ändra collision endast vid behov med navigation/byggbarhetsbelägg. Selection visar stock. Före/efter och browser i faktisk spelstorlek.
 
-### RTS-193 — Gemensam terräng på alla spelkartor — In Progress
+### RTS-193 — Gemensam terräng på alla spelkartor — Done
 - Inventera nio skirmishkartor och kampanjens faktiska kartval. Sprid Frontiers gräs/jord/skog/kust/vatten/gruva/berg med individuella träd; bevara layout och strategisk variation.
 - Grafik/collision/byggbarhet/land och sjö stämmer; riktade navigation/objective-tester och visuell browsergranskning.
 
-### RTS-194 — Minst128×128 spelbara tiles på alla kartor — Todo
+### RTS-194 — Minst128×128 spelbara tiles på alla kartor — In Progress
 - Befintligt maximum Plains128/Shattered Coast:128×128 tiles,4096×4096px,32px tiles. Utvidga mindre kartors verkliga terräng med meningsfulla expansioner, skogar, vägar, kust och passager.
 - Anpassa starts/resurser/AI/kamera/minimap; bevara introduktion/missionsmål/triggers, verifiera koordinater och Save-version. Ingen skalning av tiles/sprites eller tom utfyllnad.
 - Stor tät skog/flera workers prestandamäts; samlade slutchecks och BACKLOG/DECISIONS/DEV_LOG/HANDOFF. Taskvis commit/push; stanna efter194 utan nya tasks/karteditor.

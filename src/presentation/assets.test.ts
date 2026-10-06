@@ -8,7 +8,7 @@ const atlas=JSON.parse(atlasJSON);
 const manifest=JSON.parse(manifestJSON);
 describe('terrain presentation preserves the gameplay map',()=>{
  for(const id of Object.keys(maps) as MapId[])it(`${id}: complete frame coverage and exact exposed edges`,()=>{
-  const map=createMap(id,id==='frontier'?'legacy':undefined);
+  const map=createMap(id,'legacy','groves');
   for(let row=0;row<map.height/map.tileSize;row++)for(let col=0;col<map.width/map.tileSize;col++){
    const frame=terrainFrame(col,row,id),kind=frame.startsWith('grass')?'grass':frame;
    expect(blockedTile(map,{column:col,row})).toBe(kind!=='grass');

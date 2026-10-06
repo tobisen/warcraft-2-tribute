@@ -1,3 +1,4 @@
+import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {expect,it} from 'vitest';
 import {factions,factionIds,factionsForPlayer} from '../config/factions';
 import {createMatch,updateMatch} from './match';
@@ -25,5 +26,5 @@ it('roundtrips fractional mana, migrates37, rejects out of bounds, wrong roles a
  const m=createMatch('skirmish');m.gathering.units.push(specialist('crown',12.25));m.production.nextUnitNumber=5;m.soldierProduction.nextUnitNumber=5;const json=encodeSave(m,{camera:{x:0,y:0},building:null}),loaded=decodeSave(json);expect(loaded.ok,loaded.ok?'':loaded.error).toBe(true);if(loaded.ok)expect(loaded.match.gathering.units[3]).toMatchObject({mana:12.25});
  for(const mana of [-1,101,'12',null]){const d=JSON.parse(json);d.state.gathering.units[3].mana=mana;expect(decodeSave(JSON.stringify(d)).ok).toBe(false);}
  const wrong=JSON.parse(json);wrong.state.gathering.units[0].mana=1;expect(decodeSave(JSON.stringify(wrong)).ok).toBe(false);
- const old=JSON.parse(json);old.configVersion='tribute-config-37';expect(decodeSave(JSON.stringify(old)).ok).toBe(false);delete old.state.gathering.units[3].mana;const migrated=decodeSave(JSON.stringify(old));expect(migrated.ok).toBe(true);if(migrated.ok)expect(currentMana(migrated.match.gathering.units[3],'crown')).toBe(60);expect(saveConfig.configVersion).toMatch(/^tribute-config-/);
+ const old=JSON.parse(json);legacyTerrainFixture(old);old.configVersion='tribute-config-37';expect(decodeSave(JSON.stringify(old)).ok).toBe(false);delete old.state.gathering.units[3].mana;const migrated=decodeSave(JSON.stringify(old));expect(migrated.ok).toBe(true);if(migrated.ok)expect(currentMana(migrated.match.gathering.units[3],'crown')).toBe(60);expect(saveConfig.configVersion).toMatch(/^tribute-config-/);
 });

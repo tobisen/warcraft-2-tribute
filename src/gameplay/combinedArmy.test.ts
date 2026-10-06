@@ -1,3 +1,4 @@
+import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {describe,it,expect} from 'vitest';
 import {armyRoles,combinedArmyConfig} from '../config/combinedArmy';
 import {prepareArmyPlan,compositionRole} from './combinedArmy';
@@ -40,7 +41,7 @@ describe('adaptive paid combined armies',()=>{
  });
  it('saves planning/decision clock and migrates older matches without free units or jobs',()=>{
   let m=prepareArmyPlan(createMatch('skirmish'));const loaded=decodeSave(encodeSave(m,view));expect(loaded.ok).toBe(true);if(loaded.ok)expect(loaded.match.armyPlan).toEqual(m.armyPlan);
-  const raw=JSON.parse(encodeSave(createMatch('skirmish'),view));raw.configVersion='tribute-config-44';const old=decodeSave(JSON.stringify(raw));expect(old.ok).toBe(true);if(old.ok)expect(old.match.gathering.units).toHaveLength(3);
+  const raw=JSON.parse(encodeSave(createMatch('skirmish'),view));legacyTerrainFixture(raw);raw.configVersion='tribute-config-44';const old=decodeSave(JSON.stringify(raw));expect(old.ok).toBe(true);if(old.ok)expect(old.match.gathering.units).toHaveLength(3);
   m={...m,paused:true};expect(updateMatch(m,10)).toBe(m);expect(prepareArmyPlan(m)).toBe(m);
  });
 });

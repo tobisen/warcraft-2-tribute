@@ -1,3 +1,4 @@
+import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {expect,it} from 'vitest';
 import {factions,factionsForPlayer} from '../config/factions';
 import {createMatch} from './match';
@@ -59,6 +60,6 @@ it('Save28 accepts paid twelve-second Cannon jobs and Brace timers, never histor
  const done=updateQueuedProduction(m.gathering,m.soldierProduction,12,b);m.gathering={...done.gathering,units:done.gathering.units.map(u=>({...u,selected:u.kind==='soldier'}))};m.soldierProduction=done.production;m.production.nextUnitNumber=done.production.nextUnitNumber;
  m.gathering=useAbility(m.gathering);const d=JSON.parse(encodeSave(m,{camera:{x:0,y:0},building:null}));
  expect(d.state.gathering.units.at(-1)).toMatchObject({typeId:'dwarves:unit:catapult',ability:{activeSeconds:5,cooldownSeconds:25}});expect(decodeSave(JSON.stringify(d)).ok).toBe(true);
- d.configVersion='tribute-config-27';expect(decodeSave(JSON.stringify(d)).ok).toBe(false);
- const old=JSON.parse(encodeSave(createMatch('survival','normal',factionsForPlayer('elves')),{camera:{x:0,y:0},building:null}));old.configVersion='tribute-config-27';expect(decodeSave(JSON.stringify(old)).ok).toBe(true);
+ legacyTerrainFixture(d);d.configVersion='tribute-config-27';expect(decodeSave(JSON.stringify(d)).ok).toBe(false);
+ const old=JSON.parse(encodeSave(createMatch('survival','normal',factionsForPlayer('elves')),{camera:{x:0,y:0},building:null}));legacyTerrainFixture(old);old.configVersion='tribute-config-27';expect(decodeSave(JSON.stringify(old)).ok).toBe(true);
 });

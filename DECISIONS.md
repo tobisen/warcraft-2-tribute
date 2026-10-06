@@ -1510,3 +1510,9 @@ Nya Frontier-matcher använder resourceLayout=trees och Save54. Ett träd per ti
 ## 2026-10-06 — RTS-192: gruvmotiv och berg
 
 Originala Surface-pixelbrushes utökar referenceatlas med96px gruva (entré/timmer/rails/malm, ljus nordväst) och sammanhängande plana klipptoppar med mörka syd-/östsidor. Gruvans synliga polygon styr hit,40px footprint styr arbete/navigation; ingen ny blockering/byggbarhetsändring. Normaliserad world-y-djupsortering för markenheter/träd/gruva ligger under befintliga effekter/luft/overlay. Save55 migrerar54:s gold presentationmarkering; äldre grovematcher behåller tidigare gruvhit.
+
+## 2026-10-06 — RTS-193: gemensamt kartunderlag
+
+Alla nio nya spelkartor använder reference-terrain-atlas för verkliga gräs/jord/vatten/kust/klippkonturer, single-tree wood och96px mines. Frontier-layouten behålls; övriga kartor behåller sina water/rockpatches. Forest Pass gamla3×7 dekorativa forest-rock-block är21 individuella10wood-träd, totalt210 ny uttrycklig finite wood utöver dess tidigare500; ingen dold resurs eller rockcollision ligger under skogen. Övriga befintliga stocks/starts/oförändrade tilemått består. Jord härleds kring riktiga resurspositioner via en gemensam cache. Kampanjer återanvänder samma kart-ID:n/scenarios/phasepoints.
+
+Save56 bevarar tidigare reference/grove och undefined/legacy layouts med uttryckligt originalgeometry-val; moderna kartfält kopieras aldrig till äldre coordinates. Historiska testfixtures rekonstruerar verklig äldre terräng/resursgeometri före versionsmärkning, i stället för att relabela nya tree/mines. Separat194 ändrar kartdimensioner.

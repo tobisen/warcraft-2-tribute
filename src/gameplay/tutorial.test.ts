@@ -1,3 +1,4 @@
+import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {expect,it} from 'vitest';
 import {createMatch,updateMatch} from './match';
 import {createTutorial,updateTutorial,tutorialDeliveredWood} from './tutorial';
@@ -31,7 +32,7 @@ for(const faction of ['crown','clans'] as const)for(const speed of [.75,1] as co
 },30000);
 it('validates tutorial snapshots and migrates old17; defeat wins over completed tutorial',()=>{
  const m=createMatch('tutorial');const json=encodeSave(m,view);for(const mutate of [(d:any)=>d.state.tutorial.step=7,(d:any)=>d.state.tutorial={step:1,workerId:'missing',moveStart:{x:10,y:10},moveOrdered:true},(d:any)=>d.state.tutorial={step:6},(d:any)=>delete d.state.tutorial]){const d=JSON.parse(json);mutate(d);expect(decodeSave(JSON.stringify(d)).ok).toBe(false);}
- const old=JSON.parse(encodeSave(createMatch(),view));old.configVersion='tribute-config-17';delete old.state.statLedger;expect(decodeSave(JSON.stringify(old)).ok).toBe(true);const defeated=updateMatch({...m,combat:{...m.combat,baseHP:0},tutorial:{step:6}},0);expect(defeated.outcome).toBe('defeat');
+ const old=JSON.parse(encodeSave(createMatch(),view));legacyTerrainFixture(old);old.configVersion='tribute-config-17';delete old.state.statLedger;expect(decodeSave(JSON.stringify(old)).ok).toBe(true);const defeated=updateMatch({...m,combat:{...m.combat,baseHP:0},tutorial:{step:6}},0);expect(defeated.outcome).toBe('defeat');
 });
 
 it('rebases the movement lesson when the player chooses another worker',()=>{

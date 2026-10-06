@@ -15,9 +15,9 @@ export interface WorldMap {
   obstacles: Footprint[];
 }
 
-export function terrainPatches(map:Pick<WorldMap,'id'|'terrainLayout'>):readonly TerrainPatch[]{const m=maps[map.id??'arena'];return map.terrainLayout==='reference'?m.referenceTerrain??m.terrain:m.terrain;}
+export function terrainPatches(map:Pick<WorldMap,'id'|'terrainLayout'>):readonly TerrainPatch[]{const m=maps[map.id??'arena'];return map.terrainLayout==='reference'?m.referenceTerrain??(map.id==='forest'?m.terrain.filter(p=>!(p.kind==='rock'&&p.column===5&&p.row===4)):m.terrain):m.terrain;}
 export function createMap(id:MapId='arena',layout?:WorldMap['terrainLayout'],resources:'trees'|'groves'='trees'): WorldMap {
-  const terrainLayout=maps[id].referenceTerrain?(layout??'reference'):undefined;
+  const terrainLayout=layout??'reference';
   return {id,...(terrainLayout==='reference'&&resources==='trees'?{resourceLayout:'trees' as const}:{}),...(terrainLayout?{terrainLayout}:{}), ...(maps[id].world??worldConfig), tileSize: arenaConfig.tileSize, revision: 0,
     obstacles: terrainPatches({id,terrainLayout}).map(p => ({ x: p.column * arenaConfig.tileSize,
       y: p.row * arenaConfig.tileSize, width: p.columns * arenaConfig.tileSize,

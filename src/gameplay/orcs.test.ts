@@ -1,3 +1,4 @@
+import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {matchLabels} from '../presentation/hud';
 import {expect,it} from 'vitest';
 import {factions,factionsForPlayer} from '../config/factions';
@@ -52,7 +53,7 @@ it('Save25 keeps older paid siege time and injured HP; new orders use the new re
  m.placement={...m.placement,barracks:footprint,barracksHP:120,barracksOwner:'player',construction:{remainingSeconds:0,builderId:null}};m.map=replaceObstacles(m.map,[...m.map.obstacles,footprint]);
  const b={kind:'barracks' as const,footprint,unitType:'catapult' as const,technology:{buildings:['forge' as const],research:{}}};
  const start=enqueueProduction(m.gathering,m.soldierProduction,b);m.gathering=start.gathering;m.soldierProduction=start.production;
- const d=JSON.parse(encodeSave(m,{camera:{x:0,y:0},building:'barracks'}));d.configVersion='tribute-config-25';d.state.soldierProduction.queue[0].durationSeconds=10;d.state.soldierProduction.queue[0].remainingSeconds=4;d.state.soldierProduction.remainingSeconds=4;
+ const d=JSON.parse(encodeSave(m,{camera:{x:0,y:0},building:'barracks'}));legacyTerrainFixture(d);d.configVersion='tribute-config-25';d.state.soldierProduction.queue[0].durationSeconds=10;d.state.soldierProduction.queue[0].remainingSeconds=4;d.state.soldierProduction.remainingSeconds=4;
  const loaded=decodeSave(JSON.stringify(d));expect(loaded.ok).toBe(true);if(!loaded.ok)return;
  expect(loaded.match.combat.baseHP).toBe(240);expect(loaded.match.gathering.units[0].hp).toBe(30);expect(loaded.match.gathering.wood).toBe(60);
  expect(loaded.match.soldierProduction.queue![0]).toMatchObject({durationSeconds:10,remainingSeconds:4,legacyRecipe:true,cost:{wood:40,gold:20}});

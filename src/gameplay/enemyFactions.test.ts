@@ -1,3 +1,4 @@
+import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {describe,it,expect} from 'vitest';
 import {factions,factionIds} from '../config/factions';
 import {createMatch,updateMatch} from './match';
@@ -83,7 +84,7 @@ describe('faction-aware opponent army',()=>{
  });
  it('Save29 migration retains generic HP, bank and paid timers instead of healing or upgrading the army',()=>{
   const m=createMatch('siege-test','normal',{player:'crown',enemy:'crown'});const r=updateEnemyProduction(m.enemyProduction!,m.combat,m.gathering,m.map,1);m.combat=r.combat;m.enemyProduction=r.state;
-  const old=JSON.parse(encodeSave(m,view));old.configVersion='tribute-config-29';delete old.state.combat.enemies[0].legacyProfile;old.state.combat.enemies[0].hp=111;
+  const old=JSON.parse(encodeSave(m,view));legacyTerrainFixture(old);old.configVersion='tribute-config-29';delete old.state.combat.enemies[0].legacyProfile;old.state.combat.enemies[0].hp=111;
   const loaded=decodeSave(JSON.stringify(old));expect(loaded.ok,loaded.ok?'':loaded.error).toBe(true);if(!loaded.ok)return;
   expect(loaded.match.combat.enemies[0]).toMatchObject({hp:111,legacyProfile:true});expect(enemyMaximumHP(loaded.match.combat.enemies[0],'crown')).toBe(240);expect(loaded.match.enemyProduction).toEqual(m.enemyProduction);expect(loaded.match.enemyProduction?.roster).toBeUndefined();
   expect(updateMatch(loaded.match,4).combat.enemies.find(e=>e.id==='enemy-produced-1')).toMatchObject({hp:36});

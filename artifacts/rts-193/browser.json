@@ -1,0 +1,227 @@
+[
+  {
+    "id": "arena",
+    "width": 1280,
+    "height": 960,
+    "trees": 1,
+    "wood": {
+      "x": 650,
+      "y": 180
+    },
+    "mine": {
+      "x": 850,
+      "y": 220
+    },
+    "rock": {
+      "x": 144,
+      "y": 160
+    },
+    "coast": {
+      "x": 1152,
+      "y": 336
+    },
+    "layout": "reference",
+    "saveLoad": true,
+    "errors": []
+  },
+  {
+    "id": "forest",
+    "width": 1280,
+    "height": 960,
+    "trees": 22,
+    "wood": {
+      "x": 650,
+      "y": 180
+    },
+    "mine": {
+      "x": 850,
+      "y": 220
+    },
+    "rock": {
+      "x": 720,
+      "y": 400
+    },
+    "coast": {
+      "x": 224,
+      "y": 592
+    },
+    "layout": "reference",
+    "saveLoad": true,
+    "errors": []
+  },
+  {
+    "id": "river",
+    "width": 1280,
+    "height": 960,
+    "trees": 1,
+    "wood": {
+      "x": 650,
+      "y": 180
+    },
+    "mine": {
+      "x": 850,
+      "y": 220
+    },
+    "rock": {
+      "x": 352,
+      "y": 176
+    },
+    "coast": {
+      "x": 448,
+      "y": 544
+    },
+    "layout": "reference",
+    "saveLoad": true,
+    "errors": []
+  },
+  {
+    "id": "islands",
+    "width": 1280,
+    "height": 960,
+    "trees": 1,
+    "wood": {
+      "x": 650,
+      "y": 180
+    },
+    "mine": {
+      "x": 600,
+      "y": 300
+    },
+    "rock": {
+      "x": 208,
+      "y": 176
+    },
+    "coast": {
+      "x": 640,
+      "y": 32
+    },
+    "layout": "reference",
+    "saveLoad": true,
+    "errors": []
+  },
+  {
+    "id": "frontier",
+    "width": 1600,
+    "height": 1152,
+    "trees": 142,
+    "wood": {
+      "x": 656,
+      "y": 144
+    },
+    "mine": {
+      "x": 850,
+      "y": 220
+    },
+    "rock": {
+      "x": 656,
+      "y": 336
+    },
+    "coast": {
+      "x": 1056,
+      "y": 80
+    },
+    "layout": "reference",
+    "saveLoad": true,
+    "errors": []
+  },
+  {
+    "id": "plains96",
+    "width": 3072,
+    "height": 3072,
+    "trees": 1,
+    "wood": {
+      "x": 650,
+      "y": 180
+    },
+    "mine": {
+      "x": 850,
+      "y": 220
+    },
+    "rock": {
+      "x": 144,
+      "y": 160
+    },
+    "coast": {
+      "x": 1152,
+      "y": 336
+    },
+    "layout": "reference",
+    "saveLoad": true,
+    "errors": []
+  },
+  {
+    "id": "plains128",
+    "width": 4096,
+    "height": 4096,
+    "trees": 1,
+    "wood": {
+      "x": 650,
+      "y": 180
+    },
+    "mine": {
+      "x": 850,
+      "y": 220
+    },
+    "rock": {
+      "x": 144,
+      "y": 160
+    },
+    "coast": {
+      "x": 1152,
+      "y": 336
+    },
+    "layout": "reference",
+    "saveLoad": true,
+    "errors": []
+  },
+  {
+    "id": "highlands",
+    "width": 3072,
+    "height": 3072,
+    "trees": 4,
+    "wood": {
+      "x": 650,
+      "y": 180
+    },
+    "mine": {
+      "x": 850,
+      "y": 220
+    },
+    "rock": {
+      "x": 1344,
+      "y": 240
+    },
+    "coast": {
+      "x": 2192,
+      "y": 1840
+    },
+    "layout": "reference",
+    "saveLoad": true,
+    "errors": []
+  },
+  {
+    "id": "coast",
+    "width": 4096,
+    "height": 4096,
+    "trees": 5,
+    "wood": {
+      "x": 650,
+      "y": 180
+    },
+    "mine": {
+      "x": 600,
+      "y": 300
+    },
+    "rock": {
+      "x": 208,
+      "y": 176
+    },
+    "coast": {
+      "x": 2048,
+      "y": 32
+    },
+    "layout": "reference",
+    "saveLoad": true,
+    "errors": []
+  }
+]

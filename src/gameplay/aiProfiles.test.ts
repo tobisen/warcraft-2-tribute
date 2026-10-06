@@ -1,3 +1,4 @@
+import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {updateEnemyAI,createEnemyAI} from './enemyAI';
 import {enemyAIConfig} from '../config/enemyAI';
 import {describe,it,expect} from 'vitest';
@@ -31,7 +32,7 @@ describe('AI behavior separately from difficulty',()=>{
   for(const id of ['offensive','defensive','economic'] as const){const settings={...profileAISettings(enemyAIConfig,id),reserveCount:0};const next=updateEnemyAI(state,combat,m.map,m.gathering.base,0,[],settings);expect(next.state.groups[0].status).toBe(id==='offensive'?'attack':'ready');}
  });
  it('validates profile IDs, migrates legacy defaults and partitions scores by behavior',()=>{
-  const m=createMatch('skirmish'),raw=JSON.parse(encodeSave(m,view));raw.configVersion='tribute-config-43';expect(decodeSave(JSON.stringify(raw)).ok).toBe(true);raw.configVersion='tribute-config-44';raw.state.aiProfile='invented';expect(decodeSave(JSON.stringify(raw)).ok).toBe(false);
+  const m=createMatch('skirmish'),raw=JSON.parse(encodeSave(m,view));legacyTerrainFixture(raw);raw.configVersion='tribute-config-43';expect(decodeSave(JSON.stringify(raw)).ok).toBe(true);legacyTerrainFixture(raw);raw.configVersion='tribute-config-44';raw.state.aiProfile='invented';expect(decodeSave(JSON.stringify(raw)).ok).toBe(false);
   m.matchId='00000000-0000-4000-8000-000000000001';m.outcome='victory';const base=resultScore(m)!;m.aiProfile='economic';const economic=resultScore(m)!;expect(validHighscore(economic)).toBe(true);expect(scorePartition(economic)).not.toBe(scorePartition(base));
  });
 });

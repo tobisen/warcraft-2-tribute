@@ -1,3 +1,4 @@
+import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {expect,it} from 'vitest';
 import {createMatch,type MatchState} from './match';
 import {createNavy,commandShips,attackShips,stopShips,placeHarbor} from './navy';
@@ -43,7 +44,7 @@ it('static-target firing/cooldown/projectile outcomes agree across timestep size
 it('attack/cooldown/inflight marine Save roundtrips; old eleven migrates without marine state',()=>{
  let m=fixture();m.navy=attackShips(m,'enemy-1');m=tick(m,.1);const view={camera:{x:0,y:0},building:null},json=encodeSave(m,view),loaded=decodeSave(json);expect(loaded.ok).toBe(true);if(loaded.ok){expect(loaded.match.navy!.ships[0].order).toEqual(m.navy!.ships[0].order);expect(loaded.match.combat.projectiles).toEqual(m.combat.projectiles);expect(domainBodyFits(loaded.match.map,'water',loaded.match.navy!.ships[0].position,16)).toBe(true);}
  for(const mutate of [(d:any)=>d.state.navy.ships[0].attackCooldown=2,(d:any)=>d.state.navy.ships[0].order.enemyId='missing',(d:any)=>d.state.combat.projectiles[0].damage=100,(d:any)=>d.configVersion='tribute-config-11']){const d=JSON.parse(json);mutate(d);expect(decodeSave(JSON.stringify(d)).ok).toBe(false);}
- const old=fixture();const d=JSON.parse(encodeSave(old,view));d.configVersion='tribute-config-11';delete d.state.statLedger;expect(decodeSave(JSON.stringify(d)).ok).toBe(true);
+ const old=fixture();const d=JSON.parse(encodeSave(old,view));legacyTerrainFixture(d);d.configVersion='tribute-config-11';delete d.state.statLedger;expect(decodeSave(JSON.stringify(d)).ok).toBe(true);
 });
 
 it('approach to firing contact remains in water and removes a stale blocked marker when range opens',()=>{
@@ -63,5 +64,5 @@ it('inflight saved cannon resumes damage and fog cancellation identically withou
  let m=fixture();m.navy=attackShips(m,'enemy-1');m=tick(m,.1);const loaded=decodeSave(encodeSave(m,{camera:{x:0,y:0},building:null}));expect(loaded.ok).toBe(true);if(!loaded.ok)throw Error(loaded.error);expect(tick(m,.6).combat.enemies[0].hp).toBe(tick(loaded.match,.6).combat.enemies[0].hp);const hidden=tick(loaded.match,.6,false);expect(hidden.combat.enemies[0].hp).toBe(36);expect(hidden.combat.projectiles).toEqual([]);expect(hidden.navy!.ships[0].order.kind).toBe('idle');
 });
 it('warships engage air at 75% damage; inflight naval air shots survive Save42 and old41 migration',()=>{
- let m=fixture();const hp=90;m.combat.enemies[0]={...m.combat.enemies[0],kind:'unit',role:'air',hp};m.navy=attackShips(m,'enemy-1');m=tick(m,.01);const shot=m.combat.projectiles![0];expect(shot).toMatchObject({marine:true,airborne:true,targets:['land','sea','air','building'],damageByDomain:{air:.75}});const json=encodeSave(m,{camera:{x:0,y:0},building:null}),loaded=decodeSave(json);expect(loaded.ok,loaded.ok?'':loaded.error).toBe(true);if(loaded.ok){expect(tick(loaded.match,1).combat.enemies[0].hp).toBe(78);expect(tick(m,1).combat.enemies[0].hp).toBe(78);}const forged=JSON.parse(json);forged.configVersion='tribute-config-41';expect(decodeSave(JSON.stringify(forged)).ok).toBe(false);const old=JSON.parse(encodeSave(fixture(),{camera:{x:0,y:0},building:null}));old.configVersion='tribute-config-41';expect(decodeSave(JSON.stringify(old)).ok).toBe(true);
+ let m=fixture();const hp=90;m.combat.enemies[0]={...m.combat.enemies[0],kind:'unit',role:'air',hp};m.navy=attackShips(m,'enemy-1');m=tick(m,.01);const shot=m.combat.projectiles![0];expect(shot).toMatchObject({marine:true,airborne:true,targets:['land','sea','air','building'],damageByDomain:{air:.75}});const json=encodeSave(m,{camera:{x:0,y:0},building:null}),loaded=decodeSave(json);expect(loaded.ok,loaded.ok?'':loaded.error).toBe(true);if(loaded.ok){expect(tick(loaded.match,1).combat.enemies[0].hp).toBe(78);expect(tick(m,1).combat.enemies[0].hp).toBe(78);}const forged=JSON.parse(json);legacyTerrainFixture(forged);forged.configVersion='tribute-config-41';expect(decodeSave(JSON.stringify(forged)).ok).toBe(false);const old=JSON.parse(encodeSave(fixture(),{camera:{x:0,y:0},building:null}));legacyTerrainFixture(old);old.configVersion='tribute-config-41';expect(decodeSave(JSON.stringify(old)).ok).toBe(true);
 });

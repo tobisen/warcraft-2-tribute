@@ -1,3 +1,4 @@
+import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {expect,it} from 'vitest';
 import {maps,mapResources,mapResourceTotals} from '../config/maps';
 import {factionsForPlayer} from '../config/factions';
@@ -47,7 +48,7 @@ it('Save19 handles extended bounds/resources and rejects map/stock/reference/bou
  for(const mutate of [(d:any)=>d.state.map.width=1280,(d:any)=>d.state.gathering.extraNodes[0].remaining=201,(d:any)=>d.state.gathering.extraNodes[0].id='wood-1',(d:any)=>d.state.gathering.extraNodes=[],(d:any)=>d.state.gathering.units[0].target={x:1600,y:10},(d:any)=>d.view.camera={x:1600,y:0},(d:any)=>d.configVersion='tribute-config-18']){
   const d=JSON.parse(json);mutate(d);expect(decodeSave(JSON.stringify(d)).ok).toBe(false);
  }
- const old=createMatch();const d=JSON.parse(encodeSave(old,{camera:{x:240,y:180},building:null}));d.configVersion='tribute-config-18';delete d.state.statLedger;expect(decodeSave(JSON.stringify(d)).ok).toBe(true);
+ const old=createMatch();const d=JSON.parse(encodeSave(old,{camera:{x:240,y:180},building:null}));legacyTerrainFixture(d);d.configVersion='tribute-config-18';delete d.state.statLedger;expect(decodeSave(JSON.stringify(d)).ok).toBe(true);
  d.state.gathering.units[0].target={x:1400,y:300};expect(decodeSave(JSON.stringify(d)).ok).toBe(false);
  // Camera clamping depends on the live viewport, not the former800×600 bootstrap.
  expect(decodeSave(encodeSave(old,{camera:{x:280,y:458},building:null})).ok).toBe(true);

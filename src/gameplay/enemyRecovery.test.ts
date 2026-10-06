@@ -1,3 +1,4 @@
+import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {legacyEnemyFixture} from './testHelpers/legacyEnemyFixture';
 import {expect,it} from 'vitest';
 import {createMatch,updateMatch} from './match';
@@ -24,7 +25,7 @@ it('small and large training steps produce the same worker and bank',()=>{
 });
 it('save/load paid timer and later workers; pause, legacy and restart remain explicit',()=>{
  const m=advanceEnemyRecovery(prepareEnemyRecovery(loss()),2);m.paused=true;const loaded=decodeSave(encodeSave(m,view));expect(loaded.ok).toBe(true);if(!loaded.ok)return;expect(loaded.match.enemyRecovery).toEqual(m.enemyRecovery);expect(updateMatch(loaded.match,100)).toBe(loaded.match);const spawned=advanceEnemyRecovery({...loaded.match,paused:false},3);expect(decodeSave(encodeSave(spawned,view)).ok).toBe(true);expect(createMatch('skirmish').enemyRecovery!.production.nextUnitNumber).toBe(3);
- const old=createMatch('skirmish');delete old.enemyRecovery;delete old.enemyKnowledge;const doc=JSON.parse(encodeSave(old,view));doc.configVersion='tribute-config-7';legacyEnemyFixture(doc);delete doc.state.statLedger;const legacy=decodeSave(JSON.stringify(doc));expect(legacy.ok).toBe(true);if(legacy.ok)expect(legacy.match.enemyRecovery).toBeUndefined();for(const mutate of [(d:any)=>d.state.enemyRecovery.production.nextUnitNumber=2,(d:any)=>d.state.enemyRecovery.production.queue[0].cost.wood=0,(d:any)=>d.configVersion='tribute-config-7']){const d=JSON.parse(encodeSave(m,view));mutate(d);expect(decodeSave(JSON.stringify(d)).ok).toBe(false);}
+ const old=createMatch('skirmish');delete old.enemyRecovery;delete old.enemyKnowledge;const doc=JSON.parse(encodeSave(old,view));legacyTerrainFixture(doc);doc.configVersion='tribute-config-7';legacyEnemyFixture(doc);delete doc.state.statLedger;const legacy=decodeSave(JSON.stringify(doc));expect(legacy.ok).toBe(true);if(legacy.ok)expect(legacy.match.enemyRecovery).toBeUndefined();for(const mutate of [(d:any)=>d.state.enemyRecovery.production.nextUnitNumber=2,(d:any)=>d.state.enemyRecovery.production.queue[0].cost.wood=0,(d:any)=>d.configVersion='tribute-config-7']){const d=JSON.parse(encodeSave(m,view));mutate(d);expect(decodeSave(JSON.stringify(d)).ok).toBe(false);}
 });
 it('base death cancels the paid replacement without refund and terminal match freezes',()=>{
  let m=prepareEnemyRecovery(loss());m.combat.enemies.find(e=>e.kind==='base')!.hp=0;m=cleanDestroyed(m);expect(m.enemyRecovery!.production.remainingSeconds).toBeNull();expect(m.enemyProduction!.wood).toBe(60);expect(advanceEnemyRecovery(m,100)).toBe(m);m.outcome='victory';expect(updateMatch(m,100)).toBe(m);

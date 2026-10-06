@@ -1,3 +1,4 @@
+import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {expect,it} from 'vitest';
 import {factions,factionsForPlayer} from '../config/factions';
 import {createMatch,updateMatch} from './match';
@@ -32,7 +33,7 @@ it('config24 migration preserves already paid siege jobs without requiring a ret
  const b={kind:'barracks' as const,footprint:{x:512,y:384,width:64,height:64},unitType:'catapult' as const};
  const started=enqueueProduction(m.gathering,m.soldierProduction,{...b,technology:{buildings:['forge' as const],research:{}}});
  m.gathering=started.gathering;m.soldierProduction=started.production;
- const d=JSON.parse(encodeSave(m,{camera:{x:0,y:0},building:null}));d.configVersion='tribute-config-24';
+ const d=JSON.parse(encodeSave(m,{camera:{x:0,y:0},building:null}));legacyTerrainFixture(d);d.configVersion='tribute-config-24';
  const loaded=decodeSave(JSON.stringify(d));expect(loaded.ok).toBe(true);if(!loaded.ok)return;
  expect(loaded.match.soldierProduction.queue).toEqual(m.soldierProduction.queue);expect(loaded.match.gathering.wood).toBe(60);
  const done=updateQueuedProduction(loaded.match.gathering,loaded.match.soldierProduction,10,b);expect(done.gathering.units.at(-1)).toMatchObject({archetype:'catapult',hp:80});

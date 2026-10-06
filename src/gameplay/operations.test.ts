@@ -1,3 +1,4 @@
+import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {expect,it} from 'vitest';
 import {operationConfig,operationFor} from '../config/operations';
 import {campaignMissions,campaignPreset} from '../config/campaign';
@@ -41,12 +42,12 @@ it('capture has equal gameplay timing over different deltas, exact completion an
 });
 it('capture zero delta and pause add no hold time',()=>{const m=operationMatch('mission-capture');m.combat.enemies=[];soldier(m,operationConfig['mission-capture'].zone);expect(updateMatch(m,0).capture?.holdSeconds).toBe(0);expect(updateMatch({...m,paused:true},100).capture?.holdSeconds).toBe(0);});
 it('mission markers respect fog and name real courier/guards; status explains goals',()=>{const m=operationMatch('mission-escort');expect(operationMarkers(m).map(m=>m.label)).toEqual(['Ridge Courier']);expect(operationMessage(m)).toMatch(/Guards remaining: 2/);const o=operationFor(m.scenario)!;m.fog=undefined;expect(operationMarkers(m).map(m=>m.label)).toEqual(['Safe Zone','Ridge Courier',...o.guards.map(g=>g.name)]);});
-it('config31 campaign migration preserves existing match identity and does not inject operation state',()=>{const m={...createMatch('tutorial','beginner',{player:'elves',enemy:'dwarves'}),campaignMission:'first-steps' as const},doc=JSON.parse(encodeSave(m,view));doc.configVersion='tribute-config-31';const loaded=decodeSave(JSON.stringify(doc));expect(loaded.ok,loaded.ok?'':loaded.error).toBe(true);if(loaded.ok){expect(loaded.match.factions).toEqual(m.factions);expect(loaded.match.capture).toBeUndefined();}});
+it('config31 campaign migration preserves existing match identity and does not inject operation state',()=>{const m={...createMatch('tutorial','beginner',{player:'elves',enemy:'dwarves'}),campaignMission:'first-steps' as const},doc=JSON.parse(encodeSave(m,view));legacyTerrainFixture(doc);doc.configVersion='tribute-config-31';const loaded=decodeSave(JSON.stringify(doc));expect(loaded.ok,loaded.ok?'':loaded.error).toBe(true);if(loaded.ok){expect(loaded.match.factions).toEqual(m.factions);expect(loaded.match.capture).toBeUndefined();}});
 it('strict Save rejects spoofed courier, guards, capture time and operation state in legacy/other missions',()=>{
  const escort=operationMatch('mission-escort'),capture=operationMatch('mission-capture'),doc=JSON.parse(encodeSave(escort,view));doc.state.gathering.units.find((u:{id:string})=>u.id==='unit-4').kind='soldier';expect(decodeSave(JSON.stringify(doc)).ok).toBe(false);
  const wrong=JSON.parse(encodeSave(escort,view));wrong.state.combat.enemies[0].id='enemy-99';expect(decodeSave(JSON.stringify(wrong)).ok).toBe(false);
  const badTime=JSON.parse(encodeSave(capture,view));badTime.state.capture.holdSeconds=31;expect(decodeSave(JSON.stringify(badTime)).ok).toBe(false);badTime.state.capture.holdSeconds=1;expect(decodeSave(JSON.stringify(badTime)).ok).toBe(false);
- const legacy=JSON.parse(encodeSave(capture,view));legacy.configVersion='tribute-config-31';expect(decodeSave(JSON.stringify(legacy)).ok).toBe(false);
+ const legacy=JSON.parse(encodeSave(capture,view));legacyTerrainFixture(legacy);legacy.configVersion='tribute-config-31';expect(decodeSave(JSON.stringify(legacy)).ok).toBe(false);
  const other=JSON.parse(encodeSave(createMatch('tutorial'),view));other.state.capture={holdSeconds:0};expect(decodeSave(JSON.stringify(other)).ok).toBe(false);
 });
 

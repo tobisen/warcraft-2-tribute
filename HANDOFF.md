@@ -1,3 +1,9 @@
+# RTS-193 klar — kartfas fortsätter med194
+
+191 push036e306,192 push461597e.193 alla nio skirmishkartor och kampanjernas kartunderlag använder reference ground/tree/mines, med bibehållna layouts/dimensions. Forest Pass21 tidigare dekorativa tiles är21×10wood actual resources utöver500. Save56 behåller historiska geometrival. Riktade73/6 +60/5, slutlig unit471/85, strict build/diff PASS. Native1280 actual-size36bilder + fysisk SaveLoad på alla nio kartor PASS i artifacts/rts-193. Nästa194 förstorar mindre till128×128/4096px, strategiska extensions, versionsskydd, slutregression och performance. CSS/docs bevarade; ingen ny CI/Pagesclaim.
+
+---
+
 # RTS-192 klar — kartfas fortsätter med193
 
 191 push036e306.192 Frontier-gruva/berg/korrekt workerdepth/Save55 klar: riktade18/3, unit471/85, strict build/diff och fysisk Chrome800/1280 PASS. Före/efter artifacts/rts-191/rts-192. Gruva96px visuell storlek,40px collision/arbete bevaras. Nästa193 sprider systemet till alla spelkartor;194 förstorar och samlar slutregression/performance. CSS/docs bevarade, ingen CI/Pagesclaim.
