@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { createMap, replaceObstacles, bodyFits, type WorldMap } from './map';
 import { createMatch, updateMatch } from './match';
-import { advanceRoute, commandMappedMove, findRoute, planRoute, segmentFits } from './navigation';
+import { advanceRoute, commandMappedMove, findRoute, planRoute, segmentFits,findFormationRoute } from './navigation';
 
 const open = (): WorldMap => ({...createMap(),width:800,height:600,obstacles:[]});
 describe('bounded navigation', () => {
@@ -82,4 +82,16 @@ it('shared destination searches remain deterministic across callers and obstacle
  const map=replaceObstacles(open(),[{x:160,y:64,width:32,height:256}]),goal={x:600,y:100},a={x:100,y:100},b={x:100,y:400};
  const fresh={...map,obstacles:map.obstacles.map(o=>({...o}))};const expected=findRoute(fresh,a,goal);findRoute(map,b,goal);expect(findRoute(map,a,goal)).toEqual(expected);
  const closed=replaceObstacles(map,[{x:160,y:0,width:32,height:600}]);expect(findRoute(closed,a,goal)).toEqual({ok:false,error:'unreachable'});
+});
+
+it('uses short diagonal detours around obstacles in every direction without square-body corner cuts',()=>{
+ for(const half of [12,16])for(const reflected of [false,true]){
+ const map=replaceObstacles(open(),[{x:160,y:64,width:32,height:128}]),a=reflected?{x:300,y:100}:{x:100,y:100},b=reflected?{x:100,y:100}:{x:300,y:100};
+ const result=findRoute(map,a,b,half);expect(result.ok).toBe(true);if(!result.ok)throw Error('Missing detour');expect(result.waypoints.length).toBeLessThanOrEqual(5);
+ let previous=a,length=0,diagonals=0;for(const p of result.waypoints){expect(segmentFits(map,previous,p,half)).toBe(true);length+=Math.hypot(p.x-previous.x,p.y-previous.y);if(p.x!==previous.x&&p.y!==previous.y)diagonals++;previous=p;}expect(diagonals).toBeGreaterThanOrEqual(2);expect(length).toBeLessThan(320);expect(previous).toEqual(b);
+ }
+});
+it('formation detours and off-center connectors also use safe diagonal segments',()=>{
+ const map=replaceObstacles(open(),[{x:160,y:64,width:32,height:128}]),a={x:137,y:40},b={x:300,y:200};
+ const result=findFormationRoute(map,a,[b,{x:300,y:232}],12);expect(result).toBeTruthy();expect(result!.destination).toEqual(b);expect(result!.waypoints.length).toBeLessThanOrEqual(5);let previous=a;for(const p of result!.waypoints){expect(segmentFits(map,previous,p,12)).toBe(true);previous=p;}expect(previous).toEqual(b);
 });

@@ -62,6 +62,19 @@ function connectors(map: WorldMap, point: Position, half: number): Tile[] {
 
 interface GoalTree {queue:Tile[];cursor:number;parent:Map<string,Tile|null>;depth:Map<string,number>}
 const goalCache=new WeakMap<WorldMap['obstacles'],{length:number;goals:Map<string,GoalTree>}>();
+/** Linear string pulling: keep only bends that the complete square body cannot bypass. */
+function simplifyRoute(map:WorldMap,start:Position,route:Position[],half:number):Position[] {
+ const result:Position[]=[];let anchor=start,lastSafe:Position|undefined;
+ for(const point of route){
+  if(segmentFits(map,anchor,point,half)){lastSafe=point;continue;}
+  if(!lastSafe)return route;
+  result.push(lastSafe);anchor=lastSafe;
+  if(!segmentFits(map,anchor,point,half))return route;
+  lastSafe=point;
+ }
+ if(lastSafe&&!same(anchor,lastSafe))result.push(lastSafe);
+ return result;
+}
 /** Bounded synchronous four-neighbor BFS; stable tie order, no diagonal corner cutting. */
 export function findRoute(map: WorldMap, start: Position, destination: Position,
   half = map.bodyHalf??navigationConfig.halfBody): RouteResult {
@@ -86,7 +99,7 @@ export function findRoute(map: WorldMap, start: Position, destination: Position,
   const first=starts.find(t=>tree!.depth.get(key(t))===bestDepth);if(!first)return {ok:false,error:'unreachable'};
   const route:Position[]=[];let current:Tile|null=first;while(current){route.push(tileCenter(map,current)!);current=tree.parent.get(key(current))??null;}
   if(!same(route[route.length-1],destination))route.push({...destination});
-  return {ok:true,waypoints:route.filter((p,i)=>i!==0||!same(p,start))};
+  return {ok:true,waypoints:simplifyRoute(map,start,route,half)};
 }
 
 export function planRoute(map: WorldMap, position: Position, destination: Position, commandNumber=1): RouteState {
@@ -147,5 +160,5 @@ export function findFormationRoute(map:WorldMap,start:Position,candidates:readon
   for(const [dx,dy]of [[0,-1],[1,0],[0,1],[-1,0]]){const neighbor={column:tile.column+dx,row:tile.row+dy};if(parent.has(key(neighbor)))continue;const next=tileCenter(map,neighbor);if(next&&segmentFits(map,center,next,half)){parent.set(key(neighbor),tile);queue.push(neighbor);}}
  }
  if(!best)return undefined;
- const route:Position[]=[];let current:Tile|null=best.tile;while(current){route.unshift(tileCenter(map,current)!);current=parent.get(key(current))??null;}if(!same(route[route.length-1],best.destination))route.push({...best.destination});return {destination:best.destination,waypoints:route.filter((p,i)=>i!==0||!same(p,start))};
+ const route:Position[]=[];let current:Tile|null=best.tile;while(current){route.unshift(tileCenter(map,current)!);current=parent.get(key(current))??null;}if(!same(route[route.length-1],best.destination))route.push({...best.destination});return {destination:best.destination,waypoints:simplifyRoute(map,start,route,half)};
 }

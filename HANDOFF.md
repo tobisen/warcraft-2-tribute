@@ -1,3 +1,9 @@
+# RTS-200 klar — fortsätt201
+
+200 säkra diagonala delsträckor runt hinder och stabil arrived-grupp. Unit475/85, riktade97/10, strict build/diff, fysisk Chrome800/1280 tre workers och793-träd stress3/18workers PASS; artifacts/rts-200. Median3.6/4ms,59.8/59.2fps.199 push4b2ad55;200 hash rapporteras vid push. Nästa201 svaga workerattacker. BFS fortsatt fyrgrannar + säker smoothing, ingen garanti om globalt kortaste Euclidean-väg. CSS/docs bevarade; samlad fullregression vid etappslut.
+
+---
+
 # RTS-199 klar — fortsätt200
 
 199 mushjulzoom0.5×–2× med pointerankare, zoomkorrekt minimap/pan/input/Save. Unit475/85, riktade15/3, strict build/diff och fysisk Chrome800/1280 selection/farm/SaveLoad/bounds PASS; artifacts/rts-199.198 pushc4376d6;199 hash rapporteras vid push. Nästa200 diagonala vägar. Zoom återställs1× vid Load, utsnittets top-left bevaras. CSS/docs orörda; ingen ny CI/Pages/fullregressionclaim.

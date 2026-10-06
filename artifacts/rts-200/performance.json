@@ -1,0 +1,32 @@
+{
+  "results": [
+    {
+      "workers": 3,
+      "trees": 793,
+      "width": 4096,
+      "height": 4096,
+      "samples": 302,
+      "cpuMedian": 3.5999999046325684,
+      "cpuP95": 4.299999952316284,
+      "fps": 59.80290868632282,
+      "cargo": 15,
+      "elapsed": 6.047253333333344,
+      "outcome": "playing"
+    },
+    {
+      "workers": 18,
+      "trees": 793,
+      "width": 4096,
+      "height": 4096,
+      "samples": 300,
+      "cpuMedian": 4,
+      "cpuP95": 4.5,
+      "fps": 59.21026575309914,
+      "cargo": 90,
+      "elapsed": 6.066409999999996,
+      "outcome": "playing"
+    }
+  ],
+  "errors": [],
+  "method": "Actual Phaser pre/postupdate and rendered frame events; fresh4096px Frontier, dense authored groves,3 vs18 active workers,300 warmed frame samples per case."
+}

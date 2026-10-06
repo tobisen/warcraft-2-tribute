@@ -24,7 +24,7 @@
 - Zooma in/ut över spelytan med begränsad skala och stabil punkt under musen. Kamera/minimap/selection/placement/input fungerar vid zoom.
 - Meny/UI-scroll påverkar inte kartzoom; browsertest flera skalor/kartkanter.
 
-### RTS-200 — Bättre diagonala vägar — Todo
+### RTS-200 — Bättre diagonala vägar — Done
 - Utred fyrgrannevägar och introducera säkra diagonala rutter utan hörnklippning; behåll kroppsstorlek, land/sjö, blockerad skog och revisionscache.
 - Verifiera off-center kontakter, täta hinder, flera units och routeprestanda.
 

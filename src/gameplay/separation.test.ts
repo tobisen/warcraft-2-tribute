@@ -13,7 +13,7 @@ it('settles a pair equally across large/small timesteps, keeping separated bodie
 it('never crosses terrain/world boundaries and uses the free axis in a narrow passage',()=>{const corridor={...map,obstacles:[{x:0,y:0,width:288,height:600},{x:320,y:0,width:480,height:600}]};let bs=bodies().map(b=>({...b,position:{x:304,y:300}}));for(let i=0;i<30;i++)bs=step(bs,.05,corridor);expect(bs.every(b=>bodyFits(corridor,b.position,b.half))).toBe(true);expect(Math.abs(bs[0].position.y-bs[1].position.y)).toBeGreaterThanOrEqual(24-1e-6);});
 it('a crowded mixed group makes bounded progress in open ground without NaN',()=>{let bs=Array.from({length:20},(_,i)=>({id:`unit-${i}`,position:{x:300,y:300},half:i%5===0?20:12}));for(let i=0;i<120;i++)bs=step(bs,.05);expect(bs.every(b=>bodyFits(map,b.position,b.half))).toBe(true);let worst=0;for(let i=0;i<bs.length;i++)for(let j=i+1;j<bs.length;j++){const a=bs[i],b=bs[j],sum=a.half+b.half;worst=Math.max(worst,Math.min(sum-Math.abs(a.position.x-b.position.x),sum-Math.abs(a.position.y-b.position.y)));}expect(worst).toBeLessThan(.2);});
 it('match keeps orders/cargo/selection and derives separation across pause/save/restart',()=>{let m=createMatch('skirmish');m.gathering.units[1]={...m.gathering.units[1],position:{...m.gathering.units[0].position}};m.gathering.units[0]={...m.gathering.units[0],kind:'worker',order:{kind:'idle'},cargo:3,selected:true};const moved=updateMatch(m,.1);expect(moved.gathering.units[0].cargo).toBe(3);expect(moved.gathering.units[0].selected).toBe(true);expect(moved.gathering.units[0].order.kind).toBe('idle');expect(moved.gathering.units[0].position).not.toEqual(moved.gathering.units[1].position);const result=decodeSave(encodeSave(moved,{camera:{x:0,y:0},building:null}));expect(result.ok).toBe(true);moved.paused=true;expect(updateMatch(moved,10)).toBe(moved);expect(createMatch('skirmish').gathering.units[0].position).toEqual({x:280,y:300});});
-it('a corrected moving unit retains its clear next leg, while a displaced arrived route is invalidated',()=>{
+it('a moving unit retains its clear next leg while an arrived idle unit stays at its assigned position',()=>{
  const m=createMatch('skirmish');m.enemyConstruction=undefined;const original=m.gathering.units[0];
  const target={x:600,y:300};const route={...planRoute(m.map,original.position,target),goalKey:'keep-clear-leg',commandNumber:42};
  m.gathering.units[0]={...original,target,order:{kind:'move'},navigation:route};
@@ -21,5 +21,5 @@ it('a corrected moving unit retains its clear next leg, while a displaced arrive
  const next=updateMatch(m,.05),moving=next.gathering.units[0],idle=next.gathering.units[1];
  expect(moving.navigation?.goalKey).toBe('keep-clear-leg');expect(moving.navigation?.commandNumber).toBe(42);expect(moving.order.kind).toBe('move');
  expect(segmentFits(next.map,moving.position,moving.navigation!.waypoints[0],12)).toBe(true);
- expect(idle.position).not.toEqual(original.position);expect(idle.navigation).toBeUndefined();expect(idle.order.kind).toBe('idle');
+ expect(idle.position).toEqual(original.position);expect(idle.navigation?.goalKey).toBe('displaced-arrival');expect(idle.order.kind).toBe('idle');
 });

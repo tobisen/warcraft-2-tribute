@@ -1545,3 +1545,6 @@ Kontextknappar använder en gemensam appägd tooltip med120ms fördröjning och 
 
 ## RTS-199 — Kamera och zoom
 Zoom0.5×–2× är appsessionens aktuella matchvy; ny match/Load startar1×. Save bevarar synlig top-left i befintligt format. Phaser centrumorigin översätts till synlig top-left i pure camerahelpers för minimap/pan/bounds, pointerankare hålls tills kartkanten begränsar det.
+
+## RTS-200 — Säkra diagonala delsträckor
+Tidigare beslut om ingen efterhands-smoothing ersätts inom denna task: linjär string-pulling förenklar både individuella och formations-BFS-vägar. Full svept kroppskollision kontrolleras för varje shortcut; fyrgrannarnas deterministic/reverse-cache består. Målen/blockedresultaten ändras inte. Färdiganlända idle-enheter står kvar vid separation, rörliga enheter får fortfarande lokal korrigering. Global Euclidean-optimalitet är inget löfte.

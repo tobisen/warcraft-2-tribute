@@ -1,3 +1,4 @@
+import {segmentFits} from './navigation';
 import {expect,it} from 'vitest';
 import {approachRoute,canReachFootprint} from './approach';
 // Golden routes captured from RTS-064 before the measured optimization.
@@ -227,6 +228,6 @@ const cases=[
     }
   }
 ];
-for(const [index,c] of cases.entries())it('preserves pre-optimization approach route '+index,()=>{const target={x:500,y:200,width:64,height:64};const map={width:800,height:600,tileSize:32,revision:0,bodyHalf:c.half,obstacles:[target,...c.extra]};expect(approachRoute(map,c.position,target,32)).toEqual(c.route);});
+for(const [index,c] of cases.entries())it('preserves approach contact and clearance with shortened route '+index,()=>{const target={x:500,y:200,width:64,height:64};const map={width:800,height:600,tileSize:32,revision:0,bodyHalf:c.half,obstacles:[target,...c.extra]};const route=approachRoute(map,c.position,target,32);expect({...route,waypoints:[]}).toEqual({...c.route,waypoints:[]});expect(route.waypoints.length).toBeLessThanOrEqual(c.route.waypoints.length);let previous=c.position;for(const p of route.waypoints){expect(segmentFits(map,previous,p,c.half)).toBe(true);previous=p;}if(route.status==='moving')expect(previous).toEqual(c.route.destination);});
 
 for(const [index,c] of cases.entries())it('connectivity witness matches full route reachability '+index,()=>{const target={x:500,y:200,width:64,height:64},map={width:800,height:600,tileSize:32,revision:0,bodyHalf:c.half,obstacles:[target,...c.extra]};expect(canReachFootprint(map,c.position,target,32)).toBe(c.route.status!=='blocked');});
