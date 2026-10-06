@@ -1542,3 +1542,6 @@ Renderframes kontrollerar lokala regler; full global connectivity och arbets-/sp
 
 ## RTS-198 — Kort knapphjälp
 Kontextknappar använder en gemensam appägd tooltip med120ms fördröjning och omedelbart fokus. Fulla förklaringar kvarstår i aria-label/kommandoguide/tech tree; disabled wrapper ingår i tangentfokus utan att aktivera knappen.
+
+## RTS-199 — Kamera och zoom
+Zoom0.5×–2× är appsessionens aktuella matchvy; ny match/Load startar1×. Save bevarar synlig top-left i befintligt format. Phaser centrumorigin översätts till synlig top-left i pure camerahelpers för minimap/pan/bounds, pointerankare hålls tills kartkanten begränsar det.

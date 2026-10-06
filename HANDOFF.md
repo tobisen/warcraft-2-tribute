@@ -1,3 +1,9 @@
+# RTS-199 klar — fortsätt200
+
+199 mushjulzoom0.5×–2× med pointerankare, zoomkorrekt minimap/pan/input/Save. Unit475/85, riktade15/3, strict build/diff och fysisk Chrome800/1280 selection/farm/SaveLoad/bounds PASS; artifacts/rts-199.198 pushc4376d6;199 hash rapporteras vid push. Nästa200 diagonala vägar. Zoom återställs1× vid Load, utsnittets top-left bevaras. CSS/docs orörda; ingen ny CI/Pages/fullregressionclaim.
+
+---
+
 # RTS-198 klar — fortsätt199
 
 198 kort snabb action-tooltip, disabled fokus och live blockeringsorsak. ActionPanel9/1, unit473/85, strict build/diff och Chrome Native800/1280 PASS; artifacts/rts-198.197 push66fe7dd;198 hash rapporteras vid push. Nästa199 mushjulzoom med kamera/minimap/inputverifiering. CSS SHA256 oförändrad/docs bevarade. Inga nya CI/Pages/fullregressionclaims; samlad regression vid etappslut.

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { clampCamera, dragCamera, screenToWorld } from './camera';
+import { clampCamera, dragCamera, screenToWorld,visibleCamera,cameraScroll,zoomCamera } from './camera';
 import { selectUnitAt, selectUnitsInRectangle } from '../gameplay/selection';
 import { barracksFootprint } from '../gameplay/placement';
 
@@ -32,3 +32,15 @@ describe('fixed-zoom bounded camera', () => {
 import {cameraDirection,panCamera} from './camera';
 it('normalizes edge/keyboard diagonals, prioritizes keyboard and cancels opposite arrows',()=>{const diagonal=cameraDirection([], {x:799,y:599},viewport,16);expect(diagonal.x).toBeCloseTo(Math.SQRT1_2);expect(diagonal.y).toBeCloseTo(Math.SQRT1_2);expect(cameraDirection(['ArrowLeft'],{x:799,y:599},viewport,16)).toEqual({x:-1,y:0});expect(cameraDirection(['ArrowLeft','ArrowRight'],null,viewport,16)).toEqual({x:0,y:0});expect(cameraDirection([],{x:800,y:600},viewport,16)).toEqual({x:0,y:0});expect(cameraDirection([],{x:300,y:300},viewport,16)).toEqual({x:0,y:0});});
 it('pans at configured real-time speed over different steps and clamps all limits',()=>{const start={x:100,y:100},direction=cameraDirection(['ArrowRight','ArrowDown'],null,viewport,16);const one=panCamera(start,direction,world,viewport,.5,480);let many=start;for(let i=0;i<5;i++)many=panCamera(many,direction,world,viewport,.1,480);expect(many.x).toBeCloseTo(one.x);expect(many.y).toBeCloseTo(one.y);expect(Math.hypot(one.x-start.x,one.y-start.y)).toBeCloseTo(240);expect(panCamera(start,{x:1,y:1},world,viewport,10,480)).toEqual({x:480,y:360});expect(panCamera(start,{x:-1,y:-1},world,viewport,10,480)).toEqual({x:0,y:0});expect(panCamera(start,{x:1,y:1},viewport,world,1,480)).toEqual({x:0,y:0});expect(panCamera(start,direction,world,viewport,0,480)).toEqual(start);});
+
+it('converts Phaser center-origin scroll and preserves the pointer world point during zoom',()=>{
+ const large={width:4096,height:4096},start={x:1000,y:900},point={x:123,y:456};
+ for(const zoom of [.5,1,2]){const raw=cameraScroll(start,viewport,zoom);expect(visibleCamera(raw,viewport,zoom)).toEqual({...start,width:800/zoom,height:600/zoom});
+ const next=zoomCamera(start,point,large,viewport,zoom,-120);expect(next.scroll.x+point.x/next.zoom).toBeCloseTo(start.x+point.x/zoom);expect(next.scroll.y+point.y/next.zoom).toBeCloseTo(start.y+point.y/zoom);}
+});
+it('bounds zoom and visible world extents, with correctly scaled middle drag',()=>{
+ const large={width:4096,height:4096};let view={zoom:1,scroll:{x:0,y:0}};
+ for(let i=0;i<20;i++)view=zoomCamera(view.scroll,{x:0,y:0},large,viewport,view.zoom,500);expect(view.zoom).toBe(.5);expect(view.scroll).toEqual({x:0,y:0});
+ for(let i=0;i<20;i++)view=zoomCamera({x:4096,y:4096},{x:800,y:600},large,viewport,view.zoom,-500);expect(view.zoom).toBe(2);expect(view.scroll).toEqual({x:3696,y:3796});
+ expect(dragCamera({scroll:{x:1000,y:900},screen:{x:400,y:300}},{x:500,y:400},large,viewport,2)).toEqual({x:950,y:850});
+});

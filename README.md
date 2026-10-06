@@ -17,7 +17,7 @@ npm run dev
 ```
 
 Öppna adressen Vite skriver ut, normalt http://localhost:5173/.
-De mindre kartorna är1280×960 world pixels; Frontier Valley1600×1152, Highlands/Plains96 är3072×3072 och Coast/Plains128 är4096×4096. Spelvyn fyller fönstret med responsiv canvas, befintlig280px sidopanel och sessionrad. Dra med mittenmusknappen för begränsad pan; zoom är1. Vid större viewport centreras hela kartan utan att sprites förstoras. Sidopanelen scrollas. Verifierade layoutstorlekar är1280×720 och1920×1080.
+Alla nya spelkartor är128×128 tiles/4096×4096 world pixels med32px tiles. Spelvyn fyller fönstret med karta och en kompakt bottom-bar; mission/tech/hjälp finns under Menu. Mushjulet över kartan zoomar0.5×–2× med stabil punkt under musen, och mittenmusknappen panorerar. Minimap och klick följer det synliga världsutsnittet. Save bevarar utsnittets övre vänstra position; laddning och ny match startar på1× zoom.
 
 ## Spela matchen
 

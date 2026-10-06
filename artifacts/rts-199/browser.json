@@ -1,0 +1,138 @@
+[
+  {
+    "width": 800,
+    "before": {
+      "zoom": 1,
+      "view": {
+        "x": 900,
+        "y": 904,
+        "width": 800,
+        "height": 392,
+        "right": 1700,
+        "bottom": 1296
+      },
+      "point": {
+        "x": 1220,
+        "y": 1060.8
+      },
+      "screen": {
+        "x": 320,
+        "y": 264.8
+      }
+    },
+    "after": {
+      "zoom": 1.3498588075760032,
+      "view": {
+        "x": 982.9381693818502,
+        "y": 944.432357573652,
+        "width": 592.6545765453743,
+        "height": 290.40074250723336,
+        "right": 1575.5927459272245,
+        "bottom": 1234.8331000808853
+      },
+      "point": {
+        "x": 1219.999961849036,
+        "y": 1060.592695574029
+      },
+      "screen": {
+        "x": 320,
+        "y": 264.8
+      }
+    },
+    "outView": {
+      "zoom": 0.5,
+      "view": {
+        "x": 0,
+        "y": 0,
+        "width": 1600,
+        "height": 784,
+        "right": 1600,
+        "bottom": 784
+      },
+      "point": {
+        "x": 640,
+        "y": 313.6
+      },
+      "screen": {
+        "x": 320,
+        "y": 264.8
+      }
+    },
+    "selectionAtHalfZoom": true,
+    "previewAnchored": true,
+    "physicalFarmPlacement": true,
+    "saveLoadAtZoomedEdge": true,
+    "uiWheelIgnored": true,
+    "maxZoom": 2,
+    "minimapAtBothScales": true,
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "before": {
+      "zoom": 1,
+      "view": {
+        "x": 660,
+        "y": 844,
+        "width": 1280,
+        "height": 512,
+        "right": 1940,
+        "bottom": 1356
+      },
+      "point": {
+        "x": 1172,
+        "y": 1048.8
+      },
+      "screen": {
+        "x": 512,
+        "y": 252.8
+      }
+    },
+    "after": {
+      "zoom": 1.3498588075760032,
+      "view": {
+        "x": 792.7010710109604,
+        "y": 896.8730829809296,
+        "width": 948.2473224725989,
+        "height": 379.29892898903955,
+        "right": 1740.9483934835594,
+        "bottom": 1276.1720119699692
+      },
+      "point": {
+        "x": 1171.9999675010308,
+        "y": 1048.5926517710702
+      },
+      "screen": {
+        "x": 512,
+        "y": 252.8
+      }
+    },
+    "outView": {
+      "zoom": 0.5,
+      "view": {
+        "x": 0,
+        "y": 0,
+        "width": 2560,
+        "height": 1024,
+        "right": 2560,
+        "bottom": 1024
+      },
+      "point": {
+        "x": 1024,
+        "y": 409.6
+      },
+      "screen": {
+        "x": 512,
+        "y": 252.8
+      }
+    },
+    "selectionAtHalfZoom": true,
+    "previewAnchored": true,
+    "physicalFarmPlacement": true,
+    "saveLoadAtZoomedEdge": true,
+    "uiWheelIgnored": true,
+    "maxZoom": 2,
+    "minimapAtBothScales": true,
+    "errors": []
+  }
+]

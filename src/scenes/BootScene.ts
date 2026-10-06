@@ -109,7 +109,7 @@ import { stopSelected } from '../gameplay/orders';
 import { orderMarkers,navalOrderMarkers } from '../presentation/orders';
 import { setRally } from '../gameplay/rally';
 import { allowsProduction, baseFootprint, type BuildingSelection } from '../gameplay/buildingSelection';
-import { dragCamera, type CameraDrag } from '../presentation/camera';
+import { clampCamera, cameraScroll, visibleCamera, dragCamera, type CameraDrag } from '../presentation/camera';
 import { commandGroupMove } from '../gameplay/groupMovement';
 import { arenaConfig } from '../config/arena';
 import {createMap,bodyFits, tileFootprint, type WorldMap } from '../gameplay/map';
@@ -315,7 +315,7 @@ export class BootScene extends Phaser.Scene {
     enemyFactionSelect.addEventListener('change',changeEnemyFaction);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>enemyFactionSelect.removeEventListener('change',changeEnemyFaction));
 
-    this.minimap=bindMinimap(document.querySelector<HTMLCanvasElement>('#minimap')!,()=>({data:visibleMinimapData(this.currentMatch()),scroll:{x:this.cameras.main.scrollX,y:this.cameras.main.scrollY},viewport:{width:this.cameras.main.width,height:this.cameras.main.height}}),point=>this.cameras.main.setScroll(point.x,point.y),()=>this.simulationActive());
+    this.minimap=bindMinimap(document.querySelector<HTMLCanvasElement>('#minimap')!,()=>({data:visibleMinimapData(this.currentMatch()),scroll:this.visibleCamera(),viewport:this.visibleCamera()}),point=>this.setCameraScroll(point),()=>this.simulationActive());
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.minimap?.destroy());
 
     this.unloadMode=null;this.attackMoveMode=false;this.patrolMode=false;this.repairMode=false;this.spellMode=null;this.spellFeedback='';
@@ -354,11 +354,11 @@ export class BootScene extends Phaser.Scene {
     this.rallyMarker = this.add.circle(0, 0, 8).setStrokeStyle(2, 0x7bd389).setDepth(6).setVisible(false);
     this.buildingRing = this.add.rectangle(0, 0, 0, 0).setOrigin(0).setStrokeStyle(2, 0xffdc73).setDepth(effectConfig.selectionDepth).setVisible(false);
     this.cameras.main.setBounds(0, 0, this.map.width, this.map.height).setZoom(1).setScroll(loaded?.view.camera.x??0,loaded?.view.camera.y??0);
-    const resizeCamera=()=>{const v=viewportGeometry(this.scale.width,this.scale.height,this.map);const camera=this.cameras.main;camera.setViewport(v.camera.x,v.camera.y,v.camera.width,v.camera.height);camera.setBounds(0,0,this.map.width,this.map.height);camera.setScroll(Math.max(0,Math.min(camera.scrollX,this.map.width-camera.width)),Math.max(0,Math.min(camera.scrollY,this.map.height-camera.height)));this.drag=undefined;this.cameraDrag=undefined;this.dragBox?.setVisible(false);};
+    const resizeCamera=()=>{const oldView=this.visibleCamera(),v=viewportGeometry(this.scale.width,this.scale.height,this.map);const camera=this.cameras.main;camera.setViewport(v.camera.x,v.camera.y,v.camera.width,v.camera.height);camera.setBounds(0,0,this.map.width,this.map.height);this.setCameraScroll(clampCamera(oldView,this.map,this.visibleCamera()));this.drag=undefined;this.cameraDrag=undefined;this.dragBox?.setVisible(false);};
     resizeCamera();this.scale.on(Phaser.Scale.Events.RESIZE,resizeCamera);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.scale.off(Phaser.Scale.Events.RESIZE,resizeCamera));
     this.cameraDrag = undefined;
-    this.cameraInput=bindCameraInput(this.game.canvas,()=>{const c=this.cameras.main;return {scroll:{x:c.scrollX,y:c.scrollY},world:this.map,camera:{x:c.x,y:c.y,width:c.width,height:c.height}};},()=>this.simulationActive()&&!this.cameraDrag&&!this.drag,p=>{this.cameras.main.setScroll(p.x,p.y);if(this.placement.active)this.previewPoint=this.worldPoint(this.input.activePointer);});
-    const cameraKey=(event:KeyboardEvent)=>{const shortcut=cameraShortcut(event.key,{...keyboardContext(event,this.gameplayActive()),ctrlKey:event.ctrlKey,metaKey:event.metaKey});if(!shortcut||this.drag||this.cameraDrag)return;event.preventDefault();const c=this.cameras.main,target=cameraFocus(shortcut==='base'?[this.gathering.base]:selectionFocusPoints(this.currentMatch(),this.selectedBuilding),this.map,{width:c.width,height:c.height});if(target){c.setScroll(target.x,target.y);if(this.placement.active)this.previewPoint=this.worldPoint(this.input.activePointer);this.syncVisuals();}};
+    this.cameraInput=bindCameraInput(this.game.canvas,()=>{const c=this.cameras.main;return {zoom:c.zoom,scroll:this.visibleCamera(),world:this.map,camera:{x:c.x,y:c.y,width:c.width,height:c.height}};},()=>this.simulationActive()&&!this.cameraDrag&&!this.drag,p=>{this.setCameraScroll(p);if(this.placement.active)this.previewPoint=this.worldPoint(this.input.activePointer);},(zoom,p,anchor)=>{this.cameras.main.setZoom(zoom);this.setCameraScroll(p);if(this.placement.active){this.previewPoint=anchor;this.syncPlacement();}});
+    const cameraKey=(event:KeyboardEvent)=>{const shortcut=cameraShortcut(event.key,{...keyboardContext(event,this.gameplayActive()),ctrlKey:event.ctrlKey,metaKey:event.metaKey});if(!shortcut||this.drag||this.cameraDrag)return;event.preventDefault();const c=this.cameras.main,target=cameraFocus(shortcut==='base'?[this.gathering.base]:selectionFocusPoints(this.currentMatch(),this.selectedBuilding),this.map,this.visibleCamera());if(target){this.setCameraScroll(target);if(this.placement.active)this.previewPoint=this.worldPoint(this.input.activePointer);this.syncVisuals();}};
     window.addEventListener('keydown',cameraKey);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>window.removeEventListener('keydown',cameraKey));
     const clearCameraGestures=()=>{this.cameraDrag=undefined;this.drag=undefined;this.dragBox?.setVisible(false);};window.addEventListener('blur',clearCameraGestures);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{this.cameraInput?.destroy();window.removeEventListener('blur',clearCameraGestures);});
@@ -540,7 +540,7 @@ export class BootScene extends Phaser.Scene {
     abilityButton.addEventListener('click',activateAbility);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>abilityButton.removeEventListener('click',activateAbility));
     const saveButton=document.getElementById('save-match') as HTMLButtonElement;
     const loadButton=document.getElementById('load-match') as HTMLButtonElement;
-    const save=()=>{if(this.session.phase==='menu'||this.restartPending)return;const result=storeSave(()=>window.localStorage,this.currentMatch(),{camera:{x:this.cameras.main.scrollX,y:this.cameras.main.scrollY},building:savedBuildingSelection(this.selectedBuilding)});document.getElementById('save-status')!.textContent=result.ok?uiText.savedLocallyInSlot1:uiText.couldNotSaveLocallyCheckBrowserStorage;};
+    const save=()=>{if(this.session.phase==='menu'||this.restartPending)return;const result=storeSave(()=>window.localStorage,this.currentMatch(),{camera:{x:this.visibleCamera().x,y:this.visibleCamera().y},building:savedBuildingSelection(this.selectedBuilding)});document.getElementById('save-status')!.textContent=result.ok?uiText.savedLocallyInSlot1:uiText.couldNotSaveLocallyCheckBrowserStorage;};
     const load=()=>{if(this.restartPending)return;const result=readSave(()=>window.localStorage);if(!result.ok){document.getElementById('save-status')!.textContent=result.code==='missing'?result.error:result.code==='version'?uiText.thisSaveUsesAnUnsupportedFormatOrGame:uiText.couldNotReadTheSaveTheActiveMatch;return;}this.awaitingLoadedResume=result.match.outcome==='playing';this.pendingLoad={match:{...result.match,paused:true},view:result.view};this.scenario=result.match.scenario!;this.difficulty=result.match.difficulty!;this.session={options:{players:result.match.multiplePlayers?.roster,aiProfile:result.match.aiProfile,scenario:this.scenario,difficulty:this.difficulty,map:result.match.map.id??'arena',faction:result.match.factions?.player??defaultFactions.player,enemyFaction:result.match.factions?.enemy??defaultFactions.enemy,speed:result.match.speed??1},phase:result.match.outcome==='playing'?'paused':'ended'};this.skipGameplayFrame=true;this.restartPending=true;this.restartButton.disabled=true;gameAudio.setPhase(this.session.phase);document.getElementById('save-status')!.textContent=result.match.outcome==='playing'?uiText.loadedPausedNoGameplayTimePassesUntilResume:uiText.loadedCompletedMatch;this.scene.restart();};
     saveButton.addEventListener('click',save);loadButton.addEventListener('click',load);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{saveButton.removeEventListener('click',save);loadButton.removeEventListener('click',load);});
     for(const [id,action] of [['start-match','start'],['pause-match','pause'],['resume-match','resume'],['new-match','new-match']] as const){const button=document.getElementById(id)!;const handler=()=>this.sessionAction(action);button.addEventListener('click',handler);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>button.removeEventListener('click',handler));}
@@ -641,6 +641,9 @@ export class BootScene extends Phaser.Scene {
     syncHomeMenu(phase);syncSkirmishMenu(menu&&currentHomePage()==='skirmish',this.session.options);syncResultScreen(phase);
   }
 
+  private visibleCamera(){const c=this.cameras.main;return visibleCamera({x:c.scrollX,y:c.scrollY},c,c.zoom);}
+  private setCameraScroll(point:Position):void {const c=this.cameras.main,p=cameraScroll(point,c,c.zoom);c.setScroll(p.x,p.y);}
+
   private worldPoint(pointer: Phaser.Input.Pointer): Position {
     pointer.updateWorldPoint(this.cameras.main);
     return { x: pointer.worldX, y: pointer.worldY };
@@ -667,7 +670,7 @@ export class BootScene extends Phaser.Scene {
     if (pointer.button === 1) {
       if (this.drag) return;
       this.cameraDrag = { screen: { x: pointer.x, y: pointer.y },
-        scroll: { x: this.cameras.main.scrollX, y: this.cameras.main.scrollY } };
+        scroll: this.visibleCamera() };
       return;
     }
     if (this.cameraDrag) return;
@@ -748,8 +751,8 @@ export class BootScene extends Phaser.Scene {
     if(this.spellMode){this.syncSpellPreview(this.worldPoint(pointer));return;}
     if (this.cameraDrag) {
       const scroll = dragCamera(this.cameraDrag, { x: pointer.x, y: pointer.y }, this.map,
-        { width: this.cameras.main.width, height: this.cameras.main.height });
-      this.cameras.main.setScroll(scroll.x, scroll.y);
+        { width: this.cameras.main.width, height: this.cameras.main.height },this.cameras.main.zoom);
+      this.setCameraScroll(scroll);
       if (this.placement.active) {
         this.previewPoint = this.worldPoint(pointer);
         this.syncPlacement();

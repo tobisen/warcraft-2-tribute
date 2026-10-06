@@ -20,7 +20,7 @@
 - Kort hovertext med namn, kostnad/hotkey och aktuell blockeringsorsak. Snabb tooltip som också fungerar för fokus/disabled-knappar; undvik upprepade långa native titles.
 - Behåll relevant tillgänglighetsinformation och utförligare techbeskrivningar i tech tree.
 
-### RTS-199 — Mushjul för kartzoom — Todo
+### RTS-199 — Mushjul för kartzoom — Done
 - Zooma in/ut över spelytan med begränsad skala och stabil punkt under musen. Kamera/minimap/selection/placement/input fungerar vid zoom.
 - Meny/UI-scroll påverkar inte kartzoom; browsertest flera skalor/kartkanter.
 
