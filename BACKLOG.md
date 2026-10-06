@@ -1,5 +1,12 @@
 # Backlog
 
+## CI-timeoutkorrigering efter RTS-204 — 2026-10-06
+
+Senaste [GitHub-körningen](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37491093989) fallerade på två tidsgränser: multiplePlayers betalda två-AI/60s-simulering (15000ms) och extraBases team/construction/Save (5000ms). Build/Pages hoppades över; lokal204-PASS är inte CI-PASS. Endast dessa integrationers wall-clockbudget ändras till60000/30000ms. Gameplaytid, fixtures och assertions är oförändrade; standardtimeout och workerantal består.
+
+Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), unit475/85 PASS15.09s och build inklusive strict typecheck PASS med befintlig bundlevarning. Diffgranskning utan fynd; git diff --check PASS. Full regression körs i nya GitHub-jobbet och dess resultat rapporteras separat. Ingen ny browserkontroll behövs för enbart testtimeout. Befintlig style.css, units.mjs och docs/ bevaras. Inga nya roadmaptasks.
+
+
 ## Current Focus
 
 **Gameplayfas RTS-195–204 avslutad:** Samtliga tio tasks är Done. Slutlig fullregression1586/186, unit475/85, strict build och faktisk Native800/1280 browser PASS. [GAMEPLAY_PHASE.md](GAMEPLAY_PHASE.md) samlar leverans/bilder/commits/begränsningar. Stanna efter204; inga nya tasks startas automatiskt. HANDOFF.md styr överlämningen.
@@ -7,49 +14,58 @@
 **Nytt gameplaymandat RTS-195–204:** Användarens önskemål2026-10-06 ersätter kartfasens stopp. En task åt gången; konkreta UI/transport/placement/navigation-problem före nytt innehåll. Bevara befintlig style.css/docs. Ingen delegering. Innehållspaket för204 detaljeras före beroende kod. Tidigare kartfasens belägg är historik.
 
 ### RTS-195 — Byggknappar på en eller två rader — Done
+
 - Samla alla synliga byggknappar på en rad när utrymmet räcker, annars två. Behåll ikoner, hotkeys, disabled-status och selectionflöde.
 - Granska actual Native800/1280/1920 med worker vald; ändra separat layout-CSS, bevara befintlig style.css.
 
 ### RTS-196 — Automatisk närkontakt för transport — Done
+
 - Load/Unload hittar närmaste synliga nåbara strand inom begränsad radie; båt/trupper går dit och genomför lastning utan pixelprecision.
 - Återanvänd land-/sjövägar, kapacitet och säker landstigning. Inga teleporter genom hinder eller fog; avbrutna order, full båt, blockerad strand och Save/load verifieras.
 
 ### RTS-197 — Responsiv byggförhandsvisning — Done
+
 - Profilera placement i verklig stor tät skog. Undvik fulla connectivity-BFS varje renderframe; faktisk placering måste fortfarande validera samtliga relevanta regler.
 - Spelsimulering fortsätter under placement. Riktade byggbarhets-/navigationstester och faktisk browsermätning.
 
 ### RTS-198 — Snabb och kort knapphjälp — Done
+
 - Kort hovertext med namn, kostnad/hotkey och aktuell blockeringsorsak. Snabb tooltip som också fungerar för fokus/disabled-knappar; undvik upprepade långa native titles.
 - Behåll relevant tillgänglighetsinformation och utförligare techbeskrivningar i tech tree.
 
 ### RTS-199 — Mushjul för kartzoom — Done
+
 - Zooma in/ut över spelytan med begränsad skala och stabil punkt under musen. Kamera/minimap/selection/placement/input fungerar vid zoom.
 - Meny/UI-scroll påverkar inte kartzoom; browsertest flera skalor/kartkanter.
 
 ### RTS-200 — Bättre diagonala vägar — Done
+
 - Utred fyrgrannevägar och introducera säkra diagonala rutter utan hörnklippning; behåll kroppsstorlek, land/sjö, blockerad skog och revisionscache.
 - Verifiera off-center kontakter, täta hinder, flera units och routeprestanda.
 
 ### RTS-201 — Svaga workerattacker — Done
+
 - Workers kan få manuell attackorder med låg melee-skada; separera från soldierstats. Gathering/byggarbete kan avbrytas och återupptas enligt befintliga regler.
 - Fog, damage/domains, Save/load, selection och dubbla worker/army-grupper verifieras.
 
 ### RTS-202 — Dolda skatter och upptäckbara allierade — Done
+
 - Fasta kartconfigfynd som upptäcks genom faktisk spelarvision; engångsbelöning och ett begränsat urval gömda enheter som övergår till spelarens kontroll.
 - Ingen dold information genom minimap/UI; resursledger, population, kampanjmål, ägarskap och Save/load bevaras. Innehåll och belöningsnivå dokumenteras före implementation.
 
 - Innehåll202: endast nya expanded-skirmishmatcher på nio kartor; två kistor ×20wood+10gold och en fraktionsgrundsoldat per karta. Faktiskt synfält + egen markenhet inom48px öppnar/rekryterar. Full supply eller blockerad spawn väntar utan kostnad/duplication; render visar varför. Kampanj och äldre matcher behåller sitt innehåll. Stable config-ID/platser, intjänad bonus räknas separat från utvunnen stock i statistik, rekryt räknas som tillagd enhet.
 
 ### RTS-203 — Flera huvudbyggnader — Done
+
 - Bygg ytterligare egna baser genom betalda workerjobb. Återanvänd byggbarhet, resursleverans, produktion, ownership/fog, selection, destruction och Save-version.
 - Detaljera produktionsköer och defeatregler före implementation; behåll kampanjens ursprungliga basmål.
 
 - Design203: högst två extra baser,100wood+60gold/st och12s workerbyggande,64px footprint. Separata FIFO-workerköer/rally, delad ekonomi/supply/basnivå. Färdig bas ger fraktionsbasens supply och leverans/vision; grund ger inget. Skirmish/team kräver sista färdiga basens förlust, kampanj skyddar ursprungsbasen.
 
 ### RTS-204 — Utökat bygg-/tech-/uppgraderingspaket — Done
+
 - Föreslå ett avgränsat sammanhängande paket för de fem fraktionerna eller använd uttrycklig användarspecifikation innan nya recipes/assets byggs.
 - Tydliga prerequisitekedjor, betalda uppgraderingar för byggnader/enheter, UI/tech tree, AI, campaign admission och Save-kompatibilitet. Befintliga roster/system återanvänds.
-
 
 - Paket204: en academy per spelare,80wood+40gold/10s/64px/140HP. Kräver forge + attack1 + defense1. Attack/defense nivå2 kostar dubbla fraktionens nivå1kostnad och tar12s, kräver färdig academy. Effekt är befintlig fraktionsmultiplikator upphöjd till nivån för militär (workers oförändrade). AI bygger/forskar enligt samma kedja. Kampanj tillåter academy först från mission6; befintliga tidiga recipes/roster består. Egna pixelmålade academyassets i fem fraktionsvarianter, ingen ny unitroster. Save62 skyddar äldre snapshots. Stopp efter204 och fullregression.
 
@@ -58,35 +74,42 @@
 **Nytt grafik-/layoutmandat RTS-188–190:** Användaren beställer tydligare spelyta, bättre fullständig enhets-/byggnadsgrafik inklusive flyg och roligare djur. En task i taget med browser/checks/docs/commit/push. Bevara style.css/docs och gameplay/balans/Save. Ingen delegering.188 push0779d8b,189 push9af4724,190 Done; etappen avslutas här. Full regression1497/180, unit476/86, strict build/diff och browser PASS. HANDOFF styr överlämningen; inga nya tasks.
 
 ### RTS-191 — Individuellt skördbara skogsträd — Done
+
 - Ersätt dekorativa skogskronor i nya matcher med individuella resurser: stabilt ID, position, wood, selection och högerklicksorder.
 - Nåbara arbetsplatser, tät blockerande skog, tydlig onåbarhet; uttömning öppnar collision/navigation och visar stubbe. Nåbart nästa träd, befintlig last/leverans, fog och strikt Save-kompatibilitet.
 - Frontier först; riktade flera-träd/workers/uttömning/passage/Save-tester och browser. Gemensamt underlag för övriga kartor i193. Ingen separat tung per-träd-tick.
 
 ### RTS-192 — Detaljerad gruva och sammanhängande berg — Done
+
 - Frontier först: egna större gruvassets med entré, klippvolym/material och konsekvent ljus. Klickyta följer motiv; workers/entré nåbara och synliga, korrekt djupsortering.
 - Separera visuell storlek från footprint; ändra collision endast vid behov med navigation/byggbarhetsbelägg. Selection visar stock. Före/efter och browser i faktisk spelstorlek.
 
 ### RTS-193 — Gemensam terräng på alla spelkartor — Done
+
 - Inventera nio skirmishkartor och kampanjens faktiska kartval. Sprid Frontiers gräs/jord/skog/kust/vatten/gruva/berg med individuella träd; bevara layout och strategisk variation.
 - Grafik/collision/byggbarhet/land och sjö stämmer; riktade navigation/objective-tester och visuell browsergranskning.
 
 ### RTS-194 — Minst128×128 spelbara tiles på alla kartor — Done
+
 - Befintligt maximum Plains128/Shattered Coast:128×128 tiles,4096×4096px,32px tiles. Utvidga mindre kartors verkliga terräng med meningsfulla expansioner, skogar, vägar, kust och passager.
 - Anpassa starts/resurser/AI/kamera/minimap; bevara introduktion/missionsmål/triggers, verifiera koordinater och Save-version. Ingen skalning av tiles/sprites eller tom utfyllnad.
 - Stor tät skog/flera workers prestandamäts; samlade slutchecks och BACKLOG/DECISIONS/DEV_LOG/HANDOFF. Taskvis commit/push; stanna efter194 utan nya tasks/karteditor.
 
 ### RTS-188 — Frigör spelytan — Done
+
 - Ta bort permanent sidebar från matchlayout; karta använder hela bredden.
 - Tech tree i undermeny under matchmenyn. Mission-knapp i top bar öppnar uppdrag, mål och status.
 - Behåll actions, minimap, feedback, paus/fokus/Escape och live uppdragsuppdateringar. Fungerar Native800/1280/1920 och Fit.
 - Non-goals: nya gameplayregler, ändring av användarens style.css, nya uppdrag.
 
 ### RTS-189 — Sammanhängande och komplett spelgrafik — Done
+
 - Inventera samtliga fem fraktioners roster och byggnader; ersätt otillräckliga/saknade motiv med tydliga detaljerade sprites, även Gryphon/Wyvern/Eagle/Gyrocopter/Airship.
 - Bevara riktningar, relevanta animationer, teamfärg, ankare, fog/selection/porträtt och logical footprints. Kontrollera alla motiv i spelbrowser; inga flygtextikoner som slutgrafik.
 - Dokumentera källor/prompt/export och faktiska belägg. Non-goals: balans-/rosterändringar.
 
 ### RTS-190 — Livfulla djur — Done
+
 - Ny särskiljbar design för deer/rabbit/fox med igenkännbara poser och befintlig idle/walk/jakt/skadad/död-presentation.
 - Bevara interaktion, sparning, fog, ljud och gameplay. Visuell browserkontroll och riktade regressioner.
 - Samlade slutchecks och HANDOFF efter190; inga nya tasks.
@@ -135,7 +158,6 @@ avslutas efter denna fix; ingen senare roadmap-task startas.
   Inga campaign-/matchsimuleringar. Screenshots/mätningar lokalt i
   /tmp/w2t-bottom-bar; ingen ny CI-/Pages-verifiering hävdas.
 
-
 **Aktuellt mandat RTS-160–164:** RTS-159 accepteras som Done och implementationen har inventerats.160 Done (`7d7290c`),161 Done (`b7439ae`),162 Done (`4658a0d`),163 Done (`efbdd7d`),164 Done (committen med denna överlämning). Etappen är avslutad; RTS-165 är nästa Todo och kräver nytt mandat. Stanna efter164 och uppdatera HANDOFF.157 lyssning och158 inspelningar kvarstår enligt historisk överlämning; återstående sprites dokumenteras separat.
 
 Efter publicerad RTS-126 har användaren sagt ”fortsätt”. Fortsätt återstående roadmap i ordning med samma taskvisa checks, dokumentation och commit/push; tidigare etappstopp vid126 gäller inte längre. Ljudlyssning är fortsatt uppskjuten.
@@ -170,21 +192,20 @@ har återuppstått. RTS-001–090 är nu implementerade och verifierade. Rollfil
 
 ## Roadmap och ordning
 
-| Etapp | Tasks | Leverans/grind |
-| --- | --- | --- |
-| 1 – Stabilisering och navigation | RTS-016–024 | Verifierad MVP, HUD, handgjord karta, nåbara orders och säkert basbygge. |
-| 2 – Kontroller och basbygge | RTS-025–034 | Kamera, byggnadsorders, guld/trä, byggtid, population, köer och förstörbara mål. |
-| 3 – Armé och combat | RTS-035–040 | Autoattack, attack-move, archer/catapult, uppgraderingar och balanserade strider. |
-| 4 – Fiendebas och skirmish | RTS-041–046 | Budgetstyrd enemy AI och separat skirmish-scenario. |
-| 5 – Överblick och spelkontroller | RTS-047–052 | Minimap, fog/synlighet, grupper, hotkeys, pause och scenario-val. |
-| 6 – Presentation och release | RTS-053–060 | Egna assets/ljud, tre uppdrag, lokal save/load och verifierad lokal release. |
+| Etapp                            | Tasks       | Leverans/grind                                                                    |
+| -------------------------------- | ----------- | --------------------------------------------------------------------------------- |
+| 1 – Stabilisering och navigation | RTS-016–024 | Verifierad MVP, HUD, handgjord karta, nåbara orders och säkert basbygge.          |
+| 2 – Kontroller och basbygge      | RTS-025–034 | Kamera, byggnadsorders, guld/trä, byggtid, population, köer och förstörbara mål.  |
+| 3 – Armé och combat              | RTS-035–040 | Autoattack, attack-move, archer/catapult, uppgraderingar och balanserade strider. |
+| 4 – Fiendebas och skirmish       | RTS-041–046 | Budgetstyrd enemy AI och separat skirmish-scenario.                               |
+| 5 – Överblick och spelkontroller | RTS-047–052 | Minimap, fog/synlighet, grupper, hotkeys, pause och scenario-val.                 |
+| 6 – Presentation och release     | RTS-053–060 | Egna assets/ljud, tre uppdrag, lokal save/load och verifierad lokal release.      |
 
 Taskordningen nedan är topologisk. Etapperna anger målbild; detaljerade
 Dependencies styr vad som måste vara klart. Etapp 1 detaljplaneras här;
 Återstående Todo-tasks behöver konkretiseras före implementation utan nya task-ID:n.
 
 ## Historik: RTS-001–015
-
 
 ## RTS-001 – Initialize project structure
 
@@ -331,7 +352,6 @@ Browserkontroll av klick, ring, målbyte och rörelse efter avmarkering.
 **Relevanta docs:** [ARCHITECTURE.md](ARCHITECTURE.md),
 [GAME_DESIGN.md](GAME_DESIGN.md), [README.md](README.md), [DEV_LOG.md](DEV_LOG.md).
 
-
 ## RTS-004 – Drag selection and group commands
 
 **Status:** Done.
@@ -374,7 +394,6 @@ Befintliga tester ska passera. Browserkontroll av klick, drag och gruppförflytt
 
 **Relevanta docs:** [ARCHITECTURE.md](ARCHITECTURE.md),
 [GAME_DESIGN.md](GAME_DESIGN.md), [README.md](README.md), [DEV_LOG.md](DEV_LOG.md).
-
 
 ## RTS-005 – Simple wood gathering
 
@@ -422,7 +441,6 @@ passera. Browserkontroll av hela gather-flödet.
 **Relevanta docs:** [GAME_DESIGN.md](GAME_DESIGN.md), [ARCHITECTURE.md](ARCHITECTURE.md),
 [README.md](README.md), [DEV_LOG.md](DEV_LOG.md).
 
-
 ## RTS-006 – Base and wood delivery
 
 **Status:** Done.
@@ -465,7 +483,6 @@ gathering-tester anpassas; andra tester ska passera.
 
 **Relevanta docs:** [GAME_DESIGN.md](GAME_DESIGN.md), [ARCHITECTURE.md](ARCHITECTURE.md),
 [README.md](README.md), [DEV_LOG.md](DEV_LOG.md).
-
 
 ## RTS-007 – Train workers from base
 
@@ -511,7 +528,6 @@ Browserkontroll av hela flödet och knappens inputisolering.
 **Relevanta docs:** [GAME_DESIGN.md](GAME_DESIGN.md), [ARCHITECTURE.md](ARCHITECTURE.md),
 [README.md](README.md), [DEV_LOG.md](DEV_LOG.md).
 
-
 ## RTS-008 – Place a barracks
 
 **Status:** Done.
@@ -555,7 +571,6 @@ Alla befintliga tester. Browserkontroll av preview, placering och båda avbrotte
 
 **Relevanta docs:** [GAME_DESIGN.md](GAME_DESIGN.md), [ARCHITECTURE.md](ARCHITECTURE.md),
 [DECISIONS.md](DECISIONS.md), [README.md](README.md), [DEV_LOG.md](DEV_LOG.md).
-
 
 ## RTS-009 – Soldier production from barracks
 
@@ -3668,6 +3683,7 @@ Varje fraktion ska ha egna units, buildings och research.
 Återanvänd tekniska grundsystem med olika data och beteenden.
 
 Föreslagen identitet:
+
 - Humans: balanserad armé och flexibel bas.
 - Orcs: stark närstrid och offensiv.
 - Elves: rörlighet och distansstrid.
@@ -3684,7 +3700,7 @@ innan respektive fraktion implementeras.
 
 **Dependencies:** RTS-133.
 
-**Acceptance criteria:** Definiera Orcs, Humans, Elves, Dwarves och Goblins. Varje fraktion ska ha egna units, buildings och research. Återanvänd tekniska grundsystem med olika data och beteenden.  Föreslagen identitet: - Humans: balanserad armé och flexibel bas. - Orcs: stark närstrid och offensiv. - Elves: rörlighet och distansstrid. - Dwarves: tålighet, försvar och siege. - Goblins: snabb produktion, teknik och explosiva vapen.  Första roster per fraktion: worker, melee, ranged, siege och en specialist. Anpassa befintliga fartyg för alla fraktioner. Definiera kostnader, styrkor, svagheter och research innan respektive fraktion implementeras. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
+**Acceptance criteria:** Definiera Orcs, Humans, Elves, Dwarves och Goblins. Varje fraktion ska ha egna units, buildings och research. Återanvänd tekniska grundsystem med olika data och beteenden. Föreslagen identitet: - Humans: balanserad armé och flexibel bas. - Orcs: stark närstrid och offensiv. - Elves: rörlighet och distansstrid. - Dwarves: tålighet, försvar och siege. - Goblins: snabb produktion, teknik och explosiva vapen. Första roster per fraktion: worker, melee, ranged, siege och en specialist. Anpassa befintliga fartyg för alla fraktioner. Definiera kostnader, styrkor, svagheter och research innan respektive fraktion implementeras. Befintlig funktion bevaras, relevanta checks och verifieringar passerar och begränsningar redovisas.
 
 **Tester:** Jämförelsematris med fem distinkta rosters, specialist, buildings/research/fartyg, kostnader, styrkor och svagheter; docs/granskning utan implementationstester. För implementation: relevanta tester, typecheck, build och git diff --check.
 
@@ -4280,12 +4296,12 @@ offsets. Gameplay/footprints och separat bottom bar-fix bevaras.
 
 **Ny visuell evidens:** [Före/efter](artifacts/rts-155/index.html), samma karta/
 kamera/selection vid Native800×600 och1280×720. Worker och soldier separat och
- tillsammans, porträtt, fysisk selection, verklig movement, explicit granskade
- gather/build/attack/death-frames och base-stadier. Noll source/exportmismatchar,
- noll förändrade rasters utanför denna Human-slice. Slutlig unit431/76, build
- inklusive strict typecheck och diffcheck PASS. Inga campaign-/matchsimuleringar.
- [Protokoll/begränsningar](assets/sources/humans.md). Inga tekniska PASS används
- som ersättning för användarens visuella godkännande av det nya resultatet.
+tillsammans, porträtt, fysisk selection, verklig movement, explicit granskade
+gather/build/attack/death-frames och base-stadier. Noll source/exportmismatchar,
+noll förändrade rasters utanför denna Human-slice. Slutlig unit431/76, build
+inklusive strict typecheck och diffcheck PASS. Inga campaign-/matchsimuleringar.
+[Protokoll/begränsningar](assets/sources/humans.md). Inga tekniska PASS används
+som ersättning för användarens visuella godkännande av det nya resultatet.
 
 **Nytt underlag2026-10-04:** Användaren accepterar Human-resultatet för tillfället och ber att de åtta nya fraktionsbilderna används. Se [inventering och exakt omfattning](assets/sources/faction-references.md). Orcs/Elves/Dwarves är identifierade. Användaren har uttryckligen bekräftat teknikerreferensen för Goblins och att alla namn behålls. Worker/melee/base har nu egna64px/128px speladaptioner för dessa fyra fraktioner. Sjöreferenser saknas. [Före/efter](artifacts/rts-155/factions/index.html) och [käll-/atlasaudit](artifacts/rts-155/factions/source-export-audit.json) skiljer källgrafik, export och runtime åt. Slutlig unit433/77 och build inklusive strict typecheck PASS; browserkontroll före/efter för fyra fraktioner vid Native800×600 och1280×720 PASS. Slutliga bilder och kontaktblad visuellt granskade; diff-/länkkontroll PASS. Ingen campaign-/matchsimulering.
 
@@ -4293,11 +4309,11 @@ kamera/selection vid Native800×600 och1280×720. Worker och soldier separat och
 
 **Slutlig evidens:** [Före/efter i samma spelvy](artifacts/rts-155/complete/index.html), Native800×600 och1280×720 för samtliga fem raser: roster, selection/porträtt, faktisk movement, attack/death-poser, alla riktningar/lag och byggnadsstadier. Slutliga bilder visuellt granskade. Audit3120 unitframes/120 buildingframes: noll source/exportmismatchar, noll orelaterade rasterändringar; frame-ID:n bevarade. Slutlig unit435/78 och build inklusive strict typecheck PASS; diff-/länkkontroll PASS. Ingen campaign-/matchsimulering, CI/Pages eller slutlig användarapproval av den nya grafiken hävdas. [Mapping och begränsningar](assets/sources/complete-references.md).
 
-| Slice | Status |
-| --- | --- |
+| Slice                                                                                   | Status                                                                                                       |
+| --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
 | Humans, Orcs, Elves, Dwarves, Goblins: fem landroller och fyra befintliga landbyggnader | Referensadaptioner implementerade och visuellt granskade; Goblins använder teknikerbilderna med namnen kvar. |
-| Separata ranged-byggnadsmotiv | Integrerade i respektive barracks, utan ny gameplaytyp. |
-| Sjöassets | Oförändrade; inga sjömotiv i referenserna. |
+| Separata ranged-byggnadsmotiv                                                           | Integrerade i respektive barracks, utan ny gameplaytyp.                                                      |
+| Sjöassets                                                                               | Oförändrade; inga sjömotiv i referenserna.                                                                   |
 
 Stanna efter denna leverans. RTS-156 och senare startas inte.
 
@@ -4781,6 +4797,7 @@ Verifiera targeting och resursanvändning.
 Nu går det inte att klicka på knappar för att producera enheter eller bygga byggnader. Användaren måste använda snabbkommando och sedan Enter.
 
 Åtgärda grundorsaken:
+
 - Klick på enhetsproduktion ska starta produktion eller lägga till i kön enligt befintliga regler.
 - Klick på en byggnadsknapp ska direkt aktivera placeringspreview.
 - Vänsterklick på giltig mark ska placera byggnaden.
@@ -4831,6 +4848,7 @@ Målet är Warcraft II-inspirerad terräng med sammanhängande skogar, organiska
 Börja med en befintlig karta som referenskarta för förbättringen:
 
 Skogar:
+
 - Skapa sammanhängande skogspartier med varierade kanter, täthet och små gläntor.
 - Träd ska upplevas som en skog, inte en samling isolerade symboler.
 - Bevara resursmängder, worker-åtkomst och gathering-regler.
@@ -4838,6 +4856,7 @@ Skogar:
 - Dekorativa träd får inte förväxlas med skördbara resurser.
 
 Vatten:
+
 - Skapa oregelbundna kustlinjer, vikar, floder och öar.
 - Använd strandövergångar, hörnvarianter och grunda vattenkanter.
 - Behåll tilebaserad logik men undvik stora synliga rektanglar som enda vattenform.
@@ -4845,6 +4864,7 @@ Vatten:
 - Kontrollera hamnplacering, fartygspassage och åtkomst till resurser.
 
 Visuellt djup:
+
 - Variera gräs, jord, sand och sten med sammanhängande övergångar.
 - Lägg till begripliga skuggor, skogsbryn, klippkanter och sparsamma dekorationer.
 - Undvik slumpmässigt visuellt brus och upprepade mönster.
@@ -4852,6 +4872,7 @@ Visuellt djup:
 - Inför inte ett nytt gameplay-system för höjd i denna task.
 
 Kartlayout:
+
 - Skapa tydliga basområden, expansionsplatser, alternativa vägar och strategiska passager.
 - Kontrollera att startpositioner och obligatoriska objectives fortfarande fungerar.
 - Bevara fog of war, minimap och save/load.
@@ -4871,6 +4892,7 @@ CI-tillägg: push0ab2436 GitHub37309876585 föll på config20-testfixturen som a
 **Status:** Done. Kartor och djurljud godkända av användaren 2026-10-05; ljuden accepterade tills resterande ljudarbete.
 
 Utöka befintliga NPC-djur:
+
 - Vänsterklick på ett synligt djur visar namn och HP samt spelar ett passande djurljud.
 - Begränsa ljudupprepning så att snabba klick inte ger ljudspam.
 - Markerade stridsenheter kan attackera ett djur med högerklick.
@@ -5049,9 +5071,7 @@ Publicera efter godkända kontroller.
 
 **Docs:** BACKLOG.md, DEV_LOG.md och relevant README/GAME_DESIGN/ARCHITECTURE; meningsfulla beslut i DECISIONS.md.
 
-
 **Verifiering180:** Slutlig full regression1458/176 PASS415.95s; unit465/84 PASS10.76s; strict typecheck/build PASS388ms; diff/manifest/länkar PASS. Faktisk [GitHub CI/Pages](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37355621323) SUCCESS. Public browser: fyra Native/Fit-fall, kampanj/save/load/result/replay, skirmishdefeat, lag-spectator/save/defeat, pause/menu cleanup, sex resolutionsval, fullscreen och reload. Alla18 ljudfiler och34 asset-URLs laddade i varje fall utan HTTP-/browserfel. Resultateliminering använder explicita fixtures; betald genomspelning är179:s separata belägg. Se [publiceringskontroll](artifacts/rts-180/public.md). Slutöverlämningen ändrar endast Markdown och återanvänder verifieringen av oförändrad kod.
-
 
 ## RTS-181 — Startinställning1920×1080 / Fit to Window
 
@@ -5064,7 +5084,6 @@ Publicera efter godkända kontroller.
 **Verifiering:** Riktade display/preference-tester, unit-suite, build inklusive strict typecheck, browser första start och sparat val/reload samt diffkontroll före commit/push.
 
 **Resultat181:** Riktade display/preferences10/2 PASS; unit466/84 PASS9.53s; build inklusive strict typecheck PASS (befintlig bundlevarning). Lokal Chrome vid800×600/1920×1080: ny start1920×1080/Fit, proportionell appgeometri och sparat800×600/Native efter reload PASS utan pageerrors. Diff granskad. Ingen ny full campaign-/matchregression, CI eller Pages-verifiering;180:s belägg är historiska.
-
 
 ## RTS-182 — Titel och rasnamn
 
@@ -5080,7 +5099,6 @@ Publicera efter godkända kontroller.
 
 **Verifiering182:** Riktade9/3, unit466/84, build med strict typecheck/diff PASS. Lokal Chrome800/1920: titel, rasval och match-HUD utan gamla rasnamn/pageerrors PASS;800-HUD visuellt granskad. Tekniska IDs/saves oförändrade. Ingen ny CI/Pages eller helkampanjsimulering.
 
-
 ## RTS-183 — Highscores per karta och svårighet
 
 **Status:** Done.
@@ -5092,7 +5110,6 @@ Publicera efter godkända kontroller.
 **Verifiering:** Riktade system-/integrationstester och verkliga browserflöden. Slutlig unit/build med strict typecheck/diff före commit. Full regression vid etappslut. Gemensam meny/HUD/input vid800×600,1920×1080,3440×1440. Inga fulla kampanjsimuleringar för rena menyändringar.
 
 **Docs:** BACKLOG, DECISIONS, DEV_LOG, HANDOFF och relevanta systemdefinitioner. Taskvis commit/push utan force.
-
 
 **Verifiering183:** Highscore/save/team23/3, unit467/84, strict build/diff PASS. Chrome800 faktisk tabell/filter/map/difficulty/mode/empty/legacy PASS; screenshot granskad. Äldre datum Unknown; configversion och partition bevaras. Match-ID-dedup oförändrad.
 
@@ -5108,7 +5125,6 @@ Publicera efter godkända kontroller.
 
 **Docs:** BACKLOG, DECISIONS, DEV_LOG, HANDOFF och relevanta systemdefinitioner. Taskvis commit/push utan force.
 
-
 **Verifiering184:** Display/preferences11/2 och camera10/2, unit468/84, strict build/diff PASS. Chrome800/1920/3440/3840: Native logical camera520/1640/3160/3560, physical worker/minimap, fullscreen och windowresize/reload PASS.3440bild granskad. Kort60-frame startmatchprobe≈60FPS; ingen massarmé/hårdvarugaranti. Testflödets initiala Survival→map-timeout och felaktiga FPS-formel rättades i extern harness före slutlig PASS.
 
 ## RTS-185 — Separat kampanjprogression
@@ -5122,7 +5138,6 @@ Publicera efter godkända kontroller.
 **Verifiering:** Riktade system-/integrationstester och verkliga browserflöden. Slutlig unit/build med strict typecheck/diff före commit. Full regression vid etappslut. Gemensam meny/HUD/input vid800×600,1920×1080,3440×1440. Inga fulla kampanjsimuleringar för rena menyändringar.
 
 **Docs:** BACKLOG, DECISIONS, DEV_LOG, HANDOFF och relevanta systemdefinitioner. Taskvis commit/push utan force.
-
 
 **Verifiering185:** Campaign/series/phases/highscores/save88/6, unit468/84, strict build/diff PASS.40 new campaign starts/saves via riktade tester, Human/Beginner isolation/replay/legacy preservation. Chrome1920 alla fem rasstarter/fysisk SaveLoad, terminalfixture för Human/Beginner och Orcs/Normal isolation PASS; progressionbild granskad. Ingen mänsklig helkampanj/tids-/balansclaim.
 
@@ -5138,7 +5153,6 @@ Publicera efter godkända kontroller.
 
 **Docs:** BACKLOG, DECISIONS, DEV_LOG, HANDOFF och relevanta systemdefinitioner. Taskvis commit/push utan force.
 
-
 **Verifiering186:** Riktade138/12, unit468/84, strict build/diff PASS. Fem raser×800/1920/3440 verkliga staged menus/briefings/SaveLoad/keyboardlocks och skirmishindependence PASS; positiv Barracks-hotkeykontroll PASS med explicit100wood-fixtur.800briefing visuellt granskad. Contenttests betalar tillåtna queues och observerar40 taktiska mål med explicita fixtures; inga40 fullkampanjer eller mänskliga tider hävdas.
 
 ## RTS-187 — Skirmish med flera AI-motståndare
@@ -5152,7 +5166,6 @@ Publicera efter godkända kontroller.
 **Verifiering:** Riktade system-/integrationstester och verkliga browserflöden. Slutlig unit/build med strict typecheck/diff före commit. Full regression vid etappslut. Gemensam meny/HUD/input vid800×600,1920×1080,3440×1440. Inga fulla kampanjsimuleringar för rena menyändringar.
 
 **Docs:** BACKLOG, DECISIONS, DEV_LOG, HANDOFF och relevanta systemdefinitioner. Taskvis commit/push utan force.
-
 
 **Verifiering187/etappslut:** Riktade127/7 PASS. Slutlig unit468/84 PASS10.28s; build inklusive strict typecheck PASS360ms (befintlig bundlevarning); full regression1489/178 PASS419.51s på slutlig spelkod. Diff/manifest84unit+94integration/länkar/browser-script-syntax PASS. Chrome native800/1920/3440: faktiska två AI med egna raser/profile/team och Beginner/Hard, unika baspositioner, SaveLoad och fysisk worker/minimap/HUD PASS. Campaignbrowser fem raser×tre storlekar återkontrollerad efter omgruppering PASS; Highscore800/Native filters/legacy/tomläge/AI-config-rubrik PASS. Actual SaveLoad→terminalfixture→PlayAgain→completed-replay/current-only behåller identitet/policy/progress och exakt en score PASS. Representativa settings/tabell/briefingbilder visuellt granskade. Ingen ny CI/Pages eller mänsklig helkampanj-/balans-/ljudclaim.
 

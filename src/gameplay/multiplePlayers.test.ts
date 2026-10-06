@@ -37,12 +37,14 @@ it('strict save/load preserves three owners, independent banks and restarts',()=
  expect(updateMatch(loaded.match,.25).waves.elapsedSeconds).toBe(5.25);
  const malformed=JSON.parse(json);malformed.multiplePlayers[2].id='enemy';expect(decodeSave(JSON.stringify(malformed)).ok).toBe(false);
 });
+// Simulates 60 gameplay seconds for three owners on the expanded map.
+// Allow shared CI CPU time; gameplay duration and assertions stay unchanged.
 it('both AI players construct and produce from paid jobs over ordinary gameplay time',()=>{
  let m=createMatch('skirmish','normal',undefined,'plains96',1,'offensive',matchPlayers(undefined,'offensive',3));
  m=updateMatch(m,60);
  for(const bot of m.multiplePlayers!.ai){expect(bot.state.enemyProduction!.acceptedJobs).toBeGreaterThan(0);expect(bot.state.combat.enemies.some(e=>e.kind==='unit')).toBe(true);expect(bot.state.enemyProduction!.spent!.wood).toBeGreaterThan(0);}
  expect(decodeSave(encodeSave(m,{camera:{x:0,y:0},building:null})).ok).toBe(true);
-},15000);
+},60000);
 import {castSpell} from './spells';
 import {matchStats} from './matchStats';
 it('commits human offensive spells to the correct AI owner and persists timers',()=>{

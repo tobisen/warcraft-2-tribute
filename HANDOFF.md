@@ -1,5 +1,12 @@
 # RTS-195–204 klara — stopp efter gameplayfasen
 
+## CI-timeoutkorrigering efter RTS-204 — 2026-10-06
+
+Senaste [GitHub-körningen](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37491093989) fallerade på två tidsgränser: multiplePlayers betalda två-AI/60s-simulering (15000ms) och extraBases team/construction/Save (5000ms). Build/Pages hoppades över; lokal204-PASS är inte CI-PASS. Endast dessa integrationers wall-clockbudget ändras till60000/30000ms. Gameplaytid, fixtures och assertions är oförändrade; standardtimeout och workerantal består.
+
+Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), unit475/85 PASS15.09s och build inklusive strict typecheck PASS med befintlig bundlevarning. Diffgranskning utan fynd; git diff --check PASS. Full regression körs i nya GitHub-jobbet och dess resultat rapporteras separat. Ingen ny browserkontroll behövs för enbart testtimeout. Befintlig style.css, units.mjs och docs/ bevaras. Inga nya roadmaptasks.
+
+
 Alla tio beställda gameplaytasks är Done.203 push485e9e5;204 taskcommit/hash rapporteras efter push. [GAMEPLAY_PHASE.md](GAMEPLAY_PHASE.md) samlar ändringar, taskhashar, före/efterbilder och begränsningar. Kartfasens nio kartor och tidigare/nya dimensioner finns i [MAP_PHASE.md](MAP_PHASE.md); inga kartdimensioner ändras i denna gameplayfas.
 
 204: en fraktionsakademi efter forge+attack/försvar I,80wood+40gold/10s/64×64/140HP; nivå II kostar2× fraktionens nivå I och tar12s. Militärbonus använder multiplikator^nivå; workers förblir2DPS utan researchbonus. Betalda jobb/byggnad/damage/repair/fog/minimap/selection/UI/AI/Save62 ingår. Kampanjadmission från mission6 gäller även äldre storyidentiteter; övriga legacyregler bevaras.40 egna academyframes,450 tidigare byggnadssprites pixel-identiska. Separatexport bevarar samtidig unitkällredigering.

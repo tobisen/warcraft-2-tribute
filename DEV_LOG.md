@@ -124,7 +124,6 @@
 - `git diff --check` passerade inför commit. Tester, typecheck, build och
   browserkontroll är redovisade i implementationsposten ovan.
 
-
 ## 2026-10-01 – RTS-004: Drag selection and group commands
 
 - Läste AGENTS, implementer-roll, backlog, arkitektur och befintlig selection,
@@ -161,7 +160,6 @@
   `feat: add drag selection and group movement`.
 - `git diff --check` passerade inför commit. Tester, typecheck, build och
   browserkontroll är redovisade i implementationsposten ovan.
-
 
 ## 2026-10-01 – RTS-005: Simple wood gathering
 
@@ -246,7 +244,6 @@
 - `git diff --check` passerade inför commit. Tester, typecheck, build och
   browserkontroll är redovisade i implementationsposten ovan.
 
-
 ## 2026-10-01 – RTS-007: Train workers from base
 
 - Läste AGENTS, implementer-roll, backlog, game design, arkitektur och befintlig
@@ -285,7 +282,6 @@
   `feat: add worker production at base`.
 - `git diff --check` passerade inför commit. Tester, typecheck, build och
   browserkontroll är redovisade i implementationsposten ovan.
-
 
 ## 2026-10-01 – RTS-008: Place a barracks
 
@@ -1125,8 +1121,8 @@ kvarstår; ingen commit/push. Fortsätter RTS-053.
 Egna 32-px tiles och 64-px wood/gold-states från repo-pixelkällor/palett till
 RGBA PNG/atlas/manifest. Nearest/native anchors, ingen logic/dependency-
 ändring. 388 tester/50 filer, typecheck/build och diff-check passerar.
-Exportartifacttest använder Node fs/zlib i tests/*.mjs; första placeringen
-under src/*.ts krävde oinstallerade Node-typer och flyttades för att bevara
+Exportartifacttest använder Node fs/zlib i tests/_.mjs; första placeringen
+under src/_.ts krävde oinstallerade Node-typer och flyttades för att bevara
 strict browser-TypeScript utan nya dependencies. Native format/transparens/
 palett/bounds/ID/walkability/config/anchors verifierade; atlas visuellt
 granskad. Node-logical-footprint är faktiskt 40 px, vilket bevaras.
@@ -1195,16 +1191,13 @@ RTS-060 `6606f0e` pushad till main. [Actions 37009719240](https://github.com/tob
 
 Publicerad naturlig Utposten/Normal: verkliga klick/drag, wood/gold-gather/delivery, barracksbygge, betald soldier/archer/catapult, strid mot alla tre vågor → Victory exakt 90 s → fresh restart. Bas240, tre workers/tre combat-units kvar, första soldier23,55 s, kostnad120 wood/35 gold, totalledger440/310, lostCargo0, inga browserfel. Två tidigare Pages-omkörningar vann men extra armétyp-assert föll: testskriptets fördröjda locator-klick använde gamla koordinater på rörliga enemies och kunde ge markorder åt även workers. Färsk snapshot precis före snabb fysisk mouse.click rättade testflödet; ingen ändring i spelkod eller armétyp-krav behövdes i slutlig omkörning. Screenshots av publicerad ekonomi/bas/combat/outcome granskade. Detta dokumentationsuppföljningscommit ändrar inga runtime-/test-/workflowfiler.
 
-
 ## 2026-10-02: RTS-061
 
 Pages verifierad först enligt användarens nya godkännande av RTS-061–065; AGENTS/roller uppdaterade. 457 tester/60 filer, typecheck/build/diff-check passerade. Publicerad canvas/assets/ljud/save/reload/load/tio restarts och viewportar omkörda. Ny legal accelererad armé: 12 combat-units blandat soldier/archer/catapult +3 workers, betalda340 wood/80 gold, 279,20s; save/load bevarade15 units. Bekräftade P2: centrumavstånd0,322px och samtidiga workers utan servicekö. P3: minimap ej keyboardfokus. Inga blockerande/P1-fynd; QA_REVIEW.md innehåller steg/miljö/förväntat/faktiskt/prioritet. Ingen gameplaykod eller test för enbart dokumentation.
 
-
 ## 2026-10-02: RTS-062
 
 RTS-061 26aff93 pushad. Inga bekräftade blockerande/P1-fynd, därför tom fixlista och ingen onödig kodändring. QA-001/002 prioriterade till sina avgränsade RTS-063/064, P3-minimap kvar. 457 tester/60 filer, typecheck/build/diff-check passerade; ingen save/config-migration eller nya spegeltester. Runtime identisk med verifierad Pages.
-
 
 ## 2026-10-02: RTS-063
 
@@ -1228,7 +1221,7 @@ Slutlig browser: åtta-worker-queue/save/load/338,8s och12-kroppars passagefixtu
 
 Publika Actions-annoteringar visar att tidigare RTS-063/064-builds stoppade vid npm test: match.test.ts:102 överskred10s för4 500 gameplayframes. Ingen behavior-assert eller deploy-konfiguration föll. Integrationsbudgeten höjd till30s för detta fall och nya loadfall; särskild browser-CPU-budget oförändrad. Ny CI/Pages-resultat följs efter push. Workflow/deployment/dependencies ändras inte. Diff granskad för clearance, delta, ties, cache/load, bodyconservation, fog och scope; inga blockerande lokala fynd kvar. Nästa planerade task RTS-066, utanför godkänd061–065-etapp; inga fraktions-/sjöfeatures införda.
 
-RTS-065 d85b754 pushad. [Actions 37021939019](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37021939019) completed success: npm ci/test/typecheck/build och Pages-deploy passerade; tidigare CI-timeout är löst. [Pages](https://tobisen.github.io/warcraft-2-tribute/) serverar index-otNC-_fR.js med exakt samma SHA256 som testad lokal dist. Publicerad naturlig Utposten/Normal med riktiga klick/drag: wood/gold → barracksbygge → betald soldier/archer/catapult → tre vågor → Victory exakt90s → restart. Första soldier23,64s, bas240, tre workers och två combat överlevde, en combat dog; kostnad120wood/35gold, ledger440/310 och lostCargo0. Därefter publicerad canvas/assets/12audio-decodes/save/reload/load/resume/tio restarts/två viewportar utan request/runtimefel. Screenshots granskade. RTS-001–065 Done; 066–090 fortsatt Todo och inte implementerade. Dokumentationsuppföljning ändrar inga runtime-, test-, dependency- eller workflowfiler.
+RTS-065 d85b754 pushad. [Actions 37021939019](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37021939019) completed success: npm ci/test/typecheck/build och Pages-deploy passerade; tidigare CI-timeout är löst. [Pages](https://tobisen.github.io/warcraft-2-tribute/) serverar index-otNC-\_fR.js med exakt samma SHA256 som testad lokal dist. Publicerad naturlig Utposten/Normal med riktiga klick/drag: wood/gold → barracksbygge → betald soldier/archer/catapult → tre vågor → Victory exakt90s → restart. Första soldier23,64s, bas240, tre workers och två combat överlevde, en combat dog; kostnad120wood/35gold, ledger440/310 och lostCargo0. Därefter publicerad canvas/assets/12audio-decodes/save/reload/load/resume/tio restarts/två viewportar utan request/runtimefel. Screenshots granskade. RTS-001–065 Done; 066–090 fortsatt Todo och inte implementerade. Dokumentationsuppföljning ändrar inga runtime-, test-, dependency- eller workflowfiler.
 
 ## 2026-10-02: RTS-066
 
@@ -1695,7 +1688,6 @@ Stop/terminalinput och scope. Inga kvarstående blockerande fynd.
 Begränsningar: placeholder, ingen sjöstrid/transport/hamnrally,
 fartyg kan överlappa vid samma move-mål. RTS-082 Done; nästa083.
 
-
 ## RTS-083 – manuell marin distansattack
 
 Vattenkontakt/range/LOS i fristående navalCombat; samma snapshot,
@@ -1723,7 +1715,6 @@ arbetare med normala order till fri kustkontakt. Screenshot granskad.
 Komponenttester använder tydligt märkta stridsfixtures; hamntestet
 betalar verklig placering men har explicit låg-HP precondition.
 RTS-083 Done, nästa084 transport.
-
 
 ## RTS-084 – transport, lastning och landsättning
 
@@ -1757,7 +1748,6 @@ inte gratis matchstate. Stats/capacity/archer/death-tester har märkta
 kontrollerade fixtures där relevant. Begränsningar: manuell kustapproach,
 frysande passagerartimers, inga nya transportassets/AI. RTS-084 Done;
 nästa085 ökarta.
-
 
 ## RTS-085 – Öarna, betald transport till victory
 
@@ -2106,8 +2096,9 @@ Browserproduktion klickar verklig snappad footprint och använder samlat saldo.
 Checks: hela npm test857tester/109filer PASS144.75s; sju Frontier-tester PASS
 11.70s (betald Victory för båda fraktioner, resurskonservation/Save och verklig
 AI-produktion som når/skadar spelarbasen). Typecheck och build PASS; befintlig
->500kB-bundlevarning kvar enligt mandat. git diff --check PASS.616 lokala
-dokumentlänkar finns,150 unika task-ID:n efter nästa etapps planering.
+
+> 500kB-bundlevarning kvar enligt mandat. git diff --check PASS.616 lokala
+> dokumentlänkar finns,150 unika task-ID:n efter nästa etapps planering.
 
 Browser Chromium1280×720/Crown och1920×1080/Clans PASS: verkliga
 selection/move/gather-inputs, upptäckt av expansion och hemleverans, betald
@@ -2723,12 +2714,14 @@ kolumner för kompaktare ikonlayout. Gruppöverskrifter dolda för att spara pla
 justeringar för mindre viewports: 3 kolumner vid 800×600.
 
 Ändringar:
+
 - `src/style.css`: `#bottom-bar` display:grid med grid-template-columns:128px auto 1fr;
   `#selection-portrait/info/action-panel` explicit grid-positioning; `#action-panel
-  #gameplay-controls` repeat(4,minmax(0,1fr)); `#action-panel [data-action-group] h3`
+#gameplay-controls` repeat(4,minmax(0,1fr)); `#action-panel [data-action-group] h3`
   display:none; containerquery för 900px max-width med 64px-portrait, 3-kolumn-grid.
 
 Verifiering:
+
 - `npm run typecheck` PASS.
 - `npm run build` PASS (strict typecheck inkluderad).
 - `npm test` 1146/1146 tester PASS (145 filer) – alla integrationer och matchsimuleringar.
@@ -2738,7 +2731,6 @@ Verifiering:
   testad viewports (800×600, 1280×720, 1920×1080), hover/disabled-states fungerar.
 
 BACKLOG.md och denna logg uppdaterad. Ingen ny RTS-ID eller gameplay-ändringar.
-
 
 ## 2026-10-04 – UI-BUGFIX-BOTTOM-BAR
 
@@ -2785,7 +2777,6 @@ BACKLOG.md och denna logg uppdaterad. Ingen ny RTS-ID eller gameplay-ändringar.
   blockerande fynd. Dokumentlänkar kontrollerade. Inga campaign-simuleringar
   eller ny CI-/Pages-kontroll. Historiska releasebelägg återanvänds inte som
   verifiering av denna fix. Commit/push enligt uppdraget; stanna därefter.
-
 
 ## 2026-10-04 – RTS-155: Human-korrigering och faktisk visuell granskning
 
@@ -2844,7 +2835,7 @@ BACKLOG.md och denna logg uppdaterad. Ingen ny RTS-ID eller gameplay-ändringar.
 - Diff/scope/inputägarskap/source-export/footprints granskade utan blockerande
   tekniska fynd. Dokumentlänkar och referenshashar kontrollerade. BACKLOG/README/
   DECISIONS/protokoll uppdaterade. Human-slicen implementerad och visuellt granskad;
- 155 hålls In Progress för användarens bedömning, övriga artgrupper ej uppdaterade.
+  155 hålls In Progress för användarens bedömning, övriga artgrupper ej uppdaterade.
   Ingen ny CI-/Pages-verifiering eller fysisk monitorgranskning. Commit/push enligt
   mandatet, stanna därefter;156+ startas inte.
 
@@ -2890,8 +2881,9 @@ BACKLOG.md och denna logg uppdaterad. Ingen ny RTS-ID eller gameplay-ändringar.
 ## 2026-10-04 – RTS-158 dialogdel verifierad; inspelningar saknas
 
 -380 egna engelska repliker för fem rasers sju roller och fem aktiviteter, specialistroll/raspersonlighet, actionrouting och tredje selectionklicket som repeat. Historik per faction/role/action, befintlig cooldown/ingen kö/local English/separat röstvolym/mute/pause/reset. Inga inspelningar skapas eller hävdas.380 recording/license-null i exakt manus i assets/sources/voice-recording-script.json; saknade filer/metadata blockerar inspelad del och Done.
+
 - Riktade8/2 före kompletterande tester PASS; ny repeat-test förväntade fel andra replik trots första repeatvariant, assertion korrigerad. Slutlig unit441/79 och build/strict typecheck PASS; browser fysisk canvas-routing select/repeat/move/work/attack PASS med uttalad speech-testadapter. Diffcheck PASS; inga campaign-simuleringar eller röstlyssning. Scriptet exporterar manus från faktisk config; testadapter skeppas inte i appen.
--158 In Progress med verifierad kod/textdel; oberoende159 fortsätter enligt mandat. Ingen slutlig röstdel, inga nya CI/Pages-belägg.
+  -158 In Progress med verifierad kod/textdel; oberoende159 fortsätter enligt mandat. Ingen slutlig röstdel, inga nya CI/Pages-belägg.
 
 ## 2026-10-04 – RTS-159 levande värld och stopp efter159
 
@@ -2899,7 +2891,7 @@ BACKLOG.md och denna logg uppdaterad. Ingen ny RTS-ID eller gameplay-ändringar.
 - Befintlig sparad waves.elapsedSeconds bestämmer exakt pose; Saveversion oförändrad. Pause tyst/frozen, restart nollställer, scene-create rensar visuella maps. Granskningen korrigerade habitat-/propsgeneration att använda statisk terräng även efter Load; byggnadskartan får bara dölja. Sista diffreview fann fel worldmanifestwidth vid height-replacement; width256 återställd och PNG/metadata-invariant tillagd. Unit/build upprepades därför efter konkreta ändringar; inga tidigare PASS används som slutcheck för ändrad kod.
 - Riktade10/3 PASS. Slutlig unit444/80 och build inklusive strict typecheck PASS efter sista metadatafix. Integration38/3 Save/visibility/wildlifeSave PASS och resourceSelection7/1 PASS; ett första kommandourval hade fel sökväg för resourceSelection, den riktiga filen kördes separat. wildlifeSave klassificeras i integrationsmanifestet; --list validerar disjunkta urval. Inga breda campaign-/matchsimuleringar eller full npm test enligt uttrycklig grafik/ljudavgränsning.
 - Faktisk Chromium800Native/1280Native PASS: normala fog-vyer och separata revealed-vyer, idle/wander, fysisk worker/animal-klickselection, oförändrad vision/roster/obstacles, fysisk Save/Load exakt tid/pose och paused update, restart utan duplicering och byggnadstäckning. Kontaktblad/spelbilder visuellt granskade. Metadatafix ändrade inte raster/runtimepose, så denna senaste browserkontroll återanvänds uttryckligen. Artifacts/rts-159 och sources/wildlife-159.md dokumenterar. Slutlig diff-/länkkontroll PASS.
--159 Done och156 Done.157 attackljud tekniskt klart men faktisk lyssning saknas;158380 repliker/routing tekniskt klara men380 inspelnings-/licensposter saknas. Inga falska röst-/spritefärdigmarkeringar. HANDOFF uppdateras med klart/kvar/blockerat, taskcommits och lokala verifieringsbelägg. Ingen ny CI/Pages eller fysisk monitor-/ljudgranskning. Stoppa efter159;160+ inte startade. Användarens docs/ bevaras utanför commit.
+  -159 Done och156 Done.157 attackljud tekniskt klart men faktisk lyssning saknas;158380 repliker/routing tekniskt klara men380 inspelnings-/licensposter saknas. Inga falska röst-/spritefärdigmarkeringar. HANDOFF uppdateras med klart/kvar/blockerat, taskcommits och lokala verifieringsbelägg. Ingen ny CI/Pages eller fysisk monitor-/ljudgranskning. Stoppa efter159;160+ inte startade. Användarens docs/ bevaras utanför commit.
 
 ## RTS-160 – huvudbyggnad i tre nivåer
 
@@ -2985,7 +2977,6 @@ RTS-167 pushfd9dfd3. Inventering av134/GAME_DESIGN, DECISIONS, factions.ts och r
 
 Slutlig etappregression165–167: npm test1227/158 PASS på477.49s, en full körning. Unit446/80 och build inklusive strict typecheck från slutliga167-koden återanvänds; efter fd9dfd3 enbart docs/inventering. Ingen ytterligare kod-/assetändring eller omtest utan relevant skäl. git diff --check och lokala Markdownreferenser PASS. HANDOFF uppdaterad med165–167 Done/hashar,168/169 konkreta blockerare och nästa168;170–173 inte startade. Full regression är automatisk genomspelning, inte mänsklig helmatch-/luftbalans. User-CSS SHA oförändrad, docs/ otrackade/bevarade. Separat docscommit/push efter verifieringen.
 
-
 ## RTS-168 – första luftroster enligt nytt uttryckligt godkännande
 
 Tidigare designblockerare upphävd av användaren2026-10-05. Fem namngivna recipes, befintlig barracks/Forge/attack1/defense1, tidig grundarcher-AA. Explicit domänmask över navigation, acquisition/combat/projectile/splash, rangedtorn, ships och spells. Lokal luftvision/minimap, selection på ikonens upphöjda centrum, bounds, gemensam FIFO/supply/rally, AI-betald produktion och synlighetsstyrd archerdefense. Sjö-AI:s landcap2 behålls men begränsar inte flygare; boarding/mark-/sjöspawn/placering ignorerar luftbodies. Save41 bevarar airorders/jobs/projectilemask och migrerar40. Originala statiska TEMP-ikoner/porträtt,24px höjd och skugga; slutliga fem sprites/animationer/porträtt Pending.
@@ -2995,7 +2986,6 @@ Riktade83/7 baselinePASS;57/8 första dependencykörningen hade55PASS och två g
 Chromium fem raser ×native800×600/1280×720 PASS, betald fysisk produktion/selection, tooltipTEMP, flight överForge, Save/Load med bibehållen HP/order/position, fulltrejobskö/scrollmått och restart. Fit-läge också fångat1280.45 screenshots plus browser.json i artifacts/rts-168; Human/Elf/Dwarf-selected800, Orc-overbuilding800, Goblin-production800/fit1280 visuellt granskade. Höjd/skugga/märkning synlig; de tre vingikonerna är avsiktligt temporära. Ingen mänsklig helmatchbalans/finalartapproval/ny CI/Pages. Slutchecks före kodcommit redovisas nedan. Användarens style.css och docs/ bevaras. Nästa169; stopp efter169.
 
 Slutlig168: unit446/80 PASS10.33s efter två gamla Elf/Orc-rosterförväntningar uppdaterats till sex roller (första unit444PASS/2FAIL). Build inklusive strict typecheck PASS på slutlig runtimekod; därefter endast tester/docs/browserharness, därför build inte upprepad. Riktade slutliga integrationer93/12 PASS11.80s. Kompletterad browserluftstrid fem raser ×800/1280: fysisk högerklick på upphöjd fiende, faktisk projektilskada för fyra flygare och Goblin-luftmaskspärr; stridsmålet isolerat från AI-formation i fixture. Orc-combat800/Goblin-combat1280 också visuellt granskade. git diff --check PASS; full regression körs en gång vid slutet av169.
-
 
 ## RTS-169 – preliminär balans för land, sea, air och magic
 
@@ -3081,7 +3071,7 @@ Riktade34/6 PASS694ms (labelidentity, hotkeys/actionmodel, queue/research/baseup
 
 01 push476ddd6; faktisk [CI37304407683](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37304407683) success.31 unika32pxactionbilder per fraktion: bounding-alpha-crop av godkända bygg-/unit-/ship-/airframes och egna integerpixelglyphs för olika kommandon/spells. Research sword/shield med plus, uppgraderad byggnad med pil. Canvas/dataURL-cache per fraktion/action, inga textchildersättningar; endast egen actionIcons.css, användarens src/style.css orörd. Prereqs anges även efter unlock; aktiva previews/research/upgrades och producerande unittyp markeras, disabled blir grå. Ingen betalnings-/tech-/matchregel ändrad.
 
-Riktade19/4 PASS547ms (fem fraktioner×alla frame/glyph-referenser unika/giltiga, labelidentity, prerequisites/status och hotkeys). Slutlig unit457/81 PASS9.15s, build inklusive strict typecheck PASS360ms, befintlig bundlevarning/diff PASS. Första unit PASS men build upptäckte Nodefs-test i strict browserTS; assettest flyttades till befintlig tests/*.mjs-konvention utan ändrade assertions. Detta motiverade sista unit/build-körningen.
+Riktade19/4 PASS547ms (fem fraktioner×alla frame/glyph-referenser unika/giltiga, labelidentity, prerequisites/status och hotkeys). Slutlig unit457/81 PASS9.15s, build inklusive strict typecheck PASS360ms, befintlig bundlevarning/diff PASS. Första unit PASS men build upptäckte Nodefs-test i strict browserTS; assettest flyttades till befintlig tests/\*.mjs-konvention utan ändrade assertions. Detta motiverade sista unit/build-körningen.
 
 Live PRIO-01-klickregression800/1280 PASS med nya ikoner, rapporter/bilder i prio-02/click-regression. Ikonbrowser31pixeldistinkta bilder för alla fem fraktioner, Crown worker/aktivbuild/base/barracks/harbor/spells vidnative800/1280 och övriga fyra barracks800, totalt16views PASS. Faktiska buttonmått, tooltips, active/disabled och ingen actionscroll/klipp. Crown worker800/barracks1280 visuellt granskade. Första arenaUI-fixturen saknade navy; explicit createNavy infördes i harness (ingen gameplayändring). Godkänd TEMP-airgrafik kvar, inga finalairclaim. Ingen broadcampaignbatch.02 Done före commit/push;03 nästa.
 
@@ -3256,7 +3246,6 @@ CSS SHA95c3725250221ef8386519adecfb05db601103697d421e78e1b2bdf057141a5e och docs
 bevaras/undantags från commits. Lokalt ändrad userCSS ingår inte i publicerad CSS.
 Mänsklig tid/balans/fun/mixlyssning/finalvoice/flyerassets återstår enligt179.
 
-
 ## RTS-180 — avslutad publiceringskontroll, 2026-10-05
 
 Releasecommit6a96227 pushad utan force. Faktisk [CI/Pages37355621323](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37355621323) SUCCESS: full test620s, build och deploy gröna. Publicerad sida visar v0.3.0 / Build6a96227. Fyra public-browserfall Native/Fit passerar kampanj/save/load/result/replay, skirmishdefeat, lag-spectator/save/defeat/statistik, pause/menu cleanup, resolutionsval, fullscreen och reload.34 asset-URLs/18 ljudfiler per fall, inga HTTP-/browserfel. Första800-kontrollen hann först bara nio ljudförfrågningar; kompletterad kontroll väntar uttryckligen på alla18 och passerar. Ingen spelkod ändrad för detta. Publicerade resultatvyer visuellt granskade. [Mätprotokoll](artifacts/rts-180/public.md).
@@ -3264,7 +3253,6 @@ Releasecommit6a96227 pushad utan force. Faktisk [CI/Pages37355621323](https://gi
 Terminala mål/eliminering är fixtures, inte mänsklig genomspelning.179:s betalda åtta Beginner/Normal-genomspelningar är separat belägg. Mänskliga20–40min/timing/balans/fun/lång mixlyssning och tidigare slutliga flygar-/voiceassets återstår. Dessa markeras inte verifierade. Tidigare pending-publiceringstext ovan beskriver läget före releasepush och ersätts av denna slutstatus.
 
 Slutlig kodverifiering: full1458/176 PASS415.95s, unit465/84 PASS10.76s, strict typecheck/build PASS388ms, diff/manifest/länkar PASS. Slutöverlämningen ändrar endast Markdown; ingen ny test/build-körning, beläggen återanvänds för oförändrad kod. HANDOFF/BACKLOG/README/QUALITY_REVIEW uppdaterade, stopp efter180 utan nya tasks/karteditor. UserCSS/docs bevaras och ingår inte i publicerad kod.
-
 
 ## 2026-10-05 — RTS-181 startinställning
 
@@ -3282,33 +3270,27 @@ Lokal Chrome800×600/1920×1080: färsk1920×1080/Fit, appgeometri, sparat
 för denna defaultändring; ingen ny CI/Pages eller visuell screenshotgranskning.
 Kod/docs granskade; git diff --check före commit.
 
-
 ## 2026-10-05 — RTS-182
 
 RTS-182 klar. Riktade9/3, unit466/84, strict build och diff PASS. Chrome800/1920 verklig home/skirmish/HUD PASS,800bild granskad. Befintlig bundlevarning; ingen ny CI/Pages.182–187 registrerade utan att skriva över181. CSS/docs bevarade.
-
 
 ## 2026-10-05 — RTS-183
 
 RTS-183 klar: tabell/filter och explicit legacydatum. Riktade23/3, unit467/84, strict build/diff PASS. Chrome800 verkliga filter och tomlägen PASS; screenshot granskad.182 push90df09f. Ingen ny CI/Pages/full campaign.
 
-
 ## 2026-10-05 — RTS-184
 
 184 klar. Display/preferences11/2+camera10/2, unit468/84 och strict build/diff PASS. Chrome800/1920/3440/3840 input/minimap/fullscreen/windowreload PASS,3440 screenshot granskad. Kort≈60FPS i startmatch, inget generellt stresstest.183 pushc3f691b. CSS/docs bevarade.
 
-
 ## 2026-10-05 — RTS-185
 
 185 klar: fem egna åttauppdragsserier, scoped progression, Save52 och highscoreseries. Riktade88/6, unit468/84, strict build/diff PASS. Chrome1920 fem starts/SaveLoad plus Human/Beginner terminalfixture/isolation PASS; bild granskad. Två harnessfel rättades (Resume-frame och dubbel freeze noop); slutkörningen använder ordinarie Scene.update. Ingen betald40-kampanjgenomspelning/mänsklig balansclaim.
-
 
 ## 2026-10-05 — RTS-186
 
 186 klar.138/12 riktade och unit468/84/strict build/diff PASS. Chrome fem raser×800/1920/3440 staged flow/briefing/SaveLoad och hotkeys PASS, positiv B-kontroll PASS med explicit100wood-fixtur.800briefing granskad. scripts/check-campaign-menu.mjs gör flödet reproducerbart med extern Playwright/Chrome. Testfixturers saknade reserved/enemies/owner rättades före PASS. All40 taktiska krav testade; tillåtna queues betalas i riktade tester, ingen full40-/mänsklig balansclaim.185 push7b7e9fc.
 
 186 beläggskorrigering: positiva B-kontrollen hade0wood, så affordability spärrade även det tillåtna kommandot. Före kontroll används explicit100wood, återställd till0 före Save. Slutlig fem raser×800/1920/3440 Chrome PASS inklusive positiv B→Escape och negativa hotkeys. Ingen gameplaykod ändrad; unit/build från186 återanvänds, scriptsyntax/diff kontrollerad. Föregående rapport påstod positiv PASS innan output granskats; denna omkörning är det faktiska belägget.
-
 
 ## 2026-10-05 — RTS-187
 
@@ -3433,6 +3415,7 @@ Nio authored kartconfiglistor ger två kistor×20wood+10gold och en gömd grunds
 Förkontroller hittade Islands start-visible kista, testets antagande om2supply i stället för recipe1, obefintligt campaignfixture-namn och moderna discoveries i historisk config57-fixture. Rättade och explicit borttagna i verkliga legacyfixtures; inga felkörningar räknas PASS. Review av camp-spawn hittade behov av fysisk accesspredikat, varför finalchecks/browser kördes om efter justeringen. Slutlig unit475/85 PASS18.09s, riktade discoveries/spawn/production/navy/transport/multiplePlayers/Save/stats86/7 PASS17.40s (filterlistan hade en obefintlig productionQueue-testfil; faktisk filräkning är7); campaigncontent/phases/teams/faction/saveidentity47/5 PASS1.97s före spawnpredikatet, oförändrade kontroller. Strict build PASS366ms, diff och manifest85/99 PASS. Chrome800/1280 fysisk workerutforskning, initialt dolda fynd, exakt loot, kontrollbar unit-4, SaveLoad och inga errors PASS på slutlig kod; artifacts/rts-202 före/efter öppning/rekrytering,1280bilder visuellt granskade. Egen finaleconomy/fog/ID/Save/render/spawnreview utan blockerande fynd. Begränsat skirmishinnehåll, inga AI-fynd/campaignbonus eller claim vid full supply. Ingen ny CI/Pages/fullregressionclaim; etappslut återstår. CSS SHA256 oförändrad/docs bevarade.
 
 ## 2026-10-06 — RTS-203
+
 Betalda extra huvudbyggnader med stable base-N-ID, workerbyggande/resume, separat kö/rally och samordnade unitcounters. Delad supply/tech/ekonomi, nåbar leverans till färdiga baser, fysiska footprints/byggbarhet, selection/HP/repair/fog/minimap/damage/death och Save61. Ursprunglig kö försvinner vid basens död; övrig produktion och arbetarnas last fortsätter om färdig bas finns. Campaign skyddar fortsatt originalbasen, skirmish/team använder sista färdiga basen. Grund räddar inte från defeat. Befintliga factionassets återanvänds. AI-target/knowledge och multiplayerskadeprojection inkluderar baserna; AI:s befintliga egna outpostpolicy består.
 
 Riktade22filer/243tester PASS17.55s före sista selection-guard; slutliga extraBases/selection/queue/action32/4 PASS6.03s inkluderar nytt team-savefall och förstörd-markerad-bas. Oförändrade integrationsbelägg återanvänds. Slutlig unit475/85 PASS14.06s, strict build/diff PASS651ms. Manifest85/100. Browser Chrome Native800/1280 fysisk selection/build, exakt100wood+60gold, två workerjobb, fysisk rally650/430, två nya workers, Save/load och0errors PASS; byggknappar2/1rader, artifacts/rts-203 före/grund/kö/färdig och1280färdig visuellt granskad. Slutlig browser på oförändrad spelkod efter ikon/selection-rättning PASS800/1280: även ikonens pseudoyta och borttagen markerad bas kontrollerade, inga pageerrors.800förebild och1280färdig visuellt granskade.
@@ -3440,6 +3423,7 @@ Riktade22filer/243tester PASS17.55s före sista selection-guard; slutliga extraB
 Förkontroller fann dubbla ready-checks efter typbreddning, felaktigt campaignfixture-ID, för kort förväntad uppgraderingsremainder och felimport i teamsfixture; rättade. Teamregression hittade att härledd dropoffmetadata även på matcher utan extras ändrade spectatornavigation; härledningen begränsades till faktiska extras och det oförändrade teamtestet passerar. Browserharnesssyntax och nyknappens disabled-reset rättade. Aktuella externa style.css-ändringar tog bort tidigare bottom-bar-grid: funktionell layout hålls separat i matchWorkspace.css, inklusive kompakt rubrik så åtta byggknappar blir1/2rader. Visuell review hittade ny basknapp utan genererad ikon-pseudoyta och kvarvarande val av borttagen bas; CSS/inspection rättades, guards och browserfall tillagda. Slutchecks upprepades av dessa konkreta skäl. En browserkörning avbröts av Vite-HMR under rättningen, ingen spelregression hävdas från den. Felkörningar räknas inte PASS. Ingen fullregression/CI/Pages/mänsklig balans hävdas ännu; fullregression vid204:s etappslut. Style.css, nya samtidiga assets/sources/units.mjs-ändringar och docs/ bevaras och exkluderas från commit.
 
 ## 2026-10-06 — RTS-204 och stopp efter gameplayfasen
+
 Akademier för alla fem fraktioner, paid workerconstruction/resume/repair/damage/death, fog/minimap/selection, F8 och nivå II attack/försvar. Prerequisites forge+båda I;80wood+40gold/10s/64×64/140HP. Nivå II2× faction-I-cost/12s; gammal fraktionsmultiplikator^nivå för militär, workers utan bonus. UI/tech tree visar0–2/cost/blocker. AI samma kedja, tidigare nivå-I-expansionsvillkor består. Kampanjmission1–5 stannar vid I,6–8 admit. Save62 genuin61migration, tidigare advancedextras blockerade inklusive multiplayerwrapper. Förstörd akademi/forge stoppar avancerat jobb utan refund, färdiga nivåer består.
 
 40 egna native academyframes/femfraktioner/twoteams/fourstages. building-onlyexport bevarar alla450 tidigare förbättrade frames pixel-för-pixel; exakt RGBA-prefixjämförelse PASS. Unitkällor/atlases påverkas inte. Assettesterna utökade för atlas490/7936, alpha/palette/team/stage/geometri/HP.
@@ -3453,3 +3437,9 @@ Egen review av schema/migration/AI/prerequisites/targets/HP/collision/repair/des
 Första kompletta etappregressionen1582PASS/2FAIL (186filer,485.61s) hittade legacy-story-AI som nådde nivå II i introduktionsuppdrag samt modern discoverymetadata i en Save56-mapfixture. HEAD203:s isolerade the-siege-test3PASS verifierade regressionen; samma test på204 misslyckades. Explicit academyCampaignReason och härledd academyAllowed skyddar playerUI/placement/AI/Save även utan seriesidentity och behåller övrig legacy-rosterpolicy. Earlyforge rebuild cap följer missionens maxnivå. Historisk mapfixture tar bort discoveries. Bots avsedda nivå-I-research väljer attack efter defense I i stället för att försöka låst defense II. Slutlig unitassertion uppdaterades för den nya härledda academyAllowed-flaggan; andra oförändrade assertions består. Fullregression körs om på slutlig kod.
 
 RTS-204 slutlig finisher: `npm test`1586/186 PASS472.93s; `npm run test:unit`475/85 PASS19.65s; `npm run build` inklusive strict typecheck PASS416ms på slutlig testkod (omkörd efter två ändrade metadataassertions; spelbundle oförändrad från437ms-bygget). Slutlig `git diff --check` PASS,17 nya Markdownreferenser PASS. Endast docs ändrades efter kodkontrollerna; ingen ny kodverifiering behövdes för dem. Current Focus204 Done/fasstopp och HANDOFF/QUALITY_REVIEW/GAMEPLAY_PHASE uppdaterade före commit.
+
+## CI-timeoutkorrigering efter RTS-204 — 2026-10-06
+
+Senaste [GitHub-körningen](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37491093989) fallerade på två tidsgränser: multiplePlayers betalda två-AI/60s-simulering (15000ms) och extraBases team/construction/Save (5000ms). Build/Pages hoppades över; lokal204-PASS är inte CI-PASS. Endast dessa integrationers wall-clockbudget ändras till60000/30000ms. Gameplaytid, fixtures och assertions är oförändrade; standardtimeout och workerantal består.
+
+Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), unit475/85 PASS15.09s och build inklusive strict typecheck PASS med befintlig bundlevarning. Diffgranskning utan fynd; git diff --check PASS. Full regression körs i nya GitHub-jobbet och dess resultat rapporteras separat. Ingen ny browserkontroll behövs för enbart testtimeout. Befintlig style.css, units.mjs och docs/ bevaras. Inga nya roadmaptasks.
