@@ -1,3 +1,4 @@
+import {refreshedFrame} from '../assets/sources/visual-refresh/frames.mjs';
 import {readFileSync} from 'node:fs';import {inflateSync} from 'node:zlib';import {describe,it,expect} from 'vitest';
 import {Surface} from '../scripts/pixelArt.mjs';import {rosterUnit} from '../assets/sources/roster-complete.mjs';
 import {settlement} from '../assets/sources/settlement-complete.mjs';
@@ -8,7 +9,7 @@ describe('RTS-155 complete reference roster and settlement (technical evidence, 
  it('every other faction unit pose exactly equals its source, has transparent margins and stable feet',()=>{
   const frame=sheet('units'),dirs=['e','se','s','sw','w','nw','n','ne'];
   for(const faction of ['crown','clans','elves','dwarves','goblins'])for(const type of ['archer','specialist','catapult'])for(const owner of ['player','enemy'])for(let dir=0;dir<8;dir++)for(const state of type==='worker'?['idle','walk','attack','death','gather','build']:['idle','walk','attack','death'])for(let n=0;n<(state==='idle'?1:4);n++){
-   const id=`${faction==='crown'?'':faction+'-'}${type}-${owner}-${dirs[dir]}-${state}-${n}`,source=rosterUnit(Surface,p,faction,type,owner,dir,state,n),data=frame(id);expect(data.equals(Buffer.from(source.data)),id).toBe(true);
+   const id=`${faction==='crown'?'':faction+'-'}${type}-${owner}-${dirs[dir]}-${state}-${n}`,source=refreshedFrame('units',manifest.frames[id],id,64,64),data=frame(id);expect(data.equals(Buffer.from(source.data)),id).toBe(true);
    if(state!=='death'){let top=0;while(top<64&&!data.subarray(top*64*4,(top+1)*64*4).some((v,i)=>i%4===3&&v))top++;expect(-unitOverlayOffsets(type,faction).hp+4,`${id} HP overlaps sprite`).toBeLessThan(top-(type==='catapult'?40:44));}
    expect(manifest.frames[id]).toMatchObject({width:64,height:64,anchor:{x:32,y:type==='catapult'?40:44}});expect(unitOrigin(type)).toEqual({x:32/64,y:(type==='catapult'?40:44)/64});
    expect(Array.from({length:64},(_,i)=>[[i,0],[i,63],[0,i],[63,i]]).flat().every(([x,y])=>data[(y*64+x)*4+3]===0),`${id} clipped edge`).toBe(true);
@@ -16,7 +17,7 @@ describe('RTS-155 complete reference roster and settlement (technical evidence, 
   }
  });
  it('each remaining building stage equals its source; transparent edges, team and logical footprint survive',()=>{
-  const frame=sheet('buildings');for(const faction of ['crown','clans','elves','dwarves','goblins'])for(const kind of ['barracks','farm','forge'])for(const owner of ['player','enemy'])for(const stage of ['foundation','building','complete','damaged']){const prefix=faction==='crown'?'':faction+'-',id=`${prefix}${kind}-${owner}-${stage}`,source=settlement(Surface,p,faction,kind,owner,stage),data=frame(id),size=kind==='farm'?64:128;expect(data.equals(Buffer.from(source.data)),id).toBe(true);expect(manifest.frames[id]).toMatchObject({anchor:{x:size/2,y:size*.75},logicalFootprint:{width:64,height:64}});expect(Array.from({length:size},(_,i)=>[[i,0],[i,size-1],[0,i],[size-1,i]]).flat().every(([x,y])=>data[(y*size+x)*4+3]===0),`${id} clipped edge`).toBe(true);}
+  const frame=sheet('buildings');for(const faction of ['crown','clans','elves','dwarves','goblins'])for(const kind of ['barracks','farm','forge'])for(const owner of ['player','enemy'])for(const stage of ['foundation','building','complete','damaged']){const prefix=faction==='crown'?'':faction+'-',id=`${prefix}${kind}-${owner}-${stage}`,source=refreshedFrame('buildings',manifest.frames[id],id,manifest.frames[id].width,manifest.frames[id].height)??settlement(Surface,p,faction,kind,owner,stage),data=frame(id),size=kind==='farm'?64:128;expect(data.equals(Buffer.from(source.data)),id).toBe(true);expect(manifest.frames[id]).toMatchObject({anchor:{x:size/2,y:size*.75},logicalFootprint:{width:64,height:64}});expect(Array.from({length:size},(_,i)=>[[i,0],[i,size-1],[0,i],[size-1,i]]).flat().every(([x,y])=>data[(y*size+x)*4+3]===0),`${id} clipped edge`).toBe(true);}
 
  });
 });

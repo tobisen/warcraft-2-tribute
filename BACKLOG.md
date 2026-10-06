@@ -10,12 +10,12 @@
 - Behåll actions, minimap, feedback, paus/fokus/Escape och live uppdragsuppdateringar. Fungerar Native800/1280/1920 och Fit.
 - Non-goals: nya gameplayregler, ändring av användarens style.css, nya uppdrag.
 
-### RTS-189 — Sammanhängande och komplett spelgrafik — In Progress
+### RTS-189 — Sammanhängande och komplett spelgrafik — Done
 - Inventera samtliga fem fraktioners roster och byggnader; ersätt otillräckliga/saknade motiv med tydliga detaljerade sprites, även Gryphon/Wyvern/Eagle/Gyrocopter/Airship.
 - Bevara riktningar, relevanta animationer, teamfärg, ankare, fog/selection/porträtt och logical footprints. Kontrollera alla motiv i spelbrowser; inga flygtextikoner som slutgrafik.
 - Dokumentera källor/prompt/export och faktiska belägg. Non-goals: balans-/rosterändringar.
 
-### RTS-190 — Livfulla djur — Todo
+### RTS-190 — Livfulla djur — In Progress
 - Ny särskiljbar design för deer/rabbit/fox med igenkännbara poser och befintlig idle/walk/flee/hunt/död-presentation.
 - Bevara interaktion, sparning, fog, ljud och gameplay. Visuell browserkontroll och riktade regressioner.
 - Samlade slutchecks och HANDOFF efter190; inga nya tasks.

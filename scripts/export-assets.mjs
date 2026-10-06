@@ -32,3 +32,6 @@ const navalImage=new Surface(2048,4160),navalAtlas={};
 for(const f of navalFrames(Surface,palette)){navalImage.blit(f.image,f.x,f.y);navalAtlas[f.id]={frame:{x:f.x,y:f.y,w:64,h:64},rotated:false,trimmed:false,spriteSourceSize:{x:0,y:0,w:64,h:64},sourceSize:{w:64,h:64}};manifest.frames[f.id]={atlas:'naval',width:64,height:64,anchor:f.anchor,kind:f.kind,faction:f.faction,owner:f.owner,role:f.role,direction:f.direction,state:f.state,frame:f.frame};}
 manifest.atlases.naval={image:'assets/naval-atlas.png',data:'assets/naval-atlas.json',width:2048,height:4160,source:'assets/sources/naval.mjs',directions:navalDirections,animations:{idle:1,walk:4,attack:4,death:4},fps:8};
 writeFileSync(new URL('naval-atlas.png',output),png(navalImage));writeFileSync(new URL('naval-atlas.json',output),JSON.stringify({frames:navalAtlas,meta:{image:'naval-atlas.png',size:{w:2048,h:4160},scale:'1'}},null,2)+'\n');writeFileSync(new URL('manifest.json',output),JSON.stringify(manifest,null,2)+'\n');
+
+// Approved generated sheets are packed after the editable native sources.
+await import('./export-visual-refresh.mjs');

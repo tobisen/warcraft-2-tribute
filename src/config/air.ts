@@ -8,4 +8,4 @@ export const airConfig:Record<FactionId,AirRecipe>={
  dwarves:{name:'Gyrocopter',cost:{wood:65,gold:40},durationSeconds:15,supply:3,hp:95,speed:175,damage:12,attackInterval:1,range:192,targets:['land','air','building'],damageByDomain:{land:.65,building:.65,air:1.5}},
  goblins:{name:'Airship',cost:{wood:75,gold:45},durationSeconds:18,supply:4,hp:140,speed:90,damage:30,attackInterval:2,range:160,splashRadius:40,targets:['land','building']},
 };
-export const airPresentation={height:24,size:28,placeholder:true};
+export const airPresentation={height:24,size:28,placeholder:false};

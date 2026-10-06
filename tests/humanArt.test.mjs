@@ -1,3 +1,4 @@
+import {refreshedFrame} from '../assets/sources/visual-refresh/frames.mjs';
 import {readFileSync} from 'node:fs';import {inflateSync} from 'node:zlib';import {describe,it,expect} from 'vitest';
 import {Surface} from '../scripts/pixelArt.mjs';import {humanUnit,humanBase} from '../assets/sources/humans.mjs';
 import {unitOrigin,unitFrame,motion} from '../src/presentation/animation';
@@ -7,13 +8,13 @@ describe('RTS-155 Human art export (technical evidence, not an aesthetic approva
  it('every Human unit pose exactly equals its source, has transparent margins and stable feet',()=>{
   const frame=sheet('units'),dirs=['e','se','s','sw','w','nw','n','ne'];
   for(const type of ['worker','soldier'])for(const owner of ['player','enemy'])for(let dir=0;dir<8;dir++)for(const state of type==='worker'?['idle','walk','attack','death','gather','build']:['idle','walk','attack','death'])for(let n=0;n<(state==='idle'?1:4);n++){
-   const id=`${type}-${owner}-${dirs[dir]}-${state}-${n}`,source=humanUnit(Surface,p,type,owner,dir,state,n),data=frame(id);expect(data.equals(Buffer.from(source.data)),id).toBe(true);
+   const id=`${type}-${owner}-${dirs[dir]}-${state}-${n}`,source=refreshedFrame('units',manifest.frames[id],id,64,64),data=frame(id);expect(data.equals(Buffer.from(source.data)),id).toBe(true);
    expect(manifest.frames[id]).toMatchObject({width:64,height:64,anchor:{x:32,y:44}});expect(unitOrigin(type)).toEqual({x:32/64,y:44/64});
    for(let i=0;i<64;i++)for(const xy of [[i,0],[i,63],[0,i],[63,i]])expect(data[(xy[1]*64+xy[0])*4+3],`${id} clipped at ${xy}`).toBe(0);
    expect(manifest.frames[unitFrame(motion(undefined,{x:0,y:0},state,0,type,owner,undefined,'crown'),n/8)]).toBeDefined();
   }
  });
  it('each base stage equals its source; transparent edges, team and logical footprint survive',()=>{
-  const frame=sheet('buildings');for(const owner of ['player','enemy'])for(const stage of ['foundation','building','complete','damaged']){const id=`base-${owner}-${stage}`,source=humanBase(Surface,p,owner,stage),data=frame(id);expect(data.equals(Buffer.from(source.data)),id).toBe(true);expect(manifest.frames[id]).toMatchObject({anchor:{x:64,y:96},logicalFootprint:{width:owner==='player'?48:96,height:owner==='player'?48:96}});for(let i=0;i<128;i++)for(const [x,y]of [[i,0],[i,127],[0,i],[127,i]])expect(data[(y*128+x)*4+3],`${id} clipped edge`).toBe(0);}
+  const frame=sheet('buildings');for(const owner of ['player','enemy'])for(const stage of ['foundation','building','complete','damaged']){const id=`base-${owner}-${stage}`,source=refreshedFrame('buildings',manifest.frames[id],id,manifest.frames[id].width,manifest.frames[id].height)??humanBase(Surface,p,owner,stage),data=frame(id);expect(data.equals(Buffer.from(source.data)),id).toBe(true);expect(manifest.frames[id]).toMatchObject({anchor:{x:64,y:96},logicalFootprint:{width:owner==='player'?48:96,height:owner==='player'?48:96}});for(let i=0;i<128;i++)for(const [x,y]of [[i,0],[i,127],[0,i],[127,i]])expect(data[(y*128+x)*4+3],`${id} clipped edge`).toBe(0);}
  });
 });

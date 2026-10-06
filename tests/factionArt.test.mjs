@@ -1,3 +1,4 @@
+import {refreshedFrame} from '../assets/sources/visual-refresh/frames.mjs';
 import {readFileSync} from 'node:fs';import {inflateSync} from 'node:zlib';import {beforeAll,describe,it,expect} from 'vitest';
 import {Surface} from '../scripts/pixelArt.mjs';import {factionUnit} from '../assets/sources/faction-people.mjs';
 import {factionBase} from '../assets/sources/faction-bases.mjs';
@@ -12,7 +13,7 @@ describe('RTS-155 faction art export (technical evidence, not an aesthetic appro
  it.each(unitCases)('$faction $type $owner poses equal their source, have transparent margins and stable feet',({faction,type,owner})=>{
   const dirs=['e','se','s','sw','w','nw','n','ne'];
   for(let dir=0;dir<8;dir++)for(const state of type==='worker'?['idle','walk','attack','death','gather','build']:['idle','walk','attack','death'])for(let n=0;n<(state==='idle'?1:4);n++){
-   const id=`${faction}-${type}-${owner}-${dirs[dir]}-${state}-${n}`,source=factionUnit(Surface,p,faction,type,owner,dir,state,n),data=frame(id);expect(data.equals(Buffer.from(source.data)),id).toBe(true);
+   const id=`${faction}-${type}-${owner}-${dirs[dir]}-${state}-${n}`,source=refreshedFrame('units',manifest.frames[id],id,64,64),data=frame(id);expect(data.equals(Buffer.from(source.data)),id).toBe(true);
    if(state!=='death'){let top=0;while(top<64&&!data.subarray(top*64*4,(top+1)*64*4).some((v,i)=>i%4===3&&v))top++;expect(-unitOverlayOffsets(type,faction).hp+4,`${id} HP overlaps sprite`).toBeLessThan(top-44);}
    expect(manifest.frames[id]).toMatchObject({width:64,height:64,anchor:{x:32,y:44}});expect(unitOrigin(type)).toEqual({x:32/64,y:44/64});
    for(let i=0;i<64;i++)for(const xy of [[i,0],[i,63],[0,i],[63,i]])expect(data[(xy[1]*64+xy[0])*4+3],`${id} clipped at ${xy}`).toBe(0);
@@ -20,6 +21,6 @@ describe('RTS-155 faction art export (technical evidence, not an aesthetic appro
   }
  });
  it('each base stage equals its source; transparent edges, team and logical footprint survive',()=>{
-  const frame=sheet('buildings');for(const faction of ['clans','elves','dwarves','goblins'])for(const owner of ['player','enemy'])for(const stage of ['foundation','building','complete','damaged']){const id=`${faction}-base-${owner}-${stage}`,source=factionBase(Surface,p,faction,owner,stage),data=frame(id);expect(data.equals(Buffer.from(source.data)),id).toBe(true);expect(manifest.frames[id]).toMatchObject({anchor:{x:64,y:96},logicalFootprint:{width:owner==='player'?48:96,height:owner==='player'?48:96}});for(let i=0;i<128;i++)for(const [x,y]of [[i,0],[i,127],[0,i],[127,i]])expect(data[(y*128+x)*4+3],`${id} clipped edge`).toBe(0);}
+  const frame=sheet('buildings');for(const faction of ['clans','elves','dwarves','goblins'])for(const owner of ['player','enemy'])for(const stage of ['foundation','building','complete','damaged']){const id=`${faction}-base-${owner}-${stage}`,source=refreshedFrame('buildings',manifest.frames[id],id,manifest.frames[id].width,manifest.frames[id].height)??factionBase(Surface,p,faction,owner,stage),data=frame(id);expect(data.equals(Buffer.from(source.data)),id).toBe(true);expect(manifest.frames[id]).toMatchObject({anchor:{x:64,y:96},logicalFootprint:{width:owner==='player'?48:96,height:owner==='player'?48:96}});for(let i=0;i<128;i++)for(const [x,y]of [[i,0],[i,127],[0,i],[127,i]])expect(data[(y*128+x)*4+3],`${id} clipped edge`).toBe(0);}
  });
 });
