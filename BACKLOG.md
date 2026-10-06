@@ -11,6 +11,8 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 **Nytt mandat — batch 1 (2026-10-06):** Kartombyggnaden pausas; redan gjorda ändringar bevaras. Endast RTS-205–207 genomförs nu, en task åt gången med browsergranskning, relevanta checks, docs och commit/push. Stanna efter batch 1 med HANDOFF inför batch 2. Ingen delegering; style.css, units.mjs och docs/ bevaras. Historiska PASS är inte ny verifiering.
 
+**Batch 1 avslutad:**205–207 Done. Ny full regression1616/192 PASS652.44s, slutlig unit481/88 PASS15.96s, strict build PASS487ms, native800/1280 browser och diff PASS. [HANDOFF.md](HANDOFF.md) och [BATCH_1.md](BATCH_1.md) redovisar bilder, grafikbegränsningar och nästa batch208–211. Stanna före208; ingen ny release/CI-/Pages-verifiering hävdas.
+
 ### RTS-205 — Läsbara spelobjekt och matchande ikoner — Done
 
 - Inventera alla fem fraktioners units/byggnader samt träd, gruvor och skatter; granska källa, export, frames, skala, ankare och rendering mot godkända referenser och Warcraft II:s läsbarhet.
@@ -21,7 +23,7 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 - Orders/Actions och Build får tydliga separata grupper; Train/Research visas för relevant selection. Större ikoner och klickytor, horisontell800×600 utan scroll/klippning; musklick/hotkeys använder samma befintliga logik. Browser selection/action/kompaktlayout.
 
-### RTS-207 — Tech Tree och Commands i top bar — In Progress
+### RTS-207 — Tech Tree och Commands i top bar — Done
 
 - Separata knappar bredvid Mission. Flytta omfattande hjälp till stängbara modalvyer; Escape och inget klickgenomsläpp.
 - Tech Tree: vald ras, ordnade nivåer/grenar/beroenden, upplåst/tillgängligt/låst, nodval med kostnad/funktion/saknade krav/kampanjbegränsningar.

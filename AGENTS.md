@@ -155,3 +155,23 @@ RTS-177–180 är avslutade och0.3.0/Build6a96227 är publicerad med faktisk CI/
 ## Avslutad grafik-/layoutetapp RTS-188–190
 
 Användarens uttryckliga uppdrag efter182–187 genomförde188–190 en task i taget, med commit/push.188/189 levererade0779d8b/9af4724;190 verifierad. Bildstilen godkänd. Fullregression1497/180, unit476/86, strict build/diff och faktisk browser PASS. HANDOFF/QUALITY_REVIEW skiljer bildförbättringar från återstående separat målade riktnings-/castingassets och mänsklig balans/ljudgranskning. CSS/docs bevaras; ingen delegering. Etappen avslutas efter190, inga nya tasks/karteditor automatiskt. Ingen ny CI/Pages/release hävdas.
+
+## Nytt mandat — batch 1 RTS-205–207 (2026-10-06)
+
+Kartombyggnaden pausas; redan gjorda ändringar bevaras. Användaren beställer
+205–213 i tre batchar, endast205–207 genomförs i aktuell chatt. Grafik granskas
+representativt i browser före spridning; source/export/rendering undersöks,
+placeholders och saknade slutanimationer redovisas. Actiongrupper och separata
+Tech Tree/Commands ska fungera vid800×600. En task åt gången med docs/checks och
+commit/push till befintlig origin/main utan force; ingen delegering. Full
+regression samlat vid batchslut enligt repo-regler, inga extra breda kampanj-
+simuleringar för grafik/UI. Bevara style.css, units.mjs och docs/.
+Stanna efter207 med kort HANDOFF.208–211 är batch2 för nästa chatt;212–213 är
+batch3. Kartlayouter, batch2/3-gameplay och ny version/release startas inte nu.
+
+## Stopp efter batch 1 RTS-205–207
+
+205–207 är Done. Ny fullregression1616/192, unit481/88, strict build och faktisk
+browser800/1280 PASS. HANDOFF/BATCH_1 redovisar grafikbegränsningar och bilder.
+Stanna före208; nästa batch kräver nästa chatt. Tidigare fortsättningsmandat
+startar inte208. CSS/units.mjs/docs bevaras; ingen ny release/Pages hävdas.

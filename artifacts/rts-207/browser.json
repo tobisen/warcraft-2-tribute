@@ -1,0 +1,454 @@
+[
+  {
+    "width": 800,
+    "height": 600,
+    "top": {
+      "scroll": false,
+      "children": [
+        {
+          "id": "match-menu-button",
+          "right": 67.734375
+        },
+        {
+          "id": "fullscreen-button",
+          "right": 140.59375
+        },
+        {
+          "id": "mission-button",
+          "right": 199.421875
+        },
+        {
+          "id": "tech-tree-button",
+          "right": 269.671875
+        },
+        {
+          "id": "commands-button",
+          "right": 347.71875
+        },
+        {
+          "id": "top-release",
+          "right": 382.140625
+        },
+        {
+          "id": "top-gold",
+          "right": 449.78125
+        },
+        {
+          "id": "top-wood",
+          "right": 516.046875
+        },
+        {
+          "id": "top-population",
+          "right": 794
+        }
+      ]
+    },
+    "headings": [
+      "Selection",
+      "Movement",
+      "Combat",
+      "Economy",
+      "Building",
+      "Camera"
+    ],
+    "bindings": [
+      {
+        "action": "build-academy",
+        "key": "F8",
+        "shown": "F8"
+      },
+      {
+        "action": "build-base",
+        "key": "Y",
+        "shown": "Y"
+      },
+      {
+        "action": "hold-position",
+        "key": "F6",
+        "shown": "F6"
+      },
+      {
+        "action": "patrol-units",
+        "key": "F7",
+        "shown": "F7"
+      },
+      {
+        "action": "train-air",
+        "key": "F5",
+        "shown": "F5"
+      },
+      {
+        "action": "cast-heal",
+        "key": "F2",
+        "shown": "F2"
+      },
+      {
+        "action": "cast-ward",
+        "key": "F3",
+        "shown": "F3"
+      },
+      {
+        "action": "cast-hex",
+        "key": "F4",
+        "shown": "F4"
+      },
+      {
+        "action": "repair-building",
+        "key": "Z",
+        "shown": "Z"
+      },
+      {
+        "action": "build-wall",
+        "key": "M",
+        "shown": "M"
+      },
+      {
+        "action": "build-gate",
+        "key": "Q",
+        "shown": "Q"
+      },
+      {
+        "action": "toggle-gate",
+        "key": "X",
+        "shown": "X"
+      },
+      {
+        "action": "build-tower",
+        "key": "O",
+        "shown": "O"
+      },
+      {
+        "action": "upgrade-tower",
+        "key": "N",
+        "shown": "N"
+      },
+      {
+        "action": "upgrade-base",
+        "key": "I",
+        "shown": "I"
+      },
+      {
+        "action": "build-harbor",
+        "key": "H",
+        "shown": "H"
+      },
+      {
+        "action": "train-transport",
+        "key": "J",
+        "shown": "J"
+      },
+      {
+        "action": "train-ship",
+        "key": "K",
+        "shown": "K"
+      },
+      {
+        "action": "unload-transport",
+        "key": "L",
+        "shown": "L"
+      },
+      {
+        "action": "train-specialist",
+        "key": "V",
+        "shown": "V"
+      },
+      {
+        "action": "dismiss-units",
+        "key": "DELETE",
+        "shown": "DELETE"
+      },
+      {
+        "action": "unit-ability",
+        "key": "E",
+        "shown": "E"
+      },
+      {
+        "action": "stop-units",
+        "key": "S",
+        "shown": "S"
+      },
+      {
+        "action": "attack-move",
+        "key": "A",
+        "shown": "A"
+      },
+      {
+        "action": "build-barracks",
+        "key": "B",
+        "shown": "B"
+      },
+      {
+        "action": "build-farm",
+        "key": "F",
+        "shown": "F"
+      },
+      {
+        "action": "build-forge",
+        "key": "G",
+        "shown": "G"
+      },
+      {
+        "action": "train-worker",
+        "key": "W",
+        "shown": "W"
+      },
+      {
+        "action": "train-soldier",
+        "key": "T",
+        "shown": "T"
+      },
+      {
+        "action": "train-archer",
+        "key": "R",
+        "shown": "R"
+      },
+      {
+        "action": "train-catapult",
+        "key": "C",
+        "shown": "C"
+      },
+      {
+        "action": "research-attack",
+        "key": "U",
+        "shown": "U"
+      },
+      {
+        "action": "research-defense",
+        "key": "D",
+        "shown": "D"
+      }
+    ],
+    "directEscapeAndClose": true,
+    "pausedMenuEscape": true,
+    "clickIsolation": true,
+    "threeTechnologyStates": true,
+    "campaignRestriction": true,
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "height": 720,
+    "top": {
+      "scroll": false,
+      "children": [
+        {
+          "id": "match-menu-button",
+          "right": 104.90625
+        },
+        {
+          "id": "fullscreen-button",
+          "right": 213.125
+        },
+        {
+          "id": "mission-button",
+          "right": 304.1875
+        },
+        {
+          "id": "tech-tree-button",
+          "right": 409.328125
+        },
+        {
+          "id": "commands-button",
+          "right": 524.609375
+        },
+        {
+          "id": "top-release",
+          "right": 571.0625
+        },
+        {
+          "id": "top-gold",
+          "right": 660.453125
+        },
+        {
+          "id": "top-wood",
+          "right": 748.328125
+        },
+        {
+          "id": "top-population",
+          "right": 1264
+        }
+      ]
+    },
+    "headings": [
+      "Selection",
+      "Movement",
+      "Combat",
+      "Economy",
+      "Building",
+      "Camera"
+    ],
+    "bindings": [
+      {
+        "action": "build-academy",
+        "key": "F8",
+        "shown": "F8"
+      },
+      {
+        "action": "build-base",
+        "key": "Y",
+        "shown": "Y"
+      },
+      {
+        "action": "hold-position",
+        "key": "F6",
+        "shown": "F6"
+      },
+      {
+        "action": "patrol-units",
+        "key": "F7",
+        "shown": "F7"
+      },
+      {
+        "action": "train-air",
+        "key": "F5",
+        "shown": "F5"
+      },
+      {
+        "action": "cast-heal",
+        "key": "F2",
+        "shown": "F2"
+      },
+      {
+        "action": "cast-ward",
+        "key": "F3",
+        "shown": "F3"
+      },
+      {
+        "action": "cast-hex",
+        "key": "F4",
+        "shown": "F4"
+      },
+      {
+        "action": "repair-building",
+        "key": "Z",
+        "shown": "Z"
+      },
+      {
+        "action": "build-wall",
+        "key": "M",
+        "shown": "M"
+      },
+      {
+        "action": "build-gate",
+        "key": "Q",
+        "shown": "Q"
+      },
+      {
+        "action": "toggle-gate",
+        "key": "X",
+        "shown": "X"
+      },
+      {
+        "action": "build-tower",
+        "key": "O",
+        "shown": "O"
+      },
+      {
+        "action": "upgrade-tower",
+        "key": "N",
+        "shown": "N"
+      },
+      {
+        "action": "upgrade-base",
+        "key": "I",
+        "shown": "I"
+      },
+      {
+        "action": "build-harbor",
+        "key": "H",
+        "shown": "H"
+      },
+      {
+        "action": "train-transport",
+        "key": "J",
+        "shown": "J"
+      },
+      {
+        "action": "train-ship",
+        "key": "K",
+        "shown": "K"
+      },
+      {
+        "action": "unload-transport",
+        "key": "L",
+        "shown": "L"
+      },
+      {
+        "action": "train-specialist",
+        "key": "V",
+        "shown": "V"
+      },
+      {
+        "action": "dismiss-units",
+        "key": "DELETE",
+        "shown": "DELETE"
+      },
+      {
+        "action": "unit-ability",
+        "key": "E",
+        "shown": "E"
+      },
+      {
+        "action": "stop-units",
+        "key": "S",
+        "shown": "S"
+      },
+      {
+        "action": "attack-move",
+        "key": "A",
+        "shown": "A"
+      },
+      {
+        "action": "build-barracks",
+        "key": "B",
+        "shown": "B"
+      },
+      {
+        "action": "build-farm",
+        "key": "F",
+        "shown": "F"
+      },
+      {
+        "action": "build-forge",
+        "key": "G",
+        "shown": "G"
+      },
+      {
+        "action": "train-worker",
+        "key": "W",
+        "shown": "W"
+      },
+      {
+        "action": "train-soldier",
+        "key": "T",
+        "shown": "T"
+      },
+      {
+        "action": "train-archer",
+        "key": "R",
+        "shown": "R"
+      },
+      {
+        "action": "train-catapult",
+        "key": "C",
+        "shown": "C"
+      },
+      {
+        "action": "research-attack",
+        "key": "U",
+        "shown": "U"
+      },
+      {
+        "action": "research-defense",
+        "key": "D",
+        "shown": "D"
+      }
+    ],
+    "directEscapeAndClose": true,
+    "pausedMenuEscape": true,
+    "clickIsolation": true,
+    "threeTechnologyStates": true,
+    "campaignRestriction": true,
+    "errors": []
+  }
+]

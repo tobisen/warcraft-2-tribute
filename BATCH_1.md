@@ -81,3 +81,33 @@ Riktade actionPanel/selectionCollection/hotkeys18/3 PASS.
 206 slutlig unit479/87 PASS16.44s, build inklusive strict typecheck PASS446ms,
 `git diff --check` PASS. Granskning utan kvarvarande layout-/actionfynd.
 206 Done;207 nästa. Full regression vid batchslut.
+
+## RTS-207 — Tech Tree och Commands
+
+Separata knappar direkt efter Mission; samma releasekälla består. Fyra
+grenar (Settlement, Army, Fleet, Research), tre nivåer med namngivna beroenden,
+valbara noder, kostnad/tid/supply, funktion, alla saknade krav och kampanjlås.
+Owned/ready är Unlocked, affordable är Available, saknade prerequisites eller
+kampanjadmission är Locked. Techview använder befintliga recipes och admission;
+redan forskade nivåer förblir upplåsta även när Forge/Academy förstörts.
+Detaljer visas under trädet; nodområdet har avgränsad vertikal scroll vid
+behov. Ingen lång osorterad techtext i bottom bar.
+
+Commands har Selection/Movement/Combat/Economy/Building/Camera med tre tydliga
+kolumner. Alla actiontangenter kommer från hotkeys; mus/kamera följer befintlig
+input. Dialogen pausar, fångar fokus och blockerar kartklick. Direkt öppnad
+hjälp stängs till spelet med Escape/Close; redan pausad meny går tillbaka till
+pausmenyn. Mission använder samma öppnings-/stängningsmönster.
+
+Native800/1280 top bar även med10000-resursbank och full kö, tre techstatusar,
+branch/nodeval, kostnad/prereq/campaign, samtliga visade hotkeys samt Escape,
+Close och kartklickisolering PASS utan pageerrors.
+[Browserreport](artifacts/rts-207/browser.json),
+[Tech Tree](artifacts/rts-207/settlement-locked-800.png),
+[research available](artifacts/rts-207/research-available-800.png),
+[campaign restriction](artifacts/rts-207/campaign-locked-800.png),
+[Commands](artifacts/rts-207/commands-800.png).
+Första dialogens detaljer kom för långt ned i800; tätare header och separat
+nodscroll rättade detta och slutbilderna granskades.31/5 riktade PASS;
+unit481/88 PASS15.96s; build med strict typecheck PASS487ms och befintlig
+bundlevarning. Slutlig `npm test`:1616/192 PASS652.44s; `git diff --check` och Markdownreferenser PASS. Actiongrupps-browsern återkörd efter topbarändringen PASS;206-bilderna visar slutlig207-topbar. Ingen ny CI-/Pages-/releaseverifiering. Batch1 avslutad; stanna före208.

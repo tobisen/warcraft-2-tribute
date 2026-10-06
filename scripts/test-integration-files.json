@@ -100,6 +100,7 @@
   "src/gameplay/visibility.test.ts",
   "src/gameplay/wildlife.test.ts",
   "src/gameplay/workerCombat.test.ts",
+  "src/presentation/technologyView.test.ts",
   "src/presentation/wildlifeSave.test.ts",
   "tests/referenceTerrain.test.mjs"
 ]

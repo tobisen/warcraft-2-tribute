@@ -1831,3 +1831,19 @@ WorkerOrder inkluderar attack; updateGathering lämnar denna till updateCombat s
 config/discoveries.ts äger nio kartors authored platser och bonusnivå. gameplay/discoveries.ts updaterar optional MatchState.discoveries efter livefog i match-loopens playerscope; bounded tre finds, egna IDs/counters/supply via befintlig spawn/production. StatBonus härleds från claimed IDs. Presentation/discoveries.ts härleder endast current-visible sprites/labels/minimap och målar original32px CanvasTexture-kistor; BootScene adapterar Phaser. Save60 validerar identity/explored/treasury/recruitrefs; äldre state utan discoveries aktiveras inte automatiskt.
 
 RTS-203: PlacementState.bases håller stable extra huvudbyggnader med ConstructionJob och egen ProductionState. extraBases.ts härleder live dropoffs/överlevnad och samordnar workerproduktion/global unitsekvens. Befintliga konstruktion/placement/combat/repair/fog/inspection adapters hanterar dessa records; matchPopulation reserverar alla köer. Save61 validerar records och återställer härledda leveransplatser. Phaser renderar befintliga fraktionsbasassets; layoutstyrning ligger i matchWorkspace.css, användarens style.css behöver inte ändras.
+
+## RTS-205–207 — grafikexport och matchhjälp
+
+Godkända rasterark reduceras med alpha-viktad area-sampling till befintliga
+atlasslots; gameplayankare/body/stock/Save-format består. SpriteCrop använder
+synliga bounds för porträtt. Resurs- och supplementalbyggnadsark/provenance i
+assets/sources/visual-refresh återanvänder samma exportpipeline.
+
+TechnologyView är en ren MatchState-läsare som återanvänder faction recipes,
+missingPrerequisites, campaignActionReason och actionPanel; DOM-vyn visar fyra
+grenar/tre nivåer och valda noddetaljer utan att utföra gameplayactions.
+CommandsView grupperar samma hotkeys som dispatchHotkey plus befintliga
+mus-/kameragester. Separata top-bar-knappar använder PauseMenu:s befintliga
+blocking backdrop och fokusfälla. Direktöppnad hjälp stängs till spelet;
+hjälp från redan pausad meny går tillbaka till pausmenyn. Omfattande äldre
+tech-/commandtexter ersätts av dessa vyer. Inga nya gameplay- eller Save-regler.

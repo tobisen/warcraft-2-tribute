@@ -1,3 +1,5 @@
+import {renderTechnologyView} from '../presentation/technologyView';
+import {renderCommandsView} from '../presentation/commandsView';
 import {spriteCrop} from '../presentation/spriteCrop';
 import {regionDefinition} from '../config/mapRegions';
 import {visibleDiscoveries} from '../presentation/discoveries';
@@ -27,7 +29,7 @@ import {castSpell,selectedSpellCaster,spellCasterReason,spellTargetAt,spellTarge
 import {orderRepair} from '../gameplay/repair';
 import {toggleGate,gateToggleReason} from '../gameplay/gates';import {defenseConfig} from '../config/defenses';
 import {placeTower,towerPreviewError,towerPlacementError,upgradeTower,towerUpgradeReason} from '../gameplay/towers';
-import {techTree,buildingAvailability} from '../gameplay/productionPrerequisites';
+import {buildingAvailability} from '../gameplay/productionPrerequisites';
 import {baseDevelopment,startBaseUpgrade,baseUpgradeReason} from '../gameplay/baseUpgrade';
 import {wildlifeHabitats,wildlifeDetails,type Habitat} from '../presentation/wildlife';
 import {combatAudioSnapshot,combatAudioCues,type CombatAudioSnapshot} from '../presentation/combatAudio';
@@ -89,7 +91,7 @@ import {canInteract} from '../gameplay/approach';
 import {motion,unitFrame,unitOrigin,unitOverlayOffsets,artAtlas,deathEffect,effectAlive,type Motion,type DeathEffect,type Action,type UnitArt} from '../presentation/animation';
 import { buildingFrame,buildingOrigin,terrainImageFrame,terrainEdges,terrainDetails,resourceFrame,resourceOrigin } from '../presentation/assets';
 import { createSession,sessionTransition,changeOptions,gameplayDelta,type MatchSession,type SessionAction } from '../gameplay/session';
-import { hotkeys,hotkeyButton,dispatchHotkey,commandGuide } from '../presentation/hotkeys';
+import { hotkeys,hotkeyButton,dispatchHotkey } from '../presentation/hotkeys';
 import { bindGroup,recallGroup,combineSelection,validGroup,type ControlGroups } from '../gameplay/controlGroups';
 import { gameplayKeyAllowed,keyboardContext } from '../presentation/keyboard';
 import { entityVisible,knownResource,placementVisible } from '../gameplay/visibility';
@@ -559,7 +561,6 @@ export class BootScene extends Phaser.Scene {
     const load=()=>{if(this.restartPending)return;const result=readSave(()=>window.localStorage);if(!result.ok){document.getElementById('save-status')!.textContent=result.code==='missing'?result.error:result.code==='version'?uiText.thisSaveUsesAnUnsupportedFormatOrGame:uiText.couldNotReadTheSaveTheActiveMatch;return;}this.awaitingLoadedResume=result.match.outcome==='playing';this.pendingLoad={match:{...result.match,paused:true},view:result.view};this.scenario=result.match.scenario!;this.difficulty=result.match.difficulty!;this.session={options:{players:result.match.multiplePlayers?.roster,aiProfile:result.match.aiProfile,scenario:this.scenario,difficulty:this.difficulty,map:result.match.map.id??'arena',faction:result.match.factions?.player??defaultFactions.player,enemyFaction:result.match.factions?.enemy??defaultFactions.enemy,speed:result.match.speed??1},phase:result.match.outcome==='playing'?'paused':'ended'};this.skipGameplayFrame=true;this.restartPending=true;this.restartButton.disabled=true;gameAudio.setPhase(this.session.phase);document.getElementById('save-status')!.textContent=result.match.outcome==='playing'?uiText.loadedPausedNoGameplayTimePassesUntilResume:uiText.loadedCompletedMatch;this.scene.restart();};
     saveButton.addEventListener('click',save);loadButton.addEventListener('click',load);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{saveButton.removeEventListener('click',save);loadButton.removeEventListener('click',load);});
     for(const [id,action] of [['start-match','start'],['pause-match','pause'],['resume-match','resume'],['new-match','new-match']] as const){const button=document.getElementById(id)!;const handler=()=>this.sessionAction(action);button.addEventListener('click',handler);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>button.removeEventListener('click',handler));}
-    document.getElementById('command-guide-text')!.textContent=commandGuide;
     const dismissButton=document.getElementById('dismiss-units') as HTMLButtonElement,dialog=document.getElementById('dismiss-dialog') as HTMLDialogElement,cancelDismiss=document.getElementById('dismiss-cancel')!,confirmDismiss=document.getElementById('dismiss-confirm')!;
     const closeDismiss=()=>{this.pendingDismiss=undefined;dialog.close();this.skipGameplayFrame=true;this.syncVisuals();this.game.canvas.focus();};
     const requestDismiss=()=>{const proposal=dismissProposal(this.currentMatch());if(!proposal||this.pendingDismiss)return;this.pendingDismiss=proposal;this.drag=undefined;this.cameraDrag=undefined;this.dragBox.setVisible(false);document.getElementById('dismiss-message')!.textContent=dismissMessage(proposal);dialog.showModal();this.syncVisuals();};
@@ -907,7 +908,7 @@ export class BootScene extends Phaser.Scene {
     const gateButton=document.getElementById('toggle-gate') as HTMLButtonElement;gateButton.disabled=!!gateToggleReason(this.currentMatch(),this.selectedBuilding??'');setActionLabel(gateButton,this.placement.defenses?.find(t=>t.id===this.selectedBuilding)?.open?'Close gate':'Open gate');
     const repairButton=document.getElementById('repair-building') as HTMLButtonElement;repairButton.disabled=!this.gameplayActive()||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected)||this.gathering.wood<=0||(this.gathering.goldBalance??0)<=0;repairButton.setAttribute('aria-pressed',String(this.repairMode));
     (document.getElementById('upgrade-tower') as HTMLButtonElement).disabled=!!towerUpgradeReason(this.currentMatch(),this.selectedBuilding??'');
-    document.getElementById('tech-tree-text')!.textContent=techTree(this.currentMatch()).join('\n');
+    renderTechnologyView(this.currentMatch());renderCommandsView();
     const development=baseDevelopment(this.currentMatch()),upgradeButton=document.getElementById('upgrade-base') as HTMLButtonElement;
     upgradeButton.disabled=!!baseUpgradeReason(this.currentMatch());setActionLabel(upgradeButton,development.remainingSeconds!==null?`Upgrading to level ${development.level+1}: ${Math.ceil(development.remainingSeconds)}s; training paused`:`Upgrade base to level ${Math.min(3,development.level+1)}`);
     const animalPoses=visibleAnimals(this.currentMatch()),animalIds=new Set(animalPoses.map(p=>p.id));

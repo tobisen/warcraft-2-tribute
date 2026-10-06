@@ -3511,3 +3511,30 @@ Slutlig unit/build/diff kompletteras före206commit. Ingen campaignbatch/CIclaim
 206 slutlig unit479/87 PASS16.44s, build inklusive strict typecheck PASS446ms,
 `git diff --check` PASS. Granskning utan kvarvarande layout-/actionfynd.
 206 Done;207 nästa. Full regression vid batchslut.
+
+## RTS-207 — separata top-bar-hjälpvyer (2026-10-06)
+
+Tech Tree och Commands bredvid Mission, befintlig PauseMenu/backdrop/fokusfälla.
+TechnologyView ren MatchState-läsare med fyra grenar/tre nivåer, nameddependencies,
+valbar nod, kostnad/funktion/alla saknade krav och campaignadmission. Gemensamma
+recipes/prereq/actionPanel återanvänds; kvarvarande forskningsbonus efter
+buildingloss förblir Unlocked. CommandsView bygger actiontangenter från hotkeys
+och grupperar Selection/Movement/Combat/Economy/Building/Camera i tabellrader.
+Omfattande gamla HUD-helptexter ersätts. Ingen gameplay-/Save-ändring.
+
+Native800/1280 faktiskt topbarclick/branch/node/Escape/Close/pausedmenuback och
+kartklickisolering PASS, alla33 actionkeybindings stämmer, tre techstatusar och
+campaignlock verifierade. Dialoglayout efter tätare header granskad; snapshots
+inkluderar explicit tech/bank/missionfixture, inte betald helkampanj.31/5 riktade
+PASS; unit481/88 PASS15.96s, strict build PASS487ms och diff PASS. Tidig testfixture
+använde icke-existerande mission/scenario-ID; korrigerad till tutorial/first-steps
+med riktig campaignidentity, ingen runtimekod försvagad.206 push a1b5cd7.
+Full regression körs samlat vid batchslut; inga nya tasks utanför205–207.
+
+207 slutlig finisher: full `npm test`1616/192 PASS652.44s, inga misslyckade filer.
+Slutlig unit481/88/build strict487ms återanvänds från oförändrad finalkod;
+endast docs ändrades därefter.206-actionbrowser återkörd efter207 PASS;
+snapshots uppdaterade till slutlig topbar. Markdownreferenser/diff PASS.
+Review utan kvarstående blockerande fynd; gameplay/Save/terränggeometri
+oförändrade och användarens CSS/units.mjs/docs bevarade.207 Done och batchstopp
+före208. Ingen ny CI/Pages/release eller mänsklig ljud-/balansverifiering.

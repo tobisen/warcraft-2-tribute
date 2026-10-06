@@ -15,6 +15,7 @@ import './presentation/spells.css';
 import './presentation/actionIcons.css';
 import './presentation/matchWorkspace.css';
 import './presentation/actionGroups.css';
+import './presentation/helpViews.css';
 import Phaser from 'phaser';
 import { BootScene } from './scenes/BootScene';
 import { viewportConfig } from './config/camera';

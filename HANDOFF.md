@@ -1,3 +1,34 @@
+# Aktuell överlämning — batch 1 RTS-205–207 (2026-10-06)
+
+Batch 1 är klar. Kartombyggnaden är pausad; redan gjorda ändringar bevaras.
+205 förbättrar native atlasexport, lagfärg och porträtt samt ger träd/gruva/skatt
+ny egen källgrafik.206 separerar actiongrupper och större ikoner.207 ger
+separata Tech Tree/Commands med noddetaljer, faktiska bindings och blockerande
+stängbara hjälpdialoger. [BATCH_1.md](BATCH_1.md) samlar före/efterbilder,
+proveniens och taskvis verifiering.205 push a87d781;206 push a1b5cd7.
+207:s leveranshash kompletteras efter taskcommit.
+
+Ny verifiering: full `npm test`1616/192 PASS652.44s; slutlig unit481/88
+PASS15.96s; build inklusive strict typecheck PASS487ms (befintlig bundlevarning);
+riktade207-tester31/5 PASS och faktisk Chrome800/1280 för grafik, actiongrupper,
+tech/commands och Escape/Close/kartklickisolering PASS. Slutlig diff- och
+Markdownreferenskontroll PASS.206-browser återkörd efter207; dess snapshots
+visar slutlig topbar. Inga kvarstående blockerande reviewfynd.
+
+Separat målade riktnings-/casting-/death/collapseframes och vissa gamla
+byggstadier är fortfarande slutgrafikbegränsningar; tekniskt fungerande
+härledda animationer räknas inte som ny slutgrafik. Ingen ny mänsklig balans-/
+ljudgranskning, CI-/Pages-verifiering eller release hävdas. `style.css`,
+`assets/sources/units.mjs` och användarens otrackade `docs/` bevaras utanför
+leveranscommits; inga nya terränglayouter eller gameplay-/Saveändringar.
+
+**Stanna här.** Nästa chatt: batch 2 RTS-208–211 (Next Mission, murar,
+farm/supply/guld, namn). Batch 3 RTS-212–213 är endast planerad.
+
+---
+
+# Historik: tidigare kart-/HUD-etapp
+
 # Aktuell överlämning — kart-/HUD-korrigering 2026-10-06
 
 A–C avslutade. Ingen ny roadmaptask eller karteditor. [MAP_CORRECTION.md](MAP_CORRECTION.md) samlar9 kartor/40 campaignstarter, faktiska färdvägar, betalda AI-expansioner, före/efterbilder och begränsningar. Native800/3440 knappar minst44px utan klippning/scroll. Fullregression1603/188, unit475/85 och strict build/diff PASS; aktuell fysisk browser PASS. Referensens konstnärliga kvalitet uppnås inte fullt, och originalbilagorna saknas. Style.css/units.mjs/docs bevaras. Ny C-CI/Pages skiljs från lokala kontroller; ursprunglig CI-timeoutfix370cf02 är verifierat grön. A4bd5737/B509fb79 pushade; C hash i slutrapport.
