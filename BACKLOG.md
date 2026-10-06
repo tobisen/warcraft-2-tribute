@@ -2,6 +2,49 @@
 
 ## Current Focus
 
+**Nytt gameplaymandat RTS-195–204:** Användarens önskemål2026-10-06 ersätter kartfasens stopp. En task åt gången; konkreta UI/transport/placement/navigation-problem före nytt innehåll. Bevara befintlig style.css/docs. Ingen delegering. Innehållspaket för204 detaljeras före beroende kod. Tidigare kartfasens belägg är historik.
+
+### RTS-195 — Byggknappar på en eller två rader — Done
+- Samla alla synliga byggknappar på en rad när utrymmet räcker, annars två. Behåll ikoner, hotkeys, disabled-status och selectionflöde.
+- Granska actual Native800/1280/1920 med worker vald; ändra separat layout-CSS, bevara befintlig style.css.
+
+### RTS-196 — Automatisk närkontakt för transport — Todo
+- Load/Unload hittar närmaste synliga nåbara strand inom begränsad radie; båt/trupper går dit och genomför lastning utan pixelprecision.
+- Återanvänd land-/sjövägar, kapacitet och säker landstigning. Inga teleporter genom hinder eller fog; avbrutna order, full båt, blockerad strand och Save/load verifieras.
+
+### RTS-197 — Responsiv byggförhandsvisning — Todo
+- Profilera placement i verklig stor tät skog. Undvik fulla connectivity-BFS varje renderframe; faktisk placering måste fortfarande validera samtliga relevanta regler.
+- Spelsimulering fortsätter under placement. Riktade byggbarhets-/navigationstester och faktisk browsermätning.
+
+### RTS-198 — Snabb och kort knapphjälp — Todo
+- Kort hovertext med namn, kostnad/hotkey och aktuell blockeringsorsak. Snabb tooltip som också fungerar för fokus/disabled-knappar; undvik upprepade långa native titles.
+- Behåll relevant tillgänglighetsinformation och utförligare techbeskrivningar i tech tree.
+
+### RTS-199 — Mushjul för kartzoom — Todo
+- Zooma in/ut över spelytan med begränsad skala och stabil punkt under musen. Kamera/minimap/selection/placement/input fungerar vid zoom.
+- Meny/UI-scroll påverkar inte kartzoom; browsertest flera skalor/kartkanter.
+
+### RTS-200 — Bättre diagonala vägar — Todo
+- Utred fyrgrannevägar och introducera säkra diagonala rutter utan hörnklippning; behåll kroppsstorlek, land/sjö, blockerad skog och revisionscache.
+- Verifiera off-center kontakter, täta hinder, flera units och routeprestanda.
+
+### RTS-201 — Svaga workerattacker — Todo
+- Workers kan få manuell attackorder med låg melee-skada; separera från soldierstats. Gathering/byggarbete kan avbrytas och återupptas enligt befintliga regler.
+- Fog, damage/domains, Save/load, selection och dubbla worker/army-grupper verifieras.
+
+### RTS-202 — Dolda skatter och upptäckbara allierade — Todo
+- Fasta kartconfigfynd som upptäcks genom faktisk spelarvision; engångsbelöning och ett begränsat urval gömda enheter som övergår till spelarens kontroll.
+- Ingen dold information genom minimap/UI; resursledger, population, kampanjmål, ägarskap och Save/load bevaras. Innehåll och belöningsnivå dokumenteras före implementation.
+
+### RTS-203 — Flera huvudbyggnader — Todo
+- Bygg ytterligare egna baser genom betalda workerjobb. Återanvänd byggbarhet, resursleverans, produktion, ownership/fog, selection, destruction och Save-version.
+- Detaljera produktionsköer och defeatregler före implementation; behåll kampanjens ursprungliga basmål.
+
+### RTS-204 — Utökat bygg-/tech-/uppgraderingspaket — Todo
+- Föreslå ett avgränsat sammanhängande paket för de fem fraktionerna eller använd uttrycklig användarspecifikation innan nya recipes/assets byggs.
+- Tydliga prerequisitekedjor, betalda uppgraderingar för byggnader/enheter, UI/tech tree, AI, campaign admission och Save-kompatibilitet. Befintliga roster/system återanvänds.
+
+
 **Kartfas RTS-191–194 avslutad:** Alla fyra beställda kartförbättringar är Done. Alla nio kartor använder skördbara skogar, gemensam terräng/gruva/berg och128×128/4096² värld. Full regression1528/181, unit472/85, strict build/diff och native browser PASS. [MAP_PHASE.md](MAP_PHASE.md) redovisar dimensioner/bilder/prestanda; HANDOFF styr stoppet efter194. Style.css/docs bevarade; inga nya tasks/karteditor.
 
 **Nytt grafik-/layoutmandat RTS-188–190:** Användaren beställer tydligare spelyta, bättre fullständig enhets-/byggnadsgrafik inklusive flyg och roligare djur. En task i taget med browser/checks/docs/commit/push. Bevara style.css/docs och gameplay/balans/Save. Ingen delegering.188 push0779d8b,189 push9af4724,190 Done; etappen avslutas här. Full regression1497/180, unit476/86, strict build/diff och browser PASS. HANDOFF styr överlämningen; inga nya tasks.

@@ -15,3 +15,17 @@
 #pause-tech-panel details { margin: 12px 0; }
 #pause-tech-panel #tech-tree-text { font-size: 14px !important; line-height: 1.7; }
 @media (max-width: 900px) { #app:not([data-phase="menu"]) #top-bar { gap: 7px; padding: 0 8px; font-size: 12px; } #top-bar button { padding: 5px 8px; font-size: 12px; } }
+
+/* Seven construction actions: one row at full width, two at compact widths. */
+#bottom-bar {
+ grid-template-columns: minmax(0, 1.4fr) 88px max-content minmax(120px, .8fr) 134px;
+}
+#context-actions { min-width: 0; }
+#action-panel [data-action-group="Build"] {
+ grid-template-columns: repeat(7, 44px);
+}
+@media (max-width: 1100px) {
+ #action-panel [data-action-group="Build"] {
+  grid-template-columns: repeat(4, 40px);
+ }
+}

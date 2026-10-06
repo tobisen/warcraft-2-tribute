@@ -1,3 +1,9 @@
+# Gameplayfas RTS-195–204 pågår
+
+195 Done: sju byggknappar en rad1280/1920, två800, faktisk Chromegranskning och screenshots artifacts/rts-195. Unit472/85, strict build/diff PASS. Nästa196 automatisk lastning/landstigning;197 placementprestanda. Nya innehållsbeslut för204 inväntar användarens svar eller avgränsat förslag före implementation. Nytt mandat ersätter kartfasens stopp; CSS/docs bevaras, inga agenter. Kartfasens checks nedan är historiska.
+
+---
+
 # Kartfas RTS-191–194 avslutad
 
 2026-10-06. Alla fyra tasks är Done.191 push036e306,192 push461597e,193 push1b06889;194 levereras i denna commit (hash rapporteras vid push). Alla nio skirmish-/kampanjkartunderlag är128×128 tiles/4096²px med32px tiles. [MAP_PHASE.md](MAP_PHASE.md) redovisar alla gamla/nya dimensioner, avverkning, kompatibilitet och före/efterbilder. Stanna här: inga nya tasks eller karteditor.

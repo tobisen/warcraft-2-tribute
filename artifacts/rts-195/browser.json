@@ -1,0 +1,143 @@
+[
+  {
+    "width": 800,
+    "height": 600,
+    "count": 7,
+    "rows": 2,
+    "right": 511.8125,
+    "queueLeft": 0,
+    "queueWidth": 0,
+    "buttons": [
+      {
+        "id": "build-wall",
+        "disabled": true,
+        "label": "Build wall [M] · Build a wall with a selected worker. Placement preserves mandatory routes and exits. · Cost: 10 wood · Key: M · Unavailable: Not enough wood"
+      },
+      {
+        "id": "build-gate",
+        "disabled": true,
+        "label": "Build gate [Q] · Build a gate with a selected worker. It starts closed. · Cost: 30 wood + 5 gold · Key: Q · Unavailable: Not enough wood and gold"
+      },
+      {
+        "id": "build-tower",
+        "disabled": true,
+        "label": "Build tower [O] · Build a defense tower with a selected worker at a visible legal site. · Cost: 50 wood + 20 gold · Key: O · Unavailable: Not enough wood and gold"
+      },
+      {
+        "id": "build-barracks",
+        "disabled": true,
+        "label": "Build Barracks – 40 wood [B] · Build barracks – select a worker · Cost: 40 wood · Key: B · Requires: Completed base · Unavailable: Not enough wood"
+      },
+      {
+        "id": "build-farm",
+        "disabled": true,
+        "label": "Build Farm – 20 wood [F] · Build farm – select a worker · Cost: 20 wood · Key: F · Requires: Completed base · Unavailable: Not enough wood"
+      },
+      {
+        "id": "build-forge",
+        "disabled": true,
+        "label": "Build Forge – 40 wood + 10 gold [G] · Build forge – select a worker · Cost: 40 wood + 10 gold · Key: G · Requires: Completed base · Unavailable: Not enough wood and gold"
+      },
+      {
+        "id": "build-harbor",
+        "disabled": true,
+        "label": "Build Harbor – 40 wood + 10 gold [H] · Build a harbor with a selected worker at a visible, valid coastal site. Pay the displayed cost at placement. · Cost: 40 wood + 10 gold · Key: H · Unavailable: Not enough wood and gold"
+      }
+    ],
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "height": 720,
+    "count": 7,
+    "rows": 1,
+    "right": 875.453125,
+    "queueLeft": 0,
+    "queueWidth": 0,
+    "buttons": [
+      {
+        "id": "build-wall",
+        "disabled": true,
+        "label": "Build wall [M] · Build a wall with a selected worker. Placement preserves mandatory routes and exits. · Cost: 10 wood · Key: M · Unavailable: Not enough wood"
+      },
+      {
+        "id": "build-gate",
+        "disabled": true,
+        "label": "Build gate [Q] · Build a gate with a selected worker. It starts closed. · Cost: 30 wood + 5 gold · Key: Q · Unavailable: Not enough wood and gold"
+      },
+      {
+        "id": "build-tower",
+        "disabled": true,
+        "label": "Build tower [O] · Build a defense tower with a selected worker at a visible legal site. · Cost: 50 wood + 20 gold · Key: O · Unavailable: Not enough wood and gold"
+      },
+      {
+        "id": "build-barracks",
+        "disabled": true,
+        "label": "Build Barracks – 40 wood [B] · Build barracks – select a worker · Cost: 40 wood · Key: B · Requires: Completed base · Unavailable: Not enough wood"
+      },
+      {
+        "id": "build-farm",
+        "disabled": true,
+        "label": "Build Farm – 20 wood [F] · Build farm – select a worker · Cost: 20 wood · Key: F · Requires: Completed base · Unavailable: Not enough wood"
+      },
+      {
+        "id": "build-forge",
+        "disabled": true,
+        "label": "Build Forge – 40 wood + 10 gold [G] · Build forge – select a worker · Cost: 40 wood + 10 gold · Key: G · Requires: Completed base · Unavailable: Not enough wood and gold"
+      },
+      {
+        "id": "build-harbor",
+        "disabled": true,
+        "label": "Build Harbor – 40 wood + 10 gold [H] · Build a harbor with a selected worker at a visible, valid coastal site. Pay the displayed cost at placement. · Cost: 40 wood + 10 gold · Key: H · Unavailable: Not enough wood and gold"
+      }
+    ],
+    "errors": []
+  },
+  {
+    "width": 1920,
+    "height": 1080,
+    "count": 7,
+    "rows": 1,
+    "right": 1282.71875,
+    "queueLeft": 0,
+    "queueWidth": 0,
+    "buttons": [
+      {
+        "id": "build-wall",
+        "disabled": true,
+        "label": "Build wall [M] · Build a wall with a selected worker. Placement preserves mandatory routes and exits. · Cost: 10 wood · Key: M · Unavailable: Not enough wood"
+      },
+      {
+        "id": "build-gate",
+        "disabled": true,
+        "label": "Build gate [Q] · Build a gate with a selected worker. It starts closed. · Cost: 30 wood + 5 gold · Key: Q · Unavailable: Not enough wood and gold"
+      },
+      {
+        "id": "build-tower",
+        "disabled": true,
+        "label": "Build tower [O] · Build a defense tower with a selected worker at a visible legal site. · Cost: 50 wood + 20 gold · Key: O · Unavailable: Not enough wood and gold"
+      },
+      {
+        "id": "build-barracks",
+        "disabled": true,
+        "label": "Build Barracks – 40 wood [B] · Build barracks – select a worker · Cost: 40 wood · Key: B · Requires: Completed base · Unavailable: Not enough wood"
+      },
+      {
+        "id": "build-farm",
+        "disabled": true,
+        "label": "Build Farm – 20 wood [F] · Build farm – select a worker · Cost: 20 wood · Key: F · Requires: Completed base · Unavailable: Not enough wood"
+      },
+      {
+        "id": "build-forge",
+        "disabled": true,
+        "label": "Build Forge – 40 wood + 10 gold [G] · Build forge – select a worker · Cost: 40 wood + 10 gold · Key: G · Requires: Completed base · Unavailable: Not enough wood and gold"
+      },
+      {
+        "id": "build-harbor",
+        "disabled": true,
+        "label": "Build Harbor – 40 wood + 10 gold [H] · Build a harbor with a selected worker at a visible, valid coastal site. Pay the displayed cost at placement. · Cost: 40 wood + 10 gold · Key: H · Unavailable: Not enough wood and gold"
+      }
+    ],
+    "errors": []
+  }
+]
