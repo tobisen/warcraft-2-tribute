@@ -1,3 +1,22 @@
+# Aktuellt tillägg — RTS-214 resurscheat (2026-10-06)
+
+Användarens `icanseemyhousefromhere` ger +100000 guld och +100000 trä per
+användning. Enter under aktiv match öppnar rutan; Enter/Apply bekräftar och
+Escape/Cancel avbryter. Gameplayhotkeys blockeras medan man skriver. Grant-
+räknaren sparas, valideras och ingår i spending men inte gathering-statistik.
+Gamla saves utan räknare fortsätter fungera. README/Commands beskriver Enter.
+
+Riktade59/6 PASS27.18s; unit481/88 PASS22.59s; strict build PASS489ms med
+befintlig bundlevarning; browser800/1280 inklusive faktisk två-AI Save/Load,
+upprepning, Enter/Apply/Cancel/Escape/paused/felkod PASS. Ny full regression1621/193 PASS740.85s;
+slutlig diff/review PASS. RTS-214 Done; taskhash rapporteras efter push. Misslyckad Save-browserfixture tryckte Enter
+på Resume innan Save; korrigerad harness, ingen produktändring för det felet.
+
+Batch2 RTS-208–211 startas inte. CSS/units.mjs/docs är bevarade. Ingen ny
+release-/Pages-verifiering.
+
+---
+
 # Aktuell överlämning — batch 1 RTS-205–207 (2026-10-06)
 
 Batch 1 är klar. Kartombyggnaden är pausad; redan gjorda ändringar bevaras.

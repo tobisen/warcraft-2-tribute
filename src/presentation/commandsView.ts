@@ -3,6 +3,7 @@ export const commandCategories=['Selection','Movement','Combat','Economy','Build
 export type CommandCategory=typeof commandCategories[number];
 export interface CommandRow {category:CommandCategory;command:string;gesture:string;explanation:string;action?:string}
 const basics:CommandRow[]=[
+ {category:'Economy',command:'Enter cheat code',gesture:'Enter',explanation:'Open code input; Enter applies and Escape cancels.'},
  {category:'Selection',command:'Select',gesture:'Left click',explanation:'Select a unit, building, resource or animal.'},
  {category:'Selection',command:'Select group',gesture:'Left drag',explanation:'Select own units inside the rectangle.'},
  {category:'Selection',command:'Toggle / add',gesture:'Shift + click / drag',explanation:'Toggle one unit or add the dragged units.'},

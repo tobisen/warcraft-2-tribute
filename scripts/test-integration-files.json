@@ -17,6 +17,7 @@
   "src/gameplay/campaignSeries.test.ts",
   "src/gameplay/campaignVerification.test.ts",
   "src/gameplay/catapult.test.ts",
+  "src/gameplay/cheats.test.ts",
   "src/gameplay/coast.test.ts",
   "src/gameplay/combatNavigation.test.ts",
   "src/gameplay/combinedArmsBalance.test.ts",

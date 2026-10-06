@@ -71,6 +71,7 @@ export interface GatheringState {
   goldBalance?: number;
   base: Position;
   wood: number;
+  resourceCheatUses?:number;
   lostCargo?:{wood:number;gold:number};
 }
 

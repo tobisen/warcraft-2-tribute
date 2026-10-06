@@ -23,6 +23,11 @@ Alla nya spelkartor är128×128 tiles/4096×4096 world pixels med32px tiles. Spe
 
 I huvudmenyn väljer du Campaign eller Skirmish (med separat Wave-survival-val). Campaign går via ras → svårighet → start/fortsätt → briefing. Alla fem raser har varsin åttauppdragsserie med egen berättelse och taktiska mål; progression är separat för kampanj, ras och svårighet. Skirmish låter dig välja fem raser, karta och AI-spelare. Välj Beginner/Easy/Normal/Hard och gameplayhastighet. Nya kampanjstarter har permanenta faser: preparation, spaning, försvar, passage, transport, eskort, räddning och kustkontroll. Läs aktuellt engelskt phasegoal. Fristående scenarier och äldre kampanj-saves behåller tidigare villkor. Förlust vid basens död har företräde.
 
+Resurscheat: tryck **Enter** under en aktiv match, skriv
+`icanseemyhousefromhere` och tryck **Enter**. Varje användning lägger till
+100000 guld och100000 trä; Escape avbryter. Resurserna sparas med matchen.
+
+
 1. Välj workers och utforska nära basen. Högerklicka upptäckt wood/gold. På de flesta kartor finns wood vid(650,180), gold vid(850,220); på kust-/ö-kartor ligger startgruvan vid(600,300). Workers samlar och levererar automatiskt.
 2. Välj en worker och Build Barracks. Placera grön preview nära basen, exempelvis(528,400) om platsen är fri. Worker bygger; ge därefter ny gather-order. Kostnader/tider varierar med fraktion och visas på knapparna. Escape/högerklick avbryter preview.
 3. Välj barracks och träna en betald armé. Bygg farm för supply, och forge/research vid behov. Orders/Build/Train/Research grupperar relevanta actions. Arbetare och stridsenheter produceras parallellt i sina byggnader.

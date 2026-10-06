@@ -9,6 +9,13 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
+**Aktuellt tillägg:** RTS-214 — resurscheat — Done. Användarens kod
+`icanseemyhousefromhere` ska ge +100000 guld och +100000 trä. Enter öppnar
+inmatning under pågående match; Enter bekräftar, Escape avbryter. Bevara
+befintliga binds, Save och användarändringar; inga batch2-tasks startas.
+Verifierat: riktade59/6, unit481/88, full1621/193 PASS740.85s, strict build
+489ms, native800/1280 inkl. två-AI Save/Load och diff PASS. Stanna här.
+
 **Nytt mandat — batch 1 (2026-10-06):** Kartombyggnaden pausas; redan gjorda ändringar bevaras. Endast RTS-205–207 genomförs nu, en task åt gången med browsergranskning, relevanta checks, docs och commit/push. Stanna efter batch 1 med HANDOFF inför batch 2. Ingen delegering; style.css, units.mjs och docs/ bevaras. Historiska PASS är inte ny verifiering.
 
 **Batch 1 avslutad:**205–207 Done. Ny full regression1616/192 PASS652.44s, slutlig unit481/88 PASS15.96s, strict build PASS487ms, native800/1280 browser och diff PASS. [HANDOFF.md](HANDOFF.md) och [BATCH_1.md](BATCH_1.md) redovisar bilder, grafikbegränsningar och nästa batch208–211. Stanna före208; ingen ny release/CI-/Pages-verifiering hävdas.

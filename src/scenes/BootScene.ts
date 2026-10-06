@@ -1,3 +1,5 @@
+import {applyResourceCheat} from '../gameplay/cheats';
+import {bindCheatInput} from '../presentation/cheatInput';
 import {renderTechnologyView} from '../presentation/technologyView';
 import {renderCommandsView} from '../presentation/commandsView';
 import {spriteCrop} from '../presentation/spriteCrop';
@@ -568,6 +570,12 @@ export class BootScene extends Phaser.Scene {
     const cancelDialog=(event:Event)=>{event.preventDefault();closeDismiss();};
     dismissButton.addEventListener('click',requestDismiss);cancelDismiss.addEventListener('click',closeDismiss);confirmDismiss.addEventListener('click',confirm);dialog.addEventListener('cancel',cancelDialog);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{dismissButton.removeEventListener('click',requestDismiss);cancelDismiss.removeEventListener('click',closeDismiss);confirmDismiss.removeEventListener('click',confirm);dialog.removeEventListener('cancel',cancelDialog);this.pendingDismiss=undefined;dialog.close();});
+    const unbindCheat=bindCheatInput(()=>this.gameplayActive()&&!this.pendingDismiss,code=>{
+      const before=this.currentMatch(),after=applyResourceCheat(before,code);
+      if(after===before)return false;
+      this.applyMatch(after);this.syncVisuals();return true;
+    });
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN,unbindCheat);
     const actionKey=(event:KeyboardEvent)=>{
       if(this.pendingDismiss)return;
       const menuContext={...keyboardContext(event,this.session.phase==='playing'||this.session.phase==='paused'),ctrlKey:event.ctrlKey,metaKey:event.metaKey};

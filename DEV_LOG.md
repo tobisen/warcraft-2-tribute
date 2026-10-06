@@ -3541,3 +3541,29 @@ före208. Ingen ny CI/Pages/release eller mänsklig ljud-/balansverifiering.
 
 207 taskcommit e4343b9 pushad till origin/main utan force. Slutlig handoff
 kompletterad med de tre taskhasharna; enbart Markdown, diff/textchecks gäller.
+
+## RTS-214 — användarbeställd resurscheat (2026-10-06)
+
+Enter öppnar native modalinmatning under aktiv match; användarens exakta kod
+icanseemyhousefromhere ger +100000 guld/+100000 trä per användning. Enter/Apply
+bekräftar, Escape/Cancel avbryter, okänd kod ändrar inget. Capture-keylistener
+hindrar gameplayhotkeys medan man skriver; scene-shutdown rensar lyssnare.
+Commands och README dokumenterar Enter. Ingen batch2 eller terrängändring.
+
+Save-test hittade befintlig karta/initial-budgetvalidering som avvisade bonusen.
+Optional resourceCheatUses håller grant-budgeten separat och valideras som
+positivt heltal; gamla saves utan fält fungerar. MatchStats inkluderar samma
+bonus endast i utgiftsberäkning, inte gathered/delivered. Relevanta tester
+inkluderar upprepning, felkod/paused/ended, Save/load, ogiltiga räknare och
+bevarade spending/gathering totals. Native800/1280 keyboard/Apply/repeat,
+Escape/invalid/paused och ingen hotkeyaktivering under typing PASS.
+Tidiga fullkörningar avbröts för konkreta Cancel-Enter/statistikreviewfynd;
+de räknas inte PASS. Slutlig riktad/unit/build/full verifiering redovisas nedan.
+
+214 slutliga checks: riktade59/6 PASS27.18s; unit481/88 PASS22.59s;
+strict build PASS489ms (befintlig bundlevarning); full `npm test`1621/193
+PASS740.85s. Browser800/1280 slutlig PASS inklusive riktig två-AI Save/Load
+med två användningar och Enter på Cancel. Save-browserns första harnessfel
+tryckte Enter på Resume och återupptog före Save; rättad menyöppning passerar.
+Slutreview/diff PASS. Ingen ny kodändring efter dessa checks; endast docs.
+RTS-214 Done, stopp före208. Bevarade användarfiler har oförändrade SHA256.
