@@ -1,0 +1,15 @@
+{
+  "logicalWidth": 1280,
+  "logicalHeight": 512,
+  "samples": 51,
+  "median": 4.299999952316284,
+  "p95": 4.700000047683716,
+  "fps": 59.99520038396927,
+  "elapsed": 1.0147533333333334,
+  "active": true,
+  "error": null,
+  "placed": {
+    "farms": 1,
+    "wood": 80
+  }
+}

@@ -38,7 +38,7 @@ export function harborSpawn(m:MatchState,footprint:Footprint,occupancy=true,role
  const map={...domainMap(m.map,'water'),bodyHalf:shipRecipe(m,role).size/2,obstacles:[...domainMap(m.map,'water').obstacles,footprint]};
  return spawnCandidates(map,footprint,'barracks',shipRecipe(m,role).size).find(p=>hasSpawnExit(map,p)&&(!occupancy||![...m.gathering.units.filter(u=>!isAir(u)).map(u=>unitBody(u.position,u.kind==='worker'?unitStats.size:combatUnitStats(u).size)),...(m.navy?.ships??[]).map(u=>unitBody(u.position,shipRecipe(m,role).size)),...m.combat.enemies.filter(e=>!e.footprint&&!isAir(e)).map(e=>unitBody(e.position,24))].some(b=>overlaps(unitBody(p,shipRecipe(m,role).size),b))))??null;
 }
-export function harborPlacementError(m:MatchState,point:Position):string|null {
+function checkHarborPlacement(m:MatchState,point:Position,preview=false):string|null {
  const locked=campaignActionReason(m,'build-harbor');if(locked)return locked;
  if(m.navy?.harbor)return uiText.harborExists;
  const rect=harborFootprint(point);if(m.fog&&!placementVisible(m.fog,rect))return uiText.theSiteMustBeVisible;if(!coastalFootprint(m.map,rect))return uiText.aHarborNeedsAFreeCoastWithLand;
@@ -46,6 +46,7 @@ export function harborPlacementError(m:MatchState,point:Position):string|null {
  if(m.gathering.units.some(u=>!isAir(u)&&overlaps(rect,unitBody(u.position,u.kind==='worker'?unitStats.size:combatUnitStats(u).size)))||m.combat.enemies.some(e=>!e.footprint&&!isAir(e)&&overlaps(rect,unitBody(e.position,24)))||(m.navy?.ships??[]).some(s=>overlaps(rect,unitBody(s.position,factionForTeam(m,'player').naval.units.warship.size))))return uiText.overlapsAUnit;
  const builder=m.gathering.units.filter(u=>u.kind==='worker'&&u.selected).sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}))[0];
  if(!builder)return uiText.selectAWorkerToBuild;
+ if(preview)return null;
  const after={...m,map:replaceObstacles(m.map,[...m.map.obstacles,rect])};
  if(approachRoute(after.map,builder.position,rect,factionForTeam(m,'player').naval.harbor.constructionRange).status==='blocked')return uiText.theBuildingSiteCannotBeReached;
  for(const worker of m.gathering.units.filter((u):u is Extract<Unit,{kind:'worker'}>=>u.kind==='worker'))for(const target of [placementObstacles(m.gathering)[0],...workerResourceTargets(m.gathering,worker).map(n=>({x:n.position.x-nodeRadius(n),y:n.position.y-nodeRadius(n),width:nodeRadius(n)*2,height:nodeRadius(n)*2}))]){
@@ -57,6 +58,8 @@ export function harborPlacementError(m:MatchState,point:Position):string|null {
  if(!harborSpawn(after,rect,false))return uiText.noFreeWaterExit;
  return null;
 }
+export const harborPlacementError=(m:MatchState,p:Position)=>checkHarborPlacement(m,p);
+export const harborPreviewError=(m:MatchState,p:Position)=>checkHarborPlacement(m,p,true);
 export function placeHarbor(m:MatchState,point:Position):MatchState {
  if(m.outcome!=='playing'||m.paused||!!m.multiplePlayers&&m.combat.baseHP<=0||!m.placement.active||m.placement.kind!=='harbor'||harborPlacementError(m,point))return m;
  const builder=m.gathering.units.filter(u=>u.kind==='worker'&&u.selected).sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}))[0],footprint=harborFootprint(point);

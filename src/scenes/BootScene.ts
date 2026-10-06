@@ -21,7 +21,7 @@ import {spellDefinition,spellForSlot,spellSlots,type SpellId} from '../config/sp
 import {castSpell,selectedSpellCaster,spellCasterReason,spellTargetAt,spellTargetReason} from '../gameplay/spells';
 import {orderRepair} from '../gameplay/repair';
 import {toggleGate,gateToggleReason} from '../gameplay/gates';import {defenseConfig} from '../config/defenses';
-import {placeTower,towerPlacementError,upgradeTower,towerUpgradeReason} from '../gameplay/towers';
+import {placeTower,towerPreviewError,towerPlacementError,upgradeTower,towerUpgradeReason} from '../gameplay/towers';
 import {techTree,buildingAvailability} from '../gameplay/productionPrerequisites';
 import {baseDevelopment,startBaseUpgrade,baseUpgradeReason} from '../gameplay/baseUpgrade';
 import {wildlifeHabitats,wildlifeDetails,type Habitat} from '../presentation/wildlife';
@@ -64,7 +64,7 @@ import {enemyBody} from '../gameplay/enemyBody';
 import type {EnemyNavalState} from '../gameplay/enemyNaval';
 import {loadTransport,unloadTransport} from '../gameplay/transport';
 import {navyConfig} from '../config/navy';
-import {attackShips,harborPlacementError,placeHarbor,trainShip,canTrainShip,commandShips,resumeHarbor,stopShips,matchPopulation,type NavyState,type Ship} from '../gameplay/navy';
+import {attackShips,harborPreviewError,harborPlacementError,placeHarbor,trainShip,canTrainShip,commandShips,resumeHarbor,stopShips,matchPopulation,type NavyState,type Ship} from '../gameplay/navy';
 import {renderMatchResults} from '../presentation/matchResults';
 import {matchSettingDetails,matchSettingsSummary} from '../presentation/matchSettings';
 import {maps,isMapId} from '../config/maps';
@@ -125,7 +125,7 @@ import type { Position } from '../gameplay/movement';
 import { gatheringConfig } from '../config/gathering';
 import { productionConfig, soldierProductionConfig } from '../config/production';
 import { barracksConfig, farmConfig } from '../config/buildings';
-import { buildingFootprint, beginPlacement, cancelPlacement, placementError, placementObstacles, placeBuilding, type PlacementState } from '../gameplay/placement';
+import { buildingFootprint, beginPlacement, cancelPlacement, placementPreviewError, placementError, placementObstacles, placeBuilding, type PlacementState } from '../gameplay/placement';
 import { canStartProduction, startProduction, type ProductionState } from '../gameplay/production';
 import { isNodeHit, orderUnits, resourceNodes, type GatheringState, type Unit } from '../gameplay/gathering';
 import {
@@ -214,6 +214,7 @@ export class BootScene extends Phaser.Scene {
   private gathering!: GatheringState;
   private placement: PlacementState = { active: false, barracks: null };
   private placementFeedbackError:string|null=null;
+  private placementAttempt:{x:number;y:number;reason:string}|null=null;
   private previewPoint: Position = { x: 0, y: 0 };
   private placementClick = false;
   private placementPreview!: Phaser.GameObjects.Rectangle;
@@ -695,10 +696,11 @@ export class BootScene extends Phaser.Scene {
         this.placement = cancelPlacement(this.placement);
       } else if (pointer.button === 0) {
         if(!placementVisible(this.fog,buildingFootprint(world,this.placement.kind??'barracks'))){this.syncVisuals();return;}
-        if(this.placement.kind==='tower'||this.placement.kind==='wall'||this.placement.kind==='gate'){this.applyMatch(placeTower(this.currentMatch(),world));this.syncVisuals();return;}
-        if(this.placement.kind==='harbor'){this.applyMatch(placeHarbor(this.currentMatch(),world));this.syncVisuals();return;}
+        if(this.placement.kind==='tower'||this.placement.kind==='wall'||this.placement.kind==='gate'){const match=this.currentMatch(),next=placeTower(match,world);if(next===match)this.rememberPlacementError(world,towerPlacementError(match,world));this.applyMatch(next);this.syncVisuals();return;}
+        if(this.placement.kind==='harbor'){const match=this.currentMatch(),next=placeHarbor(match,world);if(next===match)this.rememberPlacementError(world,harborPlacementError(match,world));this.applyMatch(next);this.syncVisuals();return;}
         const result = placeBuilding(this.placement, world, this.gathering.wood, placementObstacles(this.gathering),
           {technology:technologyFor(this.currentMatch(),'player'),map:this.map,gathering:this.gathering,enemies:this.combat.enemies});
+        if(result.placement===this.placement)this.rememberPlacementError(world,placementError(this.placement,world,this.gathering.wood,placementObstacles(this.gathering),{technology:technologyFor(this.currentMatch(),'player'),map:this.map,gathering:this.gathering,enemies:this.combat.enemies}));
         if (result.map) this.map = result.map;
         this.placement = result.placement;
         this.gathering = 'gathering' in result && result.gathering ? result.gathering : { ...this.gathering, wood: result.wood };
@@ -809,6 +811,11 @@ export class BootScene extends Phaser.Scene {
     this.syncVisuals();
   }
 
+  private rememberPlacementError(point:Position,reason:string|null):void {
+    const rect=buildingFootprint(point,this.placement.kind??'barracks');
+    this.placementAttempt=reason?{x:rect.x,y:rect.y,reason}:null;
+  }
+
   private syncPlacement(): void {
     const forge=this.placement.forge;
     if(!forge&&this.forgeVisual){this.forgeVisual.destroy();this.forgeVisual=undefined;}
@@ -820,8 +827,10 @@ export class BootScene extends Phaser.Scene {
 
     if(!this.placement.barracks&&this.barracksVisual){this.barracksVisual.destroy();this.barracksVisual=undefined;}
     const rect = buildingFootprint(this.previewPoint,this.placement.kind??'barracks');
-    const error = this.placement.active ? !placementVisible(this.fog,rect)?uiText.theSiteMustBeVisible:this.placement.kind==='tower'||this.placement.kind==='wall'||this.placement.kind==='gate'?towerPlacementError(this.currentMatch(),this.previewPoint):this.placement.kind==='harbor'?harborPlacementError(this.currentMatch(),this.previewPoint):placementError(this.placement, this.previewPoint, this.gathering.wood, placementObstacles(this.gathering),
+    let error = this.placement.active ? !placementVisible(this.fog,rect)?uiText.theSiteMustBeVisible:this.placement.kind==='tower'||this.placement.kind==='wall'||this.placement.kind==='gate'?towerPreviewError(this.currentMatch(),this.previewPoint):this.placement.kind==='harbor'?harborPreviewError(this.currentMatch(),this.previewPoint):placementPreviewError(this.placement, this.previewPoint, this.gathering.wood, placementObstacles(this.gathering),
       {technology:technologyFor(this.currentMatch(),'player'),map:this.map,gathering:this.gathering,enemies:this.combat.enemies}) : null;
+    if(!this.placement.active||this.placementAttempt&&(this.placementAttempt.x!==rect.x||this.placementAttempt.y!==rect.y))this.placementAttempt=null;
+    error=error??this.placementAttempt?.reason??null;
     this.placementFeedbackError=error;
     this.placementPreview.setPosition(rect.x, rect.y)
       .setFillStyle(error ? 0xe05b5b : 0x7bd389, 0.4).setVisible(this.placement.active);

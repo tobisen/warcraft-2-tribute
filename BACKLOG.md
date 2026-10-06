@@ -12,7 +12,7 @@
 - Load/Unload hittar närmaste synliga nåbara strand inom begränsad radie; båt/trupper går dit och genomför lastning utan pixelprecision.
 - Återanvänd land-/sjövägar, kapacitet och säker landstigning. Inga teleporter genom hinder eller fog; avbrutna order, full båt, blockerad strand och Save/load verifieras.
 
-### RTS-197 — Responsiv byggförhandsvisning — Todo
+### RTS-197 — Responsiv byggförhandsvisning — Done
 - Profilera placement i verklig stor tät skog. Undvik fulla connectivity-BFS varje renderframe; faktisk placering måste fortfarande validera samtliga relevanta regler.
 - Spelsimulering fortsätter under placement. Riktade byggbarhets-/navigationstester och faktisk browsermätning.
 

@@ -75,7 +75,7 @@ export function cancelPlacement(state: PlacementState): PlacementState {
   return { ...state, active: false };
 }
 
-export function placementError(state: PlacementState, point: Position, wood: number, obstacles: Footprint[], context?: PlacementContext): string | null {
+function checkPlacement(state: PlacementState, point: Position, wood: number, obstacles: Footprint[], context?: PlacementContext, preview=false): string | null {
   const kind=state.kind??'barracks';
   const locked=contentReason(context?.gathering.campaignContent,'buildings',kind);if(locked)return locked;
   if(context?.technology){const locked=buildingAvailability(productionFaction(context.gathering),kind==='tower'||kind==='wall'||kind==='gate'?'base':kind,context.technology);if(locked)return locked;}
@@ -96,6 +96,7 @@ export function placementError(state: PlacementState, point: Position, wood: num
     if([...context.map.obstacles,...(context.map.enemyPassageBlocks??[])].some(o=>overlaps(rect,o)))return uiText.overlapsTerrainOrABuilding;
     if(context.gathering.units.some(u=>!isAir(u)&&overlaps(rect,unitBody(u.position,u.kind==='worker'?unitStats.size:combatUnitStats(u).size)))
       || context.enemies.some(e=>!isAir(e)&&overlaps(rect,unitBody(e.position,otherBodySize(e)))))return uiText.overlapsAUnit;
+    if(preview)return context.gathering.units.some(u=>u.kind==='worker'&&u.selected)?null:uiText.selectAWorkerToBuild;
     const after=replaceObstacles(context.map,[...context.map.obstacles,rect]);
     const [base]=placementObstacles(context.gathering);
     for(const worker of context.gathering.units.filter((u):u is Extract<Unit,{kind:'worker'}>=>u.kind==='worker')) {
@@ -131,6 +132,10 @@ export function placementError(state: PlacementState, point: Position, wood: num
   }
   return null;
 }
+
+export function placementError(state:PlacementState,point:Position,wood:number,obstacles:Footprint[],context?:PlacementContext):string|null{return checkPlacement(state,point,wood,obstacles,context);}
+/** Geometry/stock preview only; placementError remains the mandatory admission check. */
+export function placementPreviewError(state:PlacementState,point:Position,wood:number,obstacles:Footprint[],context?:PlacementContext):string|null{return checkPlacement(state,point,wood,obstacles,context,true);}
 
 export function placeBuilding(state: PlacementState, point: Position, wood: number, obstacles: Footprint[], context?: PlacementContext):
   {placement:PlacementState;wood:number;map?:WorldMap;gathering?:GatheringState} {

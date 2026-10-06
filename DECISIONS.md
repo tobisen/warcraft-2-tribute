@@ -1536,3 +1536,6 @@ Buildgruppen använder sju44px-kolumner på bred viewport, fyra40px-kolumner vid
 ## 2026-10-06 — RTS-196
 
 Separat autoTransport planerar lokalt synligt nåbart coastmöte inom256px från båt och512px från boardingtrupp. Befintlig load/unload implementerar faktisk övergång/capacity/HP/last/supply; inga teleporter. Planerade landformationer och sjövägar används tills båda sidor är framme. Jobbet har30s gräns; nya order/Stop/Hold eller deltagardöd avbryter. Båten behåller vald status; ombordstigna/landsatta units är inte automatiskt valda. Saknad automatisk unloadplats behåller tidigare manuellt läge. Save58 lagrar jobb/goalrefs/timer, validerar land/sjö/contact/order/capacity och migrerar57 utan nya order. Alla äldre versioner avvisar transferfält.
+
+## RTS-197 — Billig placement-preview
+Renderframes kontrollerar lokala regler; full global connectivity och arbets-/spawnvägar valideras vid klick. Avvisad klickorsak visas kvar på samma tile. Detta undviker BFS per frame utan att tillåta otillgängliga faktiska byggen.

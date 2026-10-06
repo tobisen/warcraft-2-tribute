@@ -1,3 +1,9 @@
+# RTS-197 klar — fortsätt198
+
+197 snabb placementpreview med full klickvalidering. Riktade45/4, unit472/85, strict build/diff och Chromeprofil/fysisk farmplacering PASS. Frontier Native1280 från38.75 till60fps; artifacts/rts-197 före/efter. 195 e7cef16 och196 18be41e pushade;197 hash rapporteras vid push. Nästa198 kort snabb hoverhjälp. CSS/docs bevarade. Fullregression vid gameplayetappslut; ingen ny CI/Pages.
+
+---
+
 # Gameplayfas RTS-195–204 pågår
 
 195 Done: sju byggknappar en rad1280/1920, två800, faktisk Chromegranskning och screenshots artifacts/rts-195. Unit472/85, strict build/diff PASS. 196 Done: automatisk strandkontakt256px/boarding512px, vanliga land-/sjövägar, Stop/Hold/dödsavbrott, Save58. Slutlig riktad63/5, unit472/85, strict build/diff och Chrome800/1280 fysisk Stop/ny boarding/Unload/SaveLoad PASS; artifacts/rts-196.195 push e7cef16;196 hash rapporteras vid taskpush. Nästa197 placementprestanda. Nya innehållsbeslut för204 inväntar användarens svar eller avgränsat förslag före implementation. Nytt mandat ersätter kartfasens stopp; CSS/docs bevaras, inga agenter. Kartfasens checks nedan är historiska.
