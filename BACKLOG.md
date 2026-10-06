@@ -16,7 +16,7 @@
 - Profilera placement i verklig stor tät skog. Undvik fulla connectivity-BFS varje renderframe; faktisk placering måste fortfarande validera samtliga relevanta regler.
 - Spelsimulering fortsätter under placement. Riktade byggbarhets-/navigationstester och faktisk browsermätning.
 
-### RTS-198 — Snabb och kort knapphjälp — Todo
+### RTS-198 — Snabb och kort knapphjälp — Done
 - Kort hovertext med namn, kostnad/hotkey och aktuell blockeringsorsak. Snabb tooltip som också fungerar för fokus/disabled-knappar; undvik upprepade långa native titles.
 - Behåll relevant tillgänglighetsinformation och utförligare techbeskrivningar i tech tree.
 

@@ -1,9 +1,9 @@
 import {factions} from '../config/factions';
-import {actionIds,actionGroups,actionGroup,actionTooltip} from './actionPanel';
+import {actionIds,actionGroups,actionGroup,actionTooltip,actionDescription} from './actionPanel';
 import {hotkeys,commandGuide,hotkeyButton} from './hotkeys';
 it('every existing action has one group, a distinct guarded hotkey and a complete tooltip/guide',()=>{
  expect(actionGroups).toEqual(['Orders','Build','Train','Research','Spells']);expect(new Set(hotkeys.map(h=>h.key)).size).toBe(hotkeys.length);
- for(const id of actionIds){expect(actionGroups).toContain(actionGroup(id));const h=hotkeys.find(h=>h.button===id)!;expect(h).toBeTruthy();expect(commandGuide).toContain(`${h.key}: ${h.label}`);const tip=actionTooltip(id,{visible:true,cost:'20 wood',reason:'Not enough wood'},'Faction action');expect(tip).toContain(h.label);expect(tip).toContain('20 wood');expect(tip).toContain('Not enough wood');expect(hotkeyButton(h.key,{playing:true,repeat:false,focusedTag:'CANVAS'})).toBe(id);}
+ for(const id of actionIds){expect(actionGroups).toContain(actionGroup(id));const h=hotkeys.find(h=>h.button===id)!;expect(h).toBeTruthy();expect(commandGuide).toContain(`${h.key}: ${h.label}`);const tip=actionTooltip(id,{visible:true,cost:'20 wood',reason:'Not enough wood'},'Faction action');expect(tip).not.toContain(h.label);expect(tip).toContain(`[${h.key}]`);expect(actionDescription(id,{visible:true,reason:''},'Faction action')).toContain(h.label);expect(tip).toContain('20 wood');expect(tip).toContain('Not enough wood');expect(hotkeyButton(h.key,{playing:true,repeat:false,focusedTag:'CANVAS'})).toBe(id);}
 });
 import {expect,it} from 'vitest';import {createMatch} from '../gameplay/match';import {actionPanel} from './actionPanel';import {createNavy} from '../gameplay/navy';import {enqueueProduction} from '../gameplay/productionQueue';
 it('shows no actions for empty selection, worker build/stop, and union for mixed selection',()=>{const m=createMatch();expect(Object.values(actionPanel(m,null,true)).some(a=>a.visible)).toBe(false);m.gathering.units[0].selected=true;let a=actionPanel(m,null,true);expect(a['build-farm'].visible).toBe(true);expect(a['stop-units'].visible).toBe(true);expect(a['train-worker'].visible).toBe(false);expect(a['attack-move'].visible).toBe(false);m.gathering.units.push({id:'s-1',kind:'soldier',hp:60,cargo:0,selected:true,position:{x:0,y:0},target:{x:0,y:0},order:{kind:'idle'}});a=actionPanel(m,null,true);expect(a['attack-move'].visible).toBe(true);expect(a['unit-ability'].visible).toBe(true);expect(a['build-farm'].visible).toBe(true);});
@@ -28,5 +28,10 @@ it('keeps prerequisites visible after unlocking and identifies active build, res
  const m=createMatch();m.gathering.wood=1000;m.gathering.goldBalance=1000;m.gathering.units[0].selected=true;m.placement.active=true;m.placement.kind='farm';expect(actionPanel(m,null,true)['build-farm'].active).toBe(true);
  m.placement.active=false;const queued=enqueueProduction(m.gathering,m.production);m.production=queued.production;expect(actionPanel(m,'base',true)['train-worker']).toMatchObject({producing:true,prerequisites:'Completed base'});
  m.placement.forge={id:'forge',owner:'player',hp:120,footprint:{x:512,y:384,width:64,height:64},construction:{remainingSeconds:0,builderId:null}};const available=actionPanel(m,'base',true)['research-attack'];expect(available.prerequisites).toContain('Completed forge');m.research!.job={kind:'attack',remainingSeconds:2};expect(actionPanel(m,'base',true)['research-attack'].active).toBe(true);
- expect(actionTooltip('research-attack',available,'Attack')).toContain('Requires: Completed forge');
+ expect(actionDescription('research-attack',available,'Attack')).toContain('Requires: Completed forge');expect(actionTooltip('research-attack',available,'Attack')).not.toContain('Requires:');
+});
+
+it('keeps hover names and costs once, excluding long ability and spell details',()=>{
+ expect(actionTooltip('build-farm',{visible:true,cost:'20 wood',reason:''},'Build Farm – 20 wood [F]')).toBe('Build Farm [F] · 20 wood');
+ expect(actionTooltip('cast-heal',{visible:true,cost:'20 mana · Range 200px · Cooldown 10s · Long spell details',reason:'Not enough mana'},'Heal')).toBe('Heal [F2] · 20 mana · Not enough mana');
 });

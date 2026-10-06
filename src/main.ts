@@ -1,3 +1,5 @@
+import {bindActionTooltips} from './presentation/actionTooltip';
+import './presentation/actionTooltip.css';
 import './presentation/playerUI.css';
 import {bindDisplayControls} from './presentation/displaySettings';
 import {bindReleaseInfo} from './presentation/releaseInfo';
@@ -16,7 +18,7 @@ import Phaser from 'phaser';
 import { BootScene } from './scenes/BootScene';
 import { viewportConfig } from './config/camera';
 
-applyEnglishText();initializePreferences();bindAudioControls();applySkin();bindHomeMenu();bindResultScreen();bindReleaseInfo();bindDisplayControls();
+applyEnglishText();initializePreferences();bindAudioControls();applySkin();bindHomeMenu();bindResultScreen();bindReleaseInfo();bindDisplayControls();bindActionTooltips();
 
 const game=new Phaser.Game({
   type: Phaser.AUTO,

@@ -29,9 +29,15 @@ export const actionIds=['cast-heal','cast-ward','cast-hex','repair-building','bu
 export type ActionId=typeof actionIds[number];
 export const actionGroups=['Orders','Build','Train','Research','Spells'] as const;
 export function actionGroup(id:ActionId):typeof actionGroups[number]{return id.startsWith('cast-')?'Spells':id.startsWith('build-')?'Build':id.startsWith('train-')?'Train':id.startsWith('research-')||id.startsWith('upgrade-')?'Research':'Orders';}
-export function actionTooltip(id:ActionId,action:ActionPresentation,label:string):string{
+export function actionDescription(id:ActionId,action:ActionPresentation,label:string):string{
  const shortcut=hotkeys.find(h=>h.button===id);
  return [label,shortcut?.label,action.cost?`Cost: ${action.cost}`:null,shortcut?`Key: ${shortcut.key}`:null,action.prerequisites?`Requires: ${action.prerequisites}`:null,action.producing?'Production in progress':null,action.reason?`Unavailable: ${action.reason}`:null].filter(Boolean).join(' · ');
+}
+export function actionTooltip(id:ActionId,action:ActionPresentation,label:string):string{
+ const key=hotkeys.find(h=>h.button===id)?.key;
+ const name=label.replace(/\s*\[[A-Z0-9]+\]$/,'').split(/\s+[–·]\s+|;/)[0];
+ const cost=action.cost?.split(' · ')[0];
+ return [`${name}${key?` [${key}]`:''}`,cost,action.reason].filter(Boolean).join(' · ');
 }
 function prerequisiteLabel(p?:UnitPrerequisites):string|undefined {const labels=[...(p?.buildings??[]).map(b=>`Completed ${b}`),...(p?.baseLevel?[`Base level ${p.baseLevel}`]:[]),...Object.entries(p?.research??{}).map(([kind,level])=>`${kind} ${level}`)];return labels.length?labels.join(', '):undefined;}
 export interface ActionPresentation {visible:boolean;reason:string;cost?:string;prerequisites?:string;producing?:boolean;active?:boolean}
@@ -88,7 +94,7 @@ export function bindActionPanel():void{
 /** Called after authoritative gameplay disabled-state sync. */
 export function renderActionPanel(model:ReturnType<typeof actionPanel>):void{
  for(const id of actionIds){const button=document.getElementById(id) as HTMLButtonElement,action=model[id],wrapper=button.parentElement!,reason=document.getElementById(`${id}-reason`)!;wrapper.hidden=!action.visible;button.disabled=button.disabled||!action.visible||!!action.reason;reason.textContent=button.disabled?(action.reason||'Action unavailable'):'';
-  const hotkey=hotkeys.find(h=>h.button===id)?.key;button.dataset.producing=String(!!action.producing);if(action.active!==undefined)button.setAttribute('aria-pressed',String(action.active));button.title=actionTooltip(id,{...action,reason:reason.textContent},button.textContent??'');button.setAttribute('aria-label',button.title);if(hotkey){button.dataset.hotkey=hotkey;setActionLabel(button,button.textContent??'');}
+  const hotkey=hotkeys.find(h=>h.button===id)?.key;button.dataset.producing=String(!!action.producing);if(action.active!==undefined)button.setAttribute('aria-pressed',String(action.active));const presentation={...action,reason:reason.textContent},label=button.textContent??'',tip=actionTooltip(id,presentation,label);button.removeAttribute('title');button.setAttribute('aria-label',actionDescription(id,presentation,label));if(wrapper.dataset.tooltip!==tip)wrapper.dataset.tooltip=tip;wrapper.setAttribute('tabindex',button.disabled?'0':'-1');wrapper.setAttribute('aria-label',button.getAttribute('aria-label')!);if(hotkey){button.dataset.hotkey=hotkey;setActionLabel(button,button.textContent??'');}
  }
  for(const group of actionGroups)(document.querySelector(`[data-action-group="${group}"]`) as HTMLElement).hidden=!actionIds.some(id=>actionGroup(id)===group&&model[id].visible);
  document.getElementById('context-actions')!.classList.toggle('spell-context',actionIds.some(id=>id.startsWith('cast-')&&model[id].visible));

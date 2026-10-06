@@ -1,3 +1,9 @@
+# RTS-198 klar — fortsätt199
+
+198 kort snabb action-tooltip, disabled fokus och live blockeringsorsak. ActionPanel9/1, unit473/85, strict build/diff och Chrome Native800/1280 PASS; artifacts/rts-198.197 push66fe7dd;198 hash rapporteras vid push. Nästa199 mushjulzoom med kamera/minimap/inputverifiering. CSS SHA256 oförändrad/docs bevarade. Inga nya CI/Pages/fullregressionclaims; samlad regression vid etappslut.
+
+---
+
 # RTS-197 klar — fortsätt198
 
 197 snabb placementpreview med full klickvalidering. Riktade45/4, unit472/85, strict build/diff och Chromeprofil/fysisk farmplacering PASS. Frontier Native1280 från38.75 till60fps; artifacts/rts-197 före/efter. 195 e7cef16 och196 18be41e pushade;197 hash rapporteras vid push. Nästa198 kort snabb hoverhjälp. CSS/docs bevarade. Fullregression vid gameplayetappslut; ingen ny CI/Pages.

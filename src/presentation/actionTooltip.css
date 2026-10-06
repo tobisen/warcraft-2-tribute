@@ -1,0 +1,9 @@
+#action-tooltip {
+ position: fixed; z-index: 100; pointer-events: none;
+ max-width: min(340px, calc(100vw - 16px)); padding: 7px 10px;
+ background: #14251ef5; border: 1px solid #a68c55; border-radius: 4px;
+ color: #eee6d0; font: 13px/1.4 sans-serif; box-shadow: 0 3px 12px #0008;
+}
+#action-tooltip[hidden] { display: none; }
+#action-panel .control:has(> button:disabled) > button { pointer-events: none; }
+#action-panel .control:focus-visible { outline: 2px solid #e8cf8b; outline-offset: 2px; }

@@ -1539,3 +1539,6 @@ Separat autoTransport planerar lokalt synligt nåbart coastmöte inom256px från
 
 ## RTS-197 — Billig placement-preview
 Renderframes kontrollerar lokala regler; full global connectivity och arbets-/spawnvägar valideras vid klick. Avvisad klickorsak visas kvar på samma tile. Detta undviker BFS per frame utan att tillåta otillgängliga faktiska byggen.
+
+## RTS-198 — Kort knapphjälp
+Kontextknappar använder en gemensam appägd tooltip med120ms fördröjning och omedelbart fokus. Fulla förklaringar kvarstår i aria-label/kommandoguide/tech tree; disabled wrapper ingår i tangentfokus utan att aktivera knappen.

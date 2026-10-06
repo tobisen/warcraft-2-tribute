@@ -1,0 +1,44 @@
+[
+  {
+    "width": 800,
+    "hover": {
+      "delay": 190.80000019073486,
+      "text": "Build Farm [F] · 20 wood",
+      "rect": {
+        "x": 339.8125,
+        "y": 512,
+        "width": 163.625,
+        "height": 34.1875,
+        "top": 512,
+        "right": 503.4375,
+        "bottom": 546.1875,
+        "left": 339.8125
+      }
+    },
+    "disabledFocus": true,
+    "liveReason": true,
+    "escapeDismiss": true,
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "hover": {
+      "delay": 191.29999995231628,
+      "text": "Build Farm [F] · 20 wood",
+      "rect": {
+        "x": 735.453125,
+        "y": 528,
+        "width": 163.625,
+        "height": 34.1875,
+        "top": 528,
+        "right": 899.078125,
+        "bottom": 562.1875,
+        "left": 735.453125
+      }
+    },
+    "disabledFocus": true,
+    "liveReason": true,
+    "escapeDismiss": true,
+    "errors": []
+  }
+]
