@@ -52,3 +52,19 @@ perspectives. Work/attack loops use idle/strike poses; death uses a bounded
 collapse/fade from the new art. There are genuine two walking poses and four
 flight poses; no claim of fully authored eight-direction animation sheets.
 Fog, action timing, death lifetime, team tint and selection use existing systems.
+
+## RTS-190 wildlife
+
+`wildlife.png`: built-in imagegen followed by a background-extraction edit.
+Prompt: transparent original fantasy RTS atlas, three rows (spotted amber deer
+with antlers, expressive ivory/pink-eared rabbit, mischievous russet fox with
+bushy white-tipped tail) and six columns (idle alert, grazing/sniffing, two
+walk steps, stretched leap, landing). Charming natural forest animals, same
+detailed fantasy style, no clothing/background/text; generous cell margins.
+The final selected source contains real alpha; hidden RGB can appear brown in
+a preview but is not drawn by the game. No opaque background is packed.
+
+Existing32px cells and anchor(16,24) remain. Deer22px, rabbit18px, fox20px max
+body height; six distinct source poses. Existing wander clock/flip and
+selection/hunt/HP/death-fade/fog/save/audio behavior is unchanged. Terrain and
+resources retain their original palette; new wildlife uses its source colors.

@@ -1,3 +1,29 @@
+# Överlämning RTS-188–190 — grafik/layout klar
+
+2026-10-06. Användaren beställde bättre spelgrafik inklusive saknade flyg, tydligare spelyta utan sidebar och roligare djur; bildstilen accepterades (“bilderna ser bra ut”).188–190 är Done, inga nya tasks startas.
+
+- **188** `0779d8b`, pushad: full-width karta, tech tree/commands i matchmenyn, topbar Mission öppnar pausad beskrivning/mål/status. Back/Escape/Resume och actions/minimap/feedback består. Ny separat CSS-fil; style.css orörd.
+- **189** `9af4724`, pushad: fem fraktioners fulla landroster, complete/damaged byggnader, sjö och flyg med imagegen-källark/export, team/ankare/footprint/porträtt/fog. TEMP-flygikoner ersatta av riktig air-atlas.1280 flyg-,5840 land-,180 byggnads- och2080 sjöframes.
+- **190** levereras med `feat(art): give forest wildlife expressive sprites`: spotted deer, ivory rabbit, bushy-tail fox,18 nya idle/walk/leap-poses i befintliga32px-celler. Interaktion/jakt/skada/död/Save/ljud/timing oförändrade; hash rapporteras efter commit/push.
+
+## Ny faktisk verifiering
+
+Full regression1497/180 PASS391.02s; slutlig unit476/86 PASS10.18s; build med strict typecheck PASS328ms; manifest86unit/94integration; syntax/diff/Markdown-/assetreferenser PASS. Reproducerbar full assets:export16 PNG/JSON bytevis oförändrade PASS, så passerade kodchecks upprepas inte efter exporten. Befintlig bundlevarning kvar.
+
+188 riktade11/3 och Chrome Native800/1280/1920 samt Fit800 full kartbredd/mission/tech/paus/Escape/resume PASS.189 art33/6 och runtime37/4 PASS; alla fem fraktioners native1280-spelcanvas-gallerier med båda teams/uttömmande framecoverage visuellt granskade. Actual Chrome fem flygare×800/1280 paid production/elevated selection/flight over building/SaveLoad/full queue/restart PASS.190 wildlife15/3, nya rastertester och Chrome Native800/1280 physical inspection/cues/rate limit/hunt/damage/death/no resources-score/SaveLoad/restart/warship hunt PASS; deer/rabbit/fox-bilder granskade.
+
+Första asset-unitkontrollerna förväntade äldre155-kodsprites och en global gammal palett. Testernas källa följer nu den nya adaptern; native terrain/resource/construction-palettkrav består. Nya bilder tillåter sina källfärger; clip/alpha/HP/team/geometry/pose/keys valideras. Första sådana fall räknas inte som PASS. Konkret granskning rättade beskärningsgränser, grannfragment och marginaler före slutchecks. Extern Playwright-miljö återställd efter miljöbyte; saknad-modul-körning räknas inte som PASS.
+
+## Källor, harness och gränser
+
+Källbilder, promptset och packning: [visual-refresh](assets/sources/visual-refresh/README.md). Built-in imagegen användes, ingen CLI/API eller importerade spelsprites. Källor ligger i projektet, inte bara generated_images. Animationsgrund är SE-poser med spegling/skuggning: alla åtta facing-nycklar finns, men inte åtta oberoende målade perspektiv. Work/attack/death är adapterade; fyra riktiga flygposer, två walkposer för mark och sex poser per djur. Native construction/walls/gates kvarstår; separata casting-/voiceassets och äldre mänsklig balans-/ljudgranskning är inte avslutade av detta uppdrag.
+
+Browserharness: [workspace](scripts/check-match-workspace.mjs), [art gallery](scripts/check-refreshed-art.mjs), [flyg](scripts/check-air.mjs), [djur](scripts/check-interactive-wildlife.mjs). Extern W2T_PLAYWRIGHT_MODULE/W2T_BROWSER_EXECUTABLE/W2T_UI_URL; W2T_AIR_ARTIFACTS och W2T_WILDLIFE_ARTIFACTS väljer separat output för nya belägg. Artefakter lokalt/tmp/rts189-*, /tmp/rts189-air, /tmp/rts190-wildlife. Ingen skeppad debug-API.
+
+Ingen ny CI/Pages/release eller faktisk ljudlyssning hävdas. Historisk RTS-180-release är separat. Browserchecks använder arbetskopian inklusive användarens CSS; style.css SHA25695c3725250221ef8386519adecfb05db601103697d421e78e1b2bdf057141a5e och otrackade docs/ bevarade/ej staged. Stanna efter190; fortsatt finputs kräver nästa uppdrag.
+
+---
+
 # Överlämning RTS-182–187 — avslutad meny-/kampanjfas
 
 2026-10-05. Bilagans sex tasks genomförda i ordning. RTS-181 fanns redan;182–187 lades till utan att skriva över tasks. RTS-180 är historiskt Done/publicerad0.3.0/Build6a96227, inte ny releaseverifiering. Stanna efter denna fas; inga nya tasks/karteditor.

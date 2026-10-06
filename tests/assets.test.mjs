@@ -17,10 +17,11 @@ describe('native pixel exports and logical anchors',()=>{
   for(let a=0;a<frames.length;a++)for(let b=a+1;b<frames.length;b++){const x=frames[a][1].frame,y=frames[b][1].frame;expect(x.x<y.x+y.w&&x.x+x.w>y.x&&x.y<y.y+y.h&&x.y+x.h>y.y).toBe(false);}
   expect(file(manifest.source).length).toBeGreaterThan(0);expect(file(manifest.palette).length).toBeGreaterThan(0);
  });
- it('resource corners are actually transparent and all opaque colors are from the documented palette',()=>{
+ it('resource corners are actually transparent and native terrain/resource colors retain the documented palette',()=>{
   const chunks=[];for(let pos=8;pos<png.length;){const length=png.readUInt32BE(pos),type=png.subarray(pos+4,pos+8).toString();if(type==='IDAT')chunks.push(png.subarray(pos+8,pos+8+length));pos+=length+12;}
   const raw=inflateSync(Buffer.concat(chunks)),stride=256*4+1,palette=new Set(Object.values(JSON.parse(file('assets/palette.json').toString())).map(c=>String(c).toLowerCase()));expect(raw.length).toBe(stride*384);
-  for(let y=0;y<384;y++){expect(raw[y*stride]).toBe(0);for(let x=0;x<256;x++){const p=y*stride+1+x*4;if(raw[p+3])expect(palette.has(`#${raw.subarray(p,p+3).toString('hex')}`)).toBe(true);}}
+  const generated=Object.entries(atlas.frames).filter(([id])=>id.startsWith('critter-')).map(([,v])=>v.frame);
+  for(let y=0;y<384;y++){expect(raw[y*stride]).toBe(0);for(let x=0;x<256;x++){const p=y*stride+1+x*4;if(raw[p+3]&&!generated.some(f=>x>=f.x&&x<f.x+f.w&&y>=f.y&&y<f.y+f.h))expect(palette.has(`#${raw.subarray(p,p+3).toString('hex')}`)).toBe(true);}}
   for(const [id,definition] of Object.entries(manifest.frames))if(definition.kind==='resource'){const f=atlas.frames[id].frame;expect(raw[f.y*stride+1+f.x*4+3]).toBe(0);}
  });
  it('maps all current terrain IDs at native 32px while keeping walkability intact',()=>{

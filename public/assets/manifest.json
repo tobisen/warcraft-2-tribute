@@ -8,7 +8,8 @@
       "image": "assets/world-atlas.png",
       "data": "assets/world-atlas.json",
       "width": 256,
-      "height": 384
+      "height": 384,
+      "refreshSource": "assets/sources/visual-refresh/README.md"
     },
     "buildings": {
       "image": "assets/buildings-atlas.png",

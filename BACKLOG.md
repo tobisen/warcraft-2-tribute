@@ -2,7 +2,7 @@
 
 ## Current Focus
 
-**Nytt grafik-/layoutmandat RTS-188–190:** Användaren beställer tydligare spelyta, bättre fullständig enhets-/byggnadsgrafik inklusive flyg och roligare djur. En task i taget med browser/checks/docs/commit/push. Bevara style.css/docs och gameplay/balans/Save. Ingen delegering.
+**Nytt grafik-/layoutmandat RTS-188–190:** Användaren beställer tydligare spelyta, bättre fullständig enhets-/byggnadsgrafik inklusive flyg och roligare djur. En task i taget med browser/checks/docs/commit/push. Bevara style.css/docs och gameplay/balans/Save. Ingen delegering.188 push0779d8b,189 push9af4724,190 Done; etappen avslutas här. Full regression1497/180, unit476/86, strict build/diff och browser PASS. HANDOFF styr överlämningen; inga nya tasks.
 
 ### RTS-188 — Frigör spelytan — Done
 - Ta bort permanent sidebar från matchlayout; karta använder hela bredden.
@@ -15,8 +15,8 @@
 - Bevara riktningar, relevanta animationer, teamfärg, ankare, fog/selection/porträtt och logical footprints. Kontrollera alla motiv i spelbrowser; inga flygtextikoner som slutgrafik.
 - Dokumentera källor/prompt/export och faktiska belägg. Non-goals: balans-/rosterändringar.
 
-### RTS-190 — Livfulla djur — In Progress
-- Ny särskiljbar design för deer/rabbit/fox med igenkännbara poser och befintlig idle/walk/flee/hunt/död-presentation.
+### RTS-190 — Livfulla djur — Done
+- Ny särskiljbar design för deer/rabbit/fox med igenkännbara poser och befintlig idle/walk/jakt/skadad/död-presentation.
 - Bevara interaktion, sparning, fog, ljud och gameplay. Visuell browserkontroll och riktade regressioner.
 - Samlade slutchecks och HANDOFF efter190; inga nya tasks.
 

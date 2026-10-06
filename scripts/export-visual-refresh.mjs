@@ -5,7 +5,7 @@ import {refreshedFrame} from '../assets/sources/visual-refresh/frames.mjs';
 const output=new URL('../public/assets/',import.meta.url);
 const factions=['crown','clans','elves','dwarves','goblins'];
 const manifest=JSON.parse(readFileSync(new URL('manifest.json',output)));
-for(const atlas of ['units','buildings','naval']){
+for(const atlas of ['units','buildings','naval','world']){
  const metadata=JSON.parse(readFileSync(new URL(`${atlas}-atlas.json`,output))),image=readRGBA(new URL(`${atlas}-atlas.png`,output));let changed=0;
  for(const [id,item] of Object.entries(metadata.frames)){
   const m=manifest.frames[id],f=item.frame;if(!m)continue;const sprite=refreshedFrame(atlas,m,id,f.w,f.h);if(!sprite)continue;for(let y=0;y<f.h;y++)for(let x=0;x<f.w;x++){const j=((f.y+y)*image.width+f.x+x)*4;image.data.set(sprite.data.subarray((y*f.w+x)*4,(y*f.w+x)*4+4),j);}changed++;

@@ -1,3 +1,15 @@
+# RTS-188–190 — Grafik och tydligare spelyta (2026-10-06)
+
+Lokala belägg:188 full-width Native800/1280/1920 och Fit800, Mission→paus→Back/Escape samt Menu→Tech tree→Resume PASS.189 alla fem faction-land/byggnad/sjö/flyg-gallerier båda teams, uttömmande runtimeframe-coverage och faktisk paid flygproduktion/selection/flight/SaveLoad vid800/1280 PASS.190 fysisk djurinspection/hunt/damage/death/SaveLoad/restart/warship hunt vid800/1280 PASS. Ny unit476/86 och build med strict typecheck PASS. Fullregression1497/180 PASS391.02s; reproducerbar full assetexport16 PNG/JSON bytevis oförändrade PASS.
+
+Review korrigerade fel cellgränser/disconnected grannfragment i genererade ark och transparenta marginaler. Användaren godkände bildstilen. Mark/sjö/flyg har nya motiv, medan native construction/walls/gates kvarstår. Grundposerna är SE; övriga riktningar använder spegling/skuggning. Ingen claim om åtta separat målade perspektiv, kompletta casting-/death-sheetanimationer eller mänsklig balans-/ljudgranskning. Alla facing-nycklar och befintliga body/HP/footprint/fog/Save-regler är bevarade. Källor och promptset finns i [visual-refresh](assets/sources/visual-refresh/README.md).
+
+Äldre155-tester jämförde med ersatta kodsprites. Source-jämförelser följer nu den nya adaptern; geometri/alpha/clip/HP/team/unik roster/nycklar/anim valideras fortfarande. Native palette-only-krav behålls för terräng, resources och construction; nya rastermotiv tillåter källpaletten. Åtta facing-keys innebär minstfyra härledda vyer, uttryckligt i sourceprotokollet. Detta är ett visuellt kvalitetssteg, inte ett påstående att alla perspektiv är slutligt handanimerade.
+
+Användarens style.css/docs bevarade och undantagna från commits. Browserbeläggen använder lokala CSS-arbetskopian; inga nya CI-/Pages-belägg hävdas. Historiska RTS-180-releasebelägg nedan är separata.
+
+---
+
 # RTS-182–187 — Ny teknisk slutgranskning2026-10-05
 
 Full regression1489/178, unit468/84, strict build/diff/manifest/länkar PASS. Riktade/native browserflöden för fem campaignraser, scoped Save/replay/progression, content/hotkeys och två verkliga AI-aktörer med olika difficulty/profile/team PASS vid800/1920/3440. Highscorefilter/tabell/legacydatum och3840-rendering/fullscreen/windowläge verifierade separat. Se [HANDOFF.md](HANDOFF.md) för exakta belägg, commits och harness.

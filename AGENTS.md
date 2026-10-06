@@ -151,3 +151,7 @@ Användarens nya uppdrag ersätter stoppet efter176. Genomför177–180 en task 
 ## Stopp efter RTS-180
 
 RTS-177–180 är avslutade och0.3.0/Build6a96227 är publicerad med faktisk CI/Pages/browser-verifiering. HANDOFF.md och QUALITY_REVIEW.md skiljer tekniska belägg från kvarstående mänsklig tids-/balans-/ljudgranskning och slutliga assets. Stanna efter180; inga nya roadmaptasks eller karteditor utan nytt uppdrag. Användarens CSS/docs är fortsatt bevarade.
+
+## Avslutad grafik-/layoutetapp RTS-188–190
+
+Användarens uttryckliga uppdrag efter182–187 genomförde188–190 en task i taget, med commit/push.188/189 levererade0779d8b/9af4724;190 verifierad. Bildstilen godkänd. Fullregression1497/180, unit476/86, strict build/diff och faktisk browser PASS. HANDOFF/QUALITY_REVIEW skiljer bildförbättringar från återstående separat målade riktnings-/castingassets och mänsklig balans/ljudgranskning. CSS/docs bevaras; ingen delegering. Etappen avslutas efter190, inga nya tasks/karteditor automatiskt. Ingen ny CI/Pages/release hävdas.

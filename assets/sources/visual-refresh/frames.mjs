@@ -3,7 +3,7 @@ import {Surface} from '../../../scripts/pixelArt.mjs';
 import {readRGBA} from '../../../scripts/read-rgba-png.mjs';
 const root=new URL('../../../',import.meta.url),dir=new URL('assets/sources/visual-refresh/',root),output=new URL('public/assets/',root);
 const factions=['crown','clans','elves','dwarves','goblins'],roles=['worker','soldier','archer','specialist','catapult'];
-const sheets=Object.fromEntries([...factions,'air','buildings','naval'].map(id=>[id,readRGBA(new URL(`${id}.png`,dir))]));
+const sheets=Object.fromEntries([...factions,'air','buildings','naval','wildlife'].map(id=>[id,readRGBA(new URL(`${id}.png`,dir))]));
 // Reviewed source row boundaries: generated banner poses need taller cells.
 const rowFractions={crown:[0,.2,.395,.583,.825,1],clans:[0,.2,.4,.6,.8,1],elves:[0,.185,.375,.575,.8,1],dwarves:[0,.21,.4,.585,.79,1],goblins:[0,.2,.4,.59,.79,1]};
 function cell(sheet,col,row,columns,rows,fractions,name){
@@ -26,7 +26,7 @@ function cell(sheet,col,row,columns,rows,fractions,name){
  }
  return {sheet:clean,x:left,y:top,width:right-left+1,height:bottom-top+1};
 }
-const sourceCache=new Map();function source(name,col,row,columns=4,rows=5){const key=`${name}/${col}/${row}`;if(!sourceCache.has(key))sourceCache.set(key,cell(sheets[name],col,row,columns,rows,(name==='naval'?[0,.203,.408,.638,.809,1]:rowFractions[name]),name));return sourceCache.get(key);}
+const sourceCache=new Map();function source(name,col,row,columns=4,rows=5){const key=`${name}/${col}/${row}`;if(!sourceCache.has(key))sourceCache.set(key,cell(sheets[name],col,row,columns,rows,(name==='wildlife'?[0,.42,.7,1]:name==='naval'?[0,.203,.408,.638,.809,1]:rowFractions[name]),name));return sourceCache.get(key);}
 /** Pack source poses at native scale; preserve alpha, anchors and logical bodies. */
 function draw(src,w,h,{bottom=h*.7,maxWidth=w-6,maxHeight=h-8,flip=false,owner='player',state='idle',index=0,direction='s',level=1}={}){
  const out=new Surface(w,h),scale=Math.min(maxWidth/src.width,maxHeight/src.height),dw=Math.round(src.width*scale),dh=Math.round(src.height*scale),left=Math.round((w-dw)/2),top=Math.round(bottom-dh),collapse=state==='death'?Math.max(.25,1-index*.22):1;
@@ -52,6 +52,9 @@ export function refreshedFrame(atlas,m,id,w,h){
  }else if(atlas==='naval'&&['warship','transport'].includes(m.role)){
  const pose=m.role==='warship'?(m.state==='attack'&&m.frame===2?1:0):(m.state==='walk'&&m.frame%2?3:2);
  src=source('naval',pose,factions.indexOf(m.faction??'crown'));options={bottom:40,maxHeight:38,maxWidth:58,owner:m.owner,state:m.state,index:m.frame,direction:m.direction,flip:['w','sw','nw'].includes(m.direction)};
+ }else if(atlas==='world'&&id.startsWith('critter-')){
+ const [,animal,action,index]=id.match(/^critter-(deer|rabbit|fox)-(idle|walk)-(\d)$/),row=['deer','rabbit','fox'].indexOf(animal);
+ src=source('wildlife',Number(index)+(action==='walk'?2:0),row,6,3);options={bottom:24,maxWidth:animal==='rabbit'?22:28,maxHeight:animal==='deer'?22:animal==='rabbit'?18:20};
  }else if(atlas==='air'){
  const [,faction,owner,direction,state,index]=id.match(/^(\w+)-air-(player|enemy)-(\w+)-(\w+)-(\d)$/);
  src=source('air',Number(index),factions.indexOf(faction));options={bottom:58,maxWidth:60,maxHeight:54,owner,state,index:Number(index),direction,flip:['w','sw','nw'].includes(direction)};
