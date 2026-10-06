@@ -68,3 +68,45 @@ Existing32px cells and anchor(16,24) remain. Deer22px, rabbit18px, fox20px max
 body height; six distinct source poses. Existing wander clock/flip and
 selection/hunt/HP/death-fade/fog/save/audio behavior is unchanged. Terrain and
 resources retain their original palette; new wildlife uses its source colors.
+
+
+## RTS-205 native readability
+
+The approved sheets remain the source for all five factions. Alpha-weighted area
+reduction in [sample.mjs](sample.mjs) replaces nearest-neighbor decimation of the
+large illustrations. This preserves narrow weapon edges and broad material
+shading without increasing sprite size. Saturated blue cloth retains its source
+highlights; only enemy cloth changes hue. Cell dimensions, anchor positions,
+frame keys, loops and logical bodies remain unchanged. Portraits crop opaque
+bounds rather than shrinking empty atlas margins; resource portraits now use
+the same tree/mine frame as the world.
+
+New original resource source: [resources-205.png](resources-205.png), generated
+with the built-in imagegen tool. Prompt: transparent original fantasy RTS sheet,
+three columns/two rows, oak/mine/closed chest then stump/depleted mine/open empty
+chest; elevated southeast view, upper-left light, detailed crisp material
+clusters and strong native48/96/32px silhouettes, no text/grid/copied game art.
+[resources.mjs](resources.mjs) uses reviewed source bounds and the same reduction.
+Actual alpha is retained; hidden RGB gradients are not rendered. Reference
+terrain, legacy world resources and treasure rendering share these motifs.
+No terrain geometry, resource quantities, collision, balance or save format
+changes. The map rebuild remains paused.
+
+Remaining authored animation limits: mirrored west/shaded north views rather
+than separately painted eight directions, derived collapse/death poses and
+existing strike/work poses. These are preserved, not claimed to be new final
+animation artwork. See [batch report](../../../BATCH_1.md) for browser evidence,
+source inventory and any remaining supplemental-art limits.
+
+
+Supplement: [fortifications-205.png](fortifications-205.png), built-in imagegen,
+original transparent five-faction/four-column sheet: academy with open-book
+relief, short wall, closed gate and the same gate open. Human blue stone,
+Orc tusk/red timber, Elf leaf/living wood, Dwarf granite/brass and Goblin
+teal/rivet/pipe designs, upper-left light and southeast view, no text/grid.
+Reviewed source columns preserve complete silhouettes. Completed/damaged/open
+frames share the source; construction stages remain the existing native art.
+Midtone team cloth uses the canonical palette while retaining dark/highlight
+shading; an unobtrusive three-pixel team band covers motifs without blue cloth
+(e.g. the Elven eagle), and Orc supplemental buildings retain a small team flag.
+No wall footprint or gate passage changes in205; snapping belongs to209.

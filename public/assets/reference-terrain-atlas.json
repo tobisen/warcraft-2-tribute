@@ -1899,13 +1899,53 @@
         "w": 48,
         "h": 48
       }
+    },
+    "chest-closed": {
+      "frame": {
+        "x": 672,
+        "y": 1056,
+        "w": 32,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 32,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 32,
+        "h": 32
+      }
+    },
+    "chest-open": {
+      "frame": {
+        "x": 0,
+        "y": 1152,
+        "w": 32,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 32,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 32,
+        "h": 32
+      }
     }
   },
   "meta": {
     "image": "reference-terrain-atlas.png",
     "size": {
       "w": 768,
-      "h": 1152
+      "h": 1248
     },
     "scale": "1",
     "source": "assets/sources/reference-terrain.mjs",

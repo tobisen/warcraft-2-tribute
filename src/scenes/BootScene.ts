@@ -1,5 +1,6 @@
+import {spriteCrop} from '../presentation/spriteCrop';
 import {regionDefinition} from '../config/mapRegions';
-import {visibleDiscoveries,paintDiscoveryChest} from '../presentation/discoveries';
+import {visibleDiscoveries} from '../presentation/discoveries';
 import type {DiscoveryState} from '../gameplay/discoveries';
 import {workerCombatConfig} from '../config/unit';
 import {cancelSelectedTransfers,requestTransport} from '../gameplay/autoTransport';
@@ -285,7 +286,6 @@ export class BootScene extends Phaser.Scene {
     const fresh=()=>({matchId:crypto.randomUUID(),...createMatch(this.scenario,this.difficulty,this.factions,(this.campaignMission?campaignPlans[this.campaignMission]?.map:undefined)??this.session.options.map,this.session.options.speed??1,this.session.options.aiProfile,this.session.options.players,this.campaignMission),...(this.campaignMission?{campaignMission:this.campaignMission,...(this.campaignRun?.campaignId?{campaignRun:{version:1 as const,phase:0,campaignId:this.campaignRun.campaignId}}:{})}:{})});
     this.applyMatch(loaded?.match??fresh());
     this.discoveryVisuals.clear();
-    for(const opened of [false,true]){const key=opened?'discovery-open':'discovery-chest';if(!this.textures.exists(key)){const texture=this.textures.createCanvas(key,32,32)!;paintDiscoveryChest(texture.context,opened);texture.refresh();}}
     this.game.canvas.tabIndex=0;this.game.canvas.setAttribute('aria-label',uiText.gameWorld);
     const groupKey=(event:KeyboardEvent)=>{
       if(!gameplayKeyAllowed(keyboardContext(event,this.gameplayActive()))||!validGroup(event.key))return;
@@ -841,7 +841,7 @@ export class BootScene extends Phaser.Scene {
     const finds=visibleDiscoveries(this.currentMatch()),ids=new Set(finds.map(d=>d.id));
     for(const [id,v]of this.discoveryVisuals)if(!ids.has(id)){v.image.destroy();v.label.destroy();this.discoveryVisuals.delete(id);}
     for(const d of finds){
-      const frame=d.kind==='recruit'?unitFrame(motion(undefined,d.position,'idle',0,'soldier','player',undefined,this.factions.player),0):undefined,key=d.kind==='recruit'?'units':d.opened?'discovery-open':'discovery-chest';
+      const frame=d.kind==='recruit'?unitFrame(motion(undefined,d.position,'idle',0,'soldier','player',undefined,this.factions.player),0):d.opened?'chest-open':'chest-closed',key=d.kind==='recruit'?'units':'reference-terrain';
       let v=this.discoveryVisuals.get(d.id);if(!v){v={image:this.add.image(d.position.x,d.position.y,key,frame).setOrigin(.5,d.kind==='recruit'?22/32:.75),label:this.add.text(d.position.x,d.position.y-30,d.label,{fontSize:'11px',color:'#efdaa4',backgroundColor:'#17271dcc'}).setOrigin(.5,1)};this.discoveryVisuals.set(d.id,v);}
       v.image.setTexture(key,frame).setDepth(1+d.position.y/this.map.height*4);if(d.kind==='recruit')v.image.setTint(0xd5c391);
       v.label.setText(d.label).setDepth(8);
@@ -890,11 +890,14 @@ export class BootScene extends Phaser.Scene {
     this.barracksVisual?.setFrame(buildingFrame('barracks','player',this.placement.construction?.remainingSeconds,5,this.factions.player,this.placement.barracksHP??combatConfig.barracksHP));
   }
 
+  private portraitCrops=new Map<string,ReturnType<typeof spriteCrop>>();
   private paintPortrait(canvas:HTMLCanvasElement,asset:{atlas:string;frame:string}|null):void {
     const ctx=canvas.getContext('2d')!;ctx.clearRect(0,0,canvas.width,canvas.height);if(!asset)return;
     const frame=this.textures.get(asset.atlas).get(asset.frame);ctx.imageSmoothingEnabled=false;
-    const scale=Math.min(3,canvas.width/frame.cutWidth,canvas.height/frame.cutHeight),w=frame.cutWidth*scale,h=frame.cutHeight*scale;
-    ctx.drawImage(frame.source.image as HTMLImageElement,frame.cutX,frame.cutY,frame.cutWidth,frame.cutHeight,(canvas.width-w)/2,(canvas.height-h)/2,w,h);
+    const key=`${asset.atlas}/${asset.frame}`;let crop=this.portraitCrops.get(key);
+    if(!crop){const c=document.createElement('canvas');c.width=frame.cutWidth;c.height=frame.cutHeight;const context=c.getContext('2d')!;context.drawImage(frame.source.image as HTMLImageElement,frame.cutX,frame.cutY,frame.cutWidth,frame.cutHeight,0,0,c.width,c.height);crop=spriteCrop(context.getImageData(0,0,c.width,c.height).data,c.width,c.height);this.portraitCrops.set(key,crop);}
+    const scale=Math.min((canvas.width-4)/crop.width,(canvas.height-4)/crop.height),w=crop.width*scale,h=crop.height*scale;
+    ctx.drawImage(frame.source.image as HTMLImageElement,frame.cutX+crop.x,frame.cutY+crop.y,crop.width,crop.height,(canvas.width-w)/2,(canvas.height-h)/2,w,h);
   }
 
   private syncVisuals(): void {

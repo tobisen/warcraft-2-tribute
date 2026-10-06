@@ -1,0 +1,180 @@
+[
+  {
+    "width": 800,
+    "sprites": [
+      {
+        "atlas": "units",
+        "frame": "worker-player-s-idle-0",
+        "scale": 1,
+        "origin": {
+          "x": 0.5,
+          "y": 0.6875
+        }
+      },
+      {
+        "atlas": "units",
+        "frame": "soldier-player-s-idle-0",
+        "scale": 1,
+        "origin": {
+          "x": 0.5,
+          "y": 0.6875
+        }
+      },
+      {
+        "atlas": "units",
+        "frame": "archer-player-s-idle-0",
+        "scale": 1,
+        "origin": {
+          "x": 0.5,
+          "y": 0.6875
+        }
+      },
+      {
+        "atlas": "buildings",
+        "frame": "base-player-complete",
+        "scale": 1,
+        "origin": {
+          "x": 0.5,
+          "y": 0.75
+        }
+      },
+      {
+        "atlas": "buildings",
+        "frame": "barracks-player-complete",
+        "scale": 1,
+        "origin": {
+          "x": 0.5,
+          "y": 0.75
+        }
+      },
+      {
+        "atlas": "reference-terrain",
+        "frame": "tree-0",
+        "scale": 1,
+        "origin": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "atlas": "reference-terrain",
+        "frame": "forest-0",
+        "scale": 1,
+        "origin": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "atlas": "reference-terrain",
+        "frame": "mine-full",
+        "scale": 1,
+        "origin": {
+          "x": 0.5,
+          "y": 0.75
+        }
+      },
+      {
+        "atlas": "reference-terrain",
+        "frame": "chest-closed",
+        "scale": 1,
+        "origin": {
+          "x": 0.5,
+          "y": 0.75
+        }
+      }
+    ],
+    "physicalWorkerAndMineSelection": true,
+    "resourcePortrait": true,
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "sprites": [
+      {
+        "atlas": "units",
+        "frame": "worker-player-s-idle-0",
+        "scale": 1,
+        "origin": {
+          "x": 0.5,
+          "y": 0.6875
+        }
+      },
+      {
+        "atlas": "units",
+        "frame": "soldier-player-s-idle-0",
+        "scale": 1,
+        "origin": {
+          "x": 0.5,
+          "y": 0.6875
+        }
+      },
+      {
+        "atlas": "units",
+        "frame": "archer-player-s-idle-0",
+        "scale": 1,
+        "origin": {
+          "x": 0.5,
+          "y": 0.6875
+        }
+      },
+      {
+        "atlas": "buildings",
+        "frame": "base-player-complete",
+        "scale": 1,
+        "origin": {
+          "x": 0.5,
+          "y": 0.75
+        }
+      },
+      {
+        "atlas": "buildings",
+        "frame": "barracks-player-complete",
+        "scale": 1,
+        "origin": {
+          "x": 0.5,
+          "y": 0.75
+        }
+      },
+      {
+        "atlas": "reference-terrain",
+        "frame": "tree-0",
+        "scale": 1,
+        "origin": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "atlas": "reference-terrain",
+        "frame": "forest-0",
+        "scale": 1,
+        "origin": {
+          "x": 0.5,
+          "y": 1
+        }
+      },
+      {
+        "atlas": "reference-terrain",
+        "frame": "mine-full",
+        "scale": 1,
+        "origin": {
+          "x": 0.5,
+          "y": 0.75
+        }
+      },
+      {
+        "atlas": "reference-terrain",
+        "frame": "chest-closed",
+        "scale": 1,
+        "origin": {
+          "x": 0.5,
+          "y": 0.75
+        }
+      }
+    ],
+    "physicalWorkerAndMineSelection": true,
+    "resourcePortrait": true,
+    "errors": []
+  }
+]

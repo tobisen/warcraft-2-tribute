@@ -66,3 +66,12 @@ synteskompositioner, med PCM-masters/runtime-WAV och separat wildlife-manifest.
 Samma projektvillkor för användning, ändring och distribution gäller. Inga
 externa inspelningar, kommersiella ljudeffekter eller attributioner tillkommer.
 Faktisk provlyssning redovisas separat från fil- och uppspelningskontroller.
+
+RTS-205: [resources-205.png](sources/visual-refresh/resources-205.png) är
+projektgenererad originalgrafik med inbyggt imagegen och faktisk alpha.
+Prompt och exporter dokumenteras i [provenance](sources/visual-refresh/README.md).
+Inga externa spelassets har importerats; samma projektvillkor gäller.
+
+RTS-205 inkluderar även [fortifications-205.png](sources/visual-refresh/fortifications-205.png),
+projektgenererad originalgrafik för fem fraktioners academy/wall/gate med
+inbyggt imagegen. Samma villkor och provenance gäller.

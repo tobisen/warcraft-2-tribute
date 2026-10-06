@@ -19,7 +19,7 @@ import type {BuildingSelection} from '../gameplay/buildingSelection';
 import type {MatchState} from '../gameplay/match';
 import {artAtlas,motion,unitFrame,type UnitArt} from './animation';
 import {buildingFrame} from './assets';
-export interface SelectionInfo {mana?:number;maxMana?:number;name:string;detail:string;hp:number|null;maxHP:number|null;stats:string[];portrait:{atlas:'units'|'naval'|'buildings'|'air'|'world';frame:string}|null}
+export interface SelectionInfo {mana?:number;maxMana?:number;name:string;detail:string;hp:number|null;maxHP:number|null;stats:string[];portrait:{atlas:'units'|'naval'|'buildings'|'air'|'world'|'reference-terrain';frame:string}|null}
 const empty=():SelectionInfo=>({name:'No selection',detail:'Click a unit, building or resource, or drag to select a group.',hp:null,maxHP:null,stats:[],portrait:null});
 /** Presentation only: reads selected player entities, only visible enemy buildings and known resources. Stats are baseline recipes. */
 export function selectionInfo(m:MatchState,building:BuildingSelection,resourceId:string|null=null,animalId:string|null=null):SelectionInfo {
@@ -31,7 +31,7 @@ export function selectionInfo(m:MatchState,building:BuildingSelection,resourceId
   const type=node.resource??'wood',visible=isVisible(m.fog,'player',node.position);
   const staffing=visible?resourceStaffing(m,node):null;
   const reachable=node.tree&&visible&&node.remaining>0?m.gathering.units.some(u=>u.kind==='worker'&&canReachFootprint(m.map,u.position,{x:node.position.x-16,y:node.position.y-16,width:32,height:32},24)):true;
-  return {name:type==='wood'?node.tree?'Tree':'Wood grove':'Gold mine',detail:`${node.id} · ${visible?node.remaining<=0?'Depleted':`${Math.ceil(node.remaining)} remaining`:'Outside current vision'}`,hp:null,maxHP:null,stats:[`Resource: ${type}`,...(!reachable?['Unreachable — fell outer trees to open access.']:[]),...(staffing?[`Workers: ${staffing.assigned} assigned / ${staffing.gathering} gathering`]:[])],portrait:null};
+  return {name:type==='wood'?node.tree?'Tree':'Wood grove':'Gold mine',detail:`${node.id} · ${visible?node.remaining<=0?'Depleted':`${Math.ceil(node.remaining)} remaining`:'Outside current vision'}`,hp:null,maxHP:null,stats:[`Resource: ${type}`,...(!reachable?['Unreachable — fell outer trees to open access.']:[]),...(staffing?[`Workers: ${staffing.assigned} assigned / ${staffing.gathering} gathering`]:[])],portrait:{atlas:node.mine||node.tree||node.grove?'reference-terrain':'world',frame:node.mine?visible&&node.remaining<=0?'mine-empty':'mine-full':node.tree||node.grove?visible&&node.remaining<=0?'stump':node.tree?'tree-0':'forest-0':`${type}-${visible&&node.remaining<=0?'depleted':'available'}`}};
  }
  const faction=factionForTeam(m,'player'),selected=[...m.gathering.units,...(m.navy?.ships??[])].filter(u=>u.selected);
  if(selected.length>1){const infos=selected.map(u=>selectionInfo({...m,gathering:{...m.gathering,units:m.gathering.units.map(x=>({...x,selected:x.id===u.id}))},navy:m.navy?{...m.navy,ships:m.navy.ships.map(x=>({...x,selected:x.id===u.id}))}:undefined},null));return {name:`${selected.length} units selected`,detail:'Right-click to command the group. Workers gather and can attack weakly; combat units fight.',hp:infos.reduce((n,x)=>n+(x.hp??0),0),maxHP:infos.reduce((n,x)=>n+(x.maxHP??0),0),stats:['Combined health',...Array.from(new Set(selected.map(orderSummary)))],portrait:null};}

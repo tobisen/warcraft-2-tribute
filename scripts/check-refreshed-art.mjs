@@ -15,8 +15,8 @@ try{for(const view of ['units','buildings'])for(const owner of ['player','enemy'
    if(view==='units')for(const [col,role]of ['worker','soldier','archer','specialist','catapult','air','warship','transport'].entries()){
     const frame=unitFrame(motion(undefined,{x:0,y:0},'idle',0,role,owner,undefined,faction),0);put(artAtlas(role),frame,140+col*142,68+row*99,unitOrigin(role));
     scene.add.text(100+col*142,77+row*99,role,{fontSize:'11px',color:'#d6dcc7'}).setScrollFactor(0).setDepth(502);
-   }else for(const [col,kind]of ['base','barracks','farm','forge','harbor','tower'].entries()){
-    put('buildings',buildingFrame(kind,owner,0,5,faction),160+col*190,92+row*99,buildingOrigin(kind));
+   }else for(const [col,kind]of ['base','barracks','farm','forge','harbor','tower','academy','wall','gate'].entries()){
+    put('buildings',buildingFrame(kind,owner,0,5,faction),100+col*130,92+row*99,buildingOrigin(kind));
    }
   }
   // Exercise every runtime texture key, including attack/death/team/facing keys.

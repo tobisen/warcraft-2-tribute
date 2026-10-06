@@ -1,3 +1,4 @@
+import {resourceSprite} from './visual-refresh/resources.mjs';
 /** Original pixel brushes, authored in this repository; reference images are never sampled. */
 export const colors={grass:'#426b35',grassDark:'#3d6331',grassLight:'#487239',earth:'#77613a',sand:'#afa16b',foam:'#91b4ad',shallow:'#487f90',water:'#30667f',deep:'#26566f',rock:'#787d78',rockDark:'#444f49',rockLight:'#a1a49a',leaf:'#285b34',leafDark:'#173d2a',leafLight:'#407948',leafHighlight:'#66925a',bark:'#765336'};
 export function referenceFrames(Surface){
@@ -73,5 +74,7 @@ export function referenceFrames(Surface){
  }
  for(const depleted of [false,true]){const s=new Surface(96,96);s.ellipse(50,86,42,7,p.leafDark);s.polygon([[8,79],[12,49],[27,23],[48,10],[70,23],[86,47],[89,80],[72,88],[24,88]],p.rockDark);s.polygon([[12,49],[27,23],[48,10],[70,23],[78,43],[55,54],[32,48]],p.rockLight);s.polygon([[12,49],[32,48],[55,54],[44,76],[24,88],[8,79]],p.rock);s.polygon([[55,54],[78,43],[86,47],[89,80],[72,88],[44,76]],p.rockDark);for(let n=0;n<36;n++){const x=18+(n*17)%60,y=34+(n*11)%39;s.line(x,y,x+4,y-2,n%3?p.rock:p.rockLight);s.pixel(x+4,y,p.rockDark);}s.line(27,23,48,10,p.sand);s.line(48,10,70,23,p.sand);s.line(25,29,37,41,p.rockDark);s.line(37,41,32,48,p.rockDark);s.line(69,28,64,44,p.rockDark);s.line(77,57,83,78,p.leafDark);s.rect(34,59,29,27,p.leafDark);s.polygon([[34,62],[42,55],[56,55],[63,62],[63,85],[34,85]],p.leafDark);s.rect(33,62,5,24,p.bark);s.rect(60,62,5,24,p.bark);s.rect(34,58,30,5,p.bark);s.line(34,58,63,58,p.sand);s.line(34,63,34,82,p.sand);s.rect(36,83,27,3,p.earth);s.line(42,83,41,94,p.rockDark);s.line(54,83,58,94,p.rockDark);for(let y=85;y<94;y+=3)s.line(40,y,58,y,p.bark);for(const [x,y]of [[23,69],[69,75],[17,78]]){s.rect(x,y,7,4,depleted?p.rock:p.sand);s.pixel(x+2,y,depleted?p.rockLight:'#e2c56f');}s.rect(66,81,13,7,p.bark);s.line(66,82,78,82,p.sand);s.pixel(70,90,p.rockLight);add(depleted?'mine-empty':'mine-full',s);}
  const stump=new Surface(48,48);stump.ellipse(24,40,10,3,p.earth);stump.rect(21,32,7,9,p.bark);stump.ellipse(24,32,4,2,p.sand);stump.pixel(24,32,p.bark);add('stump',stump);
+ for(const f of frames){if(f.id.startsWith('tree-')||f.id.startsWith('forest-'))f.image=resourceSprite('tree',48,48,Number(f.id.split('-')[1]));else if(f.id==='stump'||f.id.startsWith('mine-'))f.image=resourceSprite(f.id,f.image.width,f.image.height);}
+ for(const kind of ['chest-closed','chest-open'])add(kind,resourceSprite(kind,32,32));
  return frames;
 }

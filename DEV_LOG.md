@@ -3461,3 +3461,32 @@ Native44×44 klickytor/36px ikoner; breda kontextknappar64×64/40px och kortnamn
 Slutregression hittade blockerad vågspawn, gamla resurstotaler i matchStats, fyndplatser som hamnat i hinder/utanför mindre Arena och ändrade organic63-regler. Rättade; historiska koordinat-/deadlinefixtures använder explicit classic, assertions kvarstår. Riktade component147/15, metadata149/7, discoveries/organic/mapRegions24/3 och modern kampanjquality8/1 PASS. Genuine63 terrain/resurs-ID/bas testade. Faktisk workerutforskning/rekryt/engångsbonus/SaveLoad800/1280 och naturlig betald utpost/gathering/produktion/försvar PASS; naval landväg272→2250/2057px.
 
 Slutlig npm test1603/188 PASS551.00s, unit475/85 PASS20.92s, build med strict typecheck PASS425ms, diff/manifest/scriptsyntax/15 docreferenser PASS. Egen review utan blockerande kodfynd; docs efter kodchecks. Bilder/alla nio kartor/40 campaignstarter och undantag finns i MAP_CORRECTION.md. Grafiken är fortfarande enklare och mer regelbunden än Warcraft II; originalbilagorna saknas. Ingen mänsklig balans-/tempo-/ljudclaim. Ursprunglig timeoutfix370cf02 faktiskt grön CI; nya kart-/Pages-körningar skiljs från detta. A4bd5737/B509fb79 pushade, C hash rapporteras efter push. CSS/units.mjs/docs bevarade. Stopp efter korrigeringen.
+
+## RTS-205 — ny batch1, läsbara objekt (2026-10-06)
+
+Kartombyggnaden pausad, befintliga ändringar bevarade. Nästa lediga nummer205;
+205–213 tillagda utan överskrivning, endast205–207 genomförs nu. All fem-race
+roster och nio buildingtyper inventerade. Godkända raster behålls men alpha-
+viktad area-export ersätter nearest-decimation; tygskuggning och canonical
+team-mellantoner bevaras. Två original imagegenark för tree/mine/chest och
+academy/wall/gate, faktisk alpha/crops granskade. Tight portraitcrop och
+resourceporträtt, samma ankare/frames/bodies/stock/Save/gameplay.
+
+Native800/1280 representativ slice och fysisk worker/gruvselection PASS;
+all-five-faction/both-owner roster/building runtimecoverage/gallerier PASS.
+Levande physical travel→fynd/treasure/recruit/SaveLoad800/1280 PASS, inga
+browsererrors. BATCH_1.md samlar före/efter, provenance och saknade separat
+målade riktnings/casting/deathassets. Ingen slutlig animation-/balansclaim.
+
+Riktade25/5,25/3 och26/6 PASS (överlappande urval, inte summerade som unika).
+Första unit475PASS/4FAIL hittade förlorad canonicalteamcolor och identiska
+Elfeagle-ownerbilder efter area-reduktion. Midtone-palette och liten teamband
+rättade orsaken; riktade12/3 PASS. Review hittade att bandet inte skulle gälla
+wildlife; wildlifeexport återställd pixelidentisk med76d05c9, bara fyra world-
+resourceframes förändrade. Slutliga unit/build/diff rapporteras efter körning.
+Ingen bred campaignregression nu; full regression efter207. style.css SHA
+8f6e1323 och units.mjs a24680e7 samt docs/ bevarade utanför taskcommit.
+
+205 slutlig `npm run test:unit`479/87 PASS, strict build PASS och diff PASS.
+Granskad diff: bara grafik/export/presentation och motsvarande tester/docs;
+footprints, gameplay och resource quantities oförändrade.205 Done,206 nästa.

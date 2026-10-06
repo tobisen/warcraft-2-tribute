@@ -9,6 +9,51 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
+**Nytt mandat — batch 1 (2026-10-06):** Kartombyggnaden pausas; redan gjorda ändringar bevaras. Endast RTS-205–207 genomförs nu, en task åt gången med browsergranskning, relevanta checks, docs och commit/push. Stanna efter batch 1 med HANDOFF inför batch 2. Ingen delegering; style.css, units.mjs och docs/ bevaras. Historiska PASS är inte ny verifiering.
+
+### RTS-205 — Läsbara spelobjekt och matchande ikoner — Done
+
+- Inventera alla fem fraktioners units/byggnader samt träd, gruvor och skatter; granska källa, export, frames, skala, ankare och rendering mot godkända referenser och Warcraft II:s läsbarhet.
+- Börja med worker/melee/ranged/base/barracks/träd/gruva/skatt och granska i browser vid normal storlek före spridning. Tydliga silhuetter, material, skuggning, roll/ras/funktion; bibehållen lagfärg, animation, footprint/collision/gameplay. Enbart förstoring räcker inte.
+- Ikoner/porträtt följer grafiken; separata porträtt tillåtna. Redovisa konkret kvarvarande slutgrafik och före/efterbilder; tekniska tests ersätter inte visuell granskning.
+
+### RTS-206 — Avgränsade actiongrupper — In Progress
+
+- Orders/Actions och Build får tydliga separata grupper; Train/Research visas för relevant selection. Större ikoner och klickytor, horisontell800×600 utan scroll/klippning; musklick/hotkeys använder samma befintliga logik. Browser selection/action/kompaktlayout.
+
+### RTS-207 — Tech Tree och Commands i top bar — Todo
+
+- Separata knappar bredvid Mission. Flytta omfattande hjälp till stängbara modalvyer; Escape och inget klickgenomsläpp.
+- Tech Tree: vald ras, ordnade nivåer/grenar/beroenden, upplåst/tillgängligt/låst, nodval med kostnad/funktion/saknade krav/kampanjbegränsningar.
+- Commands: Selection/Movement/Combat/Economy/Building/Camera i tydliga rader med faktiska keybindings/musgester. Samlad batchverifiering och HANDOFF; stopp före208.
+
+### RTS-208 — Next Mission efter kampanjvictory — Todo (batch 2)
+
+- Registrera victory/upplåsning före nästa briefing inom samma ras/svårighet/kampanj. Replay/Main Menu består; defeat saknar Next, sista visar Campaign Complete. Replay får inte sänka progression eller dubblera resultat.
+
+### RTS-209 — 1×1-murar och säker snapping — Todo (batch 2)
+
+- Tile-grid/egna murar/gates, matching preview, automatiska raka/hörn/ände/korsningsframes och grannuppdatering vid bygg/destruction. Gate-regler består; collision/kostnad/placement/navigation/Save verifieras.
+
+### RTS-210 — Farmkapacitet och ändliga guldresurser — Todo (batch 2)
+
+- Identifiera och dokumentera gamla/nya farm-/supplygränser för roster/större arméer/flera baser; samma regler i UI/produktion/AI/Save.
+- Inventera varje kartas guld/förväntad förbrukning; avgränsade nåbara start-/expansionsresursändringar trots kartpaus, inga oändliga eller identiska mängder.
+
+### RTS-211 — Kampanj- och kartnamn — Todo (batch 2)
+
+- Korta stämningsfulla engelska namn med egen raskampanjidentitet, plats/konflikt/mål. Interna ID:n/progression/Save/highscores består; gammalt/nytt i rapport. HANDOFF och stopp efter batch 2.
+
+### RTS-212 — Två valfria hemliga bossar — Todo (batch 3)
+
+- Två lämpliga kartor; upptäcks genom fog/utforskning utanför start/obligatoriska mål. Namn/design/HP/combatfeedback, befintlig combat och begränsat hemområde; ordentlig armé krävs utan uppenbart AI-exploit.
+- Datadefinierad betydande skatt efter bossvinst, exakt en hämtning även med Save. Ingen victory-/fiendespelarblockering. Dokumentera AI-interaktion/belöningsägarskap.
+
+### RTS-213 — Version och befintlig Pages-release — Todo (batch 3)
+
+- Efter verifierade korrigeringar: befintlig versionspolicy, gemensam versionskälla och faktisk changelog; befintlig Pages-workflow/release/tagpraxis utan ny infrastruktur. Verifiera deployment/public version där åtkomst finns; redovisa placeholders/ej kontrollerat. HANDOFF och stopp.
+
+
 **Prioriterad kart-/HUD-korrigering (2026-10-06):** A Done: gemensam terränggrafik och Frontier Valley (se HANDOFF). B Done: alla nio kartregioner, fiendestarter, betalda expansioner och borttagen kantpanorering (se MAP_CORRECTION.md). C Done: native44px knappar och samlad slutverifiering1603/188 PASS, unit475/85, strict build425ms och faktisk browser800/3440 PASS. MAP_CORRECTION.md samlar inventering, bilder och begränsningar. Korrigeringen avslutad; Taskvis commit/push; stopp efter C. Bevara style.css/units.mjs/docs. Ingen delegering. Tidigare kartreferensbilagor saknas lokalt; dokumenterad Battle.net-referens finns. Äldre sparningar ska behålla sin geometri.
 
 
