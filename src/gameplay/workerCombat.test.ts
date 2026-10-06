@@ -1,3 +1,4 @@
+import {createClassicMatch} from './testHelpers/classicMatch';
 import {expect,it} from 'vitest';
 import {createMatch,updateMatch} from './match';
 import {orderAttack,updateCombat,type Enemy} from './combat';
@@ -9,7 +10,7 @@ import {encodeSave,decodeSave} from './save';
 import {beginPlacement,placeBuilding,placementObstacles} from './placement';
 const view={camera:{x:0,y:0},building:null} as const;
 const target=():Enemy=>({id:'enemy-1',kind:'unit',role:'soldier',owner:'enemy',hp:36,position:{x:304,y:300},order:{kind:'idle'}});
-function fixture(){const m=createMatch();m.gathering.units.forEach((u,i)=>u.selected=i===0);m.combat.enemies=[target()];m.waves.nextEnemyNumber=2;return m;}
+function fixture(classic=false){const m=(classic?createClassicMatch:createMatch)();m.gathering.units.forEach((u,i)=>u.selected=i===0);m.combat.enemies=[target()];m.waves.nextEnemyNumber=2;return m;}
 it('manual workers deal 2 melee damage per second alongside selected soldiers, with no military research multiplier',()=>{
  const m=fixture(),worker=m.gathering.units[0];const soldier={...worker,id:'unit-4',kind:'soldier' as const,hp:60,cargo:0 as const,cargoType:undefined,order:{kind:'idle' as const},selected:true};
  const workers=updateCombat({...m.gathering,units:orderAttack([worker],'enemy-1')},m.combat,1,m.map);expect(workers.combat.enemies[0].hp).toBeCloseTo(34);
@@ -39,7 +40,7 @@ it('roundtrips current and queued worker attacks, validates refs, and rejects re
  const raw=JSON.parse(encodeSave(m,view)),loaded=decodeSave(JSON.stringify(raw));expect(loaded.ok).toBe(true);if(!loaded.ok)throw Error(loaded.error);expect(loaded.match.gathering.units[0].orderQueue).toEqual([{kind:'attack',enemyId:'enemy-1'}]);expect(updateMatch(loaded.match,.2).combat.enemies[0].hp).toBeLessThan(36);
  const forged=structuredClone(raw);forged.state.gathering.units[0].order.enemyId='missing';expect(decodeSave(JSON.stringify(forged)).ok).toBe(false);
  for(const version of [57,58]){const old=structuredClone(raw);old.configVersion=`tribute-config-${version}`;expect(decodeSave(JSON.stringify(old)).ok).toBe(false);}
- const genuine=JSON.parse(encodeSave(fixture(),view));genuine.configVersion='tribute-config-58';expect(decodeSave(JSON.stringify(genuine)).ok).toBe(true);
+ const genuine=JSON.parse(encodeSave(fixture(true),view));genuine.configVersion='tribute-config-58';expect(decodeSave(JSON.stringify(genuine)).ok).toBe(true);
 });
 it('target death clears manual worker attacks and construction can be interrupted',()=>{
  const m=fixture(),gathering={...m.gathering,units:orderAttack(m.gathering.units,'enemy-1')};const dead=updateCombat(gathering,{...m.combat,enemies:[{...target(),hp:1}]},1,m.map);expect(dead.combat.enemies).toHaveLength(0);expect(dead.gathering.units[0].order.kind).toBe('idle');

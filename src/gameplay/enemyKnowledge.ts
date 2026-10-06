@@ -29,7 +29,7 @@ export function enemyAttackDestination(m:MatchState):Position {return m.enemyKno
 export function prepareEnemyScout(m:MatchState):MatchState {
  if(!m.enemyKnowledge||resourceNodes(m.gathering).filter(Boolean).every(node=>knownEnemyNode(m,node)))return m;
  const supplied=['wood','gold'].every(type=>m.enemyKnowledge!.nodes.some(n=>(n.resource??'wood')===type&&n.remaining>0));
- if(supplied)return {...m,combat:{...m.combat,enemies:m.combat.enemies.map(e=>e.kind==='worker'&&e.work?.order.kind==='move'?{...e,navigation:undefined,work:{...e.work,order:{kind:'idle' as const}}}:e)}};
+ if(supplied)return {...m,combat:{...m.combat,enemies:m.combat.enemies.map(e=>e.kind==='worker'&&e.work?.order.kind==='move'&&!(m.map.design==='regions'&&m.enemyNaval&&e.work.target.x===944&&e.work.target.y===352)?{...e,navigation:undefined,work:{...e.work,order:{kind:'idle' as const}}}:e)}};
  const workers=m.combat.enemies.filter(e=>e.kind==='worker'&&e.hp>0&&e.work!.cargo===0&&['idle','move','gather'].includes(e.work!.order.kind)).sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}));const scout=workers.find(e=>e.work!.order.kind==='move')??workers[0];if(!scout)return m;
  const waypoints=searchWaypoints(m,'resource');let index=m.enemyKnowledge.resourceScoutIndex;const goal=waypoints[index];if(Math.hypot(scout.position.x-goal.x,scout.position.y-goal.y)<=config.arrivalRange||scout.navigation?.status==='blocked')index=Math.min(index+1,waypoints.length-1);
  const target=waypoints[index];if(scout.work!.order.kind==='move'&&scout.work!.target.x===target.x&&scout.work!.target.y===target.y)return {...m,enemyKnowledge:{...m.enemyKnowledge,resourceScoutIndex:index}};

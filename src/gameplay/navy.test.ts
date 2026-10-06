@@ -1,6 +1,7 @@
 import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {expect,it} from 'vitest';
-import {createMatch,updateMatch,type MatchState} from './match';
+import {createClassicMatch as createMatch} from './testHelpers/classicMatch';
+import {updateMatch,type MatchState} from './match';
 import {placeHarbor,harborPlacementError,trainShip,canTrainShip,commandShips,matchPopulation,updateNavy,resumeHarbor} from './navy';
 import {beginPlacement,placeBuilding,placementObstacles,placementError} from './placement';
 import {bindGroup,recallGroup} from './controlGroups';

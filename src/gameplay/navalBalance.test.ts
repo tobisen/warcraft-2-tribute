@@ -1,5 +1,6 @@
 import {expect,it} from 'vitest';
-import {createMatch,updateMatch} from './match';
+import {createClassicMatch as createMatch} from './testHelpers/classicMatch';
+import {updateMatch} from './match';
 import {factions,factionsForPlayer} from '../config/factions';
 import {orderUnits} from './gathering';
 import {commandGroupMove} from './groupMovement';

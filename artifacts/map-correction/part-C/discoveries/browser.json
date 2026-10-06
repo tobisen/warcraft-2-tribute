@@ -1,0 +1,42 @@
+[
+  {
+    "width": 800,
+    "initiallyHidden": true,
+    "physicalTravel": true,
+    "treasure": {
+      "wood": 20,
+      "gold": 10,
+      "claimed": [
+        "frontier-discovery-1"
+      ]
+    },
+    "recruited": {
+      "recruits": {
+        "frontier-discovery-3": "unit-4"
+      },
+      "units": 4
+    },
+    "saveLoad": true,
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "initiallyHidden": true,
+    "physicalTravel": true,
+    "treasure": {
+      "wood": 20,
+      "gold": 10,
+      "claimed": [
+        "frontier-discovery-1"
+      ]
+    },
+    "recruited": {
+      "recruits": {
+        "frontier-discovery-3": "unit-4"
+      },
+      "units": 4
+    },
+    "saveLoad": true,
+    "errors": []
+  }
+]

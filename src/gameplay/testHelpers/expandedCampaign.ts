@@ -1,3 +1,4 @@
+import {enemyBase} from '../enemyBases';
 import {approachRoute} from '../approach';
 import {orderUnits} from '../gathering';
 import {campaignMissions,campaignPreset,type CampaignMissionId} from '../../config/campaign';
@@ -24,6 +25,7 @@ export function playExpandedCampaign(id:CampaignMissionId,difficulty:Difficulty=
  const select=(predicate:(id:string,kind:string)=>boolean)=>{m.gathering.units=m.gathering.units.map(u=>({...u,selected:predicate(u.id,u.kind)}));if(m.navy)m.navy.ships=m.navy.ships.map(s=>({...s,selected:predicate(s.id,s.kind)}));};
  let destination:{x:number;y:number}|undefined,combatEnabled=true;
  const tick=()=>{
+  if(campaignPhase(m)?.goal==='base'){const base=enemyBase(m.combat,m.map);if(base)destination={...base.position};}
   const visible=m.combat.enemies.filter(e=>combatEnabled&&entityVisible(m.fog!,'player',e));
   for(const unit of m.gathering.units.filter(u=>u.kind==='soldier')){
    const target=visible.filter(e=>canAttackDomain(unit,e,m.factions!.player)&&Math.hypot(e.position.x-unit.position.x,e.position.y-unit.position.y)<160&&approachRoute(m.map,unit.position,e.footprint??{...e.position,width:0,height:0},24).status!=='blocked').sort((a,b)=>Math.hypot(a.position.x-unit.position.x,a.position.y-unit.position.y)-Math.hypot(b.position.x-unit.position.x,b.position.y-unit.position.y))[0];
@@ -52,7 +54,7 @@ export function playExpandedCampaign(id:CampaignMissionId,difficulty:Difficulty=
    until(()=>m.campaignRun!.phase!==phase||m.outcome!=='playing');
   }else if(p.goal==='base'){
    for(let attempt=0;attempt<4&&m.campaignRun!.phase===phase&&m.outcome==='playing';attempt++){
-    const target=m.combat.enemies.find(e=>e.kind==='base');if(target)group(target.position);
+    const target=enemyBase(m.combat,m.map);if(target)group(target.position);
     until(()=>m.campaignRun!.phase!==phase||m.outcome!=='playing'||!m.gathering.units.some(u=>u.kind==='soldier'));
     if(m.campaignRun!.phase!==phase||m.outcome!=='playing')break;
     if(m.scenario!=='mission-sea')throw Error(`${id}: assault lost its army`);

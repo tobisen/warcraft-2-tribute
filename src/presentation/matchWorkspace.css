@@ -19,7 +19,7 @@
 /* Keep the functional match workspace independent of user style.css edits. */
 
 #app:not([data-phase='menu']):not([data-phase='ended']){grid-template-rows:48px auto minmax(0,1fr) 160px;overflow:visible;}
-#bottom-bar{display:grid;grid-template-columns:minmax(0,1.4fr) 88px minmax(148px,1fr) minmax(120px,.8fr) 134px;grid-template-rows:1fr;gap:8px;height:160px;padding:8px;align-items:start;}
+#bottom-bar{display:grid;grid-template-columns:minmax(0,1.4fr) 92px minmax(148px,1fr) minmax(120px,.8fr) 134px;grid-template-rows:1fr;gap:8px;height:160px;padding:8px;align-items:start;}
 #bottom-bar>*{min-width:0;grid-row:1;}
 #selection-info{grid-column:1;display:block;max-height:none;overflow:visible;align-self:start;font-size:11px;}
 #selection-portrait{float:left;width:48px;height:48px;margin:0 8px 4px 0;}
@@ -31,14 +31,14 @@
 #action-panel [data-action-group='Orders']{grid-column:2;grid-row:1;}
 #context-actions{grid-column:3;grid-row:1;min-width:0;display:grid;gap:6px;}
 #action-panel [data-action-group]{display:grid;grid-template-columns:repeat(3,44px);gap:4px;min-width:0;}
-#action-panel [data-action-group='Orders']{grid-template-columns:repeat(2,42px);}
+#action-panel [data-action-group='Orders']{grid-template-columns:repeat(2,44px);}
 #action-panel .control{display:block;min-width:0;}
 #action-panel .action-reason{display:none;}
-#action-panel [data-action-group] button{position:relative;display:flex;justify-content:center;align-items:center;width:100%;height:40px;min-height:40px;padding:2px;font-size:0;}
+#action-panel [data-action-group] button{position:relative;display:flex;justify-content:center;align-items:center;width:100%;height:44px;min-height:44px;padding:2px;font-size:0;}
 #action-panel button[data-icon]::before{display:block;}
 #action-panel button::after{content:attr(data-hotkey);position:absolute;right:2px;bottom:1px;font:9px system-ui;color:#ffe8a3;background:#172422;}
 #production-queue{grid-column:4;grid-row:1;display:grid;grid-template-columns:minmax(0,1fr);gap:4px;max-height:none;overflow:visible;margin:0;font:11px system-ui;}
-#production-queue button{height:42px;min-height:42px;padding:3px;font:10px system-ui;}
+#production-queue button{height:44px;min-height:44px;padding:3px;font:10px system-ui;}
 #production-queue button>span{flex:1;}
 #minimap-overlay{grid-column:5;grid-row:1;align-self:start;justify-self:start;width:134px;margin:0;box-shadow:none;border-width:2px;}
 #minimap-overlay #minimap{width:130px;height:100px;}
@@ -48,15 +48,25 @@
 
 /* Nine construction actions: one row at full width, two at compact widths. */
 #bottom-bar {
- grid-template-columns: minmax(0, 1.4fr) 88px max-content minmax(120px, .8fr) 134px;
+ grid-template-columns: minmax(136px,240px) 92px max-content minmax(120px,160px) minmax(134px,1fr);
 }
 #context-actions { min-width: 0; }
 #action-panel [data-action-group="Build"] {
- grid-template-columns: repeat(9, 40px);
+ grid-template-columns: repeat(9, 64px);
 }
-@media (max-width: 1100px) {
+@media (max-width: 1199px) {
  #action-panel [data-action-group="Build"] {
-  grid-template-columns: repeat(5, 36px);
+  grid-template-columns: repeat(5, 44px);
  }
 }
 #action-panel [data-action-group] h3 { display: none; }
+
+/* Native spacious workspace shows short names; compact panels retain full tooltips. */
+@media (min-width: 1200px) {
+ #action-panel [data-action-group]:not([data-action-group='Orders']) { grid-template-columns: repeat(3,64px); }
+ #action-panel [data-action-group='Build']:not([data-action-group='Orders']) { grid-template-columns: repeat(9,64px); }
+ #action-panel [data-action-group]:not([data-action-group='Orders']) button { height:64px; padding:2px 2px 13px; }
+ #action-panel [data-action-group]:not([data-action-group='Orders']) button::after { content:attr(data-short-label); left:1px; right:1px; bottom:1px; font-size:9px; line-height:11px; background:transparent; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+}
+
+#minimap-overlay { justify-self:end; }

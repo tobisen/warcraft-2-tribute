@@ -868,3 +868,11 @@ nya byggnader/teknik från att tolkas som äldre format.
 Akademiernas fyrastegs pixelgrafik finns i [academies.mjs](assets/sources/academies.mjs).
 `node scripts/export-buildings.mjs` uppdaterar akademierna och bevarar övriga
 byggnadspixlar samt separata unitassets. Browserbilder/checks: [HANDOFF.md](HANDOFF.md).
+
+Kart-/HUD-korrigeringen använder gemensam regionterräng på alla nio nya
+skirmishkartor och kampanjkartor. Fiendens betalda utposter fungerar som
+fortsatt ekonomi-/produktionsbas; muspekaren vid kanten panorerar inte.
+Save64 behåller äldre geografi inklusive Save63:s Frontier-design. Native
+knappar har minst44×44px klickyta; större skärmar visar kortnamn.
+[MAP_CORRECTION.md](MAP_CORRECTION.md) redovisar kartinventering, faktisk
+färdväg, före/efterbilder, verifiering och kvarstående visuell kvalitet.

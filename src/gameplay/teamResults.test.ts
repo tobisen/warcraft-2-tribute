@@ -1,3 +1,4 @@
+import {createClassicMatch} from './testHelpers/classicMatch';
 import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {enemyAttackDestination} from './enemyKnowledge';
 import {it,expect} from 'vitest';
@@ -9,7 +10,7 @@ import {encodeSave,decodeSave} from './save';
 import {issueOrder} from './commandOrders';
 import {matchStats} from './matchStats';
 import {resultScore,validHighscore,scorePartition,createHighscoreStore} from './highscores';
-const match=()=>{const r=matchPlayers(undefined,undefined,3);r[2].teamId=1;return createMatch('skirmish','normal',undefined,'plains96',1,'balanced',r);};
+const match=(classic=false)=>{const r=matchPlayers(undefined,undefined,3);r[2].teamId=1;return (classic?createClassicMatch:createMatch)('skirmish','normal',undefined,'plains96',1,'balanced',r);};
 function eliminate(m:ReturnType<typeof match>,id:'player'|'enemy'|'ai-2'){
  if(id==='player')m.combat.baseHP=0;else m.multiplePlayers!.ai.find(b=>b.id===id)!.state.combat.enemies.find(e=>e.kind==='base')!.hp=0;
  return projectMultiplePlayers(m);
@@ -65,7 +66,7 @@ it('retires a remembered eliminated enemy destination and scouts toward the rema
 
 it('migrates valid config49 individual outcomes to team victory or continuing spectator play',()=>{
  for(const eliminated of ['player','enemy'] as const){
-  const m=updateMatch(eliminate(match(),eliminated),.25),raw=JSON.parse(encodeSave(m,{camera:{x:0,y:0},building:null}));raw.configVersion='tribute-config-49';
+  const m=updateMatch(eliminate(match(true),eliminated),.25),raw=JSON.parse(encodeSave(m,{camera:{x:0,y:0},building:null}));raw.configVersion='tribute-config-49';
   const oldOutcome=eliminated==='player'?'defeat':'playing';
   for(const key of ['human']){const doc=JSON.parse(raw[key]);legacyTerrainFixture(doc);doc.configVersion='tribute-config-49';doc.state.outcome=oldOutcome;raw[key]=JSON.stringify(doc);}
   for(const part of raw.ai){const doc=JSON.parse(part.document);legacyTerrainFixture(doc);doc.configVersion='tribute-config-49';doc.state.outcome=oldOutcome;part.document=JSON.stringify(doc);}

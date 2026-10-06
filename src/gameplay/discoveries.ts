@@ -13,7 +13,7 @@ import {chooseSpawn} from './spawning';
 export interface DiscoveryState {version:1;claimed:string[];recruits:Record<string,string>}
 export const createDiscoveries=():DiscoveryState=>({version:1,claimed:[],recruits:{}});
 export function discoveryBonus(m:Pick<MatchState,'discoveries'|'map'>){
- const claimed=m.discoveries?.claimed??[],count=mapDiscoveries(m.map.id??'arena').filter(d=>d.kind==='treasure'&&claimed.includes(d.id)).length;
+ const claimed=m.discoveries?.claimed??[],count=mapDiscoveries(m.map.id??'arena',m.map.design).filter(d=>d.kind==='treasure'&&claimed.includes(d.id)).length;
  return {wood:count*discoveryConfig.reward.wood,gold:count*discoveryConfig.reward.gold};
 }
 export function recruitReason(m:MatchState,d:Discovery):string|null {
@@ -26,7 +26,7 @@ export function recruitReason(m:MatchState,d:Discovery):string|null {
 export function updateDiscoveries(m:MatchState):MatchState {
  if(!m.discoveries||m.scenario!=='skirmish'||m.campaignRun||m.campaignMission||m.outcome!=='playing'||m.paused||!m.fog)return m;
  let next=m;
- for(const d of mapDiscoveries(m.map.id??'arena')){
+ for(const d of mapDiscoveries(m.map.id??'arena',m.map.design)){
   if(next.discoveries!.claimed.includes(d.id)||!isVisible(next.fog!,'player',d.position)||!next.gathering.units.some(u=>!isAir(u)&&(u.hp??1)>0&&Math.hypot(u.position.x-d.position.x,u.position.y-d.position.y)<=discoveryConfig.range&&segmentFits(next.map,u.position,d.position,(u.kind==='worker'?workerStats(next.factions?.player):combatUnitStats(u,next.factions?.player)).size/2)))continue;
   if(d.kind==='treasure'){
    next={...next,gathering:{...next.gathering,wood:next.gathering.wood+discoveryConfig.reward.wood,goldBalance:(next.gathering.goldBalance??0)+discoveryConfig.reward.gold},discoveries:{...next.discoveries!,claimed:[...next.discoveries!.claimed,d.id]}};

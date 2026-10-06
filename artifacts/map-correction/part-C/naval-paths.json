@@ -1,0 +1,45 @@
+{
+  "routes": [
+    {
+      "id": "islands",
+      "world": "classic",
+      "landingStart": {
+        "x": 960,
+        "y": 480
+      },
+      "landingLandPath": 272.47018185482244,
+      "waterPath": 160
+    },
+    {
+      "id": "islands",
+      "world": "current",
+      "landingStart": {
+        "x": 960,
+        "y": 480
+      },
+      "landingLandPath": 2249.879614603466,
+      "waterPath": 160
+    },
+    {
+      "id": "coast",
+      "world": "classic",
+      "landingStart": {
+        "x": 960,
+        "y": 480
+      },
+      "landingLandPath": 272.47018185482244,
+      "waterPath": 160
+    },
+    {
+      "id": "coast",
+      "world": "current",
+      "landingStart": {
+        "x": 960,
+        "y": 480
+      },
+      "landingLandPath": 2056.9226278809406,
+      "waterPath": 160
+    }
+  ],
+  "scope": "Actual navigable landing-to-base and channel legs; embark/unload timing and total human travel time are not claimed."
+}

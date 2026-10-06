@@ -1,3 +1,4 @@
+import {createClassicMatch} from './testHelpers/classicMatch';
 import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {expect,it} from 'vitest';
 import {campaignMissions,campaignDetails,campaignPreset} from '../config/campaign';
@@ -61,7 +62,7 @@ it.each(campaignMissions)('$id preserves run identity, settings and state throug
  const forged=JSON.parse(encodeSave(match,view));forged.state.campaignMission=mission.id==='first-steps'?'the-crossing':'first-steps';expect(decodeSave(JSON.stringify(forged)).ok).toBe(false);
 });
 it('Save30 migrates without inventing historical campaign participation or changing paid NPC state',()=>{
- const match=createMatch('skirmish'),doc=JSON.parse(encodeSave(match,view));legacyTerrainFixture(doc);doc.configVersion='tribute-config-30';
+ const match=createClassicMatch('skirmish'),doc=JSON.parse(encodeSave(match,view));legacyTerrainFixture(doc);doc.configVersion='tribute-config-30';
  const loaded=decodeSave(JSON.stringify(doc));expect(loaded.ok,loaded.ok?'':loaded.error).toBe(true);if(loaded.ok){expect(loaded.match.campaignMission).toBeUndefined();expect(loaded.match.enemyProduction).toEqual(match.enemyProduction);expect(loaded.match.combat).toEqual(match.combat);}
  doc.state.campaignMission='first-steps';expect(decodeSave(JSON.stringify(doc)).ok).toBe(false);
 });

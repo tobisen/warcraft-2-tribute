@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { createMatch, updateMatch, type MatchState } from './match';
+import {createClassicMatch as createMatch} from './testHelpers/classicMatch';
+import {updateMatch, type MatchState} from './match';
 import { populationState, hasPopulation } from './population';
 import { beginPlacement, placeBuilding, placementObstacles, placementError } from './placement';
 import { startProduction } from './production';

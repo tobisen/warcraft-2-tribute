@@ -1,9 +1,11 @@
+import {placementObstacles} from './placement';
+import {matchFog} from './matchFog';
 import {createClassicMatch} from './testHelpers/classicMatch';
 import {expect,it} from 'vitest';
 import {createMatch} from './match';
 import {createMap,bodyFits,terrainPatches,overlaps} from './map';
 import {resourceNodes} from './gathering';
-import {mapResourceTotals} from '../config/maps';
+import {mapResources,mapResourceTotals} from '../config/maps';
 import {approachRoute} from './approach';
 import {encodeSave,decodeSave} from './save';
 import {referenceTile} from '../presentation/referenceTerrain';
@@ -23,4 +25,8 @@ it('Save62 keeps expanded legacy geography and rejects an organic layout under t
  const m=createClassicMatch('skirmish','beginner',undefined,'arena'),doc=JSON.parse(encodeSave(m,view));doc.configVersion='tribute-config-62';const loaded=decodeSave(JSON.stringify(doc));expect(loaded.ok,loaded.ok?'':loaded.error).toBe(true);if(loaded.ok)expect(loaded.match.map).toEqual(m.map);
  doc.state.map.design='organic';expect(decodeSave(JSON.stringify(doc)).ok).toBe(false);
  expect(createMap('frontier','reference','trees','expanded').design).toBeUndefined();
+});
+
+it('genuine Save63 organic Frontier keeps its terrain, original base and all resource identities',()=>{
+ const m=createClassicMatch('skirmish','beginner',undefined,'frontier'),nodes=mapResources('frontier','trees','expanded','organic').map(({amount,...n})=>({...n,remaining:amount}));m.map=createMap('frontier','reference','trees','expanded','organic');m.gathering.node=nodes[0];m.gathering.gold=nodes[1];m.gathering.extraNodes=nodes.slice(2);m.map.obstacles.push(...placementObstacles(m.gathering),...m.combat.enemies.flatMap(e=>e.footprint?[e.footprint]:[]));m.fog=matchFog({...m,fog:undefined});const doc=JSON.parse(encodeSave(m,view));doc.configVersion='tribute-config-63';const loaded=decodeSave(JSON.stringify(doc));expect(loaded.ok,loaded.ok?'':loaded.error).toBe(true);if(loaded.ok){expect(terrainPatches(loaded.match.map)).toEqual(terrainPatches(m.map));expect(resourceNodes(loaded.match.gathering)).toEqual(resourceNodes(m.gathering));expect(loaded.match.combat.enemies.find(e=>e.kind==='base')!.position).toEqual({x:1360,y:144});}
 });

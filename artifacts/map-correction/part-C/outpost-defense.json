@@ -1,0 +1,23 @@
+{
+  "reports": [
+    {
+      "mainAlive": true,
+      "visible": true,
+      "threatId": "unit-4",
+      "defenders": [
+        "enemy-produced-1",
+        "enemy-produced-2"
+      ]
+    },
+    {
+      "mainAlive": false,
+      "visible": true,
+      "threatId": "unit-4",
+      "defenders": [
+        "enemy-produced-1",
+        "enemy-produced-2"
+      ]
+    }
+  ],
+  "fixture": "Actual naturally paid outpost/army, explicit invading soldier near the expansion; real team fog and defense logic."
+}

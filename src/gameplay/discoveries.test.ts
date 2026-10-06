@@ -1,3 +1,4 @@
+import {createClassicMatch} from './testHelpers/classicMatch';
 import {factions} from '../config/factions';
 import {expect,it} from 'vitest';
 import {maps,type MapId} from '../config/maps';
@@ -14,13 +15,13 @@ import {encodeSave,decodeSave} from './save';
 import {matchPopulation} from './navy';
 const view={camera:{x:0,y:0},building:null} as const;
 function fixture(id:MapId='frontier'){return createMatch('skirmish','beginner',undefined,id);}
-function scout(m:ReturnType<typeof fixture>,index:number){const d=mapDiscoveries(m.map.id!)[index];m.gathering.units[0]={...m.gathering.units[0],position:{...d.position},target:{...d.position},order:{kind:'idle'}};m.fog=matchFog(m);return d;}
+function scout(m:ReturnType<typeof fixture>,index:number){const d=mapDiscoveries(m.map.id!,m.map.design)[index];m.gathering.units[0]={...m.gathering.units[0],position:{...d.position},target:{...d.position},order:{kind:'idle'}};m.fog=matchFog(m);return d;}
 it('authors hidden body-safe sites on every expanded map without changing campaign admission',()=>{
- for(const id of Object.keys(maps) as MapId[]){const m=fixture(id),finds=mapDiscoveries(id);expect(finds).toHaveLength(3);expect(new Set(finds.map(d=>d.id)).size).toBe(3);for(const d of finds){expect(bodyFits(m.map,d.position,20)).toBe(true);expect(isVisible(m.fog!,'player',d.position),`${id}/${d.id}`).toBe(false);}expect(visibleDiscoveries(m)).toEqual([]);expect(visibleMinimapData(m).markers.some(d=>d.id.includes('discovery'))).toBe(false);expect(updateDiscoveries(m)).toBe(m);}
+ for(const id of Object.keys(maps) as MapId[]){const m=fixture(id),finds=mapDiscoveries(id,'regions');expect(finds).toHaveLength(3);expect(new Set(finds.map(d=>d.id)).size).toBe(3);for(const d of finds){expect(bodyFits(m.map,d.position,20)).toBe(true);expect(isVisible(m.fog!,'player',d.position),`${id}/${d.id}`).toBe(false);}expect(visibleDiscoveries(m)).toEqual([]);expect(visibleMinimapData(m).markers.some(d=>d.id.includes('discovery'))).toBe(false);expect(updateDiscoveries(m)).toBe(m);}
  expect(createMatch('mission-waves').discoveries).toBeUndefined();
 });
 it('requires actual vision and ground proximity, then credits exactly one finite reward',()=>{
- const m=fixture(),d=mapDiscoveries('frontier')[0];m.gathering.units[0].position={...d.position};expect(updateDiscoveries(m)).toBe(m);m.fog=matchFog(m);const next=updateDiscoveries(m);expect(next.gathering.wood-m.gathering.wood).toBe(20);expect(next.gathering.goldBalance!-m.gathering.goldBalance!).toBe(10);expect(discoveryBonus(next)).toEqual({wood:20,gold:10});expect(updateDiscoveries(next)).toBe(next);expect(matchStats(next).player.wood).toEqual({gathered:0,delivered:0,spent:0});expect(visibleDiscoveries(next).find(f=>f.id===d.id)?.opened).toBe(true);
+ const m=fixture(),d=mapDiscoveries('frontier','regions')[0];m.gathering.units[0].position={...d.position};expect(updateDiscoveries(m)).toBe(m);m.fog=matchFog(m);const next=updateDiscoveries(m);expect(next.gathering.wood-m.gathering.wood).toBe(20);expect(next.gathering.goldBalance!-m.gathering.goldBalance!).toBe(10);expect(discoveryBonus(next)).toEqual({wood:20,gold:10});expect(updateDiscoveries(next)).toBe(next);expect(matchStats(next).player.wood).toEqual({gathered:0,delivered:0,spent:0});expect(visibleDiscoveries(next).find(f=>f.id===d.id)?.opened).toBe(true);
  const distant=fixture();distant.gathering.units[0].position={x:d.position.x-100,y:d.position.y};distant.fog=matchFog(distant);expect(isVisible(distant.fog!,'player',d.position)).toBe(true);expect(updateDiscoveries(distant)).toBe(distant);
 });
 it('does not collect during pause, after defeat, or merely through a flying scout',()=>{
@@ -41,7 +42,7 @@ it('saves claimed treasure and recruited/lost allies, protects old formats and m
  let m=fixture();scout(m,0);m=updateDiscoveries(m);scout(m,2);m=updateDiscoveries(m);
  const raw=JSON.parse(encodeSave(m,view)),loaded=decodeSave(JSON.stringify(raw));expect(loaded.ok).toBe(true);if(!loaded.ok)throw Error(loaded.error);expect(loaded.match.discoveries).toEqual(m.discoveries);expect(updateDiscoveries(loaded.match).gathering.units).toHaveLength(4);expect(updateDiscoveries(loaded.match).gathering.wood).toBe(m.gathering.wood);
  for(const mutate of [(d:typeof raw)=>d.state.discoveries.claimed.push(d.state.discoveries.claimed[0]),(d:typeof raw)=>d.state.discoveries.claimed.push('unknown'),(d:typeof raw)=>d.state.discoveries.recruits={'frontier-discovery-3':'unit-1'},(d:typeof raw)=>d.configVersion='tribute-config-59']){const bad=structuredClone(raw);mutate(bad);expect(decodeSave(JSON.stringify(bad)).ok).toBe(false);}
- const old=JSON.parse(encodeSave(fixture(),view));delete old.state.discoveries;old.configVersion='tribute-config-59';const migrated=decodeSave(JSON.stringify(old));expect(migrated.ok).toBe(true);if(migrated.ok)expect(migrated.match.discoveries).toBeUndefined();
+ const old=JSON.parse(encodeSave(createClassicMatch('skirmish','beginner',undefined,'frontier'),view));delete old.state.discoveries;old.configVersion='tribute-config-59';const migrated=decodeSave(JSON.stringify(old));expect(migrated.ok).toBe(true);if(migrated.ok)expect(migrated.match.discoveries).toBeUndefined();
  m.gathering.units=m.gathering.units.slice(0,3);expect(decodeSave(encodeSave(m,view)).ok).toBe(true);
 });
 it('updates in the match loop and leaves harvested stock untouched',()=>{

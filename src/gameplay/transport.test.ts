@@ -1,6 +1,7 @@
 import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {expect,it} from 'vitest';
-import {createMatch,updateMatch,type MatchState} from './match';
+import {createClassicMatch as createMatch} from './testHelpers/classicMatch';
+import {updateMatch,type MatchState} from './match';
 import {placeHarbor,trainShip,updateNavy,matchPopulation,commandShips,attackShips} from './navy';
 import {loadTransport,unloadTransport} from './transport';
 import {orderUnits,updateGathering} from './gathering';

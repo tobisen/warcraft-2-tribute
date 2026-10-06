@@ -1,4 +1,10 @@
-# Kartkorrigering pågår — A klar, B nästa
+# Aktuell överlämning — kart-/HUD-korrigering 2026-10-06
+
+A–C avslutade. Ingen ny roadmaptask eller karteditor. [MAP_CORRECTION.md](MAP_CORRECTION.md) samlar9 kartor/40 campaignstarter, faktiska färdvägar, betalda AI-expansioner, före/efterbilder och begränsningar. Native800/3440 knappar minst44px utan klippning/scroll. Fullregression1603/188, unit475/85 och strict build/diff PASS; aktuell fysisk browser PASS. Referensens konstnärliga kvalitet uppnås inte fullt, och originalbilagorna saknas. Style.css/units.mjs/docs bevaras. Ny C-CI/Pages skiljs från lokala kontroller; ursprunglig CI-timeoutfix370cf02 är verifierat grön. A4bd5737/B509fb79 pushade; C hash i slutrapport.
+
+---
+
+# Historik: del A och tidigare etapper
 
 ## Kartkorrigering A — 2026-10-06
 
@@ -351,3 +357,11 @@ Review rättade kapacitetstexten så Survival inte erbjuder kartbyte; build omk�
 ## Kartkorrigering B — 2026-10-06
 
 Alla nio kartor använder gemensam regiondesign, nåbara startresurser och avlägsna AI-starter. Betald utpost fortsätter ekonomi/produktion/försvar och förhindrar förtida victory vid huvudbasförlust. Normal dispatch får90s extra; gamla Saves behåller layout via Save64. Pointerkantpanorering borttagen. MAP_CORRECTION.md innehåller inventering av40 campaignstarter, faktiska färdvägar, renderade före/efterbilder och begränsningar. Riktade map/campaign40 PASS; final mapRegions/enemyNaval17/2 PASS, unit475/85 PASS15.96s och strict build PASS400ms. Native1280 fysisk building/gather/open-ground/arrows/edge och naturlig betald AI-utpost PASS, bilder granskade. Grafiken är fortfarande enklare/mer regelbunden än referensen. Historiska tests med fasta koordinater använder explicit classic-fixture. C och full regression återstår; style.css/units.mjs/docs bevarade.
+
+## Kartkorrigering C — 2026-10-06
+
+Native44×44 klickytor/36px ikoner; breda kontextknappar64×64/40px och kortnamn. Begränsad selectionyta, horisontella huvudpaneler, tydligare disabled-ikoner och befintliga tooltip/hotkeys. Faktisk Chrome800×600/3440×1440: nio byggknappar två/en rad, tre betalda köjobb, fem armyactions, fysisk klick/HUD-isolation och inga överlapp/scroll/errors PASS. Aktuella bilder granskade.
+
+Slutregression hittade blockerad vågspawn, gamla resurstotaler i matchStats, fyndplatser som hamnat i hinder/utanför mindre Arena och ändrade organic63-regler. Rättade; historiska koordinat-/deadlinefixtures använder explicit classic, assertions kvarstår. Riktade component147/15, metadata149/7, discoveries/organic/mapRegions24/3 och modern kampanjquality8/1 PASS. Genuine63 terrain/resurs-ID/bas testade. Faktisk workerutforskning/rekryt/engångsbonus/SaveLoad800/1280 och naturlig betald utpost/gathering/produktion/försvar PASS; naval landväg272→2250/2057px.
+
+Slutlig npm test1603/188 PASS551.00s, unit475/85 PASS20.92s, build med strict typecheck PASS425ms, diff/manifest/scriptsyntax/15 docreferenser PASS. Egen review utan blockerande kodfynd; docs efter kodchecks. Bilder/alla nio kartor/40 campaignstarter och undantag finns i MAP_CORRECTION.md. Grafiken är fortfarande enklare och mer regelbunden än Warcraft II; originalbilagorna saknas. Ingen mänsklig balans-/tempo-/ljudclaim. Ursprunglig timeoutfix370cf02 faktiskt grön CI; nya kart-/Pages-körningar skiljs från detta. A4bd5737/B509fb79 pushade, C hash rapporteras efter push. CSS/units.mjs/docs bevarade. Stopp efter korrigeringen.

@@ -1,0 +1,302 @@
+[
+  {
+    "width": 800,
+    "height": 600,
+    "count": 9,
+    "rows": 2,
+    "right": 505,
+    "queueLeft": 0,
+    "queueWidth": 0,
+    "buttons": [
+      {
+        "width": 44,
+        "height": 44,
+        "bottom": 494,
+        "id": "build-wall",
+        "disabled": true,
+        "label": "Build wall [M] · Build a wall with a selected worker. Placement preserves mandatory routes and exits. · Cost: 10 wood · Key: M · Unavailable: Not enough wood"
+      },
+      {
+        "width": 44,
+        "height": 44,
+        "bottom": 494,
+        "id": "build-gate",
+        "disabled": true,
+        "label": "Build gate [Q] · Build a gate with a selected worker. It starts closed. · Cost: 30 wood + 5 gold · Key: Q · Unavailable: Not enough wood and gold"
+      },
+      {
+        "width": 44,
+        "height": 44,
+        "bottom": 494,
+        "id": "build-tower",
+        "disabled": true,
+        "label": "Build tower [O] · Build a defense tower with a selected worker at a visible legal site. · Cost: 50 wood + 20 gold · Key: O · Unavailable: Not enough wood and gold"
+      },
+      {
+        "width": 44,
+        "height": 44,
+        "bottom": 494,
+        "id": "build-academy",
+        "disabled": true,
+        "label": "Build Royal Academy – 80 wood + 40 gold [F8] · Build a military academy after completing a forge and attack/defense I. Unlocks paid attack/defense II. · Cost: 80 wood + 40 gold · Key: F8 · Requires: Completed forge, attack 1, defense 1 · Unavailable: Complete Forge"
+      },
+      {
+        "width": 44,
+        "height": 44,
+        "bottom": 494,
+        "id": "build-base",
+        "disabled": true,
+        "label": "Build Keep – 100 wood + 60 gold [Y] · Build an additional main base with a worker: 100 wood + 60 gold, 12 seconds. Separate worker queue and rally; shared resources, supply and technology. · Cost: 100 wood + 60 gold · Key: Y · Unavailable: Not enough wood and gold"
+      },
+      {
+        "width": 44,
+        "height": 44,
+        "bottom": 542,
+        "id": "build-barracks",
+        "disabled": true,
+        "label": "Build Barracks – 40 wood [B] · Build barracks – select a worker · Cost: 40 wood · Key: B · Requires: Completed base · Unavailable: Not enough wood"
+      },
+      {
+        "width": 44,
+        "height": 44,
+        "bottom": 542,
+        "id": "build-farm",
+        "disabled": true,
+        "label": "Build Farm – 20 wood [F] · Build farm – select a worker · Cost: 20 wood · Key: F · Requires: Completed base · Unavailable: Not enough wood"
+      },
+      {
+        "width": 44,
+        "height": 44,
+        "bottom": 542,
+        "id": "build-forge",
+        "disabled": true,
+        "label": "Build Forge – 40 wood + 10 gold [G] · Build forge – select a worker · Cost: 40 wood + 10 gold · Key: G · Requires: Completed base · Unavailable: Not enough wood and gold"
+      },
+      {
+        "width": 44,
+        "height": 44,
+        "bottom": 542,
+        "id": "build-harbor",
+        "disabled": true,
+        "label": "Build Harbor – 40 wood + 10 gold [H] · Build a harbor with a selected worker at a visible, valid coastal site. Pay the displayed cost at placement. · Cost: 40 wood + 10 gold · Key: H · Unavailable: Not enough wood and gold"
+      }
+    ],
+    "workspace": {
+      "scroll": false,
+      "panels": [
+        {
+          "id": "selection-info",
+          "left": 8,
+          "right": 161,
+          "bottom": 519.34375
+        },
+        {
+          "id": "minimap-overlay",
+          "left": 658,
+          "right": 792,
+          "bottom": 554
+        }
+      ]
+    },
+    "queue": [
+      {
+        "width": 160,
+        "height": 44,
+        "bottom": 494
+      },
+      {
+        "width": 160,
+        "height": 44,
+        "bottom": 542
+      },
+      {
+        "width": 160,
+        "height": 44,
+        "bottom": 590
+      }
+    ],
+    "army": [
+      {
+        "id": "train-soldier",
+        "width": 44,
+        "height": 44,
+        "bottom": 494
+      },
+      {
+        "id": "train-archer",
+        "width": 44,
+        "height": 44,
+        "bottom": 494
+      },
+      {
+        "id": "train-catapult",
+        "width": 44,
+        "height": 44,
+        "bottom": 494
+      },
+      {
+        "id": "train-specialist",
+        "width": 44,
+        "height": 44,
+        "bottom": 542
+      },
+      {
+        "id": "train-air",
+        "width": 44,
+        "height": 44,
+        "bottom": 542
+      }
+    ],
+    "errors": []
+  },
+  {
+    "width": 3440,
+    "height": 1440,
+    "count": 9,
+    "rows": 1,
+    "right": 964,
+    "queueLeft": 0,
+    "queueWidth": 0,
+    "buttons": [
+      {
+        "width": 64,
+        "height": 64,
+        "bottom": 1354,
+        "id": "build-wall",
+        "disabled": true,
+        "label": "Build wall [M] · Build a wall with a selected worker. Placement preserves mandatory routes and exits. · Cost: 10 wood · Key: M · Unavailable: Not enough wood"
+      },
+      {
+        "width": 64,
+        "height": 64,
+        "bottom": 1354,
+        "id": "build-gate",
+        "disabled": true,
+        "label": "Build gate [Q] · Build a gate with a selected worker. It starts closed. · Cost: 30 wood + 5 gold · Key: Q · Unavailable: Not enough wood and gold"
+      },
+      {
+        "width": 64,
+        "height": 64,
+        "bottom": 1354,
+        "id": "build-tower",
+        "disabled": true,
+        "label": "Build tower [O] · Build a defense tower with a selected worker at a visible legal site. · Cost: 50 wood + 20 gold · Key: O · Unavailable: Not enough wood and gold"
+      },
+      {
+        "width": 64,
+        "height": 64,
+        "bottom": 1354,
+        "id": "build-academy",
+        "disabled": true,
+        "label": "Build Royal Academy – 80 wood + 40 gold [F8] · Build a military academy after completing a forge and attack/defense I. Unlocks paid attack/defense II. · Cost: 80 wood + 40 gold · Key: F8 · Requires: Completed forge, attack 1, defense 1 · Unavailable: Complete Forge"
+      },
+      {
+        "width": 64,
+        "height": 64,
+        "bottom": 1354,
+        "id": "build-base",
+        "disabled": true,
+        "label": "Build Keep – 100 wood + 60 gold [Y] · Build an additional main base with a worker: 100 wood + 60 gold, 12 seconds. Separate worker queue and rally; shared resources, supply and technology. · Cost: 100 wood + 60 gold · Key: Y · Unavailable: Not enough wood and gold"
+      },
+      {
+        "width": 64,
+        "height": 64,
+        "bottom": 1354,
+        "id": "build-barracks",
+        "disabled": true,
+        "label": "Build Barracks – 40 wood [B] · Build barracks – select a worker · Cost: 40 wood · Key: B · Requires: Completed base · Unavailable: Not enough wood"
+      },
+      {
+        "width": 64,
+        "height": 64,
+        "bottom": 1354,
+        "id": "build-farm",
+        "disabled": true,
+        "label": "Build Farm – 20 wood [F] · Build farm – select a worker · Cost: 20 wood · Key: F · Requires: Completed base · Unavailable: Not enough wood"
+      },
+      {
+        "width": 64,
+        "height": 64,
+        "bottom": 1354,
+        "id": "build-forge",
+        "disabled": true,
+        "label": "Build Forge – 40 wood + 10 gold [G] · Build forge – select a worker · Cost: 40 wood + 10 gold · Key: G · Requires: Completed base · Unavailable: Not enough wood and gold"
+      },
+      {
+        "width": 64,
+        "height": 64,
+        "bottom": 1354,
+        "id": "build-harbor",
+        "disabled": true,
+        "label": "Build Harbor – 40 wood + 10 gold [H] · Build a harbor with a selected worker at a visible, valid coastal site. Pay the displayed cost at placement. · Cost: 40 wood + 10 gold · Key: H · Unavailable: Not enough wood and gold"
+      }
+    ],
+    "workspace": {
+      "scroll": false,
+      "panels": [
+        {
+          "id": "selection-info",
+          "left": 8,
+          "right": 248,
+          "bottom": 1369.015625
+        },
+        {
+          "id": "minimap-overlay",
+          "left": 3298,
+          "right": 3432,
+          "bottom": 1394
+        }
+      ]
+    },
+    "queue": [
+      {
+        "width": 160,
+        "height": 44,
+        "bottom": 1334
+      },
+      {
+        "width": 160,
+        "height": 44,
+        "bottom": 1382
+      },
+      {
+        "width": 160,
+        "height": 44,
+        "bottom": 1430
+      }
+    ],
+    "army": [
+      {
+        "id": "train-soldier",
+        "width": 64,
+        "height": 64,
+        "bottom": 1354
+      },
+      {
+        "id": "train-archer",
+        "width": 64,
+        "height": 64,
+        "bottom": 1354
+      },
+      {
+        "id": "train-catapult",
+        "width": 64,
+        "height": 64,
+        "bottom": 1354
+      },
+      {
+        "id": "train-specialist",
+        "width": 64,
+        "height": 64,
+        "bottom": 1422
+      },
+      {
+        "id": "train-air",
+        "width": 64,
+        "height": 64,
+        "bottom": 1422
+      }
+    ],
+    "errors": []
+  }
+]

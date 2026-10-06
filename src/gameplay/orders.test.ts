@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { createMatch, updateMatch } from './match';
+import {createClassicMatch as createMatch} from './testHelpers/classicMatch';
+import {updateMatch} from './match';
 import { stopSelected } from './orders';
 import type { Unit, WorkerOrder } from './gathering';
 import { planRoute } from './navigation';

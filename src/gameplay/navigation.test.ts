@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { createMap, replaceObstacles, bodyFits, type WorldMap } from './map';
-import { createMatch, updateMatch } from './match';
+import {createClassicMatch as createMatch} from './testHelpers/classicMatch';
+import {updateMatch} from './match';
 import { advanceRoute, commandMappedMove, findRoute, planRoute, segmentFits,findFormationRoute } from './navigation';
 
 const open = (): WorldMap => ({...createMap(),width:800,height:600,obstacles:[]});

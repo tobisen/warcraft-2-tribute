@@ -1,6 +1,7 @@
 import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {expect,it} from 'vitest';
-import {createMatch,updateMatch} from './match';
+import {createClassicMatch as createMatch} from './testHelpers/classicMatch';
+import {updateMatch} from './match';
 import {factionsForPlayer} from '../config/factions';
 import {changeOptions,createSession} from './session';
 import {decodeSave,encodeSave} from './save';

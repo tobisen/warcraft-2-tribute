@@ -1,5 +1,6 @@
 import type {MapId} from '../../config/maps';
-import {createMatch,type MatchState} from '../match';
+import {createClassicMatch as createMatch} from './classicMatch';
+import type {MatchState} from '../match';
 import {bodyFits} from '../map';
 import {combatUnitStats} from '../../config/unit';
 import type {Soldier,Worker} from '../gathering';
