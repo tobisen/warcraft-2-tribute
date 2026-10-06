@@ -1,3 +1,4 @@
+import {createClassicMatch} from './testHelpers/classicMatch';
 import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {expect,it} from 'vitest';
 import {maps} from '../config/maps';
@@ -13,7 +14,7 @@ import {observeForest} from './forestFog';
 import {encodeSave,decodeSave} from './save';
 import {referenceTile} from '../presentation/referenceTerrain';
 import {forestVisuals} from '../presentation/forestVisuals';
-function legacyMatch(){const m=createMatch('skirmish','normal',undefined,'frontier');legacyTerrainFixture({map:'frontier',state:m});m.map=createMap('frontier','reference','groves','original');m.gathering.node={id:'wood-1',resource:'wood',grove:groveForNode('wood-1'),position:{x:650,y:180},remaining:400};m.gathering.extraNodes=maps.frontier.extraResources!.map(n=>({id:n.id,resource:n.resource,grove:groveForNode(n.id),position:{...n.position},remaining:n.amount}));delete m.gathering.gold!.mine;delete m.fog!.forest;m.map.obstacles.push(...placementObstacles(m.gathering),...m.combat.enemies.flatMap(e=>e.footprint?[e.footprint]:[]));return m;}
+function legacyMatch(){const m=createClassicMatch('skirmish','normal',undefined,'frontier');legacyTerrainFixture({map:'frontier',state:m});m.map=createMap('frontier','reference','groves','original');m.gathering.node={id:'wood-1',resource:'wood',grove:groveForNode('wood-1'),position:{x:650,y:180},remaining:400};m.gathering.extraNodes=maps.frontier.extraResources!.map(n=>({id:n.id,resource:n.resource,grove:groveForNode(n.id),position:{...n.position},remaining:n.amount}));delete m.gathering.gold!.mine;delete m.fog!.forest;m.map.obstacles.push(...placementObstacles(m.gathering),...m.combat.enemies.flatMap(e=>e.footprint?[e.footprint]:[]));return m;}
 const view={camera:{x:0,y:0},building:null};
 it('forest crowns, actual obstacles and water/rock tiles agree, with connected harvestable groves',()=>{
  const m=legacyMatch();
@@ -47,7 +48,7 @@ import {orderUnits,updateGathering} from './gathering';
 import {selectionInfo} from '../presentation/selectionInfo';
 it('fresh Frontier has one stable selectable resource per crown and conserves authored wood',()=>{
  const m=createMatch('skirmish','normal',undefined,'frontier'),trees=resourceNodes(m.gathering).filter(n=>n.tree);
- expect(trees.filter(n=>!n.id.startsWith('expansion-')&&!n.id.startsWith('organic-')).length).toBe(Object.values(frontierGroves).reduce((s,g)=>s+g.cells.length,0));
+ expect(trees.filter(n=>!n.id.startsWith('expansion-')&&!n.id.startsWith('organic-')&&!n.id.startsWith('region-')).length).toBe(Object.values(frontierGroves).reduce((s,g)=>s+g.cells.length,0));
  expect(new Set(trees.map(n=>n.id)).size).toBe(trees.length);expect(trees.reduce((s,n)=>s+n.remaining,0)).toBeCloseTo(mapResourceTotals('frontier','trees',m.map.worldLayout,m.map.design).wood);
  for(const n of trees){expect(isNodeHit(n.position,n)).toBe(true);expect(bodyFits(m.map,n.position,12)).toBe(false);}
  expect(mapResources('frontier','trees',m.map.worldLayout,m.map.design).map(n=>n.id)).toEqual(resourceNodes(m.gathering).map(n=>n.id));

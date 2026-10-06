@@ -1,0 +1,48 @@
+{
+  "edgePointerStationary": true,
+  "arrowsPan": true,
+  "playerConstruction": {
+    "remainingSeconds": 0,
+    "builderId": null
+  },
+  "harvest": {
+    "remaining": 0,
+    "open": true
+  },
+  "ai": {
+    "time": 80.5,
+    "site": {
+      "id": "enemy-outpost",
+      "owner": "enemy",
+      "kind": "building",
+      "buildingType": "outpost",
+      "hp": 240,
+      "position": {
+        "x": 3120,
+        "y": 2896
+      },
+      "footprint": {
+        "x": 3072,
+        "y": 2848,
+        "width": 96,
+        "height": 96
+      },
+      "construction": {
+        "remainingSeconds": 0,
+        "builderId": null
+      }
+    },
+    "spent": {
+      "wood": 158,
+      "gold": 36
+    },
+    "accepted": 2,
+    "bank": {
+      "wood": 9,
+      "gold": 9
+    },
+    "save": true
+  },
+  "errors": [],
+  "fixtures": "Human building/gathering uses explicit bank and revealed vision; AI expansion uses untouched starting bank and actual paid economy. Short accelerated scenario, not human balance."
+}

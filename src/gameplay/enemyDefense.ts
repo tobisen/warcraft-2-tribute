@@ -1,3 +1,4 @@
+import {enemyBase} from './enemyBases';
 import {canAttackDomain,movementMap,isAir} from './domains';
 import {enemyUnitStats} from './enemyUnits';
 import type {FactionId} from '../config/factions';
@@ -16,7 +17,7 @@ export type PlayerVisibility=(unit:Unit,observer:Enemy)=>boolean;
 export function updateEnemyDefense(state:EnemyAIState,combat:CombatState,map:WorldMap,playerBase:Position,
  player:Unit[],settings:EnemyAISettings,visible:PlayerVisibility=()=>true,faction:FactionId='clans'){
  let enemies=combat.enemies,groups=state.groups;
- const base=enemies.find(e=>e.kind==='base'&&e.hp>0),alive=new Set(enemies.filter(e=>e.hp>0).map(e=>e.id));
+ const base=enemyBase(combat,map),alive=new Set(enemies.filter(e=>e.hp>0).map(e=>e.id));
  let reserve=base?state.reserve.filter(id=>alive.has(id)):[],defenders=state.defenders.filter(d=>alive.has(d.id));
  const produced=enemies.filter(e=>e.hp>0&&e.id.startsWith('enemy-produced-')&&!e.navalLanding);
  if(base)for(const e of [...produced].sort((a,b)=>Math.hypot(a.position.x-base.position.x,a.position.y-base.position.y)-Math.hypot(b.position.x-base.position.x,b.position.y-base.position.y)||a.id.localeCompare(b.id,'en',{numeric:true}))){

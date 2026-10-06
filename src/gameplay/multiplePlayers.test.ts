@@ -1,3 +1,4 @@
+import {createClassicMatch} from './testHelpers/classicMatch';
 import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {it,expect} from 'vitest';
 import {createMatch,updateMatch} from './match';
@@ -7,7 +8,7 @@ it('creates one human and two independent paid AI economies',()=>{
  let m=createMatch('skirmish','normal',{player:'crown',enemy:'clans'},'plains96',1,'balanced',matchPlayers(undefined,undefined,3));
  expect(m.multiplePlayers!.ai).toHaveLength(2);
  expect(new Set(m.combat.enemies.map(e=>e.id)).size).toBe(m.combat.enemies.length);
- expect(m.combat.enemies.find(e=>e.playerId==='ai-2'&&e.kind==='base')?.position).toEqual({x:1664,y:384});
+ expect(m.combat.enemies.find(e=>e.playerId==='ai-2'&&e.kind==='base')?.position).toEqual({x:3504,y:496});
  m=updateMatch(m,5);
  const [a,b]=m.multiplePlayers!.ai;
  expect(a.state.enemyProduction).not.toBe(b.state.enemyProduction);
@@ -106,6 +107,6 @@ it('independent AI difficulties select real budgets/production and roundtrip, re
  const bad=JSON.parse(json);bad.multiplePlayers[2].difficulty='beginner';expect(decodeSave(JSON.stringify(bad)).ok).toBe(false);
 });
 it.each(['tribute-config-51','tribute-config-52'])('migrates %s multiplayer envelopes without assigning different AI difficulties',version=>{
- const m=createMatch('skirmish','normal',undefined,'plains96',1,'balanced',matchPlayers(undefined,undefined,3)),doc=JSON.parse(encodeSave(m,{camera:{x:0,y:0},building:null}));doc.configVersion=version;for(const part of [doc,...doc.ai]){if(part.document){const nested=JSON.parse(part.document);legacyTerrainFixture(nested);nested.configVersion=version;part.document=JSON.stringify(nested);}}const human=JSON.parse(doc.human);legacyTerrainFixture(human);human.configVersion=version;doc.human=JSON.stringify(human);
+ const m=createClassicMatch('skirmish','normal',undefined,'plains96',1,'balanced',matchPlayers(undefined,undefined,3)),doc=JSON.parse(encodeSave(m,{camera:{x:0,y:0},building:null}));doc.configVersion=version;for(const part of [doc,...doc.ai]){if(part.document){const nested=JSON.parse(part.document);legacyTerrainFixture(nested);nested.configVersion=version;part.document=JSON.stringify(nested);}}const human=JSON.parse(doc.human);legacyTerrainFixture(human);human.configVersion=version;doc.human=JSON.stringify(human);
  const result=decodeSave(JSON.stringify(doc));expect(result.ok,result.ok?'':result.error).toBe(true);if(result.ok){expect(result.match.multiplePlayers!.roster[2].difficulty).toBeUndefined();expect(result.match.multiplePlayers!.ai[1].state.difficulty).toBe('normal');}
 });

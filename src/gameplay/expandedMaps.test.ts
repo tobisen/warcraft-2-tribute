@@ -1,8 +1,9 @@
+import {createClassicMatch as createMatch} from './testHelpers/classicMatch';
 import {expect,it} from 'vitest';
 import {maps,mapResources,mapResourceTotals,type MapId} from '../config/maps';
 import {campaignPlans} from '../config/campaignPhases';
 import {operationConfig} from '../config/operations';
-import {createMatch} from './match';
+
 import {createMap,bodyFits,terrainPatches,nearbyObstacles} from './map';
 import {resourceNodes} from './gathering';
 import {placementObstacles} from './placement';

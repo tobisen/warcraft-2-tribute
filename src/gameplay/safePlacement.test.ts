@@ -1,5 +1,6 @@
+import {createClassicMatch as createMatch} from './testHelpers/classicMatch';
 import { describe, expect, it } from 'vitest';
-import { createMatch } from './match';
+
 import { beginPlacement, cancelPlacement, placementError, placementObstacles, placeBarracks } from './placement';
 import { replaceObstacles, bodyFits } from './map';
 import { chooseSpawn, spawnCandidates, unitBody } from './spawning';

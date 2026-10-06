@@ -1,7 +1,8 @@
+import {regionProtected} from './mapRegions';
 import type {MapId,MapResource,TerrainPatch} from './maps';
 import {frontierGroves} from './referenceTerrain';
 
-export type TerrainDesign='organic';
+export type TerrainDesign='organic'|'regions';
 type Shape=readonly [number,number,number,number];
 /** Authored regions, in tiles: center x/y and radii. Shared contours, distinct geography. */
 const valleys:Record<MapId,{water:readonly Shape[];rock:readonly Shape[];woods:readonly Shape[]}>= {
@@ -18,24 +19,24 @@ const valleys:Record<MapId,{water:readonly Shape[];rock:readonly Shape[];woods:r
 export const organicWorld=(id:MapId)=>({width:id==='arena'?2048:id==='forest'?3072:4096,height:id==='arena'?2048:id==='forest'?3072:4096});
 function contains(c:number,r:number,[x,y,rx,ry]:Shape,index:number){const angle=Math.atan2((r-y)/ry,(c-x)/rx),edge=1+.12*Math.sin(angle*3+index)+.07*Math.cos(angle*5-index);return ((c-x)/rx)**2+((r-y)/ry)**2<edge*edge;}
 const missionPoints:Partial<Record<MapId,readonly (readonly [number,number])[]>>={frontier:[[26,5],[37,20],[34,20]],highlands:[[47,17],[28,27],[54,46],[83,10]],coast:[[50,12],[54,14]],islands:[[30,15]]};
-function safe(c:number,r:number,id:MapId){return c>=5&&c<=21&&r>=7&&r<=17||(missionPoints[id]??[[26,5]]).some(([x,y])=>Math.hypot(c-x,r-y)<3.5);}
+function safe(c:number,r:number,id:MapId){const t=Math.max(0,Math.min(1,((c-17)*9+(r-10)*-4)/97)),resourceLane=Math.hypot(c-(17+9*t),r-(10-4*t))<1.8,w=Math.max(0,Math.min(1,((c-17)*3+(r-10)*-5)/34)),woodLane=Math.hypot(c-(17+3*w),r-(10-5*w))<1.8;return resourceLane||woodLane|| c>=5&&c<=21&&r>=7&&r<=17||(missionPoints[id]??[[26,5]]).some(([x,y])=>Math.hypot(c-x,r-y)<3.5);}
 /** Merge identical row spans vertically; collision remains tile exact and bounded. */
 export function patchesFromCells(cells:Map<string,TerrainPatch['kind']>):TerrainPatch[]{const result:TerrainPatch[]=[],active=new Map<string,TerrainPatch>();const rows=new Map<number,Map<number,TerrainPatch['kind']>>();for(const [key,kind]of cells){const [c,r]=key.split(',').map(Number),row=rows.get(r)??new Map();row.set(c,kind);rows.set(r,row);}for(const [r,row]of [...rows].sort((a,b)=>a[0]-b[0])){const columns=[...row.keys()].sort((a,b)=>a-b);for(let i=0;i<columns.length;){const c=columns[i],kind=row.get(c)!,start=c;let end=c;i++;while(i<columns.length&&columns[i]===end+1&&row.get(columns[i])===kind)end=columns[i++];const key=`${start}:${end}:${kind}`,previous=active.get(key);if(previous&&previous.row+previous.rows===r)previous.rows++;else{const patch={column:start,row:r,columns:end-start+1,rows:1,kind};result.push(patch);active.set(key,patch);}}}return result;}
-export function organicTerrain(id:MapId):TerrainPatch[]{const cells=new Map<string,TerrainPatch['kind']>(),size=organicWorld(id).width/32,v=valleys[id];for(let r=0;r<size;r++)for(let c=0;c<size;c++){
+export function organicTerrain(id:MapId,design:TerrainDesign='organic'):TerrainPatch[]{const cells=new Map<string,TerrainPatch['kind']>(),size=organicWorld(id).width/32,v=valleys[id];for(let r=0;r<size;r++)for(let c=0;c<size;c++){
  let kind:TerrainPatch['kind']|undefined;
  if(id==='islands'||id==='coast'){
   // Western starting island, eastern shore, a winding southern sea and islands.
-  const channel=24+Math.round(2*Math.sin(r*.24));
+  const channel=22+(r>=8&&r<=18?0:Math.round(2*Math.sin(r*.24)));
   if(r<2||c<2||c>=size-2||r<30&&c>=channel&&c<channel+6||r>=30&&r<40+Math.round(3*Math.sin(c*.13)))kind='water';
   if(r>=40){if(id==='islands'){if(c>42&&!(contains(c,r,[65,56,15,11],1)||contains(c,r,[84,87,20,17],2)||contains(c,r,[112,108,10,11],3)))kind='water';}else if(c>40&&!(contains(c,r,[62,61,14,10],2)||contains(c,r,[99,96,17,15],3)))kind='water';}
  }
  if(v.water.some((s,i)=>contains(c,r,s,i)))kind='water';
  if(v.rock.some((s,i)=>contains(c,r,s,i+3)))kind='rock';
- if(kind&&!safe(c,r,id)&&!(id==='frontier'&&Object.values(frontierGroves).some(g=>g.cells.some(p=>p.column===c&&p.row===r))))cells.set(`${c},${r}`,kind);
+ if(kind&&!(design==='regions'&&regionProtected(c,r,id))&&!safe(c,r,id)&&!(id==='frontier'&&Object.values(frontierGroves).some(g=>g.cells.some(p=>p.column===c&&p.row===r))))cells.set(`${c},${r}`,kind);
  }return patchesFromCells(cells);}
-export function organicResources(id:MapId,existing:readonly MapResource[],terrain:readonly TerrainPatch[]):MapResource[]{const nodes:MapResource[]=[],occupied=new Set(existing.filter(n=>n.tree).map(n=>`${Math.floor(n.position.x/32)},${Math.floor(n.position.y/32)}`)),blocked=(c:number,r:number)=>terrain.some(p=>c>=p.column&&c<p.column+p.columns&&r>=p.row&&r<p.row+p.rows);const size=organicWorld(id).width/32;
+export function organicResources(id:MapId,existing:readonly MapResource[],terrain:readonly TerrainPatch[],design:TerrainDesign='organic'):MapResource[]{const nodes:MapResource[]=[],occupied=new Set(existing.filter(n=>n.tree).map(n=>`${Math.floor(n.position.x/32)},${Math.floor(n.position.y/32)}`)),blocked=(c:number,r:number)=>terrain.some(p=>c>=p.column&&c<p.column+p.columns&&r>=p.row&&r<p.row+p.rows);const size=organicWorld(id).width/32;
  for(const [i,shape]of valleys[id].woods.entries())for(let r=2;r<size-2;r++)for(let c=2;c<size-2;c++){
- if(!contains(c,r,shape,i)||safe(c,r,id)||blocked(c,r)||occupied.has(`${c},${r}`)||existing.some(n=>!n.tree&&Math.hypot(n.position.x-(c+.5)*32,n.position.y-(r+.5)*32)<96))continue;
+ if(!contains(c,r,shape,i)||(design==='regions'&&regionProtected(c,r,id))||safe(c,r,id)||blocked(c,r)||occupied.has(`${c},${r}`)||existing.some(n=>!n.tree&&Math.hypot(n.position.x-(c+.5)*32,n.position.y-(r+.5)*32)<96))continue;
  if(id==='frontier'&&Object.values(frontierGroves).some(g=>g.cells.some(p=>p.column===c&&p.row===r)))continue;
  // A few authored glades cut into each connected grove, not random isolated trees.
  if(contains(c,r,[shape[0]+2,shape[1]+1,2,2.5],0))continue;

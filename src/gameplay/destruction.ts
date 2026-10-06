@@ -1,3 +1,4 @@
+import {hasEnemyBase} from './enemyBases';
 import {hasMainBase} from './extraBases';
 import {withGateRules} from './gates';
 import {recordBuildingDeaths} from './statLedger';
@@ -25,7 +26,7 @@ export function cleanDestroyed(state:MatchState):MatchState {
   if(drowned.length){const lost={...(gathering.lostCargo??{wood:0,gold:0})};for(const u of drowned)if(u.kind==='worker')lost[u.cargoType??'wood']+=u.cargo;gathering={...gathering,lostCargo:lost};}
   const navalHarborDead=state.combat.enemies.some(e=>e.buildingType==='harbor'&&e.hp<=0);const navalShipAlive=state.combat.enemies.some(e=>e.kind==='ship'&&e.hp>0);
   if(state.enemyNaval?.phase==='loading'&&!navalShipAlive)state={...state,combat:{...state.combat,enemies:state.combat.enemies.map(e=>e.navalLanding?{...e,navalLanding:undefined,navigation:undefined,order:{kind:'idle'}}:e)}};
-  if(state.enemyNaval&&(state.enemyNaval.production.nextUnitNumber>1&&!navalShipAlive||navalHarborDead||!state.combat.enemies.some(e=>e.kind==='base'&&e.hp>0))){state={...state,enemyNaval:{...state.enemyNaval,production:clearProduction(state.enemyNaval.production),...(navalShipAlive?{}:{passengers:[],phase:'finished'})}};}
+  if(state.enemyNaval&&(state.enemyNaval.production.nextUnitNumber>1&&!navalShipAlive||navalHarborDead||!hasEnemyBase(state.combat,state.map))){state={...state,enemyNaval:{...state.enemyNaval,production:clearProduction(state.enemyNaval.production),...(navalShipAlive?{}:{passengers:[],phase:'finished'})}};}
   const baseDead=state.combat.baseHP<=0,allBasesDead=!hasMainBase(state);
   const deadBases=(state.placement.bases??[]).filter(b=>b.hp<=0);
   const barDead=state.placement.barracks!==null&&state.placement.barracksHP!==undefined&&state.placement.barracksHP<=0;
@@ -55,7 +56,7 @@ export function cleanDestroyed(state:MatchState):MatchState {
   if(units.some((u,i)=>u!==gathering.units[i]))gathering={...gathering,units};
   if(placement.active&&!gathering.units.some(u=>u.kind==='worker'&&u.selected))placement={...placement,active:false};
   const targets=new Set(playerTargets(gathering,state.combat,placement,state.navy).map(t=>t.id));
-  const enemyBaseAlive=liveEnemies.some(e=>e.kind==='base');
+  const enemyBaseAlive=hasEnemyBase({...state.combat,enemies:liveEnemies},state.map);
   const enemyWorkers=new Set(liveEnemies.filter(e=>e.kind==='worker').map(e=>e.id));
   const readyEnemies=liveEnemies.map(e=>e.construction?.builderId&&!enemyWorkers.has(e.construction.builderId)?{...e,construction:{...e.construction,builderId:null}}:e).map(e=>e.work?.order.kind==='build'&&!liveEnemies.some(site=>site.id===`enemy-${e.work!.order.kind==='build'?e.work!.order.buildingId:''}`)?{...e,navigation:undefined,work:{...e.work,order:{kind:'idle' as const}}}:e);
   const enemies=readyEnemies.map(e=>e.work&&!enemyBaseAlive?{...e,navigation:undefined,work:{...e.work,order:{kind:'idle' as const}}}:e.order?.kind==='defend'&&!targets.has(e.order.targetId)?{...e,navigation:undefined,order:{kind:'idle' as const}}:e.navigation?.targetId&&e.navigation.targetId!=='explore-goal'&&!targets.has(e.navigation.targetId)?{...e,navigation:undefined}:e);
@@ -65,7 +66,7 @@ export function cleanDestroyed(state:MatchState):MatchState {
   const liveGroups=state.enemyAI?.groups.map(g=>({...g,members:g.members.filter(id=>enemyAlive.has(id)),destinations:Object.fromEntries(Object.entries(g.destinations).filter(([id])=>enemyAlive.has(id)))})).filter(g=>g.members.length);
   const enemyAI=state.enemyAI?{...state.enemyAI,reserve:state.enemyAI.reserve.filter(id=>enemyAlive.has(id)),defenders:state.enemyAI.defenders.filter(d=>enemyAlive.has(d.id)).map(d=>d.groupId&&!liveGroups!.some(g=>g.id===d.groupId)?{id:d.id}:d),threatId:gathering.units.some(u=>u.id===state.enemyAI!.threatId)?state.enemyAI.threatId:null,groups:liveGroups!}:undefined;
   return withGateRules({...state,...(state.navy?{navy:{...state.navy,ships:state.navy.ships.filter(s=>s.hp>0).map(s=>s.transfer?.kind==='load'&&s.transfer.unitIds.some(id=>!gathering.units.some(u=>u.id===id))?{...s,transfer:undefined}:s).map(ship=>ship.order.kind==='attack'&&!liveEnemies.some(e=>ship.order.kind==='attack'&&e.id===ship.order.enemyId)?{...ship,navigation:undefined,order:{kind:'idle' as const}}:ship),harbor:harborDead?null:state.navy.harbor?{...state.navy.harbor,construction:paused(state.navy.harbor.construction)!}:null,production:allBasesDead||harborDead?clearProduction(state.navy.production):state.navy.production}}:{}),...(state.enemyRecovery&&!enemyBaseAlive?{enemyRecovery:{...state.enemyRecovery,production:{...state.enemyRecovery.production,queue:[],remainingSeconds:null,blockedSpawnKey:undefined}}}:{}),...(state.enemyPolicy?.research.job&&(!enemyBaseAlive||!enemies.some(e=>e.buildingType==='forge')||state.enemyPolicy.research[state.enemyPolicy.research.job.kind]>=1&&!enemies.some(e=>e.buildingType==='academy'))?{enemyPolicy:{research:{...state.enemyPolicy.research,job:null}}}:{}),gathering,placement,production,soldierProduction,...(state.controlGroups?{controlGroups:pruneGroups(state.controlGroups,[...gathering.units,...(state.navy?.ships.filter(s=>s.hp>0)??[])])}:{}),...(enemyAI?{enemyAI}:{}),
-    ...(state.enemyProduction&&!enemies.some(e=>e.kind==='base')?{enemyProduction:{...state.enemyProduction,production:{...state.enemyProduction.production,queue:[],remainingSeconds:null,blockedSpawnKey:undefined}}}:{}),
+    ...(state.enemyProduction&&!hasEnemyBase({...state.combat,enemies},state.map)?{enemyProduction:{...state.enemyProduction,production:{...state.enemyProduction.production,queue:[],remainingSeconds:null,blockedSpawnKey:undefined}}}:{}),
     ...(state.research?.job&&(allBasesDead||forgeDead||!placement.forge||state.research[state.research.job.kind]>=1&&!placement.academy)?{research:{...state.research,job:null}}:{}),
     map:obstacles.length===state.map.obstacles.length?state.map:replaceObstacles(state.map,obstacles),combat:{...state.combat,enemies,...(state.combat.destroyedEnemyFootprints?{destroyedEnemyFootprints:undefined}:{})}});
 }

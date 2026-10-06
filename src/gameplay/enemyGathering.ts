@@ -1,3 +1,4 @@
+import {enemyBase,hasEnemyBase} from './enemyBases';
 import {canReachFootprint} from './approach';
 import {enemyNavigationMap} from './map';
 import {factionForTeam} from '../config/factions';
@@ -14,7 +15,7 @@ import type {ResourceService} from './resourceQueue';
 import type {GateFor} from './traffic';
 export function enemyWorker(e:Enemy):Worker|null {return e.kind==='worker'&&e.work?{id:e.id,owner:'player',kind:'worker',hp:e.hp,selected:false,position:e.position,target:e.work.target,cargo:e.work.cargo,cargoType:e.work.cargoType,order:e.work.order,navigation:e.navigation}:null;}
 export function addEnemyWorkers(m:MatchState):void {
- const base=m.combat.enemies.find(e=>e.kind==='base');if(!base?.footprint||!m.enemyProduction)return;
+ const base=enemyBase(m.combat,m.map);if(!base?.footprint||!m.enemyProduction)return;
  for(let i=0;i<enemyEconomyConfig.workerCount;i++){
   const position=chooseSpawn(enemyNavigationMap(m.map),base.footprint,'barracks',m.gathering.units,m.combat.enemies);if(!position)throw Error('No enemy worker spawn');
   m.combat.enemies.push({id:`enemy-worker-${i+1}`,owner:'enemy',kind:'worker',hp:factionForTeam(m,'enemy').units.worker.hp,position,work:{target:{...position},cargo:0,order:{kind:'idle'}}});
@@ -26,7 +27,7 @@ export function knownResourceFor(m:MatchState,type:'wood'|'gold',position?:{x:nu
 }
 /** Assign jobs before the shared queue and passage scheduler take their snapshot. */
 export function prepareEnemyGathering(m:MatchState):MatchState {
- if(!m.combat.enemies.some(e=>e.kind==='base'&&e.hp>0))return m;
+ if(!hasEnemyBase(m.combat,m.map))return m;
  return {...m,combat:{...m.combat,enemies:m.combat.enemies.map(e=>{
   if(!e.work||e.hp<=0||e.work.order.kind!=='idle')return e;
   const resource=enemyEconomyConfig.resources[(Number(e.id.split('-').at(-1))-1)%enemyEconomyConfig.resources.length],node=knownResourceFor(m,resource,e.position);
@@ -39,7 +40,7 @@ export function prepareEnemyGathering(m:MatchState):MatchState {
 export function updateEnemyGathering(m:MatchState,delta:number,gateFor?:GateFor,services?:Map<string,ResourceService>):MatchState {
  const workers=m.combat.enemies.flatMap(e=>{const worker=enemyWorker(e);return worker?[worker]:[];}),bank=m.enemyProduction;
  if(!workers.length||!bank)return m;
- const base=m.combat.enemies.find(e=>e.kind==='base'&&e.hp>0);
+ const base=enemyBase(m.combat,m.map);
  if(!base?.footprint)return {...m,combat:{...m.combat,enemies:m.combat.enemies.map(e=>e.work?{...e,navigation:undefined,work:{...e.work,order:{kind:'idle'}}}:e)}};
  let g:GatheringState={units:workers,wood:bank.wood,goldBalance:bank.gold,base:base.position,baseSize:base.footprint.width,dropoffs:m.combat.enemies.filter(e=>e.buildingType==='outpost'&&e.hp>0&&e.construction?.remainingSeconds===0).map(e=>e.footprint!),faction:(m.factions??defaultFactions).enemy,node:m.gathering.node,gold:m.gathering.gold,extraNodes:m.gathering.extraNodes};
  for(const worker of workers){if(worker.order.kind!=='idle')continue;const index=Number(worker.id.split('-').at(-1))-1,resource=enemyEconomyConfig.resources[index%enemyEconomyConfig.resources.length],node=knownResourceFor(m,resource,worker.position);if(node&&node.remaining>0)g.units=orderUnits(g.units.map(u=>({...u,selected:u.id===worker.id})),node.position,node);}

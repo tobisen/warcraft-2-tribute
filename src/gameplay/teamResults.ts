@@ -1,3 +1,4 @@
+import {hasEnemyBase} from './enemyBases';
 import {hasMainBase} from './extraBases';
 import type {PlayerId} from '../config/players';
 import type {MatchState,MatchOutcome} from './match';
@@ -6,7 +7,7 @@ import {playerTeam} from './players';
 export function playerEliminated(m:MatchState,id:PlayerId):boolean{
  if(id==='player')return !hasMainBase(m);
  const bot=m.multiplePlayers?.ai.find(p=>p.id===id);
- return !!bot&&!bot.state.combat.enemies.some(e=>e.kind==='base'&&e.hp>0);
+ return !!bot&&!hasEnemyBase(bot.state.combat,bot.state.map);
 }
 export function teamOutcome(m:MatchState):MatchOutcome{
  const roster=m.multiplePlayers!.roster,own=playerTeam('player',roster);

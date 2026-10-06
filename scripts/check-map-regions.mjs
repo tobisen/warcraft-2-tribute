@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {mkdir,writeFile} from 'node:fs/promises';
+const {chromium}=await import(process.env.W2T_PLAYWRIGHT_MODULE??'playwright-core'),out=process.env.W2T_SCREENSHOTS??'artifacts/map-correction/part-B';await mkdir(out,{recursive:true});
+const browser=await chromium.launch({headless:true,executablePath:process.env.W2T_BROWSER_EXECUTABLE}),reports=[];
+try{const page=await browser.newPage({viewport:{width:1280,height:720}}),errors=[];page.on('pageerror',e=>errors.push(e.message));await page.route('**/src/main.ts*',async r=>{const response=await r.fetch();await r.fulfill({response,body:(await response.text()).replace('new Phaser.Game({','window.__gameCheck=new Phaser.Game({')});});
+await page.goto(process.env.W2T_UI_URL??'http://127.0.0.1:5189/');await page.locator('#menu-settings').click();await page.selectOption('#display-resolution','1280x720');await page.selectOption('#display-mode','native');await page.locator('#menu-back').click();await page.locator('#menu-skirmish').click();await page.selectOption('#map-select','frontier');await page.locator('#start-match').click();await page.waitForFunction(()=>!window.__gameCheck.scene.keys.BootScene.restartPending);
+for(const id of ['arena','forest','river','islands','frontier','plains96','plains128','highlands','coast']){
+ for(const phase of ['before','after']){
+ await page.evaluate(async({id,phase})=>{const {createMatch}=await import('/src/gameplay/match.ts'),{encodeSave}=await import('/src/gameplay/save.ts'),{saveConfig}=await import('/src/config/save.ts');const m=createMatch('skirmish','beginner',undefined,id,1,'balanced',undefined,undefined,phase==='before'?'classic':'current');window.localStorage.setItem(saveConfig.key,encodeSave(m,{camera:{x:0,y:0},building:null}));},{id,phase});
+ await page.keyboard.press('p');await page.locator('#load-match').click();await page.waitForFunction(()=>!window.__gameCheck.scene.keys.BootScene.restartPending);await page.keyboard.press('p');
+ const info=await page.evaluate(async()=>{const {approachRoute}=await import('/src/gameplay/approach.ts');const s=window.__gameCheck.scene.keys.BootScene;s.update=()=>{};s.sys.sceneUpdate=()=>{};for(const t of Object.values(s.fog.teams)){t.visible.fill(true);t.explored.fill(true);}const c=s.cameras.main,z=Math.min(c.width/s.map.width,c.height/s.map.height)*.96;c.setZoom(z);c.centerOn(s.map.width/2,s.map.height/2);s.syncVisuals();const base=s.combat.enemies.find(e=>e.kind==='base'),u=s.gathering.units[2],route=approachRoute(s.map,u.position,base.footprint,24),points=[u.position,...route.waypoints],landPath=route.status==='blocked'?null:points.slice(1).reduce((n,p,i)=>n+Math.hypot(p.x-points[i].x,p.y-points[i].y),0);return {landPath,width:s.map.width,height:s.map.height,design:s.map.design,base:s.combat.enemies.find(e=>e.kind==='base').position,trees:[s.gathering.node,...s.gathering.extraNodes??[]].filter(n=>n.tree).length};});
+ await page.waitForTimeout(80);await page.screenshot({path:`${out}/${phase}-${id}.png`});reports.push({id,phase,...info});
+ }
+}
+assert.deepEqual(errors,[]);await writeFile(`${out}/maps.json`,JSON.stringify({reports,errors,fixture:'Explicit fully explored art overview; no claim of natural scouting.'},null,2));console.log('PASS all nine actual before/after game map overviews');
+}finally{await browser.close();}

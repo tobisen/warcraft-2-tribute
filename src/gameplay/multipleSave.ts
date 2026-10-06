@@ -9,12 +9,12 @@ import {saveConfig} from '../config/save';
 import type {PlayerId} from '../config/players';
 
 function contextFor(m:MatchState,id:PlayerId):SaveContext{
- const multi=m.multiplePlayers!,start=playerStart(m.map.id??'arena',id==='player'?'enemy':id);
+ const multi=m.multiplePlayers!,start=playerStart(m.map.id??'arena',id==='player'?'enemy':id,m.map.design);
  const others=multi.ai.filter(bot=>bot.id!==(id==='player'?'enemy':id));
  return {multiplayer:true,enemyBase:{x:start.x-48,y:start.y-48,width:96,height:96},
   extraObstacles:others.flatMap(bot=>bot.state.combat.enemies.flatMap(e=>e.footprint?[e.footprint]:[])),
   externalTargets:new Set(others.flatMap(bot=>bot.state.combat.enemies.map(e=>globalEntityId(bot.id,e.id)))),
-  knownBases:multi.roster.map(p=>playerStart(m.map.id??'arena',p.id))};
+  knownBases:multi.roster.map(p=>playerStart(m.map.id??'arena',p.id,m.map.design))};
 }
 function singleView(m:MatchState,id:PlayerId):MatchState{
  const bot=m.multiplePlayers!.ai.find(bot=>bot.id===(id==='player'?'enemy':id))!;
@@ -41,7 +41,7 @@ export function decodeMultipleSave(raw:unknown):LoadResult{
  if(typeof doc.configVersion==='string'&&/^tribute-config-(?:[1-9]|[1-5][0-9]|6[01])$/.test(doc.configVersion))for(const encoded of [doc.human,...(Array.isArray(doc.ai)?doc.ai.map(bot=>(bot as Record<string,unknown>).document):[])])if(typeof encoded==='string'){const s=JSON.parse(encoded).state;if(s?.placement?.academy!==undefined||s?.placement?.kind==='academy'||s?.combat?.enemies?.some((e:{buildingType?:string})=>e.buildingType==='academy')||[s?.research,s?.enemyPolicy?.research,s?.combat?.upgrades,s?.combat?.enemyUpgrades].some(r=>r&&(r.attack>1||r.defense>1)))throw Error('Legacy advanced research');}
 
  if(typeof doc.configVersion==='string'&&/^tribute-config-(?:[1-9]|[1-5][0-9]|60)$/.test(doc.configVersion))for(const encoded of [doc.human,...(Array.isArray(doc.ai)?doc.ai.map(bot=>(bot as Record<string,unknown>).document):[])])if(typeof encoded==='string'){const p=JSON.parse(encoded).state?.placement;if(p?.bases!==undefined||p?.nextBaseNumber!==undefined||p?.kind==='base')throw Error('Legacy extra bases');}
-if(doc?.configVersion!==saveConfig.configVersion&&doc?.configVersion!=='tribute-config-53'&&doc?.configVersion!=='tribute-config-54'&&doc?.configVersion!=='tribute-config-55'&&doc?.configVersion!=='tribute-config-56'&&doc?.configVersion!=='tribute-config-57'&&doc?.configVersion!=='tribute-config-58'&&doc?.configVersion!=='tribute-config-59'&&doc?.configVersion!=='tribute-config-60'&&doc?.configVersion!=='tribute-config-61'&&Array.isArray(doc?.multiplePlayers)&&doc.multiplePlayers.some(p=>(p as Record<string,unknown>).difficulty!==undefined))throw Error('Legacy player difficulty');
+if(doc?.configVersion!==saveConfig.configVersion&&doc?.configVersion!=='tribute-config-53'&&doc?.configVersion!=='tribute-config-54'&&doc?.configVersion!=='tribute-config-55'&&doc?.configVersion!=='tribute-config-56'&&doc?.configVersion!=='tribute-config-57'&&doc?.configVersion!=='tribute-config-58'&&doc?.configVersion!=='tribute-config-59'&&doc?.configVersion!=='tribute-config-60'&&doc?.configVersion!=='tribute-config-61'&&doc?.configVersion!=='tribute-config-62'&&doc?.configVersion!=='tribute-config-63'&&Array.isArray(doc?.multiplePlayers)&&doc.multiplePlayers.some(p=>(p as Record<string,unknown>).difficulty!==undefined))throw Error('Legacy player difficulty');
  if(typeof doc?.configVersion==='string'&&/^tribute-config-(?:[1-9]|[1-5][0-9])$/.test(doc.configVersion)){
   for(const encoded of [doc.human,...(Array.isArray(doc.ai)?doc.ai.map(bot=>(bot as Record<string,unknown>).state):[])])if(typeof encoded==='string'&&JSON.parse(encoded).state?.discoveries!==undefined)throw Error('Legacy discoveries');
  }
@@ -52,7 +52,7 @@ if(doc?.configVersion!==saveConfig.configVersion&&doc?.configVersion!=='tribute-
    if(units.some((u:{kind:string;order:{kind:string};orderQueue?:{kind:string}[]})=>u.kind==='worker'&&(u.order.kind==='attack'||u.orderQueue?.some(o=>o.kind==='attack'))))throw Error('Legacy worker attack');
   }
  }
- if(doc?.configVersion==='tribute-config-53'||doc?.configVersion==='tribute-config-54'||doc?.configVersion==='tribute-config-55'||doc?.configVersion==='tribute-config-56'||doc?.configVersion==='tribute-config-57'||doc?.configVersion==='tribute-config-58'||doc?.configVersion==='tribute-config-59'||doc?.configVersion==='tribute-config-60'||doc?.configVersion==='tribute-config-61')doc.configVersion=saveConfig.configVersion;
+ if(doc?.configVersion==='tribute-config-53'||doc?.configVersion==='tribute-config-54'||doc?.configVersion==='tribute-config-55'||doc?.configVersion==='tribute-config-56'||doc?.configVersion==='tribute-config-57'||doc?.configVersion==='tribute-config-58'||doc?.configVersion==='tribute-config-59'||doc?.configVersion==='tribute-config-60'||doc?.configVersion==='tribute-config-61'||doc?.configVersion==='tribute-config-62'||doc?.configVersion==='tribute-config-63')doc.configVersion=saveConfig.configVersion;
  const migrateTeams=doc?.configVersion==='tribute-config-49';
  if(doc?.configVersion==='tribute-config-48'&&Array.isArray(doc.multiplePlayers)){doc.multiplePlayers=doc.multiplePlayers.map((p,i)=>({...p as object,teamId:i+1}));doc.configVersion=saveConfig.configVersion;}
  if(doc?.configVersion==='tribute-config-51'||doc?.configVersion==='tribute-config-52')doc.configVersion=saveConfig.configVersion;

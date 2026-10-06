@@ -1,3 +1,5 @@
+import {regionDefinition,regionThirdStart} from '../config/mapRegions';
+import type {TerrainDesign} from '../config/organicTerrain';
 import {additionalStarts,playerColors,type PlayerDefinition,type PlayerId} from '../config/players';
 import {defaultFactions,type MatchFactions} from '../config/factions';
 import type {AIProfileId} from '../config/aiProfiles';
@@ -22,15 +24,15 @@ export function matchPlayers(factions:MatchFactions=defaultFactions,profile:AIPr
   {teamId:2,id:'enemy',controller:'ai',faction:factions.enemy,color:playerColors[1],profile},
   ...(count===3?[{teamId:3,id:'ai-2' as const,controller:'ai' as const,faction:'elves' as const,color:playerColors[2],profile}]:[])];
 }
-export function playerStart(map:MapId,id:PlayerId):Position{
+export function playerStart(map:MapId,id:PlayerId,design?:TerrainDesign):Position{
  if(id==='player')return {...gatheringConfig.basePosition};
- if(id==='ai-2'){const p=additionalStarts[map];if(!p)throw Error('Map has no third start');return {...p};}
- const rect=maps[map].enemyBase??enemyBaseConfig.footprint;return {x:rect.x+rect.width/2,y:rect.y+rect.height/2};
+ if(id==='ai-2'){const p=design==='regions'&&additionalStarts[map]?regionThirdStart:additionalStarts[map];if(!p)throw Error('Map has no third start');return {...p};}
+ const rect=regionDefinition(map,maps[map],design).enemyBase??enemyBaseConfig.footprint;return {x:rect.x+rect.width/2,y:rect.y+rect.height/2};
 }
 /** Validate physical footprint and a reachable worker exit before offering a slot. */
-export function validatePlayerStarts(mapId:MapId,players:readonly PlayerDefinition[]):boolean{
+export function validatePlayerStarts(mapId:MapId,players:readonly PlayerDefinition[],design:TerrainDesign|'legacy'='regions'):boolean{
  try{
- const map=createMap(mapId),rects=players.map(p=>p.id==='player'?baseFootprint(playerStart(mapId,p.id)):{x:playerStart(mapId,p.id).x-48,y:playerStart(mapId,p.id).y-48,width:96,height:96});
+ const layout=design==='legacy'?undefined:design,map=createMap(mapId,undefined,'trees','expanded',layout),rects=players.map(p=>p.id==='player'?baseFootprint(playerStart(mapId,p.id,layout)):{x:playerStart(mapId,p.id,layout).x-48,y:playerStart(mapId,p.id,layout).y-48,width:96,height:96});
  if(new Set(players.map(p=>p.id)).size!==players.length)return false;
  if(rects.some((r,i)=>!bodyFits(map,{x:r.x+r.width/2,y:r.y+r.height/2},r.width/2)||rects.some((other,j)=>j!==i&&overlaps(r,other))))return false;
  const occupied={...map,obstacles:[...map.obstacles,...rects]};

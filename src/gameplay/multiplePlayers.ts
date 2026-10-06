@@ -36,20 +36,21 @@ function alliedObservers(m:MatchState,id:PlayerId):VisionObserver[]{
  return [...observers,...m.multiplePlayers.ai.filter(bot=>bot.id!==id&&!playerEliminated(m,bot.id)&&canSupport(id,bot.id,m.multiplePlayers!.roster)).flatMap(bot=>visionObservers(bot.state).filter(o=>o.owner==='enemy'))];
 }
 export function aiContext(m:MatchState,id:PlayerId):AIContext{
- const base=playerStart(m.map.id??'arena',id);
+ const base=playerStart(m.map.id??'arena',id,m.map.design);
  const helpBases=id==='player'?[]:[...(canSupport(id,'player',m.multiplePlayers?.roster)&&!playerEliminated(m,'player')?playerTargets(m.gathering,m.combat,m.placement).filter(t=>t.kind==='base').map(t=>t.footprint):[]),...(m.multiplePlayers?.ai.filter(bot=>bot.id!==id&&!playerEliminated(m,bot.id)&&canSupport(id,bot.id,m.multiplePlayers!.roster)).flatMap(bot=>bot.state.combat.enemies.filter(e=>e.kind==='base'&&e.hp>0).map(e=>e.footprint!))??[])];
- const hostileStart=m.multiplePlayers?.roster.find(p=>!playerEliminated(m,p.id)&&canHarm(id,p.id,m.multiplePlayers!.roster)),search=hostileStart?playerStart(m.map.id??'arena',hostileStart.id):undefined;
+ const hostileStart=m.multiplePlayers?.roster.find(p=>!playerEliminated(m,p.id)&&canHarm(id,p.id,m.multiplePlayers!.roster)),search=hostileStart?playerStart(m.map.id??'arena',hostileStart.id,m.map.design):undefined;
  return {humanHostile:!playerEliminated(m,'player')&&canHarm(id,'player',m.multiplePlayers?.roster),helpBases,sharedObservers:alliedObservers(m,id),visionSide:id==='player'?'player':'enemy',gateFriendly:canSupport(id,'player',m.multiplePlayers?.roster),buildSites:[{x:base.x-192,y:base.y+96},{x:base.x+96,y:base.y+96},{x:base.x-192,y:base.y-96},{x:base.x+96,y:base.y-96}],muster:{x:base.x-144,y:base.y+176},
   attackWaypoints:[{x:base.x-256,y:base.y+224},search?{x:Math.max(32,search.x-160),y:search.y+160}:{x:704,y:480},search??{x:448,y:480}]};
 }
 export function initializeMultiplePlayers(m:MatchState,roster:PlayerDefinition[]):MatchState{
  if(roster.length<3)return m;
- if(!validPlayers(roster,{scenario:m.scenario,map:m.map.id})||m.scenario!=='skirmish'||!supportedPlayerCounts(m.map.id??'arena',m.scenario).includes(roster.length)||!validatePlayerStarts(m.map.id??'arena',roster))throw Error('Unsupported player starts');
+ if(!validPlayers(roster,{scenario:m.scenario,map:m.map.id})||m.scenario!=='skirmish'||!supportedPlayerCounts(m.map.id??'arena',m.scenario).includes(roster.length)||!validatePlayerStarts(m.map.id??'arena',roster,m.map.design??'legacy'))throw Error('Unsupported player starts');
  const ai:AIPlayer[]=roster.filter(p=>p.controller==='ai').map(p=>{
-  let state=createMatch('skirmish',p.difficulty??m.difficulty,{player:m.factions!.player,enemy:p.faction},m.map.id,m.speed,p.profile);
-  const from=playerStart(m.map.id??'arena','enemy'),to=playerStart(m.map.id??'arena',p.id),dx=to.x-from.x,dy=to.y-from.y;
+  let state=createMatch('skirmish',p.difficulty??m.difficulty,{player:m.factions!.player,enemy:p.faction},m.map.id,m.speed,p.profile,undefined,undefined,m.map.design==='regions'?'current':'classic');
+  const from=playerStart(m.map.id??'arena','enemy',m.map.design),to=playerStart(m.map.id??'arena',p.id,m.map.design),dx=to.x-from.x,dy=to.y-from.y;
   const shift=(point:Position)=>({x:point.x+dx,y:point.y+dy});
   state={...state,combat:{...state.combat,enemies:state.combat.enemies.map(e=>({...e,position:shift(e.position),...(e.footprint?{footprint:{...e.footprint,...shift(e.footprint)}}:{}),...(e.work?{work:{...e.work,target:shift(e.work.target)}}:{})}))}};
+  state.fog=matchFog({...state,fog:undefined});
   const bot={id:p.id as AIPlayer['id'],state,vision:createFog(m.map).teams.enemy};return {...bot,vision:actorVision(m,bot)};
  });
  return shareTeamVision(projectMultiplePlayers({...m,multiplePlayers:{roster:roster.map(p=>({...p})),ai,kills:{player:0,enemy:0,'ai-2':0}}}));
@@ -65,7 +66,7 @@ export function projectMultiplePlayers(m:MatchState):MatchState{
  const multi=m.multiplePlayers!;
  const enemies=projectedEnemies(m);
  const own=[...placementObstacles(m.gathering).slice(m.combat.baseHP>0?0:1),...(m.placement.barracks?[m.placement.barracks]:[]),...(m.placement.academy?[m.placement.academy.footprint]:[]),...(m.placement.forge?[m.placement.forge.footprint]:[]),...(m.placement.bases??[]).map(b=>b.footprint),...(m.placement.farms??[]).map(f=>f.footprint),...(m.placement.defenses??[]).filter(t=>t.kind!=='gate'||!t.open).map(t=>t.footprint),...(m.navy?.harbor?[m.navy.harbor.footprint]:[])];
- const obstacles=[...createMap(m.map.id,m.map.terrainLayout,m.map.resourceLayout==='trees'?'trees':'groves',m.map.worldLayout==='expanded'?'expanded':'original').obstacles,...own,...enemies.flatMap(e=>e.footprint?[e.footprint]:[])];
+ const obstacles=[...createMap(m.map.id,m.map.terrainLayout,m.map.resourceLayout==='trees'?'trees':'groves',m.map.worldLayout==='expanded'?'expanded':'original',m.map.design).obstacles,...own,...enemies.flatMap(e=>e.footprint?[e.footprint]:[])];
  const unchanged=JSON.stringify(obstacles)===JSON.stringify(m.map.obstacles);
  const primary=multi.ai.find(p=>p.id==='enemy')!.state;
  return withGateRules({...m,aiContext:undefined,map:{...m.map,obstacles:unchanged?m.map.obstacles:obstacles,revision:m.map.revision+Number(!unchanged)},combat:{...m.combat,enemies,projectiles:[...(m.combat.projectiles??[]).filter(p=>!p.owner),...multi.ai.flatMap(bot=>(bot.state.combat.projectiles??[]).filter(p=>p.owner==='enemy').map(p=>({...p,id:globalEntityId(bot.id,p.id),shooterId:p.shooterId?globalEntityId(bot.id,p.shooterId):undefined})))]},
@@ -138,7 +139,7 @@ export function updateMultiplePlayers(m:MatchState,delta:number):MatchState{
    }));
    const context=aiContext(snapshot,bot.id),remembered=bot.state.enemyKnowledge?.playerBase;
    // Eliminations are public match events; no hidden living base/position is read here.
-   const retired=!!remembered&&!snapshot.multiplePlayers!.roster.some(p=>!playerEliminated(snapshot,p.id)&&canHarm(bot.id,p.id,snapshot.multiplePlayers!.roster)&&(()=>{const start=playerStart(snapshot.map.id??'arena',p.id);return start.x===remembered.x&&start.y===remembered.y;})());
+   const retired=!!remembered&&!snapshot.multiplePlayers!.roster.some(p=>!playerEliminated(snapshot,p.id)&&canHarm(bot.id,p.id,snapshot.multiplePlayers!.roster)&&(()=>{const start=playerStart(snapshot.map.id??'arena',p.id,snapshot.map.design);return start.x===remembered.x&&start.y===remembered.y;})());
    const knownBase=hostiles.filter(t=>t.kind==='base'&&entityVisible(fog,'enemy',{position:{x:t.footprint.x+t.footprint.width/2,y:t.footprint.y+t.footprint.height/2},footprint:t.footprint})).sort((a,b)=>a.id.localeCompare(b.id))[0];
    let view:MatchState={...bot.state,multiplePlayers:undefined,aiContext:context,map:human.map,fog,paused:false,outcome:'playing',factions:{player:snapshot.factions!.player,enemy:roster.faction},aiProfile:roster.profile,
     gathering:{...human.gathering,units:[...(!playerEliminated(snapshot,'player')&&canHarm(bot.id,'player',snapshot.multiplePlayers!.roster)?snapshot.gathering.units.map(u=>({...u,selected:false})):[]),...foreign]},placement:snapshot.placement,navy:undefined,production:{remainingSeconds:null,nextUnitNumber:4},soldierProduction:{remainingSeconds:null,nextUnitNumber:4},controlGroups:{},wildlife:{},waves:{...snapshot.waves},

@@ -1,5 +1,6 @@
+import {createClassicMatch as createMatch} from './testHelpers/classicMatch';
 import {expect,it} from 'vitest';
-import {createMatch,updateMatch,type MatchState} from './match';
+import {updateMatch,type MatchState} from './match';
 import {prepareEnemyConstruction,enemyPopulation} from './enemyConstruction';
 import {prepareEnemyExpansion,updateEnemyExpansion,wantsEnemyExpansion} from './enemyExpansion';
 import {updateEnemyGathering} from './enemyGathering';

@@ -1,0 +1,231 @@
+{
+  "reports": [
+    {
+      "id": "arena",
+      "phase": "before",
+      "landPath": 463.81030605194616,
+      "width": 4096,
+      "height": 4096,
+      "base": {
+        "x": 1008,
+        "y": 144
+      },
+      "trees": 652
+    },
+    {
+      "id": "arena",
+      "phase": "after",
+      "landPath": 1789.9371606538248,
+      "width": 2048,
+      "height": 2048,
+      "design": "regions",
+      "base": {
+        "x": 1680,
+        "y": 1584
+      },
+      "trees": 420
+    },
+    {
+      "id": "forest",
+      "phase": "before",
+      "landPath": 463.81030605194616,
+      "width": 4096,
+      "height": 4096,
+      "base": {
+        "x": 1008,
+        "y": 144
+      },
+      "trees": 673
+    },
+    {
+      "id": "forest",
+      "phase": "after",
+      "landPath": 3319.85003253515,
+      "width": 3072,
+      "height": 3072,
+      "design": "regions",
+      "base": {
+        "x": 2608,
+        "y": 2512
+      },
+      "trees": 1301
+    },
+    {
+      "id": "river",
+      "phase": "before",
+      "landPath": 463.81030605194616,
+      "width": 4096,
+      "height": 4096,
+      "base": {
+        "x": 1008,
+        "y": 144
+      },
+      "trees": 652
+    },
+    {
+      "id": "river",
+      "phase": "after",
+      "landPath": 5918.960702046322,
+      "width": 4096,
+      "height": 4096,
+      "design": "regions",
+      "base": {
+        "x": 3504,
+        "y": 3408
+      },
+      "trees": 1769
+    },
+    {
+      "id": "islands",
+      "phase": "before",
+      "landPath": null,
+      "width": 4096,
+      "height": 4096,
+      "base": {
+        "x": 1008,
+        "y": 144
+      },
+      "trees": 466
+    },
+    {
+      "id": "islands",
+      "phase": "after",
+      "landPath": null,
+      "width": 4096,
+      "height": 4096,
+      "design": "regions",
+      "base": {
+        "x": 3248,
+        "y": 464
+      },
+      "trees": 557
+    },
+    {
+      "id": "frontier",
+      "phase": "before",
+      "landPath": 978.9553479591798,
+      "width": 4096,
+      "height": 4096,
+      "base": {
+        "x": 1360,
+        "y": 144
+      },
+      "trees": 793
+    },
+    {
+      "id": "frontier",
+      "phase": "after",
+      "landPath": 4816.7334103200255,
+      "width": 4096,
+      "height": 4096,
+      "design": "regions",
+      "base": {
+        "x": 3504,
+        "y": 3280
+      },
+      "trees": 2249
+    },
+    {
+      "id": "plains96",
+      "phase": "before",
+      "landPath": 463.81030605194616,
+      "width": 4096,
+      "height": 4096,
+      "base": {
+        "x": 1008,
+        "y": 144
+      },
+      "trees": 280
+    },
+    {
+      "id": "plains96",
+      "phase": "after",
+      "landPath": 5197.184789381821,
+      "width": 4096,
+      "height": 4096,
+      "design": "regions",
+      "base": {
+        "x": 3504,
+        "y": 3344
+      },
+      "trees": 1694
+    },
+    {
+      "id": "plains128",
+      "phase": "before",
+      "landPath": 463.81030605194616,
+      "width": 4096,
+      "height": 4096,
+      "base": {
+        "x": 1008,
+        "y": 144
+      },
+      "trees": 652
+    },
+    {
+      "id": "plains128",
+      "phase": "after",
+      "landPath": 4653.516936583688,
+      "width": 4096,
+      "height": 4096,
+      "design": "regions",
+      "base": {
+        "x": 3504,
+        "y": 3344
+      },
+      "trees": 1930
+    },
+    {
+      "id": "highlands",
+      "phase": "before",
+      "landPath": 2420.751446086952,
+      "width": 4096,
+      "height": 4096,
+      "base": {
+        "x": 2736,
+        "y": 144
+      },
+      "trees": 275
+    },
+    {
+      "id": "highlands",
+      "phase": "after",
+      "landPath": 3066.2758676418894,
+      "width": 4096,
+      "height": 4096,
+      "design": "regions",
+      "base": {
+        "x": 3504,
+        "y": 464
+      },
+      "trees": 1164
+    },
+    {
+      "id": "coast",
+      "phase": "before",
+      "landPath": null,
+      "width": 4096,
+      "height": 4096,
+      "base": {
+        "x": 1008,
+        "y": 144
+      },
+      "trees": 118
+    },
+    {
+      "id": "coast",
+      "phase": "after",
+      "landPath": null,
+      "width": 4096,
+      "height": 4096,
+      "design": "regions",
+      "base": {
+        "x": 3056,
+        "y": 464
+      },
+      "trees": 657
+    }
+  ],
+  "errors": [],
+  "fixture": "Explicit fully explored art overview; no claim of natural scouting."
+}

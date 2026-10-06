@@ -60,6 +60,7 @@
   "src/gameplay/largeMaps.test.ts",
   "src/gameplay/load.test.ts",
   "src/gameplay/mana.test.ts",
+  "src/gameplay/mapRegions.test.ts",
   "src/gameplay/maps.test.ts",
   "src/gameplay/match.test.ts",
   "src/gameplay/matchSettings.test.ts",

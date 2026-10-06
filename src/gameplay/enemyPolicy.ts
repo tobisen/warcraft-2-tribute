@@ -1,3 +1,4 @@
+import {enemyBase,hasEnemyBase} from './enemyBases';
 import {academyCampaignReason,campaignContentFor,contentReason} from '../config/campaignContent';
 import {aiProfile} from '../config/aiProfiles';
 import {nextEnemyRole} from './enemyProduction';
@@ -32,8 +33,8 @@ export function enemyPriority(m:MatchState):EnemyPriority {
  const first=aiProfile(m).researchFirst;if(r[first]<1)return first;const second=first==='attack'?'defense':'attack';if(r[second]<1)return second;if(academyCampaignReason(m))return 'army';if(!p.academy||p.academy.construction.remainingSeconds>0)return 'academy';return r[first]<factions[(m.factions??defaultFactions).enemy].upgrades[first].maxLevel?first:first==='attack'?'defense':'attack';
 }
 export function prepareEnemyPolicy(m:MatchState):MatchState {
- if(!m.enemyPolicy||!m.enemyProduction||!m.combat.enemies.some(e=>e.kind==='base'&&e.hp>0))return m;
- const priority=enemyPriority(m),base=m.combat.enemies.find(e=>e.kind==='base')!,bank=m.enemyProduction;
+ if(!m.enemyPolicy||!m.enemyProduction||!hasEnemyBase(m.combat,m.map))return m;
+ const priority=enemyPriority(m),base=enemyBase(m.combat,m.map)!,bank=m.enemyProduction;
  let g:GatheringState={faction:(m.factions??defaultFactions).enemy,base:base.position,baseSize:base.footprint!.width,wood:bank.wood,goldBalance:bank.gold,units:m.combat.enemies.flatMap(e=>{const w=enemyWorker(e);return w?[w]:[];}),node:knownResourceFor(m,'wood')??{...m.gathering.node,remaining:0},gold:knownResourceFor(m,'gold')};
  let research=m.enemyPolicy.research;
  if(priority==='attack'||priority==='defense'){const started=startResearch(g,research,enemyBuildingView(m),priority);g=started.gathering;research=started.research;}

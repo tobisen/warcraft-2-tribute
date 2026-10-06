@@ -1,3 +1,4 @@
+import {regionDefinition} from '../config/mapRegions';
 import {visibleDiscoveries,paintDiscoveryChest} from '../presentation/discoveries';
 import type {DiscoveryState} from '../gameplay/discoveries';
 import {workerCombatConfig} from '../config/unit';
@@ -650,7 +651,7 @@ export class BootScene extends Phaser.Scene {
     (document.getElementById('gameplay-controls') as HTMLFieldSetElement).disabled=!this.gameplayActive();
     document.getElementById('hud')!.hidden=menu||phase==='ended';const game=document.getElementById('game')!,wasHidden=game.hidden;game.hidden=menu||phase==='ended';
     if(wasHidden&&!menu)this.scale.refresh();
-    document.getElementById('mission-instruction')!.textContent=this.session.options.scenario==='skirmish'?(maps[this.session.options.map??'arena'].instruction??scenarioConfig.skirmish.instruction):scenarioConfig[this.session.options.scenario].instruction;
+    document.getElementById('mission-instruction')!.textContent=this.session.options.scenario==='skirmish'?(regionDefinition(this.session.options.map??'arena',maps[this.session.options.map??'arena'],'regions').instruction??scenarioConfig.skirmish.instruction):scenarioConfig[this.session.options.scenario].instruction;
     document.getElementById('session-status')!.textContent=isSpectating(this.currentMatch())?"Spectating your team · Your base was destroyed. Camera only; no gameplay orders. Use the match menu to leave.":menu?uiText.chooseAScenarioAndDifficultyThenStartMatch:phase==='paused'?uiText.pausedSimulationIsFrozen:phase==='ended'?uiText.theMatchHasEndedRestartOrChooseA:`${scenarioConfig[this.session.options.scenario].label} · ${this.session.options.difficulty} · ${aiProfiles[this.session.options.aiProfile??'balanced'].label} AI · ${maps[(menu?this.session.options.map:this.map.id)??'arena'].label}`;
     syncHomeMenu(phase);syncSkirmishMenu(menu&&currentHomePage()==='skirmish',this.session.options);syncResultScreen(phase);
   }
@@ -949,7 +950,7 @@ export class BootScene extends Phaser.Scene {
     this.restartButton.hidden = this.session.phase!=='paused'&&this.session.phase!=='ended';
     this.restartButton.disabled = this.restartPending;
     const definition=scenarioConfig[this.scenario];
-    this.matchStatus.textContent=this.campaignRun?(this.outcome==='victory'?'Victory — all campaign objectives complete.':this.outcome==='defeat'?'Defeat — your base or required courier was lost.':campaignObjective(this.currentMatch())):this.outcome==='defeat'?uiText.defeatYourBaseWasDestroyed:this.outcome==='victory'?definition.victory==='enemy-base'?uiText.victoryTheEnemyBaseWasDestroyed:definition.victory==='timer'?uiText.victoryTheOutpostSurvivedFor90Seconds:uiText.victoryAllWavesDefeated:this.scenario==='skirmish'?(maps[this.map.id??'arena'].instruction??definition.instruction):definition.instruction;
+    this.matchStatus.textContent=this.campaignRun?(this.outcome==='victory'?'Victory — all campaign objectives complete.':this.outcome==='defeat'?'Defeat — your base or required courier was lost.':campaignObjective(this.currentMatch())):this.outcome==='defeat'?uiText.defeatYourBaseWasDestroyed:this.outcome==='victory'?definition.victory==='enemy-base'?uiText.victoryTheEnemyBaseWasDestroyed:definition.victory==='timer'?uiText.victoryTheOutpostSurvivedFor90Seconds:uiText.victoryAllWavesDefeated:this.scenario==='skirmish'?(regionDefinition(this.map.id??'arena',maps[this.map.id??'arena'],this.map.design).instruction??definition.instruction):definition.instruction;
     this.syncPlacement();this.syncNavy();this.syncDiscoveries();
     const crowns=forestVisuals(this.gathering,this.fog),crownIds=new Set(crowns.map(c=>c.id));for(const [id,image] of this.forestImages)if(!crownIds.has(id)){image.destroy();this.forestImages.delete(id);}for(const crown of crowns){if(!this.forestImages.has(crown.id))this.forestImages.set(crown.id,this.add.image(crown.x,crown.y,'reference-terrain',crown.frame).setOrigin(.5,1));this.forestImages.get(crown.id)!.setFrame(crown.frame).setDepth(1+crown.y/this.map.height*4);}
     const gold=this.gathering.gold!;if(gold.mine)this.goldVisual.setTexture('reference-terrain',gold.remaining<=0&&isVisible(this.fog,'player',gold.position)?'mine-empty':'mine-full').setOrigin(.5,.75).setDepth(1+(gold.position.y+20)/this.map.height*4);else this.goldVisual.setFrame(resourceFrame('gold',gold.remaining,isVisible(this.fog,'player',gold.position)));

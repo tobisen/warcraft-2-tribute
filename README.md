@@ -616,7 +616,7 @@ matchlyssning är uppskjuten till senare enligt användaren.
 ## Lokala inställningar (RTS-119)
 
 Master, music, effects, voices och mute sparas lokalt, liksom kamerans pan speed
-och edge panning samt vald fraktion, svårighet och spelhastighet som menydefaults.
+och piltangent-/minikartapanorering samt vald fraktion, svårighet och spelhastighet som menydefaults.
 Röster har separat volym. Inställningarna återkommer vid reload; ogiltiga eller
 saknade värden använder defaults. Blockerad lagring hindrar inte sessionen och
 visas när en ändring inte kan sparas. Inställningar är separata från matchsave.

@@ -1,8 +1,9 @@
+import {createClassicMatch as createMatch} from './testHelpers/classicMatch';
 import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {saveConfig as currentSaveConfig} from '../config/save';
 import {expect,it} from 'vitest';
 import {factions,factionsForPlayer} from '../config/factions';
-import {createMatch} from './match';
+
 import {enqueueProduction,updateQueuedProduction} from './productionQueue';
 import {updateGathering,type Soldier} from './gathering';
 import {startResearch,updateResearch} from './research';

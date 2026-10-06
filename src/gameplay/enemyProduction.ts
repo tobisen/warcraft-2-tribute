@@ -1,3 +1,4 @@
+import {enemyBase} from './enemyBases';
 import {compositionRole,type ArmyPlan} from './combinedArmy';
 import {isAir} from './domains';
 import {unitAvailability} from './productionPrerequisites';
@@ -24,12 +25,12 @@ export function nextEnemyRole(state:EnemyProductionState,faction?:FactionId,tech
 }
 /** Adapter to shared atomic queue/time/spawn rules; temporary units never enter player state. */
 export function updateEnemyProduction(state:EnemyProductionState,combat:CombatState,player:GatheringState,map:WorldMap,delta:number,faction?:FactionId,buildings?:{armyPlan?:ArmyPlan;technology?:TechnologyState;site?:Enemy;population:Population;reserveForFarm?:number;startAllowed?:boolean;workerReservations?:number;maxArmy?:number;embarked?:number;airThreat?:boolean}) {
- const base=combat.enemies.find(e=>e.kind==='base'&&e.hp>0);
+ const base=enemyBase(combat,map);
  if(!base?.footprint)return {combat,state:{...state,production:{...state.production,queue:[],remainingSeconds:null,blockedSpawnKey:undefined}}};
  if(buildings&&(!buildings.site?.footprint||buildings.site.construction?.remainingSeconds!==0))return {combat,state};
  let next=state,c=combat,time=Math.max(0,delta);
  const profile=faction?factions[faction]:undefined;
- const roleBuilding=(role:Exclude<UnitRole,'worker'>)=>({kind:'barracks' as const,bounds:map,technology:buildings?.technology,unitType:role,footprint:buildings?.site?.footprint??base.footprint!,jobCost:profile?profile.units[role].cost:enemyProductionConfig.cost,durationSeconds:Math.max(1,(state.durationSeconds??enemyProductionConfig.durationSeconds)+(profile?profile.units[role].durationSeconds-5:0))});
+ const roleBuilding=(role:Exclude<UnitRole,'worker'>)=>({kind:'barracks' as const,bounds:map,technology:buildings?.technology,unitType:role,footprint:(map.design==='regions'?combat.enemies.find(e=>e.buildingType==='outpost'&&e.hp>0&&e.construction?.remainingSeconds===0)?.footprint:undefined)??buildings?.site?.footprint??base.footprint!,jobCost:profile?profile.units[role].cost:enemyProductionConfig.cost,durationSeconds:Math.max(1,(state.durationSeconds??enemyProductionConfig.durationSeconds)+(profile?profile.units[role].durationSeconds-5:0))});
  for(;;){
   const units:Unit[]=c.enemies.filter(e=>!e.footprint).map(e=>enemySoldier(e,faction??'clans'));
   let g:GatheringState={faction,units,wood:next.wood,goldBalance:next.gold,base:base.position,node:{id:'unused',position:base.position,remaining:0}};

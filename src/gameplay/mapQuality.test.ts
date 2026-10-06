@@ -2,7 +2,7 @@ import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {legacyEnemyFixture} from './testHelpers/legacyEnemyFixture';
 import {expect,it} from 'vitest';
 import {factionsForPlayer} from '../config/factions';
-import {createMatch} from './match';
+import {createClassicMatch as createMatch} from './testHelpers/classicMatch';
 import {bodyFits} from './map';
 import {approachRoute} from './approach';
 import {findRoute} from './navigation';

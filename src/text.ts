@@ -217,7 +217,7 @@ export const text={
   "camera": "Camera",
   "panSpeed": "Pan speed",
   "edgePanning": "Edge panning",
-  "cameraControls": "Wheel: zoom in/out. Arrow keys: pan camera. Middle-drag: pan. Hover the world edge to scroll. Space: focus selection. Home: focus base. Click the world for keyboard focus."
+  "cameraControls": "Wheel: zoom in/out. Arrow keys: pan camera. Middle-drag: pan. Click the minimap to move the camera. Space: focus selection. Home: focus base. Click the world for keyboard focus."
 } as const;
 
 export function applyEnglishText():void{for(const element of document.querySelectorAll<HTMLElement>('[data-ui-text]')){const key=element.dataset.uiText as keyof typeof text;if(Object.hasOwn(text,key))element.textContent=text[key];}}

@@ -1,3 +1,4 @@
+import {hasEnemyBase} from './enemyBases';
 import {isAir} from './domains';
 import {enemyNavigationMap} from './map';
 import {factionForTeam} from '../config/factions';
@@ -23,7 +24,7 @@ export const createEnemyNaval=():EnemyNavalState=>({production:{remainingSeconds
 function seen(m:MatchState,rect:Parameters<typeof placementVisible>[1]){return !m.fog||placementVisible({...m.fog,teams:{...m.fog.teams,player:m.fog.teams.enemy}},rect);}
 function spend(m:MatchState,cost:{wood:number;gold:number}):MatchState {const bank=m.enemyProduction!;return {...m,enemyProduction:{...bank,wood:bank.wood-cost.wood,gold:bank.gold-cost.gold,spent:{wood:(bank.spent?.wood??0)+cost.wood,gold:(bank.spent?.gold??0)+cost.gold}}};}
 export function prepareEnemyNaval(m:MatchState):MatchState {
- if(!m.enemyNaval||!m.enemyProduction||m.enemyNaval.phase==='finished'||!m.combat.enemies.some(e=>e.kind==='base'&&e.hp>0))return m;
+ if(!m.enemyNaval||!m.enemyProduction||m.enemyNaval.phase==='finished'||!hasEnemyBase(m.combat,m.map))return m;
  const site=m.combat.enemies.find(e=>e.buildingType==='harbor');
  const available=m.combat.enemies.filter(e=>e.work&&e.hp>0&&e.work.order.kind!=='build').sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}));
  if(site?.construction?.remainingSeconds===0)return m;
@@ -38,7 +39,7 @@ function contact(m:MatchState,a:Position,b:Position){return Math.hypot(a.x-b.x,a
 export function updateEnemyNaval(m:MatchState,delta:number):MatchState {
  if(!m.enemyNaval||delta<=0||m.paused||m.outcome!=='playing')return m;
  let state=m.enemyNaval,site=m.combat.enemies.find(e=>e.buildingType==='harbor');
- if(!m.combat.enemies.some(e=>e.kind==='base'&&e.hp>0))return {...m,enemyNaval:{...state,production:{...state.production,queue:[],remainingSeconds:null}}};
+ if(!hasEnemyBase(m.combat,m.map))return {...m,enemyNaval:{...state,production:{...state.production,queue:[],remainingSeconds:null}}};
  let productionDelta=delta;
  if(site?.construction&&site.construction.remainingSeconds>0){const g:GatheringState={...m.gathering,faction:factionForTeam(m,'enemy').id,units:m.combat.enemies.flatMap(e=>{const w=enemyWorker(e);return w?[w]:[];})};const result=updateSite(g,site.construction,site.footprint!,'harbor',enemyNavigationMap(m.map),delta);const workers=new Map(result.gathering.units.map(u=>[u.id,u]));m={...m,combat:{...m.combat,enemies:m.combat.enemies.map(e=>{const u=workers.get(e.id);return e===site?{...e,construction:result.job}:u&&u.kind==='worker'?{...e,position:u.position,navigation:u.navigation,work:{...e.work!,target:u.target,order:u.order}}:e;})}};site=m.combat.enemies.find(e=>e.buildingType==='harbor');productionDelta=result.completedAfterSeconds===undefined?0:Math.max(0,delta-result.completedAfterSeconds);}
  const p=state.production,recipe=factionForTeam(m,'enemy').naval.units.transport;

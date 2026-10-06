@@ -1,3 +1,4 @@
+import {regionDefinition} from '../config/mapRegions';
 import {canInteract} from './approach';
 import {baseFootprint} from './buildingSelection';
 import {enemyUnitStats} from './enemyUnits';
@@ -12,7 +13,7 @@ import {resourceNodes,type ResourceNode,type Worker} from './gathering';
 import type {Position} from './movement';
 import type {MatchState} from './match';
 export interface EnemyKnowledgeState {nodes:ResourceNode[];playerBase:Position|null;resourceScoutIndex:number;attackScoutIndex:number}
-export function searchWaypoints(m:MatchState,kind:'resource'|'attack'){if(kind==='attack'&&m.aiContext)return m.aiContext.attackWaypoints;const map=maps[m.map.id??'arena'];const base=(m.map.terrainLayout==='reference'?(kind==='resource'?map.referenceResourceWaypoints:map.referenceAttackWaypoints):undefined)??(kind==='resource'?map.enemyResourceWaypoints??config.resourceWaypoints:map.enemyAttackWaypoints??config.attackWaypoints);return kind==='resource'&&m.map.worldLayout==='expanded'?[...base,...expansionSites(m.map.id??'arena').map(s=>({x:(s.column+10.5)*32,y:(s.row+5.5)*32}))]:base;}
+export function searchWaypoints(m:MatchState,kind:'resource'|'attack'){if(kind==='attack'&&m.aiContext)return m.aiContext.attackWaypoints;const map=regionDefinition(m.map.id??'arena',maps[m.map.id??'arena'],m.map.design);const base=(m.map.terrainLayout==='reference'?(kind==='resource'?map.referenceResourceWaypoints:map.referenceAttackWaypoints):undefined)??(kind==='resource'?map.enemyResourceWaypoints??config.resourceWaypoints:map.enemyAttackWaypoints??config.attackWaypoints);return kind==='resource'&&m.map.worldLayout==='expanded'&&!m.map.design?[...base,...expansionSites(m.map.id??'arena').map(s=>({x:(s.column+10.5)*32,y:(s.row+5.5)*32}))]:base;}
 export const createEnemyKnowledge=():EnemyKnowledgeState=>({nodes:[],playerBase:null,resourceScoutIndex:0,attackScoutIndex:0});
 export function knownEnemyNode(m:MatchState,node:ResourceNode|undefined):ResourceNode|undefined {return node?(m.enemyKnowledge?m.enemyKnowledge.nodes.find(n=>n.id===node.id):node):undefined;}
 export function observeEnemyKnowledge(m:MatchState):MatchState {

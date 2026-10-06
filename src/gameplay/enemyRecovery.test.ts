@@ -1,7 +1,8 @@
+import {createClassicMatch as createMatch} from './testHelpers/classicMatch';
 import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {legacyEnemyFixture} from './testHelpers/legacyEnemyFixture';
 import {expect,it} from 'vitest';
-import {createMatch,updateMatch} from './match';
+import {updateMatch} from './match';
 import {cleanDestroyed} from './destruction';
 import {prepareEnemyRecovery,advanceEnemyRecovery} from './enemyRecovery';
 import {enemyPriority,prepareEnemyPolicy} from './enemyPolicy';
