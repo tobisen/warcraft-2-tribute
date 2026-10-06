@@ -1,3 +1,4 @@
+import {hasMainBase} from './extraBases';
 import {navyConfig} from '../config/navy';
 import {bodyFits,tileCenter} from './map';
 import {domainMap,planDomainRoute} from './terrainNavigation';
@@ -15,7 +16,7 @@ const size=(u:Unit)=>u.kind==='worker'?unitStats.size:combatUnitStats(u).size;
 const distance=(a:Position,b:Position)=>Math.hypot(a.x-b.x,a.y-b.y);
 /** Local visible coast search; routes are tested only after geometry and landing clearance. */
 export function requestTransport(m:MatchState,shipId:string,kind:'load'|'unload'):MatchState {
- if(m.paused||m.outcome!=='playing'||m.combat.baseHP<=0)return m;
+ if(m.paused||m.outcome!=='playing'||!hasMainBase(m))return m;
  const ship=m.navy?.ships.find(s=>s.id===shipId&&s.role==='transport'&&s.hp>0);if(!ship)return m;
  if(kind==='load'){const immediate=loadTransport(m,shipId);if(immediate!==m)return requestTransport(immediate,shipId,kind);}
  const units=m.gathering.units.filter(u=>u.selected&&!isAir(u)&&(u.hp??1)>0).slice(0,navyConfig.transport.capacity-(ship.passengers?.length??0));

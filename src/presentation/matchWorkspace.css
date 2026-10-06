@@ -16,16 +16,47 @@
 #pause-tech-panel #tech-tree-text { font-size: 14px !important; line-height: 1.7; }
 @media (max-width: 900px) { #app:not([data-phase="menu"]) #top-bar { gap: 7px; padding: 0 8px; font-size: 12px; } #top-bar button { padding: 5px 8px; font-size: 12px; } }
 
-/* Seven construction actions: one row at full width, two at compact widths. */
+/* Keep the functional match workspace independent of user style.css edits. */
+
+#app:not([data-phase='menu']):not([data-phase='ended']){grid-template-rows:48px auto minmax(0,1fr) 160px;overflow:visible;}
+#bottom-bar{display:grid;grid-template-columns:minmax(0,1.4fr) 88px minmax(148px,1fr) minmax(120px,.8fr) 134px;grid-template-rows:1fr;gap:8px;height:160px;padding:8px;align-items:start;}
+#bottom-bar>*{min-width:0;grid-row:1;}
+#selection-info{grid-column:1;display:block;max-height:none;overflow:visible;align-self:start;font-size:11px;}
+#selection-portrait{float:left;width:48px;height:48px;margin:0 8px 4px 0;}
+#selection-info h2{font-size:16px;line-height:1.2;margin:0 0 4px;overflow-wrap:anywhere;}
+#selection-info p{font-size:11px;line-height:1.25;margin:4px 0;overflow-wrap:anywhere;}
+#selection-health-bar{width:100%;height:6px;}
+#action-panel,#action-panel #gameplay-controls{display:contents;}
+#action-panel #action-hint{display:none;}
+#action-panel [data-action-group='Orders']{grid-column:2;grid-row:1;}
+#context-actions{grid-column:3;grid-row:1;min-width:0;display:grid;gap:6px;}
+#action-panel [data-action-group]{display:grid;grid-template-columns:repeat(3,44px);gap:4px;min-width:0;}
+#action-panel [data-action-group='Orders']{grid-template-columns:repeat(2,42px);}
+#action-panel .control{display:block;min-width:0;}
+#action-panel .action-reason{display:none;}
+#action-panel [data-action-group] button{position:relative;display:flex;justify-content:center;align-items:center;width:100%;height:40px;min-height:40px;padding:2px;font-size:0;}
+#action-panel button[data-icon]::before{display:block;}
+#action-panel button::after{content:attr(data-hotkey);position:absolute;right:2px;bottom:1px;font:9px system-ui;color:#ffe8a3;background:#172422;}
+#production-queue{grid-column:4;grid-row:1;display:grid;grid-template-columns:minmax(0,1fr);gap:4px;max-height:none;overflow:visible;margin:0;font:11px system-ui;}
+#production-queue button{height:42px;min-height:42px;padding:3px;font:10px system-ui;}
+#production-queue button>span{flex:1;}
+#minimap-overlay{grid-column:5;grid-row:1;align-self:start;justify-self:start;width:134px;margin:0;box-shadow:none;border-width:2px;}
+#minimap-overlay #minimap{width:130px;height:100px;}
+#selection-icons{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:2px;max-height:none;overflow:visible;clear:both;}
+#selection-icons canvas{width:100%;height:auto;min-width:0;}
+
+
+/* Eight construction actions: one row at full width, two at compact widths. */
 #bottom-bar {
  grid-template-columns: minmax(0, 1.4fr) 88px max-content minmax(120px, .8fr) 134px;
 }
 #context-actions { min-width: 0; }
 #action-panel [data-action-group="Build"] {
- grid-template-columns: repeat(7, 44px);
+ grid-template-columns: repeat(8, 40px);
 }
 @media (max-width: 1100px) {
  #action-panel [data-action-group="Build"] {
   grid-template-columns: repeat(4, 40px);
  }
 }
+#action-panel [data-action-group] h3 { display: none; }

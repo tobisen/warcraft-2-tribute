@@ -204,7 +204,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
   if(scope?.side==='enemy')playerDamage.clear();
   units=units.map(unit=>unit.hp!==undefined?{...unit,hp:Math.max(0,unit.hp-(playerDamage.get(unit.id)??0)*(unit.kind==='soldier'?defenseMultiplier*abilityEffects(gathering,unit).defenseMultiplier*spellModifiers(unit).defense:1))}:unit);
   const surviving=removeDeadUnits({...gathering,units});units=surviving.units;
-  const nextPlacement=placement?{...placement,...(placement.defenses?{defenses:placement.defenses.map(t=>({...t,hp:Math.max(0,t.hp-(playerDamage.get(t.id)??0))}))}:{}),
+  const nextPlacement=placement?{...placement,...(placement.bases?{bases:placement.bases.map(b=>({...b,hp:Math.max(0,b.hp-(playerDamage.get(b.id)??0))}))}:{}),...(placement.defenses?{defenses:placement.defenses.map(t=>({...t,hp:Math.max(0,t.hp-(playerDamage.get(t.id)??0))}))}:{}),
     ...(placement.forge?{forge:{...placement.forge,hp:Math.max(0,placement.forge.hp-(playerDamage.get('forge')??0))}}:{}),
     ...(placement.barracks?{barracksHP:Math.max(0,(placement.barracksHP??combatConfig.barracksHP)-(playerDamage.get('barracks')??0))}:{}),
     ...(placement.farms?{farms:placement.farms.map(f=>({...f,hp:Math.max(0,(f.hp??combatConfig.farmHP)-(playerDamage.get(f.id)??0))}))}:{})}:undefined;

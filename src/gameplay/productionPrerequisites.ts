@@ -19,7 +19,7 @@ export function technologyFor(m:import('./match').MatchState,team:'player'|'enem
   }
   return {buildings,research:{attack:m.enemyPolicy?.research.attack??0,defense:m.enemyPolicy?.research.defense??0}};
  }
- if(m.combat.baseHP>0)buildings.push('base');
+ if((m.combat.baseHP>0||(m.placement.bases??[]).some(b=>b.hp>0&&b.construction.remainingSeconds===0)))buildings.push('base');
  if(m.placement.barracks&&(m.placement.barracksHP??1)>0&&(m.placement.construction?.remainingSeconds??0)===0)buildings.push('barracks');
  if(m.placement.forge&&(m.placement.forge.hp??1)>0&&m.placement.forge.construction.remainingSeconds===0)buildings.push('forge');
  if(m.placement.farms?.some(f=>(f.hp??1)>0&&f.construction.remainingSeconds===0))buildings.push('farm');

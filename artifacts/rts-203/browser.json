@@ -1,0 +1,34 @@
+[
+  {
+    "width": 800,
+    "rows": 2,
+    "physicalBuild": true,
+    "paid": {
+      "wood": 100,
+      "gold": 60
+    },
+    "queue": 2,
+    "physicalRally": {
+      "x": 650,
+      "y": 430
+    },
+    "saveLoad": true,
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "rows": 1,
+    "physicalBuild": true,
+    "paid": {
+      "wood": 100,
+      "gold": 60
+    },
+    "queue": 2,
+    "physicalRally": {
+      "x": 650,
+      "y": 430
+    },
+    "saveLoad": true,
+    "errors": []
+  }
+]

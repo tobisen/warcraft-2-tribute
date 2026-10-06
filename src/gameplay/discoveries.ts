@@ -35,7 +35,7 @@ export function updateDiscoveries(m:MatchState):MatchState {
    const faction=factionForTeam(next,'player'),position=chooseSpawn(next.map,{x:d.position.x-8,y:d.position.y-8,width:16,height:16},'barracks',next.gathering.units,next.combat.enemies,faction.units.soldier.size,p=>segmentFits(next.map,d.position,p,faction.units.soldier.size/2))!;
    const number=Math.max(next.production.nextUnitNumber,next.soldierProduction.nextUnitNumber),id=`unit-${number}`;
    const unit:Soldier={id,kind:'soldier',owner:'player',hp:faction.units.soldier.hp,cargo:0,selected:false,position,target:{...position},order:{kind:'idle'}};
-   next={...next,gathering:{...next.gathering,units:[...next.gathering.units,unit]},production:{...next.production,nextUnitNumber:number+1},soldierProduction:{...next.soldierProduction,nextUnitNumber:number+1},discoveries:{version:1,claimed:[...next.discoveries!.claimed,d.id],recruits:{...next.discoveries!.recruits,[d.id]:id}}};
+   next={...next,gathering:{...next.gathering,units:[...next.gathering.units,unit]},production:{...next.production,nextUnitNumber:number+1},soldierProduction:{...next.soldierProduction,nextUnitNumber:number+1},placement:{...next.placement,...(next.placement.bases?{bases:next.placement.bases.map(b=>({...b,production:{...b.production,nextUnitNumber:number+1}}))}:{})},discoveries:{version:1,claimed:[...next.discoveries!.claimed,d.id],recruits:{...next.discoveries!.recruits,[d.id]:id}}};
    next={...next,fog:matchFog(next)};
   }
  }

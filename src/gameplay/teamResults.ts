@@ -1,9 +1,10 @@
+import {hasMainBase} from './extraBases';
 import type {PlayerId} from '../config/players';
 import type {MatchState,MatchOutcome} from './match';
 import {playerTeam} from './players';
 /** Existing base-elimination rule; surviving assets remain inert, without artificial losses. */
 export function playerEliminated(m:MatchState,id:PlayerId):boolean{
- if(id==='player')return m.combat.baseHP<=0;
+ if(id==='player')return !hasMainBase(m);
  const bot=m.multiplePlayers?.ai.find(p=>p.id===id);
  return !!bot&&!bot.state.combat.enemies.some(e=>e.kind==='base'&&e.hp>0);
 }

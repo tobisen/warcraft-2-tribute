@@ -1,5 +1,7 @@
 /* Own icons override the old eight generic symbols without changing the bottom-bar grid. */
 #action-panel button[data-action-icon]::before {
+  content: "";
+  display: block;
   background-image: var(--action-icon);
   background-position: center;
   background-size: 32px 32px;

@@ -1,3 +1,9 @@
+# RTS-203 klar — fortsätt204
+
+203 betalda extra huvudbyggnader: max två extras,100wood+60gold/12s, separata workerköer/rally, delad supply/tech/ekonomi, färdiga basleveranser/vision, destruction/repair/team och Save61. Campaign skyddar originalbasen, skirmish sista färdiga basen. Riktade243/22 före sista selectionguard + slutliga32/4, unit475/85, strict build/diff och Native800/1280 fysisk build/queue/rally/SaveLoad PASS; artifacts/rts-203.202 push7954e2e;203 hash rapporteras vid push. Slutlig browser efter ikon/selectionguard inklusive borttagen markerad bas PASS utan errors. Nästa204 avgränsat bygg-/techpaket ska detaljeras före kod. Fullregression vid etappslut; inga CI/Pages-/mänsklig balansclaims. CSS/docs och samtidigt ändrad assets/sources/units.mjs bevaras utanför commit.
+
+---
+
 # RTS-202 klar — fortsätt203
 
 202 nya skirmishfynd på alla nio kartor: två20wood+10goldkistor och en grundsoldat, vision/närkontakt/supply/säker spawn/Save60. Unit475/85, riktade86/7 och tidigare47/5, strict build/diff, Chrome800/1280 fysisk utforskning/claim/recruit/SaveLoad PASS; artifacts/rts-202.201 pushd95468b;202 hash rapporteras vid push. Nästa203 fler huvudbyggnader: detaljera kostnad/kö/dropoff/defeat före implementation. Campaign/äldre matcher får inga nya fynd; AI samlar dem inte. CSS/docs bevarade; fullregression vid etappslut.

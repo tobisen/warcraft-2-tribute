@@ -1,3 +1,4 @@
+import {hasMainBase} from './extraBases';
 import {campaignActionReason} from '../config/campaignContent';
 import {playerEliminated} from './teamResults';
 import {syncProjectedCombat} from './multiplePlayers';
@@ -18,7 +19,7 @@ const teamFaction=(m:MatchState,team:'player'|'enemy')=>(m.factions??defaultFact
 function combatant(m:MatchState,id:string,team:'player'|'enemy'):Combatant|undefined{return team==='player'?m.gathering.units.find((u):u is Soldier=>u.kind==='soldier'&&!isAir(u)&&u.id===id):m.combat.enemies.find(e=>e.id===id&&!isAir(e)&&!e.footprint&&(e.kind===undefined||e.kind==='unit'));}
 export function spellCasterReason(m:MatchState,casterId:string,id:SpellId,team:'player'|'enemy'='player'):string|null{
  if(team==='player'){const locked=campaignActionReason(m,'cast-heal');if(locked)return locked;}
- if(m.paused||m.outcome!=='playing'||!!m.multiplePlayers&&m.combat.baseHP<=0)return 'Match is paused or ended';
+ if(m.paused||m.outcome!=='playing'||!!m.multiplePlayers&&!hasMainBase(m))return 'Match is paused or ended';
  const caster=combatant(m,casterId,team),faction=teamFaction(m,team),cfg=spellDefinition(id,faction);
  if(!caster||caster.hp<=0||('archetype'in caster?caster.archetype!=='specialist':!('role'in caster)||caster.role!=='specialist'))return 'Select a living own specialist';
  if(!factionSpells[faction].includes(id))return 'Spell unavailable to this faction';
@@ -48,7 +49,7 @@ export function castSpell(m:MatchState,casterId:string,id:SpellId,targetId:strin
 export function spellTargetAt(m:MatchState,id:SpellId,point:Position,team:'player'|'enemy'='player'):string|undefined{const cfg=spellDefinition(id,teamFaction(m,team)),targetTeam=cfg.targetTeam==='ally'?team:team==='player'?'enemy':'player',candidates=targetTeam==='player'?[...m.gathering.units.filter(u=>u.kind==='soldier'&&!isAir(u)),...(cfg.targetTeam==='ally'&&m.multiplePlayers?m.combat.enemies.filter(e=>!isAir(e)&&!e.footprint&&e.kind==='unit'&&canSupport('player',ownerOf(e),m.multiplePlayers!.roster)):[])]:m.combat.enemies.filter(e=>!isAir(e)&&!e.footprint&&(e.kind===undefined||e.kind==='unit'));return candidates.find(u=>u.hp!>0&&(!m.multiplePlayers||!spellTargetReason(m,'player'===team?selectedSpellCaster(m,id)?.id??'':m.combat.enemies.find(e=>e.role==='specialist')?.id??'',id,u.id,team))&&(!m.fog||entityVisible(m.fog,team,u))&&Math.abs(u.position.x-point.x)<=16&&Math.abs(u.position.y-point.y)<=16)?.id;}
 export function spellModifiers(u:SpellState,elapsed=0){let attack=1,defense=1;for(const effect of u.spellEffects??[])if(effect.remainingSeconds>elapsed+1e-9){const cfg=spellDefinition(effect.spell,effect.sourceFaction);attack*=cfg.attackMultiplier??1;defense*=cfg.defenseMultiplier??1;}return {attack,defense};}
 export function advanceSpells(m:MatchState,delta:number):MatchState{
- if(m.paused||m.outcome!=='playing'||!!m.multiplePlayers&&m.combat.baseHP<=0||delta<=0)return m;
+ if(m.paused||m.outcome!=='playing'||!!m.multiplePlayers&&!hasMainBase(m)||delta<=0)return m;
  const active=(u:SpellState)=>u.spellEffects?.some(e=>e.remainingSeconds>0)||Object.values(u.spellCooldowns??{}).some(v=>v>0);if(!m.gathering.units.some(u=>u.kind==='soldier'&&active(u))&&!m.combat.enemies.some(active)&&!m.navy?.ships.some(s=>s.passengers?.some(u=>u.kind==='soldier'&&active(u)))&&!m.enemyNaval?.passengers.some(active))return m;
  const tick=<T extends SpellState>(u:T):T=>!u.spellCooldowns&&!u.spellEffects?u:{...u,...(u.spellCooldowns?{spellCooldowns:Object.fromEntries(spellIds.filter(id=>u.spellCooldowns![id]!==undefined).map(id=>[id,Math.max(0,u.spellCooldowns![id]!-delta)]))}:{}),...(u.spellEffects?{spellEffects:u.spellEffects.map(e=>({...e,remainingSeconds:Math.max(0,e.remainingSeconds-delta)})).filter(e=>e.remainingSeconds>1e-9)}:{})};
  return {...m,gathering:{...m.gathering,units:m.gathering.units.map(u=>u.kind==='soldier'?tick(u):u)},combat:{...m.combat,enemies:m.combat.enemies.map(tick)},...(m.navy?{navy:{...m.navy,ships:m.navy.ships.map(s=>({...s,passengers:s.passengers?.map(u=>u.kind==='soldier'?tick(u):u)}))}}:{}),...(m.enemyNaval?{enemyNaval:{...m.enemyNaval,passengers:m.enemyNaval.passengers.map(tick)}}:{})};

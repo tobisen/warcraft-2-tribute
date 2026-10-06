@@ -19,7 +19,7 @@ import type { SelectableUnit } from './selection';
 
 export type ResourceType = 'wood' | 'gold';
 export type WorkerOrder = {kind:'attack';enemyId:string} | {kind:'repair';buildingId:import('./buildingSelection').BuildingSelection&string} |  { kind: 'idle' } | { kind: 'move' }
-  | { kind: 'gather' | 'deliver'; nodeId: string } | {kind:'build';buildingId:`wall-${number}`|`gate-${number}`|`tower-${number}`|'harbor'|'outpost'|'barracks'|'forge'|`farm-${number}`};
+  | { kind: 'gather' | 'deliver'; nodeId: string } | {kind:'build';buildingId:`base-${number}`|`wall-${number}`|`gate-${number}`|`tower-${number}`|'harbor'|'outpost'|'barracks'|'forge'|`farm-${number}`};
 export interface Worker extends SelectableUnit, importOrderState {
   navigation?: RouteState;
   kind: 'worker';
@@ -62,6 +62,7 @@ export interface GatheringState {
   faction?:FactionId;
   baseSize?:number;
   /** Derived live delivery buildings; never persisted independently. */
+  primaryDropoff?:boolean;
   dropoffs?:Footprint[];
   units: Unit[];
   node: ResourceNode;
@@ -141,8 +142,9 @@ export function updateGathering(state: GatheringState, deltaSeconds: number, map
         continue;
       }
       const delivering = worker.order.kind === 'deliver';
-      const deliveryRects=[baseRect,...(delivering?state.dropoffs??[]:[])].sort((a,b)=>Math.hypot(worker.position.x-a.x-a.width/2,worker.position.y-a.y-a.height/2)-Math.hypot(worker.position.x-b.x-b.width/2,worker.position.y-b.y-b.height/2));
+      const deliveryRects=[...(state.primaryDropoff===false?[]:[baseRect]),...(delivering?state.dropoffs??[]:[])].sort((a,b)=>Math.hypot(worker.position.x-a.x-a.width/2,worker.position.y-a.y-a.height/2)-Math.hypot(worker.position.x-b.x-b.width/2,worker.position.y-b.y-b.height/2));
       const cachedDelivery=worker.navigation?.revision===map?.revision?deliveryRects.find(rect=>worker.navigation?.goalKey===`deliver:${nodeId}:${rect.x}:${rect.y}`):undefined;
+      if(delivering&&!deliveryRects.length)return {...worker,navigation:undefined,target:{...worker.position}};
       const deliveryRect=delivering&&map&&state.dropoffs?.length?(cachedDelivery??deliveryRects.find(rect=>approachRoute(map,worker.position,rect,gatheringConfig.deliveryRange).status!=='blocked')??deliveryRects[0]):deliveryRects[0];
       const destination = delivering ? {x:deliveryRect.x+deliveryRect.width/2,y:deliveryRect.y+deliveryRect.height/2} : node.position;
       const range = delivering ? gatheringConfig.deliveryRange : gatheringConfig.range;

@@ -1,3 +1,4 @@
+import {hasMainBase,syncDropoffs,updateExtraBaseProduction} from './extraBases';
 import {createDiscoveries,updateDiscoveries,type DiscoveryState} from './discoveries';
 import {updateTransportTransfers} from './autoTransport';
 import {mapResources} from '../config/maps';
@@ -169,7 +170,7 @@ function resolveOutcome(state: MatchState): MatchState {
   const victory=plan?state.campaignRun!.phase===plan.phases.length:definition.victory==='operation'?operation==='victory':definition.victory==='tutorial'?state.tutorial?.step===6:definition.victory==='enemy-base'? !state.combat.enemies.some(e=>e.kind==='base'&&e.hp>0)
     :definition.victory==='timer'?state.waves.elapsedSeconds+1e-10>=definition.holdSeconds!
     :state.waves.nextWave===scenarioWaves(state.scenario??'survival',state.difficulty??'normal').length&&state.combat.enemies.every(e=>e.kind==='base');
-  const outcome:MatchOutcome=state.combat.baseHP<=0||operation==='defeat'?'defeat':victory?'victory':'playing';
+  const outcome:MatchOutcome=(state.campaignRun||state.campaignMission?state.combat.baseHP<=0:!hasMainBase(state))||operation==='defeat'?'defeat':victory?'victory':'playing';
   return outcome === 'playing' ? state
     : { ...state, outcome, placement: { ...state.placement, active: false } };
 }
@@ -198,6 +199,7 @@ function advance(state: MatchState, delta: number, scope?:CombatScope): MatchSta
   state=prepareEnemyScout(state);
   const gateFor=trafficGates(state.map,[...state.gathering.units.filter(u=>!isAir(u)).map(u=>({id:`player:${u.id}`,position:u.position,fixed:u.commandMode?.kind==='hold'||u.order.kind==='idle'&&u.navigation?.status==='arrived',half:(u.kind==='worker'?workerStats(state.gathering.faction):combatUnitStats(u,state.gathering.faction)).size/2,speed:(u.kind==='worker'?workerStats(state.gathering.faction):combatUnitStats(u,state.gathering.faction)).speed,active:u.order.kind!=='idle',waypoints:u.navigation?.waypoints??[u.target]})),...state.combat.enemies.filter(e=>!isAir(e)&&e.kind!=='ship'&&!e.footprint&&e.hp>0).map(e=>({id:`enemy:${e.id}`,position:e.position,half:enemySize(e)/2,speed:e.kind==='worker'?workerStats(state.factions?.enemy??defaultFactions.enemy).speed:enemyUnitStats(e,state.factions?.enemy).speed,active:e.work?e.work.order.kind!=='idle':e.order?.kind!=='idle',waypoints:e.navigation?.waypoints??(e.work?[e.work.target]:undefined)??(e.order?.kind==='muster'||e.order?.kind==='attack-move'?[e.order.destination]:[])}))],state.waves.elapsedSeconds,delta);
   const services=resourceServices({...state.gathering,units:[...state.gathering.units,...state.combat.enemies.flatMap(e=>{const worker=enemyWorker(e);return worker?[worker]:[];})]},state.map,state.waves.elapsedSeconds);
+  state=syncDropoffs(state);
   const forestBefore=state.gathering;
   let gathering = updateGathering(state.gathering, ownDelta, state.map,{elapsedSeconds:state.waves.elapsedSeconds,gateFor,services});
   state=updateEnemyGathering({...state,gathering},delta,gateFor,services);state={...state,map:syncForestObstacles(forestBefore,state.gathering,state.map)};const enemyBuilding=updateEnemyConstruction(state,delta,gateFor);state=enemyBuilding.match;gathering=state.gathering;
@@ -217,7 +219,7 @@ function advance(state: MatchState, delta: number, scope?:CombatScope): MatchSta
   const baseStep=advanceBaseUpgrade(cleaned,ownDelta);cleaned=baseStep.match;
   const worker=cleaned.combat.baseHP>0?updateQueuedProduction(cleaned.gathering,cleaned.production,baseStep.productionSeconds,{kind:'base'},
     {map:cleaned.map,enemies:cleaned.combat.enemies}):{gathering:cleaned.gathering,production:cleaned.production};
-  const soldier=cleaned.combat.baseHP>0?updateQueuedProduction(worker.gathering,cleaned.soldierProduction,ownDelta,
+  const soldier=hasMainBase(cleaned)?updateQueuedProduction(worker.gathering,cleaned.soldierProduction,ownDelta,
     {kind:'barracks',bounds:cleaned.map,footprint:cleaned.placement.barracks,ready:barracksReady(cleaned.placement)},
     {map:cleaned.map,enemies:cleaned.combat.enemies}):{gathering:worker.gathering,production:cleaned.soldierProduction};
   const nextUnitNumber=Math.max(worker.production.nextUnitNumber,soldier.production.nextUnitNumber);
@@ -226,6 +228,7 @@ function advance(state: MatchState, delta: number, scope?:CombatScope): MatchSta
   const incoming=scenarioConfig[cleaned.scenario??'survival'].waves?updateWaves(cleaned.waves,ai.combat,delta,campaignWaveSchedule(cleaned),cleaned.campaignRun&&cleaned.map.id==='frontier'?{x:1248,y:144,spacing:32}:undefined):{combat:ai.combat,waves:{...cleaned.waves,elapsedSeconds:cleaned.waves.elapsedSeconds+delta}};
   let updated:MatchState={...cleaned,...(enemyPolicy?{enemyPolicy}:{}),...(vision?{fog:vision}:{}),research,...(enemy.state?{enemyProduction:enemy.state}:{}),...(ai.state?{enemyAI:ai.state}:{}),gathering:soldier.gathering,combat:incoming.combat,waves:incoming.waves,
     production:{...worker.production,nextUnitNumber},soldierProduction:{...soldier.production,nextUnitNumber}};
+  if(scope?.side!=='enemy')updated=updateExtraBaseProduction(updated,baseStep.productionSeconds);
   const beforeNavyCompletion=readyBuildings(updated);
   updated=updateTransportTransfers(updateNavy(updated,ownDelta),ownDelta);
   updated={...updated,statLedger:recordCompletions(beforeNavyCompletion,updated)};

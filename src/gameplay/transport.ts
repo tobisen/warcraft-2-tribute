@@ -1,3 +1,4 @@
+import {hasMainBase} from './extraBases';
 import {isAir} from './domains';
 import {navyConfig} from '../config/navy';
 import {unitStats,combatUnitStats} from '../config/unit';
@@ -15,7 +16,7 @@ const size=(u:Unit)=>u.kind==='worker'?unitStats.size:combatUnitStats(u).size;
 function contact(m:MatchState,ship:Position,point:Position){return Math.hypot(ship.x-point.x,ship.y-point.y)<=cfg.contactRange+1e-9&&segmentFits(marineFlightMap(m.map),ship,point,0);}
 /** Immediate boarding only: players first move units to a free visible shore. */
 export function loadTransport(m:MatchState,shipId:string):MatchState {
- if(m.outcome!=='playing'||m.paused||!!m.multiplePlayers&&m.combat.baseHP<=0)return m;
+ if(m.outcome!=='playing'||m.paused||!!m.multiplePlayers&&!hasMainBase(m))return m;
  const ship=m.navy?.ships.find(s=>s.id===shipId&&s.role==='transport'&&s.hp>0);if(!ship)return m;
  let seats=cfg.capacity-(ship.passengers?.length??0);
  const boarding=m.gathering.units.filter(u=>!isAir(u)&&u.selected&&(u.hp??1)>0&&(!m.fog||placementVisible(m.fog,unitBody(u.position,size(u))))&&bodyFits({...m.map,bodyHalf:size(u)/2},u.position,size(u)/2)&&contact(m,ship.position,u.position)&&seats-->0);
@@ -25,7 +26,7 @@ export function loadTransport(m:MatchState,shipId:string):MatchState {
 }
 /** Plan the entire landing before mutation; a crowded/hidden/invalid shore rejects all. */
 export function unloadTransport(m:MatchState,shipId:string,point:Position):MatchState {
- if(m.outcome!=='playing'||m.paused||!!m.multiplePlayers&&m.combat.baseHP<=0)return m;
+ if(m.outcome!=='playing'||m.paused||!!m.multiplePlayers&&!hasMainBase(m))return m;
  const ship=m.navy?.ships.find(s=>s.id===shipId&&s.role==='transport'&&s.selected&&s.hp>0),passengers=ship?.passengers;
  if(!ship||!passengers?.length||!contact(m,ship.position,point))return m;
  const occupied=[...m.gathering.units.filter(u=>!isAir(u)).map(u=>unitBody(u.position,size(u))),...m.combat.enemies.filter(e=>e.hp>0&&!isAir(e)&&!e.footprint).map(e=>unitBody(e.position,24))];

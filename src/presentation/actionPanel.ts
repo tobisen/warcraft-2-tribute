@@ -1,3 +1,5 @@
+import {extraBaseConfig} from '../config/extraBases';
+import {selectedBase} from '../gameplay/extraBases';
 import {campaignActionReason} from '../config/campaignContent';
 import {setActionLabel} from './actionLabel';
 import {isAir} from '../gameplay/domains';
@@ -25,7 +27,7 @@ import {forgeReady} from '../gameplay/research';
 import type {BuildingSelection} from '../gameplay/buildingSelection';
 import type {MatchState} from '../gameplay/match';
 import {hotkeys} from './hotkeys';
-export const actionIds=['cast-heal','cast-ward','cast-hex','repair-building','build-wall','build-gate','toggle-gate','build-tower','upgrade-tower','upgrade-base','train-worker','train-soldier','train-archer','train-catapult','train-specialist','train-air','train-transport','train-ship','build-barracks','build-farm','build-forge','build-harbor','research-attack','research-defense','attack-move','unit-ability','unload-transport','hold-position','patrol-units','stop-units','dismiss-units'] as const;
+export const actionIds=['cast-heal','cast-ward','cast-hex','repair-building','build-wall','build-gate','toggle-gate','build-tower','upgrade-tower','upgrade-base','train-worker','train-soldier','train-archer','train-catapult','train-specialist','train-air','train-transport','train-ship','build-base','build-barracks','build-farm','build-forge','build-harbor','research-attack','research-defense','attack-move','unit-ability','unload-transport','hold-position','patrol-units','stop-units','dismiss-units'] as const;
 export type ActionId=typeof actionIds[number];
 export const actionGroups=['Orders','Build','Train','Research','Spells'] as const;
 export function actionGroup(id:ActionId):typeof actionGroups[number]{return id.startsWith('cast-')?'Spells':id.startsWith('build-')?'Build':id.startsWith('train-')?'Train':id.startsWith('research-')||id.startsWith('upgrade-')?'Research':'Orders';}
@@ -45,7 +47,7 @@ export function affordabilityReason(balance:{wood:number;goldBalance?:number},co
  const wood=balance.wood<cost.wood,gold=(balance.goldBalance??0)<cost.gold;return wood&&gold?uiText.notEnoughWoodAndGold:wood?uiText.notEnoughWood:gold?uiText.notEnoughGold:'';
 }
 export function actionPanel(m:MatchState,building:BuildingSelection,playing:boolean):Record<ActionId,ActionPresentation>{
- const land=m.gathering.units.filter(u=>u.selected),ships=m.navy?.ships.filter(u=>u.selected)??[],worker=land.some(u=>u.kind==='worker'),combat=land.some(u=>u.kind==='soldier'),transport=ships.find(u=>u.role==='transport'),any=land.length+ships.length>0,base=building==='base',barracks=building==='barracks',harbor=building==='harbor';
+ const land=m.gathering.units.filter(u=>u.selected),ships=m.navy?.ships.filter(u=>u.selected)??[],worker=land.some(u=>u.kind==='worker'),combat=land.some(u=>u.kind==='soldier'),transport=ships.find(u=>u.role==='transport'),any=land.length+ships.length>0,base=!!selectedBase(m,building),barracks=building==='barracks',harbor=building==='harbor';
  const faction=factionForTeam(m,'player'),population=matchPopulation(m);
  const result={} as Record<ActionId,ActionPresentation>;
  for(const id of actionIds){let visible=false,reason='',cost,prerequisites:string|undefined,producing=false,active:boolean|undefined;
@@ -55,15 +57,16 @@ export function actionPanel(m:MatchState,building:BuildingSelection,playing:bool
   else if(id==='build-wall'||id==='build-gate'){visible=worker;cost=costLabel(defenseConfig[id==='build-wall'?'wall':'gate'].cost);reason=m.placement.active?'Finish or cancel placement':affordabilityReason(m.gathering,defenseConfig[id==='build-wall'?'wall':'gate'].cost);}
   else if(id==='upgrade-tower'){visible=!!building?.startsWith('tower-');cost=costLabel(defenseConfig.upgrade.cost);reason=towerUpgradeReason(m,building??'')??'';}
   else if(id==='build-tower'){visible=worker;cost=costLabel(defenseConfig.tower.cost);reason=m.placement.active?'Finish or cancel placement':affordabilityReason(m.gathering,defenseConfig.tower.cost);}
-  else if(id==='upgrade-base'){visible=base;const b=baseDevelopment(m);cost=b.level<3?costLabel(baseUpgradeConfig[(b.level+1) as 2|3].cost):undefined;reason=baseUpgradeReason(m)??'';}
+  else if(id==='upgrade-base'){visible=base;const b=baseDevelopment(m);cost=b.level<3?costLabel(baseUpgradeConfig[(b.level+1) as 2|3].cost):undefined;reason=(m.placement.bases?.find(b=>b.id===building)?.construction.remainingSeconds??0)>0?'Construction unfinished':baseUpgradeReason(m)??'';}
+  else if(id==='build-base'){visible=worker;cost=costLabel(extraBaseConfig.cost);reason=m.placement.active?'Finish or cancel placement':(m.placement.bases?.length??0)>=extraBaseConfig.maxCount?'Maximum three main buildings':affordabilityReason(m.gathering,extraBaseConfig.cost);}
   else if(id.startsWith('build-')){visible=worker;const kind=id.slice(6) as 'barracks'|'farm'|'forge'|'harbor';const recipe=kind==='harbor'?faction.naval.harbor.cost:faction.buildings[kind].cost;cost=costLabel(recipe);reason=buildingAvailability(faction,kind,technologyFor(m,'player'))??(m.placement.active?'Finish or cancel placement':kind==='barracks'&&m.placement.barracks||kind==='forge'&&m.placement.forge||kind==='harbor'&&m.navy?.harbor?'Already built':kind==='farm'&&(m.placement.farms?.length??0)>=farmConfig.maxCount?'Farm limit reached':affordabilityReason(m.gathering,recipe));}
   else if(id.startsWith('train-')){
    const role=id==='train-ship'?'warship':id.slice(6) as 'worker'|'soldier'|'archer'|'catapult'|'specialist'|'air'|'transport',naval=role==='transport'||role==='warship';
    visible=(role==='worker'?base:naval?harbor:barracks)&&(naval||faction.roster.includes(role as 'worker'|'soldier'|'archer'|'catapult'|'specialist'|'air'));
    const recipe=naval?faction.naval.units[role as 'transport'|'warship']:faction.units[role];cost=costLabel(recipe.cost);const landPrereq=role!=='transport'&&role!=='warship'?faction.units[role].prerequisites:undefined;prerequisites=naval?'Completed harbor':prerequisiteLabel({...landPrereq,buildings:[...new Set([...(landPrereq?.buildings??[]),role==='worker'?'base':'barracks'] as const)]});
-   const production=role==='worker'?m.production:naval?m.navy?.production:m.soldierProduction;
+   const production=role==='worker'?selectedBase(m,building)?.production:naval?m.navy?.production:m.soldierProduction;
    producing=!!production?.queue?.some(j=>j.kind===role);
-   const remaining=role==='worker'?0:naval?m.navy?.harbor?.construction.remainingSeconds??1:m.placement.construction?.remainingSeconds??0;
+   const remaining=role==='worker'?(m.placement.bases?.find(b=>b.id===building)?.construction.remainingSeconds??0):naval?m.navy?.harbor?.construction.remainingSeconds??1:m.placement.construction?.remainingSeconds??0;
    const prerequisite=naval?null:unitAvailability(faction,role,technologyFor(m,'player'));
    reason=remaining>0?'Construction unfinished':prerequisite??(production&&productionJobCount(production)>=queueConfig.maxJobs?'Queue full':!hasPopulation(population,recipe.supply)?uiText.populationLimitReached:affordabilityReason(m.gathering,recipe.cost));
   }

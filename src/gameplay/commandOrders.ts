@@ -1,3 +1,4 @@
+import {hasMainBase} from './extraBases';
 import {playerEliminated} from './teamResults';
 import {canHarm} from './players';
 import {matchAnimals} from './wildlife';
@@ -36,7 +37,7 @@ function start(m:MatchState,u:Unit|Ship,o:QueuedOrder):Unit|Ship {
 }
 /** Shift appends only supported commands. Selection never changes as orders advance. */
 export function issueOrder(m:MatchState,o:QueuedOrder,append=false):MatchState {
- if(m.paused||m.outcome!=='playing'||!!m.multiplePlayers&&m.combat.baseHP<=0)return m;
+ if(m.paused||m.outcome!=='playing'||!!m.multiplePlayers&&!hasMainBase(m))return m;
  if(o.kind==='attack'){const target=m.combat.enemies.find(e=>e.id===o.enemyId);if(target&&(playerEliminated(m,target.playerId??'enemy')||!canHarm('player',target.playerId??'enemy',m.multiplePlayers?.roster)))return m;}
  const destination='destination' in o?o.destination:undefined;
  const group=destination?new Map((o.kind==='attack-move'?commandAttackMove:commandGroupMove)(m.gathering.units,destination,m.map).map(u=>[u.id,u])):undefined;

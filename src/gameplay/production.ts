@@ -25,7 +25,7 @@ export interface ProductionState {
   blockedSpawnKey?: string;
   nextUnitNumber: number;
 }
-export type ProductionBuilding = { kind: 'base' } | { kind: 'barracks'; footprint: Footprint | null; ready?:boolean;bounds?:Pick<WorldMap,'width'|'height'>;technology?:TechnologyState;unitType?:'soldier'|'archer'|'catapult'|'specialist'|'air';jobCost?:ResourceCost;durationSeconds?:number };
+export type ProductionBuilding = { kind: 'base';footprint?:Footprint;ready?:boolean } | { kind: 'barracks'; footprint: Footprint | null; ready?:boolean;bounds?:Pick<WorldMap,'width'|'height'>;technology?:TechnologyState;unitType?:'soldier'|'archer'|'catapult'|'specialist'|'air';jobCost?:ResourceCost;durationSeconds?:number };
 const base: ProductionBuilding = { kind: 'base' };
 
 export function soldierSpawn(footprint: Footprint,size=soldierStats.size,bounds:Pick<WorldMap,'width'|'height'>=worldConfig): Position | null {
@@ -43,8 +43,8 @@ export function soldierSpawn(footprint: Footprint,size=soldierStats.size,bounds:
 
 export function canStartProduction(gathering: GatheringState, production: ProductionState, building: ProductionBuilding = base, population?:Population): boolean {
   const recipe=productionRecipe(gathering,building),cost=recipe.cost;
-  return unitAvailability(productionFaction(gathering),building.kind==='base'?'worker':building.unitType??'soldier',building.kind==='base'?undefined:building.technology,gathering.campaignContent)===null && (!population || hasPopulation(population,recipe.supply)) && production.remainingSeconds === null && canAfford(gathering,cost)
-    && (building.kind === 'base' || (building.ready !== false && building.footprint !== null && soldierSpawn(building.footprint,recipe.size,building.bounds) !== null));
+  return building.ready!==false && unitAvailability(productionFaction(gathering),building.kind==='base'?'worker':building.unitType??'soldier',building.kind==='base'?undefined:building.technology,gathering.campaignContent)===null && (!population || hasPopulation(population,recipe.supply)) && production.remainingSeconds === null && canAfford(gathering,cost)
+    && (building.kind === 'base' || (building.footprint !== null && soldierSpawn(building.footprint,recipe.size,building.bounds) !== null));
 }
 
 export function startProduction(gathering: GatheringState, production: ProductionState, building: ProductionBuilding = base, population?:Population) {
@@ -58,7 +58,7 @@ export function startProduction(gathering: GatheringState, production: Productio
 }
 
 export function updateProduction(gathering: GatheringState, production: ProductionState, deltaSeconds: number, building: ProductionBuilding = base, context?: {map:WorldMap;enemies:readonly {id:string;position:Position;kind?:string;role?:string}[]}) {
-  if (building.kind==='barracks' && building.ready===false) return {gathering,production};
+  if (building.ready===false) return {gathering,production};
   if (production.remainingSeconds === null) return { gathering, production };
   const remainingSeconds = Math.max(0, production.remainingSeconds - Math.max(0, deltaSeconds));
   if (remainingSeconds > 1e-10) return { gathering, production: { ...production, remainingSeconds } };
@@ -67,7 +67,7 @@ export function updateProduction(gathering: GatheringState, production: Producti
     + ':'+context.enemies.map(e=>`${e.id}:${e.position.x}:${e.position.y}`).join('|') : undefined;
   if(production.remainingSeconds===0 && production.blockedSpawnKey===spawnKey && context)return {gathering,production};
   const baseSize=gathering.baseSize??gatheringConfig.baseSize;
-  const footprint=building.kind==='base'?{x:gathering.base.x-baseSize/2,
+  const footprint=building.kind==='base'?building.footprint??{x:gathering.base.x-baseSize/2,
     y:gathering.base.y-baseSize/2,width:baseSize,height:baseSize}:building.footprint;
   const recipe=productionRecipe(gathering,building);
   const position = context ? footprint?chooseSpawn(recipe.domain==='air'?airMap(context.map):context.map,footprint,building.kind,gathering.units.filter(u=>isAir(u)===(recipe.domain==='air')),context.enemies.filter(e=>isAir(e)===(recipe.domain==='air')),recipe.size):null

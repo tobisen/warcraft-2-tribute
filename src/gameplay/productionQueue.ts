@@ -20,7 +20,7 @@ export function canEnqueue(g:GatheringState,p:ProductionState,b:ProductionBuildi
   const recipe=productionRecipe(g,b);
   return unitAvailability(productionFaction(g),b.kind==='base'?'worker':b.unitType??'soldier',b.kind==='base'?undefined:b.technology,g.campaignContent)===null && productionJobCount(p)<queueConfig.maxJobs && (!pop||hasPopulation(pop,recipe.supply))
     && canAfford(g,recipe.cost)
-    && (b.kind==='base'||b.ready!==false&&b.footprint!==null&&soldierSpawn(b.footprint,recipe.size,b.bounds)!==null);
+    && b.ready!==false && (b.kind==='base'||b.footprint!==null&&soldierSpawn(b.footprint,recipe.size,b.bounds)!==null);
 }
 export function enqueueProduction(gathering:GatheringState,production:ProductionState,
   building:ProductionBuilding=base,population?:Population,playing=true) {

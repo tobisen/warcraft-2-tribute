@@ -1,6 +1,7 @@
 import {text as uiText} from '../text';
 import { gameplayKeyAllowed,type KeyContext } from './keyboard';
 export const hotkeys=[
+ {key:'Y',button:'build-base',label:'Build an additional main base with a worker: 100 wood + 60 gold, 12 seconds. Separate worker queue and rally; shared resources, supply and technology.'},
  {key:'F6',button:'hold-position',label:'Hold position: attack visible targets in range without pursuing. Normal orders replace the queue; Shift adds move, attack, attack-move, gather, hold or patrol (max 32). Hold and patrol continue until replaced or stopped.'},
  {key:'F7',button:'patrol-units',label:'Patrol between your current position and the clicked point; combat units attack-move and resume after target loss. Shift appends.'},
  {key:'F5',button:'train-air',label:'Train the faction flyer at a completed barracks; Forge and both research upgrades required.'},
@@ -13,7 +14,7 @@ export const hotkeys=[
  {key:'X',button:'toggle-gate',label:'Open or close the selected gate. Only your team may use an open gate; closing over units or required routes is blocked.'},
  {key:'O',button:'build-tower',label:'Build a defense tower with a selected worker at a visible legal site.'},
  {key:'N',button:'upgrade-tower',label:'Upgrade the selected tower after completing base level 2 and a Forge.'},
- {key:'I',button:'upgrade-base',label:'Upgrade the selected base. Its worker queue pauses and resumes with its remaining time intact.'},
+ {key:'I',button:'upgrade-base',label:'Upgrade the selected base. All main-building worker queues pause and resumes with its remaining time intact.'},
  {key:'H',button:'build-harbor',label:'Build a harbor with a selected worker at a visible, valid coastal site. Pay the displayed cost at placement.'},
  {key:'J',button:'train-transport',label:'Train a transport at the selected completed harbor. Requires resources, supply and a free queue slot.'},
  {key:'K',button:'train-ship',label:'Train a warship at the selected completed harbor. Requires resources, supply and a free queue slot.'},

@@ -18,7 +18,9 @@ export function knownEnemyNode(m:MatchState,node:ResourceNode|undefined):Resourc
 export function observeEnemyKnowledge(m:MatchState):MatchState {
  if(!m.enemyKnowledge||!m.fog)return m;
  const byId=new Map(m.enemyKnowledge.nodes.map(n=>[n.id,n]));for(const node of resourceNodes(m.gathering))if(node&&isVisible(m.fog,'enemy',node.position))byId.set(node.id,{...node,position:{...node.position}});
- const playerBase=m.aiContext?.humanHostile!==false&&m.combat.baseHP>0&&isVisible(m.fog,'enemy',m.gathering.base)?{...m.gathering.base}:m.enemyKnowledge.playerBase;
+ const visibleExpansion=m.placement.bases?.find(b=>b.hp>0&&b.construction.remainingSeconds===0&&isVisible(m.fog!,'enemy',{x:b.footprint.x+b.footprint.width/2,y:b.footprint.y+b.footprint.height/2}));
+ const remembered=m.enemyKnowledge.playerBase,retired=!m.aiContext&&remembered&&isVisible(m.fog,'enemy',remembered)&&!(m.combat.baseHP>0&&remembered.x===m.gathering.base.x&&remembered.y===m.gathering.base.y)&&!(m.placement.bases??[]).some(b=>b.hp>0&&remembered.x===b.footprint.x+b.footprint.width/2&&remembered.y===b.footprint.y+b.footprint.height/2);
+ const playerBase=m.aiContext?.humanHostile!==false&&m.combat.baseHP>0&&isVisible(m.fog,'enemy',m.gathering.base)?{...m.gathering.base}:m.aiContext?.humanHostile!==false&&visibleExpansion?{x:visibleExpansion.footprint.x+visibleExpansion.footprint.width/2,y:visibleExpansion.footprint.y+visibleExpansion.footprint.height/2}:retired?null:m.enemyKnowledge.playerBase;
  return {...m,enemyKnowledge:{...m.enemyKnowledge,nodes:[...byId.values()],playerBase}};
 }
 export function enemyAttackDestination(m:MatchState):Position {return m.enemyKnowledge?.playerBase??searchWaypoints(m,'attack')[m.enemyKnowledge?.attackScoutIndex??0];}

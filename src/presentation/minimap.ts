@@ -31,7 +31,8 @@ export function cameraIndicator(scroll:Position,world:MapSize,viewport:MapSize,s
 export function minimapData(state:MatchState,visible:MinimapVisibility=()=>true){
  const markers:MinimapMarker[]=[];
  const rect=(id:string,owner:MinimapMarker['owner'],footprint:Footprint,color:string)=>markers.push({id,owner,footprint:{...footprint},position:{x:footprint.x+footprint.width/2,y:footprint.y+footprint.height/2},color});
- rect('base','player',baseFootprint(state.gathering.base),'#5fa9df');
+ if(state.combat.baseHP>0)rect('base','player',baseFootprint(state.gathering.base),'#5fa9df');
+ for(const b of state.placement.bases??[])rect(b.id,'player',b.footprint,'#5fa9df');
  if(state.placement.barracks)rect('barracks','player',state.placement.barracks,'#d09153');
  if(state.placement.forge)rect('forge','player',state.placement.forge.footprint,'#989ea8');
  for(const t of state.placement.defenses??[])rect(t.id,t.owner,t.footprint,'#d09153');

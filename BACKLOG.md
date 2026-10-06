@@ -38,9 +38,11 @@
 
 - Innehåll202: endast nya expanded-skirmishmatcher på nio kartor; två kistor ×20wood+10gold och en fraktionsgrundsoldat per karta. Faktiskt synfält + egen markenhet inom48px öppnar/rekryterar. Full supply eller blockerad spawn väntar utan kostnad/duplication; render visar varför. Kampanj och äldre matcher behåller sitt innehåll. Stable config-ID/platser, intjänad bonus räknas separat från utvunnen stock i statistik, rekryt räknas som tillagd enhet.
 
-### RTS-203 — Flera huvudbyggnader — Todo
+### RTS-203 — Flera huvudbyggnader — Done
 - Bygg ytterligare egna baser genom betalda workerjobb. Återanvänd byggbarhet, resursleverans, produktion, ownership/fog, selection, destruction och Save-version.
 - Detaljera produktionsköer och defeatregler före implementation; behåll kampanjens ursprungliga basmål.
+
+- Design203: högst två extra baser,100wood+60gold/st och12s workerbyggande,64px footprint. Separata FIFO-workerköer/rally, delad ekonomi/supply/basnivå. Färdig bas ger fraktionsbasens supply och leverans/vision; grund ger inget. Skirmish/team kräver sista färdiga basens förlust, kampanj skyddar ursprungsbasen.
 
 ### RTS-204 — Utökat bygg-/tech-/uppgraderingspaket — Todo
 - Föreslå ett avgränsat sammanhängande paket för de fem fraktionerna eller använd uttrycklig användarspecifikation innan nya recipes/assets byggs.

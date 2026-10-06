@@ -14,6 +14,7 @@ export function visionObservers(state:MatchState):VisionObserver[]{
  const building=(id:string,footprint:{x:number;y:number;width:number;height:number},radius:number)=>observers.push({id,owner:'player',footprint,position:{x:footprint.x+footprint.width/2,y:footprint.y+footprint.height/2},radius});
  for(const ship of state.navy?.ships??[])if(ship.hp>0)observers.push({id:ship.id,owner:'player',position:{...ship.position},radius:fogConfig.combatRadius});
  const harbor=state.navy?.harbor;if(harbor&&harbor.hp>0&&harbor.construction.remainingSeconds===0)building('harbor',harbor.footprint,fogConfig.barracksRadius);
+ for(const b of state.placement.bases??[])if(b.hp>0&&b.construction.remainingSeconds===0)building(b.id,b.footprint,fogConfig.baseRadius);
  if(state.combat.baseHP>0)building('base',baseFootprint(state.gathering.base),fogConfig.baseRadius);
  if(state.placement.barracks&&(state.placement.barracksHP??1)>0&&state.placement.construction?.remainingSeconds===0)building('barracks',state.placement.barracks,fogConfig.barracksRadius);
  const forge=state.placement.forge;if(forge&&forge.hp>0&&forge.construction.remainingSeconds===0)building('forge',forge.footprint,fogConfig.forgeRadius);

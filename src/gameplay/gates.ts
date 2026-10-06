@@ -1,3 +1,4 @@
+import {hasMainBase} from './extraBases';
 import {nodeRadius} from './gathering';
 import {isAir} from './domains';
 import {enemySize} from './enemyBody';
@@ -16,5 +17,5 @@ export function fortificationSafety(m:MatchState,rect:Footprint):string|null{
  for(const e of m.combat.enemies.filter(e=>e.footprint&&(e.kind==='base'||e.buildingType==='barracks'||e.buildingType==='outpost'))){const exit=(map:typeof after)=>spawnCandidates(enemyNavigationMap(map),e.footprint!,'barracks').some(p=>hasSpawnExit(enemyNavigationMap(map),p));if(exit(m.map)&&!exit(after))return 'Blocks an enemy production exit';}
  return null;
 }
-export function gateToggleReason(m:MatchState,id:string):string|null{const t=m.placement.defenses?.find(t=>t.id===id&&t.kind==='gate');if(!t||t.hp<=0)return 'Gate missing';if(m.paused||m.outcome!=='playing'||!!m.multiplePlayers&&m.combat.baseHP<=0)return 'Match is paused or ended';if(t.construction.remainingSeconds>0)return 'Construction unfinished';if(!t.open)return null;return fortificationSafety(m,t.footprint);}
+export function gateToggleReason(m:MatchState,id:string):string|null{const t=m.placement.defenses?.find(t=>t.id===id&&t.kind==='gate');if(!t||t.hp<=0)return 'Gate missing';if(m.paused||m.outcome!=='playing'||!!m.multiplePlayers&&!hasMainBase(m))return 'Match is paused or ended';if(t.construction.remainingSeconds>0)return 'Construction unfinished';if(!t.open)return null;return fortificationSafety(m,t.footprint);}
 export function toggleGate(m:MatchState,id:string):MatchState{if(gateToggleReason(m,id))return m;const t=m.placement.defenses!.find(t=>t.id===id)!;const obstacles=t.open?[...m.map.obstacles,t.footprint]:m.map.obstacles.filter(o=>!same(o,t.footprint));return withGateRules({...m,map:replaceObstacles(m.map,obstacles),placement:{...m.placement,defenses:m.placement.defenses!.map(x=>x===t?{...x,open:!t.open}:x)}});}

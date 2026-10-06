@@ -6,6 +6,7 @@ import {orderSummary} from '../gameplay/commandOrders';
 import {spellDefinition} from '../config/spells';
 import {manaFor,currentMana} from '../gameplay/mana';
 import {inspectedBuilding} from '../gameplay/buildingInspection';
+import {selectedBase} from '../gameplay/extraBases';
 import {unitAvailability,technologyFor} from '../gameplay/productionPrerequisites';
 import {resourceStaffing} from '../gameplay/resourceStaffing';
 import {resourceNodes} from '../gameplay/gathering';
@@ -52,7 +53,7 @@ export function selectionInfo(m:MatchState,building:BuildingSelection,resourceId
   if(remaining>0)stats.unshift(description);
   const roles=kind==='base'?['worker'] as const:kind==='barracks'?f.roster.filter(r=>r!=='worker'):[];
   for(const role of roles){const reason=unitAvailability(f,role,technologyFor(m,'player'));stats.push(`${f.unitNames[role]}: ${reason??'Available'}`);}
-  const production=kind==='base'?m.production:kind==='barracks'?m.soldierProduction:kind==='harbor'?m.navy?.production:undefined;
+  const production=kind==='base'?selectedBase(m,building)?.production:kind==='barracks'?m.soldierProduction:kind==='harbor'?m.navy?.production:undefined;
   if(production)stats.push(`Production: ${production.queue?.length??0} queued`);
   if(kind==='harbor')stats.push(`${f.naval.units.transport.name} · ${f.naval.units.warship.name}`);
   if(kind==='base')stats.push(`Base level ${m.combat.baseDevelopment?.level??1}`,m.combat.baseDevelopment?.remainingSeconds!=null?`Upgrade: ${m.combat.baseDevelopment.remainingSeconds.toFixed(1)}s; worker training paused`:'Worker training active');
