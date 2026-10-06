@@ -1,0 +1,18 @@
+[
+  {
+    "width": 800,
+    "physicalWorkerAttack": true,
+    "weakDamage": true,
+    "saveLoadAttack": true,
+    "resumeGather": true,
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "physicalWorkerAttack": true,
+    "weakDamage": true,
+    "saveLoadAttack": true,
+    "resumeGather": true,
+    "errors": []
+  }
+]

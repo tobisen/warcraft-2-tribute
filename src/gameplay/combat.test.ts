@@ -13,11 +13,11 @@ const economy = (units: GatheringState['units'] = [soldier()]): GatheringState =
 const fight = (x = 132, hp = 36): CombatState => ({ baseHP: combatConfig.baseHP, enemies: [{ id: 'enemy-1', position: { x, y: 100 }, hp }] });
 
 describe('manual combat', () => {
-  it('only selected soldiers accept attack; workers keep their work order', () => {
+  it('only selected units accept attack, including workers', () => {
     const worker = { kind: 'worker' as const, id: 'w', position: {x:0,y:0}, target:{x:0,y:0}, cargo:3, selected:true, order:{kind:'gather' as const,nodeId:'wood'} };
     const idle = soldier({order:{kind:'idle'}});
     const units = orderAttack([worker, idle, soldier({id:'unselected',selected:false,order:{kind:'move'}})], 'enemy-2');
-    expect(units[0]).toEqual(worker);
+    expect(units[0].order).toEqual({kind:'attack',enemyId:'enemy-2'});expect(units[0].cargo).toBe(3);
     expect(units[1].order).toEqual({kind:'attack',enemyId:'enemy-2'});
     expect(units[2].order.kind).toBe('move');
   });

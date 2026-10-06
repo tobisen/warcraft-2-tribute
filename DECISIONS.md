@@ -1548,3 +1548,6 @@ Zoom0.5×–2× är appsessionens aktuella matchvy; ny match/Load startar1×. Sa
 
 ## RTS-200 — Säkra diagonala delsträckor
 Tidigare beslut om ingen efterhands-smoothing ersätts inom denna task: linjär string-pulling förenklar både individuella och formations-BFS-vägar. Full svept kroppskollision kontrolleras för varje shortcut; fyrgrannarnas deterministic/reverse-cache består. Målen/blockedresultaten ändras inte. Färdiganlända idle-enheter står kvar vid separation, rörliga enheter får fortfarande lokal korrigering. Global Euclidean-optimalitet är inget löfte.
+
+## RTS-201 — Manuellt workermelee
+Alla fem fraktioners workers har2damage/s och16px surface-range, egen config utanför soldierstats. Endast manuella attacker/Shift-attackqueue; inga military researchbonus eller auto-acquisition. Arbetsorder ersätts medan last bevaras, ny arbetsorder återupptar enligt befintliga regler. Land/buildingtargets, Save59 med explicit pre59-innehållskontroll. EnemyAI-workpolicy oförändrad.

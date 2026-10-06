@@ -27,7 +27,7 @@ import { advanceRoute, planRoute, updateMappedMove, segmentFits, type RouteState
 import type { WorldMap } from './map';
 import type { Footprint, PlacementState } from './placement';
 import { combatConfig } from '../config/combat';
-import { soldierStats, combatUnitStats, rangedStats } from '../config/unit';
+import { soldierStats, combatUnitStats, rangedStats,workerStats,workerCombatConfig } from '../config/unit';
 import type { GatheringState, Unit,WorkerOrder,ResourceType } from './gathering';
 import { moveTowards, type Position } from './movement';
 
@@ -40,8 +40,8 @@ export function enemyAt(enemies: Enemy[], point: Position): Enemy | undefined {
 }
 
 export function orderAttack(units: Unit[], enemyId: string): Unit[] {
-  return units.map(unit => unit.kind === 'soldier' && unit.selected
-    ? { ...unit, commandMode: undefined, orderQueue: undefined, attackMoveTarget: undefined, autoOrigin: undefined, autoDisabled: false, navigation: undefined, order: { kind: 'attack', enemyId } } : unit);
+  return units.map(unit => unit.selected
+    ? { ...unit, commandMode: undefined, orderQueue: undefined, ...(unit.kind==='soldier'?{attackMoveTarget: undefined, autoOrigin: undefined, autoDisabled: false}:{}), navigation: undefined, order: { kind: 'attack', enemyId } } : unit);
 }
 
 /** Consume travel time before melee damage; positions/ranges use centre distances. */
@@ -105,16 +105,17 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
       return {...moved,...(rangedStats(unit,gathering.faction)?{attackCooldown:Math.max(0,(unit.attackCooldown??0)-delta)}:{}),...(arrived||moved.navigation?.status==='blocked'?{attackMoveTarget:undefined,autoOrigin:undefined,order:{kind:'idle' as const}}:{})};
     }
     if(unit.kind==='soldier'&&unit.order.kind==='hunt')return unit;
-    if (unit.kind !== 'soldier' || unit.hp <= 0 || unit.order.kind !== 'attack') return unit.kind==='soldier'&&rangedStats(unit,gathering.faction)?{...unit,attackCooldown:Math.max(0,(unit.attackCooldown??0)-delta)}:unit;
+    if (unit.hp!==undefined&&unit.hp <= 0 || unit.order.kind !== 'attack') return unit.kind==='soldier'&&rangedStats(unit,gathering.faction)?{...unit,attackCooldown:Math.max(0,(unit.attackCooldown??0)-delta)}:unit;
     const enemy = attackableEnemies.find(e => e.id === (unit.order.kind === 'attack' ? unit.order.enemyId : '') && e.hp > 0);
     if (!enemy||!canAttackDomain(unit,enemy,gathering.faction??'crown')||visible&&!visible(enemy,unit)) return { ...unit, autoOrigin:undefined,navigation: undefined, order: { kind: 'idle' as const } };
-    const ranged=rangedStats(unit,gathering.faction);
-    const range=ranged?.range??combatUnitStats(unit,gathering.faction).range??combatConfig.soldierRange;
-    const speed=combatUnitStats(unit,gathering.faction).speed;
-    const step = unit.commandMode?.kind==='hold' ? {position:{...unit.position},attackSeconds:(map?canInteract({...movementMap(map,unit),ignoreAttackOcclusion:isAir(enemy)},unit.position,enemyBody(enemy),range):Math.hypot(unit.position.x-enemy.position.x,unit.position.y-enemy.position.y)<=range)?delta:0,navigation:undefined} : map ? combatApproach({...movementMap(map,unit),ignoreAttackOcclusion:isAir(enemy),bodyHalf:combatUnitStats(unit,gathering.faction).size/2},unit.position,enemyBody(enemy),
+    const stats=unit.kind==='worker'?{...workerStats(gathering.faction),...workerCombatConfig}:combatUnitStats(unit,gathering.faction);
+    const ranged=unit.kind==='soldier'?rangedStats(unit,gathering.faction):null;
+    const range=ranged?.range??stats.range??combatConfig.soldierRange;
+    const speed=stats.speed;
+    const step = unit.commandMode?.kind==='hold' ? {position:{...unit.position},attackSeconds:(map?canInteract({...movementMap(map,unit),ignoreAttackOcclusion:isAir(enemy)},unit.position,enemyBody(enemy),range):Math.hypot(unit.position.x-enemy.position.x,unit.position.y-enemy.position.y)<=range)?delta:0,navigation:undefined} : map ? combatApproach({...movementMap(map,unit),ignoreAttackOcclusion:isAir(enemy),bodyHalf:stats.size/2},unit.position,enemyBody(enemy),
       enemy.id,speed,range,delta,unit.navigation,gateFor?.(`player:${unit.id}`))
       : approach(unit.position, enemy.position, speed, range, delta);
-    if(ranged) {
+    if(ranged&&unit.kind==='soldier') {
       let cooldown=Math.max(0,(unit.attackCooldown??0)-(delta-step.attackSeconds)),time=step.attackSeconds;
       const canFire=(!visible||visible(enemy,unit))&&(!map||isAir(unit)||isAir(enemy)||segmentFits(enemy.footprint?{...map,obstacles:map.obstacles.filter(o=>!(o.x===enemy.footprint!.x&&o.y===enemy.footprint!.y&&o.width===enemy.footprint!.width&&o.height===enemy.footprint!.height))}:map,step.position,enemy.position,0));
       while(canFire&&time>0&&time+1e-9>=cooldown) {
@@ -129,7 +130,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
       cooldown=Math.max(0,cooldown-time);
       return {...unit,position:step.position,attackCooldown:cooldown,...(step.navigation?{navigation:step.navigation}:{})};
     }
-    damage.set(enemy.id, (damage.get(enemy.id) ?? 0) + step.attackSeconds * (combatUnitStats(unit,gathering.faction).damagePerSecond??combatConfig.soldierDamagePerSecond)*attackMultiplier*abilityEffects(gathering,unit).attackMultiplier*spellModifiers(unit).attack);
+    damage.set(enemy.id, (damage.get(enemy.id) ?? 0) + step.attackSeconds * (stats.damagePerSecond??combatConfig.soldierDamagePerSecond)*(unit.kind==='worker'?1:attackMultiplier*abilityEffects(gathering,unit).attackMultiplier*spellModifiers(unit).attack));
     return { ...unit, position: step.position, ...(step.navigation ? {navigation:step.navigation}: {}) };
   });
   // Both sides attack from the same live snapshot, so lethal blows are simultaneous.
@@ -213,7 +214,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
   const enemies = movingEnemies.map(enemy => ({ ...enemy, hp: Math.max(0, enemy.hp - (damage.get(enemy.id) ?? 0)*(!enemy.footprint&&enemy.kind!=='worker'?(combat.enemyUpgrades?.defense?opponent.upgrades.defense.multiplier:1)*abilityEffects(enemyGathering,enemySoldier(enemy,enemyFaction)).defenseMultiplier*spellModifiers(enemy).defense:1)) }))
     .filter(e => e.hp > 0 || e.kind==='worker').map(enemy => enemy.navigation?.targetId && enemy.navigation.targetId!=='explore-goal' && !aliveTargets.has(enemy.navigation.targetId) ? {...enemy,navigation:undefined} : enemy);
   const destroyedEnemyFootprints=movingEnemies.filter(e=>e.footprint&&e.hp-(damage.get(e.id)??0)<=0).map(e=>e.footprint!);
-  units = units.map(unit => unit.kind === 'soldier' && unit.order.kind === 'attack'
+  units = units.map(unit => unit.order.kind === 'attack'
     && !enemies.some(e => e.id === (unit.order.kind === 'attack' ? unit.order.enemyId : ''))
     ? { ...unit, navigation: undefined, order: { kind: 'idle' as const } } : unit);
   const finishedNavy=nextNavy?{...nextNavy,ships:nextNavy.ships.map(ship=>ship.order.kind==='attack'&&!enemies.some(e=>e.hp>0&&ship.order.kind==='attack'&&e.id===ship.order.enemyId)?{...ship,navigation:undefined,order:{kind:'idle' as const}}:ship)}:undefined;

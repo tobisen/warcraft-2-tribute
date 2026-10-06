@@ -28,7 +28,7 @@
 - Utred fyrgrannevägar och introducera säkra diagonala rutter utan hörnklippning; behåll kroppsstorlek, land/sjö, blockerad skog och revisionscache.
 - Verifiera off-center kontakter, täta hinder, flera units och routeprestanda.
 
-### RTS-201 — Svaga workerattacker — Todo
+### RTS-201 — Svaga workerattacker — Done
 - Workers kan få manuell attackorder med låg melee-skada; separera från soldierstats. Gathering/byggarbete kan avbrytas och återupptas enligt befintliga regler.
 - Fog, damage/domains, Save/load, selection och dubbla worker/army-grupper verifieras.
 

@@ -14,7 +14,7 @@ import type { WorldMap } from './map';
 import { planRoute } from './navigation';
 
 /** Later fog can supply this predicate; the current map is fully visible. */
-export type EnemyVisibility = (enemy: Enemy, observer: Soldier) => boolean;
+export type EnemyVisibility = (enemy: Enemy, observer: Unit) => boolean;
 export const allEnemiesVisible: EnemyVisibility = () => true;
 const distance = (a: {x:number;y:number}, b: {x:number;y:number}) => Math.hypot(a.x-b.x,a.y-b.y);
 function reachable(unit: Soldier, enemy: Enemy, map?: WorldMap,faction?:FactionId): boolean {

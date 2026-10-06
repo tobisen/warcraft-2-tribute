@@ -1,3 +1,9 @@
+# RTS-201 klar — fortsätt202
+
+201 manuellt workermelee2DPS/16px, cargo/orderbyte/fog/domän/Save59. Riktade89/7 + slutlig workercombat7/1, unit475/85, strict build/diff och fysisk Chrome800/1280 attack/SaveLoad/gather PASS; artifacts/rts-201.200 push30f9734;201 hash rapporteras vid push. Nästa202: detaljera begränsade skatter/upptäckbara enheter före config/state/assets. Ingen autonom enemyworkercombat. CSS/docs bevarade; samlad fullregression vid etappslut.
+
+---
+
 # RTS-200 klar — fortsätt201
 
 200 säkra diagonala delsträckor runt hinder och stabil arrived-grupp. Unit475/85, riktade97/10, strict build/diff, fysisk Chrome800/1280 tre workers och793-träd stress3/18workers PASS; artifacts/rts-200. Median3.6/4ms,59.8/59.2fps.199 push4b2ad55;200 hash rapporteras vid push. Nästa201 svaga workerattacker. BFS fortsatt fyrgrannar + säker smoothing, ingen garanti om globalt kortaste Euclidean-väg. CSS/docs bevarade; samlad fullregression vid etappslut.

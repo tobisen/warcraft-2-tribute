@@ -1,3 +1,4 @@
+import {workerCombatConfig} from '../config/unit';
 import {cancelSelectedTransfers,requestTransport} from '../gameplay/autoTransport';
 import {syncSkirmishMenu} from '../presentation/skirmishMenu';
 import {campaignActionReason,campaignContentFor} from '../config/campaignContent';
@@ -1007,7 +1008,7 @@ export class BootScene extends Phaser.Scene {
       visual.body.setPosition(unit.position.x, unit.position.y);
       const marker=orderMarkers({ ...this.gathering,units:[{...unit,selected:true}] },{...this.combat,enemies:visibleEnemies},true,this.placement.barracks,this.placement.farms,this.placement.forge?.footprint)[0];
       const enemy=unit.order.kind==='attack'?visibleEnemies.find(e=>unit.order.kind==='attack'&&e.id===unit.order.enemyId):undefined;
-      const attackRange=unit.kind==='soldier'?(unit.archetype==='archer'?archerConfig.range:unit.archetype==='catapult'?catapultConfig.range:combatConfig.soldierRange):0;
+      const attackRange=unit.kind==='soldier'?(unit.archetype==='archer'?archerConfig.range:unit.archetype==='catapult'?catapultConfig.range:combatConfig.soldierRange):workerCombatConfig.range;
       const animalTarget=unit.order.kind==='hunt'?animalPoses.find(a=>unit.order.kind==='hunt'&&a.id===unit.order.animalId):undefined;
       const action:Action=unit.order.kind==='hunt'&&unit.navigation?.status==='arrived'?'attack':unit.order.kind==='attack'&&enemy&&canInteract(this.map,unit.position,enemyBody(enemy),attackRange)?'attack':unit.order.kind==='gather'&&marker&&Math.hypot(marker.position.x-unit.position.x,marker.position.y-unit.position.y)<=gatheringConfig.nodeRadius+gatheringConfig.range?'gather':(unit.order.kind==='build'||unit.order.kind==='repair')&&unit.navigation?.status==='arrived'?'build':'idle';
       this.animateUnit(unit.id,visual.body,unit.position,action,unit.kind==='worker'?'worker':unit.archetype??'soldier','player',animalTarget?.position??enemy?.position??marker?.position);

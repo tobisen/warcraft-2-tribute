@@ -37,8 +37,15 @@ export function encodeMultipleSave(m:MatchState,view:SavedView):string{
 /** Validate every scoped document with the existing strict economy/tech/ID checks. */
 export function decodeMultipleSave(raw:unknown):LoadResult{
  try{
- const doc=raw as Record<string,unknown>;if(doc?.configVersion!==saveConfig.configVersion&&doc?.configVersion!=='tribute-config-53'&&doc?.configVersion!=='tribute-config-54'&&doc?.configVersion!=='tribute-config-55'&&doc?.configVersion!=='tribute-config-56'&&doc?.configVersion!=='tribute-config-57'&&Array.isArray(doc?.multiplePlayers)&&doc.multiplePlayers.some(p=>(p as Record<string,unknown>).difficulty!==undefined))throw Error('Legacy player difficulty');
- if(doc?.configVersion==='tribute-config-53'||doc?.configVersion==='tribute-config-54'||doc?.configVersion==='tribute-config-55'||doc?.configVersion==='tribute-config-56'||doc?.configVersion==='tribute-config-57')doc.configVersion=saveConfig.configVersion;
+ const doc=raw as Record<string,unknown>;if(doc?.configVersion!==saveConfig.configVersion&&doc?.configVersion!=='tribute-config-53'&&doc?.configVersion!=='tribute-config-54'&&doc?.configVersion!=='tribute-config-55'&&doc?.configVersion!=='tribute-config-56'&&doc?.configVersion!=='tribute-config-57'&&doc?.configVersion!=='tribute-config-58'&&Array.isArray(doc?.multiplePlayers)&&doc.multiplePlayers.some(p=>(p as Record<string,unknown>).difficulty!==undefined))throw Error('Legacy player difficulty');
+ if(typeof doc?.configVersion==='string'&&/^tribute-config-(?:[1-9]|[1-4][0-9]|5[0-8])$/.test(doc.configVersion)){
+  for(const encoded of [doc.human,...(Array.isArray(doc.ai)?doc.ai.map(bot=>(bot as Record<string,unknown>).state):[])]){
+   if(typeof encoded!=='string')continue;
+   const child=JSON.parse(encoded),units=child.state?.gathering?.units??[];
+   if(units.some((u:{kind:string;order:{kind:string};orderQueue?:{kind:string}[]})=>u.kind==='worker'&&(u.order.kind==='attack'||u.orderQueue?.some(o=>o.kind==='attack'))))throw Error('Legacy worker attack');
+  }
+ }
+ if(doc?.configVersion==='tribute-config-53'||doc?.configVersion==='tribute-config-54'||doc?.configVersion==='tribute-config-55'||doc?.configVersion==='tribute-config-56'||doc?.configVersion==='tribute-config-57'||doc?.configVersion==='tribute-config-58')doc.configVersion=saveConfig.configVersion;
  const migrateTeams=doc?.configVersion==='tribute-config-49';
  if(doc?.configVersion==='tribute-config-48'&&Array.isArray(doc.multiplePlayers)){doc.multiplePlayers=doc.multiplePlayers.map((p,i)=>({...p as object,teamId:i+1}));doc.configVersion=saveConfig.configVersion;}
  if(doc?.configVersion==='tribute-config-51'||doc?.configVersion==='tribute-config-52')doc.configVersion=saveConfig.configVersion;

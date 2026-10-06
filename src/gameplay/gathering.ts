@@ -18,7 +18,7 @@ import { moveTowards, type Position } from './movement';
 import type { SelectableUnit } from './selection';
 
 export type ResourceType = 'wood' | 'gold';
-export type WorkerOrder = {kind:'repair';buildingId:import('./buildingSelection').BuildingSelection&string} |  { kind: 'idle' } | { kind: 'move' }
+export type WorkerOrder = {kind:'attack';enemyId:string} | {kind:'repair';buildingId:import('./buildingSelection').BuildingSelection&string} |  { kind: 'idle' } | { kind: 'move' }
   | { kind: 'gather' | 'deliver'; nodeId: string } | {kind:'build';buildingId:`wall-${number}`|`gate-${number}`|`tower-${number}`|'harbor'|'outpost'|'barracks'|'forge'|`farm-${number}`};
 export interface Worker extends SelectableUnit, importOrderState {
   navigation?: RouteState;
@@ -112,7 +112,7 @@ export function updateGathering(state: GatheringState, deltaSeconds: number, map
     if(original.kind==='soldier'&&original.attackMoveTarget)return original;
     if (map && (original.order.kind === 'move' || original.order.kind === 'idle' && original.navigation?.status === 'blocked'
       && original.navigation.error !== 'no-space' && original.navigation.revision !== map.revision)) return updateMappedMove(original, map, deltaSeconds,queue?.gateFor?.(`${queue?.team??'player'}:${original.id}`),state.faction);
-    if (original.order.kind === 'build'||original.order.kind==='repair') return original;
+    if (original.order.kind === 'build'||original.order.kind==='repair'||original.order.kind==='attack') return original;
     if (original.kind === 'soldier') {
       if (original.attackMoveTarget) return original;
       if (original.order.kind !== 'move') return original;
@@ -122,7 +122,7 @@ export function updateGathering(state: GatheringState, deltaSeconds: number, map
     }
     let worker: Worker = { ...original, position: { ...original.position } };
     let time = Math.max(0, deltaSeconds);
-    while (worker.order.kind !== 'idle' && worker.order.kind !== 'build'&&worker.order.kind!=='repair') {
+    while (worker.order.kind !== 'idle' && worker.order.kind !== 'build'&&worker.order.kind!=='repair'&&worker.order.kind!=='attack') {
       if (worker.order.kind === 'move') {
         worker.position = moveTowards(worker.position, worker.target, workerStats(state.faction).speed, time);
         if (worker.position.x === worker.target.x && worker.position.y === worker.target.y) {

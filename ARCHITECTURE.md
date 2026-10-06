@@ -1823,3 +1823,6 @@ Riktade art33/6 och runtime37/4 PASS; slutlig unit473/85 PASS10.05s och strict b
 
 ## RTS-199–200 — Kamera och vägsegment
 Presentationens camerahelpers översätter Phaser centrumorigin till synlig top-left för zoom/minimap/pan/Save. Zoom ändrar bara vyn, inte map/tile/bodymått. Navigation behåller cached reverse-BFS med fyrgrannar och förenklar resultat/formationvägar genom linjär string-pulling med befintlig segmentFits. Arrived idle-positioner skyddas från separation för stabil gruppankomst; rörliga bodies korrigeras som tidigare. Inga nya sparade navigationfält.
+
+## RTS-201 — Workerattack genom befintlig combat
+WorkerOrder inkluderar attack; updateGathering lämnar denna till updateCombat som väljer workerCombatConfig och workerStats för melee/routing. EnemyVisibility tar Unit-observatörer, acquisition är fortfarande soldier-only. Commands/Save/markers återanvänder gemensam enemyId; Save59 skyddar äldre versioners workerorder. Ingen separat combatupdater eller worker-AI tillförs.

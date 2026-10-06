@@ -42,7 +42,7 @@ describe('persistent commands and FIFO',()=>{
  });
  it('preserves modes/queue via strict Save/load; rejects invalid state and resets new matches',()=>{
   let m=issueOrder(fixture(),{kind:'patrol',destination:{x:400,y:300}});m=issueOrder(m,{kind:'hold'},true);const loaded=decodeSave(encodeSave(m,view));expect(loaded.ok).toBe(true);if(loaded.ok){expect(loaded.match.gathering.units[0].commandMode).toEqual(m.gathering.units[0].commandMode);expect(loaded.match.gathering.units[0].orderQueue).toEqual([{kind:'hold'}]);}
-  const raw=JSON.parse(encodeSave(m,view));raw.state.gathering.units[0].orderQueue=[{kind:'attack',enemyId:'x'}];expect(decodeSave(JSON.stringify(raw)).ok).toBe(false);
+  const raw=JSON.parse(encodeSave(m,view));raw.state.gathering.units[0].orderQueue=[{kind:'attack-move',destination:{x:400,y:300}}];expect(decodeSave(JSON.stringify(raw)).ok).toBe(false);
   expect(createMatch().gathering.units.every(u=>!u.commandMode&&!u.orderQueue)).toBe(true);
  });
  it('completed move advances in the real match loop and fixed Hold resists separation',()=>{

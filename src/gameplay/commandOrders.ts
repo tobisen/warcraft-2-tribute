@@ -19,7 +19,7 @@ export interface OrderState {
 }
 export const orderQueueLimit=32;
 function supports(u:Unit|Ship,o:QueuedOrder):boolean {
- return o.kind==='hunt'?u.kind==='soldier'||u.kind==='ship'&&u.role!=='transport':o.kind==='gather'?u.kind==='worker':o.kind==='attack-move'?u.kind==='soldier':o.kind==='attack'?u.kind==='soldier'||u.kind==='ship'&&u.role!=='transport':true;
+ return o.kind==='hunt'?u.kind==='soldier'||u.kind==='ship'&&u.role!=='transport':o.kind==='gather'?u.kind==='worker':o.kind==='attack-move'?u.kind==='soldier':o.kind==='attack'?u.kind==='worker'||u.kind==='soldier'||u.kind==='ship'&&u.role!=='transport':true;
 }
 function start(m:MatchState,u:Unit|Ship,o:QueuedOrder):Unit|Ship {
  if(o.kind==='hunt'&&(u.kind==='soldier'||u.kind==='ship'&&u.role!=='transport')){const animal=matchAnimals(m).find(a=>a.id===o.animalId);return {...u,commandMode:undefined,orderQueue:undefined,navigation:undefined,...(u.kind==='soldier'?{attackMoveTarget:undefined,autoOrigin:undefined,autoDisabled:false}:{}),target:{...(animal?.position??u.position)},order:animal?.hp?{kind:'hunt',animalId:o.animalId}:{kind:'idle'}};}

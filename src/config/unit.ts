@@ -15,3 +15,5 @@ export function rangedStats(unit:CombatProfile,faction?:FactionId){
  return {...baseline,...profile} as typeof archerConfig|typeof catapultConfig;
 }
 export const workerStats=(faction:FactionId='crown')=>({...unitStats,...factions[faction].units.worker});
+
+export const workerCombatConfig={damagePerSecond:2,range:16,targets:['land','building'] as const};
