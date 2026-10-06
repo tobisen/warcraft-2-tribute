@@ -19,7 +19,7 @@ import type { Unit } from './gathering';
 import { soldierStats, combatUnitStats, unitStats } from '../config/unit';
 import { barracksConfig, farmConfig, worldConfig } from '../config/buildings';
 import { gatheringConfig } from '../config/gathering';
-import {resourceNodes,type GatheringState} from './gathering';
+import {nodeRadius,resourceNodes,type GatheringState} from './gathering';
 import type { Position } from './movement';
 
 export interface Footprint extends Position {
@@ -62,7 +62,7 @@ export function placementObstacles(state: GatheringState): Footprint[] {
   return [
     { x: state.base.x - baseSize / 2, y: state.base.y - baseSize / 2,
       width: baseSize, height: baseSize },
-    ...resourceNodes(state).flatMap(node=>[...(!node.grove||node.remaining>0?[{x:node.position.x-gatheringConfig.nodeRadius,y:node.position.y-gatheringConfig.nodeRadius,width:gatheringConfig.nodeRadius*2,height:gatheringConfig.nodeRadius*2}]:[]),...forestRectangles(node)]),
+    ...resourceNodes(state).flatMap(node=>[...(!(node.grove||node.tree)||node.remaining>0?[{x:node.position.x-nodeRadius(node),y:node.position.y-nodeRadius(node),width:nodeRadius(node)*2,height:nodeRadius(node)*2}]:[]),...forestRectangles(node)]),
   ];
 }
 

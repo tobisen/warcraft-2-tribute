@@ -1,7 +1,7 @@
 import {gatheringConfig} from '../config/gathering';
 import {canInteract} from './approach';
 import {enemyWorker} from './enemyGathering';
-import type {ResourceNode} from './gathering';
+import {nodeRadius,type ResourceNode} from './gathering';
 import type {MatchState} from './match';
 import {placementObstacles} from './placement';
 import {resourceServices} from './resourceQueue';
@@ -12,7 +12,7 @@ export function resourceStaffing(m:MatchState,node:ResourceNode):{assigned:numbe
  if(node.remaining<=0)return {assigned:workers.length,gathering:0};
  const services=resourceServices({...m.gathering,units:[...m.gathering.units,...m.combat.enemies.flatMap(e=>{const w=enemyWorker(e);return w?[w]:[];})]},m.map,m.waves.elapsedSeconds);
  const map={...m.map,obstacles:[...m.map.obstacles,...placementObstacles(m.gathering)]};
- const radius=gatheringConfig.nodeRadius,rect={x:node.position.x-radius,y:node.position.y-radius,width:radius*2,height:radius*2};
+ const radius=nodeRadius(node),rect={x:node.position.x-radius,y:node.position.y-radius,width:radius*2,height:radius*2};
  return {assigned:workers.length,gathering:workers.filter(u=>{
   if(u.order.kind!=='gather'||u.cargo>=gatheringConfig.capacity||u.navigation&&u.navigation.status!=='arrived')return false;
   const service=services.get(u.id);

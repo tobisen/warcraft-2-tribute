@@ -4,7 +4,7 @@ import type {SpellState} from './spells';
 import type {ResourceService} from './resourceQueue';
 import type {AbilityState} from './abilities';
 import type {FactionId} from '../config/factions';
-import { approachRoute, canInteract } from './approach';
+import { approachRoute, canInteract, canReachFootprint } from './approach';
 import { resourceServices } from './resourceQueue';
 import type { GateFor } from './traffic';
 import { advanceRoute } from './navigation';
@@ -47,6 +47,7 @@ export interface Soldier extends SelectableUnit, SpellState, importOrderState {
 }
 export type Unit = Worker | Soldier;
 export interface ResourceNode {
+  tree?:true;
   grove?:import('../config/referenceTerrain').GroveId;
   resource?: ResourceType;
   id: string;
@@ -73,7 +74,9 @@ export interface GatheringState {
 
 export function resourceNodes(state:GatheringState):ResourceNode[]{return [state.node,...(state.gold?[state.gold]:[]),...(state.extraNodes??[])];}
 
+export const nodeRadius=(node:ResourceNode)=>node.tree?16:gatheringConfig.nodeRadius;
 export function isNodeHit(point: Position, node: ResourceNode): boolean {
+  if(node.tree)return Math.abs(point.x-node.position.x)<=16&&Math.abs(point.y-node.position.y)<=16;
   if(forestContains(node,point))return true;
   return Math.hypot(point.x - node.position.x, point.y - node.position.y) <= gatheringConfig.nodeRadius;
 }
@@ -98,6 +101,8 @@ export function orderUnits(units: Unit[], target: Position, node?: ResourceNode)
 export function updateGathering(state: GatheringState, deltaSeconds: number, map?: WorldMap,queue?:{elapsedSeconds:number;gateFor?:GateFor;team?:'player'|'enemy';services?:Map<string,ResourceService>;nodeVisible?:(node:ResourceNode)=>boolean;knownRemaining?:(node:ResourceNode)=>number}): GatheringState {
   const services=queue?.services??(map&&queue?resourceServices(state,map,queue.elapsedSeconds):undefined);
   const nodes = resourceNodes(state).map(node=>({...node}));
+  const workMap=map?{...map,obstacles:[...map.obstacles,...placementObstacles(state)]}:undefined;
+  const nextTree=(worker:Worker,node:ResourceNode)=>node.tree?nodes.filter(n=>n.tree&&n.remaining>0&&(!queue?.nodeVisible||queue.nodeVisible(n))).sort((a,b)=>Math.hypot(a.position.x-worker.position.x,a.position.y-worker.position.y)-Math.hypot(b.position.x-worker.position.x,b.position.y-worker.position.y)).find(n=>!workMap||canReachFootprint(workMap,worker.position,{x:n.position.x-16,y:n.position.y-16,width:32,height:32},gatheringConfig.range)):undefined;
   let goldBalance = state.goldBalance ?? 0;
   let wood = state.wood;
   const units = state.units.map(original => {
@@ -128,7 +133,8 @@ export function updateGathering(state: GatheringState, deltaSeconds: number, map
       const resource = node.resource ?? 'wood';
       let remaining = node.remaining;
       if (worker.order.kind === 'gather' && (remaining <= 0 && (!queue?.nodeVisible||queue.nodeVisible(node)) || worker.cargo >= gatheringConfig.capacity)) {
-        worker.order = worker.cargo > 0 ? { kind: 'deliver', nodeId } : { kind: 'idle' };
+        const next=worker.cargo===0?nextTree(worker,node):undefined;
+        worker.order = worker.cargo > 0 ? { kind: 'deliver', nodeId } : next?{kind:'gather',nodeId:next.id}:{ kind: 'idle' };
         continue;
       }
       const delivering = worker.order.kind === 'deliver';
@@ -140,8 +146,8 @@ export function updateGathering(state: GatheringState, deltaSeconds: number, map
       if (map) {
         const workMap = { ...map, obstacles: [...map.obstacles, ...placementObstacles(state)] };
         const rect = delivering ? deliveryRect : {
-          x:node.position.x-gatheringConfig.nodeRadius, y:node.position.y-gatheringConfig.nodeRadius,
-          width:gatheringConfig.nodeRadius*2, height:gatheringConfig.nodeRadius*2 };
+          x:node.position.x-nodeRadius(node), y:node.position.y-nodeRadius(node),
+          width:nodeRadius(node)*2, height:nodeRadius(node)*2 };
         const service=!delivering?services?.get(worker.id):undefined;
         const goalKey = `${worker.order.kind}:${nodeId}:${rect.x}:${rect.y}${service?`:service:${service.point.x}:${service.point.y}:${service.working}`:''}`;
         const cached = worker.navigation;
@@ -165,7 +171,8 @@ export function updateGathering(state: GatheringState, deltaSeconds: number, map
         worker.cargoType = undefined;
         worker.cargo = 0;
         const returnRemaining=queue?.nodeVisible&&!queue.nodeVisible(node)?queue.knownRemaining?.(node)??remaining:remaining;
-        worker.order = returnRemaining > 0 ? { kind: 'gather', nodeId } : { kind: 'idle' };
+        const next=returnRemaining<=0?nextTree(worker,node):undefined;
+        worker.order = returnRemaining > 0 ? { kind: 'gather', nodeId } : next?{kind:'gather',nodeId:next.id}:{ kind: 'idle' };
         continue;
       }
       if(remaining<=0){worker.order=worker.cargo>0?{kind:'deliver',nodeId}:{kind:'idle'};continue;}

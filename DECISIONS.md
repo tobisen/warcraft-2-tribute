@@ -1502,3 +1502,7 @@ Campaign: faction→difficulty→start/continue→briefing→mission. Endast cur
 ## 2026-10-05 — RTS-187
 
 Skirmish-sidan öppnas uttryckligen i Skirmish, medan Survival är separat scenarioval med fasta slots. Authored Plains96/128 har tredje start; tvåplatskartor visar orsaken och direktval för Plains96+2AI. Varje AI:s faction/profile/team visas tillsammans; befintligt difficultyval styr AI1 och default. AI2 har valfri difficulty override. Actor-MatchState använder p.difficulty annars default; root difficulty speglar explicit AI1 override. Save53 validates roster/actual actor difficulty och migrerar51/52 multi-envelopes utan att hitta på overrides. Highscorepartition/rubrik inkluderar explicit AI-difficulty samt roster/profil/lag. Teams/start-footprints valideras innan matchstart. Ingen ny AI eller ny karta införs.
+
+## 2026-10-06 — RTS-191: individuella skogsträd
+
+Nya Frontier-matcher använder resourceLayout=trees och Save54. Ett träd per tidigare crowncell har stabilt resurs-ID och32×32 markfootprint; befintliga400/200wood delas mellan cellerna utan extra ekonomi. Källatlas har ett synligt träd per sprite. Stock0 ger stubbe och borttaget hinder; en gemensam obstacle-revision per simulationsslice invaliderar routes. Byte efter uttömning/leverans väljer närmaste synliga nåbara träd, AI-jobbtilldelning kräver nåbarhet. Äldre saves utan resourceLayout behåller tidigare groves och konturer; inga gamla order-ID:n/koordinater omtolkas. Gemensamt underlag sprids till övriga kartor i193.

@@ -61,6 +61,7 @@
   "src/gameplay/matchStats.test.ts",
   "src/gameplay/missions.test.ts",
   "src/gameplay/multiplePlayers.test.ts",
+  "src/gameplay/multipleResources.test.ts",
   "src/gameplay/navalBalance.test.ts",
   "src/gameplay/navalCombat.test.ts",
   "src/gameplay/navigation.test.ts",

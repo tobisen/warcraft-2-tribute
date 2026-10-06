@@ -37,7 +37,8 @@ export function encodeMultipleSave(m:MatchState,view:SavedView):string{
 /** Validate every scoped document with the existing strict economy/tech/ID checks. */
 export function decodeMultipleSave(raw:unknown):LoadResult{
  try{
- const doc=raw as Record<string,unknown>;if(doc?.configVersion!==saveConfig.configVersion&&Array.isArray(doc?.multiplePlayers)&&doc.multiplePlayers.some(p=>(p as Record<string,unknown>).difficulty!==undefined))throw Error('Legacy player difficulty');
+ const doc=raw as Record<string,unknown>;if(doc?.configVersion!==saveConfig.configVersion&&doc?.configVersion!=='tribute-config-53'&&Array.isArray(doc?.multiplePlayers)&&doc.multiplePlayers.some(p=>(p as Record<string,unknown>).difficulty!==undefined))throw Error('Legacy player difficulty');
+ if(doc?.configVersion==='tribute-config-53')doc.configVersion=saveConfig.configVersion;
  const migrateTeams=doc?.configVersion==='tribute-config-49';
  if(doc?.configVersion==='tribute-config-48'&&Array.isArray(doc.multiplePlayers)){doc.multiplePlayers=doc.multiplePlayers.map((p,i)=>({...p as object,teamId:i+1}));doc.configVersion=saveConfig.configVersion;}
  if(doc?.configVersion==='tribute-config-51'||doc?.configVersion==='tribute-config-52')doc.configVersion=saveConfig.configVersion;

@@ -2,7 +2,27 @@
 
 ## Current Focus
 
+**Aktuellt kartmandat RTS-191–194:** Fyra beställda kartförbättringar, en i taget. Frontier träd/gruva/berg färdigställs och browsergranskas först. Taskvisa checks/docs/commit/push till origin/main. Bevara style.css/docs; ingen delegering. Stanna efter194. Tidigare grafikfas är historisk status.
+
 **Nytt grafik-/layoutmandat RTS-188–190:** Användaren beställer tydligare spelyta, bättre fullständig enhets-/byggnadsgrafik inklusive flyg och roligare djur. En task i taget med browser/checks/docs/commit/push. Bevara style.css/docs och gameplay/balans/Save. Ingen delegering.188 push0779d8b,189 push9af4724,190 Done; etappen avslutas här. Full regression1497/180, unit476/86, strict build/diff och browser PASS. HANDOFF styr överlämningen; inga nya tasks.
+
+### RTS-191 — Individuellt skördbara skogsträd — Done
+- Ersätt dekorativa skogskronor i nya matcher med individuella resurser: stabilt ID, position, wood, selection och högerklicksorder.
+- Nåbara arbetsplatser, tät blockerande skog, tydlig onåbarhet; uttömning öppnar collision/navigation och visar stubbe. Nåbart nästa träd, befintlig last/leverans, fog och strikt Save-kompatibilitet.
+- Frontier först; riktade flera-träd/workers/uttömning/passage/Save-tester och browser. Gemensamt underlag för övriga kartor i193. Ingen separat tung per-träd-tick.
+
+### RTS-192 — Detaljerad gruva och sammanhängande berg — In Progress
+- Frontier först: egna större gruvassets med entré, klippvolym/material och konsekvent ljus. Klickyta följer motiv; workers/entré nåbara och synliga, korrekt djupsortering.
+- Separera visuell storlek från footprint; ändra collision endast vid behov med navigation/byggbarhetsbelägg. Selection visar stock. Före/efter och browser i faktisk spelstorlek.
+
+### RTS-193 — Gemensam terräng på alla spelkartor — Todo
+- Inventera nio skirmishkartor och kampanjens faktiska kartval. Sprid Frontiers gräs/jord/skog/kust/vatten/gruva/berg med individuella träd; bevara layout och strategisk variation.
+- Grafik/collision/byggbarhet/land och sjö stämmer; riktade navigation/objective-tester och visuell browsergranskning.
+
+### RTS-194 — Minst128×128 spelbara tiles på alla kartor — Todo
+- Befintligt maximum Plains128/Shattered Coast:128×128 tiles,4096×4096px,32px tiles. Utvidga mindre kartors verkliga terräng med meningsfulla expansioner, skogar, vägar, kust och passager.
+- Anpassa starts/resurser/AI/kamera/minimap; bevara introduktion/missionsmål/triggers, verifiera koordinater och Save-version. Ingen skalning av tiles/sprites eller tom utfyllnad.
+- Stor tät skog/flera workers prestandamäts; samlade slutchecks och BACKLOG/DECISIONS/DEV_LOG/HANDOFF. Taskvis commit/push; stanna efter194 utan nya tasks/karteditor.
 
 ### RTS-188 — Frigör spelytan — Done
 - Ta bort permanent sidebar från matchlayout; karta använder hela bredden.

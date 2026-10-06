@@ -53,7 +53,7 @@ it('depleting either expansion leaves its other same-type deposit and orders act
 
 it('Save/load preserves active expansion delivery targets and rejects unknown deposit references',()=>{
  const m=createMatch('skirmish','beginner',undefined,'frontier');
- for(const [i,node] of m.gathering.extraNodes!.entries()){
+ for(const [i,node] of m.gathering.extraNodes!.slice(0,m.gathering.units.length).entries()){
   const worker=m.gathering.units[i] as Worker;
   worker.cargo=5;worker.cargoType=node.resource;worker.selected=true;
   m.gathering.units[i]=orderUnits([worker],node.position,node)[0];

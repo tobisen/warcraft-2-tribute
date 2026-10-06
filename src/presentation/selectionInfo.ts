@@ -1,3 +1,4 @@
+import {canReachFootprint} from '../gameplay/approach';
 import {isSpectating} from '../gameplay/teamResults';
 import {matchAnimals} from '../gameplay/wildlife';
 import {orderSummary} from '../gameplay/commandOrders';
@@ -26,7 +27,8 @@ export function selectionInfo(m:MatchState,building:BuildingSelection,resourceId
   if(!node||!m.fog||!knownResource(m.fog,node.position))return empty();
   const type=node.resource??'wood',visible=isVisible(m.fog,'player',node.position);
   const staffing=visible?resourceStaffing(m,node):null;
-  return {name:type==='wood'?'Wood grove':'Gold mine',detail:`${node.id} · ${visible?node.remaining<=0?'Depleted':`${Math.ceil(node.remaining)} remaining`:'Outside current vision'}`,hp:null,maxHP:null,stats:[`Resource: ${type}`,...(staffing?[`Workers: ${staffing.assigned} assigned / ${staffing.gathering} gathering`]:[])],portrait:null};
+  const reachable=node.tree&&visible&&node.remaining>0?m.gathering.units.some(u=>u.kind==='worker'&&canReachFootprint(m.map,u.position,{x:node.position.x-16,y:node.position.y-16,width:32,height:32},24)):true;
+  return {name:type==='wood'?node.tree?'Tree':'Wood grove':'Gold mine',detail:`${node.id} · ${visible?node.remaining<=0?'Depleted':`${Math.ceil(node.remaining)} remaining`:'Outside current vision'}`,hp:null,maxHP:null,stats:[`Resource: ${type}`,...(!reachable?['Unreachable — fell outer trees to open access.']:[]),...(staffing?[`Workers: ${staffing.assigned} assigned / ${staffing.gathering} gathering`]:[])],portrait:null};
  }
  const faction=factionForTeam(m,'player'),selected=[...m.gathering.units,...(m.navy?.ships??[])].filter(u=>u.selected);
  if(selected.length>1){const infos=selected.map(u=>selectionInfo({...m,gathering:{...m.gathering,units:m.gathering.units.map(x=>({...x,selected:x.id===u.id}))},navy:m.navy?{...m.navy,ships:m.navy.ships.map(x=>({...x,selected:x.id===u.id}))}:undefined},null));return {name:`${selected.length} units selected`,detail:'Right-click to command the group. Workers gather; combat units fight.',hp:infos.reduce((n,x)=>n+(x.hp??0),0),maxHP:infos.reduce((n,x)=>n+(x.maxHP??0),0),stats:['Combined health',...Array.from(new Set(selected.map(orderSummary)))],portrait:null};}

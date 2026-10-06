@@ -18,6 +18,7 @@ export function referenceFrames(Surface){
   for(const [x,y] of [[11+v%3,39],[34-v%2,40],[22+v%2,31+v%3]]){s.rect(x-2,y-10,4,11,p.bark);for(let k=0;k<4;k++){const top=y-37+k*7,wide=5+k*3;s.polygon([[x,top],[x+wide,top+13],[x+wide-3,top+16],[x-wide,top+14]],p.leafDark);s.polygon([[x-1,top+2],[x+wide-3,top+12],[x-2,top+12],[x-wide+2,top+13]],p.leaf);s.line(x-2,top+4,x-wide+3,top+11,p.leafLight);for(let j=0;j<3;j++)s.pixel(x-4+j*3+(v%2),top+10+j,p.leafHighlight);}}
   add(`forest-${v}`,s);
  }
+ for(let v=0;v<4;v++){const s=new Surface(48,48),x=23+v%2;s.ellipse(26,42,14,4,p.leafDark);s.rect(x-2,29,5,14,p.bark);s.line(x-1,30,x-1,42,p.sand);for(let k=0;k<5;k++){const top=2+k*6,wide=6+k*3;s.polygon([[x,top],[x+wide,top+13],[x+wide-3,top+17],[x-wide,top+15]],p.leafDark);s.polygon([[x-1,top+1],[x+wide-4,top+12],[x-3,top+13],[x-wide+2,top+13]],p.leaf);s.line(x-2,top+4,x-wide+3,top+12,p.leafLight);s.pixel(x-4,top+8,p.leafHighlight);}add(`tree-${v}`,s);}
  const stump=new Surface(48,48);stump.ellipse(24,40,10,3,p.earth);stump.rect(21,32,7,9,p.bark);stump.ellipse(24,32,4,2,p.sand);stump.pixel(24,32,p.bark);add('stump',stump);
  return frames;
 }
