@@ -45,6 +45,52 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
+## Nytt mandat — RTS-215–218 (2026-10-07)
+
+Kartombyggnad/releasestädning/versionshöjning pausade. Genomför215–218 en
+åt gången, riktade tester/browser, obligatoriska slutchecks och taskvis
+commit/push. Bevara style.css, units.mjs och docs/. HANDOFF efter218, stanna.
+
+### RTS-215 — Worker Tools I–III — Done
+
+Gemensam config, huvudbyggnadsforskning i befintlig research-lane, tre
+sekventiella nivåer för alla fem raser. Wood/gold-tid90/80/70% av basen,
+ersättande bonus; last5 och hastighet oförändrade. Visa nivå/nästa bonus/
+kostnad/tid/dependencies i actions/Tech Tree. Egna befintliga/nya workers,
+individuell spelarprogression och gemensam jobbspärr mellan egna baser.
+Levererat:60/30–100/60–140/100 wood/gold,15/20/30s,90/80/70% bas-gatheringtid.
+Verifierat:riktade73/7 + beroenden45/5, unit482/86, strict build/diff PASS;
+femras Native800 musklick/Tech Tree/save/load/restart PASS.
+[Browserbelägg](artifacts/rts-215/browser.json); [balans](FACTION_BALANCE.md).
+Save/load och restart. Tester:ordning/kostnad/tid/ägarskap/dubbeljobb/
+sparning/restart; browser:musklick. Balansdokumentation uppdateras.
+
+### RTS-216 — Större minimap på spelplanen — Todo
+
+Overlay nere till höger innanför spelplanen ovanför bottom bar, marginal,
+ca160×160 vid native800×600, bibehållna proportioner/terräng/fog/enheter/
+kamerarektangel och klick/drag. Konsumera input utan selection/worldorder.
+Använd frigjort bottom bar-utrymme. Tester:input/koordinater; browser:
+800×600/3440×1440 Native/Fit/fullscreen. Ingen bred HUD-ombyggnad.
+
+### RTS-217 — Begripliga selection-namn — Todo
+
+Rasens engelska enhetsnamn, gruppnamn/antal; interna IDs endast state/save/
+devtools. HP/stats/order kvar. Tester:enskild/grupp; browser:worker/fighter.
+Ingen identitets-/saveformatändring.
+
+### RTS-218 — Full wood-last före automatisk leverans — Todo
+
+Normalleverans vid5; partiell last vid uttömt träd följer nästa nåbara träd.
+Trängsel/väntan/arbetsposition ger inte leverans; inga förlorade/dubbla wood.
+Utan nåbart träd får restlast levereras och idle/blocked förklaras. Manuella
+avbrott/delivery och gold-regler bevaras. Riktade grupp/depletion/trängsel/
+unreachable/manual/save/conservation-tester och browser:flera cykler.
+Dokumentera grundorsak; ingen bred gathering-/pathfinding-omskrivning.
+
+### Tidigare avslutade uppdrag
+
+
 ## 2026-10-07 — Full ljudimplementation, användarens nya mandat
 
 Alla 315 lokala engelska repliker är aktiva: fem raser × worker/soldier/archer ×

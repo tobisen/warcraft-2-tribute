@@ -14,6 +14,7 @@ export function contentReason(content:CampaignContent|undefined,category:'units'
 /** Advanced technology must also respect legacy story missions without a series identity. */
 export function academyCampaignReason(m:Pick<MatchState,'campaignMission'>):string|null{return m.campaignMission?contentReason(missionContent(m.campaignMission),'buildings','academy'):null;}
 export function campaignActionReason(m:MatchState,id:string):string|null{
+ if(id==='research-workerTools')return null;
  if(id==='build-academy'&&academyCampaignReason(m))return academyCampaignReason(m);
  const c=campaignContentFor(m);
  if(id.startsWith('train-'))return contentReason(c,id==='train-ship'||id==='train-transport'?'ships':'units',id==='train-ship'?'warship':id.slice(6));

@@ -1,0 +1,52 @@
+[
+  {
+    "faction": "crown",
+    "physicalBaseSelection": true,
+    "threeMouseResearchLevels": true,
+    "exactCosts": true,
+    "techTree": true,
+    "saveLoad": true,
+    "restart": true,
+    "errors": []
+  },
+  {
+    "faction": "clans",
+    "physicalBaseSelection": true,
+    "threeMouseResearchLevels": true,
+    "exactCosts": true,
+    "techTree": true,
+    "saveLoad": true,
+    "restart": true,
+    "errors": []
+  },
+  {
+    "faction": "elves",
+    "physicalBaseSelection": true,
+    "threeMouseResearchLevels": true,
+    "exactCosts": true,
+    "techTree": true,
+    "saveLoad": true,
+    "restart": true,
+    "errors": []
+  },
+  {
+    "faction": "dwarves",
+    "physicalBaseSelection": true,
+    "threeMouseResearchLevels": true,
+    "exactCosts": true,
+    "techTree": true,
+    "saveLoad": true,
+    "restart": true,
+    "errors": []
+  },
+  {
+    "faction": "goblins",
+    "physicalBaseSelection": true,
+    "threeMouseResearchLevels": true,
+    "exactCosts": true,
+    "techTree": true,
+    "saveLoad": true,
+    "restart": true,
+    "errors": []
+  }
+]

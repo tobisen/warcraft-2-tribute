@@ -1,6 +1,7 @@
 import {text as uiText} from '../text';
 import { gameplayKeyAllowed,type KeyContext } from './keyboard';
 export const hotkeys=[
+ {key:'F9',button:'research-workerTools',label:'Research Worker Tools I–III at a completed main building. Wood/gold gathering takes 10/20/30% less time; each level replaces the previous bonus. Capacity remains 5.'},
  {key:'F8',button:'build-academy',label:'Build a military academy after completing a forge and attack/defense I. Unlocks paid attack/defense II.'},
  {key:'Y',button:'build-base',label:'Build an additional main base with a worker: 100 wood + 60 gold, 12 seconds. Separate worker queue and rally; shared resources, supply and technology.'},
  {key:'F6',button:'hold-position',label:'Hold position: attack visible targets in range without pursuing. Normal orders replace the queue; Shift adds move, attack, attack-move, gather, hold or patrol (max 32). Hold and patrol continue until replaced or stopped.'},

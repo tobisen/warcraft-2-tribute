@@ -47,5 +47,5 @@ export function prepareEnemyPolicy(m:MatchState):MatchState {
  return {...m,enemyPolicy:{research},enemyProduction:{...bank,wood:g.wood,gold:g.goldBalance??0,spent:{wood:(bank.spent?.wood??0)+bank.wood-g.wood,gold:(bank.spent?.gold??0)+bank.gold-(g.goldBalance??0)}},combat:{...m.combat,enemies:m.combat.enemies.map(e=>{const u=byId.get(e.id);return u?{...e,navigation:u.navigation,work:{cargo:u.cargo,cargoType:u.cargoType,target:u.target,order:u.order}}:e;})}};
 }
 export function advanceEnemyPolicy(m:MatchState,delta:number):EnemyPolicyState|undefined {
- return m.enemyPolicy?{research:updateResearch(m.enemyPolicy.research,enemyBuildingView(m),delta,true,(m.factions??defaultFactions).enemy)}:undefined;
+ return m.enemyPolicy?{research:updateResearch(m.enemyPolicy.research,enemyBuildingView(m),delta,true,(m.factions??defaultFactions).enemy,hasEnemyBase(m.combat,m.map))}:undefined;
 }

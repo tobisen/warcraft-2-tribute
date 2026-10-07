@@ -5,6 +5,8 @@ import {defenseConfig} from '../config/defenses';
 import {campaignActionReason} from '../config/campaignContent';
 import {costLabel,canAfford} from '../gameplay/economy';
 import {technologyFor,missingPrerequisites} from '../gameplay/productionPrerequisites';
+import {hasMainBase} from '../gameplay/extraBases';
+import {workerToolsConfig} from '../config/workerTools';
 import {researchRecipe} from '../gameplay/research';
 import type {MatchState} from '../gameplay/match';
 import {actionPanel,type ActionId} from './actionPanel';
@@ -35,6 +37,9 @@ export function technologyView(m:MatchState){
  for(const kind of ['attack','defense'] as const)for(const level of [1,2] as const){
   const recipe=researchRecipe(f,kind,level-1),r:UnitPrerequisites=level===1?f.upgrades[kind].prerequisites??{}:{buildings:['forge','academy'],research:{[kind]:1}},done=(tech.research[kind]??0)>=level;
   add({id:`research-${kind}-${level}`,label:`${f.upgrades[kind].name} ${level===1?'I':'II'}`,branch:'Research',tier:level===1?2:3,dependencies:deps(r),missing:missingPrerequisites(f,r,tech),cost:`${costLabel(recipe.cost)} · ${recipe.durationSeconds}s`,purpose:`Military ${kind} improvement, level ${level}. Workers do not receive research bonuses.`,blocker:done?'Researched':m.research?.job?'Research in progress':canAfford(m.gathering,recipe.cost)?'':'Not enough wood or gold'},done,`research-${kind}`,level===2?campaignActionReason(m,'build-academy'):null);
+ }
+ for(const level of [1,2,3] as const){const recipe=workerToolsConfig[level-1],current=m.research?.workerTools??0,done=current>=level;
+  add({id:`research-workerTools-${level}`,label:recipe.name,branch:'Research',tier:level,dependencies:[f.buildingNames.base,...(level>1?[workerToolsConfig[level-2]!.name]:[])],missing:[...(!hasMainBase(m)?['Complete main building']:[]),...(current<level-1?[`Research ${workerToolsConfig[level-2]!.name}`]:[])],cost:`${costLabel(recipe.cost)} · ${recipe.durationSeconds}s`,purpose:`${Math.round((1-recipe.timeMultiplier)*100)}% shorter wood and gold gathering time. Replaces previous tools bonus; capacity 5 unchanged.`,blocker:done?'Researched':m.research?.job?'Research in progress':canAfford(m.gathering,recipe.cost)?'':'Not enough wood or gold'},done,'research-workerTools');
  }
  for(const level of [2,3] as const){const current=tech.baseLevel??1,r=baseUpgradeConfig[level],done=current>=level;add({id:`base-level-${level}`,label:`${f.buildingNames.base} level ${level}`,branch:'Settlement',tier:level,dependencies:[`${f.buildingNames.base} level ${level-1}`],missing:current<level-1?[`Upgrade ${f.buildingNames.base} to level ${level-1}`]:[],cost:`${costLabel(r.cost)} · ${r.seconds}s`,purpose:'Develops your main buildings; worker queues pause during the upgrade.',blocker:done?'Upgraded':m.combat.baseDevelopment?.remainingSeconds!=null?'Upgrade in progress':canAfford(m.gathering,r.cost)?'':'Not enough wood or gold'},done,'upgrade-base');}
  const towerRequirements:UnitPrerequisites={buildings:['forge'],baseLevel:2};

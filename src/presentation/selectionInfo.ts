@@ -1,3 +1,4 @@
+import {workerToolsConfig} from '../config/workerTools';
 import {upgradeMultiplier} from '../config/upgrades';
 import {workerCombatConfig} from '../config/unit';
 import {canReachFootprint} from '../gameplay/approach';
@@ -59,6 +60,7 @@ export function selectionInfo(m:MatchState,building:BuildingSelection,resourceId
   if(production)stats.push(`Production: ${production.queue?.length??0} queued`);
   if(kind==='harbor')stats.push(`${f.naval.units.transport.name} · ${f.naval.units.warship.name}`);
   if(kind==='base')stats.push(`Base level ${m.combat.baseDevelopment?.level??1}`,m.combat.baseDevelopment?.remainingSeconds!=null?`Upgrade: ${m.combat.baseDevelopment.remainingSeconds.toFixed(1)}s; worker training paused`:'Worker training active');
+  if(kind==='base'){const level=m.research?.workerTools??0,next=workerToolsConfig[Math.min(2,level)];stats.push(`Research: Worker Tools ${level}/3${level>=3?' · Complete':` · Next: ${Math.round((1-next.timeMultiplier)*100)}% shorter wood/gold gathering · ${next.cost.wood} wood + ${next.cost.gold} gold · ${next.durationSeconds}s`}`);}
   if(kind==='academy'||kind==='forge'||kind==='base')stats.push(`Research: Attack ${m.research?.attack??0} / Defense ${m.research?.defense??0}`,m.research?.job?`${m.research.job.kind}: ${m.research.job.remainingSeconds.toFixed(1)}s remaining`:'Attack / Defense research requires a completed forge');
  }
  return {name,detail:team==='enemy'?'Visible enemy building · No orders or private production data':remaining>0?`Construction ${remaining.toFixed(1)}s remaining`:description,hp,maxHP,stats,portrait:kind==='outpost'?null:{atlas:'buildings',frame:kind==='gate'&&m.placement.defenses?.find(t=>t.id===building)?.open?`${f.artPrefix}gate-player-open`:buildingFrame(kind,team,remaining,kind==='academy'?10:kind==='base'&&building?.startsWith('base-')?12:5,f.id,hp,kind==='tower'?m.placement.defenses?.find(t=>t.id===building)?.level??1:kind==='base'&&team==='player'?m.combat.baseDevelopment?.level??1:1)}};

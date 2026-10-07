@@ -135,7 +135,8 @@ import { gatheringConfig } from '../config/gathering';
 import { productionConfig, soldierProductionConfig } from '../config/production';
 import { barracksConfig, farmConfig } from '../config/buildings';
 import {hasMainBase,selectedBase,trainBaseWorker} from '../gameplay/extraBases';
-import {researchRecipe} from '../gameplay/research';
+import {workerToolsConfig} from '../config/workerTools';
+import {researchRecipe,researchLevel} from '../gameplay/research';
 import {extraBaseConfig} from '../config/extraBases';
 import { buildingFootprint, beginPlacement, cancelPlacement, placementPreviewError, placementError, placementObstacles, placeBuilding, type PlacementState } from '../gameplay/placement';
 import { canStartProduction, startProduction, type ProductionState } from '../gameplay/production';
@@ -463,9 +464,9 @@ export class BootScene extends Phaser.Scene {
     this.forgeButton.addEventListener('click',beginForge);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.forgeButton.removeEventListener('click',beginForge));
     this.researchButtons.clear();
-    for(const kind of ['attack','defense'] as const){
+    for(const kind of ['workerTools','attack','defense'] as const){
       const button=document.querySelector<HTMLButtonElement>(`#research-${kind}`)!;
-      const research=()=>{const result=startResearch(this.gathering,this.research,this.placement,kind,this.gameplayActive());this.gathering=result.gathering;this.research=result.research;this.syncVisuals();};
+      const research=()=>{const result=startResearch(this.gathering,this.research,this.placement,kind,this.gameplayActive(),hasMainBase(this.currentMatch()));this.gathering=result.gathering;this.research=result.research;this.syncVisuals();};
       this.researchButtons.set(kind,button);button.addEventListener('click',research);
       this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>button.removeEventListener('click',research));
     }
@@ -866,7 +867,11 @@ export class BootScene extends Phaser.Scene {
     if(forge)this.forgeVisual!.setFrame(buildingFrame('forge','player',forge.construction.remainingSeconds,5,this.factions.player,forge.hp));
     this.forgeButton.disabled=!this.gameplayActive()||this.placement.active||!!forge||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected);
     document.getElementById('research-status')!.textContent=forge?`Forge ${Math.ceil(forge.hp)} HP · construction ${forge.construction.remainingSeconds.toFixed(1)} s · Attack ${this.research.attack} / Defense ${this.research.defense}${this.research.job?` · ${this.research.job.kind} ${this.research.job.remainingSeconds.toFixed(1)} s`:''}`:uiText.buildAForgeForUpgrades;
-    for(const [kind,button] of this.researchButtons){button.disabled=!canResearch(this.gathering,this.research,this.placement,kind,this.gameplayActive());setActionLabel(button,`${factions[this.factions.player].upgrades[kind].name} ${this.research[kind]===0?'I':'II'} – ${costLabel(researchRecipe(factions[this.factions.player],kind,this.research[kind]).cost)}`);}
+    for(const [kind,button] of this.researchButtons){
+      const level=researchLevel(this.research,kind),recipe=researchRecipe(factions[this.factions.player],kind,level);
+      button.disabled=!canResearch(this.gathering,this.research,this.placement,kind,this.gameplayActive(),hasMainBase(this.currentMatch()));
+      setActionLabel(button,kind==='workerTools'?`Worker Tools ${['I','II','III'][Math.min(2,level)]} – level ${level}/3 · ${level>=3?'Complete':`${Math.round((1-workerToolsConfig[level]!.timeMultiplier)*100)}% shorter gathering · ${costLabel(recipe.cost)} · ${recipe.durationSeconds}s`}${this.research.job?.kind==='workerTools'?` · ${this.research.job.remainingSeconds.toFixed(1)}s left`:''}`:`${factions[this.factions.player].upgrades[kind].name} ${level===0?'I':'II'} – ${costLabel(recipe.cost)}`);
+    }
 
     if(!this.placement.barracks&&this.barracksVisual){this.barracksVisual.destroy();this.barracksVisual=undefined;}
     const rect = buildingFootprint(this.previewPoint,this.placement.kind??'barracks');

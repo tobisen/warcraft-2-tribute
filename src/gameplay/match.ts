@@ -203,7 +203,7 @@ function advance(state: MatchState, delta: number, scope?:CombatScope): MatchSta
   const services=resourceServices({...state.gathering,units:[...state.gathering.units,...state.combat.enemies.flatMap(e=>{const worker=enemyWorker(e);return worker?[worker]:[];})]},state.map,state.waves.elapsedSeconds);
   state=syncDropoffs(state);
   const forestBefore=state.gathering;
-  let gathering = updateGathering(state.gathering, ownDelta, state.map,{elapsedSeconds:state.waves.elapsedSeconds,gateFor,services});
+  let gathering = updateGathering({...state.gathering,...(state.research?.workerTools?{workerToolsLevel:state.research.workerTools}:{})}, ownDelta, state.map,{elapsedSeconds:state.waves.elapsedSeconds,gateFor,services});
   state=updateEnemyGathering({...state,gathering},delta,gateFor,services);state={...state,map:syncForestObstacles(forestBefore,state.gathering,state.map)};const enemyBuilding=updateEnemyConstruction(state,delta,gateFor);state=enemyBuilding.match;gathering=state.gathering;
   state=updateEnemyExpansion(state,delta,gateFor);gathering=state.gathering;
   state=updateEnemyNaval(state,delta);gathering=state.gathering;
@@ -217,7 +217,7 @@ function advance(state: MatchState, delta: number, scope?:CombatScope): MatchSta
   let cleaned=cleanDestroyed({...state,...(fight.navy?{navy:fight.navy}:{}),gathering:fight.gathering,combat:fight.combat,placement:fight.placement??building.placement});
   cleaned=advanceEnemyRecovery(cleaned,delta);
   const enemyPolicy=advanceEnemyPolicy(cleaned,delta);
-  const research=updateResearch(cleaned.research??createResearch(),cleaned.placement,ownDelta,true,cleaned.factions?.player??defaultFactions.player);
+  const research=updateResearch(cleaned.research??createResearch(),cleaned.placement,ownDelta,true,cleaned.factions?.player??defaultFactions.player,hasMainBase(cleaned));
   const baseStep=advanceBaseUpgrade(cleaned,ownDelta);cleaned=baseStep.match;
   const worker=cleaned.combat.baseHP>0?updateQueuedProduction(cleaned.gathering,cleaned.production,baseStep.productionSeconds,{kind:'base'},
     {map:cleaned.map,enemies:cleaned.combat.enemies}):{gathering:cleaned.gathering,production:cleaned.production};

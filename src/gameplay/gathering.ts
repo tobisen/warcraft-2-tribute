@@ -1,3 +1,4 @@
+import {workerToolsTimeMultiplier} from '../config/workerTools';
 import {forestContains} from './forestTerrain';
 import type {OrderState as importOrderState} from './commandOrders';
 import type {SpellState} from './spells';
@@ -56,6 +57,8 @@ export interface ResourceNode {
   remaining: number;
 }
 export interface GatheringState {
+  /** Derived from this owner's research; not an independent saved stat. */
+  workerToolsLevel?:number;
   /** Derived mission admission policy; not serialized. */
   campaignContent?:import('../config/campaignContent').CampaignContent;
   /** Derived from match ownership; reconstructed on Load rather than serialized. */
@@ -183,12 +186,12 @@ export function updateGathering(state: GatheringState, deltaSeconds: number, map
       }
       if(remaining<=0){worker.order=worker.cargo>0?{kind:'deliver',nodeId}:{kind:'idle'};continue;}
       const amount = Math.min(remaining, gatheringConfig.capacity - worker.cargo,
-        gatheringConfig.woodPerSecond * time);
+        gatheringConfig.woodPerSecond / workerToolsTimeMultiplier(state.workerToolsLevel) * time);
       worker.cargoType = resource;
       worker.cargo += amount;
       remaining -= amount;
       node.remaining = remaining;
-      time = Math.max(0, time - amount / gatheringConfig.woodPerSecond);
+      time = Math.max(0, time - amount / (gatheringConfig.woodPerSecond / workerToolsTimeMultiplier(state.workerToolsLevel)));
       if (remaining <= 0 || worker.cargo >= gatheringConfig.capacity) {
         worker.order = { kind: 'deliver', nodeId };
       } else {

@@ -1,5 +1,32 @@
 # Development log
 
+## RTS-215 — Worker Tools I–III, 2026-10-07
+
+Tre sekventiella huvudbyggnadsnivåer i befintlig research-lane. Gemensam
+config60/30,100/60,140/100 wood/gold och15/20/30s; insamlingstid90/80/70%
+av basen för wood/gold, ersättande bonus. Nivån läses för aktuell ägare vid
+uppdatering, även för nya workers/AI-ägare; gruppens researchjobb delar
+spärr mellan egna baser. Last5/rörelse oförändrade. Tools behöver ingen
+Forge; byggnadsdöd städar jobbet enligt befintliga ägarregler.
+
+Actions/tooltip/selection och Tech Tree visar nivå/nästa bonus/kostnad/tid.
+F9 genväg återanvänder guarded button-path. Valfritt validerat workerTools-
+fält bevarar gamla config64-saves (saknat=0); derived gathering-nivå
+serialiseras inte. Ingen produktversionshöjning.
+
+Verifiering: riktade73/7 PASS2.23s; enemyPolicy/enemyGathering/destruction/
+baseUpgrade/extraBases45/5 PASS6.84s. Slutlig unit482/86 PASS15.48s,
+build inkl.strict typecheck PASS407ms, diff/review PASS. Browser alla fem
+raser vid uttrycklig Native800×600: fysisk basselection, musklick tre
+nivåer/exakta kostnader, Tech Tree, save/load och faktisk restart PASS.
+[Belägg](artifacts/rts-215/browser.json). Tidigt browserprov behövde manuell
+syncVisuals för fryst testscen; slutprov korrigerat. Slutchecks upprepades
+efter den relevanta kompletteringen av synlig bonus/tid och nativeprofil.
+Full regression samlas efter218; inga extra breda campaign-simuleringar.
+Kostnadernas mänskliga långmatchbalans är inte provspelad. User-CSS/
+units.mjs/docs bevarade; nästa216, ingen release/städning.
+
+
 ## 2026-10-07 — CI-korrigering verifierad på GitHub
 
 Fix67f1cc7 är pushad till origin/main. [Actions37598064764](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37598064764)

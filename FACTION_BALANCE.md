@@ -1,3 +1,26 @@
+# Worker Tools — RTS-215, 2026-10-07
+
+Samma huvudbyggnadsforskning för alla fem raser; en individuell research-lane
+per spelare, gemensam mellan egna huvudbyggnader. Inga lagdelade bonusar.
+
+| Nivå | Wood / gold | Forskning | Gathering-tid relativt bas | Tid för5 resurser vid bas1/s |
+| --- | --- | --- | --- | --- |
+| I |60 /30|15s|90%|4.5s|
+| II |100 /60|20s|80%|4.0s|
+| III |140 /100|30s|70%|3.5s|
+
+Bonusen ersätter föregående nivå. Endast aktiv insamling påverkas; rörelse,
+lastkapacitet5, väntan/arbetsplatser och transporttid ingår inte i bonusen.
+Forskning kräver levande färdig egen huvudbyggnad, inte Forge. Föregående
+nivå krävs; ett pågående jobb spärrar ytterligare forskning. Gamla sparningar
+utan tools-nivå betyder0. Save-format/config64 är bakåtkompatibelt via valfritt
+validerat workerTools-fält, ingen produktversionshöjning.
+
+Riktade tider/ägarskap/save och femras-musklick verifieras tekniskt;
+mänsklig långmatchbalans för nya kostnader är inte provspelad.
+
+## Historisk fraktionsbalans
+
 # RTS-070 – Fraktionsspeltest, 2026-10-03
 
 Verifierad profil: lokal produktionsbuild, macOS arm64 och headless Chromium, 1280×900 med native 800×600 canvas. Andra browsermotorer och multiplayerbalans är inte verifierade.
