@@ -1,5 +1,19 @@
 # Development log
 
+## 2026-10-07 — CI-korrigering verifierad på GitHub
+
+Fix67f1cc7 är pushad till origin/main. [Actions37598064764](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37598064764)
+är faktiskt grön för samma SHA: `npm test` full regression, build och
+Pages-deploy PASS. Det återkommande spectator-testets5000ms-timeout är
+åtgärdat med individuell30000ms-budget utan ändrade assertions/gameplay.
+Ljuden är godkända av användaren. Tidigare röda körningar är historik;
+inget påstående om att de har körts om. Ingen ny versionsrelease gjord.
+
+Denna avslutande statusuppdatering ändrar bara Markdown. Text-/länk-/
+diffgranskning PASS; ovanstående kodkontroller återanvänds uttryckligen,
+inga nya kodtester/browserchecks behövs. CSS/units.mjs/docs/ bevarade.
+
+
 ## 2026-10-07 — Ljud godkänt och återkommande CI-timeout
 
 Användaren har faktiskt lyssnat och godkänner ljuden. Detta ersätter tidigare
