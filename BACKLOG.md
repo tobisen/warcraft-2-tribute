@@ -5578,3 +5578,30 @@ RTS-213 förblir In Progress tills faktisk publicering är verifierad.
 Ingen ny roadmaptask eller GitHub-release/tagpraxis startas; befintlig
 produktversion/Pages-praktik gäller. Återstående mänsklig kampanjtid/balans och
 temporär enhetsgrafik är fortsatt dokumenterade begränsningar.
+
+
+## 2026-10-08 — Release0.4.0: faktisk placeringsram rättad
+
+Extra productionkontroll upptäckte att Phaser placementPreview behöll kasernens
+64×64 trots32×32-footprint för walls/gates. Tidigare enrutsbrowser verifierade
+buildingFootprint och färdiga fixtures, inte den faktiska preview-rektangeln;
+det tidigare preview-påståendet ersätts av denna konkreta verifiering.
+BootScene.syncPlacement sätter nu .setSize(rect.width,rect.height).
+Inga gameplay-/Save-/kostnadsändringar. scripts/check-placement-preview.mjs
+verifierar med fysiska musklick: wall/gate32, barracks/farm64, byte tillbaka till
+wall32 och tre intilliggande ordinarie sites (gate480, wall448/512, y384).
+Real Enter/Apply foggoffnow/resourcecheat och alla goldnoder>=1500 ingår.
+Chrome tomma isolerade kontexter800/1280 PASS,0pageerrors; båda actual preview-
+bilder visuellt granskade. Tidiga harnessfel: pointer-event lästes för tidigt,
+målet låg under800-HUD och farm antogs32 trots config64; väntan, camera-scroll
+och korrekt förväntan rättade harness utan extra speländringar.
+
+Ny unit511/89 PASS13.69s och strict build PASS569ms (befintlig bundlevarning),
+script-syntax/diff PASS. Full1706/199 från02e2396 återanvänds för oförändrad
+gameplay; enbart preview-scenerendering ändrad och täcks av faktisk browser.
+Production Next Mission800/1280 PASS med befintligt scripts/check-next-mission
+anpassat till productionbundle i separat /tmp-harness: victory→successor,
+identitet/SaveLoad, defeat/final hidden och replay. Äldre98128bc-pipeline har
+fallerat,02e2396-CI pågår; previewfix blir ny slutlig releasekandidat och faktisk
+slutbuild/Pages-kontroll följs innan RTS-213 Done. CSS/units.mjs/docs/:memory:.ses
+bevaras. Ingen ny roadmaptask eller workflowförändring.

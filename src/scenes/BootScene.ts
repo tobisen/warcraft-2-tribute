@@ -899,7 +899,7 @@ export class BootScene extends Phaser.Scene {
     if(!this.placement.active||this.placementAttempt&&(this.placementAttempt.x!==rect.x||this.placementAttempt.y!==rect.y))this.placementAttempt=null;
     error=error??this.placementAttempt?.reason??null;
     this.placementFeedbackError=error;
-    this.placementPreview.setPosition(rect.x, rect.y)
+    this.placementPreview.setPosition(rect.x, rect.y).setSize(rect.width, rect.height)
       .setFillStyle(error ? 0xe05b5b : 0x7bd389, 0.4).setVisible(this.placement.active);
     this.buildButton.setAttribute('aria-pressed',String(this.placement.active&&(!this.placement.kind||this.placement.kind==='barracks')));
     this.farmButton?.setAttribute('aria-pressed',String(this.placement.active&&this.placement.kind==='farm'));this.forgeButton.setAttribute('aria-pressed',String(this.placement.active&&this.placement.kind==='forge'));
