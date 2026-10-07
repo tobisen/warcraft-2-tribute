@@ -35,3 +35,17 @@ it('an isolated worker waits without occupying a reachable worker’s service pl
  expect(services.get('worker-1')!.working).toBe(false);
  expect([...services.values()].filter(p=>p.working)).toHaveLength(3);
 });
+
+it('Save retains partial wood while changing trees, then resumes normal full-load deliveries',async()=>{
+ const {approachRoute}=await import('./approach'),{resourceNodes}=await import('./gathering'),{syncForestObstacles}=await import('./forestTerrain');let m=createMatch('survival');
+ const first=resourceNodes(m.gathering).find(n=>n.tree&&approachRoute(m.map,m.gathering.units[0].position,{x:n.position.x-16,y:n.position.y-16,width:32,height:32},24).status!=='blocked')!;
+ first.remaining=1;const position=approachRoute(m.map,m.gathering.units[0].position,{x:first.position.x-16,y:first.position.y-16,width:32,height:32},24).destination;
+ m.gathering.units=[{...m.gathering.units[0] as Worker,position,target:{...first.position},cargo:2,cargoType:'wood',order:{kind:'gather',nodeId:first.id},selected:true}];m.research!.workerTools=3;
+ const before=m.gathering;m.gathering=updateGathering({...before,workerToolsLevel:3},.7,m.map);m.map=syncForestObstacles(before,m.gathering,m.map);
+ const u=m.gathering.units[0];expect(u.cargo).toBeCloseTo(3);expect(u.order.kind).toBe('gather');expect(u.order).not.toEqual({kind:'gather',nodeId:first.id});
+ const loaded=decodeSave(encodeSave(m,{camera:{x:0,y:0},building:null}));expect(loaded.ok).toBe(true);if(!loaded.ok)return;
+ expect(loaded.match.gathering.units[0]).toMatchObject({id:u.id,cargo:u.cargo,cargoType:'wood',order:u.order,target:u.target});expect(loaded.match.research!.workerTools).toBe(3);
+ let resumed=loaded.match.gathering;const total=(s:GatheringState)=>s.wood+resourceNodes(s).filter(n=>(n.resource??'wood')==='wood').reduce((n,x)=>n+x.remaining,0)+s.units.reduce((n,x)=>n+x.cargo,0),initial=total(resumed),deliveries:number[]=[];
+ for(let i=0;i<400;i++){const prev=resumed;resumed=updateGathering(resumed,.05,loaded.match.map,{elapsedSeconds:i*.05});if(prev.units[0].order.kind==='gather'&&resumed.units[0].order.kind==='deliver')deliveries.push(resumed.units[0].cargo);expect(total(resumed)).toBeCloseTo(initial,8);}
+ expect(deliveries.length).toBeGreaterThan(0);expect(deliveries.every(n=>n===5)).toBe(true);expect(resumed.wood).toBeGreaterThanOrEqual(5);
+});

@@ -1,0 +1,21 @@
+{
+  "scenario": "tutorial",
+  "fixture": "20 primary wood delivered; 5 secondary wood still carried",
+  "state": {
+    "tutorial": {
+      "step": 3
+    },
+    "delivered": 20,
+    "cargo": 5,
+    "secondaryNode": "region-0-0-tree-1-0"
+  },
+  "restored": {
+    "tutorial": {
+      "step": 3
+    },
+    "delivered": 20,
+    "cargo": 5
+  },
+  "actualSaveLoadClicks": true,
+  "errors": []
+}

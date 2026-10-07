@@ -1,5 +1,74 @@
 # Development log
 
+## RTS-218 — Full wood-last och bevarad last vid trädbyte, 2026-10-07
+
+Grundorsak: gathering-kodens tre uttömningsgrenar (före arbete, efter uttag
+och för redan behandlade workers) skickade alla positiva laster till deliver.
+Den gamla nextTree-fallbacken användes främst med tom last. Gemensam lokal
+uttömningsregel väljer nu närmaste nåbara wood-nod med kvarvarande stock och
+behåller cargo/cargoType; annars finalleverans eller idle. Last5, gold,
+manuella move/delivery/resursbyten, serviceadmission och traffic består.
+Target/routcache byts utan ny worker-/Save-data. Befintlig skogskollisionssync
+öppnar ett fällt träds passage direkt innan reachability-kontrollen; senare
+workers och end-of-step använder samma regel. Idle efter sista uttömda
+wood-målet får begriplig text. Ingen bred pathfinding-/gathering-omskrivning.
+
+Riktade112/9 PASS3.46s: alla Tools-nivåer, same/different trees, senare
+worker-depletion, fulla avfärder, trafik-/serviceväntan/arbetsplatsbyte,
+isolerat närmare träd, saknad nåbar ved, nyöppnad passage, manual/cross-resource,
+gold, AI-vision, Save mitt i trädbyte och conservation. Ny woodDelivery-fil är
+isolerad unit; Save-provet ligger i befintlig integrationfil resourceQueue.
+Manifestets disjunkta87 unit/108 integrationfiler validerade.
+Slutlig unit506/87 PASS17.98s. Slutlig build inklusive strict typecheck PASS475ms;
+befintlig bundlevarning kvar. Diff/review PASS.
+
+Faktisk Chrome Native800: dragval av sex workers, högerklick gather, ToolsIII,
+35 partiallast-trädbyten,15 normala fulla avfärder och21 deposits/finalleveranser.
+98 wood bevarad över600 tick-samples (97.99999999999999–98.00000000000016),
+verkliga Save/Load-musklick efter första trädbyte, observerad faktisk
+resource-service-väntan utan partiell normalavfärd och tydlig slut-idle PASS.
+[Bilder/spår](artifacts/rts-218/browser.json). Isolerad ekonomifixture med giltiga
+trädstockar och korrekt AI-ledger; faktisk updateMatch-klocka i0.05s-steg,
+inget naturligt mänskligt balansspeltest. Första fixtureproven saknade synlighet,
+korrekt AI-ledger eller tillräcklig stock för sexworkers flera fulla cykler;
+korrigerade utan ändrad produktkod. Ej giltiga slutbelägg räknas inte som PASS.
+
+GitHub215/b4f97cf faktiskt grön: [37618831308](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37618831308).
+216:s [37620255382](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37620255382)
+röd på två largeMaps-assertions som fortfarande väntade gamla200×150-defaults.
+Integrationstestets koordinater/camera width uppdaterade till160×160, riktade
+2 PASS/7 övriga skipped545ms. Assertions behållna, ingen gameplaykorrigering.
+Tidigt fullregressionsförsök avbröts (exit130) för detta konkreta CI-fynd;
+nästa full regression upptäckte tutorialens single-node-leveransräknare:
+sekundär trädcargo drogs av trots att dess uttag inte räknades, så räknaren
+kunde sjunka under ett redan passerat mål och Save nekas. Samma konservativa
+matchStats.player.wood.delivered återanvänds nu. Tutorial8/1 PASS4.87s,
+First Steps + två räknarprov3 PASS/13 övriga skipped4.00s. Inga assertions
+tagits bort. Det andra försöket avbröts (exit130); full regression på slutlig
+kod pågår. Unit/strict build kördes om efter denna nödvändiga beroendekorrigering.
+Faktisk tutorialbrowser: faction/difficulty/mission-wizard,20 levererad wood
+plus5 sekundärnod-cargo, bevarat Build Barracks-steg och Save/Load PASS.
+[Belägg](artifacts/rts-218/tutorial-browser.json). Fixtur, inte full browserkampanj.
+
+Den slutförda regressionskörningen1660 PASS/4 FAIL i195 filer562.54s hittade
+även gamla resurslabel-/idle-förväntningar (avsiktliga217/218-ändringar) samt
+The Siege Normal-kontrollerns engångsarmé som slogs ut. Riktade äldre
+gathering-baseline gav Siege PASS1/12 skipped9.59s; nytt effektivare resursflöde
+behöver betald återhämtning. Befintlig naval-preparation återanvänds för
+betalda landreinforcements i samma max4-anfallsloop; ingen gratis armé, ändrad
+HP/combat/AI-balans eller svagare målassertion. Siege PASS1/12 skipped8.22s.
+Resursetiketternas exakta fog/stock-assertions kvar med ID-fria texter;
+expansionsved behåller last/gather, gold levererar/idlar som förr och total
+resourceconservation tillagd. Riktade12/2 PASS663ms. Full regression körs om
+för dessa konkreta fynd; unit506/87 återanvänds efter sista ändringarna som
+enbart berör klassificerade integrationer/testcontroller. Slutlig strict build475ms och diff/review PASS.
+**Slutlig full regression1664/195 PASS551.70s.** Alla195 filer passerar,
+inklusive kampanj/controller, save/resource/routing och hela uniturvalet.
+Tidigare1660/4-FAIL och avbrutna försök är diagnostik, inte slutstatus.
+HANDOFF uppdaterad; stanna efter218. Ingen ny release/version/kartombyggnad.
+Ny218-CI/Pages efter push är inte ännu verifierad.
+
+
 ## RTS-217 — Selection-namn och synlig gruppsammansättning, 2026-10-07
 
 Enskilda enheter visar rasens engelska namn och order; grupper visar namn ×

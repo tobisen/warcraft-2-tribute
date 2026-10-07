@@ -1,3 +1,56 @@
+## 2026-10-07 — RTS-215–218 färdiga, stopp
+
+Nytt bifogat mandat ersatte tidigare stopp: fyra avgränsade tasks före release.
+215 Worker Tools I/II/III levererad/pushad **b4f97cf**;216 större minimap-overlay
+**31d0d6a**;217 begripliga selection-namn/gruppantal **1049b40**.218 är klar
+och levereras med denna slutcommit: full wood-last/trädbyte, riktade tester,
+Save-räknarkorrigering, browser och grön slutregression.
+Ingen release, versionshöjning, kartombyggnad eller automatisk nästa task.
+
+Worker Tools:60/30,100/60,140/100 wood/gold;15/20/30s; gatheringtid90/80/70%
+för wood/gold, ersättande nivåer. Egen per-player research och delad lane mellan
+egna huvudbyggnader; Save/Load/restart, framtida workers och fem raser täckta.
+Native800 verkliga bas-/researchmusklick för alla fem PASS. Minimap160×160,
+proportionell karta/letterbox, inputcapture; Native/Fit/fullscreen-API vid800
+och3440 PASS med selection/order oförändrade. Selection visar rasnamn och
+synliga namn × antal; interna IDs kvar i state/save/devtools. Alla fem raser
+worker/fighter/gruppdrag PASS. Separat CSS bevarar användarens style.css.
+
+218:s grundorsak: uttömning gav leverans på positiva laster. Nu behålls
+partial wood och nästa nåbara träd väljs; bara full5 är normalleverans.
+Saknas nåbar ved levereras restlast, sedan förklarande idle. Samma regel för
+flera workers/depletion, guld/manual/traffic bevarade. Skogskollision återanvänds
+för passage som öppnas av fällt träd. Inget nytt Saveformat/ljudframework.
+Riktade112/9, unit506/87, slutlig strict build och browser PASS. Browsersexworker:
+35 partialträdbyten,15 normala fulla avfärder,21 deposits,98 wood bevarad,
+verklig Save/Load, faktisk resource-service-väntan och tydlig idle. [Belägg](artifacts/rts-218/browser.json).
+Fullregression upptäckte även tutorialens gamla primary-only-leveransräknare:
+sekundär last kunde underkänna en redan klar fas vid Save. Räknaren använder
+nu befintlig matchStats wood.delivered. Tutorial8/1 och First Steps + två
+räknarprov3 PASS (övriga13 skipped), ny unit/strict build PASS.
+Faktisk tutorial-wizard/Save/Load med sekundärcargo PASS;
+[belägg](artifacts/rts-218/tutorial-browser.json). Fullregressionens återstående
+fynd: gamla resurslabel-/wood-idle-förväntningar uppdaterade, conservation kvar;
+The Siege Normal kräver nu betald återhämtning efter arméförlust. Befintlig
+naval-preparation återanvänds på land inom samma max4-anfall; inga stridsvärden,
+resurser/HP/enheter injiceras. Riktade12/2 och Siege1/12 skipped PASS.
+1660/4-fail-regressionen och två avbrutna försök är diagnostik. Slutlig
+**npm test1664/195 PASS551.70s**, unit506/87 PASS17.98s, build inklusive
+strict typecheck PASS475ms, syntax/länk/diff/review PASS. Unit återanvänds
+efter sista integration-/testcontrollerändringarna; fullregression täcker dem.
+
+Ny largeMaps-minimapförväntning
+riktat2 PASS (övriga7 skipped).215 GitHub faktiskt grön37618831308;
+216 röd37620255382 på gamla200×150-förväntningar, korrigerade här.
+Ny218-CI/Pages är inte verifierad. Historiska release-/ljudbelägg hålls isär.
+Browserproven är korta instrumenterade ekonomiska/input-scenarier i Chrome,
+inte mänskligt balans-/ljudspeltest eller fysisk3440-monitor. Ljudens tidigare
+användargodkännande kvar; ingen ny ljudändring. Befintlig bundlevarning kvar.
+Användarens units.mjs/style.css/docs/ och scratch :memory:.ses bevaras.
+
+Efter218: **stanna**. Roadmap208+, kartarbete och releasestädning kräver
+nytt uppdrag. Se senaste BACKLOG/DEV_LOG för aktuellt verifieringsläge.
+
 ## 2026-10-07 — CI-korrigering verifierad på GitHub
 
 Fix67f1cc7 är pushad till origin/main. [Actions37598064764](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37598064764)

@@ -1,5 +1,5 @@
 import {tutorialConfig} from '../config/tutorial';
-import {maps} from '../config/maps';
+import {matchStats} from './matchStats';
 import {combatConfig} from '../config/combat';
 import {combatUnitStats,unitStats} from '../config/unit';
 import {barracksReady} from './construction';
@@ -11,8 +11,7 @@ import type {Position} from './movement';
 export interface TutorialState {step:number;workerId?:string;moveStart?:Position;moveOrdered?:boolean}
 export const createTutorial=():TutorialState=>({step:0});
 export function tutorialDeliveredWood(m:MatchState):number {
- const cargo=[...m.gathering.units,...(m.navy?.ships??[]).flatMap(s=>s.passengers??[])].reduce((n,u)=>n+(u.kind==='worker'&&(u.cargoType??'wood')==='wood'?u.cargo:0),0);
- return maps[m.map.id??'arena'].wood-m.gathering.node.remaining-cargo-(m.gathering.lostCargo?.wood??0);
+ return matchStats(m).player.wood.delivered;
 }
 /** Sequential milestones observe real orders/economy; no wall clock or free units. */
 export function updateTutorial(m:MatchState):MatchState {

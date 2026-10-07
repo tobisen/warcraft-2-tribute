@@ -38,3 +38,11 @@ it('validates tutorial snapshots and migrates old17; defeat wins over completed 
 it('rebases the movement lesson when the player chooses another worker',()=>{
  let m=createMatch('tutorial');m.gathering.units[0].selected=true;m=updateMatch(m,0);m.gathering.units=m.gathering.units.map(u=>({...u,selected:u.id==='unit-3'}));m=updateMatch(m,0);expect(m.tutorial?.workerId).toBe('unit-3');m.gathering.units=commandGroupMove(m.gathering.units,{x:600,y:240},m.map);for(let i=0;i<5;i++)m=updateMatch(m,.1);expect(m.tutorial?.step).toBe(2);
 });
+
+it('wood delivered stays valid across secondary-node cargo and completed tutorial Save',()=>{
+ let m=createMatch('tutorial');const secondary=m.gathering.extraNodes!.find(n=>(n.resource??'wood')==='wood')!;expect(secondary).toBeDefined();
+ m.gathering.node.remaining-=20;m.tutorial={step:2};m=updateTutorial(m);expect(m.tutorial?.step).toBe(3);expect(tutorialDeliveredWood(m)).toBeCloseTo(20);
+ const u=m.gathering.units[0];if(u.kind!=='worker')throw Error('Worker required');u.cargo=5;u.cargoType='wood';u.target={...secondary.position};u.order={kind:'deliver',nodeId:secondary.id};secondary.remaining-=5;
+ expect(tutorialDeliveredWood(m)).toBeCloseTo(20);expect(decodeSave(encodeSave(m,view)).ok).toBe(true);
+ u.cargo=0;u.cargoType=undefined;expect(tutorialDeliveredWood(m)).toBeCloseTo(25);expect(decodeSave(encodeSave(m,view)).ok).toBe(true);
+});

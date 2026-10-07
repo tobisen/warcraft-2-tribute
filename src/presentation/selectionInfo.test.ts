@@ -22,3 +22,8 @@ it.each(['crown','clans','elves','dwarves','goblins'] as const)('uses human name
  const group=selectionInfo(m,null);expect(group.detail).toContain(factions[faction].unitNames.worker+' ×2');expect(group.detail).toContain(factions[faction].unitNames.soldier+' ×1');expect(group.name).toBe('3 units selected');expect(group.stats).toContain('Order: move');expect(group.detail).not.toMatch(/unit-\d/);expect(group.hp).toBe(12+(m.gathering.units[1].hp??factions[faction].units.worker.hp)+20);
  expect(worker.id).toBe(original.gathering.units[0].id);expect(worker.order).toEqual(original.gathering.units[0].order);
 });
+
+it('explains idle after the last wood target is depleted without adding saved worker state',()=>{
+ const m=createMatch(),u=m.gathering.units[0];u.selected=true;u.target={...m.gathering.node.position};m.gathering.node.remaining=0;
+ expect(selectionInfo(m,null).detail).toContain('Order: idle · Last tree depleted; choose a new resource.');u.target={...u.position};expect(selectionInfo(m,null).detail).toBe('Order: idle');
+});

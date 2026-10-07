@@ -21,10 +21,10 @@ for(const [id,tiles] of [['plains96',128],['plains128',128]] as const){
   expect(bodyFits(m.map,last,12)).toBe(true);expect(findRoute(m.map,m.gathering.units[0].position,last).ok).toBe(true);
   expect(m.fog!.teams.player.visible).toHaveLength(tiles*tiles);expect(isExplored(m.fog!,'player',last)).toBe(false);
   m.gathering.units[0].position=last;m.fog=matchFog(m);expect(isExplored(m.fog!,'player',last)).toBe(true);
-  expect(visibleMinimapData(m).world).toEqual({width:size,height:size});expect(worldToMinimap({x:size,y:size},m.map)).toEqual({x:200,y:150});
+  expect(visibleMinimapData(m).world).toEqual({width:size,height:size});expect(worldToMinimap({x:size,y:size},m.map)).toEqual({x:160,y:160});
   const viewport={width:1000,height:502},scroll={x:size-1000,y:size-502};
-  expect(minimapCamera({x:200,y:150},m.map,viewport)).toEqual(scroll);expect(clampCamera({x:size,y:size},m.map,viewport)).toEqual(scroll);
-  expect(cameraIndicator(scroll,m.map,viewport).width).toBeCloseTo(1000/size*200);
+  expect(minimapCamera({x:160,y:160},m.map,viewport)).toEqual(scroll);expect(clampCamera({x:size,y:size},m.map,viewport)).toEqual(scroll);
+  expect(cameraIndicator(scroll,m.map,viewport).width).toBeCloseTo(1000/size*160);
  });
  it(`${id}: long blocked-direct routes search beyond the former small-map budget`,()=>{
   const m=createMatch('skirmish','beginner',undefined,id),size=m.map.width;

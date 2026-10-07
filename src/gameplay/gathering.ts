@@ -1,5 +1,5 @@
 import {workerToolsTimeMultiplier} from '../config/workerTools';
-import {forestContains} from './forestTerrain';
+import {forestContains,syncForestObstacles} from './forestTerrain';
 import type {OrderState as importOrderState} from './commandOrders';
 import type {SpellState} from './spells';
 import type {ResourceService} from './resourceQueue';
@@ -108,9 +108,14 @@ export function orderUnits(units: Unit[], target: Position, node?: ResourceNode)
 export function updateGathering(state: GatheringState, deltaSeconds: number, map?: WorldMap,queue?:{elapsedSeconds:number;gateFor?:GateFor;team?:'player'|'enemy';services?:Map<string,ResourceService>;nodeVisible?:(node:ResourceNode)=>boolean;knownRemaining?:(node:ResourceNode)=>number}): GatheringState {
   const services=queue?.services??(map&&queue?resourceServices(state,map,queue.elapsedSeconds):undefined);
   const nodes = resourceNodes(state).map(node=>({...node}));
-  const workMap=map?resourceWorkMap(map,state):undefined;
+  let workMap=map?resourceWorkMap(map,state):undefined;
   const baseSize=state.baseSize??gatheringConfig.baseSize,baseRect={x:state.base.x-baseSize/2,y:state.base.y-baseSize/2,width:baseSize,height:baseSize};
-  const nextTree=(worker:Worker,node:ResourceNode)=>node.tree?nodes.filter(n=>n.tree&&n.remaining>0&&(!queue?.nodeVisible||queue.nodeVisible(n))).sort((a,b)=>Math.hypot(a.position.x-worker.position.x,a.position.y-worker.position.y)-Math.hypot(b.position.x-worker.position.x,b.position.y-worker.position.y)).find(n=>!workMap||canReachFootprint(workMap,worker.position,{x:n.position.x-16,y:n.position.y-16,width:32,height:32},gatheringConfig.range)):undefined;
+  const nextTree=(worker:Worker,node:ResourceNode)=>(node.resource??'wood')==='wood'?nodes.filter(n=>n.id!==node.id&&(n.resource??'wood')==='wood'&&n.remaining>0&&(!queue?.nodeVisible||queue.nodeVisible(n))).sort((a,b)=>Math.hypot(a.position.x-worker.position.x,a.position.y-worker.position.y)-Math.hypot(b.position.x-worker.position.x,b.position.y-worker.position.y)).find(n=>!workMap||canReachFootprint(workMap,worker.position,{x:n.position.x-nodeRadius(n),y:n.position.y-nodeRadius(n),width:nodeRadius(n)*2,height:nodeRadius(n)*2},gatheringConfig.range)):undefined;
+  // Depletion is not a delivery trigger for partial wood if another tree is reachable.
+  const depletedOrder=(worker:Worker,node:ResourceNode):Worker=>{
+    const next=worker.cargo<gatheringConfig.capacity?nextTree(worker,node):undefined;
+    return {...worker,navigation:undefined,...(next?{target:{...next.position}}:{}),order:next?{kind:'gather',nodeId:next.id}:worker.cargo>0?{kind:'deliver',nodeId:node.id}:{kind:'idle'}};
+  };
   let goldBalance = state.goldBalance ?? 0;
   let wood = state.wood;
   const units = state.units.map(original => {
@@ -141,8 +146,7 @@ export function updateGathering(state: GatheringState, deltaSeconds: number, map
       const resource = node.resource ?? 'wood';
       let remaining = node.remaining;
       if (worker.order.kind === 'gather' && (remaining <= 0 && (!queue?.nodeVisible||queue.nodeVisible(node)) || worker.cargo >= gatheringConfig.capacity)) {
-        const next=worker.cargo===0?nextTree(worker,node):undefined;
-        worker.order = worker.cargo > 0 ? { kind: 'deliver', nodeId } : next?{kind:'gather',nodeId:next.id}:{ kind: 'idle' };
+        worker = depletedOrder(worker,node);
         continue;
       }
       const delivering = worker.order.kind === 'deliver';
@@ -160,7 +164,7 @@ export function updateGathering(state: GatheringState, deltaSeconds: number, map
         const service=!delivering?services?.get(worker.id):undefined;
         const goalKey = `${worker.order.kind}:${nodeId}:${rect.x}:${rect.y}${service?`:service:${service.point.x}:${service.point.y}:${service.working}`:''}`;
         const cached = worker.navigation;
-        const route = cached?.goalKey === goalKey && cached.revision === map.revision ? cached
+        const route = cached?.goalKey === goalKey && cached.revision === workMapForStep.revision ? cached
           : { ...(service?planRoute(workMapForStep,worker.position,service.point,cached?.commandNumber??1):approachRoute(workMapForStep, worker.position, rect, range, cached?.commandNumber ?? 1)), goalKey };
         const step = advanceRoute(workMapForStep, worker.position, route, workerStats(state.faction).speed, time,queue?.gateFor?.(`${queue?.team??'player'}:${worker.id}`));
         worker.position = step.position;
@@ -180,20 +184,21 @@ export function updateGathering(state: GatheringState, deltaSeconds: number, map
         worker.cargoType = undefined;
         worker.cargo = 0;
         const returnRemaining=queue?.nodeVisible&&!queue.nodeVisible(node)?queue.knownRemaining?.(node)??remaining:remaining;
-        const next=returnRemaining<=0?nextTree(worker,node):undefined;
-        worker.order = returnRemaining > 0 ? { kind: 'gather', nodeId } : next?{kind:'gather',nodeId:next.id}:{ kind: 'idle' };
+        worker = returnRemaining > 0 ? {...worker,order:{kind:'gather',nodeId}} : depletedOrder(worker,node);
         continue;
       }
-      if(remaining<=0){worker.order=worker.cargo>0?{kind:'deliver',nodeId}:{kind:'idle'};continue;}
+      if(remaining<=0){worker=depletedOrder(worker,node);continue;}
       const amount = Math.min(remaining, gatheringConfig.capacity - worker.cargo,
         gatheringConfig.woodPerSecond / workerToolsTimeMultiplier(state.workerToolsLevel) * time);
       worker.cargoType = resource;
       worker.cargo += amount;
       remaining -= amount;
       node.remaining = remaining;
+      // A felled tree can expose the next reachable tree in this same step.
+      if(workMap&&remaining<=0&&(node.tree||node.grove)&&amount>0)workMap=syncForestObstacles({...state,node:{...node,remaining:amount},extraNodes:[]},{...state,node:{...node},extraNodes:[]},workMap);
       time = Math.max(0, time - amount / (gatheringConfig.woodPerSecond / workerToolsTimeMultiplier(state.workerToolsLevel)));
       if (remaining <= 0 || worker.cargo >= gatheringConfig.capacity) {
-        worker.order = { kind: 'deliver', nodeId };
+        worker = remaining<=0 ? depletedOrder(worker,node) : {...worker,order:{kind:'deliver',nodeId}};
       } else {
         break;
       }
@@ -205,8 +210,7 @@ export function updateGathering(state: GatheringState, deltaSeconds: number, map
     ...state,
     units: units.map(worker => worker.kind === 'worker' && worker.order.kind === 'gather'
       && nodes.find(n=>worker.order.kind==='gather' && n.id===worker.order.nodeId&&(!queue?.nodeVisible||queue.nodeVisible(n)))?.remaining === 0
-      ? { ...worker, order: worker.cargo > 0
-        ? { kind: 'deliver', nodeId: worker.order.nodeId } : { kind: 'idle' } } : worker),
+      ? depletedOrder(worker,nodes.find(n=>worker.order.kind==='gather'&&n.id===worker.order.nodeId)!) : worker),
     node: nodes[0], wood,
     ...(state.extraNodes?{extraNodes:nodes.slice(state.gold?2:1)}:{}),
     ...(state.gold ? {gold:nodes[1],goldBalance} : {}),

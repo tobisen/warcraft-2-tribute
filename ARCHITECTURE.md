@@ -140,8 +140,11 @@ automatiskt till deliver. Inom 24 px från basens centrum överförs hela lasten
 till gemensamt saldo; bara denna övergång krediterar saldot.
 
 Deliver minns resursnodens ID. Efter leverans återgår arbetaren till noden om
-wood finns, annars idle. Vid uttömning levereras även partiallast; tomma arbetare
-blir idle. Ny gather-order med full last levererar först. Gather mot tom nod
+wood finns, annars nästa nåbara wood-nod. RTS-218: vid uttömning behålls
+partiallast och order/target byts till nästa nåbara wood-nod; automatisk
+normalleverans börjar först vid5. Utan nåbar wood-nod får restlast levereras,
+sedan idle med förklarande selection-text. Arbetskö/traffic ändrar inte regeln;
+gold och uttryckliga spelarorder behåller tidigare beteende. Ny gather-order med full last levererar först. Gather mot tom nod
 levererar kvarvarande last eller blir idle om lasten är tom. Move avbryter
 loopen utan att kasta eller leverera lasten, även om målet ligger vid basen.
 Avmarkering ändrar varken order eller last.
@@ -151,7 +154,7 @@ så ett långt steg kan innehålla flera övergångar. Arbetarna behandlas i sta
 listordning vid delning av den begränsade noden. Uttag begränsas både av nodens
 mängd och ledig lastkapacitet. Summa nod + laster + saldo bevaras inom
 flyttalstolerans. Depletion efter en senare arbetare dirigerar även tidigare
-arbetares kvarvarande gather-order till slutleverans.
+arbetares kvarvarande gather-order till samma wood-byte/finalleveransregel.
 
 Basen är en fast blå placeholder. Text vid varje arbetare visar last/kapacitet
 med en decimal, och saldotext visar wood och nodens mängd. Ingen manuell leveransorder eller collision införs i arbetsloopen. Den tidigare

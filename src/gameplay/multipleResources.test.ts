@@ -38,16 +38,19 @@ it.each([1,40])('four independent deposits preserve their targets through repeat
  expect(original.extraNodes![0].remaining).toBe(200);
 });
 
-it('depleting either expansion leaves its other same-type deposit and orders active',()=>{
+it('wood expansion depletion retains partial cargo at the other deposit; gold still delivers and idles',()=>{
  for(const index of [0,1]){
   let state=fixture();state.extraNodes![index].remaining=0.5;
+  const initial=resourceNodes(state).reduce((n,r)=>n+r.remaining,0);
   state=updateGathering(state,3);
   const exhausted=state.units[index+2] as Worker,other=state.units[index] as Worker;
   expect(state.extraNodes![index].remaining).toBe(0);
-  expect(exhausted.order).toEqual({kind:'idle'});
+  expect(exhausted.order).toEqual(index===0?{kind:'gather',nodeId:'wood-1'}:{kind:'idle'});
+  expect(exhausted.cargo).toBeCloseTo(index===0?3:0);
   expect(other.order).toMatchObject({kind:'gather',nodeId:index===0?'wood-1':'gold-1'});
   expect(resourceNodes(state)[index].remaining).toBeGreaterThan(0);
-  expect(index===0?state.wood:state.goldBalance).toBeCloseTo(0.5);
+  expect(index===0?state.wood:state.goldBalance).toBeCloseTo(index===0?0:0.5);
+  expect(resourceNodes(state).reduce((n,r)=>n+r.remaining,0)+state.units.reduce((n,u)=>n+u.cargo,0)+state.wood+state.goldBalance!).toBeCloseTo(initial);
  }
 });
 

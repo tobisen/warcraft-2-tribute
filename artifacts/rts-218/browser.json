@@ -1,0 +1,470 @@
+{
+  "fixture": {
+    "first": {
+      "id": "organic-0-tree-12-6",
+      "position": {
+        "x": 400,
+        "y": 208
+      }
+    },
+    "second": {
+      "id": "organic-0-tree-11-6",
+      "position": {
+        "x": 368,
+        "y": 208
+      }
+    },
+    "positions": [
+      {
+        "x": 310,
+        "y": 550
+      },
+      {
+        "x": 346,
+        "y": 550
+      },
+      {
+        "x": 382,
+        "y": 550
+      },
+      {
+        "x": 418,
+        "y": 550
+      },
+      {
+        "x": 454,
+        "y": 550
+      },
+      {
+        "x": 490,
+        "y": 550
+      }
+    ],
+    "total": 98
+  },
+  "physicalGroupOrder": true,
+  "saveLoad": true,
+  "toolsLevel": 3,
+  "trace": {
+    "departures": [
+      {
+        "id": "unit-1",
+        "cargo": 5,
+        "remaining": 74.78350739424474
+      },
+      {
+        "id": "unit-2",
+        "cargo": 5,
+        "remaining": 74.78350739424474
+      },
+      {
+        "id": "unit-3",
+        "cargo": 5,
+        "remaining": 74.21535233884904
+      },
+      {
+        "id": "unit-5",
+        "cargo": 5,
+        "remaining": 68.75905755840463
+      },
+      {
+        "id": "unit-6",
+        "cargo": 5,
+        "remaining": 68.36723622219526
+      },
+      {
+        "id": "unit-4",
+        "cargo": 5,
+        "remaining": 68.00000000000006
+      },
+      {
+        "id": "unit-2",
+        "cargo": 5,
+        "remaining": 54.33206368002419
+      },
+      {
+        "id": "unit-3",
+        "cargo": 5,
+        "remaining": 53.33052292352305
+      },
+      {
+        "id": "unit-1",
+        "cargo": 5,
+        "remaining": 51.99664865886555
+      },
+      {
+        "id": "unit-5",
+        "cargo": 5,
+        "remaining": 34.24238916218694
+      },
+      {
+        "id": "unit-4",
+        "cargo": 5,
+        "remaining": 29.626754831597992
+      },
+      {
+        "id": "unit-3",
+        "cargo": 5,
+        "remaining": 28.811338206289253
+      },
+      {
+        "id": "unit-6",
+        "cargo": 5,
+        "remaining": 26.09406569388835
+      },
+      {
+        "id": "unit-2",
+        "cargo": 5,
+        "remaining": 25.002391161129395
+      },
+      {
+        "id": "unit-1",
+        "cargo": 5,
+        "remaining": 22.385767631380975
+      },
+      {
+        "id": "unit-1",
+        "cargo": 2.8990203246623927,
+        "remaining": 0
+      },
+      {
+        "id": "unit-2",
+        "cargo": 3.873684206226434,
+        "remaining": 0
+      },
+      {
+        "id": "unit-3",
+        "cargo": 4.496131621595343,
+        "remaining": 0
+      },
+      {
+        "id": "unit-4",
+        "cargo": 3.165962586450698,
+        "remaining": 0
+      },
+      {
+        "id": "unit-5",
+        "cargo": 4.790341371578992,
+        "remaining": 0
+      },
+      {
+        "id": "unit-6",
+        "cargo": 3.7748598894862906,
+        "remaining": 0
+      }
+    ],
+    "deliveries": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      3.8736842062264287,
+      2.899020324662388,
+      3.7748598894862937,
+      3.1659625864507035,
+      4.7903413715789895,
+      4.496131621595339
+    ],
+    "switches": [
+      {
+        "id": "unit-1",
+        "cargo": 0.7711338374393784,
+        "from": "organic-0-tree-12-6",
+        "to": "organic-0-tree-11-6"
+      },
+      {
+        "id": "unit-2",
+        "cargo": 0.7152736937335666,
+        "from": "organic-0-tree-12-6",
+        "to": "organic-0-tree-11-6"
+      },
+      {
+        "id": "unit-3",
+        "cargo": 0.574702087461449,
+        "from": "organic-0-tree-12-6",
+        "to": "organic-0-tree-13-6"
+      },
+      {
+        "id": "unit-1",
+        "cargo": 4.842562408867952,
+        "from": "organic-0-tree-11-6",
+        "to": "organic-0-tree-10-6"
+      },
+      {
+        "id": "unit-2",
+        "cargo": 4.78670226516214,
+        "from": "organic-0-tree-11-6",
+        "to": "organic-0-tree-13-6"
+      },
+      {
+        "id": "unit-4",
+        "cargo": 3.8144912927708976,
+        "from": "organic-1-tree-10-23",
+        "to": "organic-1-tree-8-22"
+      },
+      {
+        "id": "unit-6",
+        "cargo": 4.18550870722912,
+        "from": "organic-1-tree-10-23",
+        "to": "organic-1-tree-8-22"
+      },
+      {
+        "id": "unit-2",
+        "cargo": 1.9551460854951546,
+        "from": "organic-0-tree-13-6",
+        "to": "organic-0-tree-11-5"
+      },
+      {
+        "id": "unit-3",
+        "cargo": 1.2737200770654813,
+        "from": "organic-0-tree-13-6",
+        "to": "organic-0-tree-10-6"
+      },
+      {
+        "id": "unit-5",
+        "cargo": 0.9450469938229182,
+        "from": "organic-1-tree-8-22",
+        "to": "organic-0-tree-10-6"
+      },
+      {
+        "id": "unit-6",
+        "cargo": 0.05495300617710558,
+        "from": "organic-1-tree-8-22",
+        "to": "organic-0-tree-10-6"
+      },
+      {
+        "id": "unit-1",
+        "cargo": 4.044853914504888,
+        "from": "organic-0-tree-10-6",
+        "to": "organic-0-tree-11-5"
+      },
+      {
+        "id": "unit-5",
+        "cargo": 0.9450469938229182,
+        "from": "organic-0-tree-10-6",
+        "to": "organic-0-tree-11-5"
+      },
+      {
+        "id": "unit-6",
+        "cargo": 0.05495300617710558,
+        "from": "organic-0-tree-10-6",
+        "to": "organic-0-tree-14-6"
+      },
+      {
+        "id": "unit-2",
+        "cargo": 0.15118261009818396,
+        "from": "organic-0-tree-11-5",
+        "to": "organic-0-tree-11-4"
+      },
+      {
+        "id": "unit-4",
+        "cargo": 1.8571428571428568,
+        "from": "organic-0-tree-11-5",
+        "to": "organic-0-tree-11-4"
+      },
+      {
+        "id": "unit-5",
+        "cargo": 2.936721526581928,
+        "from": "organic-0-tree-11-5",
+        "to": "organic-0-tree-12-4"
+      },
+      {
+        "id": "unit-1",
+        "cargo": 0.7036333943113064,
+        "from": "organic-0-tree-14-6",
+        "to": "organic-0-tree-15-6"
+      },
+      {
+        "id": "unit-3",
+        "cargo": 4.0560119380508475,
+        "from": "organic-0-tree-14-6",
+        "to": "organic-0-tree-12-4"
+      },
+      {
+        "id": "unit-6",
+        "cargo": 3.295307673814966,
+        "from": "organic-0-tree-14-6",
+        "to": "organic-0-tree-15-6"
+      },
+      {
+        "id": "unit-4",
+        "cargo": 0.02719296950116889,
+        "from": "organic-0-tree-11-4",
+        "to": "organic-0-tree-12-4"
+      },
+      {
+        "id": "unit-3",
+        "cargo": 1.092164497654307,
+        "from": "organic-0-tree-12-4",
+        "to": "organic-0-tree-15-6"
+      },
+      {
+        "id": "unit-4",
+        "cargo": 1.3660906370289576,
+        "from": "organic-0-tree-12-4",
+        "to": "organic-0-tree-15-6"
+      },
+      {
+        "id": "unit-5",
+        "cargo": 2.5428037971905706,
+        "from": "organic-0-tree-12-4",
+        "to": "organic-0-tree-15-6"
+      },
+      {
+        "id": "unit-2",
+        "cargo": 0.7188175395600761,
+        "from": "organic-0-tree-15-6",
+        "to": "organic-0-tree-16-6"
+      },
+      {
+        "id": "unit-3",
+        "cargo": 1.3921275125295582,
+        "from": "organic-0-tree-15-6",
+        "to": "organic-0-tree-16-6"
+      },
+      {
+        "id": "unit-4",
+        "cargo": 1.3660906370289576,
+        "from": "organic-0-tree-15-6",
+        "to": "organic-0-tree-16-6"
+      },
+      {
+        "id": "unit-5",
+        "cargo": 2.5428037971905706,
+        "from": "organic-0-tree-15-6",
+        "to": "organic-0-tree-16-6"
+      },
+      {
+        "id": "unit-6",
+        "cargo": 1.0368694132954972,
+        "from": "organic-0-tree-15-6",
+        "to": "organic-0-tree-16-6"
+      },
+      {
+        "id": "unit-1",
+        "cargo": 2.494153657996038,
+        "from": "organic-0-tree-16-6",
+        "to": "organic-0-tree-17-6"
+      },
+      {
+        "id": "unit-2",
+        "cargo": 3.4688175395600793,
+        "from": "organic-0-tree-16-6",
+        "to": "organic-0-tree-17-6"
+      },
+      {
+        "id": "unit-3",
+        "cargo": 4.091264954928991,
+        "from": "organic-0-tree-16-6",
+        "to": "organic-0-tree-17-6"
+      },
+      {
+        "id": "unit-4",
+        "cargo": 1.3660906370289576,
+        "from": "organic-0-tree-16-6",
+        "to": "organic-0-tree-17-6"
+      },
+      {
+        "id": "unit-5",
+        "cargo": 2.5428037971905706,
+        "from": "organic-0-tree-16-6",
+        "to": "organic-0-tree-17-6"
+      },
+      {
+        "id": "unit-6",
+        "cargo": 1.0368694132954972,
+        "from": "organic-0-tree-16-6",
+        "to": "organic-0-tree-17-6"
+      }
+    ],
+    "conservation": {
+      "samples": 600,
+      "min": 97.99999999999999,
+      "max": 98.00000000000016
+    },
+    "seenWaiting": true
+  },
+  "final": {
+    "wood": 98.00000000000014,
+    "units": [
+      {
+        "id": "unit-1",
+        "cargo": 0,
+        "order": {
+          "kind": "idle"
+        },
+        "position": {
+          "x": 438.45245854415873,
+          "y": 414
+        }
+      },
+      {
+        "id": "unit-2",
+        "cargo": 0,
+        "order": {
+          "kind": "idle"
+        },
+        "position": {
+          "x": 337.6000000000003,
+          "y": 414
+        }
+      },
+      {
+        "id": "unit-3",
+        "cargo": 0,
+        "order": {
+          "kind": "idle"
+        },
+        "position": {
+          "x": 414.45245754415873,
+          "y": 414
+        }
+      },
+      {
+        "id": "unit-4",
+        "cargo": 0,
+        "order": {
+          "kind": "idle"
+        },
+        "position": {
+          "x": 390.4524579182901,
+          "y": 414
+        }
+      },
+      {
+        "id": "unit-5",
+        "cargo": 0,
+        "order": {
+          "kind": "idle"
+        },
+        "position": {
+          "x": 361.6000000000003,
+          "y": 414
+        }
+      },
+      {
+        "id": "unit-6",
+        "cargo": 0,
+        "order": {
+          "kind": "idle"
+        },
+        "position": {
+          "x": 383.2000000000003,
+          "y": 390.0000000000002
+        }
+      }
+    ]
+  },
+  "errors": []
+}

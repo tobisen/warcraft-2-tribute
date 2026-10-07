@@ -86,7 +86,7 @@ och ID-fria panel-/ikonlabels. Riktade20/2, unit490/86 och strict build/diff
 PASS; faktiska worker/fighter-/gruppmusval alla fem raser Native800 PASS.
 [Browserbelägg](artifacts/rts-217/browser.json).
 
-### RTS-218 — Full wood-last före automatisk leverans — Todo
+### RTS-218 — Full wood-last före automatisk leverans — Done
 
 Normalleverans vid5; partiell last vid uttömt träd följer nästa nåbara träd.
 Trängsel/väntan/arbetsposition ger inte leverans; inga förlorade/dubbla wood.
@@ -94,6 +94,18 @@ Utan nåbart träd får restlast levereras och idle/blocked förklaras. Manuella
 avbrott/delivery och gold-regler bevaras. Riktade grupp/depletion/trängsel/
 unreachable/manual/save/conservation-tester och browser:flera cykler.
 Dokumentera grundorsak; ingen bred gathering-/pathfinding-omskrivning.
+Levererat gemensam uttömningsregel med bibehållen last/nästa nåbara wood,
+finalleverans/idle, samtidiga workers och direkt öppnad skogspassage.
+Tutorialens leveransräknare återanvänder resursstatistiken för alla vednoder.
+Verifierat:riktade112/9, tutorial8/1, specifika First Steps/Siege-prover,
+resursintegration12/2, unit506/87, strict build/diff/review och browser PASS.
+Slutlig full regression1664/195 PASS551.70s; tidigare röda/avbrutna körningar
+är diagnostik. [Browser](artifacts/rts-218/browser.json),
+[tutorial Save/Load](artifacts/rts-218/tutorial-browser.json).
+
+**Stopp efter218:**215–218 färdiga; HANDOFF uppdaterad. Ingen kartombyggnad,
+versionshöjning/releasestädning eller nästa task startas. Användarändringar
+bevarade. Ny218-CI/Pages-status rapporteras separat från lokal slutregression.
 
 ### Tidigare avslutade uppdrag
 
