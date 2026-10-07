@@ -1,3 +1,4 @@
+import {bossRules} from '../config/bosses';
 import {upgradeMultiplier} from '../config/upgrades';
 import type {PlayerId} from '../config/players';
 import {airPresentation} from '../config/air';
@@ -33,7 +34,7 @@ import type { GatheringState, Unit,WorkerOrder,ResourceType } from './gathering'
 import { moveTowards, type Position } from './movement';
 
 export interface EnemyWork {cargo:number;cargoType?:ResourceType;target:Position;order:WorkerOrder}
-export interface Enemy extends SpellState {playerId?:PlayerId;faction?:FactionId;mana?:number;role?:'soldier'|'archer'|'catapult'|'specialist'|'air';attackCooldown?:number;ability?:import('./abilities').AbilityState;legacyProfile?:true; owner?:'enemy'; kind?:'ship'|'unit'|'base'|'worker'|'building';navalLanding?:true;buildingType?:'academy'|'harbor'|'outpost'|'barracks'|'farm'|'forge';construction?:import('./placement').ConstructionJob;work?:EnemyWork; order?:{kind:'idle'}|{kind:'defend';targetId:string}|{kind:'muster'|'attack-move';destination:Position}; id: string; position: Position; hp: number; footprint?:Footprint; navigation?: RouteState }
+export interface Enemy extends SpellState {boss?:import('../config/bosses').BossId;playerId?:PlayerId;faction?:FactionId;mana?:number;role?:'soldier'|'archer'|'catapult'|'specialist'|'air';attackCooldown?:number;ability?:import('./abilities').AbilityState;legacyProfile?:true; owner?:'enemy'; kind?:'ship'|'unit'|'base'|'worker'|'building';navalLanding?:true;buildingType?:'academy'|'harbor'|'outpost'|'barracks'|'farm'|'forge';construction?:import('./placement').ConstructionJob;work?:EnemyWork; order?:{kind:'idle'}|{kind:'defend';targetId:string}|{kind:'muster'|'attack-move';destination:Position}; id: string; position: Position; hp: number; footprint?:Footprint; navigation?: RouteState }
 export interface CombatState {baseDevelopment?:import('../config/baseUpgrade').BaseDevelopment; baseOwner?:'player'; enemies: Enemy[]; baseHP: number; projectiles?:Projectile[]; nextProjectileNumber?:number; destroyedEnemyFootprints?:Footprint[]; enemyUpgrades?:{attack:number;defense:number};upgrades?:{attack:number;defense:number} }
 
 export function enemyAt(enemies: Enemy[], point: Position): Enemy | undefined {
@@ -151,7 +152,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
       return {...cooling,position:step.position,...(step.route?{navigation:step.route}:{})};
     }
 
-    const knownTargets=originalTargets.filter(t=>playerVisible(t,enemy)&&canAttackDomain(enemy,t,enemyFaction));
+    const knownTargets=originalTargets.filter(t=>(enemy.boss?Math.hypot(t.footprint.x+t.footprint.width/2-enemy.position.x,t.footprint.y+t.footprint.height/2-enemy.position.y)<=bossRules.range:playerVisible(t,enemy))&&canAttackDomain(enemy,t,enemyFaction));
     const nearby=knownTargets.filter(t=>t.kind!=='base').map(t=>({target:t,
       distance:Math.hypot(t.footprint.x+t.footprint.width/2-enemy.position.x,t.footprint.y+t.footprint.height/2-enemy.position.y)}))
       .filter(t=>t.distance<=stats.aggroRange).sort((a,b)=>a.distance-b.distance
@@ -159,6 +160,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
     const siegeDefense=enemy.role==='catapult'?knownTargets.filter(t=>['tower','wall','gate'].includes(t.kind)&&Math.hypot(t.footprint.x+t.footprint.width/2-enemy.position.x,t.footprint.y+t.footprint.height/2-enemy.position.y)<=stats.aggroRange).sort((a,b)=>Math.hypot(a.footprint.x+a.footprint.width/2-enemy.position.x,a.footprint.y+a.footprint.height/2-enemy.position.y)-Math.hypot(b.footprint.x+b.footprint.width/2-enemy.position.x,b.footprint.y+b.footprint.height/2-enemy.position.y)||a.id.localeCompare(b.id))[0]:undefined;
     const target=enemy.order?.kind==='defend'?knownTargets.find(t=>enemy.order?.kind==='defend'&&t.id===enemy.order.targetId):siegeDefense??nearby[0]?.target??knownTargets.find(t=>t.kind==='base');
     if(!target){
+      if(enemy.boss)return cooling;
       if(enemy.order?.kind==='defend')return {...enemy,navigation:undefined,order:{kind:'idle' as const}};
       const goal=enemy.order?.kind==='attack-move'?enemy.order.destination:arenaConfig.base;
       const step=map?combatApproach(enemyMap!,enemy.position,baseFootprint(goal),'explore-goal',stats.speed,stats.range,delta,enemy.navigation?.targetId==='explore-goal'?enemy.navigation:undefined,gateFor?.(`enemy:${enemy.id}`)):approach(enemy.position,goal,stats.speed,stats.range,delta);
@@ -166,20 +168,20 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
     }
     const moved=units.find(u=>u.id===target.id)??naval.navy?.ships.find(s=>s.id===target.id);
     const footprint=map&&moved?unitFootprint(moved.position,target.footprint.width):target.footprint;
-    if(!playerVisible({...target,footprint},enemy))return {...enemy,navigation:undefined};
+    if(!enemy.boss&&!playerVisible({...target,footprint},enemy))return {...enemy,navigation:undefined};
     const center={x:footprint.x+footprint.width/2,y:footprint.y+footprint.height/2};
-    const step=map?combatApproach({...enemyMap!,ignoreAttackOcclusion:target.domain==='air'},enemy.position,footprint,target.id,stats.speed,stats.range,delta,enemy.navigation,gateFor?.(`enemy:${enemy.id}`))
+    const step=enemy.boss?{position:{...enemy.position},attackSeconds:delta,navigation:undefined}:map?combatApproach({...enemyMap!,ignoreAttackOcclusion:target.domain==='air'},enemy.position,footprint,target.id,stats.speed,stats.range,delta,enemy.navigation,gateFor?.(`enemy:${enemy.id}`))
       :approach(enemy.position,center,stats.speed,stats.range,delta);
-    const multiplier=upgradeMultiplier(opponent.upgrades.attack.multiplier,combat.enemyUpgrades?.attack);
+    const multiplier=enemy.boss?1:upgradeMultiplier(opponent.upgrades.attack.multiplier,combat.enemyUpgrades?.attack);
     const soldier=enemySoldier(enemy,enemyFaction);
     if(ranged){
       let cooldown=Math.max(0,(enemy.attackCooldown??0)-(delta-step.attackSeconds)),time=step.attackSeconds;
-      const canFire=!map||isAir(enemy)||target.domain==='air'||segmentFits({...map,obstacles:map.obstacles.filter(o=>!(o.x===footprint.x&&o.y===footprint.y&&o.width===footprint.width&&o.height===footprint.height))},step.position,center,0);
+      const canFire=!!enemy.boss||!map||isAir(enemy)||target.domain==='air'||segmentFits({...map,obstacles:map.obstacles.filter(o=>!(o.x===footprint.x&&o.y===footprint.y&&o.width===footprint.width&&o.height===footprint.height))},step.position,center,0);
       while(canFire&&time>0&&time+1e-9>=cooldown){
         time=Math.max(0,time-cooldown);
         shots.push({projectile:{owner:'enemy',id:`enemy-arrow-${nextProjectileNumber++}`,shooterId:enemy.id,targetId:target.id,
           position:{...step.position},destination:{...center},speed:ranged.projectileSpeed,remainingLife:ranged.projectileLifetime,
-          targets:attackTargets(enemy,enemyFaction),...(isAir(enemy)||target.domain==='air'?{airborne:true as const}:{}),...(stats.damageByDomain?{damageByDomain:stats.damageByDomain}:{}),...(enemy.role==='catapult'?{defenseMultiplier:defenseBalanceConfig.siegeDefenseMultiplier}:{}),damage:ranged.damage*multiplier*abilityEffects(enemyGathering,soldier,delta-time).attackMultiplier*spellModifiers(soldier,delta-time).attack,
+          targets:attackTargets(enemy,enemyFaction),...(enemy.boss||isAir(enemy)||target.domain==='air'?{airborne:true as const}:{}),...(stats.damageByDomain?{damageByDomain:stats.damageByDomain}:{}),...(enemy.role==='catapult'?{defenseMultiplier:defenseBalanceConfig.siegeDefenseMultiplier}:{}),damage:ranged.damage*multiplier*abilityEffects(enemyGathering,soldier,delta-time).attackMultiplier*spellModifiers(soldier,delta-time).attack,
           hitRadius:'hitRadius' in ranged?ranged.hitRadius:0,targetFootprint:{...footprint},
           ...('splashRadius' in ranged?{splashRadius:ranged.splashRadius}:{})},time});
         cooldown=ranged.attackInterval;
@@ -191,7 +193,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
   });
   const visibleProjectile=(enemy:Enemy,p:Projectile)=>projectileVisible?projectileVisible(enemy,p):!visible||units.some(u=>u.id===p.shooterId&&u.kind==='soldier'&&visible(enemy,u));
   const ownBodies=originalTargets.map(t=>{const moved=units.find(u=>u.id===t.id)??naval.navy?.ships.find(u=>u.id===t.id);const f=moved?unitFootprint(moved.position,t.footprint.width):t.footprint;return {id:t.id,hp:t.hp,...(t.domain==='air'?{role:'air' as const}:{}),...(t.kind==='ship'?{kind:'ship' as const}:{}),...(t.kind==='tower'||t.kind==='wall'||t.kind==='gate'?{fortification:true as const}:{}),position:{x:f.x+f.width/2,y:f.y+f.height/2},...(t.kind==='soldier'||t.kind==='worker'||t.kind==='ship'?{}:{footprint:f})};});
-  const enemyProjectileVisible=(body:Enemy,p:Projectile)=>{const target=originalTargets.find(t=>t.id===body.id),shooter=movingEnemies.find(e=>e.id===p.shooterId)??combat.enemies.find(e=>e.id===p.shooterId)??{id:p.shooterId??'historical-shooter',position:p.position,hp:1};return !!target&&playerVisible({...target,footprint:body.footprint??unitFootprint(body.position,target.footprint.width)},shooter);};
+  const enemyProjectileVisible=(body:Enemy,p:Projectile)=>{if(p.shooterId?.startsWith('enemy-boss-'))return Math.hypot(body.position.x-p.destination.x,body.position.y-p.destination.y)<=100;const target=originalTargets.find(t=>t.id===body.id),shooter=movingEnemies.find(e=>e.id===p.shooterId)??combat.enemies.find(e=>e.id===p.shooterId)??{id:p.shooterId??'historical-shooter',position:p.position,hp:1};return !!target&&playerVisible({...target,footprint:body.footprint??unitFootprint(body.position,target.footprint.width)},shooter);};
   const projectiles:Projectile[]=[];
   const advanceShot=(list:Projectile[],time:number,owner?:'enemy')=>{
     const advanced=advanceProjectiles(list,owner?ownBodies:movingEnemies.filter(e=>!scope?.canTarget||scope.canTarget(e)),time,map,owner?enemyProjectileVisible:visibleProjectile);
@@ -212,7 +214,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
   const nextNavy=naval.navy?{...naval.navy,ships:naval.navy.ships.map(s=>({...s,hp:Math.max(0,s.hp-(playerDamage.get(s.id)??0)*defenseMultiplier)})),harbor:naval.navy.harbor?{...naval.navy.harbor,hp:Math.max(0,naval.navy.harbor.hp-(playerDamage.get('harbor')??0))}:null}:undefined;
   const nextCombat={...combat,baseHP:Math.max(0,combat.baseHP-(playerDamage.get('base')??0))};
   const aliveTargets=new Set((scope?.targets??playerTargets(surviving,nextCombat,nextPlacement,nextNavy)).filter(t=>t.hp>0).map(t=>t.id));
-  const enemies = movingEnemies.map(enemy => ({ ...enemy, hp: Math.max(0, enemy.hp - (damage.get(enemy.id) ?? 0)*(!enemy.footprint&&enemy.kind!=='worker'?(upgradeMultiplier(opponent.upgrades.defense.multiplier,combat.enemyUpgrades?.defense))*abilityEffects(enemyGathering,enemySoldier(enemy,enemyFaction)).defenseMultiplier*spellModifiers(enemy).defense:1)) }))
+  const enemies = movingEnemies.map(enemy => ({ ...enemy, hp: Math.max(0, enemy.hp - (damage.get(enemy.id) ?? 0)*(!enemy.footprint&&enemy.kind!=='worker'?(enemy.boss?1:upgradeMultiplier(opponent.upgrades.defense.multiplier,combat.enemyUpgrades?.defense))*abilityEffects(enemyGathering,enemySoldier(enemy,enemyFaction)).defenseMultiplier*spellModifiers(enemy).defense:1)) }))
     .filter(e => e.hp > 0 || e.kind==='worker').map(enemy => enemy.navigation?.targetId && enemy.navigation.targetId!=='explore-goal' && !aliveTargets.has(enemy.navigation.targetId) ? {...enemy,navigation:undefined} : enemy);
   const destroyedEnemyFootprints=movingEnemies.filter(e=>e.footprint&&e.hp-(damage.get(e.id)??0)<=0).map(e=>e.footprint!);
   units = units.map(unit => unit.order.kind === 'attack'

@@ -1,0 +1,373 @@
+{
+  "fixture": "Scoped campaign completions unlock mission; ledger-tracked funding; paid building/production APIs; troops staged near guardian; real mouse attack and actual match steps",
+  "results": [
+    {
+      "run": {
+        "id": "bramblemaw",
+        "faction": "crown",
+        "series": "human-frontier-v1",
+        "mission": "forest-watch"
+      },
+      "initial": {
+        "bosses": {
+          "version": 1,
+          "guardians": {
+            "bramblemaw": {
+              "hp": 1100,
+              "attackCooldown": 0,
+              "claimed": false,
+              "engaged": false
+            }
+          }
+        },
+        "visibleBosses": []
+      },
+      "preparation": {
+        "fighters": [
+          {
+            "id": "unit-4",
+            "position": {
+              "x": 2232,
+              "y": 2520
+            }
+          },
+          {
+            "id": "unit-5",
+            "position": {
+              "x": 2272,
+              "y": 2520
+            }
+          },
+          {
+            "id": "unit-6",
+            "position": {
+              "x": 2312,
+              "y": 2520
+            }
+          },
+          {
+            "id": "unit-7",
+            "position": {
+              "x": 2352,
+              "y": 2520
+            }
+          },
+          {
+            "id": "unit-8",
+            "position": {
+              "x": 2192,
+              "y": 2560
+            }
+          },
+          {
+            "id": "unit-9",
+            "position": {
+              "x": 2232,
+              "y": 2560
+            }
+          },
+          {
+            "id": "unit-10",
+            "position": {
+              "x": 2272,
+              "y": 2560
+            }
+          },
+          {
+            "id": "unit-11",
+            "position": {
+              "x": 2312,
+              "y": 2560
+            }
+          },
+          {
+            "id": "unit-12",
+            "position": {
+              "x": 2192,
+              "y": 2600
+            }
+          },
+          {
+            "id": "unit-13",
+            "position": {
+              "x": 2232,
+              "y": 2600
+            }
+          },
+          {
+            "id": "unit-14",
+            "position": {
+              "x": 2272,
+              "y": 2600
+            }
+          },
+          {
+            "id": "unit-15",
+            "position": {
+              "x": 2192,
+              "y": 2640
+            }
+          },
+          {
+            "id": "unit-16",
+            "position": {
+              "x": 2232,
+              "y": 2640
+            }
+          },
+          {
+            "id": "unit-17",
+            "position": {
+              "x": 2192,
+              "y": 2680
+            }
+          }
+        ],
+        "bossPosition": {
+          "x": 2352,
+          "y": 2640
+        },
+        "name": "Bramblemaw",
+        "population": {
+          "cap": 18,
+          "used": 17,
+          "reserved": 0
+        },
+        "wood": 99660,
+        "gold": 99940,
+        "stats": {
+          "wood": {
+            "gathered": 0,
+            "delivered": 0,
+            "spent": 360
+          },
+          "gold": {
+            "gathered": 0,
+            "delivered": 0,
+            "spent": 70
+          },
+          "added": 14,
+          "lost": 0,
+          "killed": 0,
+          "built": 3,
+          "destroyed": 0,
+          "removed": 0
+        }
+      },
+      "battle": {
+        "ordered": 14,
+        "frames": 41,
+        "hp": 884.3537018811643,
+        "engaged": true,
+        "alive": 14
+      },
+      "defeated": {
+        "boss": {
+          "hp": 0,
+          "attackCooldown": 0,
+          "claimed": false,
+          "engaged": false
+        },
+        "alive": 11,
+        "outcome": "playing",
+        "wood": 99660,
+        "gold": 99940
+      },
+      "loot": {
+        "claimed": true,
+        "wood": 99960,
+        "gold": 100140
+      },
+      "actualMouseAttack": true,
+      "paidArmy": true,
+      "woundedSaveLoad": true,
+      "claimedSaveLoad": true,
+      "restart": true,
+      "errors": []
+    },
+    {
+      "run": {
+        "id": "gravelheart",
+        "faction": "dwarves",
+        "series": "dwarves-road-v1",
+        "mission": "ridge-convoy"
+      },
+      "initial": {
+        "bosses": {
+          "version": 1,
+          "guardians": {
+            "gravelheart": {
+              "hp": 1400,
+              "attackCooldown": 0,
+              "claimed": false,
+              "engaged": false
+            }
+          }
+        },
+        "visibleBosses": []
+      },
+      "preparation": {
+        "fighters": [
+          {
+            "id": "unit-5",
+            "position": {
+              "x": 2640,
+              "y": 2792
+            }
+          },
+          {
+            "id": "unit-6",
+            "position": {
+              "x": 2680,
+              "y": 2792
+            }
+          },
+          {
+            "id": "unit-7",
+            "position": {
+              "x": 2720,
+              "y": 2792
+            }
+          },
+          {
+            "id": "unit-8",
+            "position": {
+              "x": 2640,
+              "y": 2832
+            }
+          },
+          {
+            "id": "unit-9",
+            "position": {
+              "x": 2680,
+              "y": 2832
+            }
+          },
+          {
+            "id": "unit-10",
+            "position": {
+              "x": 2640,
+              "y": 2872
+            }
+          },
+          {
+            "id": "unit-11",
+            "position": {
+              "x": 2680,
+              "y": 2872
+            }
+          },
+          {
+            "id": "unit-12",
+            "position": {
+              "x": 2720,
+              "y": 2872
+            }
+          },
+          {
+            "id": "unit-13",
+            "position": {
+              "x": 2640,
+              "y": 2912
+            }
+          },
+          {
+            "id": "unit-14",
+            "position": {
+              "x": 2680,
+              "y": 2912
+            }
+          },
+          {
+            "id": "unit-15",
+            "position": {
+              "x": 2720,
+              "y": 2912
+            }
+          },
+          {
+            "id": "unit-16",
+            "position": {
+              "x": 2760,
+              "y": 2912
+            }
+          },
+          {
+            "id": "unit-17",
+            "position": {
+              "x": 2680,
+              "y": 2952
+            }
+          },
+          {
+            "id": "unit-18",
+            "position": {
+              "x": 2720,
+              "y": 2952
+            }
+          }
+        ],
+        "bossPosition": {
+          "x": 2800,
+          "y": 2832
+        },
+        "name": "Gravelheart",
+        "population": {
+          "cap": 18,
+          "used": 18,
+          "reserved": 0
+        },
+        "wood": 99615,
+        "gold": 99950,
+        "stats": {
+          "wood": {
+            "gathered": 0,
+            "delivered": 0,
+            "spent": 425
+          },
+          "gold": {
+            "gathered": 0,
+            "delivered": 0,
+            "spent": 70
+          },
+          "added": 14,
+          "lost": 0,
+          "killed": 0,
+          "built": 3,
+          "destroyed": 0,
+          "removed": 0
+        }
+      },
+      "battle": {
+        "ordered": 14,
+        "frames": 41,
+        "hp": 1203.7181542903459,
+        "engaged": true,
+        "alive": 14
+      },
+      "defeated": {
+        "boss": {
+          "hp": 0,
+          "attackCooldown": 0,
+          "claimed": true,
+          "engaged": false
+        },
+        "alive": 12,
+        "outcome": "playing",
+        "wood": 99815,
+        "gold": 100300
+      },
+      "loot": {
+        "claimed": true,
+        "wood": 99815,
+        "gold": 100300
+      },
+      "actualMouseAttack": true,
+      "paidArmy": true,
+      "woundedSaveLoad": true,
+      "claimedSaveLoad": true,
+      "restart": true,
+      "errors": []
+    }
+  ]
+}

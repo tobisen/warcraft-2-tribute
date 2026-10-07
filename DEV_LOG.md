@@ -1,5 +1,73 @@
 # Development log
 
+## 2026-10-07 — RTS-212 två hemliga bossar färdiga
+
+Nytt uttryckligt uppdrag efter219: genomför212, sedan stopp före213. Två
+originalväktare på befintliga regionskartor, för single-player Skirmish och
+kampanj: Bramblemaw på Frontier2352/2640 (1100HP,24skada/1.2s,16px splash,
+300wood/200gold); Gravelheart på Highlands2800/2832 (1400HP,28skada/1.6s,
+20px splash,200wood/350gold). Platserna är kroppssäkra/nåbara och ligger
+långt från starter och obligatoriska mål; ingen kartombyggnad.
+
+Stationära väktare med360px hemområde. De väcks först av faktisk playersikt;
+fortsätter försvara området medan egna enheter/byggnader är kvar där. Hela
+styrkans reträtt återställer HP och engagement. Arcing projektiler kan slå
+land/luft/sjö/byggnader och kringgå terrängskydd; range överstiger vanliga
+båg-/belägringsenheter så permanent utsidesbeskjutning inte är gratis.
+De är immuna mot riktade spells; vanliga melee/ranged/naval-/towerattacker
+samt buffs på den egna armén använder befintlig combat. Ingen ny neutral-AI.
+
+BossState hålls separat från fiendespelarens trupper/produktion/grupper/
+fog/statistik/vinstmål. En kort combatprojektion använder vanliga Enemy/
+projektil-/skadefunktioner, därefter återförs HP/cooldown/engagement och
+väktarna tas ur fiendearmén. Fiende-AI ignorerar dem, kan inte ta deras skatt
+eller användas för att döda dem gratis. Bossar blockerar inte guard/wave/
+base-victory; escort-victory med levande guardian testad. Byggpreview/klick
+respekterar väktarens64px kropp. Minimap/namn/HP/range/poses visas bara via
+befintlig fog; inga dolda platsmarkörer.
+
+Efter död: kvarliggande originalcorpse och betydande skatt96px söderut.
+En levande egen marktrupp inom48px, sikt och fri access krävs för hämtning;
+trupp som redan står där kan hämta samma tick. Claimed-ledger bevarar en
+belöning även efter Save. Bonus hålls separat från utvunnen/levererad wood.
+Save65 migrerar64; nya Savefält valideras (map/roster/version/HP/cooldown/
+engagement/claim/exploration), gamla regions-solo-sparningar aktiveras vid
+Load. Originalkartor och multiplayer får inga nya bossar; restart/replay är
+ett nytt möte med full HP och tom claimledger. Ingen spelversionshöjning.
+
+Två egna imagegen-källor och åtta exporterade poses: idle/wind-up/attack/dead.
+Transparenta original sparade lokalt; befintlig alpha-area-reducer/exporter
+återanvänds. [Källa/prompt/CC0/bearbetning](assets/sources/bosses/README.md),
+asset-credits/manifest uppdaterade. Inga externa spelbilder/ljud eller betald
+stock. Befintliga godkända material-/impact-/treasuresljud återanvänds;
+agenten har inte gjort ny faktisk ljudlyssning.
+
+Ny verifiering: focused75/7 PASS35.15s, collision13/2 PASS2.72s, slutliga
+boss/air/tower/WorkerTools39/4 PASS3.84s; unit507/87 PASS17.42s; strict build
+PASS640ms med befintlig bundlevarning. Manifest87unit/109integration disjunkt.
+Native800 browser båda kampanjmöten PASS: riktig menu/mission/musattack,
+finansiering registrerad i cheatledger men byggnader och14 soldater via
+betalda gameplay-API:er, trupper staged nära väktaren. Faktiska matchticks,
+HP-fall/förluster, wounded Save/Load med projektiler, defeated/loot, claimed
+Save/Load/pause/restart. Bramblemaw11 respektive Gravelheart12 överlevande;
+exakta300/200 och200/350 bonusar. [Browserbelägg](artifacts/rts-212/browser.json)
+och [kontroll](scripts/check-bosses.mjs). Båda sprites/strid/corpse/loot visuellt
+granskade; ingen naturlig fullkampanj eller mänsklig balansbedömning hävdas.
+Tidiga diagnoser: speed0/no-map gav NaN innan stationär attackgren; för stor
+splash justerades mot solo/armé-prover. Browserformation låg först utanför
+canvas/sikt, korrigerad med kroppsgiltig synlig staging; direkt loot kunde
+legitimt ske när en överlevande redan stod vid skatten, assertion korrigerad.
+
+Slutlig `npm test`1682/196 PASS542.56s. Byte-identisk boss-onlyexport av
+PNG/atlasJSON/manifest PASS; länk/syntax/diff och egen diffgranskning PASS.
+212 Done, levereras med denna commit/push; inga öppna blockerande fynd. CSS/units.mjs/docs/ och
+:memory:.ses bevarade.213,208–211 och release startas inte av detta uppdrag.
+Ny212-CI/Pages är ännu inte verifierad. Föregående219/993a637:s
+[CI37642322214](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37642322214)
+är röd av runner-tilldelningsfel efter5försök; tester/build startade inte.
+Detta är inget rapporterat assertions-/gameplayfel. Workflow ändras inte
+utan sådant belägg;212-push ger ett nytt workflowförsök.
+
 ## 2026-10-07 — RTS-219 kampanjfynd färdiga
 
 Användaren beställer att befintliga fynd slås på efter218. Samma authored

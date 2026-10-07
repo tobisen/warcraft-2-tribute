@@ -110,6 +110,13 @@
       "width": 1024,
       "height": 5120,
       "refreshSource": "assets/sources/visual-refresh/README.md"
+    },
+    "bosses": {
+      "image": "assets/bosses-atlas.png",
+      "data": "assets/bosses-atlas.json",
+      "width": 384,
+      "height": 192,
+      "source": "assets/sources/bosses/README.md"
     }
   },
   "frames": {
@@ -147917,6 +147924,86 @@
       "owner": "enemy",
       "buildingType": "academy",
       "stage": "damaged"
+    },
+    "bramblemaw-0": {
+      "atlas": "bosses",
+      "kind": "boss",
+      "width": 96,
+      "height": 96,
+      "anchor": {
+        "x": 48,
+        "y": 75
+      }
+    },
+    "bramblemaw-1": {
+      "atlas": "bosses",
+      "kind": "boss",
+      "width": 96,
+      "height": 96,
+      "anchor": {
+        "x": 48,
+        "y": 75
+      }
+    },
+    "bramblemaw-2": {
+      "atlas": "bosses",
+      "kind": "boss",
+      "width": 96,
+      "height": 96,
+      "anchor": {
+        "x": 48,
+        "y": 75
+      }
+    },
+    "bramblemaw-3": {
+      "atlas": "bosses",
+      "kind": "boss",
+      "width": 96,
+      "height": 96,
+      "anchor": {
+        "x": 48,
+        "y": 75
+      }
+    },
+    "gravelheart-0": {
+      "atlas": "bosses",
+      "kind": "boss",
+      "width": 96,
+      "height": 96,
+      "anchor": {
+        "x": 48,
+        "y": 75
+      }
+    },
+    "gravelheart-1": {
+      "atlas": "bosses",
+      "kind": "boss",
+      "width": 96,
+      "height": 96,
+      "anchor": {
+        "x": 48,
+        "y": 75
+      }
+    },
+    "gravelheart-2": {
+      "atlas": "bosses",
+      "kind": "boss",
+      "width": 96,
+      "height": 96,
+      "anchor": {
+        "x": 48,
+        "y": 75
+      }
+    },
+    "gravelheart-3": {
+      "atlas": "bosses",
+      "kind": "boss",
+      "width": 96,
+      "height": 96,
+      "anchor": {
+        "x": 48,
+        "y": 75
+      }
     }
   }
 }

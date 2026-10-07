@@ -5,7 +5,7 @@ import {placementObstacles} from '../placement';
 import type {MatchState} from '../match';
 /** Rebuild actual pre-reference map/resource geometry; never relabel modern coordinates. */
 export function legacyTerrainFixture(doc:{map:MapId;state:MatchState}):void {
- delete doc.state.discoveries;
+ delete doc.state.discoveries;delete doc.state.bosses;
  const s=doc.state,resourceBodies=placementObstacles(s.gathering),oldNodes=[s.gathering.node,s.gathering.gold,...s.gathering.extraNodes??[]],resources=mapResources(doc.map).map(n=>({id:n.id,resource:n.resource,position:{...n.position},remaining:oldNodes.find(o=>o?.id===n.id)?.remaining??n.amount}));
  s.gathering.node=resources[0];s.gathering.gold=resources[1];if(resources.length>2)s.gathering.extraNodes=resources.slice(2);else delete s.gathering.extraNodes;
  const oldTerrain=createMap(doc.map,s.map.terrainLayout,s.map.resourceLayout==='trees'?'trees':'groves',s.map.worldLayout==='expanded'?'expanded':'original',s.map.design).obstacles;

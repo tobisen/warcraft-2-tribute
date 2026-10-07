@@ -45,6 +45,10 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
+Användaren beställer uttryckligen RTS-212 efter219. Genomför endast212 med
+befintlig combat, Save/engångsskatt, egna sprites, browser/checks/docs och
+commit/push.213/release och208–211 startas inte av detta uppdrag.
+
 ### RTS-219 — Aktivera befintliga kampanjfynd — Done
 
 Nytt uttryckligt uppdrag efter218: slå på skatter och rekryterbara trupper i
@@ -54,8 +58,8 @@ kampanjmål bevaras. Befintliga expanderade kampanjsparningar aktiveras vid
 Load; äldre originalkartor behåller kompatibel geometri utan nya fynd.
 Tutorialens träningslektion kräver producerad trupp. Riktade integrationer,
 browser och slutchecks/docs/commit/push. Kartombyggnad och release fortsatt
-pausade. Bossar saknar implementation; frågan om att även genomföra212 är
-ställd separat och dess Todo-status består tills scope är klarlagt.
+pausade. Bossarna hanteras separat i212; användaren har därefter beställt dess
+implementation enligt Current Focus.
 Levererat: två20wood/10gold-skatter och en rasgrundsoldat per karta, engångs-
 ledger, Save-aktivering och tutorialspärrar. Riktade discoveries14/1 och
 berörda kampanjer53/5, unit506/87, strict build/diff/review och faktisk
@@ -204,10 +208,25 @@ Verifierat: riktade59/6, unit481/88, full1621/193 PASS740.85s, strict build
 
 - Korta stämningsfulla engelska namn med egen raskampanjidentitet, plats/konflikt/mål. Interna ID:n/progression/Save/highscores består; gammalt/nytt i rapport. HANDOFF och stopp efter batch 2.
 
-### RTS-212 — Två valfria hemliga bossar — Todo (batch 3)
+### RTS-212 — Två valfria hemliga bossar — Done (nytt uppdrag)
 
 - Två lämpliga kartor; upptäcks genom fog/utforskning utanför start/obligatoriska mål. Namn/design/HP/combatfeedback, befintlig combat och begränsat hemområde; ordentlig armé krävs utan uppenbart AI-exploit.
 - Datadefinierad betydande skatt efter bossvinst, exakt en hämtning även med Save. Ingen victory-/fiendespelarblockering. Dokumentera AI-interaktion/belöningsägarskap.
+
+Levererat: Bramblemaw/Frontier1100HP och Gravelheart/Highlands1400HP,
+stationära360px hemområden, siktväckning/full reträttreset och egna sprites.
+300wood/200gold respektive200wood/350gold skatt, mark/sikt/access/engångsledger.
+Separat guardianstate håller AI/produktion/missionvictory/statistik fria från
+bosskrav; vanliga attacker/projectiles/buffs återanvänds, targeted spells
+undantagna. Save65 migrerar64; äldre regions-solo-matcher aktiveras vid Load,
+originalkartor/multiplayer bevaras. Native800 båda kampanjmöten, betald armé,
+verklig musattack/strid/wounded+claimed Save/Load/restart PASS; sprites/corpse/
+loot visuellt granskade. Riktade75/7 +13/2 +39/4, unit507/87, strict build,
+fullregression1682/196 PASS542.56s, byte-identisk export och länk/syntax/diff/
+review PASS. [Belägg](artifacts/rts-212/browser.json). HANDOFF/credits uppdaterade.
+Ingen mänsklig balans-/naturlig fullmatch-/ny ljudlyssning hävdas. Föregående
+219-CI röd på runner-tilldelning (tester/build startade inte); ny212-CI/Pages
+ej verifierad. Stanna efter212;213/release och208–211 startas inte.
 
 ### RTS-213 — Version och befintlig Pages-release — Todo (batch 3)
 

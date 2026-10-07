@@ -1575,3 +1575,20 @@ regler. Fynd kräver fog/sikt, egen levande marktrupp inom48px och fri access;
 rekrytering använder vanlig supply och spawn. Tutorial kräver utvunnen och
 levererad ved samt producerad soldat även om fynd redan hämtats. Bossar
 har inget befintligt system att aktivera; RTS-212 behandlas separat.
+
+
+## RTS-212 — stationära hemliga guardians
+
+Två egna väktare utanför starter/uppdragsmål på Frontier/Highlands, i nya och
+laddade regions-solo-matcher. Stationära360px-områden med återställning efter
+full reträtt, första väckning via playerfog, längre räckvidd än vanliga
+rangedtrupper och arcing splash mot land/air/sea/buildings. Riktade spells
+är undantagna; normal combat och buffs på egna trupper fungerar. Detta
+undviker en separat neutral-AI och permanent control-/terrain-/range-cheese.
+
+Guardianstate är separat från enemy-arméer; AI ignorerar dem och får aldrig
+belöningen. Endast mänskliga spelarens levande marktrupp kan hämta efter död,
+exakt en gång via Save-ledger. Guardianens liv krävs inte för kampanjvictory,
+groups eller produktion. Replay/restart skapar nytt möte. Fraktioner har
+sina vanliga enheter/stats; baslinje-solo förlorar, större armé kan vinna.
+Mänsklig balansbedömning och naturlig utforskning över en full match kvarstår.

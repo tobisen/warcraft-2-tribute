@@ -8,6 +8,7 @@
   "src/gameplay/autoTransport.test.ts",
   "src/gameplay/baseUpgrade.test.ts",
   "src/gameplay/beginner.test.ts",
+  "src/gameplay/bosses.test.ts",
   "src/gameplay/campaign.test.ts",
   "src/gameplay/campaignContent.test.ts",
   "src/gameplay/campaignEarly.test.ts",

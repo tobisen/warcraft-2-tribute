@@ -1,3 +1,29 @@
+# RTS-212 — två valfria väktare,2026-10-07
+
+Bramblemaw/Frontier och Gravelheart/Highlands har egna transparenta original-
+sprites, namn/HP/combatposes, synligt hemområde och engångsskatt. Befintlig
+combat/projektiler/fog/spawnstorlek används; separat guardianstate håller dem
+utanför enemyproduktion, grupper, statistik och kampanjvictory. Save65 täcker
+HP/cooldown/engagement/claim och migrerar64. Riktade spells är undantagna;
+vanliga attacker och buffs på egna trupper fungerar. No broad map/refactor.
+
+Riktade75/7, collision13/2, slutliga39/4, unit507/87 och strict build PASS.
+Native800 båda kampanjmöten PASS med fysisk attack,14 betalda normaltrupper,
+finansierings-/stagingfixture, faktisk combat, wounded/claimed Save/Load och
+restart. Båda sprites/strid/corpse/loot visuellt granskade. [Belägg](artifacts/rts-212/browser.json).
+Slutlig fullregression1682/196 PASS542.56s; byte-identisk boss-onlyexport,
+länk/syntax/diff och egen review PASS.212 Done. Inga nya
+ljudassets; tidigare användargodkända ljud återanvänds. Ny agentljudlyssning,
+naturlig matchutforskning och mänsklig balansbedömning har inte gjorts.
+
+Föregående219/993a637:s [CI37642322214](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37642322214)
+är röd på infrastrukturfelen "job was not started ... failed to be acquired
+(5 attempts)": inga tester/build startade. Ny212-CI/Pages ej verifierad.
+Workflow ändras inte utifrån ett runner-tilldelningsfel.213/release samt
+208–211 startas inte; användarens CSS/units.mjs/docs/ bevaras.
+
+---
+
 # Gameplayfas RTS-195–204 — avslutad2026-10-06
 
 Slutlig fullregression1586/186 PASS472.93s, unit475/85 PASS19.65s, strict build PASS och slutlig fysisk Chrome Native800/1280 PASS. Akademin/nivå II integrerar building/worker/navigation/repair/targets/destruction/AI/team/fog/minimap/UI/Save. Alla fem fraktioners melee/armor/workeravgränsning/academyHP täcks. Två nya legacy-storyadmissionsfall skyddar introduktionsuppdragen. Paid campaigngenomspelningar och gamla koordinatversioner ingår i fullregressionen; mänsklig balans/tid är separat.

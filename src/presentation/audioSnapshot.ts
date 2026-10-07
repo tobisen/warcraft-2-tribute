@@ -1,3 +1,4 @@
+import {bossEnemyId,type BossId} from '../config/bosses';
 import type {MatchState} from '../gameplay/match';
 import {combatConfig} from '../config/combat';
 import {isVisible} from '../gameplay/fog';
@@ -20,7 +21,7 @@ export function matchAudioSnapshot(m:MatchState,visibleEnemies:MatchState['comba
    if(u.kind!=='worker'||u.order.kind!=='gather'||u.owner!==undefined&&u.owner!=='player')return [];
    const id=u.order.nodeId,node=resourceNodes(g).find(n=>n.id===id);return node?[[u.id,node.resource??'wood']]:[];
   })),
-  treasures:mapDiscoveries(m.map.id??'arena',m.map.design).filter(d=>d.kind==='treasure'&&m.discoveries?.claimed.includes(d.id)).map(d=>d.id),
+  treasures:[...Object.entries(m.bosses?.guardians??{}).filter(([,v])=>v.claimed).map(([id])=>bossEnemyId(id as BossId)),...mapDiscoveries(m.map.id??'arena',m.map.design).filter(d=>d.kind==='treasure'&&m.discoveries?.claimed.includes(d.id)).map(d=>d.id)],
   construction:Object.fromEntries([...(p.construction?[['barracks',p.construction.remainingSeconds]]:[]),...(p.farms??[]).map(f=>[f.id,f.construction.remainingSeconds]),...(p.forge?[['forge',p.forge.construction.remainingSeconds]]:[]),...(p.academy?[['academy',p.academy.construction.remainingSeconds]]:[]),...(p.bases??[]).map(b=>[b.id,b.construction.remainingSeconds]),...(p.defenses??[]).map(d=>[d.id,d.construction.remainingSeconds]),...(n?.harbor?[['harbor',n.harbor.construction.remainingSeconds]]:[])]),
   production:m.production.nextUnitNumber+m.soldierProduction.nextUnitNumber+((n?.production.nextUnitNumber??1)-1),
   completed:[...(n?.harbor?.construction.remainingSeconds===0?['harbor']:[]),...(barracksReady(p)?['barracks']:[]),...(p.farms??[]).filter(f=>f.construction.remainingSeconds===0).map(f=>f.id),...(p.forge?.construction.remainingSeconds===0?['forge']:[]),...(p.academy?.construction.remainingSeconds===0?['academy']:[]),...(p.bases??[]).filter(b=>b.construction.remainingSeconds===0).map(b=>b.id),...(p.defenses??[]).filter(d=>d.construction.remainingSeconds===0).map(d=>d.id)],

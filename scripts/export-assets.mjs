@@ -35,3 +35,5 @@ writeFileSync(new URL('naval-atlas.png',output),png(navalImage));writeFileSync(n
 
 // Approved generated sheets are packed after the editable native sources.
 await import('./export-visual-refresh.mjs');
+
+await import('./export-boss-assets.mjs');

@@ -142,3 +142,11 @@ Alla källor/downloads/original- och exporthashar, upphov och bearbetning per
 fil i [manifestet](../artifacts/audio-identity/character-tones/manifest.json).
 Original i sources/audio-identity/originals/character-tones. Kandidater, inte
 kompletta paket; inga Soundsnap-assets importerade eller abonnemang startade.
+
+## RTS-212 — egna bossassets
+
+Bramblemaw och Gravelheart: egna AI-genererade transparenta sprites för projektet,
+OpenAI imagegen,2026-10-07; CC0-1.0-dedikation för outputs/exporter. Inga importerade
+spel-/stockassets. Källa, upphov, prompt och bearbetning per asset i
+[sources/bosses/README.md](sources/bosses/README.md). Befintliga lokala effekter/
+kistframes återanvänds; inga nya externa ljud eller modellvikter distribueras.

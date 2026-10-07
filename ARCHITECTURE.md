@@ -1865,3 +1865,22 @@ mus-/kameragester. Separata top-bar-knappar använder PauseMenu:s befintliga
 blocking backdrop och fokusfälla. Direktöppnad hjälp stängs till spelet;
 hjälp från redan pausad meny går tillbaka till pausmenyn. Omfattande äldre
 tech-/commandtexter ersätts av dessa vyer. Inga nya gameplay- eller Save-regler.
+
+
+## RTS-212 — valfria väktare
+
+config/bosses.ts definierar två väktare, kropp/hemområde/projektiler och skatt.
+gameplay/bosses.ts äger BossState och en combatprojektion: väktarna läggs till
+precis för updateCombat, HP/cooldown/engagement återförs, vanliga enemytrupper
+behåller sina records. AI, outcome, missionguard/wave-counters och fiendestats
+ser aldrig guardian-records. Stationära root-guards väcks vid playersikt och
+resetter när egna targets lämnar360px; inga nya chase-/neutral-AI-system.
+Targeted spells ser enbart vanliga trupper; guardians är spell-immune.
+
+Loot kräver actual playerfog/levande marktrupp/access inom48px efter död och
+claimed-ledger. BossBonus går in i samma finite resource accounting som
+discoveryBonus. Save65 migrerar64 och installerar tom guardianstate i äldre
+regions-solo-matcher; gamla geometrier/multiplayer bevaras. Bossrecords har
+inte unit-ID-/produktionscounterkrav eftersom de ligger utanför arméerna.
+BootScene adapterar originalatlas, HP/namn/range/poses/corpse/loot och vanliga
+impact-/audiosnapshots. Kroppen används i byggpreview/admission.

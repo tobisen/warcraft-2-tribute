@@ -1,3 +1,4 @@
+import {bossBonus} from './bosses';
 import {discoveryBonus} from './discoveries';
 import {playerTeam} from './players';
 import type {PlayerId} from '../config/players';
@@ -33,7 +34,7 @@ export function matchStats(m:MatchState):MatchStats {
   const enemyGathered=bank?.extracted?.[type]??0,remaining=resourceNodes(m.gathering).filter(n=>(n.resource??'wood')===type).reduce((sum,n)=>sum+n.remaining,0);
   const gathered=nonnegative(definition[type]-remaining-enemyGathered),balance=type==='wood'?m.gathering.wood:m.gathering.goldBalance??0;
   const carried=[...m.gathering.units,...passengerUnits(m.navy)].reduce((n,u)=>n+(u.kind==='worker'&&(u.cargoType??'wood')===type?u.cargo:0),0),lost=m.gathering.lostCargo?.[type]??0;
-  const spent=nonnegative(initial[type]+discoveryBonus(m)[type]+(m.gathering.resourceCheatUses??0)*100000+gathered-balance-carried-lost);
+  const spent=nonnegative(initial[type]+discoveryBonus(m)[type]+bossBonus(m)[type]+(m.gathering.resourceCheatUses??0)*100000+gathered-balance-carried-lost);
   return {gathered,delivered:nonnegative(gathered-carried-lost),spent};
  };
  const enemyResource=(type:ResourceType):ResourceStats=>{

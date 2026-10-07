@@ -1,3 +1,4 @@
+import {createBosses,prepareBossCombat,finishBossCombat,updateBossRewards,type BossState} from './bosses';
 import {regionDefinition} from '../config/mapRegions';
 import {hasEnemyBase} from './enemyBases';
 import {hasMainBase,syncDropoffs,updateExtraBaseProduction} from './extraBases';
@@ -79,6 +80,7 @@ import { updateWaves, type WaveState } from './waves';
 
 export type MatchOutcome = 'playing' | 'defeat' | 'victory';
 export interface MatchState {
+ bosses?:BossState;
  discoveries?:DiscoveryState;
  multiplePlayers?:MultiplePlayers;
  aiContext?:AIContext;
@@ -159,6 +161,7 @@ export function createMatch(scenario:MatchScenario='survival',difficulty:Difficu
   if(state.map.terrainLayout==='reference'&&!state.map.resourceLayout)for(const node of [state.gathering.node,...(state.gathering.extraNodes??[])])node.grove=groveForNode(node.id);
   state.map.obstacles.push(...placementObstacles(state.gathering));
   if(scenarioConfig[scenario].enemyBase&&scenario!=='siege-test'){addEnemyWorkers(state);state.enemyConstruction=createEnemyConstruction();state.enemyPolicy=createEnemyPolicy();state.enemyRecovery=createEnemyRecovery();state.enemyKnowledge=createEnemyKnowledge();}
+  if(!players&&(scenario==='skirmish'||campaignId))state.bosses=createBosses(state.map);
   initializeOperation(state);
   state.fog=matchFog(state);
   return players?initializeMultiplePlayers(state,players):state;
@@ -213,8 +216,8 @@ function advance(state: MatchState, delta: number, scope?:CombatScope): MatchSta
   let combat=state.research&&(state.research.attack||state.research.defense||state.combat.upgrades)?{...state.combat,upgrades:{attack:state.research.attack,defense:state.research.defense}}:state.combat;
   if(state.enemyPolicy&&(state.enemyPolicy.research.attack||state.enemyPolicy.research.defense||combat.enemyUpgrades))combat={...combat,enemyUpgrades:{attack:state.enemyPolicy.research.attack,defense:state.enemyPolicy.research.defense}};
   const vision=state.fog?matchFog({...state,gathering:building.gathering,combat,placement:building.placement}):undefined;
-  const fight=updateCombat(building.gathering,combat,delta,state.map,building.placement,vision?(e=>entityVisible(vision,'player',e)):undefined,vision?((t)=>entityVisible(vision,'enemy',{position:{x:t.footprint.x+t.footprint.width/2,y:t.footprint.y+t.footprint.height/2},...(t.kind==='ship'||t.kind==='worker'||t.kind==='soldier'?{}:{footprint:t.footprint})})):undefined,vision?(e=>entityVisible(vision,'player',e)):undefined,gateFor,state.navy,vision?(e=>entityVisible(vision,'player',e)):undefined,state.factions?.enemy??defaultFactions.enemy,vision?e=>entityVisible(vision,'player',e):undefined,scope);
-  let cleaned=cleanDestroyed({...state,...(fight.navy?{navy:fight.navy}:{}),gathering:fight.gathering,combat:fight.combat,placement:fight.placement??building.placement});
+  const fight=updateCombat(building.gathering,prepareBossCombat({...state,gathering:building.gathering,fog:vision},combat),delta,state.map,building.placement,vision?(e=>entityVisible(vision,'player',e)):undefined,vision?((t)=>entityVisible(vision,'enemy',{position:{x:t.footprint.x+t.footprint.width/2,y:t.footprint.y+t.footprint.height/2},...(t.kind==='ship'||t.kind==='worker'||t.kind==='soldier'?{}:{footprint:t.footprint})})):undefined,vision?(e=>entityVisible(vision,'player',e)):undefined,gateFor,state.navy,vision?(e=>entityVisible(vision,'player',e)):undefined,state.factions?.enemy??defaultFactions.enemy,vision?e=>entityVisible(vision,'player',e):undefined,scope);
+  let cleaned=cleanDestroyed({...state,...(fight.navy?{navy:fight.navy}:{}),gathering:fight.gathering,...finishBossCombat(state,fight.combat),placement:fight.placement??building.placement});
   cleaned=advanceEnemyRecovery(cleaned,delta);
   const enemyPolicy=advanceEnemyPolicy(cleaned,delta);
   const research=updateResearch(cleaned.research??createResearch(),cleaned.placement,ownDelta,true,cleaned.factions?.player??defaultFactions.player,hasMainBase(cleaned));
@@ -237,7 +240,7 @@ function advance(state: MatchState, delta: number, scope?:CombatScope): MatchSta
   updated=updateEnemyExploration(updated);updated=updateWildlife(updated,ownDelta);
   const separated=separateBodies(updated.map,[...updated.gathering.units.filter(u=>!isAir(u)).map(u=>({id:`player:${u.id}`,position:u.position,fixed:u.commandMode?.kind==='hold'||u.order.kind==='idle'&&u.navigation?.status==='arrived',half:(u.kind==='worker'?workerStats(state.gathering.faction):combatUnitStats(u,state.gathering.faction)).size/2})),...updated.combat.enemies.filter(e=>!isAir(e)&&e.kind!=='ship'&&!e.footprint).map(e=>({id:`enemy:${e.id}`,position:e.position,half:enemySize(e)/2}))],delta);
   if(separated.size){updated.gathering={...updated.gathering,units:updated.gathering.units.map(u=>{const position=separated.get(`player:${u.id}`);return position?{...u,position,navigation:correctedNavigation(updated.map,position,(u.kind==='worker'?workerStats(state.gathering.faction):combatUnitStats(u,state.gathering.faction)).size/2,u.navigation)}:u;})};updated.combat={...updated.combat,enemies:updated.combat.enemies.map(e=>{const position=separated.get(`enemy:${e.id}`);return position?{...e,position,navigation:correctedNavigation(updated.map,position,enemySize(e)/2,e.navigation)}:e;})};}
-  updated=advanceSpells(updated,delta);updated=advanceEnemyAbilities(updated,delta);updated.gathering=advanceAbilities(updated.gathering,delta);updated.fog=matchFog(updated);if(scope?.side!=='enemy')updated=updateDiscoveries(updated);const taught=updateTutorial(updated);if(taught!==updated){updated=taught;updated.fog=matchFog(updated);}return scope?updated:resolveOutcome(updated.campaignRun&&campaignPhase(updated)?.goal!=='operation'?{...updated,...(updated.capture?{capture:{holdSeconds:0}}:{})}:advanceCapture(state,updated,delta));
+  updated=advanceSpells(updated,delta);updated=advanceEnemyAbilities(updated,delta);updated.gathering=advanceAbilities(updated.gathering,delta);updated.fog=matchFog(updated);if(scope?.side!=='enemy')updated=updateBossRewards(updateDiscoveries(updated));const taught=updateTutorial(updated);if(taught!==updated){updated=taught;updated.fog=matchFog(updated);}return scope?updated:resolveOutcome(updated.campaignRun&&campaignPhase(updated)?.goal!=='operation'?{...updated,...(updated.capture?{capture:{holdSeconds:0}}:{})}:advanceCapture(state,updated,delta));
 }
 
 /** Split at existing gameplay and spell/AI boundaries, retaining delta-based gameplay rather than a fixed timestep. */

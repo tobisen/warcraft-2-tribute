@@ -1,3 +1,4 @@
+import {bossRules,type BossId} from '../config/bosses';
 import {navyConfig} from '../config/navy';
 import { productionConfig, soldierProductionConfig } from '../config/production';
 import { soldierStats, combatUnitStats, unitStats } from '../config/unit';
@@ -7,9 +8,9 @@ import type { Position } from './movement';
 import type { Footprint } from './placement';
 import type { Unit } from './gathering';
 
-export interface PositionedBody {position:Position;kind?:string;role?:string;archetype?:string}
+export interface PositionedBody {boss?:BossId;position:Position;kind?:string;role?:string;archetype?:string}
 export function otherBodySize(body:PositionedBody):number {
-  return body.kind==='ship'?navyConfig.ship.size:body.role==='catapult'||body.archetype==='catapult'?combatUnitStats({archetype:'catapult'}).size:soldierStats.size;
+  return body.boss?bossRules.size:body.kind==='ship'?navyConfig.ship.size:body.role==='catapult'||body.archetype==='catapult'?combatUnitStats({archetype:'catapult'}).size:soldierStats.size;
 }
 
 export function unitBody(position:Position,size:number):Footprint {

@@ -33,3 +33,11 @@ describe('native pixel exports and logical anchors',()=>{
   for(const type of ['wood','gold'])for(const state of ['available','depleted'])expect(manifest.frames[`${type}-${state}`]).toMatchObject({width:64,height:64,anchor:{x:32,y:40},logicalFootprint:{width:gatheringConfig.nodeRadius*2,height:gatheringConfig.nodeRadius*2}});expect(gatheringConfig.initialWood).toBe(400);expect(goldConfig.initialAmount).toBe(300);
  });
 });
+
+it('exports eight distinct transparent guardian poses with local sources and bounded atlas frames',async()=>{
+ const {readRGBA}=await import('../scripts/read-rgba-png.mjs'),image=readRGBA(new URL('../public/assets/bosses-atlas.png',import.meta.url)),data=JSON.parse(file('public/assets/bosses-atlas.json'));
+ expect(image.width).toBe(384);expect(image.height).toBe(192);expect(Object.keys(data.frames)).toHaveLength(8);
+ for(const id of ['bramblemaw','gravelheart']){
+  const signatures=[];for(let i=0;i<4;i++){const f=data.frames[`${id}-${i}`].frame;expect(f.w).toBe(96);expect(f.h).toBe(96);expect(f.x+f.w).toBeLessThanOrEqual(image.width);expect(f.y+f.h).toBeLessThanOrEqual(image.height);const pixels=[];for(let y=0;y<f.h;y++)for(let x=0;x<f.w;x++)pixels.push(...image.data.subarray(((f.y+y)*image.width+f.x+x)*4,((f.y+y)*image.width+f.x+x)*4+4));expect(pixels.filter((v,j)=>j%4===3&&v>0).length).toBeGreaterThan(900);expect(pixels[3]).toBe(0);signatures.push(Buffer.from(pixels).toString('base64'));}expect(new Set(signatures).size).toBe(4);expect(file(`assets/sources/bosses/${id}.png`).length).toBeGreaterThan(1000);
+ }
+});
