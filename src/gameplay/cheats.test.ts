@@ -1,6 +1,8 @@
+import {matchFog} from './matchFog';
+import {entityVisible} from './visibility';
 import {describe,it,expect} from 'vitest';
 import {createMatch} from './match';
-import {applyResourceCheat,resourceCheatCode} from './cheats';
+import {applyCheat,fogCheatCode,applyResourceCheat,resourceCheatCode} from './cheats';
 import {matchStats} from './matchStats';
 import {encodeSave,decodeSave} from './save';
 describe('resource cheat',()=>{
@@ -21,5 +23,29 @@ describe('resource cheat',()=>{
  it('ignores unknown codes, paused and ended matches; tolerates case and outer spaces',()=>{
   const m=createMatch();expect(applyResourceCheat(m,'wrong')).toBe(m);const paused={...m,paused:true};expect(applyResourceCheat(paused,resourceCheatCode)).toBe(paused);
   const ended={...m,outcome:'victory' as const};expect(applyResourceCheat(ended,resourceCheatCode)).toBe(ended);expect(applyResourceCheat(m,` ${resourceCheatCode.toUpperCase()} `)).not.toBe(m);
+ });
+});
+
+describe('fog cheat',()=>{
+ it('reveals every player cell and enemies, persists through updates and leaves enemy vision unchanged',()=>{
+  const m=createMatch(),baseline=matchFog(m),next=applyCheat({...m,fog:baseline},' FOGGOFFNOW ');
+  expect(next.fog!.teams.player.visible.every(Boolean)).toBe(true);
+  expect(next.fog!.teams.player.explored.every(Boolean)).toBe(true);
+  expect(next.combat.enemies.every(e=>entityVisible(next.fog!,'player',e))).toBe(true);
+  expect(next.fog!.teams.enemy).toEqual(baseline.teams.enemy);
+  expect(matchFog(next).teams.player.visible.every(Boolean)).toBe(true);
+  expect(baseline.teams.player.visible.some(v=>!v)).toBe(true);
+  expect(createMatch().fog?.revealed).toBeUndefined();
+ });
+ it('survives Save/load and rejects invalid reveal flags',()=>{
+  const m=applyCheat(createMatch(),fogCheatCode),save=encodeSave(m,{camera:{x:0,y:0},building:null}),loaded=decodeSave(save);
+  expect(loaded.ok).toBe(true);if(!loaded.ok)throw Error(loaded.error);
+  expect(matchFog(loaded.match).teams.player.visible.every(Boolean)).toBe(true);
+  for(const flag of [false,1,'true']){const doc=JSON.parse(save);doc.state.fog.revealed=flag;expect(decodeSave(JSON.stringify(doc)).ok).toBe(false);}
+ });
+ it('rejects paused and ended matches and still dispatches the resource code',()=>{
+  const m=createMatch(),paused={...m,paused:true},ended={...m,outcome:'victory' as const};
+  expect(applyCheat(paused,fogCheatCode)).toBe(paused);expect(applyCheat(ended,fogCheatCode)).toBe(ended);
+  expect(applyCheat(m,'unknown')).toBe(m);expect(applyCheat(m,resourceCheatCode).gathering.wood).toBe(m.gathering.wood+100000);
  });
 });

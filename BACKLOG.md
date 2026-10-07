@@ -45,6 +45,12 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
+Senaste uttryckliga tillägg: `foggoffnow` i befintlig cheat-input. Avslöja hela
+kartan för spelaren, inklusive fiender/minimap; behåll effekten under matchen
+samt Save/Load och återställ normal fog vid ny match. Ingen annan roadmaptask
+startas av tillägget. Status och verifiering finns i avsnittet nedan.
+
+
 Användaren beställer uttryckligen RTS-212 efter219. Genomför endast212 med
 befintlig combat, Save/engångsskatt, egna sprites, browser/checks/docs och
 commit/push.213/release och208–211 startas inte av detta uppdrag.
@@ -5397,3 +5403,20 @@ Publicera efter godkända kontroller.
 **Verifiering187/etappslut:** Riktade127/7 PASS. Slutlig unit468/84 PASS10.28s; build inklusive strict typecheck PASS360ms (befintlig bundlevarning); full regression1489/178 PASS419.51s på slutlig spelkod. Diff/manifest84unit+94integration/länkar/browser-script-syntax PASS. Chrome native800/1920/3440: faktiska två AI med egna raser/profile/team och Beginner/Hard, unika baspositioner, SaveLoad och fysisk worker/minimap/HUD PASS. Campaignbrowser fem raser×tre storlekar återkontrollerad efter omgruppering PASS; Highscore800/Native filters/legacy/tomläge/AI-config-rubrik PASS. Actual SaveLoad→terminalfixture→PlayAgain→completed-replay/current-only behåller identitet/policy/progress och exakt en score PASS. Representativa settings/tabell/briefingbilder visuellt granskade. Ingen ny CI/Pages eller mänsklig helkampanj-/balans-/ljudclaim.
 
 **Stopp:** RTS-182–187 klara; fasen avslutad. Inga nya roadmaptasks eller karteditor. HANDOFF/QUALITY_REVIEW skiljer ny verifiering från RTS-180:s historiska releasebelägg. CSS/docs bevaras.
+
+## Tillägg — foggoffnow
+
+**Status:** Done (2026-10-07).
+
+Enter → `foggoffnow` → Enter/Apply avslöjar alla player-celler (visible och
+explored). Optional validerad `fog.revealed` behåller effekten vid fog-update och
+Save/Load; gamla saves fungerar och nya matcher börjar utan flaggan. Befintlig
+resurskod, paused/ended-spärrar och inputisolering bevaras. Inga CSS/asset-/kart-
+eller releaseändringar ingår.
+
+**Verifiering:** Riktade cheat/fog/visibility28/3 och Save/identity/multiplePlayers41/3
+PASS. Unit507/87 PASS, build inklusive strict typecheck PASS (befintlig
+bundlevarning), diff/manifest/browser-script-syntax PASS. Faktisk Chrome800/1280:
+Enter/input, fog-update, Save/Load och befintlig resurscheat PASS;800-bild visuellt
+granskad, värld och minimap utan fog. Ingen ny fullregression, CI/Pages eller
+release; detta är ett avgränsat tillägg och ingen roadmapetapp har startats.

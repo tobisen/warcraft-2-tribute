@@ -4095,3 +4095,27 @@ med två användningar och Enter på Cancel. Save-browserns första harnessfel
 tryckte Enter på Resume och återupptog före Save; rättad menyöppning passerar.
 Slutreview/diff PASS. Ingen ny kodändring efter dessa checks; endast docs.
 RTS-214 Done, stopp före208. Bevarade användarfiler har oförändrade SHA256.
+
+## 2026-10-07 — Tillägg foggoffnow
+
+Användarens nya kod kopplas till befintlig Enter-dialog via applyCheat.
+Optional fog.revealed:true avslöjar samtliga player-celler vid varje update;
+matchFog uppdaterar även skogsminnet. Värld, objektfiltrering och minimap använder
+samma synfält. Effekten gäller aktuell match/Save och nystart återställer fog.
+Save-valideringen accepterar endast true eller frånvarande flagga; äldre saves
+förblir kompatibla. Resurscheaten och paused/ended-spärrarna bevaras.
+
+Ny verifiering: `npm test -- src/gameplay/cheats.test.ts src/gameplay/fog.test.ts
+src/gameplay/visibility.test.ts`28/3 PASS; `npm test -- src/gameplay/save.test.ts
+src/gameplay/saveIdentity.test.ts src/gameplay/multiplePlayers.test.ts`41/3 PASS;
+`npm run test:unit`507/87 PASS; `npm run build` strict typecheck/build PASS med
+befintlig bundlevarning. Manifest, browser-script-syntax och diff PASS. Uppdaterad
+scripts/check-cheat.mjs körd i faktisk Chrome800/1280: fog-reveal/update/SaveLoad,
+resursgrant, dialog/inputisolering och paused-spärrar PASS. Screenshot
+/tmp/w2t-fog-800.png visuellt granskad. Första Chrome-start blockerades av sandbox;
+samma kontroll passerade med tillåten lokal browserkörning. Review av dispatch,
+flaggspridning, save-whitelist och immutable fog-update klar.
+
+Ingen ny fullregression/CI/Pages/release hävdas. Ingen roadmaptask startas.
+Användarens src/style.css, assets/sources/units.mjs, docs/ och :memory:.ses lämnas
+utanför ändringen och commit.

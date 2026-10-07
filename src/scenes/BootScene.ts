@@ -1,6 +1,6 @@
 import {bossDefinitions,bossRules,type BossId} from '../config/bosses';
 import {bossEnemies,battleEnemies,bossLootPosition,type BossState} from '../gameplay/bosses';
-import {applyResourceCheat} from '../gameplay/cheats';
+import {applyCheat} from '../gameplay/cheats';
 import {bindCheatInput} from '../presentation/cheatInput';
 import {renderTechnologyView} from '../presentation/technologyView';
 import {renderCommandsView} from '../presentation/commandsView';
@@ -576,7 +576,7 @@ export class BootScene extends Phaser.Scene {
     dismissButton.addEventListener('click',requestDismiss);cancelDismiss.addEventListener('click',closeDismiss);confirmDismiss.addEventListener('click',confirm);dialog.addEventListener('cancel',cancelDialog);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{dismissButton.removeEventListener('click',requestDismiss);cancelDismiss.removeEventListener('click',closeDismiss);confirmDismiss.removeEventListener('click',confirm);dialog.removeEventListener('cancel',cancelDialog);this.pendingDismiss=undefined;dialog.close();});
     const unbindCheat=bindCheatInput(()=>this.gameplayActive()&&!this.pendingDismiss,code=>{
-      const before=this.currentMatch(),after=applyResourceCheat(before,code);
+      const before=this.currentMatch(),after=applyCheat(before,code);
       if(after===before)return false;
       this.applyMatch(after);this.syncVisuals();return true;
     });
