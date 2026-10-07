@@ -3,7 +3,7 @@ import {buildingFrame,type BuildingKind} from './assets';
 import {unitFrame,motion,artAtlas,type UnitArt} from './animation';
 import {actionIds,type ActionId} from './actionPanel';
 export interface ActionIcon {atlas?:string;frame?:string;glyph?:string;badge?:'research'|'upgrade'}
-const glyphs:Partial<Record<ActionId,string>>={'cast-heal':'heal','cast-ward':'ward','cast-hex':'hex','repair-building':'repair','toggle-gate':'gate','attack-move':'advance','unit-ability':'ability','unload-transport':'unload','hold-position':'hold','patrol-units':'patrol','stop-units':'stop','dismiss-units':'dismiss'};
+const glyphs:Partial<Record<ActionId,string>>={'cast-heal':'heal','cast-ward':'ward','cast-hex':'hex','repair-building':'repair','attack-move':'advance','unit-ability':'ability','unload-transport':'unload','hold-position':'hold','patrol-units':'patrol','stop-units':'stop','dismiss-units':'dismiss'};
 export function actionIcon(id:ActionId,faction:FactionId):ActionIcon {
  if(id.startsWith('build-'))return {atlas:'buildings',frame:buildingFrame(id.slice(6) as BuildingKind,'player',0,5,faction)};
  if(id.startsWith('train-')){const type=(id==='train-ship'?'warship':id.slice(6)) as UnitArt;return {atlas:artAtlas(type),frame:unitFrame(motion(undefined,{x:0,y:0},'idle',0,type,'player',undefined,faction),0)};}

@@ -4173,3 +4173,52 @@ för tiogränsen; nästa hittade harnessklick på meny under pause-backdrop. Exp
 kartval och korrekt redan öppen pausmeny gav slutlig PASS för båda kartstorlekarna.
 Ingen ny fullregression/CI/Pages/release eller bred kampanjsimulering hävdas.
 Användarens CSS, units.mjs, docs/ och :memory:.ses bevaras utanför commit.
+
+## 2026-10-07 — Sammanhängande murar och automatisk gatepassage
+
+Användaren prioriterar walls/gates som sammanhängande mur och egna trupper som
+passerar portar utan manuell öppning. Browserinventering visade fristående
+små mursektioner, särskilt glapp i nord–syd. Source/export/render undersöktes:
+walls.mjs skapar isolerade128px-frames och BootScene valde samma frame för varje
+32px-cell. Source-assets och användarens units.mjs lämnas orörda; ingen global
+export. Pure gameplay/fortifications ger kardinala grannmasker med två gateceller.
+Presentation/fortifications renderar cached native-pixel masonry/roof planes efter
+masker och återanvänder befintlig gate-/scaffold-art. Omräkning vid förstörelse
+ändrar anslutningar utan sparad extrageometri. Befintlig totalgräns32, HP och
+individuella selection-/attackobjekt ändras inte.
+
+Färdiga portar är direkt routbara för egna/allierade. Hostila aktörer får gate-
+footprints i enemyPassageBlocks även när bilden är closed. updateAutomaticGates
+öppnar/stänger bilden vid friendly proximity; routing väntar inte på närhet.
+Ofärdiga gates förblir fysiska blockers. Matchslicing, konstruktion och multi-
+projektion använder samma regel. Gateplacement får sluta egen inhägnad eftersom
+passagen blir routbar; solid wall behåller trap-skydd. Manuell knapp, X-hotkey,
+iconmapping och manualhint är borttagna ur UI; selectiontext beskriver automatiken.
+Legacy toggle-API finns kvar för befintliga tests men används inte av spelarflödet.
+Save normaliserar legacy completed-closed obstacles och validerar övriga refs,
+inklusive avvisning av duplicate gate obstacle. Gateoccupied Save/Load PASS.
+
+Verifiering: `npm test --` gates/fortifications/teams/multiplePlayers/save/
+actionPanel/hotkeys/towers/destruction/match/navigation104/11 PASS. Efter konkret
+slutreview av gate-enclosure och Save-refs omkördes berörda gates/save/towers/
+teams/multiplePlayers62/5 PASS på slutlig gameplay. Tester täcker faktisk egen
+rörelse genom port, hostile routing, ofärdig port, allied passage, hostile-only
+proximity, Save i portöppningen, legacy save, duplicates och enclosure. Adjacency
+på100-cellskedja med gate, hörn/T/korsning, diagonaler/towers undantas och
+förstörelsemasker PASS; ingen >32-byggclaim.
+
+Slutlig `npm run test:unit`509/88 PASS19.34s och `npm run build` strict typecheck/
+build PASS1.12s med befintlig bundlevarning. Manifest/diff/script-syntax PASS.
+`scripts/check-fortifications.mjs` faktisk Chrome800/1280 PASS:26 färdiga fixture-
+segment inkl gate/hörn/korsning, verklig simulerad trupppassage utan toggle,
+hostile bodyblock, borttagen manualaction, Save/Load och destruction-refresh.
+Bilder /tmp/w2t-fortifications-800.png och1280.png visuellt granskade.
+Browserterminal/defense-fixtures är inte mänsklig helmatch- eller balansverifiering.
+
+Tidiga riktade körningar hittade testets felaktiga orderUnits-argument och
+hotkey/actionIds-inkonsekvens när manualaction togs bort; rättat. Slutbrowser
+hittade kvarvarande skin-iconreferens som blockerade bootstrap efter DOM-removal;
+referensen togs bort och slutlig browser/unit/build omkördes till PASS. Tidigare
+checks återanvänds endast där senare ändringar inte påverkar systemen.
+Ingen ny fullregression/CI/Pages/release. Användarens CSS, units.mjs, docs/ och
+:memory:.ses är orörda av denna ändring och lämnas utanför commit.

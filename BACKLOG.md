@@ -45,6 +45,10 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
+Senaste uppdrag: sammanhängande walls/gates och automatisk passage för egna
+trupper. Avgränsat tillägg; ingen annan roadmaptask startas. Se murtillägget nedan.
+
+
 Senaste uppdrag: höj farmgränsen till minst fem; större uppdrag får fler.
 Avgränsat tillägg, ingen annan roadmaptask startas. Se farmtillägget nedan.
 
@@ -5465,3 +5469,30 @@ storkartans byggstart efter5/stopp vid10 och Save/Load av5/10 PASS.
 Byggnadssamlingarna i browser är explicita fixtures; integrationstest bygger
 faktiskt fem farms och validerar supply. Tiogårdssave ger58 supply och11:e avvisas.
 Diff/script-syntax/review PASS. Ingen ny fullregression, CI/Pages eller release.
+
+## Tillägg — Sammanhängande murar och automatiska portar
+
+**Status:** Done (2026-10-07).
+
+Walls/gates ansluter på32px-grid i nord/öst/syd/väst, inklusive gatebåda celler,
+raka sträckor, hörn, T-/korsningar. Grannmasker räknas om vid byggande och
+förstörelse, utan egen komponentlängdgräns. Befintlig totalgräns32 fortifications,
+kostnader, HP och separata byggnadsval bevaras. Ny cached native-pixelrendering
+ger sammanhängande masonry/roof planes och använder befintlig gate/scaffold-art;
+ingen global asset-export eller ändring av användarens units.mjs.
+
+Färdiga portar är alltid routbara för egna trupper/allierade och öppnas visuellt
+vid närhet. Fiender blockeras oavsett visuell open-state. Ofärdiga gate-sites
+blockerar fortsatt. Manuella portknappen/X-hint tas bort; selection/Commands
+beskriver automatiken. Port som sluter en egen inhägnad får placeras, medan solid
+mur fortfarande kontrolleras mot permanent instängning. Äldre closed-gate saves
+normaliseras vid Load; Save/Load med trupp i portöppningen fungerar.
+
+**Verifiering:** Riktade104/11 PASS på gameplay före sista safety/save-review;
+berörda gate/Save/tower/team/multiplePlayers omkörda på slutlig gameplay62/5 PASS.
+Slutlig unit509/88 och strict build PASS (befintlig bundlevarning), diff/manifest/
+browser-script-syntax PASS. Faktisk Chrome800/1280: sammanhängande26-segments-
+fixtur med port/hörn/korsning, egen simulerad passage utan toggle, hostile block,
+Save/Load och förstörelseuppdatering PASS; båda bilder visuellt granskade.
+Grannlogik testas på100-cellskedja; detta hävdar inte byggande över befintlig32-gräns.
+Ingen mänsklig helmatch/balans, ny fullregression, CI/Pages eller release hävdas.

@@ -22,7 +22,7 @@ const basics:CommandRow[]=[
  {category:'Camera',command:'Focus selection',gesture:'Space',explanation:'Center the camera on your selected units or building.'},
  {category:'Camera',command:'Focus base',gesture:'Home',explanation:'Center the camera on your main base.'},
 ];
-function category(id:string):CommandCategory{return id==='dismiss-units'?'Selection':id==='repair-building'||id==='train-worker'||id.startsWith('research-')?'Economy':id.startsWith('build-')||id.startsWith('upgrade-')||id==='toggle-gate'?'Building':['stop-units','patrol-units','unload-transport','train-transport'].includes(id)?'Movement':'Combat';}
+function category(id:string):CommandCategory{return id==='dismiss-units'?'Selection':id==='repair-building'||id==='train-worker'||id.startsWith('research-')?'Economy':id.startsWith('build-')||id.startsWith('upgrade-')?'Building':['stop-units','patrol-units','unload-transport','train-transport'].includes(id)?'Movement':'Combat';}
 export function commandRows():CommandRow[]{return [...basics,...hotkeys.map(h=>({category:category(h.button),command:h.button.split('-').map((w,i)=>i===0?w[0]!.toUpperCase()+w.slice(1):w).join(' '),gesture:h.key,explanation:h.label.split(/(?<=\.)\s+/)[0]!,action:h.button}))];}
 export function renderCommandsView():void{
  const panel=document.getElementById('pause-commands-panel')!;if(panel.hidden||panel.childElementCount)return;

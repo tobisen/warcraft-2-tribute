@@ -2,7 +2,7 @@ import {upgradeMultiplier} from '../config/upgrades';
 import {validPlayers} from './matchSettings';
 import {playerEliminated,teamOutcome} from './teamResults';
 import {matchFog} from './matchFog';
-import {withGateRules} from './gates';
+import {updateAutomaticGates,withGateRules} from './gates';
 import {enemyBody} from './enemyBody';
 import {abilityEffects} from './abilities';
 import {untilSpellBoundary} from './enemySpells';
@@ -65,7 +65,7 @@ export function projectedEnemies(m:MatchState):Enemy[]{
 export function projectMultiplePlayers(m:MatchState):MatchState{
  const multi=m.multiplePlayers!;
  const enemies=projectedEnemies(m);
- const own=[...placementObstacles(m.gathering).slice(m.combat.baseHP>0?0:1),...(m.placement.barracks?[m.placement.barracks]:[]),...(m.placement.academy?[m.placement.academy.footprint]:[]),...(m.placement.forge?[m.placement.forge.footprint]:[]),...(m.placement.bases??[]).map(b=>b.footprint),...(m.placement.farms??[]).map(f=>f.footprint),...(m.placement.defenses??[]).filter(t=>t.kind!=='gate'||!t.open).map(t=>t.footprint),...(m.navy?.harbor?[m.navy.harbor.footprint]:[])];
+ const own=[...placementObstacles(m.gathering).slice(m.combat.baseHP>0?0:1),...(m.placement.barracks?[m.placement.barracks]:[]),...(m.placement.academy?[m.placement.academy.footprint]:[]),...(m.placement.forge?[m.placement.forge.footprint]:[]),...(m.placement.bases??[]).map(b=>b.footprint),...(m.placement.farms??[]).map(f=>f.footprint),...(m.placement.defenses??[]).filter(t=>t.kind!=='gate'||t.construction.remainingSeconds>0).map(t=>t.footprint),...(m.navy?.harbor?[m.navy.harbor.footprint]:[])];
  const obstacles=[...createMap(m.map.id,m.map.terrainLayout,m.map.resourceLayout==='trees'?'trees':'groves',m.map.worldLayout==='expanded'?'expanded':'original',m.map.design).obstacles,...own,...enemies.flatMap(e=>e.footprint?[e.footprint]:[])];
  const unchanged=JSON.stringify(obstacles)===JSON.stringify(m.map.obstacles);
  const primary=multi.ai.find(p=>p.id==='enemy')!.state;
@@ -174,5 +174,5 @@ function freezeEliminated(m:MatchState):MatchState{
 /** Rebuild legacy current vision from active observers, retaining explored team history. */
 export function refreshTeamVision(m:MatchState):MatchState{
  const next={...m,multiplePlayers:{...m.multiplePlayers!,ai:m.multiplePlayers!.ai.map(bot=>({...bot,vision:actorVision(m,bot)}))}};
- return shareTeamVision({...next,fog:matchFog(next)});
+ return updateAutomaticGates(shareTeamVision({...next,fog:matchFog(next)}));
 }

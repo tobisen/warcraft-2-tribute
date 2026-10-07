@@ -1,5 +1,20 @@
 # Arkitektur
 
+## Sammanhängande fortifications och automatisk gatepassage
+
+Gameplay-modulen `fortifications` härleder grannmasker från aktuella wall/gate-
+footprints, med två celler per gate. Presentationen skapar cached native-pixel-
+canvastexturer för sammanhängande masonry, hörn och korsningar; befintlig gate-
+och byggstadieart återanvänds. Grannändringar väljer nya texturer utan asset-export.
+
+`withGateRules` tar bort färdiga gate-footprints från egna fysiska navigationen
+men ger hostila aktörer samma footprints som enemyPassageBlocks. Open-flaggan
+styr dörrbilden via friendly proximity, inte routbarhet. Ofärdiga portar blockerar.
+Multiplayer använder samma ägar-/allieradregler. Save normaliserar äldre färdiga
+closed-gate obstacles före clearancekontroll, bevarar strict refs och avvisar
+upprepade gate-obstacles. Gateplacement säkerhetsbedömer framtida friendly passage.
+
+
 ## Ljudidentitet — fem lokala röstpaket
 
 315 aktiva WAV-filer mappas datadrivet från `config/voices.ts` och det lokala

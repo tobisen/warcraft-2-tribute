@@ -7,7 +7,6 @@ import {setActionLabel} from './actionLabel';
 import {isAir} from '../gameplay/domains';
 import {selectedSpellCaster,spellCasterReason} from '../gameplay/spells';
 import {spellDefinition,spellDescription,spellForSlot,type SpellSlot} from '../config/spells';
-import {gateToggleReason} from '../gameplay/gates';
 import {towerUpgradeReason} from '../gameplay/towers';import {defenseConfig} from '../config/defenses';
 import {baseDevelopment,baseUpgradeReason} from '../gameplay/baseUpgrade';
 import {baseUpgradeConfig} from '../config/baseUpgrade';
@@ -29,7 +28,7 @@ import {forgeReady} from '../gameplay/research';
 import type {BuildingSelection} from '../gameplay/buildingSelection';
 import type {MatchState} from '../gameplay/match';
 import {hotkeys} from './hotkeys';
-export const actionIds=['cast-heal','cast-ward','cast-hex','repair-building','build-wall','build-gate','toggle-gate','build-tower','upgrade-tower','upgrade-base','train-worker','train-soldier','train-archer','train-catapult','train-specialist','train-air','train-transport','train-ship','build-academy','build-base','build-barracks','build-farm','build-forge','build-harbor','research-workerTools','research-attack','research-defense','attack-move','unit-ability','unload-transport','hold-position','patrol-units','stop-units','dismiss-units'] as const;
+export const actionIds=['cast-heal','cast-ward','cast-hex','repair-building','build-wall','build-gate','build-tower','upgrade-tower','upgrade-base','train-worker','train-soldier','train-archer','train-catapult','train-specialist','train-air','train-transport','train-ship','build-academy','build-base','build-barracks','build-farm','build-forge','build-harbor','research-workerTools','research-attack','research-defense','attack-move','unit-ability','unload-transport','hold-position','patrol-units','stop-units','dismiss-units'] as const;
 export type ActionId=typeof actionIds[number];
 export const actionGroups=['Orders','Build','Train','Research','Spells'] as const;
 export function actionGroup(id:ActionId):typeof actionGroups[number]{return id.startsWith('cast-')?'Spells':id.startsWith('build-')?'Build':id.startsWith('train-')?'Train':id.startsWith('research-')||id.startsWith('upgrade-')?'Research':'Orders';}
@@ -55,7 +54,6 @@ export function actionPanel(m:MatchState,building:BuildingSelection,playing:bool
  for(const id of actionIds){let visible=false,reason='',cost,summary:string|undefined,prerequisites:string|undefined,producing=false,active:boolean|undefined;
   if(id.startsWith('cast-')){const spell=spellForSlot(faction.id,id.slice(5) as SpellSlot),caster=spell?selectedSpellCaster(m,spell):undefined;visible=!!caster;if(spell){const cfg=spellDefinition(spell,faction.id);cost=`${cfg.manaCost} mana · Range ${cfg.range}px · Cooldown ${cfg.cooldown}s · ${spellDescription(spell,faction.id)}`;reason=caster?spellCasterReason(m,caster.id,spell)??'':'Select a specialist';}}
   else if(id==='repair-building'){visible=worker;cost='0.5 wood + 0.1 gold per restored HP';reason=m.gathering.wood<=0||(m.gathering.goldBalance??0)<=0?'Not enough wood or gold':'';}
-  else if(id==='toggle-gate'){visible=!!building?.startsWith('gate-');reason=gateToggleReason(m,building??'')??'';}
   else if(id==='build-wall'||id==='build-gate'){visible=worker;cost=costLabel(defenseConfig[id==='build-wall'?'wall':'gate'].cost);reason=m.placement.active?'Finish or cancel placement':affordabilityReason(m.gathering,defenseConfig[id==='build-wall'?'wall':'gate'].cost);}
   else if(id==='upgrade-tower'){visible=!!building?.startsWith('tower-');cost=costLabel(defenseConfig.upgrade.cost);reason=towerUpgradeReason(m,building??'')??'';}
   else if(id==='build-tower'){visible=worker;cost=costLabel(defenseConfig.tower.cost);reason=m.placement.active?'Finish or cancel placement':affordabilityReason(m.gathering,defenseConfig.tower.cost);}

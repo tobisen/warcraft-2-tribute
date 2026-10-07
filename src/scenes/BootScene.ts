@@ -1,3 +1,5 @@
+import {fortificationConnections} from '../gameplay/fortifications';
+import {fortificationTexture} from '../presentation/fortifications';
 import {bossDefinitions,bossRules,type BossId} from '../config/bosses';
 import {bossEnemies,battleEnemies,bossLootPosition,type BossState} from '../gameplay/bosses';
 import {applyCheat} from '../gameplay/cheats';
@@ -31,7 +33,7 @@ import {isAir} from '../gameplay/domains';
 import {spellDefinition,spellForSlot,spellSlots,type SpellId} from '../config/spells';
 import {castSpell,selectedSpellCaster,spellCasterReason,spellTargetAt,spellTargetReason} from '../gameplay/spells';
 import {orderRepair} from '../gameplay/repair';
-import {toggleGate,gateToggleReason} from '../gameplay/gates';import {defenseConfig} from '../config/defenses';
+import {defenseConfig} from '../config/defenses';
 import {placeTower,towerPreviewError,towerPlacementError,upgradeTower,towerUpgradeReason} from '../gameplay/towers';
 import {buildingAvailability} from '../gameplay/productionPrerequisites';
 import {baseDevelopment,startBaseUpgrade,baseUpgradeReason} from '../gameplay/baseUpgrade';
@@ -462,8 +464,8 @@ export class BootScene extends Phaser.Scene {
     };
     const repairBegin=()=>{if(!this.gameplayActive()||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected))return;this.unloadMode=null;this.attackMoveMode=false;this.patrolMode=false;this.placement=cancelPlacement(this.placement);this.repairMode=!this.repairMode;this.syncVisuals();};
     document.getElementById('repair-building')!.addEventListener('click',repairBegin);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>document.getElementById('repair-building')!.removeEventListener('click',repairBegin));
-    const wallBuild=()=>begin('wall'),gateBuild=()=>begin('gate'),gateToggle=()=>{if(this.gameplayActive()&&this.selectedBuilding){this.applyMatch(toggleGate(this.currentMatch(),this.selectedBuilding));this.syncVisuals();}},towerBuild=()=>begin('tower'),towerUpgrade=()=>{if(this.gameplayActive()&&this.selectedBuilding)this.applyMatch(upgradeTower(this.currentMatch(),this.selectedBuilding));this.syncVisuals();};
-    for(const [id,handler] of [['build-wall',wallBuild],['build-gate',gateBuild],['toggle-gate',gateToggle],['build-tower',towerBuild],['upgrade-tower',towerUpgrade]] as const){document.getElementById(id)!.addEventListener('click',handler);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>document.getElementById(id)!.removeEventListener('click',handler));}
+    const wallBuild=()=>begin('wall'),gateBuild=()=>begin('gate'),towerBuild=()=>begin('tower'),towerUpgrade=()=>{if(this.gameplayActive()&&this.selectedBuilding)this.applyMatch(upgradeTower(this.currentMatch(),this.selectedBuilding));this.syncVisuals();};
+    for(const [id,handler] of [['build-wall',wallBuild],['build-gate',gateBuild],['build-tower',towerBuild],['upgrade-tower',towerUpgrade]] as const){document.getElementById(id)!.addEventListener('click',handler);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>document.getElementById(id)!.removeEventListener('click',handler));}
     const cancel = (event?:KeyboardEvent) => {
       if(event&&!gameplayKeyAllowed(keyboardContext(event,this.gameplayActive())))return;
       if (!this.gameplayActive()) return;
@@ -935,9 +937,13 @@ export class BootScene extends Phaser.Scene {
 
   private syncVisuals(): void {
     const liveDefenses=new Set<string>((this.placement.defenses??[]).map(t=>t.id));for(const [id,image]of this.defenseVisuals)if(!liveDefenses.has(id)){image.destroy();this.defenseVisuals.delete(id);}
-    for(const t of this.placement.defenses??[]){let image=this.defenseVisuals.get(t.id);if(!image){image=this.add.image(t.footprint.x+t.footprint.width/2,t.footprint.y+16,'buildings').setOrigin(.5,.75);this.defenseVisuals.set(t.id,image);}image.setFrame(t.kind==='gate'&&t.open?`${factions[this.factions.player].artPrefix}gate-player-open`:buildingFrame(t.kind,'player',t.construction.remainingSeconds,defenseConfig[t.kind].seconds,this.factions.player,t.hp,t.level));}
+    const connections=fortificationConnections(this.placement.defenses??[]);
+    for(const t of this.placement.defenses??[]){let image=this.defenseVisuals.get(t.id);if(!image){image=this.add.image(t.footprint.x+t.footprint.width/2,t.footprint.y+16,'buildings').setOrigin(.5,.75);this.defenseVisuals.set(t.id,image);}
+      if(t.kind==='tower')image.setTexture('buildings',buildingFrame(t.kind,'player',t.construction.remainingSeconds,defenseConfig[t.kind].seconds,this.factions.player,t.hp,t.level));
+      else image.setTexture(fortificationTexture(this,t,connections.get(t.id)??[],this.factions.player));
+      image.setDepth(t.footprint.y/this.map.height);
+    }
     for(const kind of ['tower','wall','gate'] as const)(document.getElementById(`build-${kind}`) as HTMLButtonElement).disabled=!this.gameplayActive()||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected)||this.placement.active||this.gathering.wood<defenseConfig[kind].cost.wood||(this.gathering.goldBalance??0)<defenseConfig[kind].cost.gold;
-    const gateButton=document.getElementById('toggle-gate') as HTMLButtonElement;gateButton.disabled=!!gateToggleReason(this.currentMatch(),this.selectedBuilding??'');setActionLabel(gateButton,this.placement.defenses?.find(t=>t.id===this.selectedBuilding)?.open?'Close gate':'Open gate');
     const repairButton=document.getElementById('repair-building') as HTMLButtonElement;repairButton.disabled=!this.gameplayActive()||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected)||this.gathering.wood<=0||(this.gathering.goldBalance??0)<=0;repairButton.setAttribute('aria-pressed',String(this.repairMode));
     (document.getElementById('upgrade-tower') as HTMLButtonElement).disabled=!!towerUpgradeReason(this.currentMatch(),this.selectedBuilding??'');
     renderTechnologyView(this.currentMatch());renderCommandsView();

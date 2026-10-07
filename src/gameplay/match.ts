@@ -23,7 +23,7 @@ import {prepareEnemySpells,untilSpellBoundary} from './enemySpells';
 import {advanceSpells} from './spells';
 import {advanceMana} from './mana';
 import {updateRepair} from './repair';
-import {withGateRules} from './gates';import {enemyNavigationMap} from './map';
+import {updateAutomaticGates,withGateRules} from './gates';import {enemyNavigationMap} from './map';
 import {updateTowers} from './towers';
 import {advanceBaseUpgrade} from './baseUpgrade';
 import {initializeOperation,operationOutcome,advanceCapture,controlsCapture,type CaptureState} from './operations';
@@ -190,7 +190,7 @@ function correctedNavigation(map:WorldMap,position:Position,half:number,route?:R
 
 function advance(state: MatchState, delta: number, scope?:CombatScope): MatchState {
   const ownDelta=scope?.side==='enemy'?0:delta;
-  state=prepareOrders(withGateRules(cleanDestroyed(state)));
+  state=prepareOrders(updateAutomaticGates(cleanDestroyed(state)));
   const readyBefore=readyBuildings(state);
   state=advanceMana(state,delta);
   state=updateRepair(state,ownDelta);
@@ -210,7 +210,7 @@ function advance(state: MatchState, delta: number, scope?:CombatScope): MatchSta
   state=updateEnemyGathering({...state,gathering},delta,gateFor,services);state={...state,map:syncForestObstacles(forestBefore,state.gathering,state.map)};const enemyBuilding=updateEnemyConstruction(state,delta,gateFor);state=enemyBuilding.match;gathering=state.gathering;
   state=updateEnemyExpansion(state,delta,gateFor);gathering=state.gathering;
   state=updateEnemyNaval(state,delta);gathering=state.gathering;
-  state=updateTowers(state,ownDelta);gathering=state.gathering;
+  state=updateAutomaticGates(updateTowers(state,ownDelta));gathering=state.gathering;
   const building = updateConstruction(gathering,state.placement,state.map,ownDelta,gateFor);
   state={...state,statLedger:recordCompletions(readyBefore,{...state,gathering:building.gathering,placement:building.placement})};
   let combat=state.research&&(state.research.attack||state.research.defense||state.combat.upgrades)?{...state.combat,upgrades:{attack:state.research.attack,defense:state.research.defense}}:state.combat;
