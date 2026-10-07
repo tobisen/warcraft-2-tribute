@@ -1,5 +1,29 @@
 # Development log
 
+## RTS-216 — Minimap som större spelplansoverlay, 2026-10-07
+
+160×160 canvas i samma gridcell som spelplanen, nere till höger10px från
+kanterna ovanför bottom bar. Overlay är separat DOM-element för att behålla
+Phaser-canvasens identitet och befintliga kamerabindning. Footer-kolumnen
+frigjord för selection, egen riktad CSS; användarens style.css orörd.
+
+Gemensam proportionell koordinatmappning med letterbox används för terräng,
+fog, markörer, kamerarektangel och navigation. Pointer capture håller drag
+även när musen går utanför rutan; up/cancel/lost/destroy städar drag. Click/
+pointer/wheel/contextmenu konsumeras; pause spärrar camera intent.
+
+Verifiering:riktade22/4 PASS459ms, slutlig unit484/86 PASS13.28s och build
+inkl.strict typecheck PASS419ms, diff/review PASS. Browser800×600 och
+3440×1440 i Native/Fit, faktisk Chromium-fullscreen-API, klick/drag,
+högerklick, selection/order-isolering och pause PASS. Native160px, samtliga
+bounds innanför spelplan/footer/fönster. Representativa nativebilder
+visuellt granskade. [Belägg/bilder](artifacts/rts-216/browser.json).
+Första browserprovet nådde aldrig paus eftersom fullscreen-knappen hade
+fokus och P korrekt blockerades; fixturen korrigerad till verkligt menyklick
+med phase-assertion. Högerklickstestet passerade. Ingen fysisk monitor eller
+annan browsermotor verifierad. Full regression samlas efter218, nästa217.
+
+
 ## RTS-215 — Worker Tools I–III, 2026-10-07
 
 Tre sekventiella huvudbyggnadsnivåer i befintlig research-lane. Gemensam

@@ -1,0 +1,330 @@
+[
+  {
+    "width": 800,
+    "height": 600,
+    "mode": "native",
+    "resolution": "800x600",
+    "initial": {
+      "game": {
+        "x": 0,
+        "y": 48,
+        "width": 800,
+        "height": 368,
+        "right": 800,
+        "bottom": 416
+      },
+      "overlay": {
+        "x": 626,
+        "y": 242,
+        "width": 164,
+        "height": 164,
+        "right": 790,
+        "bottom": 406
+      },
+      "bar": {
+        "x": 0,
+        "y": 416,
+        "width": 800,
+        "height": 184,
+        "right": 800,
+        "bottom": 600
+      },
+      "canvas": {
+        "x": 628,
+        "y": 244,
+        "width": 160,
+        "height": 160,
+        "right": 788,
+        "bottom": 404
+      },
+      "parent": "app",
+      "logical": 160
+    },
+    "fullscreen": {
+      "game": {
+        "x": 0,
+        "y": 48,
+        "width": 800,
+        "height": 368,
+        "right": 800,
+        "bottom": 416
+      },
+      "overlay": {
+        "x": 626,
+        "y": 242,
+        "width": 164,
+        "height": 164,
+        "right": 790,
+        "bottom": 406
+      },
+      "bar": {
+        "x": 0,
+        "y": 416,
+        "width": 800,
+        "height": 184,
+        "right": 800,
+        "bottom": 600
+      },
+      "canvas": {
+        "x": 628,
+        "y": 244,
+        "width": 160,
+        "height": 160,
+        "right": 788,
+        "bottom": 404
+      },
+      "parent": "app",
+      "logical": 160
+    },
+    "selectionOrdersUnchanged": true,
+    "clickDragCamera": true,
+    "pauseGate": true,
+    "errors": []
+  },
+  {
+    "width": 800,
+    "height": 600,
+    "mode": "fit",
+    "resolution": "1280x720",
+    "initial": {
+      "game": {
+        "x": 0,
+        "y": 105,
+        "width": 800,
+        "height": 305,
+        "right": 800,
+        "bottom": 410
+      },
+      "overlay": {
+        "x": 691.25,
+        "y": 301.25,
+        "width": 102.5,
+        "height": 102.5,
+        "right": 793.75,
+        "bottom": 403.75
+      },
+      "bar": {
+        "x": 0,
+        "y": 410,
+        "width": 800,
+        "height": 115,
+        "right": 800,
+        "bottom": 525
+      },
+      "canvas": {
+        "x": 692.5,
+        "y": 302.5,
+        "width": 100,
+        "height": 100,
+        "right": 792.5,
+        "bottom": 402.5
+      },
+      "parent": "app",
+      "logical": 160
+    },
+    "fullscreen": {
+      "game": {
+        "x": 0,
+        "y": 105,
+        "width": 800,
+        "height": 305,
+        "right": 800,
+        "bottom": 410
+      },
+      "overlay": {
+        "x": 691.25,
+        "y": 301.25,
+        "width": 102.5,
+        "height": 102.5,
+        "right": 793.75,
+        "bottom": 403.75
+      },
+      "bar": {
+        "x": 0,
+        "y": 410,
+        "width": 800,
+        "height": 115,
+        "right": 800,
+        "bottom": 525
+      },
+      "canvas": {
+        "x": 692.5,
+        "y": 302.5,
+        "width": 100,
+        "height": 100,
+        "right": 792.5,
+        "bottom": 402.5
+      },
+      "parent": "app",
+      "logical": 160
+    },
+    "selectionOrdersUnchanged": true,
+    "clickDragCamera": true,
+    "pauseGate": true,
+    "errors": []
+  },
+  {
+    "width": 3440,
+    "height": 1440,
+    "mode": "native",
+    "resolution": "3440x1440",
+    "initial": {
+      "game": {
+        "x": 0,
+        "y": 48,
+        "width": 3440,
+        "height": 1208,
+        "right": 3440,
+        "bottom": 1256
+      },
+      "overlay": {
+        "x": 3266,
+        "y": 1082,
+        "width": 164,
+        "height": 164,
+        "right": 3430,
+        "bottom": 1246
+      },
+      "bar": {
+        "x": 0,
+        "y": 1256,
+        "width": 3440,
+        "height": 184,
+        "right": 3440,
+        "bottom": 1440
+      },
+      "canvas": {
+        "x": 3268,
+        "y": 1084,
+        "width": 160,
+        "height": 160,
+        "right": 3428,
+        "bottom": 1244
+      },
+      "parent": "app",
+      "logical": 160
+    },
+    "fullscreen": {
+      "game": {
+        "x": 0,
+        "y": 48,
+        "width": 3440,
+        "height": 1208,
+        "right": 3440,
+        "bottom": 1256
+      },
+      "overlay": {
+        "x": 3266,
+        "y": 1082,
+        "width": 164,
+        "height": 164,
+        "right": 3430,
+        "bottom": 1246
+      },
+      "bar": {
+        "x": 0,
+        "y": 1256,
+        "width": 3440,
+        "height": 184,
+        "right": 3440,
+        "bottom": 1440
+      },
+      "canvas": {
+        "x": 3268,
+        "y": 1084,
+        "width": 160,
+        "height": 160,
+        "right": 3428,
+        "bottom": 1244
+      },
+      "parent": "app",
+      "logical": 160
+    },
+    "selectionOrdersUnchanged": true,
+    "clickDragCamera": true,
+    "pauseGate": true,
+    "errors": []
+  },
+  {
+    "width": 3440,
+    "height": 1440,
+    "mode": "fit",
+    "resolution": "800x600",
+    "initial": {
+      "game": {
+        "x": 760,
+        "y": 115.20000457763672,
+        "width": 1920,
+        "height": 883.2000122070312,
+        "right": 2680,
+        "bottom": 998.400016784668
+      },
+      "overlay": {
+        "x": 2262.39990234375,
+        "y": 580.800048828125,
+        "width": 393.60009765625,
+        "height": 393.5999755859375,
+        "right": 2656,
+        "bottom": 974.4000244140625
+      },
+      "bar": {
+        "x": 760,
+        "y": 998.4000244140625,
+        "width": 1920,
+        "height": 441.5999755859375,
+        "right": 2680,
+        "bottom": 1440
+      },
+      "canvas": {
+        "x": 2267.2001953125,
+        "y": 585.6000366210938,
+        "width": 384,
+        "height": 384,
+        "right": 2651.2001953125,
+        "bottom": 969.6000366210938
+      },
+      "parent": "app",
+      "logical": 160
+    },
+    "fullscreen": {
+      "game": {
+        "x": 760,
+        "y": 115.20000457763672,
+        "width": 1920,
+        "height": 883.2000122070312,
+        "right": 2680,
+        "bottom": 998.400016784668
+      },
+      "overlay": {
+        "x": 2262.39990234375,
+        "y": 580.800048828125,
+        "width": 393.60009765625,
+        "height": 393.5999755859375,
+        "right": 2656,
+        "bottom": 974.4000244140625
+      },
+      "bar": {
+        "x": 760,
+        "y": 998.4000244140625,
+        "width": 1920,
+        "height": 441.5999755859375,
+        "right": 2680,
+        "bottom": 1440
+      },
+      "canvas": {
+        "x": 2267.2001953125,
+        "y": 585.6000366210938,
+        "width": 384,
+        "height": 384,
+        "right": 2651.2001953125,
+        "bottom": 969.6000366210938
+      },
+      "parent": "app",
+      "logical": 160
+    },
+    "selectionOrdersUnchanged": true,
+    "clickDragCamera": true,
+    "pauseGate": true,
+    "errors": []
+  }
+]

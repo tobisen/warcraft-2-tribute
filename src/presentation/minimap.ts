@@ -13,19 +13,26 @@ import { clampCamera } from './camera';
 export interface MapSize {width:number;height:number}
 export interface MinimapMarker {id:string;owner:'player'|'enemy'|'neutral';position:Position;footprint?:Footprint;color:string}
 export type MinimapVisibility=(marker:MinimapMarker)=>boolean;
-export const minimapSize={width:200,height:150};
+export const minimapSize={width:160,height:160};
+/** Fit the map without stretching; the surrounding canvas is a square overview. */
+export function minimapContent(world:MapSize,size:MapSize=minimapSize){
+ const scale=Math.min(size.width/world.width,size.height/world.height),width=world.width*scale,height=world.height*scale;
+ return {x:(size.width-width)/2,y:(size.height-height)/2,width,height};
+}
 export function worldToMinimap(point:Position,world:MapSize,size:MapSize=minimapSize):Position {
- return {x:Math.max(0,Math.min(size.width,point.x/world.width*size.width)),y:Math.max(0,Math.min(size.height,point.y/world.height*size.height))};
+ const area=minimapContent(world,size);
+ return {x:area.x+Math.max(0,Math.min(world.width,point.x))/world.width*area.width,y:area.y+Math.max(0,Math.min(world.height,point.y))/world.height*area.height};
 }
 export function minimapToWorld(point:Position,world:MapSize,size:MapSize=minimapSize):Position {
- const bounded=worldToMinimap(point,size,world);return bounded;
+ const area=minimapContent(world,size);
+ return {x:Math.max(0,Math.min(world.width,(point.x-area.x)/area.width*world.width)),y:Math.max(0,Math.min(world.height,(point.y-area.y)/area.height*world.height))};
 }
 export function minimapCamera(point:Position,world:MapSize,viewport:MapSize,size:MapSize=minimapSize):Position {
  const center=minimapToWorld(point,world,size);return clampCamera({x:center.x-viewport.width/2,y:center.y-viewport.height/2},world,viewport);
 }
 export function cameraIndicator(scroll:Position,world:MapSize,viewport:MapSize,size:MapSize=minimapSize):Footprint {
  const position=worldToMinimap(clampCamera(scroll,world,viewport),world,size);
- return {...position,width:Math.min(world.width,viewport.width)/world.width*size.width,height:Math.min(world.height,viewport.height)/world.height*size.height};
+ return {...position,width:Math.min(world.width,viewport.width)/world.width*minimapContent(world,size).width,height:Math.min(world.height,viewport.height)/world.height*minimapContent(world,size).height};
 }
 /** Fresh marker snapshots and an explicit visibility filter; no selection/order mutations. */
 export function minimapData(state:MatchState,visible:MinimapVisibility=()=>true){

@@ -1,0 +1,14 @@
+/* Same grid cell as the world canvas: inside its corner, above the bottom bar. */
+#app > #minimap-overlay {
+ grid-column:1 / -1; grid-row:3; align-self:end; justify-self:end;
+ width:164px; margin:0 10px 10px 0; border:2px solid #977a40;
+ box-sizing:border-box; z-index:15; background:#050805;
+ box-shadow:0 3px 12px #0009; line-height:0;
+}
+#app > #minimap-overlay #minimap {
+ display:block; width:160px; height:160px; margin:0; border:0;
+ touch-action:none; user-select:none; cursor:crosshair;
+}
+/* Former minimap column is now available to selection information. */
+#bottom-bar { grid-template-columns:minmax(160px,1fr) max-content max-content max-content; }
+#selection-info { max-width:360px; }

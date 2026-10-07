@@ -92,7 +92,7 @@ export function bindActionPanel():void{
  const fieldset=document.getElementById('gameplay-controls')!,bar=document.getElementById('bottom-bar')!;document.getElementById('action-panel')!.append(fieldset);
  const actions=document.createElement('section');actions.id='context-actions';actions.setAttribute('aria-label','Build, train and research');fieldset.append(actions);
  document.getElementById('selection-info')!.prepend(document.getElementById('selection-portrait')!);
- bar.append(document.getElementById('minimap-overlay')!);
+ document.getElementById('app')!.append(document.getElementById('minimap-overlay')!);
  for(const group of actionGroups){const section=document.createElement('section'),heading=document.createElement('h3');section.dataset.actionGroup=group;section.setAttribute('aria-label',group);heading.textContent=group==='Orders'?'Orders / Actions':group;section.append(heading);(group==='Orders'?fieldset:actions).append(section);}
  for(const id of actionIds){const button=document.getElementById(id)!;let wrapper=button.parentElement!;if(!wrapper.classList.contains('control')){wrapper=document.createElement('div');wrapper.className='control';button.before(wrapper);wrapper.append(button);}const reason=document.createElement('span');reason.id=`${id}-reason`;reason.className='action-reason';button.setAttribute('aria-describedby',reason.id);wrapper.append(reason);fieldset.querySelector(`[data-action-group="${actionGroup(id)}"]`)!.append(wrapper);}
  bar.append(document.getElementById('production-queue')!);

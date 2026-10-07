@@ -65,9 +65,13 @@ femras Native800 musklick/Tech Tree/save/load/restart PASS.
 Save/load och restart. Tester:ordning/kostnad/tid/ägarskap/dubbeljobb/
 sparning/restart; browser:musklick. Balansdokumentation uppdateras.
 
-### RTS-216 — Större minimap på spelplanen — Todo
+### RTS-216 — Större minimap på spelplanen — Done
 
 Overlay nere till höger innanför spelplanen ovanför bottom bar, marginal,
+Levererat160×160 canvas i spelplanens gridcell med10px hörnmarginal.
+Proportionell karta med letterbox, pointer capture/drag och konsumerad input.
+Verifierat:riktade22/4, unit484/86, strict build/diff PASS; Native/Fit och
+fullscreen-API vid800/3440 PASS. [Belägg](artifacts/rts-216/browser.json).
 ca160×160 vid native800×600, bibehållna proportioner/terräng/fog/enheter/
 kamerarektangel och klick/drag. Konsumera input utan selection/worldorder.
 Använd frigjort bottom bar-utrymme. Tester:input/koordinater; browser:
