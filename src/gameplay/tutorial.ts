@@ -26,7 +26,7 @@ export function updateTutorial(m:MatchState):MatchState {
  }
  if(t.step===2)return tutorialDeliveredWood(m)+1e-8>=tutorialConfig.deliveredWood?{...m,tutorial:{step:3}}:m;
  if(t.step===3)return barracksReady(m.placement)?{...m,tutorial:{step:4}}:m;
- if(t.step===4){const soldiers=m.gathering.units.filter(u=>u.kind==='soldier');if(!soldiers.length||!m.placement.barracks)return m;
+ if(t.step===4){const recruits=new Set(Object.values(m.discoveries?.recruits??{})),soldiers=m.gathering.units.filter(u=>u.kind==='soldier'&&!recruits.has(u.id));if(!soldiers.length||!m.placement.barracks)return m;
   const position=spawnCandidates(m.map,m.placement.barracks,'barracks',combatConfig.enemySize).find(p=>(!m.fog||isVisible(m.fog,'player',p))&&!m.gathering.units.some(u=>overlaps(unitBody(p,combatConfig.enemySize),unitBody(u.position,u.kind==='worker'?unitStats.size:combatUnitStats(u).size))));
   if(!position)return m;
   return {...m,tutorial:{step:5},waves:{...m.waves,nextEnemyNumber:2},combat:{...m.combat,enemies:[...m.combat.enemies,{id:'enemy-1',kind:'unit',owner:'enemy',order:{kind:'idle'},hp:tutorialConfig.targetHP,position:{...position}}]},gathering:{...m.gathering,units:m.gathering.units.map(u=>u.kind==='soldier'?{...u,autoDisabled:true}:u)}};

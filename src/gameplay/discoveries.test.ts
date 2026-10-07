@@ -1,3 +1,8 @@
+import {campaignMissions} from '../config/campaign';
+import {identityFor} from '../config/campaignSeries';
+import {factionIds} from '../config/factions';
+import {startCampaignMission} from './campaign';
+import {updateTutorial,tutorialDeliveredWood} from './tutorial';
 import {createClassicMatch} from './testHelpers/classicMatch';
 import {factions} from '../config/factions';
 import {expect,it} from 'vitest';
@@ -16,7 +21,7 @@ import {matchPopulation} from './navy';
 const view={camera:{x:0,y:0},building:null} as const;
 function fixture(id:MapId='frontier'){return createMatch('skirmish','beginner',undefined,id);}
 function scout(m:ReturnType<typeof fixture>,index:number){const d=mapDiscoveries(m.map.id!,m.map.design)[index];m.gathering.units[0]={...m.gathering.units[0],position:{...d.position},target:{...d.position},order:{kind:'idle'}};m.fog=matchFog(m);return d;}
-it('authors hidden body-safe sites on every expanded map without changing campaign admission',()=>{
+it('authors hidden body-safe sites on every expanded map while standalone non-skirmish scenarios remain unchanged',()=>{
  for(const id of Object.keys(maps) as MapId[]){const m=fixture(id),finds=mapDiscoveries(id,'regions');expect(finds).toHaveLength(3);expect(new Set(finds.map(d=>d.id)).size).toBe(3);for(const d of finds){expect(bodyFits(m.map,d.position,20)).toBe(true);expect(isVisible(m.fog!,'player',d.position),`${id}/${d.id}`).toBe(false);}expect(visibleDiscoveries(m)).toEqual([]);expect(visibleMinimapData(m).markers.some(d=>d.id.includes('discovery'))).toBe(false);expect(updateDiscoveries(m)).toBe(m);}
  expect(createMatch('mission-waves').discoveries).toBeUndefined();
 });
@@ -47,4 +52,36 @@ it('saves claimed treasure and recruited/lost allies, protects old formats and m
 });
 it('updates in the match loop and leaves harvested stock untouched',()=>{
  const m=fixture();scout(m,0);const amount=m.gathering.node.remaining;const next=updateMatch(m,.1);expect(next.discoveries?.claimed).toHaveLength(1);expect(next.gathering.node.remaining).toBe(amount);expect(next.gathering.wood).toBe(m.gathering.wood+discoveryConfig.reward.wood);
+});
+
+it.each(factionIds)('%s campaign finds work in all eight missions and survive Save without repeating rewards',faction=>{
+ const identity=identityFor(faction,'normal'),progress={version:1 as const,identity,completed:campaignMissions.map(m=>m.id)};
+ for(const mission of campaignMissions){
+  let m=startCampaignMission(progress,mission.id,'normal',{player:faction,enemy:'crown'})!;
+  const initialWood=m.gathering.wood,initialGold=m.gathering.goldBalance!,initialUnits=m.gathering.units.length;
+  expect(m.discoveries).toEqual({version:1,claimed:[],recruits:{}});expect(visibleDiscoveries(m)).toEqual([]);
+  for(let i=0;i<3;i++){const d=scout(m,i);expect(bodyFits(m.map,d.position,20),`${faction}/${mission.id}/${d.id}`).toBe(true);m=updateDiscoveries(m);expect(m.discoveries!.claimed).toContain(d.id);}
+  expect(m.gathering.wood).toBe(initialWood+40);expect(m.gathering.goldBalance).toBe(initialGold+20);expect(m.gathering.units).toHaveLength(initialUnits+1);
+  expect(m.gathering.units.at(-1)?.hp).toBe(factions[faction].units.soldier.hp);
+  expect(m.campaignRun?.phase).toBe(0);expect(m.outcome).toBe('playing');expect(matchStats(m).player.wood.delivered).toBe(0);
+  const saved=decodeSave(encodeSave({...m,paused:true},view));expect(saved.ok,saved.ok?'':saved.error).toBe(true);if(!saved.ok)throw Error(saved.error);
+  expect(saved.match.discoveries).toEqual(m.discoveries);expect(updateMatch(saved.match,1)).toBe(saved.match);
+  const resumed=updateMatch({...saved.match,paused:false},0);expect(resumed.gathering.wood).toBe(m.gathering.wood);expect(resumed.gathering.units).toHaveLength(initialUnits+1);
+  expect(startCampaignMission(progress,mission.id,'normal',{player:faction,enemy:'crown'})!.discoveries?.claimed).toEqual([]);
+ }
+});
+it('activates an existing expanded campaign save on Load without modifying its mission, resources or progression',()=>{
+ const identity=identityFor('clans','normal'),m=startCampaignMission({version:1,identity,completed:[]},'first-steps','normal',{player:'clans',enemy:'crown'})!;
+ delete m.discoveries;const raw=JSON.parse(encodeSave(m,view));delete raw.state.discoveries;
+ const result=decodeSave(JSON.stringify(raw));expect(result.ok).toBe(true);if(!result.ok)throw Error(result.error);
+ expect(result.match.discoveries).toEqual({version:1,claimed:[],recruits:{}});expect(result.match.campaignRun).toEqual(m.campaignRun);expect(result.match.gathering.wood).toBe(m.gathering.wood);
+ scout(result.match,0);expect(updateMatch(result.match,.01).discoveries?.claimed).toHaveLength(1);
+});
+it('treasure cannot finish the gathering lesson and a rescued soldier cannot finish the training lesson',()=>{
+ let m=createMatch('tutorial','beginner',undefined,'arena',1,'balanced',undefined,'first-steps');m.tutorial={step:2};scout(m,0);m=updateMatch(m,.01);
+ expect(m.tutorial?.step).toBe(2);expect(tutorialDeliveredWood(m)).toBe(0);scout(m,2);m=updateMatch(m,.01);
+ m.tutorial={step:4};m.placement.barracks={x:576,y:352,width:64,height:64};
+ expect(updateTutorial(m)).toBe(m);
+ const recruit=m.gathering.units.find(u=>u.kind==='soldier')!;m.gathering.units.push({...recruit,id:'unit-5',position:{x:688,y:352}});
+ expect(updateTutorial(m).tutorial?.step).toBe(5);
 });

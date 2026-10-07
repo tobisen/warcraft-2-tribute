@@ -1,0 +1,225 @@
+{
+  "fixture": "One scout placed 56–80px from each distant site; physical selection/move and real match ticks",
+  "results": [
+    {
+      "faction": "crown",
+      "initial": {
+        "claimed": [],
+        "visible": 0,
+        "wood": 40,
+        "gold": 10,
+        "units": 3
+      },
+      "findings": [
+        {
+          "id": "arena-discovery-1",
+          "ordered": "move",
+          "claimed": true,
+          "units": 3,
+          "wood": 60,
+          "gold": 20,
+          "tutorial": 1,
+          "outcome": "playing"
+        },
+        {
+          "id": "arena-discovery-3",
+          "ordered": "move",
+          "claimed": true,
+          "units": 4,
+          "wood": 60,
+          "gold": 20,
+          "tutorial": 2,
+          "outcome": "playing"
+        }
+      ],
+      "restored": {
+        "claimed": [
+          "arena-discovery-1",
+          "arena-discovery-3"
+        ],
+        "wood": 60,
+        "units": 4
+      },
+      "mouseOrders": true,
+      "saveLoad": true,
+      "restart": true,
+      "errors": []
+    },
+    {
+      "faction": "clans",
+      "initial": {
+        "claimed": [],
+        "visible": 0,
+        "wood": 40,
+        "gold": 10,
+        "units": 3
+      },
+      "findings": [
+        {
+          "id": "arena-discovery-1",
+          "ordered": "move",
+          "claimed": true,
+          "units": 3,
+          "wood": 60,
+          "gold": 20,
+          "tutorial": 1,
+          "outcome": "playing"
+        },
+        {
+          "id": "arena-discovery-3",
+          "ordered": "move",
+          "claimed": true,
+          "units": 4,
+          "wood": 60,
+          "gold": 20,
+          "tutorial": 2,
+          "outcome": "playing"
+        }
+      ],
+      "restored": {
+        "claimed": [
+          "arena-discovery-1",
+          "arena-discovery-3"
+        ],
+        "wood": 60,
+        "units": 4
+      },
+      "mouseOrders": true,
+      "saveLoad": true,
+      "restart": true,
+      "errors": []
+    },
+    {
+      "faction": "elves",
+      "initial": {
+        "claimed": [],
+        "visible": 0,
+        "wood": 40,
+        "gold": 10,
+        "units": 3
+      },
+      "findings": [
+        {
+          "id": "arena-discovery-1",
+          "ordered": "move",
+          "claimed": true,
+          "units": 3,
+          "wood": 60,
+          "gold": 20,
+          "tutorial": 1,
+          "outcome": "playing"
+        },
+        {
+          "id": "arena-discovery-3",
+          "ordered": "move",
+          "claimed": true,
+          "units": 4,
+          "wood": 60,
+          "gold": 20,
+          "tutorial": 2,
+          "outcome": "playing"
+        }
+      ],
+      "restored": {
+        "claimed": [
+          "arena-discovery-1",
+          "arena-discovery-3"
+        ],
+        "wood": 60,
+        "units": 4
+      },
+      "mouseOrders": true,
+      "saveLoad": true,
+      "restart": true,
+      "errors": []
+    },
+    {
+      "faction": "dwarves",
+      "initial": {
+        "claimed": [],
+        "visible": 0,
+        "wood": 40,
+        "gold": 10,
+        "units": 3
+      },
+      "findings": [
+        {
+          "id": "arena-discovery-1",
+          "ordered": "move",
+          "claimed": true,
+          "units": 3,
+          "wood": 60,
+          "gold": 20,
+          "tutorial": 1,
+          "outcome": "playing"
+        },
+        {
+          "id": "arena-discovery-3",
+          "ordered": "move",
+          "claimed": true,
+          "units": 4,
+          "wood": 60,
+          "gold": 20,
+          "tutorial": 2,
+          "outcome": "playing"
+        }
+      ],
+      "restored": {
+        "claimed": [
+          "arena-discovery-1",
+          "arena-discovery-3"
+        ],
+        "wood": 60,
+        "units": 4
+      },
+      "mouseOrders": true,
+      "saveLoad": true,
+      "restart": true,
+      "errors": []
+    },
+    {
+      "faction": "goblins",
+      "initial": {
+        "claimed": [],
+        "visible": 0,
+        "wood": 40,
+        "gold": 10,
+        "units": 3
+      },
+      "findings": [
+        {
+          "id": "arena-discovery-1",
+          "ordered": "move",
+          "claimed": true,
+          "units": 3,
+          "wood": 60,
+          "gold": 20,
+          "tutorial": 1,
+          "outcome": "playing"
+        },
+        {
+          "id": "arena-discovery-3",
+          "ordered": "move",
+          "claimed": true,
+          "units": 4,
+          "wood": 60,
+          "gold": 20,
+          "tutorial": 2,
+          "outcome": "playing"
+        }
+      ],
+      "restored": {
+        "claimed": [
+          "arena-discovery-1",
+          "arena-discovery-3"
+        ],
+        "wood": 60,
+        "units": 4
+      },
+      "mouseOrders": true,
+      "saveLoad": true,
+      "restart": true,
+      "errors": []
+    }
+  ]
+}

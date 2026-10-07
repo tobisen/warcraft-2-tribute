@@ -1,3 +1,4 @@
+import {createDiscoveries} from './discoveries';
 import {regionDefinition} from '../config/mapRegions';
 import type {WorldMap} from './map';
 import {hasEnemyBase} from './enemyBases';
@@ -229,7 +230,7 @@ export function decodeSave(json:string,context?:SaveContext):LoadResult {
   const map=r(s.map,'world',['design','worldLayout','resourceLayout','terrainLayout','id','width','height','tileSize','revision','obstacles']);ensure(map.design===undefined||(map.design==='organic'||map.design==='regions')&&map.terrainLayout==='reference'&&map.resourceLayout==='trees'&&map.worldLayout==='expanded','terrain design');ensure(map.terrainLayout===undefined||map.terrainLayout==='reference'||map.terrainLayout==='legacy','terrain layout');ensure(map.worldLayout===undefined||map.worldLayout==='expanded'&&map.resourceLayout==='trees','world layout');ensure(map.resourceLayout===undefined||map.resourceLayout==='trees'&&map.terrainLayout==='reference','resource layout');ensure((map.id??'arena')===mapId&&(s.campaignRun?planForSave()?.map===mapId:scenarioMapAllowed(scenario,mapId)),'map identity/scenario');ensure(map.width===configuredMap.width&&map.height===configuredMap.height&&map.tileSize===32,'world config');integer(map.revision,'revision');const obstacleValues=arr(map.obstacles,'obstacles',4096).map(o=>footprint(o,'obstacle'));
   const finds=mapDiscoveries(mapId,configuredMap.design);let bonusCount=0;
   optional(s.discoveries,value=>{
-   ensure(scenario==='skirmish'&&s.campaignMission===undefined&&s.campaignRun===undefined&&map.worldLayout==='expanded','discovery admission');
+   ensure((scenario==='skirmish'||s.campaignMission!==undefined)&&map.worldLayout==='expanded','discovery admission');
    const d=r(value,'discoveries',['version','claimed','recruits']);ensure(d.version===1,'discovery version');
    const claimed=arr(d.claimed,'claimed discoveries',finds.length),ids=new Set<string>();
    for(const id of claimed){ensure(typeof id==='string'&&!ids.has(id),'duplicate discovery');const find=finds.find(f=>f.id===id);ensure(!!find&&s.fog&&isExplored(s.fog as unknown as FogState,'player',find.position),'discovery exploration');ids.add(id);if(find.kind==='treasure')bonusCount++;}
@@ -328,6 +329,8 @@ for(const u of state.gathering.units)ensure(bodyFits(movementMap(state.map,u),u.
   ensure(view.building===null||view.building==='base'&&Number(c.baseHP)>0||view.building==='harbor'&&buildingIds.has('harbor')||view.building==='barracks'&&buildingIds.has('barracks'),'selected building ref');
   if(state.enemyPolicy&&(state.enemyPolicy.research.attack||state.enemyPolicy.research.defense))state.combat.enemyUpgrades={attack:state.enemyPolicy.research.attack,defense:state.enemyPolicy.research.defense};
   if(state.research?.workerTools)state.gathering.workerToolsLevel=state.research.workerTools;state.gathering.campaignContent=campaignContentFor(state);state.gathering.faction=factionData.player;for(const u of state.gathering.units)if(u.kind==='soldier'&&(u.archetype==='specialist'||u.archetype==='air'))u.faction=factionData.player;for(const ship of state.navy?.ships??[])for(const u of ship.passengers??[])if(u.kind==='soldier'&&(u.archetype==='specialist'||u.archetype==='air'))u.faction=factionData.player;state.placement={...state.placement,active:false};state.fog=matchFog(state);
+  // Existing expanded campaign saves had no finds; start their finite claim ledger on load.
+  if(state.campaignMission&&state.map.worldLayout==='expanded'&&!state.discoveries)state.discoveries=createDiscoveries();
   return {ok:true,match:state,view:{camera,building:view.building as SavedView['building']}};
  }catch(error){return {ok:false,error:error instanceof Error?error.message:uiText.couldNotReadTheSave,code:'invalid'};}
 }

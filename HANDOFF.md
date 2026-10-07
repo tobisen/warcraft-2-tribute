@@ -1,3 +1,42 @@
+## 2026-10-07 — RTS-219 kampanjfynd färdiga
+
+Användaren beställer att befintliga fynd slås på efter218. Samma authored
+kartplatser, renderer och ljud används i alla fem raskampanjer: två skatter
+à20wood/10gold och en fraktionsgrundsoldat per karta/uppdragsstart. Inga
+nya kartlayouter, externa assets eller slumpade bonusar. Vision, levande egen
+marktrupp inom48px och kroppsgiltig access krävs; supply/spawn kan skjuta upp
+rekrytering. Claimed/recruit-ledger och ordinarie unitcounters bevarar engångs-
+belöningar, Save och vanlig statistik. Fynd blir aldrig ett separat vinstkrav.
+
+Save64 accepterar kampanjledger; befintliga expanderade kampanjsparningar
+utan ledger får en tom vid Load efter validering. Ingen omedelbar belöning,
+ändrad mission/progression eller Save-/versionshöjning. Historiska original-
+kartor och äldre skirmishsparningar behåller kompatibilitet utan nya fynd.
+Tutorialens wood-lektion använder utvunnen/levererad wood; träningslektionen
+filtrerar bort found recruit-ID:n och kräver en producerad soldier.
+
+Ny verifiering: discoveries14/1 PASS9.38s (alla5×8 kampanjstarter/claim/Save/
+restart och tutorialspärr), berörda campaignPhases/Series/Early/Late/tutorial
+53/5 PASS88.26s, unit506/87 PASS31.03s, build med strict typecheck PASS1.08s
+med befintlig bundlevarning. Native800 browser alla fem PASS: fysisk scout-
+selection/order, faktisk matchuppdatering, dold före sikt, skatt20/10, rekryt,
+Save/Load/pause/restart. Fixture placerar en scout56–80px från authored fynd;
+ingen naturlig långkampanj eller mänsklig balansbedömning hävdas. Orc-kista/
+Elven-rekryt skärmbilder visuellt granskade. [Belägg](artifacts/rts-219/browser.json)
+och [kontroll](scripts/check-campaign-discoveries.mjs).
+Slutlig `npm test`1671/195 PASS758.71s; syntax/länk/diff och egen
+diffgranskning utan fynd PASS. Done, levereras med denna commit/push.
+Tidiga testfixturefel
+använde0s (inga match-loop-fynd) och har korrigerats; browserfixture söker nu
+fri scoutaccess runt fyndet. Gameplay-navigation ändrades inte.
+
+RTS-212:s två bossar saknar implementation och har inte aktiverats här;
+användaren har fått separat scopefråga. Kartombyggnad/release fortfarande
+pausade. Befintlig CSS/units.mjs/docs/ och :memory:.ses bevaras. Föregående
+218/81bedea har nu faktiskt grön [CI/Pages37626840058](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37626840058);
+Ny219-CI/Pages är inte verifierad i denna leverans. Tidigare stopp efter218
+ersätts endast för aktuellt beställda kampanjfynd.
+
 ## 2026-10-07 — RTS-215–218 färdiga, stopp
 
 Nytt bifogat mandat ersatte tidigare stopp: fyra avgränsade tasks före release.

@@ -1562,3 +1562,16 @@ Två extra levande baser tillåts utöver ursprungsbasen:100wood+60gold,12s work
 En akademi per spelare/fraktion efter färdig forge och båda nivåerna I:80wood+40gold/10s/64×64/140HP. Attack/försvar II kostar2× fraktionens nivå I-kostnad och12s. Befintlig militärmultiplikator upphöjs till nivån, max2; inga workerbonus eller HP-heal. Forge+akademi måste leva och vara färdiga under avancerat jobb; destruction avbryter utan refund men färdig teknik består. Samma paid workerconstruction/research för AI, tidigare expansionsvillkor behåller nivå I. Kampanjmission1–5 stannar vid I, academy admit från6. Save62 migrerar genuin61 och blockerar advanced extras i tidigare dokument/multiplayerwrappers. Fyrastegs egna native-pixelsprites i fem varianter; separat byggnadsexport bevarar befintlig förbättrad art och unitassets. Ingen ny unitroster eller separat commandscene.
 
 RTS-204 slutlig kampanjgräns: academyadmission gäller även äldre storymatcher utan seriesidentity. Övriga historiska roster-/recipeundantag består. TechnologyState härleder academyAllowed för placering; UI/AI/Save använder samma mission1–5-lås. Genomspelningsbotten väljer sin avsedda defense I före attack I och fastnar inte på låst defense II utan akademi. Historiska Save56-mapfixtures saknar nya skirmishfynd.
+
+
+## RTS-219 — Kampanjfynd aktiverade efter nytt användaruppdrag
+
+RTS-202:s ursprungliga kampanjundantag ersätts: samma två skatter och en
+fraktionsgrundsoldat per karta är tillgängliga även i nya kampanjmatcher.
+Befintliga expanderade kampanjsparningar utan discovery-ledger får en tom
+ledger vid Load, utan omedelbara resurser/trupper eller ändrad progression.
+Originalkartors gamla sparningar och skirmishmigrering behåller tidigare
+regler. Fynd kräver fog/sikt, egen levande marktrupp inom48px och fri access;
+rekrytering använder vanlig supply och spawn. Tutorial kräver utvunnen och
+levererad ved samt producerad soldat även om fynd redan hämtats. Bossar
+har inget befintligt system att aktivera; RTS-212 behandlas separat.

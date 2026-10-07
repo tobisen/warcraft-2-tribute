@@ -127,7 +127,7 @@ export function createMatch(scenario:MatchScenario='survival',difficulty:Difficu
   if(!isFactionId(factions.player)||!isFactionId(factions.enemy))throw Error('Unknown faction');
   if(!isAIProfile(aiProfile))throw Error('Unknown AI profile');
   const state: MatchState = {wildlife:{},
-    ...(scenario==='skirmish'&&!campaignId?{discoveries:createDiscoveries()}:{}),
+    ...(scenario==='skirmish'||campaignId?{discoveries:createDiscoveries()}:{}),
     ...(campaignId?{campaignMission:campaignId,...(campaignPlans[campaignId]?{campaignRun:{version:1 as const,phase:0}}:{})}:{}),
     ...(aiProfile!=='balanced'?{aiProfile}:{}),
     statLedger:createStatLedger(),

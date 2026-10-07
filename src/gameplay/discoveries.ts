@@ -24,7 +24,7 @@ export function recruitReason(m:MatchState,d:Discovery):string|null {
 }
 /** Finite authored finds: camera movement is never vision, and each reward is applied once. */
 export function updateDiscoveries(m:MatchState):MatchState {
- if(!m.discoveries||m.scenario!=='skirmish'||m.campaignRun||m.campaignMission||m.outcome!=='playing'||m.paused||!m.fog)return m;
+ if(!m.discoveries||m.outcome!=='playing'||m.paused||!m.fog)return m;
  let next=m;
  for(const d of mapDiscoveries(m.map.id??'arena',m.map.design)){
   if(next.discoveries!.claimed.includes(d.id)||!isVisible(next.fog!,'player',d.position)||!next.gathering.units.some(u=>!isAir(u)&&(u.hp??1)>0&&Math.hypot(u.position.x-d.position.x,u.position.y-d.position.y)<=discoveryConfig.range&&segmentFits(next.map,u.position,d.position,(u.kind==='worker'?workerStats(next.factions?.player):combatUnitStats(u,next.factions?.player)).size/2)))continue;

@@ -45,6 +45,26 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
+### RTS-219 — Aktivera befintliga kampanjfynd — Done
+
+Nytt uttryckligt uppdrag efter218: slå på skatter och rekryterbara trupper i
+kampanjerna genom befintligt discovery-system. Alla fem raskampanjer och åtta
+uppdrag; fog/proximity/supply/engångsbelöningar, Save/Load/restart och
+kampanjmål bevaras. Befintliga expanderade kampanjsparningar aktiveras vid
+Load; äldre originalkartor behåller kompatibel geometri utan nya fynd.
+Tutorialens träningslektion kräver producerad trupp. Riktade integrationer,
+browser och slutchecks/docs/commit/push. Kartombyggnad och release fortsatt
+pausade. Bossar saknar implementation; frågan om att även genomföra212 är
+ställd separat och dess Todo-status består tills scope är klarlagt.
+Levererat: två20wood/10gold-skatter och en rasgrundsoldat per karta, engångs-
+ledger, Save-aktivering och tutorialspärrar. Riktade discoveries14/1 och
+berörda kampanjer53/5, unit506/87, strict build/diff/review och faktisk
+Native800 browser alla fem PASS. Slutlig fullregression1671/195 PASS758.71s.
+[Belägg](artifacts/rts-219/browser.json); HANDOFF uppdaterad. Ingen ny release.
+Föregående218/81bedea har faktiskt grön GitHub-CI/Pages37626840058;
+ny219-CI/Pages är inte verifierad. Stanna efter beställda kampanjfynd.
+
+
 ## Nytt mandat — RTS-215–218 (2026-10-07)
 
 Kartombyggnad/releasestädning/versionshöjning pausade. Genomför215–218 en
