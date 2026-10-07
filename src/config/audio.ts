@@ -8,6 +8,8 @@ export const effectMix={
  victory:{gain:.8,cooldown:1},defeat:{gain:.8,cooldown:1},cannon:{gain:.7,cooldown:.25},
  splash:{gain:.5,cooldown:.3},warning:{gain:.8,cooldown:1},
  gather:{gain:.4,cooldown:.8},build:{gain:.4,cooldown:.8},train:{gain:.65,cooldown:.4},
+ chop:{gain:.5,cooldown:.65},mining:{gain:.5,cooldown:.7},treasure:{gain:.65,cooldown:.5},
+ destruction:{gain:.7,cooldown:.5},
 } as const;
 
-export const audioFiles=['animal-deer','animal-rabbit','animal-fox','music','command','impact','complete','victory','defeat','cannon','splash','gather','build','train','melee','bow','siege','buildingHit'] as const;
+export const audioFiles=['animal-deer','animal-rabbit','animal-fox','music','command','impact','complete','victory','defeat','cannon','splash','gather','build','train','melee','bow','siege','buildingHit','chop','mining','treasure','destruction'] as const;

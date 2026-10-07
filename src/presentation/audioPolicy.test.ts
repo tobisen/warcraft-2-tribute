@@ -18,3 +18,12 @@ it('work/build/train cues use actual changes, aggregate multiple workers and sil
  expect(audioEvents(undefined,before,true)).toEqual([]);expect(audioEvents(before,{...before,production:9},false)).toEqual([]);
  expect(audioEvents(before,{...before,work:{},construction:{farm:0},completed:['farm']},true)).toEqual(['complete']);
 });
+
+it('routes wood, ore and newly claimed treasure separately and coalesces resource groups',()=>{
+ const before={...snapshot,work:{a:1,b:1,c:1},workMaterials:{a:'wood' as const,b:'wood' as const,c:'gold' as const},treasures:[]};
+ const next={...before,work:{a:2,b:2,c:2},treasures:['chest']};
+ expect(audioEvents(before,next,true)).toEqual(['chop','mining','treasure']);
+ expect(audioEvents(next,next,true)).toEqual([]);
+ expect(audioEvents(before,{...before,work:{a:0,b:1,c:1}},true)).toEqual([]);
+ expect(audioEvents(undefined,next,true)).toEqual([]);expect(audioEvents(before,next,false)).toEqual([]);
+});

@@ -1,0 +1,78 @@
+{
+  "method": "Live combat fixture, direct voice-presentation cues, real PCM assets, MediaRecorder tap of actual effect/voice graph. Re-encoded Opus capture as PCM for review. Not human listening.",
+  "results": [
+    {
+      "faction": "crown",
+      "path": "artifacts/audio-identity/pilot-crown-match.wav",
+      "cues": [
+        {
+          "action": "select",
+          "ok": true,
+          "duration": 1.7574583333333333
+        },
+        {
+          "action": "move",
+          "ok": true,
+          "duration": 1.1010416666666667
+        },
+        {
+          "action": "attack",
+          "ok": true,
+          "duration": 1.817375
+        },
+        {
+          "action": "gather",
+          "ok": true,
+          "duration": 1.4845
+        },
+        {
+          "action": "repeat",
+          "ok": true,
+          "duration": 2.72125
+        }
+      ],
+      "duration": 11.28,
+      "peak": 0.3608396351337433,
+      "recordings": 10,
+      "errors": [],
+      "listeningVerified": false
+    },
+    {
+      "faction": "clans",
+      "path": "artifacts/audio-identity/pilot-clans-match.wav",
+      "cues": [
+        {
+          "action": "select",
+          "ok": true,
+          "duration": 1.1415416666666667
+        },
+        {
+          "action": "move",
+          "ok": true,
+          "duration": 0.9452083333333333
+        },
+        {
+          "action": "attack",
+          "ok": true,
+          "duration": 1.3601666666666667
+        },
+        {
+          "action": "gather",
+          "ok": true,
+          "duration": 1.5428333333333333
+        },
+        {
+          "action": "repeat",
+          "ok": true,
+          "duration": 2.296708333333333
+        }
+      ],
+      "duration": 9.66,
+      "peak": 0.3724517524242401,
+      "recordings": 10,
+      "errors": [],
+      "listeningVerified": false
+    }
+  ],
+  "listeningVerified": false
+}

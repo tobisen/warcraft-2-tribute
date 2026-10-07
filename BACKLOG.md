@@ -9,6 +9,36 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
+## 2026-10-07 — Full ljudimplementation, användarens nya mandat
+
+Alla 315 lokala engelska repliker är aktiva: fem raser × worker/soldier/archer ×
+selection/move/attack/gather/ready/error/humor × tre varianter. Goblins behåller
+repots identitet med snabb uppfinnarton; Humans torr tjänstehumor, Orcs ohövlig
+bokstavlighet, Elves överlägsen elegans och Dwarves korthugget hantverk.
+Kostnadsfri offline Kokoro-generering och OpenVoice V2-karaktärskonvertering
+använder de godkända fria tonreferenserna. Detta är neuralgenererade repliker,
+inte nya mänskliga inspelningar. Dvärgarnas 63 bearbetningar är CC-BY-SA-3.0;
+övriga nya röster/effekter CC0, med modellernas egna notices separat.
+Per-asset upphov, källa, licens, bearbetning och hash finns i
+[ljudunderlaget](assets/sources/audio-identity/README.md). Credits följer med spelet.
+
+13 effektfamiljer ersatta med inspelade materiallager, inklusive melee/build,
+trä/sten, projektiler, kanon/vatten, skatt och byggnadsras. Befintlig AudioContext
+återanvänds: en representativ grupporder, cooldown/variantrotation/sällsynt humor,
+separat Voice/SFX, mjuk ducking och gemensam kompressor. Audio-unlock, mute,
+pause och restart bevaras. Alla ljud laddas lokalt; inga betalda tjänster.
+
+[Lyssna på slutversionen](artifacts/audio-identity/final/index.html): fem verkliga
+matchmixar och egna repliker från varje ras. Tekniska browser-/PCM-kontroller
+är skilda från lyssning: slutpaketens faktiska ljudkvalitet är **ej verifierad**.
+Användaren har godkänt tonriktningen och beställt full implementation samt
+commit/push; detta utgör inte hörselgranskning av samtliga slutklipp.
+Verifierat: unit482/86, full regression1630/193, build med strict typecheck,
+femras-browser och slutlig diffkontroll PASS. Manuell ljudkvalitet är en
+kvarstående granskningspunkt, inte ett uppfyllt lyssningskriterium.
+Kartarbete och roadmapbatch2 startas inte. Befintlig style.css, units.mjs och
+docs/ bevaras. Ingen ny release hävdas.
+
 **Aktuellt tillägg:** RTS-214 — resurscheat — Done. Användarens kod
 `icanseemyhousefromhere` ska ge +100000 guld och +100000 trä. Enter öppnar
 inmatning under pågående match; Enter bekräftar, Escape avbryter. Bevara

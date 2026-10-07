@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "origin": "Original deterministic composition/synthesis in scripts/export-audio.py; no external recordings",
+  "origin": "Original music/UI/wildlife; licensed CC0 recorded-material gameplay effects. See assets/ASSET_LICENSE.md.",
   "sampleRate": 24000,
   "entries": {
     "music": {
@@ -23,9 +23,12 @@
       "ogg": "audio/impact.ogg",
       "fallback": "audio/impact.wav",
       "master": "assets/audio/impact.wav",
-      "duration": 0.18,
+      "duration": 0.4,
       "loop": false,
-      "volume": 1
+      "volume": 1,
+      "author": "Project arrangement of Kenney/Thimras recordings",
+      "license": "CC0-1.0",
+      "provenance": "assets/sources/audio-identity/material-effects.json#impact"
     },
     "complete": {
       "ogg": "audio/complete.ogg",
@@ -55,33 +58,45 @@
       "ogg": "audio/cannon.ogg",
       "fallback": "audio/cannon.wav",
       "master": "assets/audio/cannon.wav",
-      "duration": 0.4,
+      "duration": 1.5,
       "loop": false,
-      "volume": 1
+      "volume": 1,
+      "author": "Project arrangement of Kenney/Thimras recordings",
+      "license": "CC0-1.0",
+      "provenance": "assets/sources/audio-identity/material-effects.json#cannon"
     },
     "splash": {
       "ogg": "audio/splash.ogg",
       "fallback": "audio/splash.wav",
       "master": "assets/audio/splash.wav",
-      "duration": 0.5,
+      "duration": 1.1,
       "loop": false,
-      "volume": 1
+      "volume": 1,
+      "author": "Project arrangement of Kenney/Thimras recordings",
+      "license": "CC0-1.0",
+      "provenance": "assets/sources/audio-identity/material-effects.json#splash"
     },
     "gather": {
       "ogg": "audio/gather.ogg",
       "fallback": "audio/gather.wav",
       "master": "assets/audio/gather.wav",
-      "duration": 0.12,
+      "duration": 0.6,
       "loop": false,
-      "volume": 1
+      "volume": 1,
+      "author": "Project arrangement of Kenney/Thimras recordings",
+      "license": "CC0-1.0",
+      "provenance": "assets/sources/audio-identity/material-effects.json#gather"
     },
     "build": {
       "ogg": "audio/build.ogg",
       "fallback": "audio/build.wav",
       "master": "assets/audio/build.wav",
-      "duration": 0.16,
+      "duration": 0.75,
       "loop": false,
-      "volume": 1
+      "volume": 1,
+      "author": "Project arrangement of Kenney/Thimras recordings",
+      "license": "CC0-1.0",
+      "provenance": "assets/sources/audio-identity/material-effects.json#build"
     },
     "train": {
       "ogg": "audio/train.ogg",
@@ -95,33 +110,89 @@
       "ogg": "audio/melee.ogg",
       "fallback": "audio/melee.wav",
       "master": "assets/audio/melee.wav",
-      "duration": 0.22,
+      "duration": 0.45,
       "loop": false,
-      "volume": 1
+      "volume": 1,
+      "author": "Project arrangement of Kenney/Thimras recordings",
+      "license": "CC0-1.0",
+      "provenance": "assets/sources/audio-identity/material-effects.json#melee"
     },
     "bow": {
       "ogg": "audio/bow.ogg",
       "fallback": "audio/bow.wav",
       "master": "assets/audio/bow.wav",
-      "duration": 0.2,
+      "duration": 0.4,
       "loop": false,
-      "volume": 1
+      "volume": 1,
+      "author": "Project arrangement of Kenney/Thimras recordings",
+      "license": "CC0-1.0",
+      "provenance": "assets/sources/audio-identity/material-effects.json#bow"
     },
     "siege": {
       "ogg": "audio/siege.ogg",
       "fallback": "audio/siege.wav",
       "master": "assets/audio/siege.wav",
-      "duration": 0.5,
+      "duration": 0.65,
       "loop": false,
-      "volume": 1
+      "volume": 1,
+      "author": "Project arrangement of Kenney/Thimras recordings",
+      "license": "CC0-1.0",
+      "provenance": "assets/sources/audio-identity/material-effects.json#siege"
     },
     "buildingHit": {
       "ogg": "audio/buildingHit.ogg",
       "fallback": "audio/buildingHit.wav",
       "master": "assets/audio/buildingHit.wav",
-      "duration": 0.38,
+      "duration": 0.9,
       "loop": false,
-      "volume": 1
+      "volume": 1,
+      "author": "Project arrangement of Kenney/Thimras recordings",
+      "license": "CC0-1.0",
+      "provenance": "assets/sources/audio-identity/material-effects.json#buildingHit"
+    },
+    "mining": {
+      "ogg": "audio/mining.ogg",
+      "fallback": "audio/mining.wav",
+      "master": "assets/audio/mining.wav",
+      "duration": 0.6,
+      "loop": false,
+      "volume": 1,
+      "author": "Project arrangement of Kenney/Thimras recordings",
+      "license": "CC0-1.0",
+      "provenance": "assets/sources/audio-identity/material-effects.json#mining"
+    },
+    "chop": {
+      "ogg": "audio/chop.ogg",
+      "fallback": "audio/chop.wav",
+      "master": "assets/audio/chop.wav",
+      "duration": 0.6,
+      "loop": false,
+      "volume": 1,
+      "author": "Project arrangement of Kenney/Thimras recordings",
+      "license": "CC0-1.0",
+      "provenance": "assets/sources/audio-identity/material-effects.json#chop"
+    },
+    "treasure": {
+      "ogg": "audio/treasure.ogg",
+      "fallback": "audio/treasure.wav",
+      "master": "assets/audio/treasure.wav",
+      "duration": 1.1,
+      "loop": false,
+      "volume": 1,
+      "author": "Project arrangement of Kenney/Thimras recordings",
+      "license": "CC0-1.0",
+      "provenance": "assets/sources/audio-identity/material-effects.json#treasure"
+    },
+    "destruction": {
+      "ogg": "audio/destruction.ogg",
+      "fallback": "audio/destruction.wav",
+      "master": "assets/audio/destruction.wav",
+      "duration": 1.6,
+      "loop": false,
+      "volume": 1,
+      "author": "Project arrangement of Kenney/Thimras recordings",
+      "license": "CC0-1.0",
+      "provenance": "assets/sources/audio-identity/material-effects.json#destruction"
     }
   }
 }

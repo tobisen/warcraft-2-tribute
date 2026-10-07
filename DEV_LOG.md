@@ -1,5 +1,253 @@
 # Development log
 
+## 2026-10-07 — Full ljudimplementation, användarens nya mandat
+
+Alla 315 lokala engelska repliker är aktiva: fem raser × worker/soldier/archer ×
+selection/move/attack/gather/ready/error/humor × tre varianter. Goblins behåller
+repots identitet med snabb uppfinnarton; Humans torr tjänstehumor, Orcs ohövlig
+bokstavlighet, Elves överlägsen elegans och Dwarves korthugget hantverk.
+Kostnadsfri offline Kokoro-generering och OpenVoice V2-karaktärskonvertering
+använder de godkända fria tonreferenserna. Detta är neuralgenererade repliker,
+inte nya mänskliga inspelningar. Dvärgarnas 63 bearbetningar är CC-BY-SA-3.0;
+övriga nya röster/effekter CC0, med modellernas egna notices separat.
+Per-asset upphov, källa, licens, bearbetning och hash finns i
+[ljudunderlaget](assets/sources/audio-identity/README.md). Credits följer med spelet.
+
+13 effektfamiljer ersatta med inspelade materiallager, inklusive melee/build,
+trä/sten, projektiler, kanon/vatten, skatt och byggnadsras. Befintlig AudioContext
+återanvänds: en representativ grupporder, cooldown/variantrotation/sällsynt humor,
+separat Voice/SFX, mjuk ducking och gemensam kompressor. Audio-unlock, mute,
+pause och restart bevaras. Alla ljud laddas lokalt; inga betalda tjänster.
+
+[Lyssna på slutversionen](artifacts/audio-identity/final/index.html): fem verkliga
+matchmixar och egna repliker från varje ras. Tekniska browser-/PCM-kontroller
+är skilda från lyssning: slutpaketens faktiska ljudkvalitet är **ej verifierad**.
+Användaren har godkänt tonriktningen och beställt full implementation samt
+commit/push; detta utgör inte hörselgranskning av samtliga slutklipp.
+Kartarbete och roadmapbatch2 startas inte. Befintlig style.css, units.mjs och
+docs/ bevaras. Ingen ny release hävdas.
+
+### Ny verifiering av slutversionen
+
+- `npm run test:unit`:482/86 PASS; `npm run build`:PASS inklusive strict
+  typecheck (befintlig bundle-storleksvarning).
+- `check-recorded-voices.mjs`:fem raser PASS med315 verkliga public-WAVs,
+  grupporder/klickspam, Voice/SFX/mute/volym/pause och faktisk scenrestart.
+- `capture-voice-pilot.mjs` med `W2T_AUDIO_REVISION=production`:fem matchmixar
+  PASS tekniskt, post-kompressor PCM peak0.435/0.358/0.357/0.374/0.363,
+  ej faktiskt lyssnade. Första capture avbröts av HMR medan koden ändrades;
+  slutkörningen gjordes efter fryst spelkod.
+- Assettest4 PASS194ms:315 unika hashes, runtime/master byte-lika, korrekta
+  derivatlicenser;13 SFX-familjers källhashes och slut-WAV/OGG kontrollerade.
+  Gammalt manifest-count15 korrigerat till faktisk config19. Nytt assettest
+  överskred först timeout på Buffers djupjämförelse; Buffer.equals verifierar
+  samma byte-likhet utan onödig serialisering. Tidig full regression avbröts
+  inför korrigeringen och räknas inte som PASS.
+- Python/JS-syntax,315 PCM/headroom och53 lyssningssidans ljudlänkar PASS.
+  Slutlig `npm test`:1630/193 PASS524.67s. Slutlig build efter licensnotisändringen PASS inklusive strict typecheck; `git diff --cached --check` PASS.
+  Review: ingen bred refaktorering eller ändrad gameplaylogik; synlighets-/materialrouting och lifecycle täcks. Ingen ny CI/Pages/release verifierad.
+
+### Historiska ljudprov nedan — ersatta av implementationen ovan
+
+
+## 2026-10-07 — Godkänd Orc-ton, nya rasjämförelser
+
+Användaren godkänner exakt tonen i Tim Rockks inlästa Orc-prov och beställer
+motsvarande karaktärstoner för gnomes/elves/dvärgar. Godkännandet gäller
+riktning/framförande, inte eget315-replikers manus, full actiontäckning eller
+matchmix. Repots femte ras är fortsatt Goblins (Tinkerer/Scrapper/uppfinnare);
+fråga ställd om gnome avser röstinspiration eller rasbyte. Ingen ras ändrad.
+
+Tio faktiskt inlästa fria kandidater exporterade med per-asset källa/upphov/
+licens/hash/bearbetning till
+[lyssningssidan](artifacts/audio-identity/character-tones/index.html), med
+Orc som godkänd jämförelse. Dvärg: MaximB, tre Drunk Dwarf-prov under
+CC-BY-SA3.0; bearbetningar behåller samma licens och credits/licenslänk.
+Goblin: artisticdude tre CC0-vokaler + xathien CC0-Minion. Elf: Hydroque
+CC0 Elf From Dragnor + två xathien CC0-Archer-kandidater. Archer är inte
+explicit Elf, vokaler är inte egna engelska orderrepliker; faktisk ton och
+text behöver lyssningsbedömas. Inga kandidater framställs som kompletta
+paket. Alla bearbetningar behåller ursprunglig tonhöjd/samplingsfrekvens,
+mono/DC-borttagning/8ms fades och nivåmål .085/peakcap .45.
+
+Soundsnap-gnomereferensen kunde inte öppnas i webtool. Den officiella
+[licensen](https://www.soundsnap.com/licence) förbjuder distribution där
+ljudet kan extraheras/återanvändas separat; därför inga imports till råa
+publika repoassets, ingen prenumeration. CC-BY-SA-text sparad lokalt.
+
+Ny exportsyntax/10 hash- och PCM-kontroller samt diff PASS. Ingen spelkod
+ändrad, tidigare unit/build återanvänds utan nya sådana körningar. Faktisk
+lyssning för dessa nya kandidater är ej verifierad. Ingen commit/push/release
+innan hela ljuduppdraget är klart; oberoende användarändringar bevarade.
+
+
+## 2026-10-07 — Nya ljudreferenser och inläst Orc-jämförelse
+
+Prov2 är enligt användaren bättre men inte helt rätt; kvalitetsgrinden är
+inte godkänd. Warcraft Wiki-kategorin svarar403 vid direkt läsning;
+[fillicenspolicyn](https://warcraft.wiki.gg/wiki/Warcraft_Wiki:Copyrights)
+skiljer textlicens från enskilda ljudfiler. Ingen fri Blizzard-ljudlicens
+verifierad. [fondlez/wow-sounds](https://github.com/fondlez/wow-sounds) är
+MIT-licensierade textlistor/filnamn, inte ljudinspelningar eller rättigheter
+till Blizzard-assets. [Pixabay](https://pixabay.com/service/license-summary/)
+tillåter gratis användning/bearbetning men förbjuder standalone-distribution
+och påpekar möjliga tredjepartsrättigheter. Ingen därifrån importerad utan
+verifierad assetkälla och förenlig repodistribution.
+
+Hittade ett separat faktiskt inläst [Orc-prov av Tim Rockk](https://opengameart.org/content/orc-voice)
+med uttrycklig CC0. Två original sparade, mono/nivåjusterade kopior och
+per-asset upphov/licens/källa/bearbetning/hash exporterade genom
+[scripts/export-orc-reference.py](scripts/export-orc-reference.py).
+[Lyssningssida](artifacts/audio-identity/acted-orc/index.html).
+Författarens repliker, inte projektets egna eller en AI-klon: en jämförelse
+av framförande, inte färdigt rasröstpaket. Ingen produktionsaktivering eller
+provlyssning hävdas. Alla fem rasers slutliga framförande återstår; den
+nuvarande fasta AI-modellen klarar inte styrbar growl/acting.
+
+Ny verifiering: två original/exporters SHA256, monoPCM16/44.1kHz, peaks
+under0.451 och Python-syntax/diff PASS. Ingen spelkod ändrad i denna
+källgranskning; tidigare unit/build återanvänds, inga nya sådana checks.
+Ingen commit/push/release eftersom ljuduppdraget inte är klart.
+
+
+## 2026-10-07 — Ljudprov2 efter underkänd lyssning (In Progress)
+
+Användaren hör mycket brus/sprak i matchmixen, underkänner melee/build och
+vill ha tydligare förväntad raskaraktär, särskilt extremt ohövlig Orc. Detta
+ersätter tidigare pilot som kvalitetskandidat; ingen femrasspridning.
+Wowhead/Epidemic granskade som referenser. Ingen verifierad fri Blizzard-
+licens för spel/repo hittad; Epidemic kräver köpt licens. Inga ljud därifrån
+importerade, inga abonnemang startade.
+
+[scripts/export-audio-revision.py](scripts/export-audio-revision.py) ger nio
+nya Kenney CC0-kandidater med materiallager i stället för syntetiskt vitt
+brus; melee metall+dov träff, build träslag+knarr. Fem ytterligare original
+sparade med källa/hash per asset i revision-2/manifest.json. Kandidatröster:
+Human torr formell, Elves arrogant, Dwarves korthuggen, Goblins snabb uppfinnare;
+Orc har tre separata neuralpresets (adam/onyx/fenrir) på samma grövre egna
+repliker. Modellen har ingen styrbar growl/acting; detta är jämförelseprov,
+inte färdigt röstskådespel. Ursprungliga315 masters/runtime ändras inte.
+
+[Lyssningssida](artifacts/audio-identity/revision-2/index.html) samlar separata
+SFX, sju röstprov och två matchmixar. Matchcapture använder nu direkt
+AudioWorklet-PCM, utan tidigare Opus-omkodning. Sex stridsljud ersätts i
+browserfixture med kandidater och tre Human/Orc-adam-repliker spelas via
+befintlig voicekanal. Live match/voice/SFX-capture PASS,0pageerrors, peak
+0.222/0.226, ingen klippning. De kvarvarande gamla synteseffekterna är en
+möjlig bruskälla; exakt orsak till användarens sprak är inte fastställd.
+Faktisk lyssning av prov2 återstår. Produktionsljud är inte aktiverade.
+
+Endast exportscripts/kandidatassets/docs ändrade i denna revision; tidigare
+unit484/88 och strict build återanvänds för oförändrad spelkod, inte som ny
+ljudkvalitetskontroll. Python/Node-syntax, metadata/PCM/hash och diffcheck
+kontrolleras. Ingen commit/push/release före färdigt uppdrag.
+
+
+## 2026-10-07 — Kostnadsfria AI-röster, kandidatleverans (In Progress)
+
+Användaren godkände kostnadsfria AI-genererade röster. Kokoro-82M kördes
+lokalt utan betald tjänst:315 unika PCM-WAVs,63 per ras, för worker/soldier/
+archer och sju actions med tre varianter. Fem separata röstembeddingar:
+Human bm_george, Orc am_fenrir, Elf bf_emma, Dwarf bm_fable, Goblin am_puck.
+Per-asset källa, upphov, licens, bearbetning och SHA256 finns i
+[ljudunderlaget](assets/sources/audio-identity/README.md). Projektets nya
+ljudoutput erbjuds under CC0 i den mån projektet innehar rättigheterna;
+Kokoro-modellen är Apache-2.0, exportbiblioteket MIT. Licenstexter sparade;
+modeller/bibliotek distribueras inte och spelet gör inga externa ljudanrop.
+
+Alla315 masters finns lokalt, men endast tio Human/Orc-pilotklipp är
+aktiverade. Fem raspreviews och två faktisk-matchinspelningar med strids-SFX
+finns i artifacts/audio-identity. Matchinspelning är inte provlyssning:
+lyssningsfeedback efterfrågad enligt användarens krav ”Provlyssna i faktisk
+match innan samma kvalitet sprids.” Övriga305 är kandidater. Ingen mänsklig
+ljudkvalitet, taltydlighet under strid eller färdigt femraspaket hävdas.
+
+Verifierat:315 olika hashvärden, mono PCM16/24kHz, inga tysta/klippta filer;
+riktade21 tester/5 filer PASS, unit484/88 PASS16.60s och build med strict
+typecheck PASS (Vite517ms, befintlig bundlevarning). Browser med riktiga315
+kandidatfiler: alla fem rasers selection/grupporder/klickspam, mute/Voice-
+volym, pause/restart PASS utan pageerrors. Två matchcaptures har peak under
+0.38 utan klippning. Automatiska kontroller verifierar teknik, inte hörsel.
+
+Tre Kenney CC0-Foleyprov finns; sex ytterligare RPG Audio-original och
+licens är hämtade. Production-SFX är ännu inte ersatta. Kvar: lyssningsgrind,
+aktivering/ljudjustering och återstående material-/effektarbete. Ingen
+commit/push/release nu; användaren beställde dessa först när uppdraget är
+färdigt. style.css, units.mjs och docs/ bevarade. Ingen nästa roadmaptask.
+
+
+## 2026-10-06 — Uppföljning ljudidentitet: alla fem, teknisk del
+
+- ”Fixa alla fem tack”:315 egna engelska repliker för Human/Orc/Elf/Dwarf/
+  Goblin ×worker/soldier/archer ×sju actions ×tre varianter. Separata texter,
+  gemensamt JSON-manus/proveniens och lokalt runtime-manifest; samtliga315
+  recording/licensefält fortfarande null.84-rassprovet bevarat som historik.
+- Återanvände GameAudio/AudioContext. Lokal WAV-Voice-kanal, deklarerad lokal
+  proveniens, en representativ gruppröst,1.2s cooldown, variantrotation,
+  sällsynt humor (sjätte klick/15%/45s), SFX-ducking45%, egna Voice/SFX,
+  mute/volym/pause/reset och stale-callbackskydd. Ingen browser-TTS/pitch-
+  fallback; saknad recording är tyst och får inte räknas som färdig röst.
+- Tunna scenehooks för ready/failed-order/placementerror. Initial/load/paused
+  snapshots tysta; inga ekonomiska/combat/navigationregler ändrade.
+  Exportverktyget validerar315 slots och lokala PCM16-masters/proveniens före
+  skrivning. Ny körning:0 voice-WAVs,315 explicit saknade.
+- Sökning hittade öppen offline-talmodell Kokoro (officiell Apache-2.0-
+  modellkälla), men inget framförande/ljudpaket är verifierat. Fråga ställd
+  om AI-genererade lokala prov kontra endast mänskliga inspelningar; svar
+  saknas. Ingen modell installerad, ingen röstasset framställd, inga betalningar.
+- Riktade voice/audio/snapshot/policy/combat21/5 PASS426ms; slutlig build
+  inklusive strict typecheck PASS/Vite400ms med befintlig bundlevarning.
+  Tidigt typecheckfel i testets node:fs-import åtgärdat med Vite raw-import;
+  inga projektdependencies/tsconfig ändrade. Riktade checks upprepade efter
+  borttagning av oanvänt gammalt generiskt dialogunderlag; slutlig unit följer.
+  Browserharness justerad för canvas/CSS-skala, faktisk contextsuspension och
+  mute-admission/stopp i stället för inaktiv AudioParam-getter. Tidiga fel är
+  inte PASS. Tysta browserbuffertar är uttryckligt testunderlag, inga röster.
+- Slutlig unit484/88 PASS13.60s; export315 slots/0 recordings och
+  source/runtimeparitet PASS. Chromium1280 femras-selection/grupporder/
+  klickspam/mixer/mute/volym/pause/reset PASS med tysta minnesbuffertar,
+  0 pageerrors; artifacts/audio-identity/browser-routing.json. Inget kvalitets-
+  eller faktiskt voice-fileloadingbelägg. En tidigare navigationstimeout
+  löstes genom explicit scene-ready istället för networkidle. Ingen extra
+  bred full-/campaignregression för ofärdig audioassetetapp.
+- Extra riktad browsercheck: fysisk Escape-paus och Restart-knapp för alla
+  fem PASS med samma graf, bevarad Voicevolym/testbuffers och ny selection-
+  uppspelning efter scene-restart. Endast harness/docs utökade; ingen relevant
+  spelkodändring efter slutlig unit/build. Diff/scriptsyntax/lokala provlänkar
+  PASS. Ingen ljudlyssning eller skådespelarprestation verifierad.
+- Docs/backlog/handoff/credits uppdaterade. Uppdraget In Progress; verkliga
+  röstfiler/faktisk lyssning, återstående SFX och kvalitetsgrind kvar. Ingen
+  commit/push/release eller batch2. Användarens CSS/units.mjs/docs bevarade.
+
+## 2026-10-06 — Ljudidentitet: inventering och första provunderlag
+
+- Läste befintlig ljudgraf/policy/events, unitvoices/tests, rasdefinitioner,
+  arkitektur/beslut och rollinstruktioner. Humans/Orcs/Elves/Dwarves/Goblins;
+  samma browser-TTS med pitch är nuvarande fallback. Inga röstinspelningar
+  finns. Efterfrågade Human/Orc-inspelningar/licenser och faktisk matchlyssning;
+  underlag ännu inte tillgängligt. Inget röstpaket räknas färdigt.
+- 84 egna korta engelska pilotrepliker för Human/Orc-worker/soldier, tre per
+  selection/move/attack/gather/ready/error/humor. Fem personlighetsbriefs;
+  inspelning/author/source/license null och listening false för alla poster.
+- Verifierade Kenney Impact Sounds CC0 på källsida och arkivlicens; hämtade
+  tre original-OGG för metall/trä/mining. Lokalt exportverktyg med befintlig
+  valfri soundfile-dependency: mono/lågpass/5ms fades/RMS .05/peakcap .65/PCM16.
+  Per-assetproveniens/bearbetning/hashes i artifacts/audio-identity/manifest.json.
+  Wowhead/Epidemic används inte; Tim Rockks CC0 Orc-sökfynd täcker inte eget
+  manus och importerades inte. Inga betalda tjänster eller nya runtimeanrop.
+- Verifiering: 84 unika ID:n och tre distinkta repliker per kombination PASS;
+  slutlig PCM/RMS/headroom/nolländpunkter/hashes och lokala provlänkar PASS.
+  Riktade befintliga ljudtester18/5 PASS436ms; unit481/88 PASS13.57s; build
+  inklusive strict typecheck PASS/Vite475ms med befintlig bundlevarning;
+  git diff --check PASS. Dessa är ny verifiering av arbetskopian, inte bevis
+  för nya inspelade röster. Inga spelkodändringar eller runtimeassetbyten.
+- Kvar: verkliga röstassets och matchlyssning före spridning, voice-lane/mix,
+  sällsynt humor, ready/error/materialrouting, övriga raser/effekter och
+  femras-browserflöden. Faktisk lyssning ej verifierad; inga nya browserchecks
+  eller breda campaign/fullregression körda för provunderlaget. Task In Progress,
+  ingen commit/push före färdig leverans och ingen release. BACKLOG/HANDOFF/
+  assetcredits uppdaterade; style.css/units.mjs/docs bevarade. Batch2 pausad.
+
 ## 2026-10-01 – Dokumentationsgrund
 
 - Läste befintligt repo: README innehöll endast projektnamnet, ingen AGENTS.md

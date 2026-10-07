@@ -1,0 +1,43 @@
+{
+  "status": "Acted CC0 comparison; author dialogue, not original project script or complete pack",
+  "entries": [
+    {
+      "id": "i_expected_better",
+      "text": "I expected better.",
+      "author": "Tim Rockk",
+      "source": "https://opengameart.org/content/orc-voice",
+      "download": "https://opengameart.org/sites/default/files/i_expected_better.wav",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "original": "assets/sources/audio-identity/originals/tim-rockk/i_expected_better.wav",
+      "originalSha256": "b8853527f7488a8d1387a3d1e24dae19384d7026f85b316f7d689230dd5aee92",
+      "output": "artifacts/audio-identity/acted-orc/i_expected_better.wav",
+      "sha256": "8a466412fd75e7b8c2d96225491e4b290e31ebed1b411d56e16d857cefadee46",
+      "processing": "Mono downmix at original sample rate; DC removal;8ms fades; active RMS .085/peakcap .45;PCM16; no pitch/formant shift",
+      "sampleRate": 44100,
+      "gain": 0.5093959173697741,
+      "peak": 0.45,
+      "duration": 1.8459863945578232,
+      "listeningVerified": false
+    },
+    {
+      "id": "die_human_scum",
+      "text": "Die, human scum.",
+      "author": "Tim Rockk",
+      "source": "https://opengameart.org/content/orc-voice",
+      "download": "https://opengameart.org/sites/default/files/die_human_scum.wav",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "original": "assets/sources/audio-identity/originals/tim-rockk/die_human_scum.wav",
+      "originalSha256": "c6423aef0b01d7d36aecb14d35a875e512accafc1eba5d6648cf3ddc92d56443",
+      "output": "artifacts/audio-identity/acted-orc/die_human_scum.wav",
+      "sha256": "ce40249d4cafa77fd3d3548e1a13a5f9eaa4b99ca287e41d424ac2772f5653fa",
+      "processing": "Mono downmix at original sample rate; DC removal;8ms fades; active RMS .085/peakcap .45;PCM16; no pitch/formant shift",
+      "sampleRate": 44100,
+      "gain": 0.5055750946511702,
+      "peak": 0.44999999999999996,
+      "duration": 2.078185941043084,
+      "listeningVerified": false
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "model": "OpenVoice V2 converter",
+  "modelSource": "https://huggingface.co/myshell-ai/OpenVoiceV2",
+  "modelLicense": "MIT",
+  "checkpointSha256": "9652c27e92b6b2a91632590ac9962ef7ae2b712e5c5b7f4c34ec55ee2b37ab9e",
+  "configSha256": "9dfff60350b8c63f2c664efd92a61b2516efb22671466960f0e5dfebd881fa47",
+  "toolCommit": "74a1d147b17a8c3092dd5430504bd83ef6c7eb23",
+  "references": {
+    "clans": {
+      "author": "Tim Rockk",
+      "source": "https://opengameart.org/content/orc-voice",
+      "license": "CC0-1.0",
+      "files": [
+        {
+          "path": "assets/sources/audio-identity/originals/tim-rockk/i_expected_better.wav",
+          "sha256": "b8853527f7488a8d1387a3d1e24dae19384d7026f85b316f7d689230dd5aee92"
+        },
+        {
+          "path": "assets/sources/audio-identity/originals/tim-rockk/die_human_scum.wav",
+          "sha256": "c6423aef0b01d7d36aecb14d35a875e512accafc1eba5d6648cf3ddc92d56443"
+        }
+      ]
+    },
+    "elves": {
+      "author": "Hydroque",
+      "source": "https://opengameart.org/content/elf-from-dragnor",
+      "license": "CC0-1.0",
+      "files": [
+        {
+          "path": "assets/sources/audio-identity/originals/character-tones/elf-dragnor.ogg",
+          "sha256": "666ae406b29c47b8d48d84016d32f1fba8450baa202db1091a8cc6a9a73bb456"
+        }
+      ]
+    },
+    "dwarves": {
+      "author": "MaximB",
+      "source": "https://opengameart.org/content/drunk-dwarf-voice-pack",
+      "license": "CC-BY-SA-3.0",
+      "files": [
+        {
+          "path": "assets/sources/audio-identity/originals/character-tones/dwarf-greetings-1.ogg",
+          "sha256": "cebf275f8e6cd267d1d8f511e757ab1099659629e1dedc11f6265898a716d111"
+        },
+        {
+          "path": "assets/sources/audio-identity/originals/character-tones/dwarf-attack-1.ogg",
+          "sha256": "7fa87556b3711a835cfed5f068f3bcd4696a0b297973fa2a649149efde8efc4d"
+        }
+      ]
+    },
+    "goblins": {
+      "author": "artisticdude",
+      "source": "https://opengameart.org/content/goblins-sound-pack",
+      "license": "CC0-1.0",
+      "files": [
+        {
+          "path": "assets/sources/audio-identity/originals/character-tones/goblin-1.wav",
+          "sha256": "0c58f275b8fdbb7387b69190dde2b96c83a22c5b34e3eb92bf11bcfbd1b594c2"
+        },
+        {
+          "path": "assets/sources/audio-identity/originals/character-tones/goblin-3.wav",
+          "sha256": "ed60560fdf9d7a7b512e69ac9a500acf4b97182088a6c22254606c4b91cf8771"
+        },
+        {
+          "path": "assets/sources/audio-identity/originals/character-tones/goblin-12.wav",
+          "sha256": "c3d06902ba01331e29aeb886a6c34746e5c5e49a3a8a632893dd5f560958f12a"
+        }
+      ]
+    }
+  },
+  "entries": {
+    "clans-worker-selection-01": {
+      "baseSha256": "848cac79f6c69bd710936343925a3775e16894770858c5432f04bc7248de1aae",
+      "outputSha256": "5dcfd7283201eeaa431b7b51a5cab8b8e6e9b1ca7547d331f9bd5f0742bbdca9",
+      "peak": 0.6,
+      "duration": 1.2690702947845804,
+      "rate": 22050,
+      "gain": 1.5233021522495713,
+      "reference": "clans",
+      "text": "What do you want, runt?",
+      "listeningVerified": false
+    },
+    "elves-worker-selection-01": {
+      "baseSha256": "81f5f08903109c1255629b8b1bc5dfc26744e6aa3d5cab9bba2ecaa3849676ec",
+      "outputSha256": "ad33b29a5e286f371cfb1ec1df9cda9f6fcb1c2b7c71119806bad9d2c2aeae42",
+      "peak": 0.6,
+      "duration": 1.4780498866213152,
+      "rate": 22050,
+      "gain": 2.0413004737192613,
+      "reference": "elves",
+      "text": "You have my attention.",
+      "listeningVerified": false
+    },
+    "dwarves-worker-selection-01": {
+      "baseSha256": "5236af8a353350eb70fe9a351ed06a4e405a5e4a109c0dfda92dc3029d5d2196",
+      "outputSha256": "d71c8d25c9ebb15362b7ca8b460d3a62a528a976cbeb6119e3d907c17a8ec010",
+      "peak": 0.6,
+      "duration": 2.4416780045351474,
+      "rate": 22050,
+      "gain": 1.5711607867464354,
+      "reference": "dwarves",
+      "text": "Tools ready. Speak.",
+      "listeningVerified": false
+    },
+    "goblins-worker-selection-01": {
+      "baseSha256": "11829571a132aea37a36b190ccaa4e3423009d3b21b34a7580812b2662bd0493",
+      "outputSha256": "929197ac3f797908789ce78234069126871b57a7ee355185dc942fffb15d7db6",
+      "peak": 0.6,
+      "duration": 1.6173696145124716,
+      "rate": 22050,
+      "gain": 2.5811874258872796,
+      "reference": "goblins",
+      "text": "Gears turning. Ideas pending.",
+      "listeningVerified": false
+    }
+  },
+  "listeningVerified": false
+}

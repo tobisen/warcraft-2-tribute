@@ -1,0 +1,190 @@
+{
+  "method": "Six actual candidate voice files per faction, concatenated for review. Standalone previews, not match recordings.",
+  "previews": [
+    {
+      "faction": "crown",
+      "path": "artifacts/audio-identity/preview-crown.wav",
+      "cues": [
+        {
+          "id": "crown-worker-selection-01",
+          "text": "Reporting for duty.",
+          "startSeconds": 0
+        },
+        {
+          "id": "crown-worker-gather-01",
+          "text": "Starting the collection.",
+          "startSeconds": 2.007458333333333
+        },
+        {
+          "id": "crown-soldier-attack-01",
+          "text": "Engaging the enemy.",
+          "startSeconds": 3.741958333333333
+        },
+        {
+          "id": "crown-soldier-ready-01",
+          "text": "Guard ready for service.",
+          "startSeconds": 5.842625
+        },
+        {
+          "id": "crown-soldier-error-01",
+          "text": "Cannot carry out that order.",
+          "startSeconds": 7.8345
+        },
+        {
+          "id": "crown-archer-humor-01",
+          "text": "My range does not include the complaints department.",
+          "startSeconds": 9.946166666666667
+        }
+      ],
+      "listeningVerified": false
+    },
+    {
+      "faction": "clans",
+      "path": "artifacts/audio-identity/preview-clans.wav",
+      "cues": [
+        {
+          "id": "clans-worker-selection-01",
+          "text": "What needs lifting?",
+          "startSeconds": 0
+        },
+        {
+          "id": "clans-worker-gather-01",
+          "text": "Hit rock. Keep bits.",
+          "startSeconds": 1.3915416666666667
+        },
+        {
+          "id": "clans-soldier-attack-01",
+          "text": "Axes up!",
+          "startSeconds": 3.184375
+        },
+        {
+          "id": "clans-soldier-ready-01",
+          "text": "New axe in the clan!",
+          "startSeconds": 4.339708333333333
+        },
+        {
+          "id": "clans-soldier-error-01",
+          "text": "Cannot hit from here.",
+          "startSeconds": 5.8001249999999995
+        },
+        {
+          "id": "clans-archer-humor-01",
+          "text": "You said draw the bow. I need crayons.",
+          "startSeconds": 7.285625
+        }
+      ],
+      "listeningVerified": false
+    },
+    {
+      "faction": "elves",
+      "path": "artifacts/audio-identity/preview-elves.wav",
+      "cues": [
+        {
+          "id": "elves-worker-selection-01",
+          "text": "You have my attention.",
+          "startSeconds": 0
+        },
+        {
+          "id": "elves-worker-gather-01",
+          "text": "Only the finest materials.",
+          "startSeconds": 1.6855833333333334
+        },
+        {
+          "id": "elves-soldier-attack-01",
+          "text": "Allow me to correct them.",
+          "startSeconds": 3.7685000000000004
+        },
+        {
+          "id": "elves-soldier-ready-01",
+          "text": "A warden joins your ranks.",
+          "startSeconds": 5.537833333333333
+        },
+        {
+          "id": "elves-soldier-error-01",
+          "text": "There is no suitable approach.",
+          "startSeconds": 7.6241666666666665
+        },
+        {
+          "id": "elves-archer-humor-01",
+          "text": "My eyebrows have acknowledged the order.",
+          "startSeconds": 9.749333333333333
+        }
+      ],
+      "listeningVerified": false
+    },
+    {
+      "faction": "dwarves",
+      "path": "artifacts/audio-identity/preview-dwarves.wav",
+      "cues": [
+        {
+          "id": "dwarves-worker-selection-01",
+          "text": "Tools ready. Speak.",
+          "startSeconds": 0
+        },
+        {
+          "id": "dwarves-worker-gather-01",
+          "text": "Find the seam.",
+          "startSeconds": 2.648833333333333
+        },
+        {
+          "id": "dwarves-soldier-attack-01",
+          "text": "Stand firm. Strike hard.",
+          "startSeconds": 4.625291666666667
+        },
+        {
+          "id": "dwarves-soldier-ready-01",
+          "text": "Iron Guard ready.",
+          "startSeconds": 7.391916666666667
+        },
+        {
+          "id": "dwarves-soldier-error-01",
+          "text": "No solid approach.",
+          "startSeconds": 9.509375
+        },
+        {
+          "id": "dwarves-archer-humor-01",
+          "text": "The bolt has less patience than I do.",
+          "startSeconds": 11.803416666666667
+        }
+      ],
+      "listeningVerified": false
+    },
+    {
+      "faction": "goblins",
+      "path": "artifacts/audio-identity/preview-goblins.wav",
+      "cues": [
+        {
+          "id": "goblins-worker-selection-01",
+          "text": "Gears turning. Ideas pending.",
+          "startSeconds": 0
+        },
+        {
+          "id": "goblins-worker-gather-01",
+          "text": "Salvage is just free inventory.",
+          "startSeconds": 1.8222083333333334
+        },
+        {
+          "id": "goblins-soldier-attack-01",
+          "text": "Live product demonstration!",
+          "startSeconds": 3.846708333333334
+        },
+        {
+          "id": "goblins-soldier-ready-01",
+          "text": "New scrapper. Factory fresh!",
+          "startSeconds": 5.612875000000001
+        },
+        {
+          "id": "goblins-soldier-error-01",
+          "text": "That plan needs funding.",
+          "startSeconds": 7.360916666666667
+        },
+        {
+          "id": "goblins-archer-humor-01",
+          "text": "Repeated clicks do not include express shipping.",
+          "startSeconds": 8.878875
+        }
+      ],
+      "listeningVerified": false
+    }
+  ]
+}

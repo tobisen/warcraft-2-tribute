@@ -12,7 +12,7 @@
     "assets:export": "node scripts/export-assets.mjs",
     "typecheck": "tsc --noEmit",
     "build": "npm run typecheck && vite build",
-    "audio:export": "python3 scripts/export-audio.py && python3 scripts/export-wildlife-audio.py",
+    "audio:export": "python3 scripts/export-audio.py && python3 scripts/export-wildlife-audio.py && python3 scripts/export-material-audio.py && python3 scripts/export-voice-manifest.py",
     "preview": "vite preview",
     "test:unit": "node scripts/test-unit.mjs"
   },

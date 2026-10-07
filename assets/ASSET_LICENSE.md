@@ -1,9 +1,21 @@
 # Originalassets och användning
 
+Aktuell ljudleverans2026-10-07:315 egna neuralgenererade engelska repliker,
+med fri Kokoro/OpenVoice authoring och licensierade karaktärsreferenser.
+63 dvärgderivat CC-BY-SA-3.0 (MaximB); övriga nya röstoutputs CC0 med
+modellnotices separat. 13 materialeffektfamiljer använder Kenney/Thimras CC0.
+[Per-assetmanifest och bearbetningar](sources/audio-identity/README.md) och
+[distribuerade credits](../public/audio/credits.html) är aktuella.
+Inga Blizzard-, Soundsnap- eller prenumerationsljud har importerats.
+Äldre ursprungsbeskrivningar nedan avser historiska exporter.
+
+
 Projektets pixelkällor, exporter och syntetiserade ljud är framställda för
 användning, ändring och distribution med warcraft-2-tribute. Ingen extern
 spelgrafik, ljudinspelning eller originalspel-sprite har importerats.
-Detta dokument ändrar inte projektets övergripande kodlicens.
+Detta dokument ändrar inte projektets övergripande kodlicens. Ovanstående
+originalursprung avser den tidigare leveransen; nya externa Foley-prov nedan
+har separata CC0-villkor.
 
 Sjöassets: [sources/naval.mjs](sources/naval.mjs) och hamnkompositionen i
 [sources/buildings.mjs](sources/buildings.mjs); gemensam [palette.json](palette.json).
@@ -75,3 +87,58 @@ Inga externa spelassets har importerats; samma projektvillkor gäller.
 RTS-205 inkluderar även [fortifications-205.png](sources/visual-refresh/fortifications-205.png),
 projektgenererad originalgrafik för fem fraktioners academy/wall/gate med
 inbyggt imagegen. Samma villkor och provenance gäller.
+
+Ljudidentitetsprov 2026-10-06: Kenney / Impact Sounds, CC0-1.0.
+Tre original-OGG och arkivets licens i [audio-identity](sources/audio-identity/README.md).
+Varje fil har källa, upphovsperson, licens, bearbetning och hashes i
+[provmanifestet](../artifacts/audio-identity/manifest.json). Inga runtimeassets
+ersatta. Det historiska84-replikers Human/Orc-provet och det nya gemensamma
+315-replikers femrasmanuset är egna textunderlag enligt projektvillkoren;
+2026-10-07 finns315 lokalt AI-genererade kandidatmasters, med tio aktiva
+pilotklipp i public/audio/voices. Per-asset upphov, modell/källa, licens,
+bearbetning och hash finns i källmanifesten i audio-identity.
+
+Kokoro-82M (hexgrad/rzvzn) är Apache-2.0; kokoro-onnx (Ivan/thewh1teagle)
+är MIT. Modeller/bibliotek ingår inte i distributionen. Projektets nya
+ljudoutput erbjuds under CC0-1.0 i den mån projektet innehar rättigheterna;
+modellens licens är skild från outputvillkoren. [Notis](sources/audio-identity/licenses/GENERATED-AUDIO.txt),
+[Apache-2.0](sources/audio-identity/licenses/Kokoro-Apache-2.0.txt),
+[MIT](sources/audio-identity/licenses/kokoro-onnx-MIT.txt) och
+[modellkort](sources/audio-identity/licenses/Kokoro-model-card.md) bevaras.
+Ingen OS-röstmodell kopieras och browser-TTS-fallback är borttagen.
+
+Kenney RPG Audio: CC0-1.0, upphov Kenney; originalen chop, handleCoins,
+clothBelt, knifeSlice, creak1 och doorClose_1 samt arkivets licens finns i
+sources/audio-identity/originals/rpg. Källa: https://kenney.nl/assets/rpg-audio.
+Dessa är ännu oanvända kandidater; production-SFX är inte ersatta.
+
+Revision2: ytterligare fem Kenney Impact Sounds-original (CC0-1.0):
+impactMetal_light_000, impactMetal_heavy_002, impactPunch_heavy_000,
+impactPlank_medium_000, impactWood_light_001. Källa/upphov/hash och alla
+lager/bearbetningar anges per kandidat i
+[revisionmanifestet](../artifacts/audio-identity/revision-2/manifest.json).
+Nya AI-röstjämförelser använder samma Kokoro/outputnotiser ovan.
+Inga Wowhead/Blizzard- eller Epidemic-ljud importerade. Referenslicenser:
+[Blizzard Legal FAQ](https://www.blizzard.com/en-us/legal/28d5ebbf-c245-4408-8ba9-043dd5f056bf/legal-faq),
+[Epidemic licenskrav](https://help.epidemicsound.com/hc/en-us/articles/26194113349010-Is-Epidemic-Sound-s-music-available-for-free).
+
+Inläst Orc-jämförelse2026-10-07: Tim Rockk, CC0-1.0, källa
+https://opengameart.org/content/orc-voice. Original i_expected_better.wav och
+die_human_scum.wav finns i sources/audio-identity/originals/tim-rockk.
+[Per-assetlicens/källa/hash/bearbetning](../artifacts/audio-identity/acted-orc/manifest.json).
+Detta är författarens repliker för framförandejämförelse, inte färdigt
+projektmanus/röstpaket. Inga Warcraft Wiki/fondlez/Pixabay-ljud importerade.
+
+Karaktärstonjämförelser2026-10-07:
+- MaximB, Drunk Dwarf Voice Pack, vald licens CC-BY-SA3.0. Tre original och
+  mono/nivå/fade-bearbetningar distribueras under samma licens. Attribution
+  och licenslänk finns även på lyssningssidan; [licenstext](sources/audio-identity/licenses/CC-BY-SA-3.0.txt).
+- artisticdude, Goblins Sound Pack, CC0-1.0: goblin-1/3/12.
+- xathien, Steampunk Fantasy Voices, CC0-1.0: Minion_Sword_001,
+  Archer_Taunt_001, Archer_Attack_001.
+- Hydroque, Elf From Dragnor, CC0-1.0: Remember_The_Elf_From_Dragnor.
+
+Alla källor/downloads/original- och exporthashar, upphov och bearbetning per
+fil i [manifestet](../artifacts/audio-identity/character-tones/manifest.json).
+Original i sources/audio-identity/originals/character-tones. Kandidater, inte
+kompletta paket; inga Soundsnap-assets importerade eller abonnemang startade.

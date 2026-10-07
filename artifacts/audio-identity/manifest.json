@@ -1,0 +1,62 @@
+{
+  "status": "audition only; no production replacement or listening approval",
+  "entries": [
+    {
+      "cue": "melee",
+      "material": "metal weapon contact",
+      "source": "https://kenney.nl/assets/impact-sounds",
+      "author": "Kenney",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "original": "assets/sources/audio-identity/originals/impactMetal_medium_000.ogg",
+      "originalSha256": "a96f879fec0864a8938e0c745b6996a6c5679c16a234ce31a01cc995e8401003",
+      "export": "artifacts/audio-identity/melee.wav",
+      "exportSha256": "ec5211f3b37f978a8bd3e5b5abfc3b5983a641e2ee58daa93777765a93f32628",
+      "processing": "mono downmix; 5.5kHz one-pole low-pass; 5ms endpoint fades; RMS target .05, peak cap .65; PCM16 WAV",
+      "gain": 0.7197377372922124,
+      "sampleRate": 44100,
+      "duration": 0.2717687074829932,
+      "peak": 0.3654098868815602,
+      "rms": 0.05,
+      "listeningVerified": false
+    },
+    {
+      "cue": "build",
+      "material": "wood construction contact",
+      "source": "https://kenney.nl/assets/impact-sounds",
+      "author": "Kenney",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "original": "assets/sources/audio-identity/originals/impactWood_medium_000.ogg",
+      "originalSha256": "1723a9fd25103ed41af06054814e84e65f4a772bac86ab2dc927da93d9592ff5",
+      "export": "artifacts/audio-identity/build.wav",
+      "exportSha256": "09c457e3fc72c2c83c8e88d0e07265c07e80ccef1a963ff1d43e9397d05dd903",
+      "processing": "mono downmix; 5.5kHz one-pole low-pass; 5ms endpoint fades; RMS target .05, peak cap .65; PCM16 WAV",
+      "gain": 0.9558109398272824,
+      "sampleRate": 44100,
+      "duration": 0.33267573696145125,
+      "peak": 0.40738048461070797,
+      "rms": 0.05,
+      "listeningVerified": false
+    },
+    {
+      "cue": "mining",
+      "material": "pickaxe/stone contact",
+      "source": "https://kenney.nl/assets/impact-sounds",
+      "author": "Kenney",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "original": "assets/sources/audio-identity/originals/impactMining_002.ogg",
+      "originalSha256": "059558ec751115ca6b1441e00f0adc837c1a3eeb0a066b109e0fd879fc5d0b0c",
+      "export": "artifacts/audio-identity/mining.wav",
+      "exportSha256": "0fd40f15b346784070dda9b3fca791d1a1c6ab9574fa977dad50b98116a85d44",
+      "processing": "mono downmix; 5.5kHz one-pole low-pass; 5ms endpoint fades; RMS target .05, peak cap .65; PCM16 WAV",
+      "gain": 0.7469515268066506,
+      "sampleRate": 44100,
+      "duration": 0.8046712018140589,
+      "peak": 0.6318454642504868,
+      "rms": 0.049999999999999996,
+      "listeningVerified": false
+    }
+  ]
+}

@@ -6,16 +6,17 @@ import {audioConfig} from '../config/audio';
 import type {Sound} from './audioPolicy';
 export interface AudibleBody {id:string;hp:number;position:Position;building:boolean}
 export interface AudibleAttack {id:string;position:Position;visible:boolean;cooldown:number;sound:'melee'|'bow'|'siege'|'cannon';target?:string;range:number}
-export interface CombatAudioSnapshot {bodies:AudibleBody[];attacks:AudibleAttack[];shots:{id:string;shooter?:string;visible:boolean}[]}
+export interface CombatAudioSnapshot {bodies:AudibleBody[];attacks:AudibleAttack[];shots:{id:string;shooter?:string;visible:boolean}[];destroyed?:{id:string;position:Position}[]}
 /** Public presentation snapshot only; never publishes hidden units or creates observers. */
-export function combatAudioSnapshot(m:MatchState):CombatAudioSnapshot{
+export function combatAudioSnapshot(m:MatchState,previous?:CombatAudioSnapshot):CombatAudioSnapshot{
  const seen=(p:Position)=>!m.fog||isVisible(m.fog,'player',p),p=m.placement,n=m.navy;
- const bodies:AudibleBody[]=[{id:'base',hp:m.combat.baseHP,position:m.gathering.base,building:true},...m.gathering.units.map(u=>({id:u.id,hp:u.hp??30,position:{...u.position},building:false})),...(n?.ships??[]).map(u=>({id:u.id,hp:u.hp,position:{...u.position},building:false})),...m.combat.enemies.filter(e=>seen(e.position)).map(e=>({id:e.id,hp:e.hp,position:{...e.position},building:!!e.footprint}))];
+ const bodies:AudibleBody[]=[{id:'base',hp:m.combat.baseHP,position:m.gathering.base,building:true},...m.gathering.units.map(u=>({id:u.id,hp:u.hp??30,position:{...u.position},building:false})),...(n?.ships??[]).map(u=>({id:u.id,hp:u.hp,position:{...u.position},building:false})),...m.combat.enemies.map(e=>({id:e.id,hp:e.hp,position:{...e.position},building:!!e.footprint}))];
  const building=(id:string,hp:number,rect:{x:number;y:number;width:number;height:number})=>bodies.push({id,hp,position:{x:rect.x+rect.width/2,y:rect.y+rect.height/2},building:true});
  if(p.barracks)building('barracks',p.barracksHP??factions[m.factions?.player??'crown'].buildings.barracks.hp,p.barracks);
  for(const f of p.farms??[])building(f.id,f.hp??factions[m.factions?.player??'crown'].buildings.farm.hp,f.footprint);
  if(p.academy)building('academy',p.academy.hp,p.academy.footprint);if(p.forge)building('forge',p.forge.hp,p.forge.footprint);if(n?.harbor)building('harbor',n.harbor.hp,n.harbor.footprint);
  for(const t of p.defenses??[])building(t.id,t.hp,t.footprint);
+ for(const b of p.bases??[])building(b.id,b.hp,b.footprint);
  const attacks:AudibleAttack[]=[];
  for(const t of p.defenses??[])if(t.kind==='tower'&&t.hp>0&&t.construction.remainingSeconds===0){const position={x:t.footprint.x+16,y:t.footprint.y+16};attacks.push({id:t.id,position,visible:seen(position),cooldown:t.cooldown,sound:'bow',range:t.level===2?192:176});}
  for(const [team,units]of [['player',m.gathering.units],['enemy',m.combat.enemies]] as const)for(const u of units){
@@ -26,7 +27,10 @@ export function combatAudioSnapshot(m:MatchState):CombatAudioSnapshot{
   attacks.push({id:u.id,position:{...u.position},visible:seen(u.position),cooldown:u.attackCooldown??0,sound,target,range:stats.range??32});
  }
  for(const u of n?.ships??[])if(u.role!=='transport')attacks.push({id:u.id,position:{...u.position},visible:seen(u.position),cooldown:u.attackCooldown??0,sound:'cannon',target:u.order.kind==='attack'?u.order.enemyId:undefined,range:220});
- return {bodies:bodies.filter(b=>seen(b.position)),attacks:attacks.filter(a=>a.visible),shots:(m.combat.projectiles??[]).map(s=>({id:s.id,shooter:s.shooterId,visible:seen(s.position)}))};
+ // A missing formerly visible building is destruction only if its position is
+ // still visible AND the entity is actually absent. Fog/reveal never emits it.
+ const destroyed=(previous?.bodies??[]).filter(b=>b.building&&b.hp>0&&seen(b.position)&&!bodies.some(n=>n.id===b.id)).map(b=>({id:b.id,position:{...b.position}}));
+ return {bodies:bodies.filter(b=>seen(b.position)),attacks:attacks.filter(a=>a.visible),shots:(m.combat.projectiles??[]).map(s=>({id:s.id,shooter:s.shooterId,visible:seen(s.position)})),destroyed};
 }
 export function combatDistanceGain(position:Position,listener:Position):number{
  const distance=Math.hypot(position.x-listener.x,position.y-listener.y);
@@ -37,7 +41,8 @@ export function combatAudioCues(before:CombatAudioSnapshot|undefined,next:Combat
  if(!before||!playing)return [];
  const cues=new Map<Sound,number>(),emit=(sound:Sound,p:Position)=>{const gain=combatDistanceGain(p,listener);if(gain>0)cues.set(sound,Math.max(cues.get(sound)??0,gain));};
  const damaged=next.bodies.filter(b=>{const old=before.bodies.find(p=>p.id===b.id);return old&&b.hp<old.hp;});
- for(const b of damaged)emit(b.building?'buildingHit':'impact',b.position);
+ for(const b of damaged)emit(b.building?(b.hp<=0?'destruction':'buildingHit'):'impact',b.position);
+ for(const b of next.destroyed??[])if(!before.destroyed?.some(old=>old.id===b.id))emit('destruction',b.position);
  for(const a of next.attacks){const old=before.attacks.find(p=>p.id===a.id);if(!old)continue;
   if(a.sound!=='melee'){
    const fresh=next.shots.some(s=>s.visible&&s.shooter===a.id&&!before.shots.some(p=>p.id===s.id));

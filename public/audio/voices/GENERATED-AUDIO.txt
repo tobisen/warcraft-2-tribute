@@ -1,0 +1,23 @@
+Project-generated AI audio for warcraft-2-tribute
+
+Original English dialogue and final recordings are generated offline with
+Kokoro voice presets and OpenVoice V2 learned character timbres.
+Human, Orc, Elf and Goblin output recordings are dedicated to CC0 1.0
+Universal to the extent the project holds rights. See CC0-1.0.txt.
+
+Dwarf outputs derived from MaximB Drunk Dwarf Voice Pack are EXCLUDED
+from CC0: all63 adaptations remain CC-BY-SA-3.0. Attribution/source/license
+and neural adaptation disclosure appear in public/audio/credits.html.
+
+Licensed character references: Tim Rockk (Orc), Hydroque (Elf), artisticdude
+(Goblin), CC0; MaximB (Dwarf), CC-BY-SA-3.0.
+Kokoro model: hexgrad/rzvzn, Apache-2.0,
+https://huggingface.co/hexgrad/Kokoro-82M
+kokoro-onnx: Ivan/thewh1teagle, MIT,
+https://github.com/thewh1teagle/kokoro-onnx
+OpenVoice V2: MyShell, MIT,
+https://huggingface.co/myshell-ai/OpenVoiceV2
+Models/libraries are offline authoring tools, not distributed in the game.
+Repository provenance: assets/sources/audio-identity/all-factions-voices.json,
+generated-voices.json (intermediate), converted-voices.json (final conversion).
+No claim of human performance or final listening approval is made.

@@ -1,0 +1,196 @@
+{
+  "method": "Actual Chromium match input and Web Audio graph with IN-MEMORY SILENT FIXTURE BUFFERS. No human/AI voice audio; no auditory evidence. Does not verify recorded file loading.",
+  "results": [
+    {
+      "faction": "crown",
+      "productionRecordings": 0,
+      "selection": {
+        "id": "crown-worker-selection-01",
+        "gain": 0.38025000000000003
+      },
+      "groupOrder": {
+        "id": "crown-worker-move-01",
+        "gain": 0.38025000000000003
+      },
+      "rapidClicksAccepted": 1,
+      "lifecycle": {
+        "duck": 0.20475000143051147,
+        "voice": 0.3802500069141388,
+        "music": 0,
+        "independent": 0.3802500069141388,
+        "mute": true,
+        "mutedSourceAbsent": true,
+        "volume": 0.11699999868869781,
+        "pause": true,
+        "restart": true,
+        "sourceCount": 1,
+        "actualSceneRestart": {
+          "sameContext": true,
+          "recordings": 315,
+          "settings": {
+            "master": 0.65,
+            "effects": 0.7,
+            "music": 0,
+            "voices": 0.2,
+            "muted": false
+          },
+          "canSpeak": true
+        }
+      },
+      "errors": []
+    },
+    {
+      "faction": "clans",
+      "productionRecordings": 0,
+      "selection": {
+        "id": "clans-worker-selection-01",
+        "gain": 0.38025000000000003
+      },
+      "groupOrder": {
+        "id": "clans-worker-move-01",
+        "gain": 0.38025000000000003
+      },
+      "rapidClicksAccepted": 1,
+      "lifecycle": {
+        "duck": 0.20475000143051147,
+        "voice": 0.3802500069141388,
+        "music": 0,
+        "independent": 0.3802500069141388,
+        "mute": true,
+        "mutedSourceAbsent": true,
+        "volume": 0.11699999868869781,
+        "pause": true,
+        "restart": true,
+        "sourceCount": 1,
+        "actualSceneRestart": {
+          "sameContext": true,
+          "recordings": 315,
+          "settings": {
+            "master": 0.65,
+            "effects": 0.7,
+            "music": 0,
+            "voices": 0.2,
+            "muted": false
+          },
+          "canSpeak": true
+        }
+      },
+      "errors": []
+    },
+    {
+      "faction": "elves",
+      "productionRecordings": 0,
+      "selection": {
+        "id": "elves-worker-selection-01",
+        "gain": 0.38025000000000003
+      },
+      "groupOrder": {
+        "id": "elves-worker-move-01",
+        "gain": 0.38025000000000003
+      },
+      "rapidClicksAccepted": 1,
+      "lifecycle": {
+        "duck": 0.20475000143051147,
+        "voice": 0.3802500069141388,
+        "music": 0,
+        "independent": 0.3802500069141388,
+        "mute": true,
+        "mutedSourceAbsent": true,
+        "volume": 0.11699999868869781,
+        "pause": true,
+        "restart": true,
+        "sourceCount": 1,
+        "actualSceneRestart": {
+          "sameContext": true,
+          "recordings": 315,
+          "settings": {
+            "master": 0.65,
+            "effects": 0.7,
+            "music": 0,
+            "voices": 0.2,
+            "muted": false
+          },
+          "canSpeak": true
+        }
+      },
+      "errors": []
+    },
+    {
+      "faction": "dwarves",
+      "productionRecordings": 0,
+      "selection": {
+        "id": "dwarves-worker-selection-01",
+        "gain": 0.38025000000000003
+      },
+      "groupOrder": {
+        "id": "dwarves-worker-move-01",
+        "gain": 0.38025000000000003
+      },
+      "rapidClicksAccepted": 1,
+      "lifecycle": {
+        "duck": 0.20475000143051147,
+        "voice": 0.3802500069141388,
+        "music": 0,
+        "independent": 0.3802500069141388,
+        "mute": true,
+        "mutedSourceAbsent": true,
+        "volume": 0.11699999868869781,
+        "pause": true,
+        "restart": true,
+        "sourceCount": 1,
+        "actualSceneRestart": {
+          "sameContext": true,
+          "recordings": 315,
+          "settings": {
+            "master": 0.65,
+            "effects": 0.7,
+            "music": 0,
+            "voices": 0.2,
+            "muted": false
+          },
+          "canSpeak": true
+        }
+      },
+      "errors": []
+    },
+    {
+      "faction": "goblins",
+      "productionRecordings": 0,
+      "selection": {
+        "id": "goblins-worker-selection-01",
+        "gain": 0.38025000000000003
+      },
+      "groupOrder": {
+        "id": "goblins-worker-move-01",
+        "gain": 0.38025000000000003
+      },
+      "rapidClicksAccepted": 1,
+      "lifecycle": {
+        "duck": 0.20475000143051147,
+        "voice": 0.3802500069141388,
+        "music": 0,
+        "independent": 0.3802500069141388,
+        "mute": true,
+        "mutedSourceAbsent": true,
+        "volume": 0.11699999868869781,
+        "pause": true,
+        "restart": true,
+        "sourceCount": 1,
+        "actualSceneRestart": {
+          "sameContext": true,
+          "recordings": 315,
+          "settings": {
+            "master": 0.65,
+            "effects": 0.7,
+            "music": 0,
+            "voices": 0.2,
+            "muted": false
+          },
+          "canSpeak": true
+        }
+      },
+      "errors": []
+    }
+  ],
+  "listeningVerified": false
+}

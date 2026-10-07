@@ -51,7 +51,7 @@ import {selectWorldTarget} from '../gameplay/resourceSelection';
 import type {StatLedger} from '../gameplay/statLedger';
 import {syncResultScreen} from '../presentation/resultScreen';
 import {getPreferences,updatePreferences} from '../presentation/preferences';
-import {voiceSpeaker,voiceOrders,orderedSpeaker,voiceOrderAction} from '../presentation/voicePolicy';
+import {voiceSpeaker,voiceOrders,orderedSpeaker,failedOrderSpeaker,readyVoiceSpeaker,voiceOrderAction} from '../presentation/voicePolicy';
 import {audioFiles} from '../config/audio';
 import {matchAudioSnapshot} from '../presentation/audioSnapshot';
 import {renderTutorial} from '../presentation/tutorial';
@@ -684,6 +684,7 @@ export class BootScene extends Phaser.Scene {
     const before=voiceOrders(this.allSelectable());
     this.processDown(pointer);
     gameAudio.say(orderedSpeaker(before,this.allSelectable()),voiceOrderAction(orderedSpeaker(before,this.allSelectable())),this.factions.player);
+    gameAudio.say(failedOrderSpeaker(before,this.allSelectable()),'error',this.factions.player);
   }
 
   private processDown(pointer: Phaser.Input.Pointer): void {
@@ -844,6 +845,7 @@ export class BootScene extends Phaser.Scene {
   private rememberPlacementError(point:Position,reason:string|null):void {
     const rect=buildingFootprint(point,this.placement.kind??'barracks');
     this.placementAttempt=reason?{x:rect.x,y:rect.y,reason}:null;
+    if(reason)gameAudio.say(voiceSpeaker(this.allSelectable()),'error',this.factions.player);
   }
 
   private syncDiscoveries():void {
@@ -1130,9 +1132,11 @@ export class BootScene extends Phaser.Scene {
 
   private syncAudio(visibleEnemies:typeof this.combat.enemies):void {
     const next=matchAudioSnapshot(this.currentMatch(),visibleEnemies);
+    const ready=readyVoiceSpeaker(this.audioSnapshot?.readyUnits,next.readyUnits??[],this.gameplayActive());
+    if(ready)gameAudio.voices.speak(ready.role,'ready',ready.faction);
     const wasPlaying=this.session.phase==='playing'||this.audioSnapshot?.outcome==='playing'&&this.outcome!=='playing';
     for(const event of audioEvents(this.audioSnapshot,next,!!wasPlaying)){if(event==='victory'||event==='defeat'){gameAudio.setPhase('ended');gameAudio.play(event,true);}else if(event!=='impact'&&event!=='cannon')gameAudio.play(event);}
-    const combatNext=combatAudioSnapshot(this.currentMatch()),camera=this.cameras.main;
+    const combatNext=combatAudioSnapshot(this.currentMatch(),this.combatSoundSnapshot),camera=this.cameras.main;
     for(const cue of combatAudioCues(this.combatSoundSnapshot,combatNext,{x:camera.scrollX+camera.width/2,y:camera.scrollY+camera.height/2},this.gameplayActive()))gameAudio.play(cue.sound,false,cue.gain);
     this.combatSoundSnapshot=combatNext;
     this.audioSnapshot=next;

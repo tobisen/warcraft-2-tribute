@@ -1,7 +1,7 @@
 import {getPreferences,updatePreferences} from './preferences';
 import {UnitVoices} from './voices';
 import {voiceRole,type VoiceUnit} from './voicePolicy';
-import type {VoiceAction} from '../config/voices';
+import {recordedVoiceManifest,voiceConfig,type VoiceAction,type VoiceClip} from '../config/voices';
 import type {FactionId} from '../config/factions';
 import {text as uiText} from '../text';
 import {attackWarningConfig} from '../config/feedback';
@@ -12,11 +12,18 @@ type AudioName=Sound|'music';
 /** One app-owned audio graph. Scene restart cannot duplicate music, listeners or stale effects. */
 export class GameAudio {
  settings:AudioSettings={...defaultAudio};
- readonly voices=new UnitVoices(()=>this.settings);
- say(unit:VoiceUnit|undefined,action:VoiceAction,faction:FactionId):void{if(unit){if(action==='select')this.voices.select(voiceRole(unit),faction,unit.id);else this.voices.speak(voiceRole(unit),action,faction);}}
+ readonly voices=new UnitVoices(()=>this.settings,()=>this.context?.currentTime??0,{
+  has:id=>this.voiceBuffers.has(id),play:(clip,gain,ended)=>this.playVoice(clip,gain,ended),stop:()=>this.stopVoice(),
+ });
+ say(unit:VoiceUnit|undefined,action:VoiceAction,faction:FactionId):void{if(unit){const identity=unit.faction??faction;if(action==='select')this.voices.select(voiceRole(unit),identity,unit.id);else this.voices.speak(voiceRole(unit),action,identity);}}
  private context?:AudioContext;
  private effectGain?:GainNode;
  private musicGain?:GainNode;
+ private voiceGain?:GainNode;
+ private mix?:DynamicsCompressorNode;
+ private voiceBuffers=new Map<string,AudioBuffer>();
+ private voiceSource?:AudioBufferSourceNode;
+ private voiceEnded?:()=>void;
  private buffers=new Map<AudioName,AudioBuffer>();
  private loading?:Promise<void>;
  private music?:AudioBufferSourceNode;
@@ -28,15 +35,54 @@ export class GameAudio {
  get status(){return {state:this.context?.state??'locked',loaded:this.buffers.size,music:!!this.music,effects:this.effects.size,phase:this.phase,settings:{...this.settings}};}
  async unlock():Promise<void>{
   try{
-   if(!this.context){this.context=new AudioContext();this.effectGain=this.context.createGain();this.musicGain=this.context.createGain();this.effectGain.connect(this.context.destination);this.musicGain.connect(this.context.destination);this.applyVolume();}
+   if(!this.context){
+    this.context=new AudioContext();this.effectGain=this.context.createGain();this.musicGain=this.context.createGain();this.voiceGain=this.context.createGain();
+    // Conservative shared headroom protects loud slider settings and coincident
+    // impacts without hard clipping or a second context/audio framework.
+    this.mix=this.context.createDynamicsCompressor();this.mix.threshold.value=-6;this.mix.knee.value=8;this.mix.ratio.value=8;this.mix.attack.value=.003;this.mix.release.value=.12;
+    this.effectGain.connect(this.mix);this.musicGain.connect(this.mix);this.voiceGain.connect(this.mix);this.mix.connect(this.context.destination);this.applyVolume();
+   }
    await this.context.resume();
    if(!this.loading)this.loading=this.load();await this.loading;
    if(this.phase==='playing'||this.phase==='menu')this.startMusic();else if(this.phase==='paused')await this.context.suspend();
   }catch{document.getElementById('audio-status')!.textContent=uiText.audioUnavailableGameplayRemainsAvailable;}
  }
- private async load():Promise<void>{for(const name of audioFiles){for(const ext of name.startsWith('animal-')?['wav']:['ogg','wav'])try{const response=await fetch(`${import.meta.env.BASE_URL}audio/${name}.${ext}`);if(!response.ok)throw new Error('missing audio');this.buffers.set(name,await this.context!.decodeAudioData(await response.arrayBuffer()));break;}catch{/* Validated PCM fallback; missing sound never blocks gameplay. */}}}
+ private async load():Promise<void>{
+  for(const name of audioFiles){for(const ext of name.startsWith('animal-')?['wav']:['ogg','wav'])try{const response=await fetch(`${import.meta.env.BASE_URL}audio/${name}.${ext}`);if(!response.ok)throw new Error('missing audio');this.buffers.set(name,await this.context!.decodeAudioData(await response.arrayBuffer()));break;}catch{/* Validated PCM fallback; missing sound never blocks gameplay. */}}
+  try{
+   const response=await fetch(`${import.meta.env.BASE_URL}audio/voices/manifest.json`);
+   if(!response.ok)return;
+   const clips=recordedVoiceManifest(await response.json());
+   // Bounded loading keeps a bad/missing clip from discarding the other packs.
+   for(let i=0;i<clips.length;i+=4)await Promise.all(clips.slice(i,i+4).map(async clip=>{
+    try{const audio=await fetch(`${import.meta.env.BASE_URL}${clip.recording}`);if(!audio.ok)return;
+     this.voiceBuffers.set(clip.id,await this.context!.decodeAudioData(await audio.arrayBuffer()));
+    }catch{/* Missing recordings are silent; never synthesize replacement speech. */}
+   }));
+   this.voices.setClips(clips);
+  }catch{/* Manifest absence never blocks the match or effect audio. */}
+ }
  setSettings(change:Partial<AudioSettings>):void {this.settings={...this.settings,...change};this.settings.master=volume(this.settings.master);this.settings.music=volume(this.settings.music);this.settings.effects=volume(this.settings.effects);this.settings.voices=volume(this.settings.voices??defaultAudio.voices!);this.applyVolume();this.voices.onSettingsChange();}
- private applyVolume():void {if(this.context&&this.effectGain&&this.musicGain){this.effectGain.gain.setValueAtTime(audioGain(this.settings,'effects'),this.context.currentTime);this.musicGain.gain.setValueAtTime(audioGain(this.settings,'music')*(this.phase==='menu'?audioConfig.menuMusicGain:1),this.context.currentTime);}}
+ private applyVolume():void {if(this.context&&this.effectGain&&this.musicGain){
+  const gain=audioGain(this.settings,'effects')*(this.voiceSource?voiceConfig.duckGain:1);
+  // Smooth duck/recovery transitions instead of stepping an active waveform.
+  if(gain===0)this.effectGain.gain.setValueAtTime(0,this.context.currentTime);
+  else this.effectGain.gain.setTargetAtTime(gain,this.context.currentTime,.012);
+  this.musicGain.gain.setValueAtTime(audioGain(this.settings,'music')*(this.phase==='menu'?audioConfig.menuMusicGain:1),this.context.currentTime);this.voiceGain?.gain.setValueAtTime(audioGain(this.settings,'voices')*voiceConfig.gain,this.context.currentTime);
+ }}
+ private playVoice(clip:VoiceClip,gain:number,ended:()=>void):boolean {
+  const context=this.context,buffer=this.voiceBuffers.get(clip.id);
+  if(!context||!this.voiceGain||context.state!=='running'||this.phase!=='playing'||this.voiceSource||!buffer)return false;
+  const source=context.createBufferSource();source.buffer=buffer;source.connect(this.voiceGain);
+  this.voiceSource=source;this.voiceEnded=ended;this.voiceGain.gain.setValueAtTime(gain,context.currentTime);
+  source.onended=()=>{source.disconnect();if(this.voiceSource===source){this.voiceSource=undefined;this.voiceEnded=undefined;this.applyVolume();ended();}};
+  try{source.start();this.applyVolume();return true;}catch{this.stopVoice();return false;}
+ }
+ private stopVoice():void {
+  const source=this.voiceSource,ended=this.voiceEnded;this.voiceSource=undefined;this.voiceEnded=undefined;
+  if(source){source.onended=null;try{source.stop();}catch{/* Already ended. */}source.disconnect();}
+  this.applyVolume();ended?.();
+ }
  setPhase(phase:SessionPhase):void{
   this.voices.setPhase(phase);if(this.phase===phase)return;this.phase=phase;this.applyVolume();
   if(phase==='ended'){this.reset();return;}

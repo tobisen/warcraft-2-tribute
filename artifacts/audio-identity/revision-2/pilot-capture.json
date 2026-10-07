@@ -1,0 +1,58 @@
+{
+  "method": "Live combat fixture, direct voice-presentation cues, real PCM assets, AudioWorklet direct PCM tap of actual effect/voice graph; no Opus conversion. Revision2 replaces all six combat cue buffers with recorded-material candidates, not production assets. Not human listening.",
+  "results": [
+    {
+      "faction": "crown",
+      "path": "artifacts/audio-identity/revision-2/pilot-crown-match.wav",
+      "cues": [
+        {
+          "action": "select",
+          "ok": true,
+          "duration": 3.5479583333333333
+        },
+        {
+          "action": "move",
+          "ok": true,
+          "duration": 1.4673333333333334
+        },
+        {
+          "action": "attack",
+          "ok": true,
+          "duration": 3.346
+        }
+      ],
+      "duration": 9.824,
+      "peak": 0.22214485704898834,
+      "recordings": 10,
+      "errors": [],
+      "listeningVerified": false
+    },
+    {
+      "faction": "clans",
+      "path": "artifacts/audio-identity/revision-2/pilot-clans-match.wav",
+      "cues": [
+        {
+          "action": "select",
+          "ok": true,
+          "duration": 1.4886666666666666
+        },
+        {
+          "action": "move",
+          "ok": true,
+          "duration": 2.3386666666666667
+        },
+        {
+          "action": "attack",
+          "ok": true,
+          "duration": 2.6146666666666665
+        }
+      ],
+      "duration": 7.925333333333334,
+      "peak": 0.22629889845848083,
+      "recordings": 10,
+      "errors": [],
+      "listeningVerified": false
+    }
+  ],
+  "listeningVerified": false
+}

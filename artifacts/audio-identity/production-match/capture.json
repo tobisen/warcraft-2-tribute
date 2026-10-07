@@ -1,0 +1,187 @@
+{
+  "production": true,
+  "method": "Live combat fixture, direct voice-presentation cues, real PCM assets (production=true uses published files without audition overrides), AudioWorklet direct PCM tap of actual post-compressor game mix (music muted); no Opus conversion. Revision2 replaces six combat cue buffers with recorded-material candidates and three pilot lines with revised Human/Orc-adam candidates; not production assets. Not human listening.",
+  "results": [
+    {
+      "faction": "crown",
+      "path": "artifacts/audio-identity/production-match/match-crown-match.wav",
+      "cues": [
+        {
+          "action": "select",
+          "ok": true,
+          "duration": 1.7574583333333333
+        },
+        {
+          "action": "move",
+          "ok": true,
+          "duration": 1.1010416666666667
+        },
+        {
+          "action": "attack",
+          "ok": true,
+          "duration": 1.817375
+        },
+        {
+          "action": "gather",
+          "ok": true,
+          "duration": 1.4845
+        },
+        {
+          "action": "repeat",
+          "ok": true,
+          "duration": 2.72125
+        }
+      ],
+      "duration": 11.28,
+      "peak": 0.43499574065208435,
+      "recordings": 315,
+      "errors": [],
+      "listeningVerified": false
+    },
+    {
+      "faction": "clans",
+      "path": "artifacts/audio-identity/production-match/match-clans-match.wav",
+      "cues": [
+        {
+          "action": "select",
+          "ok": true,
+          "duration": 1.2690625
+        },
+        {
+          "action": "move",
+          "ok": true,
+          "duration": 1.8495625
+        },
+        {
+          "action": "attack",
+          "ok": true,
+          "duration": 2.2326875
+        },
+        {
+          "action": "gather",
+          "ok": true,
+          "duration": 2.8131875
+        },
+        {
+          "action": "repeat",
+          "ok": true,
+          "duration": 2.6390416666666665
+        }
+      ],
+      "duration": 13.178666666666667,
+      "peak": 0.35781800746917725,
+      "recordings": 315,
+      "errors": [],
+      "listeningVerified": false
+    },
+    {
+      "faction": "elves",
+      "path": "artifacts/audio-identity/production-match/match-elves-match.wav",
+      "cues": [
+        {
+          "action": "select",
+          "ok": true,
+          "duration": 1.4780416666666667
+        },
+        {
+          "action": "move",
+          "ok": true,
+          "duration": 1.7915
+        },
+        {
+          "action": "attack",
+          "ok": true,
+          "duration": 1.512875
+        },
+        {
+          "action": "gather",
+          "ok": true,
+          "duration": 1.8727708333333333
+        },
+        {
+          "action": "repeat",
+          "ok": true,
+          "duration": 2.3023541666666665
+        }
+      ],
+      "duration": 11.344,
+      "peak": 0.35675716400146484,
+      "recordings": 315,
+      "errors": [],
+      "listeningVerified": false
+    },
+    {
+      "faction": "dwarves",
+      "path": "artifacts/audio-identity/production-match/match-dwarves-match.wav",
+      "cues": [
+        {
+          "action": "select",
+          "ok": true,
+          "duration": 2.441666666666667
+        },
+        {
+          "action": "move",
+          "ok": true,
+          "duration": 1.7915
+        },
+        {
+          "action": "attack",
+          "ok": true,
+          "duration": 1.8611666666666666
+        },
+        {
+          "action": "gather",
+          "ok": true,
+          "duration": 1.7682916666666666
+        },
+        {
+          "action": "repeat",
+          "ok": true,
+          "duration": 2.8712291666666667
+        }
+      ],
+      "duration": 13.12,
+      "peak": 0.37364357709884644,
+      "recordings": 315,
+      "errors": [],
+      "listeningVerified": false
+    },
+    {
+      "faction": "goblins",
+      "path": "artifacts/audio-identity/production-match/match-goblins-match.wav",
+      "cues": [
+        {
+          "action": "select",
+          "ok": true,
+          "duration": 1.6173541666666666
+        },
+        {
+          "action": "move",
+          "ok": true,
+          "duration": 1.2574583333333333
+        },
+        {
+          "action": "attack",
+          "ok": true,
+          "duration": 2.0353125
+        },
+        {
+          "action": "gather",
+          "ok": true,
+          "duration": 1.8147291666666667
+        },
+        {
+          "action": "repeat",
+          "ok": true,
+          "duration": 1.5825208333333334
+        }
+      ],
+      "duration": 10.688,
+      "peak": 0.363316148519516,
+      "recordings": 315,
+      "errors": [],
+      "listeningVerified": false
+    }
+  ],
+  "listeningVerified": false
+}

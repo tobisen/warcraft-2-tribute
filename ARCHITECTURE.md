@@ -1,5 +1,20 @@
 # Arkitektur
 
+## Ljudidentitet — fem lokala röstpaket
+
+315 aktiva WAV-filer mappas datadrivet från `config/voices.ts` och det lokala
+manifestet. Manus/proveniens finns i `assets/sources/audio-identity`.
+Kokoro/OpenVoice är offline authoring, inga runtime-modeller eller talanrop.
+`UnitVoices` håller en lane utan kö, 1.2s cooldown, rotation och sällsynt humor.
+`voicePolicy` väljer en representativ egen enhet för grupporder/ready/error.
+
+`GameAudio` återanvänder samma AudioContext: Voice/Music/Effect-gains går via
+kompressor till destinationen. SFX duckas mjukt till45% under tal. Mute,
+volym, pause och restart städar källor/callbacks och bevarar inställningar.
+Snapshots skiljer avverkning/gruvdrift, skatt/recruit och synligt byggnadsras;
+fog-döljning ger inget falskt ras. 13 familjer använder licensierade inspelade
+materiallager. [Underlag och lyssningsbegränsningar](assets/sources/audio-identity/README.md).
+
 ## Status och teknik
 
 Implementerat och verifierat genom RTS-150; release0.2.0 är publicerad. Fem fraktioner, åtta campaign-operationer, stora kartor, Save33, dismissal, grupperade commands och lokala highscores kompletterar följande historiska systembeskrivningar: archer/projectiles, catapult/splash och Forge/research, FIFO/refund, target-HP/destruktion, workerbygge, farms, population, kamera,

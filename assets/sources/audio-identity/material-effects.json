@@ -1,0 +1,441 @@
+{
+  "status": "Activated by user; final rendered quality not independently listened",
+  "entries": {
+    "melee": {
+      "material": "metal weapon strike and body contact",
+      "author": "Project arrangement of Kenney/Thimras recordings",
+      "license": "CC0-1.0",
+      "sources": [
+        {
+          "original": "assets/sources/audio-identity/originals/impactMetal_light_000.ogg",
+          "sha256": "33b5e6e37c6e9d54e07bf5a89b12c76e879f40c1ea83cdd82714df1d6f9fec6d",
+          "delay": 0,
+          "gain": 0.65,
+          "author": "Kenney",
+          "source": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        },
+        {
+          "original": "assets/sources/audio-identity/originals/impactPunch_heavy_000.ogg",
+          "sha256": "b33a8f14068aec24ec69ba85e5e87fdc41228975f6a1a3e44a6e7d6fc3d9f8d8",
+          "delay": 0.012,
+          "gain": 0.7,
+          "author": "Kenney",
+          "source": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "master": "assets/audio/melee.wav",
+      "masterSha256": "5b4e4b2119b027e9164af5bdeb601c738144ea5657ec01b4109154ba5a33865a",
+      "oggSha256": "c4c9135609c05fa6d52c9d06c673a1cc562ee56c094ffcdea724853cf01613fc",
+      "fallbackSha256": "5b4e4b2119b027e9164af5bdeb601c738144ea5657ec01b4109154ba5a33865a",
+      "duration": 0.45,
+      "sampleRate": 24000,
+      "peak": 0.49999999999999994,
+      "activeRms": 0.07950667807331888,
+      "normalization": 0.6063156030744375,
+      "processing": "Recorded-material layers; antialiased mono resample24k; DC removal;6.5kHz 2-pole low-pass;6ms onset/60ms tail fades; active RMS .085/peakcap .5; PCM16 master+fallback and Vorbis; no noise synthesis",
+      "listeningVerified": false
+    },
+    "build": {
+      "material": "hammering timber with a small frame creak",
+      "author": "Project arrangement of Kenney/Thimras recordings",
+      "license": "CC0-1.0",
+      "sources": [
+        {
+          "original": "assets/sources/audio-identity/originals/impactWood_light_001.ogg",
+          "sha256": "4b76bf3ccc8e60d19188f3165b778a7817786faa6887c55d9049bcbeef3b425f",
+          "delay": 0,
+          "gain": 1,
+          "author": "Kenney",
+          "source": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        },
+        {
+          "original": "assets/sources/audio-identity/originals/impactWood_light_001.ogg",
+          "sha256": "4b76bf3ccc8e60d19188f3165b778a7817786faa6887c55d9049bcbeef3b425f",
+          "delay": 0.24,
+          "gain": 0.75,
+          "author": "Kenney",
+          "source": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        },
+        {
+          "original": "assets/sources/audio-identity/originals/rpg/creak1.ogg",
+          "sha256": "8a346186fd297254248cab8e8117060a52a5cf2a84f603153a762108550ea95e",
+          "delay": 0.12,
+          "gain": 0.15,
+          "author": "Kenney",
+          "source": "https://kenney.nl/assets/rpg-audio",
+          "license": "CC0-1.0"
+        }
+      ],
+      "master": "assets/audio/build.wav",
+      "masterSha256": "616df6f3c932d6e98f2a88f04a05f2239e7062de2185df2773b694b6cdcb1525",
+      "oggSha256": "83d24882c41bd46e0fb253d7970511bebb004e6879b2234705383aa20bf28ed0",
+      "fallbackSha256": "616df6f3c932d6e98f2a88f04a05f2239e7062de2185df2773b694b6cdcb1525",
+      "duration": 0.75,
+      "sampleRate": 24000,
+      "peak": 0.5,
+      "activeRms": 0.0418679133324576,
+      "normalization": 0.7488928842415867,
+      "processing": "Recorded-material layers; antialiased mono resample24k; DC removal;6.5kHz 2-pole low-pass;6ms onset/60ms tail fades; active RMS .085/peakcap .5; PCM16 master+fallback and Vorbis; no noise synthesis",
+      "listeningVerified": false
+    },
+    "bow": {
+      "material": "bow release and arrow flight",
+      "author": "Project arrangement of Kenney/Thimras recordings",
+      "license": "CC0-1.0",
+      "sources": [
+        {
+          "original": "assets/sources/audio-identity/originals/rpg/clothBelt.ogg",
+          "sha256": "f29560a2aea95bbfeb643e1e8f56ec2b6f7e32f32ce4e140645a36db81de3253",
+          "delay": 0,
+          "gain": 0.7,
+          "author": "Kenney",
+          "source": "https://kenney.nl/assets/rpg-audio",
+          "license": "CC0-1.0"
+        },
+        {
+          "original": "assets/sources/audio-identity/originals/rpg/knifeSlice.ogg",
+          "sha256": "4cd96dc630bed9840c15f1dd2306da2cc56a4da26a5d3f1a03c5a7265ac5e54f",
+          "delay": 0.035,
+          "gain": 0.45,
+          "author": "Kenney",
+          "source": "https://kenney.nl/assets/rpg-audio",
+          "license": "CC0-1.0"
+        }
+      ],
+      "master": "assets/audio/bow.wav",
+      "masterSha256": "71ce3717d155c491fb8e6b8d34fb55a4e38a70583f61e659ffe4eeea2b34d68f",
+      "oggSha256": "da4aec984885587bc2ce2da890fc58f2f97acbe8e1200fc95b33f981fa5a2462",
+      "fallbackSha256": "71ce3717d155c491fb8e6b8d34fb55a4e38a70583f61e659ffe4eeea2b34d68f",
+      "duration": 0.4,
+      "sampleRate": 24000,
+      "peak": 0.4405647806001438,
+      "activeRms": 0.08081746482221618,
+      "normalization": 1.864284959513918,
+      "processing": "Recorded-material layers; antialiased mono resample24k; DC removal;6.5kHz 2-pole low-pass;6ms onset/60ms tail fades; active RMS .085/peakcap .5; PCM16 master+fallback and Vorbis; no noise synthesis",
+      "listeningVerified": false
+    },
+    "siege": {
+      "material": "heavy wooden mechanism launch",
+      "author": "Project arrangement of Kenney/Thimras recordings",
+      "license": "CC0-1.0",
+      "sources": [
+        {
+          "original": "assets/sources/audio-identity/originals/impactPlank_medium_000.ogg",
+          "sha256": "8403cd7a043f0391574c88c55dd205743725b5363d2407f6de145f201690b68f",
+          "delay": 0,
+          "gain": 1,
+          "author": "Kenney",
+          "source": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        },
+        {
+          "original": "assets/sources/audio-identity/originals/impactWood_medium_000.ogg",
+          "sha256": "1723a9fd25103ed41af06054814e84e65f4a772bac86ab2dc927da93d9592ff5",
+          "delay": 0.05,
+          "gain": 0.45,
+          "author": "Kenney",
+          "source": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "master": "assets/audio/siege.wav",
+      "masterSha256": "7a1f10cc0dcad6978c9d20fe9b625ee47284c75876f18de09621de8577f76232",
+      "oggSha256": "3d36b08dfefb04783a387df7cc346b3cfd92be885b32299460ecfff419c66a87",
+      "fallbackSha256": "7a1f10cc0dcad6978c9d20fe9b625ee47284c75876f18de09621de8577f76232",
+      "duration": 0.65,
+      "sampleRate": 24000,
+      "peak": 0.5,
+      "activeRms": 0.08662071310352537,
+      "normalization": 0.5764628666857706,
+      "processing": "Recorded-material layers; antialiased mono resample24k; DC removal;6.5kHz 2-pole low-pass;6ms onset/60ms tail fades; active RMS .085/peakcap .5; PCM16 master+fallback and Vorbis; no noise synthesis",
+      "listeningVerified": false
+    },
+    "buildingHit": {
+      "material": "stone masonry hit",
+      "author": "Project arrangement of Kenney/Thimras recordings",
+      "license": "CC0-1.0",
+      "sources": [
+        {
+          "original": "assets/sources/audio-identity/originals/thimras/cannon_hit_wall_no_splash.ogg",
+          "sha256": "7ae0a35447ca22ec446db9a6aa3e96be51c32814da1bf11fc6ce718367d7f4dd",
+          "delay": 0,
+          "gain": 0.65,
+          "author": "Thimras",
+          "source": "https://opengameart.org/content/battle-at-sea",
+          "download": "https://opengameart.org/sites/default/files/cannon_hit_wall_no_splash.ogg",
+          "license": "CC0-1.0"
+        },
+        {
+          "original": "assets/sources/audio-identity/originals/impactMining_002.ogg",
+          "sha256": "059558ec751115ca6b1441e00f0adc837c1a3eeb0a066b109e0fd879fc5d0b0c",
+          "delay": 0.06,
+          "gain": 0.35,
+          "author": "Kenney",
+          "source": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "master": "assets/audio/buildingHit.wav",
+      "masterSha256": "e46164e1eeb5f9bebda687da6dce9e8561df5f1d364dc31ad3be3c4ccecfe517",
+      "oggSha256": "81072b7ad6f6ac347002dd57fb32b26259fc327c744b075a7c227de5ee379277",
+      "fallbackSha256": "e46164e1eeb5f9bebda687da6dce9e8561df5f1d364dc31ad3be3c4ccecfe517",
+      "duration": 0.9,
+      "sampleRate": 24000,
+      "peak": 0.5,
+      "activeRms": 0.08199540978701741,
+      "normalization": 1.119283204169902,
+      "processing": "Recorded-material layers; antialiased mono resample24k; DC removal;6.5kHz 2-pole low-pass;6ms onset/60ms tail fades; active RMS .085/peakcap .5; PCM16 master+fallback and Vorbis; no noise synthesis",
+      "listeningVerified": false
+    },
+    "impact": {
+      "material": "body/armour contact",
+      "author": "Project arrangement of Kenney/Thimras recordings",
+      "license": "CC0-1.0",
+      "sources": [
+        {
+          "original": "assets/sources/audio-identity/originals/impactPunch_heavy_000.ogg",
+          "sha256": "b33a8f14068aec24ec69ba85e5e87fdc41228975f6a1a3e44a6e7d6fc3d9f8d8",
+          "delay": 0,
+          "gain": 1,
+          "author": "Kenney",
+          "source": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "master": "assets/audio/impact.wav",
+      "masterSha256": "9ced3263851898f58f6eb81cc7e197bd0f6a1f1c58e4494ee8d2b816c9311ee7",
+      "oggSha256": "e51cc668f535a85b1bf817a1b1a03887a22ec87935d8c632c0bb57035aa65efd",
+      "fallbackSha256": "9ced3263851898f58f6eb81cc7e197bd0f6a1f1c58e4494ee8d2b816c9311ee7",
+      "duration": 0.4,
+      "sampleRate": 24000,
+      "peak": 0.44618436940454537,
+      "activeRms": 0.08828794125986879,
+      "normalization": 0.4987686288881083,
+      "processing": "Recorded-material layers; antialiased mono resample24k; DC removal;6.5kHz 2-pole low-pass;6ms onset/60ms tail fades; active RMS .085/peakcap .5; PCM16 master+fallback and Vorbis; no noise synthesis",
+      "listeningVerified": false
+    },
+    "mining": {
+      "material": "pickaxe striking stone",
+      "author": "Project arrangement of Kenney/Thimras recordings",
+      "license": "CC0-1.0",
+      "sources": [
+        {
+          "original": "assets/sources/audio-identity/originals/impactMining_002.ogg",
+          "sha256": "059558ec751115ca6b1441e00f0adc837c1a3eeb0a066b109e0fd879fc5d0b0c",
+          "delay": 0,
+          "gain": 1,
+          "author": "Kenney",
+          "source": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "master": "assets/audio/mining.wav",
+      "masterSha256": "b5660c5e99931123f2fdd789db60b810ec66cece14f50a8f14ff93765f29a134",
+      "oggSha256": "b996e5dee97f3698a6fcb80072e4fc34e3cc6b3f1c7cdaaa4265b3c74fba61b9",
+      "fallbackSha256": "b5660c5e99931123f2fdd789db60b810ec66cece14f50a8f14ff93765f29a134",
+      "duration": 0.6,
+      "sampleRate": 24000,
+      "peak": 0.5,
+      "activeRms": 0.0591884467662045,
+      "normalization": 0.5720542519528812,
+      "processing": "Recorded-material layers; antialiased mono resample24k; DC removal;6.5kHz 2-pole low-pass;6ms onset/60ms tail fades; active RMS .085/peakcap .5; PCM16 master+fallback and Vorbis; no noise synthesis",
+      "listeningVerified": false
+    },
+    "chop": {
+      "material": "axe biting wood",
+      "author": "Project arrangement of Kenney/Thimras recordings",
+      "license": "CC0-1.0",
+      "sources": [
+        {
+          "original": "assets/sources/audio-identity/originals/rpg/chop.ogg",
+          "sha256": "d00c2b3c9fff07e376145c8c8c45c90e5084ec192f6ce0387db233f7b86f1486",
+          "delay": 0,
+          "gain": 1,
+          "author": "Kenney",
+          "source": "https://kenney.nl/assets/rpg-audio",
+          "license": "CC0-1.0"
+        }
+      ],
+      "master": "assets/audio/chop.wav",
+      "masterSha256": "3152f8cbe9e8836bf995ce7a7fa4a251414ee117d2f3137670a51564a13a2dac",
+      "oggSha256": "90f2f44f7a594d080c8e22a7603250bc7346dfc10f2f24e6240088d543e68eb1",
+      "fallbackSha256": "3152f8cbe9e8836bf995ce7a7fa4a251414ee117d2f3137670a51564a13a2dac",
+      "duration": 0.6,
+      "sampleRate": 24000,
+      "peak": 0.5,
+      "activeRms": 0.0708601999902293,
+      "normalization": 0.49715758554402223,
+      "processing": "Recorded-material layers; antialiased mono resample24k; DC removal;6.5kHz 2-pole low-pass;6ms onset/60ms tail fades; active RMS .085/peakcap .5; PCM16 master+fallback and Vorbis; no noise synthesis",
+      "listeningVerified": false
+    },
+    "gather": {
+      "material": "legacy generic work contact",
+      "author": "Project arrangement of Kenney/Thimras recordings",
+      "license": "CC0-1.0",
+      "sources": [
+        {
+          "original": "assets/sources/audio-identity/originals/impactMining_002.ogg",
+          "sha256": "059558ec751115ca6b1441e00f0adc837c1a3eeb0a066b109e0fd879fc5d0b0c",
+          "delay": 0,
+          "gain": 1,
+          "author": "Kenney",
+          "source": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "master": "assets/audio/gather.wav",
+      "masterSha256": "b5660c5e99931123f2fdd789db60b810ec66cece14f50a8f14ff93765f29a134",
+      "oggSha256": "f0e3a34725e380291d34889c48b4abfff5f453ee9f365622fd50938d30d26612",
+      "fallbackSha256": "b5660c5e99931123f2fdd789db60b810ec66cece14f50a8f14ff93765f29a134",
+      "duration": 0.6,
+      "sampleRate": 24000,
+      "peak": 0.5,
+      "activeRms": 0.0591884467662045,
+      "normalization": 0.5720542519528812,
+      "processing": "Recorded-material layers; antialiased mono resample24k; DC removal;6.5kHz 2-pole low-pass;6ms onset/60ms tail fades; active RMS .085/peakcap .5; PCM16 master+fallback and Vorbis; no noise synthesis",
+      "listeningVerified": false
+    },
+    "treasure": {
+      "material": "coins handled in a treasure chest",
+      "author": "Project arrangement of Kenney/Thimras recordings",
+      "license": "CC0-1.0",
+      "sources": [
+        {
+          "original": "assets/sources/audio-identity/originals/rpg/handleCoins.ogg",
+          "sha256": "8a91f969e932df709df80ee124d86a51389eed9b67f22e5e716bc2bbf60d8dab",
+          "delay": 0,
+          "gain": 1,
+          "author": "Kenney",
+          "source": "https://kenney.nl/assets/rpg-audio",
+          "license": "CC0-1.0"
+        }
+      ],
+      "master": "assets/audio/treasure.wav",
+      "masterSha256": "ace097898819df882e0b6c06ba817ddb368d410a76bd19baa4dc2ca6d2230cef",
+      "oggSha256": "5749e3efe9885eaf838e286538725d385318fb756044672e9ff32083cfff4820",
+      "fallbackSha256": "ace097898819df882e0b6c06ba817ddb368d410a76bd19baa4dc2ca6d2230cef",
+      "duration": 1.1,
+      "sampleRate": 24000,
+      "peak": 0.5,
+      "activeRms": 0.03783906593761008,
+      "normalization": 0.893622269769099,
+      "processing": "Recorded-material layers; antialiased mono resample24k; DC removal;6.5kHz 2-pole low-pass;6ms onset/60ms tail fades; active RMS .085/peakcap .5; PCM16 master+fallback and Vorbis; no noise synthesis",
+      "listeningVerified": false
+    },
+    "destruction": {
+      "material": "timber failure and falling masonry",
+      "author": "Project arrangement of Kenney/Thimras recordings",
+      "license": "CC0-1.0",
+      "sources": [
+        {
+          "original": "assets/sources/audio-identity/originals/impactPlank_medium_000.ogg",
+          "sha256": "8403cd7a043f0391574c88c55dd205743725b5363d2407f6de145f201690b68f",
+          "delay": 0,
+          "gain": 0.7,
+          "author": "Kenney",
+          "source": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        },
+        {
+          "original": "assets/sources/audio-identity/originals/impactWood_medium_000.ogg",
+          "sha256": "1723a9fd25103ed41af06054814e84e65f4a772bac86ab2dc927da93d9592ff5",
+          "delay": 0.11,
+          "gain": 0.8,
+          "author": "Kenney",
+          "source": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        },
+        {
+          "original": "assets/sources/audio-identity/originals/thimras/cannon_hit_wall_no_splash.ogg",
+          "sha256": "7ae0a35447ca22ec446db9a6aa3e96be51c32814da1bf11fc6ce718367d7f4dd",
+          "delay": 0.18,
+          "gain": 0.7,
+          "author": "Thimras",
+          "source": "https://opengameart.org/content/battle-at-sea",
+          "download": "https://opengameart.org/sites/default/files/cannon_hit_wall_no_splash.ogg",
+          "license": "CC0-1.0"
+        },
+        {
+          "original": "assets/sources/audio-identity/originals/impactMining_002.ogg",
+          "sha256": "059558ec751115ca6b1441e00f0adc837c1a3eeb0a066b109e0fd879fc5d0b0c",
+          "delay": 0.48,
+          "gain": 0.35,
+          "author": "Kenney",
+          "source": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "master": "assets/audio/destruction.wav",
+      "masterSha256": "432baf9b63503f88ba5ca2409ec1fc1d8d0f4bcb7a36a8d15a5526d3ba0cac5d",
+      "oggSha256": "e94e0a01fdde32065d4aa184ee470709f17728e790d55f326a05d228e9f275cf",
+      "fallbackSha256": "432baf9b63503f88ba5ca2409ec1fc1d8d0f4bcb7a36a8d15a5526d3ba0cac5d",
+      "duration": 1.6,
+      "sampleRate": 24000,
+      "peak": 0.5,
+      "activeRms": 0.05570017807484456,
+      "normalization": 0.7111607675787686,
+      "processing": "Recorded-material layers; antialiased mono resample24k; DC removal;6.5kHz 2-pole low-pass;6ms onset/60ms tail fades; active RMS .085/peakcap .5; PCM16 master+fallback and Vorbis; no noise synthesis",
+      "listeningVerified": false
+    },
+    "cannon": {
+      "material": "gunpowder cannon discharge",
+      "author": "Project arrangement of Kenney/Thimras recordings",
+      "license": "CC0-1.0",
+      "sources": [
+        {
+          "original": "assets/sources/audio-identity/originals/thimras/cannon_fire_1.ogg",
+          "sha256": "2b21ffa41e5c3be4eecdfbd3490544f5aa8b6d1581787265863e13de1a8e599d",
+          "delay": 0,
+          "gain": 1,
+          "author": "Thimras",
+          "source": "https://opengameart.org/content/battle-at-sea",
+          "download": "https://opengameart.org/sites/default/files/cannon_fire_1.ogg",
+          "license": "CC0-1.0"
+        }
+      ],
+      "master": "assets/audio/cannon.wav",
+      "masterSha256": "93fb5d5d026925193cf9a06497067df8abf9e70cdd471539aebd09efe555fc31",
+      "oggSha256": "f8d2140b886f21a3a81ef5bd9d6a0b2adf6f950d6cf5f2ab84fd12d3548c48d4",
+      "fallbackSha256": "93fb5d5d026925193cf9a06497067df8abf9e70cdd471539aebd09efe555fc31",
+      "duration": 1.5,
+      "sampleRate": 24000,
+      "peak": 0.5,
+      "activeRms": 0.07606035708725281,
+      "normalization": 0.4997440836955251,
+      "processing": "Recorded-material layers; antialiased mono resample24k; DC removal;6.5kHz 2-pole low-pass;6ms onset/60ms tail fades; active RMS .085/peakcap .5; PCM16 master+fallback and Vorbis; no noise synthesis",
+      "listeningVerified": false
+    },
+    "splash": {
+      "material": "projectile landing in water",
+      "author": "Project arrangement of Kenney/Thimras recordings",
+      "license": "CC0-1.0",
+      "sources": [
+        {
+          "original": "assets/sources/audio-identity/originals/thimras/cannon_miss_1.ogg",
+          "sha256": "d91a1effc2964673033fa9f8d22093029fa0b500aea0bafb86724738c0e89fe3",
+          "delay": 0,
+          "gain": 1,
+          "author": "Thimras",
+          "source": "https://opengameart.org/content/battle-at-sea",
+          "download": "https://opengameart.org/sites/default/files/cannon_miss_1.ogg",
+          "license": "CC0-1.0"
+        }
+      ],
+      "master": "assets/audio/splash.wav",
+      "masterSha256": "f7398af25f7a12b9275496715157a2df5ad81c1a191ccbcc9a1eb3a75c33c077",
+      "oggSha256": "5035b6350aaf300911e93f5c829f78e9cb0d5687b1915f592611fa773fb31edf",
+      "fallbackSha256": "f7398af25f7a12b9275496715157a2df5ad81c1a191ccbcc9a1eb3a75c33c077",
+      "duration": 1.1,
+      "sampleRate": 24000,
+      "peak": 0.5,
+      "activeRms": 0.07323696482309132,
+      "normalization": 0.6126616921670067,
+      "processing": "Recorded-material layers; antialiased mono resample24k; DC removal;6.5kHz 2-pole low-pass;6ms onset/60ms tail fades; active RMS .085/peakcap .5; PCM16 master+fallback and Vorbis; no noise synthesis",
+      "listeningVerified": false
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "voices": 315,
+  "uniqueHashes": 315,
+  "maxVoicePeak": 0.75,
+  "runtimeEqualsMasters": true,
+  "finalListeningLinks": 53,
+  "actualListeningVerified": false,
+  "voiceRolesAndVariantsSelectable": true
+}
