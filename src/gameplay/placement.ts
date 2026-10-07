@@ -19,7 +19,7 @@ import { bodyFits, overlaps, replaceObstacles, type WorldMap } from './map';
 import { spawnCandidates, hasSpawnExit, unitBody, otherBodySize } from './spawning';
 import type { Unit } from './gathering';
 import { soldierStats, combatUnitStats, unitStats } from '../config/unit';
-import { barracksConfig, farmConfig, worldConfig } from '../config/buildings';
+import { barracksConfig, farmConfig, farmLimit, worldConfig } from '../config/buildings';
 import { gatheringConfig } from '../config/gathering';
 import {nodeRadius,resourceNodes,type GatheringState} from './gathering';
 import type { Position } from './movement';
@@ -71,8 +71,8 @@ export function placementObstacles(state: GatheringState): Footprint[] {
   ];
 }
 
-export function beginPlacement(state: PlacementState,kind:'academy'|'base'|'harbor'|'barracks'|'farm'|'forge'|'tower'|'wall'|'gate'='barracks'): PlacementState {
-  return kind==='academy'&&state.academy || kind==='base'&&(state.bases?.length??0)>=extraBaseConfig.maxCount || kind==='forge'&&state.forge || kind==='barracks'&&state.barracks || kind==='farm'&&(state.farms?.length??0)>=farmConfig.maxCount
+export function beginPlacement(state: PlacementState,kind:'academy'|'base'|'harbor'|'barracks'|'farm'|'forge'|'tower'|'wall'|'gate'='barracks',world:{width:number;height:number}=worldConfig): PlacementState {
+  return kind==='academy'&&state.academy || kind==='base'&&(state.bases?.length??0)>=extraBaseConfig.maxCount || kind==='forge'&&state.forge || kind==='barracks'&&state.barracks || kind==='farm'&&(state.farms?.length??0)>=farmLimit(world)
     ? state : { ...state, active:true,...(kind!=='barracks'?{kind}: {kind:undefined}) };
 }
 
@@ -89,7 +89,7 @@ function checkPlacement(state: PlacementState, point: Position, wood: number, ob
   if(kind==='academy'&&state.academy)return 'Academy already built';
   if(kind==='forge'&&state.forge)return uiText.forgeExists;
   if (kind==='barracks'&&state.barracks) return uiText.barracksExists;
-  if (kind==='farm'&&(state.farms?.length??0)>=farmConfig.maxCount) return uiText.farmLimit;
+  if (kind==='farm'&&(state.farms?.length??0)>=farmLimit(context?.map)) return uiText.farmLimit;
   const rect = buildingFootprint(point,kind);
   if (rect.x < 0 || rect.y < 0 || rect.x + rect.width > (context?.map.width??worldConfig.width) || rect.y + rect.height > (context?.map.height??worldConfig.height)) {
     return uiText.outsideTheWorld;

@@ -1,3 +1,4 @@
+import {populationState} from './population';
 import {createClassicMatch} from './testHelpers/classicMatch';
 import {factions} from '../config/factions';
 import {describe,it,expect} from 'vitest';
@@ -26,4 +27,12 @@ describe('validated local snapshots',()=>{
  it.each([['future version',(d:any)=>d.schemaVersion=saveConfig.schemaVersion+1],['old version',(d:any)=>d.schemaVersion=0],['config version',(d:any)=>d.configVersion='future'],['negative cargo',(d:any)=>d.state.gathering.units[0].cargo=-1],['missing order',(d:any)=>delete d.state.gathering.units[0].order],['duplicate ID',(d:any)=>d.state.gathering.units[1].id='unit-1'],['broken node',(d:any)=>d.state.gathering.units[0].order={kind:'gather',nodeId:'no-node'}],['counter',(d:any)=>d.state.production.nextUnitNumber=1],['false outcome',(d:any)=>d.state.outcome='victory'],['bad fog',(d:any)=>d.state.fog.teams.enemy.explored.pop()],['map mismatch',(d:any)=>d.state.map.obstacles=[]],['unsafe field',(d:any)=>d.state.gathering.units[0].constructor={bad:true}]])('atomically rejects %s',(_label,mutate)=>{const m=createMatch(),before=JSON.stringify(m),doc=JSON.parse(encodeSave(m,view));mutate(doc);expect(decodeSave(JSON.stringify(doc)).ok).toBe(false);expect(JSON.stringify(m)).toBe(before);});
  it('rejects malformed/oversized JSON and broken combat references',()=>{expect(decodeSave('{')).toMatchObject({ok:false});expect(decodeSave(' '.repeat(saveConfig.maxBytes+1)).ok).toBe(false);const doc=JSON.parse(encodeSave(createMatch(),view));doc.state.gathering.units[0]={...doc.state.gathering.units[0],kind:'soldier',hp:60,cargo:0,order:{kind:'attack',enemyId:'missing'}};expect(decodeSave(JSON.stringify(doc)).ok).toBe(false);});
  it('handles absent saves and quota/access failures without changing old slot or active match',()=>{let old:string|null=null;const storage={getItem:()=>old,setItem:(_key:string,value:string)=>{old=value;}};const m=createMatch();expect(readSave(storage)).toMatchObject({ok:false});expect(storeSave(storage,m,view).ok).toBe(true);expect(readSave(storage).ok).toBe(true);const before=old;expect(storeSave({...storage,setItem:()=>{throw Error('quota');}},m,view)).toMatchObject({ok:false,error:'quota'});expect(old).toBe(before);expect(readSave({...storage,getItem:()=>{throw Error('denied');}})).toMatchObject({ok:false});expect(storeSave(()=>{throw Error('access');},m,view)).toMatchObject({ok:false,error:'access'});expect(readSave(()=>{throw Error('access');})).toMatchObject({ok:false});});
+});
+
+it('preserves ten farms and supply on large maps and rejects an eleventh farm',()=>{
+ let m=createMatch('skirmish','normal',undefined,'plains128');
+ const farms=Array.from({length:10},(_,i)=>({id:`farm-${i+1}` as const,owner:'player' as const,hp:80,footprint:{x:512+i*96,y:768,width:64,height:64},construction:{remainingSeconds:0,builderId:null}}));
+ m={...m,placement:{...m.placement,farms,nextFarmNumber:11},map:{...m.map,obstacles:[...m.map.obstacles,...farms.map(f=>f.footprint)]}};
+ const copy=roundtrip(m);expect(copy.placement.farms).toHaveLength(10);expect(populationState(copy.gathering,copy.placement,[]).cap).toBe(58);
+ const doc=JSON.parse(encodeSave(m,view));doc.state.placement.farms.push({...farms[0],id:'farm-11'});expect(decodeSave(JSON.stringify(doc)).ok).toBe(false);
 });

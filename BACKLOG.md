@@ -45,6 +45,10 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
+Senaste uppdrag: höj farmgränsen till minst fem; större uppdrag får fler.
+Avgränsat tillägg, ingen annan roadmaptask startas. Se farmtillägget nedan.
+
+
 Senaste uppdrag: lägg till Next Mission på kampanjens vinstskärm så att nästa
 uppdrag startas direkt. Avgränsat tillägg; ingen annan roadmaptask startas.
 Se tilläggsavsnittet nedan för status och verifiering.
@@ -5443,3 +5447,21 @@ nästa uppdrag även efter avslutad Save/Load, bevarad identitet, defeat/final-s
 och retry PASS. Diff och browser-script-syntax PASS.800-bild
 visuellt granskad. Terminal-fixtur används för vinst, ingen mänsklig genomspelning
 hävdas. Ingen ny fullregression, CI/Pages/release. CSS/units.mjs/docs bevaras.
+
+## Tillägg — Minst fem farms och fler på stora kartor
+
+**Status:** Done (2026-10-07).
+
+Basgränsen höjs3→5. Kartor med minst3072 pixlar på någon sida har gräns10,
+för både missions och skirmish. Gemensam farmLimit används av byggstart,
+placeringsvalidering, action-panel, scenens disabled-state och Save-validering.
+Byggplatser räknas också mot gränsen; färdiga farms ger fortsatt5 supply var.
+Gamla saves förblir kompatibla. Inga kostnads-/AI- eller kartlayoutändringar.
+
+**Verifiering:** Population/placement/actionPanel/Save64/4 PASS; unit507/87
+PASS och build inklusive strict typecheck PASS (befintlig bundlevarning).
+Chrome800/1280 på Arena och Plains128: farmknapp efter3, småkartans stopp vid5,
+storkartans byggstart efter5/stopp vid10 och Save/Load av5/10 PASS.
+Byggnadssamlingarna i browser är explicita fixtures; integrationstest bygger
+faktiskt fem farms och validerar supply. Tiogårdssave ger58 supply och11:e avvisas.
+Diff/script-syntax/review PASS. Ingen ny fullregression, CI/Pages eller release.

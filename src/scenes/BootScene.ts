@@ -135,7 +135,7 @@ import { soldierStats, combatUnitStats, unitStats } from '../config/unit';
 import type { Position } from '../gameplay/movement';
 import { gatheringConfig } from '../config/gathering';
 import { productionConfig, soldierProductionConfig } from '../config/production';
-import { barracksConfig, farmConfig } from '../config/buildings';
+import { barracksConfig, farmConfig, farmLimit } from '../config/buildings';
 import {hasMainBase,selectedBase,trainBaseWorker} from '../gameplay/extraBases';
 import {workerToolsConfig} from '../config/workerTools';
 import {researchRecipe,researchLevel} from '../gameplay/research';
@@ -454,7 +454,7 @@ export class BootScene extends Phaser.Scene {
       if(campaignActionReason(this.currentMatch(),`build-${kind}`))return;
       if(kind==='harbor'&&this.navy?.harbor)return;
       if(buildingAvailability(factions[this.factions.player],kind==='tower'||kind==='wall'||kind==='gate'?'base':kind,technologyFor(this.currentMatch(),'player')))return;
-      this.placement = beginPlacement(this.placement,kind);
+      this.placement = beginPlacement(this.placement,kind,this.map);
       this.drag = undefined;
       this.dragBox.setVisible(false);
       this.previewPoint = this.worldPoint(this.input.activePointer);
@@ -913,7 +913,7 @@ export class BootScene extends Phaser.Scene {
     const academyButton=document.getElementById('build-academy') as HTMLButtonElement;academyButton.disabled=!this.gameplayActive()||this.placement.active||!!academy||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected);academyButton.setAttribute('aria-pressed',String(this.placement.active&&this.placement.kind==='academy'));
     (document.getElementById('build-base') as HTMLButtonElement).disabled=!this.gameplayActive()||this.placement.active||(this.placement.bases?.length??0)>=extraBaseConfig.maxCount||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected);
     this.farmButton.disabled=!this.gameplayActive()||this.placement.active
-      ||(this.placement.farms?.length??0)>=farmConfig.maxCount||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected);
+      ||(this.placement.farms?.length??0)>=farmLimit(this.map)||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected);
     document.getElementById('farm-status')!.textContent=(this.placement.farms??[]).map(f=>`${f.id}: ${Math.ceil(f.hp??combatConfig.farmHP)} HP · ${f.construction.remainingSeconds===0?uiText.complete5:f.construction.remainingSeconds.toFixed(1)+uiText.sRemaining}`).join(' · ') || uiText.selectAWorkerACompletedFarmAdds5;
     for(const [id,visual] of this.farmVisuals)if(!this.placement.farms?.some(f=>f.id===id)){visual.destroy();this.farmVisuals.delete(id);}
     for(const farm of this.placement.farms??[]) {

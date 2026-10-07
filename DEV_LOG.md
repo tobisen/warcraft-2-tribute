@@ -4145,3 +4145,31 @@ Save/Load av avslutad match PASS i slutlig browserkontroll; diff och script-synt
 kampanjgenomspelning eller ny fullregression/CI/Pages/release hävdas.
 Granskning: progression/identity, billig eligibility, event cleanup, keyboardfokus
 och befintlig restart/input PASS. Användarens CSS/assets/docs/ lämnas utanför commit.
+
+## 2026-10-07 — Farmgräns minst fem, tio på stora kartor
+
+Användaren begär minst5 farms och fler på större missions. Tidigare3 fanns i
+farmConfig, byggstart/placering, båda UIspärrarna och separat literal i Save.
+Basgräns5 och storkartsgräns10 (någon sida>=3072 pixlar) ligger nu i samma
+config och farmLimit. BootScene skickar aktuell kartstorlek till beginPlacement;
+placeringsvalidering, actionPanel och Save använder samma regel. Färdiga farms
+fortsätter ge5 supply; byggplatser räknas mot antal. Inga ändrade kostnader,
+kartlayouter eller AIproduktionspolicy. Äldre saves med<=3 förblir giltiga.
+
+`npm test -- src/gameplay/population.test.ts src/gameplay/placement.test.ts
+src/presentation/actionPanel.test.ts src/gameplay/save.test.ts`64/4 PASS.
+Populationstest bygger fem verkliga farms och mäter33 supply; gränstest täcker
+5/10 och entry/placement; Save-test roundtrippar10 farms/58 supply och avvisar11.
+Första populationstestet antog liten gräns på sin nu större classic-karta;
+testet rättades för explicit liten default och stora kartor och riktat omkört.
+`npm run test:unit`507/87 PASS; `npm run build` inklusive strict typecheck PASS
+med befintlig bundlevarning. Diff/browser-script-syntax/review PASS.
+
+`scripts/check-farm-limit.mjs` faktiskt Chrome800/1280 på Arena/Plains128 PASS:
+UI kan börja fjärde farm, liten gräns5, stor gräns10 inklusive byggstart efter5,
+Save/Load av5/10 och IDcounter. Browser använder explicit completed-farm-fixtur,
+inte mänsklig ekonomigenomspelning. Första browserförsöket använde liten karta
+för tiogränsen; nästa hittade harnessklick på meny under pause-backdrop. Explicit
+kartval och korrekt redan öppen pausmeny gav slutlig PASS för båda kartstorlekarna.
+Ingen ny fullregression/CI/Pages/release eller bred kampanjsimulering hävdas.
+Användarens CSS, units.mjs, docs/ och :memory:.ses bevaras utanför commit.
