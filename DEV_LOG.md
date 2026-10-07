@@ -4222,3 +4222,41 @@ referensen togs bort och slutlig browser/unit/build omkördes till PASS. Tidigar
 checks återanvänds endast där senare ändringar inte påverkar systemen.
 Ingen ny fullregression/CI/Pages/release. Användarens CSS, units.mjs, docs/ och
 :memory:.ses är orörda av denna ändring och lämnas utanför commit.
+
+
+## 2026-10-07 — Tio gånger mer guld i alla gruvor
+
+Primary, authored extras, regions, organic och extensions får10× stock. GoldConfig
+anger3000 och stockMultiplier10. Trä, kostnader, bank och gathering-rate bevaras.
+GatheringState.expandedGoldStock=true skiljer nya sparningar från gamla utan
+formatversionsbyte. Decode lägger till9× ursprungsstock före validering på alla
+goldnoder och enemyKnowledge; tömda gruvor får nytt guld. Utvunnet, saldon och
+ledger förblir oförändrade; upprepad Load ger ingen ytterligare ökning. Ogiltig
+markör/legacy-overstock avvisas. AI-bankgränsen inkluderar all goldstock och
+ledger verifierar fortsatt mined/spent/cargo. Nya config-/integrationstester
+klassificerade i manifestet; befintliga fasta stockassertions uppdaterade.
+
+Tidiga matchStats-körningar gav timeout35–37s. Konkret orsak: withGateRules
+skapade ny map även utan regeländring och invalidiserade traffic WeakMap-cache.
+Behåll nu identiteten när obstacle-/passage-regler är samma. Regressionstest
+för identiteten ingår; matchStats8/1 PASS6.62s utan ändrad tidsgräns.
+
+Riktade goldStock/gold/save/enemyGathering/enemyProduction/multiplePlayers/
+gates/maps99/9 PASS50.30s före sista AI-bankgränsen (sex betalda finite-resource
+skirmishes arena/forest/river × crown/clans med conservation och Save).
+Slutlig goldStock/save/enemyGathering/enemyProduction/gates63/5 PASS4.39s;
+nya testet verifierar legitim AI-bank över primary-stock efter flera gruvor.
+Kust- och öars riktade resursfall vardera1 PASS. Slutlig npm run test:unit510/89
+PASS15.52s och npm run build med strict typecheck PASS755ms; befintlig
+bundlevarning kvarstår. Manifest, script-syntax och git diff --check PASS.
+
+scripts/check-gold-stock.mjs: faktisk Chrome800/1280 i uttryckligen tomma
+isolerade kontexter med temporär profil, Arena/Frontier/Coast/Plains128 stock
+och selectiontext PASS. Endast egen testsparning används: gammal slot efter5
+utvunnet guld laddas med2995 och gathered5; andra Save/Load ökar inte stock.
+Browser körd före sista AI-bankgränsen; dess oförändrade flöden återanvänds,
+slutlig AI-gräns täcks av integrationen. Automatisk approval review avvisade
+första browserförsöket då beskrivningen kunde innebära användarslot; inget kördes.
+Explicit tomma kontexter infördes och säkrare separat browserkörning godkändes.
+Ingen användarsparning berördes. Ingen ny fullregression/CI/Pages/release eller
+mänsklig balanskontroll. Användarens CSS/units.mjs/docs/:memory:.ses bevaras.

@@ -42,5 +42,5 @@ export function organicResources(id:MapId,existing:readonly MapResource[],terrai
  if(contains(c,r,[shape[0]+2,shape[1]+1,2,2.5],0))continue;
  occupied.add(`${c},${r}`);nodes.push({id:`organic-${i}-tree-${c}-${r}`,resource:'wood',tree:true,position:{x:(c+.5)*32,y:(r+.5)*32},amount:8});
  }
- for(const [i,[c,r]]of [[23,51],[43,73],[72,25],[104,64],[73,105]].entries()){if(c>=size-4||r>=size-4||blocked(c,r))continue;const position={x:(c+.5)*32,y:(r+.5)*32};if(existing.some(n=>Math.hypot(n.position.x-position.x,n.position.y-position.y)<128)||nodes.some(n=>Math.hypot(n.position.x-position.x,n.position.y-position.y)<96))continue;nodes.push({id:`organic-mine-${i}`,resource:'gold',mine:true,position,amount:250});}return nodes;
+ for(const [i,[c,r]]of [[23,51],[43,73],[72,25],[104,64],[73,105]].entries()){if(c>=size-4||r>=size-4||blocked(c,r))continue;const position={x:(c+.5)*32,y:(r+.5)*32};if(existing.some(n=>Math.hypot(n.position.x-position.x,n.position.y-position.y)<128)||nodes.some(n=>Math.hypot(n.position.x-position.x,n.position.y-position.y)<96))continue;nodes.push({id:`organic-mine-${i}`,resource:'gold',mine:true,position,amount:2500});}return nodes;
 }

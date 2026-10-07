@@ -11,4 +11,4 @@ export const gatheringConfig = {
   baseSize: 48,
 };
 
-export const goldConfig = { initialAmount:300, position:{x:850,y:220}, resource:'gold' as const };
+export const goldConfig = { initialAmount:3000,stockMultiplier:10, position:{x:850,y:220}, resource:'gold' as const };

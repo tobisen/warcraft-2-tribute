@@ -41,10 +41,10 @@ describe('typed resource delivery',()=>{
   it('requires a reachable mine and preserves clean resource state on restart',()=>{
     let s=createMatch().gathering;const m=createMatch().map;
     s.units=[{...s.units[0],selected:true}];s.units=orderUnits(s.units,s.gold!.position,s.gold!);
-    s=updateGathering(s,1,m);expect(s.gold!.remaining).toBe(300);expect(s.units[0].cargo).toBe(0);
+    s=updateGathering(s,1,m);expect(s.gold!.remaining).toBe(3000);expect(s.units[0].cargo).toBe(0);
     const wall={...m,revision:1,obstacles:[...m.obstacles,{x:800,y:0,width:32,height:m.height}]};
     s=updateGathering(s,20,wall);expect(s.units[0].navigation?.status).toBe('blocked');expect(s.goldBalance).toBe(0);
-    const fresh=createMatch();expect(fresh.gathering.goldBalance).toBe(0);expect(fresh.gathering.gold!.remaining).toBe(300);
+    const fresh=createMatch();expect(fresh.gathering.goldBalance).toBe(0);expect(fresh.gathering.gold!.remaining).toBe(3000);
   });
   it('resource clicks preserve soldier orders in mixed selection',()=>{
     const s=fixture();s.units.push({id:'army',kind:'soldier',position:{x:100,y:0},target:{x:200,y:0},selected:true,hp:60,cargo:0,order:{kind:'move'}});

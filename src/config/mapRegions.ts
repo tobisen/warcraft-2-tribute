@@ -16,7 +16,7 @@ export function regionDefinition(id:MapId,original:MapDefinition,design?:Terrain
 export function regionResourceNodes(id:MapId):MapResource[]{const bases=[regionBases[id],...(['plains96','plains128'].includes(id)?[{x:regionThirdStart.x-48,y:regionThirdStart.y-48,width:96,height:96}]:[])];const result:MapResource[]=[];
  for(const [index,b]of bases.entries())for(const [site,point]of [{x:b.x,y:b.y},regionExpansion(b,id)].entries()){
   for(let r=0;r<4;r++)for(let c=0;c<4;c++)if(!(r===0&&c===0))result.push({id:`region-${index}-${site}-tree-${c}-${r}`,tree:true,resource:'wood',position:{x:point.x-176+c*32,y:point.y-176+r*32},amount:24});
-  result.push({id:`region-${index}-${site}-mine`,mine:true,resource:'gold',position:{x:point.x+176,y:point.y-64},amount:300});
+  result.push({id:`region-${index}-${site}-mine`,mine:true,resource:'gold',position:{x:point.x+176,y:point.y-64},amount:3000});
  }return result;
 }
 export function regionProtected(c:number,r:number,id:MapId):boolean{const b=regionBases[id],sites=[b,regionExpansion(b,id),...(['plains96','plains128'].includes(id)?[{x:regionThirdStart.x-48,y:regionThirdStart.y-48},regionExpansion({x:regionThirdStart.x-48,y:regionThirdStart.y-48,width:96,height:96},id)]:[])];return sites.some(p=>c>=p.x/32-8&&c<=p.x/32+9&&r>=p.y/32-8&&r<=p.y/32+9);}

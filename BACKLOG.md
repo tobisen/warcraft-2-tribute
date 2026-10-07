@@ -45,6 +45,9 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
+Senaste uppdrag: öka guldet rejält i alla gruvor. Avgränsat tillägg klart;
+ingen annan roadmaptask startas. Se guldtillägget nedan.
+
 Senaste uppdrag: sammanhängande walls/gates och automatisk passage för egna
 trupper. Avgränsat tillägg; ingen annan roadmaptask startas. Se murtillägget nedan.
 
@@ -5496,3 +5499,23 @@ fixtur med port/hörn/korsning, egen simulerad passage utan toggle, hostile bloc
 Save/Load och förstörelseuppdatering PASS; båda bilder visuellt granskade.
 Grannlogik testas på100-cellskedja; detta hävdar inte byggande över befintlig32-gräns.
 Ingen mänsklig helmatch/balans, ny fullregression, CI/Pages eller release hävdas.
+
+
+## Tillägg — Tio gånger mer guld i alla gruvor
+
+**Status:** Done (2026-10-07).
+
+Alla primary/extra och genererade regionala/organic/expansion-gruvor har10×
+tidigare stock: exempelvis300→3000 och150→1500. Trä, startbank, kostnader och
+utvinningstakt ändras inte. Gamla sparningar uppgraderas en gång vid Load:
+extra stock läggs till utan att tidigare utvinning, saldo eller stats försvinner.
+Även tömda och ihågkomna gruvor uppgraderas. AI-bankens Save-gräns inkluderar
+alla kartans gruvor; faktisk utvinning valideras fortfarande via ledger.
+
+**Verifiering:** Riktade99/9 PASS inklusive sex betalda finite-resource matcher;
+efter sista AI-bankändringen berörda integrationer63/5 PASS. MatchStats8/1 och
+kust-/öarnas resursfall PASS. Slutlig unit510/89, strict build och diff PASS.
+Chrome i tomma isolerade kontexter800/1280: Arena/Frontier/Coast/Plains128,
+stock/selectiontext och testsparningens engångsmigration med bevarat utvunnet
+guld PASS. Konkret gate-cache-regression upptäckt av matchStats rättad utan
+höjd timeout. Ingen ny fullregression, mänsklig balans, CI/Pages eller release.

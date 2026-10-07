@@ -68,3 +68,8 @@ it('does not accept duplicate legacy gate obstacle references during Save migrat
  const m=gate(),doc=JSON.parse(encodeSave(m,{camera:{x:0,y:0},building:null}));doc.state.map.obstacles.push(m.placement.defenses![0].footprint);
  expect(decodeSave(JSON.stringify(doc)).ok).toBe(false);
 });
+
+it('retains the map and traffic cache identity when automatic passage rules have not changed',()=>{
+ const plain=createMatch();expect(withGateRules(plain)).toBe(plain);
+ const automatic=withGateRules(gate());expect(withGateRules(automatic).map).toBe(automatic.map);
+});

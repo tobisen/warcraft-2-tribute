@@ -28,9 +28,9 @@ describe('native pixel exports and logical anchors',()=>{
   const map=createMap();for(let row=0;row<30;row++)for(let col=0;col<40;col++){const frame=terrainFrame(col,row);expect(manifest.frames[frame]).toMatchObject({width:32,height:32,anchor:{x:0,y:0}});expect(blockedTile(map,{column:col,row})).toBe(frame==='rock'||frame==='water');}
  });
  it('blends only exposed terrain edges without seams inside patches',()=>{expect(terrainEdges(3,3)).toEqual(['edge-rock-n','edge-rock-w']);expect(terrainEdges(4,4)).toEqual([]);expect(terrainEdges(0,0)).toEqual([]);expect(terrainEdges(3,14)).toContain('edge-water-n');});
- it('maps observed depletion and preserves existing amounts/footprints/anchors',()=>{
+ it('maps observed depletion and keeps resource stock and logical footprints/anchors consistent',()=>{
   expect(resourceFrame('wood',1,true)).toBe('wood-available');expect(resourceFrame('wood',0,true)).toBe('wood-depleted');expect(resourceFrame('gold',0,true)).toBe('gold-depleted');expect(resourceFrame('gold',0,false)).toBe('gold-available');expect(resourceOrigin).toEqual({x:.5,y:.625});
-  for(const type of ['wood','gold'])for(const state of ['available','depleted'])expect(manifest.frames[`${type}-${state}`]).toMatchObject({width:64,height:64,anchor:{x:32,y:40},logicalFootprint:{width:gatheringConfig.nodeRadius*2,height:gatheringConfig.nodeRadius*2}});expect(gatheringConfig.initialWood).toBe(400);expect(goldConfig.initialAmount).toBe(300);
+  for(const type of ['wood','gold'])for(const state of ['available','depleted'])expect(manifest.frames[`${type}-${state}`]).toMatchObject({width:64,height:64,anchor:{x:32,y:40},logicalFootprint:{width:gatheringConfig.nodeRadius*2,height:gatheringConfig.nodeRadius*2}});expect(gatheringConfig.initialWood).toBe(400);expect(goldConfig.initialAmount).toBe(3000);
  });
 });
 

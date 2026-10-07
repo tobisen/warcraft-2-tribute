@@ -57,6 +57,7 @@ export interface ResourceNode {
   remaining: number;
 }
 export interface GatheringState {
+  expandedGoldStock?:true;
   /** Derived from this owner's research; not an independent saved stat. */
   workerToolsLevel?:number;
   /** Derived mission admission policy; not serialized. */

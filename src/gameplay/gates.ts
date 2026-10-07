@@ -9,9 +9,11 @@ const same=(a:Footprint,b:Footprint)=>a.x===b.x&&a.y===b.y&&a.width===b.width&&a
 /** Completed friendly gates are passable even while their visual doors are closed. */
 export function withGateRules(m:MatchState):MatchState {
  const gates=(m.placement.defenses??[]).filter(t=>t.kind==='gate'&&t.hp>0&&t.construction.remainingSeconds===0);
+ if(!gates.length&&!m.map.enemyPassageBlocks?.length)return m;
  const obstacles=m.map.obstacles.filter(o=>!gates.some(t=>same(o,t.footprint)));
  const map=obstacles.length===m.map.obstacles.length?m.map:replaceObstacles(m.map,obstacles);
  const blocks=m.aiContext?.gateFriendly?[]:gates.map(t=>t.footprint);
+ if(map===m.map&&(m.map.enemyPassageBlocks?.length??0)===blocks.length&&blocks.every((b,i)=>same(b,m.map.enemyPassageBlocks![i])))return m;
  return {...m,map:{...map,enemyPassageBlocks:blocks.length?blocks:undefined}};
 }
 /** Door animation follows friendly proximity; routing never waits for the door animation. */

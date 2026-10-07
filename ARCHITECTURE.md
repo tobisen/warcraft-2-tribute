@@ -1899,3 +1899,15 @@ regions-solo-matcher; gamla geometrier/multiplayer bevaras. Bossrecords har
 inte unit-ID-/produktionscounterkrav eftersom de ligger utanför arméerna.
 BootScene adapterar originalatlas, HP/namn/range/poses/corpse/loot och vanliga
 impact-/audiosnapshots. Kroppen används i byggpreview/admission.
+
+
+## Guldlager och äldre sparningar — 2026-10-07
+
+Alla konfigurerade och genererade gruvor har tio gånger tidigare stock;
+goldConfig.stockMultiplier används vid migration. Nya matcher markerar
+GatheringState.expandedGoldStock=true. Decode uppgraderar om markören saknas:
+remaining += ny configstock − tidigare configstock, även för enemyKnowledge.
+Ordinarie nod-/ekonomivalidering följer och bevarar mined-statistik samt ledger.
+Markören förhindrar dubbel migration. AI-bankens goldgräns omfattar alla noder.
+withGateRules återanvänder MatchState/map när passage-regler är oförändrade,
+så traffic-cache inte invalidiseras varje simulationsteg.

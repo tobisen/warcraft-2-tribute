@@ -25,7 +25,7 @@ export function extensionResources(id:MapId,terrain:readonly TerrainPatch[],exis
    if((dx===0||dx===6)&&(dy===0||dy===4))continue;
    const position={x:(site.column+dx+.5)*32,y:(site.row+dy+.5)*32};if(!blocked(position.x,position.y))result.push({id:`expansion-${index+1}-tree-${dx}-${dy}`,resource:'wood',tree:true,position,amount:20});
   }
-  const position={x:(site.column+10+.5)*32,y:(site.row+7+.5)*32};if(!blocked(position.x,position.y))result.push({id:`expansion-${index+1}-gold`,resource:'gold',mine:true,position,amount:150});
+  const position={x:(site.column+10+.5)*32,y:(site.row+7+.5)*32};if(!blocked(position.x,position.y))result.push({id:`expansion-${index+1}-gold`,resource:'gold',mine:true,position,amount:1500});
  }
  return result;
 }

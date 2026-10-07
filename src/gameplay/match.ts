@@ -138,6 +138,7 @@ export function createMatch(scenario:MatchScenario='survival',difficulty:Difficu
     outcome: 'playing',paused:false,controlGroups:{},scenario,difficulty,research:createResearch(),
     map: createMap(mapId,undefined,'trees','expanded',world==='classic'||scenario==='siege-test'?undefined:'regions'),
     gathering: {
+      expandedGoldStock:true,
       faction:factions.player,
       units: arenaConfig.workers.map((position, index) => ({
         kind: 'worker',owner:'player',hp:factionDefinitions[factions.player].units.worker.hp, id: `unit-${index + 1}`, position: { ...position }, target: { ...position },
