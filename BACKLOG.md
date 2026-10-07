@@ -45,6 +45,9 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
+Senaste uppdrag: walls/gates med1×1 placeringsruta. Avgränsat tillägg;
+ingen annan roadmaptask startas. Se senaste murtillägget nedan.
+
 Senaste uppdrag: öka guldet rejält i alla gruvor. Avgränsat tillägg klart;
 ingen annan roadmaptask startas. Se guldtillägget nedan.
 
@@ -5519,3 +5522,22 @@ Chrome i tomma isolerade kontexter800/1280: Arena/Frontier/Coast/Plains128,
 stock/selectiontext och testsparningens engångsmigration med bevarat utvunnet
 guld PASS. Konkret gate-cache-regression upptäckt av matchStats rättad utan
 höjd timeout. Ingen ny fullregression, mänsklig balans, CI/Pages eller release.
+
+
+## Tillägg — Walls och gates på1×1 ruta
+
+**Status:** Done (2026-10-07).
+
+Nya walls/gates använder en32×32-ruta vid preview och placering. Wall var redan32;
+gate ändras64→32, inklusive grafiken. Anslutningar och automatisk passage gäller
+fortfarande. Kostnader/HP/byggtid bevaras. Äldre sparningar med64px-portar laddas
+med sin ursprungliga bredd så att befintliga murkedjor förblir intakta.
+
+**Verifiering:** gates/fortifications/placement/Save63/4 PASS, unit511/89 PASS,
+strict build och diff PASS. Faktisk isolerad Chrome800/1280: enruts-footprints,
+anslutningar/hörn/korsning, simulerad egen passage, hostile block, Save/Load och
+förstörelse PASS; båda bilder granskade. Browsermurar är explicita fixtures;
+gameplaytestet placerar port med ordinarie placeTower. Ingen ny fullregression,
+CI/Pages/release eller mänsklig balanskontroll.
+
+Berörda tower/repair/team/multiplePlayers-integrationer42/4 PASS17.18s.

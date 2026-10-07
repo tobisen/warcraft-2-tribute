@@ -30,8 +30,8 @@ export function fortificationTexture(scene:Phaser.Scene,t:Defense,masks:readonly
  const texture=scene.textures.createCanvas(key,128,128)!;texture.setFilter(Phaser.Textures.FilterMode.NEAREST);const ctx=texture.context;
  if(t.kind==='wall'&&t.construction.remainingSeconds===0)wallCell(ctx,48,48,masks[0]??0,source.endsWith('-damaged'));
  else{
-  if(t.kind==='gate'&&t.construction.remainingSeconds===0)for(let i=0;i<masks.length;i++)if(masks[i]&5)wallCell(ctx,32+i*32,48,masks[i]&5,false);
-  const frame=scene.textures.getFrame('buildings',source);ctx.drawImage(frame.source.image as CanvasImageSource,frame.cutX,frame.cutY,frame.cutWidth,frame.cutHeight,0,0,128,128);
+  if(t.kind==='gate'&&t.construction.remainingSeconds===0)for(let i=0;i<masks.length;i++)if(masks[i]&5)wallCell(ctx,64-t.footprint.width/2+i*32,48,masks[i]&5,false);
+  const frame=scene.textures.getFrame('buildings',source);ctx.drawImage(frame.source.image as CanvasImageSource,frame.cutX,frame.cutY,frame.cutWidth,frame.cutHeight,t.kind==='gate'&&t.footprint.width===32?32:0,0,t.kind==='gate'&&t.footprint.width===32?64:128,128);
  }
  texture.refresh();return key;
 }

@@ -4,6 +4,7 @@
 
 | Beslut | Innebörd och motiv |
 | --- | --- |
+| Walls/gates på en ruta (2026-10-07) | Ny placering är32×32 för båda. Portgrafik och anslutningar följer bredden; äldre sparade64px-portar behålls för intakta murkedjor. |
 | Mer guld i alla gruvor (2026-10-07) | Alla gruvor får10× stock. Trä och utvinningstakt bevaras. Gamla saves får extra stock en gång och behåller utvunnet guld/stats. |
 | Sammanhängande murar och automatiska portar (2026-10-07) | Intilliggande walls/gates ansluter på tile-grid. Färdiga egna portar routas automatiskt för egna/allierade trupper och öppnas visuellt vid närhet; fiender blockeras. Manuell portkontroll behövs inte och tas bort ur spelarflödet. Ofärdiga gate-sites blockerar fortfarande. |
 | Browserbaserat singleplayer-RTS | Inspiration från Warcraft 2, AoE2 och C&C; scope hålls till en lokal spelupplevelse. |

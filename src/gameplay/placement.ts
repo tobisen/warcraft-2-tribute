@@ -50,7 +50,7 @@ export interface PlacementState {
 }
 
 export function buildingFootprint(point: Position,kind:'academy'|'base'|'harbor'|'barracks'|'farm'|'forge'|'tower'|'wall'|'gate'='barracks'): Footprint {
-  if(kind==='tower'||kind==='wall'||kind==='gate')return {x:Math.floor(point.x/32)*32,y:Math.floor(point.y/32)*32,width:kind==='gate'?64:32,height:32};
+  if(kind==='tower'||kind==='wall'||kind==='gate')return {x:Math.floor(point.x/32)*32,y:Math.floor(point.y/32)*32,width:defenseConfig[kind].size,height:32};
   const config=kind==='academy'?academyConfig:kind==='base'?extraBaseConfig:kind==='harbor'?navyConfig.harbor:kind==='forge'?forgeConfig:kind==='farm'?farmConfig:barracksConfig;
   const size = config.tileSize * config.footprintTiles;
   return {

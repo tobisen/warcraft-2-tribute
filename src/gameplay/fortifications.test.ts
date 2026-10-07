@@ -14,3 +14,9 @@ it('joins corners, T-junctions, crossings and both gate cells; rebuilds after de
  expect(fortificationConnections([center,wall(6,96,96),wall(7,64,32,'tower')]).get(center.id)).toEqual([0]);
  expect(fortificationConnections([wall(8,64,64,'gate'),wall(9,64,32),wall(10,96,96)]).get('gate-8')).toEqual([3,12]);
 });
+
+it('joins a single-cell gate seamlessly to walls on all four sides',()=>{
+ const gate=wall(1,64,64,'gate');gate.footprint.width=32;
+ const neighbors=[wall(2,32,64),wall(3,96,64),wall(4,64,32),wall(5,64,96)];
+ const masks=fortificationConnections([gate,...neighbors]);expect(masks.get(gate.id)).toEqual([15]);expect(masks.get('wall-2')).toEqual([2]);expect(masks.get('wall-3')).toEqual([8]);
+});

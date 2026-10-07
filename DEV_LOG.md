@@ -4260,3 +4260,27 @@ första browserförsöket då beskrivningen kunde innebära användarslot; inget
 Explicit tomma kontexter infördes och säkrare separat browserkörning godkändes.
 Ingen användarsparning berördes. Ingen ny fullregression/CI/Pages/release eller
 mänsklig balanskontroll. Användarens CSS/units.mjs/docs/:memory:.ses bevaras.
+
+
+## 2026-10-07 — En ruta för walls och gates
+
+Gate.size64→32; buildingFootprint använder gemensam defenseConfig.size.
+Wall är fortsatt32×32. Gate-rendering komprimeras horisontellt och anslutnings-
+armar centreras efter footprint; gamla64px-portar behåller sin art/anslutning.
+Save-validering accepterar32 och explicit äldre64 endast för gate; inga murar
+flyttas vid Load. Ny placering använder alltid32. Befintliga passage-/Save-tester
+anpassade till cellens centrum496 och väggkedjans avslut512; nytt enruts-
+anslutningstest samt legacy64px-Save-test. Review utan kvarstående fynd.
+
+npm test -- gates/fortifications/placement/save63/4 PASS2.57s.
+npm run test:unit511/89 PASS16.42s; npm run build inklusive strict typecheck
+PASS909ms, befintlig bundlevarning. Script-syntax/diff PASS.
+scripts/check-single-cell-fortifications.mjs använder tomma isolerade Chrome-
+kontexter med egna testsaves. Faktisk800/1280 PASS:32×32 snap för wall/gate,
+26-segments fixture, anslutningar/hörn/korsning, simulerad egen passage genom
+smal port, hostile block, Save/Load och destruction-refresh. Båda bilder
+/tmp/w2t-single-cell-800.png och1280.png visuellt granskade. Inget påstående om
+mänsklig placement-/helmatchgranskning; faktisk placeTower testas i integration.
+Ingen ny fullregression/CI/Pages/release. CSS/units.mjs/docs/:memory:.ses bevaras.
+
+Berörda tower/repair/team/multiplePlayers-integrationer42/4 PASS17.18s.

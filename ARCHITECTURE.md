@@ -1911,3 +1911,12 @@ Ordinarie nod-/ekonomivalidering följer och bevarar mined-statistik samt ledger
 Markören förhindrar dubbel migration. AI-bankens goldgräns omfattar alla noder.
 withGateRules återanvänder MatchState/map när passage-regler är oförändrade,
 så traffic-cache inte invalidiseras varje simulationsteg.
+
+
+## Enruta för murar och portar — 2026-10-07
+
+buildingFootprint använder defenseConfig.size: nya walls/gates är32×32 på32px-grid.
+Gate-art komprimeras horisontellt till en cell; anslutningsarmar centreras efter
+faktisk footprint. Maskerna stödjer både nya enrutsportar och äldre64px-portar.
+Decode tillåter explicit äldre gatebredd64 utan att flytta befintliga murar;
+nybyggande använder alltid32. Automatisk teamrouting följer faktisk footprint.
