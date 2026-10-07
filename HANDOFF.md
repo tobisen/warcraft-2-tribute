@@ -834,3 +834,26 @@ Native44×44 klickytor/36px ikoner; breda kontextknappar64×64/40px och kortnamn
 Slutregression hittade blockerad vågspawn, gamla resurstotaler i matchStats, fyndplatser som hamnat i hinder/utanför mindre Arena och ändrade organic63-regler. Rättade; historiska koordinat-/deadlinefixtures använder explicit classic, assertions kvarstår. Riktade component147/15, metadata149/7, discoveries/organic/mapRegions24/3 och modern kampanjquality8/1 PASS. Genuine63 terrain/resurs-ID/bas testade. Faktisk workerutforskning/rekryt/engångsbonus/SaveLoad800/1280 och naturlig betald utpost/gathering/produktion/försvar PASS; naval landväg272→2250/2057px.
 
 Slutlig npm test1603/188 PASS551.00s, unit475/85 PASS20.92s, build med strict typecheck PASS425ms, diff/manifest/scriptsyntax/15 docreferenser PASS. Egen review utan blockerande kodfynd; docs efter kodchecks. Bilder/alla nio kartor/40 campaignstarter och undantag finns i MAP_CORRECTION.md. Grafiken är fortfarande enklare och mer regelbunden än Warcraft II; originalbilagorna saknas. Ingen mänsklig balans-/tempo-/ljudclaim. Ursprunglig timeoutfix370cf02 faktiskt grön CI; nya kart-/Pages-körningar skiljs från detta. A4bd5737/B509fb79 pushade, C hash rapporteras efter push. CSS/units.mjs/docs bevarade. Stopp efter korrigeringen.
+
+
+## 2026-10-08 — Release0.4.0: slutlig lokal regression grön
+
+Releasecommit02e2396 är pushad till origin/main. Exakt separat checkout med
+användarens lokala CSS/units.mjs/docs/:memory:.ses exkluderade verifierad:
+`npm test`1706/199 PASS830.01s efter rättade gamla stockassertions. Detta ersätter
+den tidigare lokala fullsuite-felkörningens aktuella status; den behålls som
+korrekt felsökningshistorik. Unit511/89 PASS och strict build PASS (slutlig
+precommit615ms; exakt releasebuild efter commit också PASS). Node_modules från
+samma lock återanvänds lokalt; CI gör npm ci. Browser på exakt0.4.0/Build02e2396
+800/1280 samt1600 Native/Fit PASS för version/changelog, kampanj/lag/skirmish,
+Save/Load, pause/replay/menu/fullscreen/upplösningar/reload/assets. Tomma
+isolerade kontexter, enbart testsparningar; inga runtime-/assetfel.
+
+[Faktisk releasepipeline](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37692443176)
+är fortfarande pending bakom äldre98128bc/37687789454. Ingen CI/Pages-PASS eller
+publicerad0.4.0 hävdas ännu. API-inloggning saknas för att avbryta den äldre
+körningen; credential lookup gav ingen credential och visade inga hemligheter.
+RTS-213 förblir In Progress tills faktisk publicering är verifierad.
+Ingen ny roadmaptask eller GitHub-release/tagpraxis startas; befintlig
+produktversion/Pages-praktik gäller. Återstående mänsklig kampanjtid/balans och
+temporär enhetsgrafik är fortsatt dokumenterade begränsningar.

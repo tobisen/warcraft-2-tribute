@@ -205,3 +205,26 @@ Releasecommit6a96227 pushad utan force. Faktisk [CI/Pages37355621323](https://gi
 Terminala mål/eliminering är fixtures, inte mänsklig genomspelning.179:s betalda åtta Beginner/Normal-genomspelningar är separat belägg. Mänskliga20–40min/timing/balans/fun/lång mixlyssning och tidigare slutliga flygar-/voiceassets återstår. Dessa markeras inte verifierade. Tidigare pending-publiceringstext ovan beskriver läget före releasepush och ersätts av denna slutstatus.
 
 Slutlig kodverifiering: full1458/176 PASS415.95s, unit465/84 PASS10.76s, strict typecheck/build PASS388ms, diff/manifest/länkar PASS. Slutöverlämningen ändrar endast Markdown; ingen ny test/build-körning, beläggen återanvänds för oförändrad kod. HANDOFF/BACKLOG/README/QUALITY_REVIEW uppdaterade, stopp efter180 utan nya tasks/karteditor. UserCSS/docs bevaras och ingår inte i publicerad kod.
+
+
+## 2026-10-08 — Release0.4.0: slutlig lokal regression grön
+
+Releasecommit02e2396 är pushad till origin/main. Exakt separat checkout med
+användarens lokala CSS/units.mjs/docs/:memory:.ses exkluderade verifierad:
+`npm test`1706/199 PASS830.01s efter rättade gamla stockassertions. Detta ersätter
+den tidigare lokala fullsuite-felkörningens aktuella status; den behålls som
+korrekt felsökningshistorik. Unit511/89 PASS och strict build PASS (slutlig
+precommit615ms; exakt releasebuild efter commit också PASS). Node_modules från
+samma lock återanvänds lokalt; CI gör npm ci. Browser på exakt0.4.0/Build02e2396
+800/1280 samt1600 Native/Fit PASS för version/changelog, kampanj/lag/skirmish,
+Save/Load, pause/replay/menu/fullscreen/upplösningar/reload/assets. Tomma
+isolerade kontexter, enbart testsparningar; inga runtime-/assetfel.
+
+[Faktisk releasepipeline](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37692443176)
+är fortfarande pending bakom äldre98128bc/37687789454. Ingen CI/Pages-PASS eller
+publicerad0.4.0 hävdas ännu. API-inloggning saknas för att avbryta den äldre
+körningen; credential lookup gav ingen credential och visade inga hemligheter.
+RTS-213 förblir In Progress tills faktisk publicering är verifierad.
+Ingen ny roadmaptask eller GitHub-release/tagpraxis startas; befintlig
+produktversion/Pages-praktik gäller. Återstående mänsklig kampanjtid/balans och
+temporär enhetsgrafik är fortsatt dokumenterade begränsningar.

@@ -5555,3 +5555,26 @@ Alla övriga fullregressionsresultat återanvänds eftersom bara testvärden än
 Detta är inte ett nytt helt grönt lokalt fullsuite-run; slutlig fullsuite körs i CI
 före Pages-deploy. Unit511/89 och production-browser PASS återanvänds från
 oförändrad spelkod. Commit/push av releasekandidaten följs av faktisk CI/Pages.
+
+
+## 2026-10-08 — Release0.4.0: slutlig lokal regression grön
+
+Releasecommit02e2396 är pushad till origin/main. Exakt separat checkout med
+användarens lokala CSS/units.mjs/docs/:memory:.ses exkluderade verifierad:
+`npm test`1706/199 PASS830.01s efter rättade gamla stockassertions. Detta ersätter
+den tidigare lokala fullsuite-felkörningens aktuella status; den behålls som
+korrekt felsökningshistorik. Unit511/89 PASS och strict build PASS (slutlig
+precommit615ms; exakt releasebuild efter commit också PASS). Node_modules från
+samma lock återanvänds lokalt; CI gör npm ci. Browser på exakt0.4.0/Build02e2396
+800/1280 samt1600 Native/Fit PASS för version/changelog, kampanj/lag/skirmish,
+Save/Load, pause/replay/menu/fullscreen/upplösningar/reload/assets. Tomma
+isolerade kontexter, enbart testsparningar; inga runtime-/assetfel.
+
+[Faktisk releasepipeline](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37692443176)
+är fortfarande pending bakom äldre98128bc/37687789454. Ingen CI/Pages-PASS eller
+publicerad0.4.0 hävdas ännu. API-inloggning saknas för att avbryta den äldre
+körningen; credential lookup gav ingen credential och visade inga hemligheter.
+RTS-213 förblir In Progress tills faktisk publicering är verifierad.
+Ingen ny roadmaptask eller GitHub-release/tagpraxis startas; befintlig
+produktversion/Pages-praktik gäller. Återstående mänsklig kampanjtid/balans och
+temporär enhetsgrafik är fortsatt dokumenterade begränsningar.
