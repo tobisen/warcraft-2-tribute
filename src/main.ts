@@ -18,6 +18,7 @@ import './presentation/matchWorkspace.css';
 import './presentation/actionGroups.css';
 import './presentation/helpViews.css';
 import './presentation/minimapOverlay.css';
+import './presentation/selectionNames.css';
 import Phaser from 'phaser';
 import { BootScene } from './scenes/BootScene';
 import { viewportConfig } from './config/camera';

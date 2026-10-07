@@ -1,5 +1,22 @@
 # Development log
 
+## RTS-217 — Selection-namn och synlig gruppsammansättning, 2026-10-07
+
+Enskilda enheter visar rasens engelska namn och order; grupper visar namn ×
+antal samt sammanlagd HP. Interna enhets-/resurs-/djur-ID:n borttagna från
+vanlig paneltext och ikonernas labels; state, save, DOM-dataset och callbacks
+behåller samma identitet. Stats/order/HP kvar. Separat CSS visar gruppens
+namnrad som tidigare doldes; användarens style.css bevarad.
+
+Verifiering:riktade20/2 PASS438ms, slutlig unit490/86 PASS15.43s,
+build inklusive strict typecheck PASS523ms och diff/review PASS. Ny slutcheck
+motiverad av browserfyndet att befintlig CSS dolde korrekt grupptext.
+Faktiska musval av worker/fighter och dragval av tre enheter för alla fem
+raser vid Native800 PASS; grupptext synlig, ikonlabels ID-fria och interna
+IDs oförändrade. Representativ gruppbild visuellt granskad.
+[Browserbelägg/bilder](artifacts/rts-217/browser.json). Full regression efter218.
+
+
 ## RTS-216 — Minimap som större spelplansoverlay, 2026-10-07
 
 160×160 canvas i samma gridcell som spelplanen, nere till höger10px från

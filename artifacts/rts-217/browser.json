@@ -1,0 +1,67 @@
+[
+  {
+    "faction": "crown",
+    "worker": "Worker",
+    "fighter": "Guard",
+    "mouseSelection": true,
+    "groupCountsVisible": true,
+    "internalIdsPreserved": [
+      "unit-17",
+      "unit-18",
+      "unit-99"
+    ],
+    "errors": []
+  },
+  {
+    "faction": "clans",
+    "worker": "Peon",
+    "fighter": "Axe Warrior",
+    "mouseSelection": true,
+    "groupCountsVisible": true,
+    "internalIdsPreserved": [
+      "unit-17",
+      "unit-18",
+      "unit-99"
+    ],
+    "errors": []
+  },
+  {
+    "faction": "elves",
+    "worker": "Grove Tender",
+    "fighter": "Warden",
+    "mouseSelection": true,
+    "groupCountsVisible": true,
+    "internalIdsPreserved": [
+      "unit-17",
+      "unit-18",
+      "unit-99"
+    ],
+    "errors": []
+  },
+  {
+    "faction": "dwarves",
+    "worker": "Miner",
+    "fighter": "Iron Guard",
+    "mouseSelection": true,
+    "groupCountsVisible": true,
+    "internalIdsPreserved": [
+      "unit-17",
+      "unit-18",
+      "unit-99"
+    ],
+    "errors": []
+  },
+  {
+    "faction": "goblins",
+    "worker": "Tinkerer",
+    "fighter": "Scrapper",
+    "mouseSelection": true,
+    "groupCountsVisible": true,
+    "internalIdsPreserved": [
+      "unit-17",
+      "unit-18",
+      "unit-99"
+    ],
+    "errors": []
+  }
+]

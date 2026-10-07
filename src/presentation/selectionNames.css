@@ -1,0 +1,6 @@
+/* Keep group composition visible alongside its portraits. */
+#selection-info:has(#selection-icons:not([hidden])) #selection-detail {
+  display: block;
+  margin: 2px 0;
+  font-size: 11px;
+}

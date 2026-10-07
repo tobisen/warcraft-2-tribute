@@ -77,11 +77,14 @@ kamerarektangel och klick/drag. Konsumera input utan selection/worldorder.
 Använd frigjort bottom bar-utrymme. Tester:input/koordinater; browser:
 800×600/3440×1440 Native/Fit/fullscreen. Ingen bred HUD-ombyggnad.
 
-### RTS-217 — Begripliga selection-namn — Todo
+### RTS-217 — Begripliga selection-namn — Done
 
 Rasens engelska enhetsnamn, gruppnamn/antal; interna IDs endast state/save/
 devtools. HP/stats/order kvar. Tester:enskild/grupp; browser:worker/fighter.
-Ingen identitets-/saveformatändring.
+Ingen identitets-/saveformatändring. Levererat rasnamn, synlig gruppsammansättning
+och ID-fria panel-/ikonlabels. Riktade20/2, unit490/86 och strict build/diff
+PASS; faktiska worker/fighter-/gruppmusval alla fem raser Native800 PASS.
+[Browserbelägg](artifacts/rts-217/browser.json).
 
 ### RTS-218 — Full wood-last före automatisk leverans — Todo
 

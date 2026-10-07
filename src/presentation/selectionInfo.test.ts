@@ -14,3 +14,11 @@ it.each(['crown','clans'] as const)('reflects actual %s base damage in the selec
  expect(selectionInfo(m,'base').portrait?.frame).toBe(`${faction==='clans'?'clans-':''}base-player-damaged`);
  m.combat.baseHP=factions[faction].buildings.base.hp/2+1;expect(selectionInfo(m,'base').portrait?.frame).toBe(`${faction==='clans'?'clans-':''}base-player-complete`);
 });
+
+it.each(['crown','clans','elves','dwarves','goblins'] as const)('uses human names/counts, retains HP/order and never exposes unit IDs for %s',faction=>{
+ const m=createMatch('survival','normal',factionsForPlayer(faction));const worker=m.gathering.units[0];worker.selected=true;worker.id='unit-17';worker.hp=12;worker.cargo=2;const original=structuredClone(m);
+ const solo=selectionInfo(m,null);expect(solo.name).toBe(factions[faction].unitNames.worker);expect([solo.name,solo.detail,...solo.stats].join(' ')).not.toContain('unit-17');expect(solo.stats).toContain('Order: idle');expect(solo.hp).toBe(12);
+ m.gathering.units[1].selected=true;m.gathering.units.push({id:'unit-99',kind:'soldier',selected:true,hp:20,cargo:0,position:{x:300,y:300},target:{x:300,y:300},order:{kind:'move'}});
+ const group=selectionInfo(m,null);expect(group.detail).toContain(factions[faction].unitNames.worker+' ×2');expect(group.detail).toContain(factions[faction].unitNames.soldier+' ×1');expect(group.name).toBe('3 units selected');expect(group.stats).toContain('Order: move');expect(group.detail).not.toMatch(/unit-\d/);expect(group.hp).toBe(12+(m.gathering.units[1].hp??factions[faction].units.worker.hp)+20);
+ expect(worker.id).toBe(original.gathering.units[0].id);expect(worker.order).toEqual(original.gathering.units[0].order);
+});
