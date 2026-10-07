@@ -36,6 +36,19 @@ export function startCampaignMission(progress:CampaignProgress,id:CampaignMissio
  if(progress.identity){const identity=progress.identity,series=seriesForId(identity.campaignId)!;const match={...createMatch(mission.scenario,difficulty,{player:identity.faction,enemy:series.enemy},seriesMissionPlan(id,identity.campaignId).map,speed,'balanced',undefined,id),campaignMission:id,campaignRun:{version:1 as const,phase:0,campaignId:identity.campaignId}};return {...match,gathering:{...match.gathering,campaignContent:missionContent(id)}};}
  return {...createMatch(mission.scenario,difficulty,campaignPreset(id)??factions,campaignPlans[id]?.map??scenarioConfig[mission.scenario].map,speed,'balanced',undefined,id),campaignMission:id};
 }
+/** Only offer the immediate unlocked successor of a campaign victory. */
+export function nextCampaignMissionId(match:MatchState,progress:CampaignProgress):CampaignMissionId|null {
+ if(match.outcome!=='victory')return null;
+ const index=campaignMissions.findIndex(m=>m.id===match.campaignMission);
+ if(index<0||index>=campaignMissions.length-1||campaignMissions[index].scenario!==match.scenario)return null;
+ if(progress.identity&&(match.campaignRun?.campaignId!==progress.identity.campaignId||match.factions?.player!==progress.identity.faction||match.difficulty!==progress.identity.difficulty))return null;
+ const id=campaignMissions[index+1].id;
+ return campaignMissionStatus(completeCampaignMission(progress,match),id)==='locked'?null:id;
+}
+export function nextCampaignMission(match:MatchState,progress:CampaignProgress):MatchState|null {
+ const id=nextCampaignMissionId(match,progress);if(!id)return null;
+ return startCampaignMission(completeCampaignMission(progress,match),id,match.difficulty??'normal',match.factions??campaignPreset(match.campaignMission)!,match.speed??1);
+}
 export interface CampaignStorage {getItem(key:string):string|null;setItem(key:string,value:string):void}
 export const scopedCampaignProgressKey='warcraft-2-tribute.campaign.v2';
 export function createCampaignStore(storage:()=>CampaignStorage){

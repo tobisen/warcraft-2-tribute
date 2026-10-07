@@ -1,8 +1,9 @@
+import {identityFor} from '../config/campaignSeries';
 import {createClassicMatch} from './testHelpers/classicMatch';
 import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
-import {expect,it} from 'vitest';
+import {describe,expect,it} from 'vitest';
 import {campaignMissions,campaignDetails,campaignPreset} from '../config/campaign';
-import {freshCampaignProgress,campaignMissionStatus,completeCampaignMission,startCampaignMission,createCampaignStore,validateCampaignProgress,campaignProgressKey} from './campaign';
+import {nextCampaignMission,freshCampaignProgress,campaignMissionStatus,completeCampaignMission,startCampaignMission,createCampaignStore,validateCampaignProgress,campaignProgressKey} from './campaign';
 import {createMatch,updateMatch} from './match';
 import {encodeSave,decodeSave} from './save';
 import {campaignDebrief} from '../presentation/campaign';
@@ -73,4 +74,30 @@ it('a resumed mission can earn its own completion without fabricating earlier lo
 it('briefings, objectives and debriefings describe existing scenario goals and defeat unlocks nothing',()=>{
  for(const mission of campaignMissions){const details=campaignDetails(mission.id);expect(details.briefing.length).toBeGreaterThan(20);expect(details.goal.length).toBeGreaterThan(20);expect(details.debriefing.length).toBeGreaterThan(20);const match={...createMatch(mission.scenario),campaignMission:mission.id};expect(campaignDebrief({...match,outcome:'victory'})).toBe(details.debriefing);expect(campaignDebrief({...match,outcome:'defeat'})).toMatch(/No new mission/);}
  expect(campaignDebrief(createMatch())).toBeNull();
+});
+
+describe('next campaign mission',()=>{
+ it('starts the immediate successor after victory, including replay and a fresh-browser completed save',()=>{
+  const first=startCampaignMission(freshCampaignProgress(),'first-steps','easy',{player:'crown',enemy:'clans'},0.75)!;
+  const next=nextCampaignMission({...first,outcome:'victory'},freshCampaignProgress())!;
+  expect(next.campaignMission).toBe('forest-watch');expect(next.outcome).toBe('playing');expect(next.difficulty).toBe('easy');expect(next.speed).toBe(0.75);
+  expect(nextCampaignMission({...first,outcome:'victory'},{version:1,completed:['first-steps','forest-watch','the-siege']})!.campaignMission).toBe('forest-watch');
+ });
+ it('hides continuation for defeat, active matches, noncampaign and the final operation',()=>{
+  const m=startCampaignMission(freshCampaignProgress(),'first-steps','normal',{player:'crown',enemy:'clans'})!;
+  expect(nextCampaignMission(m,freshCampaignProgress())).toBeNull();expect(nextCampaignMission({...m,outcome:'defeat'},freshCampaignProgress())).toBeNull();
+  expect(nextCampaignMission({...createMatch(),outcome:'victory'},freshCampaignProgress())).toBeNull();
+  expect(nextCampaignMission({...m,campaignMission:'coastal-banner',scenario:'mission-capture',outcome:'victory'},freshCampaignProgress())).toBeNull();
+ });
+});
+
+it('next mission preserves each scoped faction/difficulty campaign and resets gameplay',()=>{
+ for(const faction of ['crown','clans','elves','dwarves','goblins'] as const){
+  const identity=identityFor(faction,'hard'),progress={version:1 as const,completed:[],identity};
+  const first=startCampaignMission(progress,'first-steps','hard',{player:faction,enemy:'clans'},0.75)!;
+  const next=nextCampaignMission({...first,outcome:'victory'},progress)!;
+  expect(next.campaignMission).toBe('forest-watch');expect(next.campaignRun).toEqual({version:1,phase:0,campaignId:identity.campaignId});
+  expect(next.factions).toEqual(first.factions);expect(next.difficulty).toBe('hard');expect(next.speed).toBe(0.75);expect(next.waves.elapsedSeconds).toBe(0);
+  expect(nextCampaignMission({...first,outcome:'victory'},{...progress,identity:identityFor(faction,'easy')})).toBeNull();
+ }
 });

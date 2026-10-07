@@ -44,7 +44,7 @@ import {dismissMessage} from '../presentation/dismiss';
 import {renderOperation,operationMarkers} from '../presentation/operations';
 import type {CaptureState} from '../gameplay/operations';
 import {campaignMissionForScenario,type CampaignMissionId} from '../config/campaign';
-import {startCampaignMission} from '../gameplay/campaign';
+import {nextCampaignMissionId,nextCampaignMission,startCampaignMission} from '../gameplay/campaign';
 import {campaignStore} from '../presentation/campaign';
 import {currentHomePage} from '../presentation/homeMenu';
 import {enemyMaximumHP} from '../gameplay/enemyUnits';
@@ -391,6 +391,17 @@ export class BootScene extends Phaser.Scene {
     this.previewPoint = { x: 0, y: 0 };
     this.matchStatus = document.querySelector<HTMLElement>('#match-status')!;
     this.restartButton = document.querySelector<HTMLButtonElement>('#restart-match')!;
+    const nextMissionButton=document.getElementById('result-next-mission') as HTMLButtonElement;
+    const advanceCampaign=()=>{
+      if(this.session.phase!=='ended'||this.restartPending)return;
+      const match=nextCampaignMission(this.currentMatch(),campaignStore.record(this.currentMatch()));if(!match)return;
+      this.pendingLoad={match:{...match,matchId:crypto.randomUUID()},view:{camera:{x:0,y:0},building:null}};
+      this.awaitingLoadedResume=false;this.scenario=match.scenario!;this.difficulty=match.difficulty!;
+      this.session={phase:'playing',options:{scenario:this.scenario,difficulty:this.difficulty,map:match.map.id??'arena',faction:match.factions!.player,enemyFaction:match.factions!.enemy,speed:match.speed??1}};
+      this.skipGameplayFrame=true;this.restartPending=true;this.restartButton.disabled=true;gameAudio.setPhase('playing');this.scene.restart();
+    };
+    nextMissionButton.addEventListener('click',advanceCampaign);
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>nextMissionButton.removeEventListener('click',advanceCampaign));
     const restart = () => this.sessionAction('restart');
     this.restartButton.addEventListener('click', restart);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
@@ -631,7 +642,9 @@ export class BootScene extends Phaser.Scene {
     (document.getElementById('save-match') as HTMLButtonElement).disabled=this.session.phase==='menu'||this.restartPending;
     (document.getElementById('load-match') as HTMLButtonElement).disabled=this.restartPending;
     const phase=this.session.phase,menu=phase==='menu';
-    if(phase==='ended'){campaignStore.record(this.currentMatch());highscoreStore.record(this.currentMatch());}
+    const nextMission=phase==='ended'?nextCampaignMissionId(this.currentMatch(),campaignStore.record(this.currentMatch())):null;
+    (document.getElementById('result-next-mission') as HTMLButtonElement).hidden=!nextMission;
+    if(phase==='ended')highscoreStore.record(this.currentMatch());
     renderHighscorePanels(this.currentMatch(),phase==='ended');
     renderMatchResults(document.getElementById('match-results')!,this.currentMatch(),phase==='ended');
     const inCampaign=menu&&currentHomePage()==='campaign';

@@ -20,7 +20,7 @@ export function syncResultScreen(next:SessionPhase):void {
  if(el('save-controls').parentElement!==el('result-save'))el('result-save').append(el('save-controls'));
  el('match-results').hidden=false;el('save-controls').hidden=false;
  if(entered)page='summary';syncPage();
- if(entered)el('result-play-again').focus();
+ if(entered)el(el('result-next-mission').hidden?'result-play-again':'result-next-mission').focus();
 }
 export function bindResultScreen():void {
  el('result-play-again').addEventListener('click',()=>{if(phase==='ended')el('restart-match').click();});

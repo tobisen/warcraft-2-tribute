@@ -45,6 +45,11 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
+Senaste uppdrag: lägg till Next Mission på kampanjens vinstskärm så att nästa
+uppdrag startas direkt. Avgränsat tillägg; ingen annan roadmaptask startas.
+Se tilläggsavsnittet nedan för status och verifiering.
+
+
 Senaste uttryckliga tillägg: `foggoffnow` i befintlig cheat-input. Avslöja hela
 kartan för spelaren, inklusive fiender/minimap; behåll effekten under matchen
 samt Save/Load och återställ normal fog vid ny match. Ingen annan roadmaptask
@@ -5420,3 +5425,21 @@ bundlevarning), diff/manifest/browser-script-syntax PASS. Faktisk Chrome800/1280
 Enter/input, fog-update, Save/Load och befintlig resurscheat PASS;800-bild visuellt
 granskad, värld och minimap utan fog. Ingen ny fullregression, CI/Pages eller
 release; detta är ett avgränsat tillägg och ingen roadmapetapp har startats.
+
+## Tillägg — Nästa kampanjuppdrag från vinstskärmen
+
+**Status:** Done (2026-10-07).
+
+Next Mission → visas efter kampanjvinst när ett efterföljande uppdrag finns.
+Startar den omedelbara efterföljaren direkt via befintlig kampanjlogik och
+scenens state-överföring; ras/kampanj-ID, difficulty och speed bevaras.
+Ny matchidentitet och initialt gameplay återställs. Replay går till nästa i
+ordning, inte första oavklarade. Även laddad avslutad match stöds. Defeat,
+frispel och sista uppdraget visar ingen nästa-knapp. Knappen får initialt fokus.
+
+**Verifiering:** Campaign/series/result37/3 PASS, unit507/87 PASS och strict
+build PASS (befintlig bundlevarning). Chrome800/1280 faktisk knapp → spelande
+nästa uppdrag även efter avslutad Save/Load, bevarad identitet, defeat/final-spärr
+och retry PASS. Diff och browser-script-syntax PASS.800-bild
+visuellt granskad. Terminal-fixtur används för vinst, ingen mänsklig genomspelning
+hävdas. Ingen ny fullregression, CI/Pages/release. CSS/units.mjs/docs bevaras.

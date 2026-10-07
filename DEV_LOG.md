@@ -4119,3 +4119,29 @@ flaggspridning, save-whitelist och immutable fog-update klar.
 Ingen ny fullregression/CI/Pages/release hävdas. Ingen roadmaptask startas.
 Användarens src/style.css, assets/sources/units.mjs, docs/ och :memory:.ses lämnas
 utanför ändringen och commit.
+
+## 2026-10-07 — Nästa kampanjuppdrag
+
+Användaren rapporterade saknad nästa-knapp efter kampanjvinst. Resultatnavigation
+hade endast Play Again/Main Menu/statistik/highscores. Ny Next Mission → använder
+nextCampaignMissionId för billig eligibility utan att skapa matcher i renderloop;
+nextCampaignMission startar först vid klick. Befintlig startCampaignMission och
+kampanjstore styr upplåsning/identity. BootScene återanvänder pendingLoad-statevägen
+för en färsk spelande match med nytt match-ID. Callback städas vid shutdown och
+restartPending skyddar mot upprepade klick. Resultatskärmen ger nästa-knappen fokus.
+Ingen nästa efter defeat/frispel/sista mission. Replay går till direkt efterföljare.
+
+Ny riktad verifiering `npm test -- src/gameplay/campaign.test.ts
+src/gameplay/campaignSeries.test.ts src/presentation/resultScreen.test.ts`37/3
+PASS. Tester omfattar alla fem scoped raser, difficulty/speed/reset, fresh-browser
+completion, replay och saknad efterföljare. `npm run test:unit`507/87 PASS;
+`npm run build` inklusive strict typecheck PASS, befintlig bundlevarning.
+Första riktade körningen/build hittade testimportfel, oavsiktlig testreplacement
+och ogiltig test-speed2; rättat och riktad/build omkörda till PASS.
+Browser scripts/check-next-mission.mjs vid800/1280 verifierar verklig
+kampanjstart → terminal-vinstfixtur → Next Mission → spelande forest-watch,
+bevarad identitet, defeat/final hidden och retry.800-resultatbild visuellt granskad.
+Save/Load av avslutad match PASS i slutlig browserkontroll; diff och script-syntax PASS. Ingen faktisk
+kampanjgenomspelning eller ny fullregression/CI/Pages/release hävdas.
+Granskning: progression/identity, billig eligibility, event cleanup, keyboardfokus
+och befintlig restart/input PASS. Användarens CSS/assets/docs/ lämnas utanför commit.
