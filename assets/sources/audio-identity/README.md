@@ -1,5 +1,9 @@
 # Fem rasers lokala ljudpaket
 
+**2026-10-07: Användaren har lyssnat och godkänner slutljuden.**
+Authoring-/capturemanifestens false-flaggor beskriver agentens ursprungliga
+verifiering; de är inte en återkallelse av detta användargodkännande.
+
 315 aktiva egna engelska repliker, tre roller, sju actions och tre varianter.
 Runtime: `public/audio/voices/manifest.json`; masters: `assets/audio/voices`.
 [Manus och per-assetcredits](all-factions-voices.json),

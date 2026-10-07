@@ -20,13 +20,15 @@ it('an eliminated allied AI stops its economy and decisions while the human cont
  let m=updateMatch(eliminate(match(),'ai-2'),.25);expect(m.outcome).toBe('playing');expect(isSpectating(m)).toBe(false);const before=structuredClone(m.multiplePlayers!.ai[1].state);m=updateMatch(m,2);
  expect(m.multiplePlayers!.ai[1].state.enemyProduction).toEqual(before.enemyProduction);expect(m.multiplePlayers!.ai[1].state.enemyAI).toEqual(before.enemyAI);expect(m.multiplePlayers!.ai[1].state.combat.enemies).toEqual(before.combat.enemies);expect(m.waves.elapsedSeconds).toBe(2.25);roundtrip(m);
 });
+// Three-player economy, spectator fog and Save roundtrip exceed the unit
+// deadline on shared CI runners; keep simulation and assertions unchanged.
 it('human elimination offers spectator vision while the allied AI keeps producing and orders are rejected',()=>{
  let m=updateMatch(match(),1);m.gathering.units[0].selected=true;m=updateMatch(eliminate(m,'player'),.25);expect(m.outcome).toBe('playing');expect(isSpectating(m)).toBe(true);expect(issueOrder(m,{kind:'move',destination:{x:600,y:500}})).toBe(m);
  const own=structuredClone(m.gathering.units),bank=m.gathering.wood,before=m.multiplePlayers!.ai[1].state.enemyProduction!.spent!;
  m=updateMatch(m,10);expect(m.gathering.units).toEqual(own);expect(m.gathering.wood).toBe(bank);expect(m.multiplePlayers!.ai[1].state.enemyProduction!.spent!.wood).toBeGreaterThan(before.wood);expect(m.fog!.teams.player.visible).toEqual(m.multiplePlayers!.ai[1].vision.visible);
  const tile=Math.floor(450/m.fog!.tileSize)*m.fog!.columns+Math.floor(400/m.fog!.tileSize);expect(m.fog!.teams.player.visible[tile]).toBe(false);expect(m.fog!.teams.player.explored[tile]).toBe(true);
  const loaded=roundtrip({...m,paused:true});expect(isSpectating(loaded)).toBe(true);expect(loaded.paused).toBe(true);expect(updateMatch(loaded,2)).toBe(loaded);expect(updateMatch({...loaded,paused:false},.25).outcome).toBe('playing');
-});
+},30000);
 it('victory requires elimination of every hostile team member and final simulation freezes',()=>{
  const r=matchPlayers(undefined,undefined,3);r[2].teamId=2;let m=createMatch('skirmish','normal',undefined,'plains96',1,'balanced',r);
  m=updateMatch(eliminate(m,'enemy'),.25);expect(m.outcome).toBe('playing');m=updateMatch(eliminate(m,'ai-2'),.25);expect(m.outcome).toBe('victory');expect(updateMatch(m,5)).toBe(m);roundtrip(m);

@@ -1,5 +1,27 @@
 # Backlog
 
+## 2026-10-07 — Ljud godkänt och återkommande CI-timeout
+
+Användaren har faktiskt lyssnat och godkänner ljuden. Detta ersätter tidigare
+notering om saknat godkännande av slutljuden; agenten har inte själv lyssnat.
+Historiska `listeningVerified:false` i authoring-/captureunderlagen behålls
+som korrekt ursprunglig agentstatus, inte aktuellt användargodkännande.
+
+De fyra senaste misslyckade Actions-körningarna37528182361/37530827720/
+37532984153/37595976772 rapporterar samma5000ms-timeout i
+`src/gameplay/teamResults.test.ts`, spectator/aktiv-allierad/Save-testet.
+Senast grönt37527447120; felet föregår ljudcommit21a8f6b. Build/deploy
+hoppades över på grund av testfelet. Just testets wall-clockbudget höjs
+från5000 till30000ms; fixture,10s gameplaytid, assertions, defaulttimeout
+för övriga tester och workerantal är oförändrade. Ingen gameplayändring.
+Ny lokal verifiering: spectator/lag/Save-integration11/1 PASS10.93s,
+unit482/86 PASS13.49s, build inklusive strict typecheck PASS och
+diffgranskning/check PASS. Endast timeout och kommentar ändrade i testet.
+Ingen ny browserkontroll behövs för testdeadline/dokumentation. Tidigare
+ljudleverans full regression1630/193 är historiskt belägg; ingen ny lokal
+full regression körd. Ny full regression körs och följs på GitHub efter push.
+
+
 ## CI-timeoutkorrigering efter RTS-204 — 2026-10-06
 
 Senaste [GitHub-körningen](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37491093989) fallerade på två tidsgränser: multiplePlayers betalda två-AI/60s-simulering (15000ms) och extraBases team/construction/Save (5000ms). Build/Pages hoppades över; lokal204-PASS är inte CI-PASS. Endast dessa integrationers wall-clockbudget ändras till60000/30000ms. Gameplaytid, fixtures och assertions är oförändrade; standardtimeout och workerantal består.
@@ -34,8 +56,8 @@ matchmixar och egna repliker från varje ras. Tekniska browser-/PCM-kontroller
 Användaren har godkänt tonriktningen och beställt full implementation samt
 commit/push; detta utgör inte hörselgranskning av samtliga slutklipp.
 Verifierat: unit482/86, full regression1630/193, build med strict typecheck,
-femras-browser och slutlig diffkontroll PASS. Manuell ljudkvalitet är en
-kvarstående granskningspunkt, inte ett uppfyllt lyssningskriterium.
+femras-browser och slutlig diffkontroll PASS. Användaren har därefter faktiskt lyssnat och godkänt slutljuden;
+ljuduppdraget är Done. Agentens egna kontroller bevisar enbart teknik.
 Kartarbete och roadmapbatch2 startas inte. Befintlig style.css, units.mjs och
 docs/ bevaras. Ingen ny release hävdas.
 

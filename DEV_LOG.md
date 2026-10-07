@@ -1,5 +1,27 @@
 # Development log
 
+## 2026-10-07 — Ljud godkänt och återkommande CI-timeout
+
+Användaren har faktiskt lyssnat och godkänner ljuden. Detta ersätter tidigare
+notering om saknat godkännande av slutljuden; agenten har inte själv lyssnat.
+Historiska `listeningVerified:false` i authoring-/captureunderlagen behålls
+som korrekt ursprunglig agentstatus, inte aktuellt användargodkännande.
+
+De fyra senaste misslyckade Actions-körningarna37528182361/37530827720/
+37532984153/37595976772 rapporterar samma5000ms-timeout i
+`src/gameplay/teamResults.test.ts`, spectator/aktiv-allierad/Save-testet.
+Senast grönt37527447120; felet föregår ljudcommit21a8f6b. Build/deploy
+hoppades över på grund av testfelet. Just testets wall-clockbudget höjs
+från5000 till30000ms; fixture,10s gameplaytid, assertions, defaulttimeout
+för övriga tester och workerantal är oförändrade. Ingen gameplayändring.
+Ny lokal verifiering: spectator/lag/Save-integration11/1 PASS10.93s,
+unit482/86 PASS13.49s, build inklusive strict typecheck PASS och
+diffgranskning/check PASS. Endast timeout och kommentar ändrade i testet.
+Ingen ny browserkontroll behövs för testdeadline/dokumentation. Tidigare
+ljudleverans full regression1630/193 är historiskt belägg; ingen ny lokal
+full regression körd. Ny full regression körs och följs på GitHub efter push.
+
+
 ## 2026-10-07 — Full ljudimplementation, användarens nya mandat
 
 Alla 315 lokala engelska repliker är aktiva: fem raser × worker/soldier/archer ×
