@@ -17,7 +17,7 @@ import {releasePlaythrough} from './testHelpers/releaseBot';
 const view={camera:{x:600,y:650},building:null};
 it('has authored base zones, finite expansion sites and three catapult-clear crossings',()=>{
  const m=createMatch('skirmish','beginner',factionsForPlayer('crown'),'frontier');
- expect(m.map).toMatchObject({width:4096,height:4096});expect(mapResourceTotals('frontier').wood).toBeCloseTo(600);expect(mapResourceTotals('frontier').gold).toBe(450);
+ expect(m.map).toMatchObject({width:4096,height:4096});expect(mapResourceTotals('frontier').wood).toBeCloseTo(600);expect(mapResourceTotals('frontier').gold).toBe(4500);
  const base=m.combat.enemies.find(e=>e.kind==='base')!;expect(base.position).toEqual({x:1360,y:144});
  for(const u of [...m.gathering.units,...m.combat.enemies.filter(e=>!e.footprint)])expect(bodyFits(m.map,u.position,12)).toBe(true);
  for(const rect of resourceNodes(m.gathering).filter(n=>n.id==='wood-1'||n.resource==='gold'&&!n.id.startsWith('expansion-')).map(n=>({x:n.position.x-(n.tree?16:20),y:n.position.y-(n.tree?16:20),width:n.tree?32:40,height:n.tree?32:40})))expect(approachRoute(m.map,m.gathering.units[0].position,rect,24).status).not.toBe('blocked');

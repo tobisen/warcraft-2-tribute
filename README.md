@@ -5,7 +5,7 @@ Arbetstiteln är inte juridiskt granskad för kommersiell release. Reponamnet
 
 Browserbaserat singleplayer-RTS inspirerat av Warcraft 2, Age of Empires 2 och
 Command & Conquer. Phaser, strict TypeScript och Vite; local-first, gameplay
-före grafik. Egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD. Aktuell version är0.3.0. Taskstatus finns i [BACKLOG.md](BACKLOG.md).
+före grafik. Egna terräng-, byggnads- och enhetsassets, animationer, ljud och fantasy-HUD. Aktuell version är0.4.0. Taskstatus finns i [BACKLOG.md](BACKLOG.md).
 
 ## Installation och lokal start
 

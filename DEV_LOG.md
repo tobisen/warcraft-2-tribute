@@ -4284,3 +4284,34 @@ mänsklig placement-/helmatchgranskning; faktisk placeTower testas i integration
 Ingen ny fullregression/CI/Pages/release. CSS/units.mjs/docs/:memory:.ses bevaras.
 
 Berörda tower/repair/team/multiplePlayers-integrationer42/4 PASS17.18s.
+
+
+## 2026-10-07 — Release0.4.0 / RTS-213 (pågående)
+
+Nytt uttryckligt releasemandat; befintlig Pages-praktik återanvänds, inga nya
+roadmaptasks/infrastruktur. Versionskälla/package/lock0.4.0; ny changelog och
+historisk0.3.0-post. Fyra kvarvarande simuleringsassertions för total goldstock
+uppdateras300→3000/400→4000; gameplay ändras inte. Releasebrowser-script
+uppdaterat till staged kampanjmeny/scoped v2-progress och femphase-series.
+Två gamla selectorförsök timeout; aktuell fixture med first-steps complete och
+human/crown/normal fungerar. Alla browserkontexter startar tomma och sparningar
+är testdata. Första fullregression avbruten när gamla assertvärden upptäcktes;
+en kort felstart i arbetskopian avbröts, slutlig fullregression körs isolerat.
+
+Separat checkout /tmp/w2t-release-040 exkluderar användarens CSS/units.mjs/docs/
+:memory:.ses. Samma lockdependencies via node_modules-symlink; inget nytt lokalt
+npm ci hävdas. Unit511/89 PASS34.61s, strict build PASS1.40s (bundlevarning).
+Production-releasebrowser800/1280/1600 Native/Fit PASS,0errors/failed assets;
+800campaign/1280team-resultbilder visuellt granskade. Kod/build oförändrad för
+kontrollerade flöden efter extra changelograd; public browser verifieras separat.
+Fullregression/CI/Pages väntar fortfarande; ingen Done/publicerad-status ännu.
+
+
+Release0.4.0 lokal slutkontroll: full `npm test`1702 PASS/4 FAIL över199 filer,
+788.87s. Alla fyra fel var gamla stockassertions: Frontier450, Highlands850
+och multipleResources450 (två timestepfall). Rättade4500/8500/4500;
+slutlig riktad Frontier/Highlands13/2 PASS47.80s och multipleResources5/1 PASS1.48s.
+Alla övriga fullregressionsresultat återanvänds eftersom bara testvärden ändrats.
+Detta är inte ett nytt helt grönt lokalt fullsuite-run; slutlig fullsuite körs i CI
+före Pages-deploy. Unit511/89 och production-browser PASS återanvänds från
+oförändrad spelkod. Commit/push av releasekandidaten följs av faktisk CI/Pages.

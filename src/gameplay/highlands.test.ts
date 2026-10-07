@@ -14,7 +14,7 @@ import {releasePlaythrough} from './testHelpers/releaseBot';
 
 it('authored highlands have clear start/build zones, finite reachable independent expansion pockets',()=>{
  const m=createMatch('skirmish','beginner',undefined,'highlands');
- expect(m.map).toMatchObject({width:4096,height:4096,tileSize:32});expect(mapResourceTotals('highlands')).toEqual({wood:1150,gold:850});
+ expect(m.map).toMatchObject({width:4096,height:4096,tileSize:32});expect(mapResourceTotals('highlands')).toEqual({wood:1150,gold:8500});
  const nodes=resourceNodes(m.gathering).filter(n=>!n.id.startsWith('expansion-'));expect(nodes.filter(n=>n.resource==='wood')).toHaveLength(4);expect(nodes.filter(n=>n.resource==='gold')).toHaveLength(4);
  for(const rect of m.map.obstacles)expect(rect.x>=0&&rect.y>=0&&rect.x+rect.width<=4096&&rect.y+rect.height<=4096).toBe(true);
  for(const u of [...m.gathering.units,...m.combat.enemies.filter(e=>!e.footprint)])expect(bodyFits(m.map,u.position,12)).toBe(true);

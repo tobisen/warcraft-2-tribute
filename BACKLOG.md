@@ -45,6 +45,10 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
+Nytt uttryckligt uppdrag: release0.4.0 via befintlig Pages-workflow.
+RTS-213 återupptas enbart för version/changelog, releasechecks och publicering.
+Lokala CSS/units.mjs/docs/:memory:.ses hålls utanför releasen.
+
 Senaste uppdrag: walls/gates med1×1 placeringsruta. Avgränsat tillägg;
 ingen annan roadmaptask startas. Se senaste murtillägget nedan.
 
@@ -253,7 +257,7 @@ Ingen mänsklig balans-/naturlig fullmatch-/ny ljudlyssning hävdas. Föregåend
 219-CI röd på runner-tilldelning (tester/build startade inte); ny212-CI/Pages
 ej verifierad. Stanna efter212;213/release och208–211 startas inte.
 
-### RTS-213 — Version och befintlig Pages-release — Todo (batch 3)
+### RTS-213 — Version och befintlig Pages-release — In Progress (release0.4.0)
 
 - Efter verifierade korrigeringar: befintlig versionspolicy, gemensam versionskälla och faktisk changelog; befintlig Pages-workflow/release/tagpraxis utan ny infrastruktur. Verifiera deployment/public version där åtkomst finns; redovisa placeholders/ej kontrollerat. HANDOFF och stopp.
 
@@ -5541,3 +5545,13 @@ gameplaytestet placerar port med ordinarie placeTower. Ingen ny fullregression,
 CI/Pages/release eller mänsklig balanskontroll.
 
 Berörda tower/repair/team/multiplePlayers-integrationer42/4 PASS17.18s.
+
+
+Release0.4.0 lokal slutkontroll: full `npm test`1702 PASS/4 FAIL över199 filer,
+788.87s. Alla fyra fel var gamla stockassertions: Frontier450, Highlands850
+och multipleResources450 (två timestepfall). Rättade4500/8500/4500;
+slutlig riktad Frontier/Highlands13/2 PASS47.80s och multipleResources5/1 PASS1.48s.
+Alla övriga fullregressionsresultat återanvänds eftersom bara testvärden ändrats.
+Detta är inte ett nytt helt grönt lokalt fullsuite-run; slutlig fullsuite körs i CI
+före Pages-deploy. Unit511/89 och production-browser PASS återanvänds från
+oförändrad spelkod. Commit/push av releasekandidaten följs av faktisk CI/Pages.

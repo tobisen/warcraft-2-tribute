@@ -33,7 +33,7 @@ it.each([1,40])('four independent deposits preserve their targets through repeat
  for(const type of ['wood','gold'] as const){
   const cargo=state.units.reduce((sum,u)=>sum+(u.kind==='worker'&&u.cargoType===type?u.cargo:0),0);
   const stock=nodes.filter(n=>n.resource===type).reduce((sum,n)=>sum+n.remaining,0);
-  expect(stock+cargo+(type==='wood'?state.wood:state.goldBalance!)).toBeCloseTo(type==='wood'?600:450);
+  expect(stock+cargo+(type==='wood'?state.wood:state.goldBalance!)).toBeCloseTo(type==='wood'?600:4500);
  }
  expect(original.extraNodes![0].remaining).toBe(200);
 });

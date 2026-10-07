@@ -1,6 +1,15 @@
 /** Product release version is independent of git/build identity and Save config. */
-export const releaseVersion='0.3.0';
-export const changelog=[{version:releaseVersion,title:'Expanded campaign, independent AI and teams',changes:[
+export const releaseVersion='0.4.0';
+export const changelog=[{version:releaseVersion,title:'Connected fortifications and richer economies',changes:[
+ 'Connected walls and gates, single-cell placement and automatic passage for friendly troops.',
+ 'Ten times more gold in every mine; older saves receive the added reserves while preserving mined gold and statistics.',
+ 'At least five farms, with ten on larger maps, and a Next Mission button after campaign victories.',
+ 'The foggoffnow cheat reveals the whole map and persists through Save/Load.',
+ 'Improved faction art, grouped actions, separate Tech Tree and Commands, and updated original sounds.',
+ 'Expanded map regions, clearer movement and transport, multiple bases, worker tools and advanced academy upgrades.',
+ 'Optional guardian encounters, finite treasure caches and recruitable allies in campaigns and skirmishes.',
+ 'Local saves remain compatible. Human campaign duration/balance and remaining temporary unit artwork are still limitations.',
+]}, {version:'0.3.0',title:'Expanded campaign, independent AI and teams',changes:[
  'Seven expanded campaign operations with permanent phases, exploration, transport and clear current objectives; the short tutorial is preserved.',
  'Independent player economies and AI profiles, with three-player skirmish on Plains96 and Plains128.',
  'Configurable teams, shared allied vision, team victory and camera-only spectator play after your elimination.',

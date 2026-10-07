@@ -156,3 +156,34 @@ progressionstest, ingen50/50-garanti. AI har en betald obeväpnad transport,
 ingen återbyggnad/kanonflotta. Fartyg får överlappa; lastning är omedelbar
 inom64px, ingen boarding-kö. Lokal sparning är originbunden; localhost-
 saves flyttas inte automatiskt till Pages. Inga blockerande fel kvar.
+
+
+## Release0.4.0 — RTS-213, 2026-10-07 (pågående)
+
+Användaren beställer uttryckligen ny release0.4.0. Befintlig Pages-workflow
+återanvänds; ingen ny infrastruktur. Gemensam produktversion och package/lock
+uppdaterade;0.3.0 bevaras som historisk changelog. Releasen omfattar commitade
+förbättringar sedan0.3.0, inklusive1×1-fortifications/autoportar,10× goldstock,
+farmgränser, Next Mission, fogcheat, karta/UI/ljud och gameplaytillägg.
+Användarens lokala style.css/units.mjs/docs/:memory:.ses är utanför underlaget.
+
+Verifiering sker i separat checkout /tmp/w2t-release-040 från HEAD med enbart
+releaseändringar. Installerade dependencies från samma lock används via symlink;
+ny clean-install kontrolleras av befintlig CI. Lokal unit511/89 PASS34.61s,
+strict build PASS1.40s med befintlig bundlevarning. Isolerad production-browser
+på befintlig subpath800/1280 samt1600 Native/Fit PASS: version/changelog,
+kampanj/lag/skirmish-resultatfixtures, selection, pause, Save/Load/replay/menu,
+fullscreen/upplösningar, reload och PNG/audio-assets;0errors/0failed assets.
+800kampanj- och1280lagresultatbilder granskade. Detta är tekniska flödeschecks,
+ingen naturlig mänsklig helkampanj eller ny subjektiv balans-/ljudgranskning.
+Fullregression och faktisk CI/Pages-verifiering redovisas efter slutförande.
+
+
+Release0.4.0 lokal slutkontroll: full `npm test`1702 PASS/4 FAIL över199 filer,
+788.87s. Alla fyra fel var gamla stockassertions: Frontier450, Highlands850
+och multipleResources450 (två timestepfall). Rättade4500/8500/4500;
+slutlig riktad Frontier/Highlands13/2 PASS47.80s och multipleResources5/1 PASS1.48s.
+Alla övriga fullregressionsresultat återanvänds eftersom bara testvärden ändrats.
+Detta är inte ett nytt helt grönt lokalt fullsuite-run; slutlig fullsuite körs i CI
+före Pages-deploy. Unit511/89 och production-browser PASS återanvänds från
+oförändrad spelkod. Commit/push av releasekandidaten följs av faktisk CI/Pages.
