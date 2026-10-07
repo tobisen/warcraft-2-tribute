@@ -45,9 +45,9 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
-Nytt uttryckligt uppdrag: release0.4.0 via befintlig Pages-workflow.
-RTS-213 återupptas enbart för version/changelog, releasechecks och publicering.
-Lokala CSS/units.mjs/docs/:memory:.ses hålls utanför releasen.
+Release0.4.0 / Buildd003daa är publicerad och faktiskt CI-/Pages-/browser-verifierad.
+RTS-213 är Done inom nytt uttryckligt releaseuppdrag; körningen avslutas här.
+Lokala CSS/units.mjs/docs/:memory:.ses är bevarade och utanför releasen.
 
 Senaste uppdrag: walls/gates med1×1 placeringsruta. Avgränsat tillägg;
 ingen annan roadmaptask startas. Se senaste murtillägget nedan.
@@ -257,7 +257,7 @@ Ingen mänsklig balans-/naturlig fullmatch-/ny ljudlyssning hävdas. Föregåend
 219-CI röd på runner-tilldelning (tester/build startade inte); ny212-CI/Pages
 ej verifierad. Stanna efter212;213/release och208–211 startas inte.
 
-### RTS-213 — Version och befintlig Pages-release — In Progress (release0.4.0)
+### RTS-213 — Version och befintlig Pages-release — Done (release0.4.0, 2026-10-08)
 
 - Efter verifierade korrigeringar: befintlig versionspolicy, gemensam versionskälla och faktisk changelog; befintlig Pages-workflow/release/tagpraxis utan ny infrastruktur. Verifiera deployment/public version där åtkomst finns; redovisa placeholders/ej kontrollerat. HANDOFF och stopp.
 
@@ -5605,3 +5605,48 @@ identitet/SaveLoad, defeat/final hidden och replay. Äldre98128bc-pipeline har
 fallerat,02e2396-CI pågår; previewfix blir ny slutlig releasekandidat och faktisk
 slutbuild/Pages-kontroll följs innan RTS-213 Done. CSS/units.mjs/docs/:memory:.ses
 bevaras. Ingen ny roadmaptask eller workflowförändring.
+
+
+## 2026-10-08 — Release0.4.0 publicerad och verifierad (RTS-213 Done)
+
+[Spela0.4.0](https://tobisen.github.io/warcraft-2-tribute/) visar faktiskt
+**v0.4.0 / Buildd003daa**. Slutlig [CI/Pages37696240941](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37696240941)
+är SUCCESS för samma SHA: npm ci, full npm test (879s), strict build och deploy
+PASS. Deploy avslutad2026-10-08 00:48:07 svensk tid. Första0.4.0-kandidaten02e2396
+var också grön37692443176, men d003daa inkluderar den faktiska32×32-previewfixen.
+Äldre98128bc-körningens failure och pending-noteringarna ovan är historik,
+inte aktuell releasestatus. RTS-213 Done; inga nästa roadmaptasks startas.
+
+Ny verifiering: lokal full1706/199 PASS830.01s på02e2396; efter den enda scen-
+previewändringen återanvänds gameplayresultaten och exakt slutcommit kör full
+regression i CI till PASS. Lokal slutlig unit511/89 PASS13.69s, exact release
+strict build529ms, manifest/script-syntax/diff/review PASS. Medveten befintlig
+bundlevarning kvar. Separat checkout exkluderar lokala användarändringar.
+
+Faktisk public production-browser på samma slutbuild:800/1280 samt1600 Native/
+Fit PASS för version/changelog, kampanj/lag/skirmish-resultatfixtures, selection,
+pause, Save/Load/replay/menu, fullscreen/upplösningar, reload och PNG/audio-HTTP.
+Fyra rapporter visarv0.4.0/Buildd003daa,0runtimefel och0failed assets.
+Extra public800/1280 PASS: faktiskt32×32 wall/gate-preview, byte till64×64
+barracks/farm och tillbaka, tre intilliggande betalda byggplatser via musklick,
+Enter/Apply fogcheat/resourcecheat och goldstock>=1500. Separat public Next
+Mission800/1280 PASS: victory→successor, bevarad identitet/SaveLoad, defeat/final
+hidden och replay. Alla kontexter tomma/temporära; endast egna testsaves.
+Första två extra public-harness startade före fjärrassets/bootstrap var klara;
+/tmp-varianter väntar networkidle före menyklick och passerar. Ingen produktkod
+ändrad efter slutcommit. Public800-resultat och1280-previewbilder granskade.
+
+Public JavaScript index-5bSU7xkd.js är byte-identisk med lokal exact build,
+SHA2567265847a900f3666d5e8cd63c7b0249328ddf88f64bce0e968ec2642e2002b1a.
+Public CSS index-B3bLsssL.css också byte-identisk,
+SHA256b062f3e0d0aabf4c0d5c9a9223672d239b27ef74749a9b97e32702f302b0024b.
+Browser/hashes-underlag finns i /tmp/w2t-release040-public/browser.json och
+/tmp/w2t-release040-public-hashes.json; kommandon återanvänder scripts/check-release.mjs
+och scripts/check-placement-preview.mjs med explicit release-URL/version/build.
+
+Mänsklig kampanjtid/balans och kvarvarande temporär artwork är fortfarande
+begränsningar; tekniska fixtures/simuleringar ersätter inte mänskliga helmatcher.
+Tidigare ljudgodkännande från användaren består; ingen ny agentlyssning hävdas.
+Slutuppdateringen ändrar enbart Markdown och återanvänder ovanstående faktiskt
+passerade kodchecks. CSS/units.mjs/docs/:memory:.ses bevaras och lämnas utanför.
+Befintlig Pages-praktik/version/changelog används utan ny tag/releaseinfrastruktur.

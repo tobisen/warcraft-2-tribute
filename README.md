@@ -881,3 +881,16 @@ Save64 behåller äldre geografi inklusive Save63:s Frontier-design. Native
 knappar har minst44×44px klickyta; större skärmar visar kortnamn.
 [MAP_CORRECTION.md](MAP_CORRECTION.md) redovisar kartinventering, faktisk
 färdväg, före/efterbilder, verifiering och kvarstående visuell kvalitet.
+
+
+## Release0.4.0 — Murar, portar och större guldlager
+
+**0.4.0 / Buildd003daa** är [publicerad på Pages](https://tobisen.github.io/warcraft-2-tribute/)
+med [verifierad CI/deploy](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37696240941).
+Walls/gates ansluter och placeras med1×1-ruta; egna trupper passerar portar
+automatiskt. Alla gruvor har10× guld, även efter uppgradering av äldre sparningar.
+Minst fem farms (tio på större kartor), Next Mission efter kampanjvinst och
+foggoffnow ingår, tillsammans med tidigare commitade karta/UI/ljud/gameplay-
+förbättringar sedan0.3.0. Inbyggd changelog har hela sammanfattningen.
+Full lokal regression1706 tester, slutlig CI och faktisk public browser PASS.
+Se RELEASE_CHECKLIST.md/HANDOFF.md för verifiering och kvarstående begränsningar.
