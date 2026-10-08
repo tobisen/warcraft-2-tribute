@@ -46,7 +46,7 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 ## Current Focus
 
 Nytt mandat 2026-10-08: RTS-220–228 i ordning, därefter användarens tillägg RTS-229, en task åt gången.
-RTS-220 grafik samt RTS-221–222 verifierade; RTS-223 är verifierad med separat flygbyggnad; 229 är klar enligt senaste styrning om egen belägringsbyggnad/ballista. 227/228/229 är klara; fullregression1795/206 PASS och HANDOFF är uppdaterad. Aktuellt mandat är avslutat; GitHub-status efter sista push redovisas separat. Städning, release och kartombyggnad är pausade.
+RTS-220 grafik samt RTS-221–222 verifierade; RTS-223 är verifierad med separat flygbyggnad; 229 är klar enligt senaste styrning om egen belägringsbyggnad/ballista. 227/228/229 är klara; fullregression1795/206 PASS och HANDOFF är uppdaterad. Aktuellt mandat är avslutat; GitHub37764843004 för5851044 är faktiskt grön (tests/build/Pages); slutdocs återanvänder kodchecks och stannar utan ny task/version. Städning, release och kartombyggnad är pausade.
 Taskvis riktade tester, native800-browser, unit/strict build/diff, docs och
 commit/push till origin/main. Full regression vid etappslut; stanna efter229.
 Befintliga style.css/units.mjs/docs/:memory:.ses bevaras. Ingen delegering.

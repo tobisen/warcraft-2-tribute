@@ -4753,3 +4753,12 @@ PASS14.71s; strict build458ms PASS; diffcheck PASS. Review confirms this
 changes only the bounded long scenario's deadline and retains every roster/
 paid-economy/replacement assertion. Gameplay/full1795 regression and browser
 evidence are reused from unchanged c157717 code, not rerun for this deadline.
+
+GitHub verification is now complete: [Actions37764843004](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37764843004)
+for `5851044` passed npm test, strict build and the existing Pages deployment.
+Code/gameplay delivery `c157717`; targeted CI deadline fix `5851044`, both
+pushed to origin/main. The prior failed run37762745212 is superseded, not
+reported as green. No new version/release task or live Pages browser check
+was performed. This final update is Markdown only: code checks and browser
+evidence above are reused explicitly; text/link/diff checks are new.
+The mandate through RTS-229 is complete; no further task is started.
