@@ -1,3 +1,18 @@
+## 2026-10-08 — RTS-235 synliga uppgraderingar
+
+Inventering: faktisk byggnadsutveckling är huvudbyggnad I–III (gemensam nivå
+även extrabaser) och tower II med permanent ground/airval. Research ändrar
+truppstats, inte forge/academybyggnadsnivå. Godkända befintliga nivå-/tornsprites
+återanvänds och kompletteras med små I/II/III respektive II ◆ GROUND / II ↑ AIR.
+Märken härleds från completed state; pågående framtida nivå visas inte som klar.
+HP0/foundation saknar märke. Ingen position/footprint/collision/Saveändring.
+Riktade23/4 PASS inkl base/tower/extrabaser/markörer/Save och restart.
+Strict slutbuild855ms PASS; unit524/91 PASS19.38s efter scennamnfix; diff PASS. Chrome800 Native base I/II/III och båda
+tornspecialiseringar samt SaveLoad/restart PASS0pageerrors, faktiskt visuellt
+inspekterade bilder i artifacts/rts-235. Första build/browser blockerades av
+namnkonflikt med befintliga ordermarkers; rättat och kontrollerat. Review utan
+kvarstående fynd. Inga nya assets/levels eller release; userändringar bevarade.
+
 ## 2026-10-08 — RTS-234 projektilmål
 
 Bågar, catapult/ballista, projektillspecialister och alla stridsflygare får ground/

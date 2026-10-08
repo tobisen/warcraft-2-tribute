@@ -115,6 +115,7 @@
   "src/gameplay/workerCombat.test.ts",
   "src/gameplay/workerTools.test.ts",
   "src/presentation/audioSnapshot.test.ts",
+  "src/presentation/buildingUpgrades.test.ts",
   "src/presentation/combatAudio.test.ts",
   "src/presentation/technologyView.test.ts",
   "src/presentation/wildlifeSave.test.ts",

@@ -1,0 +1,27 @@
+[
+  {
+    "levels": [
+      {
+        "frame": "base-player-complete",
+        "markers": [
+          "I"
+        ]
+      },
+      {
+        "frame": "base-level2-player-complete",
+        "markers": [
+          "II"
+        ]
+      },
+      {
+        "frame": "base-level3-player-complete",
+        "markers": [
+          "III"
+        ]
+      }
+    ],
+    "specializations": true,
+    "saveLoadRestart": true,
+    "errors": []
+  }
+]

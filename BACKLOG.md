@@ -69,13 +69,13 @@ Krav/acceptans: Gemensam target selection/range/movement/hit/damage för ground/
 
 Non-goals: städning, release och andra planerade funktioner.
 
-### RTS-235 — Synliga byggnadsuppgraderingar — In Progress
+### RTS-235 — Synliga byggnadsuppgraderingar — Done
 
 Krav/acceptans: Inventera faktiska nivåer/specialiseringar; befintliga godkända assets och tydliga markörer. Position/footprint/collision består. Rendering-/Save-tester och browser före/efter.
 
 Non-goals: städning, release och andra planerade funktioner.
 
-### RTS-236 — Flera produktionsbyggnader av samma typ — Todo
+### RTS-236 — Flera produktionsbyggnader av samma typ — In Progress
 
 Krav/acceptans: Spelare/AI får flera instanser med individuella köer, gemensam ekonomi/supply och fungerande selection/UI. Explicit campaignbegränsning består. Parallellproduktion, Save/restart och browser.
 

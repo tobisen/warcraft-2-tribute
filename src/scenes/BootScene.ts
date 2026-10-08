@@ -1,3 +1,4 @@
+import {buildingUpgradeMarkers} from '../presentation/buildingUpgrades';
 import {wallLine,placeWallLine} from '../gameplay/wallDrag';
 import {siegeBuilding,trainSiege} from '../gameplay/siegeProduction';
 import {roleResearchConfig,isRoleResearch} from '../config/roleResearch';
@@ -280,6 +281,7 @@ export class BootScene extends Phaser.Scene {
   private visuals = new Map<string, { body: Phaser.GameObjects.Image; ring: Phaser.GameObjects.Arc; cargo: Phaser.GameObjects.Text }>();
   private awaitingLoadedResume=false;
   private pendingLoad?:{match:MatchState;view:SavedView};
+  private upgradeMarkers=new Map<string,Phaser.GameObjects.Text>();
   private hpBars?:Phaser.GameObjects.Graphics;
   private impacts=new Map<number,{impact:Impact;visual:Phaser.GameObjects.Image}>();
   private nextImpact=1;
@@ -306,6 +308,7 @@ export class BootScene extends Phaser.Scene {
     this.spellGraphics=this.add.graphics().setDepth(45);
     this.warningState=createWarningState();this.warningVisual=this.add.graphics().setDepth(9);
     this.forestImages.clear();this.habitats=[];this.wildlifeVisuals.clear();this.wildlifeProps=[];this.visualTime=0;this.extraResourceVisuals.clear();this.hitSnapshot=undefined;this.motions.clear();this.deaths.clear();this.impacts.clear();this.nextImpact=1;
+    this.upgradeMarkers.clear();
     this.hpBars=this.add.graphics().setDepth(7);this.animalFeedback=this.add.graphics().setDepth(7);this.animalHP.clear();this.selectedAnimal=null;
     this.operationGraphics=this.add.graphics().setDepth(6);this.operationLabels=[];
     const loaded=this.pendingLoad;this.pendingLoad=undefined;
@@ -1025,6 +1028,9 @@ export class BootScene extends Phaser.Scene {
     this.stopButton.disabled = !this.gameplayActive() || !this.allSelectable().some(u=>u.selected);
     setActionLabel(document.getElementById('dismiss-units') as HTMLButtonElement,this.selectedBuilding?'Demolish Building':'Dismiss Unit');
     (document.getElementById('dismiss-units') as HTMLButtonElement).disabled=!dismissProposal(this.currentMatch(),this.selectedBuilding);
+    const upgradeBadges=buildingUpgradeMarkers(this.currentMatch()),markerIds=new Set(upgradeBadges.map(m=>m.id));
+    for(const [id,label] of this.upgradeMarkers)if(!markerIds.has(id)){label.destroy();this.upgradeMarkers.delete(id);}
+    for(const marker of upgradeBadges){let label=this.upgradeMarkers.get(marker.id);if(!label){label=this.add.text(marker.x,marker.y,marker.label,{fontFamily:'monospace',fontSize:'11px',color:marker.color,backgroundColor:'#16261e',padding:{x:3,y:1}}).setOrigin(.5).setDepth(8);this.upgradeMarkers.set(marker.id,label);}label.setPosition(marker.x,marker.y).setText(marker.label).setColor(marker.color);}
     this.hpBars?.clear();
     const routePoints=this.scoutRouteMode?this.scoutRoutePoints:this.gathering.units.flatMap(u=>u.kind==='soldier'&&u.selected&&u.scouting?.mode==='route'?u.scouting.waypoints:[]);for(let i=0;i<routePoints.length;i++){const a=routePoints[i]!,b=routePoints[(i+1)%routePoints.length]!;this.hpBars?.lineStyle(2,0x86dbe6,.8).strokeCircle(a.x,a.y,5);if(routePoints.length>1)this.hpBars?.lineBetween(a.x,a.y,b.x,b.y);}
     const allEnemies=[...this.combat.enemies,...bossEnemies(this.currentMatch(),true)],visibleEnemies=allEnemies.filter(e=>entityVisible(this.fog,'player',e)),presentedEnemies=allEnemies.filter(e=>entityPresented(this.fog,'player',e));
