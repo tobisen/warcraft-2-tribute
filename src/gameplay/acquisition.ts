@@ -1,7 +1,7 @@
 import {canHarm} from './players';
 import {canInteract} from './approach';
 import {enemyBody} from './enemyBody';
-import {canAttackDomain,movementMap,isAir} from './domains';
+import {canAttackDomain,movementMap,isAir,targetDomain} from './domains';
 import type {FactionId} from '../config/factions';
 import {enemySize} from './enemyBody';
 import { combatUnitStats,rangedStats } from '../config/unit';
@@ -21,7 +21,7 @@ function reachable(unit: Soldier, enemy: Enemy, map?: WorldMap,faction?:FactionI
   if (!map) return true;
   map=movementMap(map,unit);
   const half=enemySize(enemy)/2;
-  return approachRoute({...map,ignoreAttackOcclusion:isAir(enemy),bodyHalf:combatUnitStats(unit,faction).size/2},unit.position,enemy.footprint??{x:enemy.position.x-half,y:enemy.position.y-half,
+  return approachRoute({...map,ignoreAttackOcclusion:isAir(enemy),attackAcrossWater:!!rangedStats(unit,faction)&&targetDomain(enemy)==='sea',bodyHalf:combatUnitStats(unit,faction).size/2},unit.position,enemy.footprint??{x:enemy.position.x-half,y:enemy.position.y-half,
     width:half*2,height:half*2},(rangedStats(unit,faction)?.range??combatUnitStats(unit,faction).range??combatConfig.soldierRange)).status!=='blocked';
 }
 export function acquireTargets(units: Unit[], enemies: Enemy[], map?: WorldMap,
@@ -34,7 +34,7 @@ export function acquireTargets(units: Unit[], enemies: Enemy[], map?: WorldMap,
     const origin=unit.autoOrigin??unit.position;
     const valid=(enemy:Enemy)=>canHarm('player',enemy.playerId??'enemy')&&visible(enemy,unit)&&enemy.hp>0&&canAttackDomain(unit,enemy,faction??'crown')
       &&distance(origin,enemy.position)<=(rangedStats(unit,faction)?.aggroRange??combatUnitStats(unit,faction).aggroRange??combatConfig.soldierAggroRange)
-      &&(unit.commandMode?.kind==='hold'?(map?canInteract({...movementMap(map,unit),ignoreAttackOcclusion:isAir(enemy)},unit.position,enemyBody(enemy),rangedStats(unit,faction)?.range??combatUnitStats(unit,faction).range??combatConfig.soldierRange):distance(unit.position,enemy.position)<=(rangedStats(unit,faction)?.range??combatUnitStats(unit,faction).range??combatConfig.soldierRange)):reachable(unit,enemy,map,faction));
+      &&(unit.commandMode?.kind==='hold'?(map?canInteract({...movementMap(map,unit),ignoreAttackOcclusion:isAir(enemy),attackAcrossWater:!!rangedStats(unit,faction)&&targetDomain(enemy)==='sea'},unit.position,enemyBody(enemy),rangedStats(unit,faction)?.range??combatUnitStats(unit,faction).range??combatConfig.soldierRange):distance(unit.position,enemy.position)<=(rangedStats(unit,faction)?.range??combatUnitStats(unit,faction).range??combatConfig.soldierRange)):reachable(unit,enemy,map,faction));
     const current=unit.order.kind==='attack'?enemies.find(e=>unit.order.kind==='attack'&&e.id===unit.order.enemyId):undefined;
     if(current&&valid(current))return unit;
     const target=enemies.filter(valid).sort((a,b)=>distance(unit.position,a.position)-distance(unit.position,b.position)

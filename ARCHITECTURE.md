@@ -1,3 +1,12 @@
+## RTS-234 — Projektilmål över domäner
+
+Ranged combatunits kan välja land/sea/air/buildings. attackAcrossWater är transient
+approachflagga: rörelsen stannar på sin vanliga domain, endast kontaktstrålen passerar
+vatten. Projektilflight återanvänder marineFlightMap för sea-kompatibla masker;
+rocks/structures består, airborne behåller airMap. Fixed aim kan fortfarande missa
+rörliga mål. Submarine undantas eftersom dess torped endast färdas i vatten;
+transport/scout är obestyckade. Meleemasker och alla damage multipliers består.
+
 ## RTS-232 — Forskningskö
 
 ResearchState.queue är optional FIFO av unika ResearchKind med redan betald

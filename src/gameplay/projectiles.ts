@@ -25,7 +25,7 @@ export function advanceProjectiles(projectiles:readonly Projectile[], enemies:re
   const time=Math.min(Math.max(0,delta),p.remainingLife);
   const position=moveTowards(p.position,p.destination,p.speed,time);
   const footprint=p.targetFootprint??enemy?.footprint;
-  const shotMap=map&&p.airborne?airMap(map):map&&p.marine?marineFlightMap(map):map;
+  const shotMap=map&&p.airborne?airMap(map):map&&(p.marine||p.targets?.includes('sea'))?marineFlightMap(map):map;
   const flightMap=shotMap&&(footprint||p.shooterFootprint)?{...shotMap,obstacles:shotMap.obstacles.filter(o=>![footprint,p.shooterFootprint].some(f=>f&&o.x===f.x&&o.y===f.y&&o.width===f.width&&o.height===f.height))}:shotMap;
   if(flightMap&&!segmentFits(flightMap,p.position,position,0))continue;
   if(travel<=time+1e-9){

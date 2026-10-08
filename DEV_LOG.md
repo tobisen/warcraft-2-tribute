@@ -1,3 +1,21 @@
+## 2026-10-08 — RTS-234 projektilmål
+
+Bågar, catapult/ballista, projektillspecialister och alla stridsflygare får ground/
+sea/air/buildingmasker. Ranged acquisition/hold/approach behåller landnavigation
+men skottkontakten till sjömål passerar vatten. Flightmap passerar vatten, behåller
+rock/structures; air shots använder befintlig airflight. Fixed aim/hit/splash och
+befintliga damageByDomain/building/tech/armor består. Inga andra balansvärden ändras.
+Undantag: submarine har vattenbunden torped med sea-only mask; transport/scout
+saknar attack. Shared domainhelper rättad för submarine och undantaget testat.
+Melee/worker/cavalry/giant behåller ground/buildings.
+Riktade61/5 PASS; alla fraktioners rangedroster mot tre målklasser, shore acquisition/
+träff och symmetrisk enemyträff, submarine och befintlig navy/air/siege. Första nya
+fixture saknade idle-order och fel Navy argumentposition, rättat; goblins specialist
+hittades och målmask rättad. Unit524/91 PASS19.17s, strict build551ms/diff PASS.
+Chrome800 tre målklassers skott/HP PASS0pageerrors; fixturefog rättad för synlig
+visuell granskning, artifacts/rts-234. Review utan kvarstående fynd. Full samlad
+regression återstår vid batchslut. Ingen release/CI-claim; userändringar bevarade.
+
 ## 2026-10-08 — RTS-233 enhetsstats
 
 Vald soloenhet visar HP samt separat attackrad per giltig målklass med namn/typ,

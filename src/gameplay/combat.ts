@@ -1,3 +1,4 @@
+import {marineFlightMap} from './terrainNavigation';
 import {seaMonsterStep} from './bosses';
 import {cavalryArmorMultiplier} from '../config/roleResearch';
 import {cavalryRules} from '../config/cavalry';
@@ -128,12 +129,12 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
     const ranged=unit.kind==='soldier'?rangedStats(unit,gathering.faction):null;
     const range=ranged?.range??stats.range??combatConfig.soldierRange;
     const speed=stats.speed;
-    const step = unit.commandMode?.kind==='hold' ? {position:{...unit.position},attackSeconds:(map?canInteract({...movementMap(map,unit),ignoreAttackOcclusion:isAir(enemy)},unit.position,enemyBody(enemy),range):Math.hypot(unit.position.x-enemy.position.x,unit.position.y-enemy.position.y)<=range)?delta:0,navigation:undefined} : map ? combatApproach({...movementMap(map,unit),ignoreAttackOcclusion:isAir(enemy),bodyHalf:stats.size/2},unit.position,enemyBody(enemy),
+    const step = unit.commandMode?.kind==='hold' ? {position:{...unit.position},attackSeconds:(map?canInteract({...movementMap(map,unit),attackAcrossWater:!!ranged&&targetDomain(enemy)==='sea',ignoreAttackOcclusion:isAir(enemy)},unit.position,enemyBody(enemy),range):Math.hypot(unit.position.x-enemy.position.x,unit.position.y-enemy.position.y)<=range)?delta:0,navigation:undefined} : map ? combatApproach({...movementMap(map,unit),attackAcrossWater:!!ranged&&targetDomain(enemy)==='sea',ignoreAttackOcclusion:isAir(enemy),bodyHalf:stats.size/2},unit.position,enemyBody(enemy),
       enemy.id,speed,range,delta,unit.navigation,gateFor?.(`player:${unit.id}`))
       : approach(unit.position, enemy.position, speed, range, delta);
     if(ranged&&unit.kind==='soldier') {
       let cooldown=Math.max(0,(unit.attackCooldown??0)-(delta-step.attackSeconds)),time=step.attackSeconds;
-      const canFire=(!visible||visible(enemy,unit))&&(!map||isAir(unit)||isAir(enemy)||segmentFits(enemy.footprint?{...map,obstacles:map.obstacles.filter(o=>!(o.x===enemy.footprint!.x&&o.y===enemy.footprint!.y&&o.width===enemy.footprint!.width&&o.height===enemy.footprint!.height))}:map,step.position,enemy.position,0));
+      const canFire=(!visible||visible(enemy,unit))&&(!map||isAir(unit)||isAir(enemy)||segmentFits(enemy.footprint?{...marineFlightMap(map),obstacles:map.obstacles.filter(o=>!(o.x===enemy.footprint!.x&&o.y===enemy.footprint!.y&&o.width===enemy.footprint!.width&&o.height===enemy.footprint!.height))}:marineFlightMap(map),step.position,enemy.position,0));
       while(canFire&&time>0&&time+1e-9>=cooldown) {
         time=Math.max(0,time-cooldown);
         shots.push({projectile:{bossProfile:bossDamageProfile(unit.kind==='soldier'?unit.archetype:undefined,true),id:`arrow-${nextProjectileNumber++}`,shooterId:unit.id,targetId:enemy.id,
@@ -189,13 +190,13 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
     const footprint=map&&moved?unitFootprint(moved.position,target.footprint.width):target.footprint;
     if(!enemy.boss&&!playerVisible({...target,footprint},enemy))return {...enemy,navigation:undefined};
     const center={x:footprint.x+footprint.width/2,y:footprint.y+footprint.height/2};
-    const step=enemy.boss?{position:{...enemy.position},attackSeconds:delta,navigation:undefined}:map?combatApproach({...enemyMap!,ignoreAttackOcclusion:target.domain==='air'},enemy.position,footprint,target.id,stats.speed,stats.range,delta,enemy.navigation,gateFor?.(`enemy:${enemy.id}`))
+    const step=enemy.boss?{position:{...enemy.position},attackSeconds:delta,navigation:undefined}:map?combatApproach({...enemyMap!,attackAcrossWater:!!ranged&&target.domain==='sea',ignoreAttackOcclusion:target.domain==='air'},enemy.position,footprint,target.id,stats.speed,stats.range,delta,enemy.navigation,gateFor?.(`enemy:${enemy.id}`))
       :approach(enemy.position,center,stats.speed,stats.range,delta);
     const multiplier=enemy.boss?1:upgradeMultiplier(opponent.upgrades.attack.multiplier,combat.enemyUpgrades?.attack);
     const soldier=enemySoldier(enemy,enemyFaction);
     if(ranged){
       let cooldown=Math.max(0,(enemy.attackCooldown??0)-(delta-step.attackSeconds)),time=step.attackSeconds;
-      const canFire=!!enemy.boss||!map||isAir(enemy)||target.domain==='air'||segmentFits({...map,obstacles:map.obstacles.filter(o=>!(o.x===footprint.x&&o.y===footprint.y&&o.width===footprint.width&&o.height===footprint.height))},step.position,center,0);
+      const canFire=!!enemy.boss||!map||isAir(enemy)||target.domain==='air'||segmentFits({...marineFlightMap(map),obstacles:marineFlightMap(map).obstacles.filter(o=>!(o.x===footprint.x&&o.y===footprint.y&&o.width===footprint.width&&o.height===footprint.height))},step.position,center,0);
       while(canFire&&time>0&&time+1e-9>=cooldown){
         time=Math.max(0,time-cooldown);
         shots.push({projectile:{bossProfile:bossDamageProfile(enemy.role,true),owner:'enemy',id:`enemy-arrow-${nextProjectileNumber++}`,shooterId:enemy.id,targetId:target.id,

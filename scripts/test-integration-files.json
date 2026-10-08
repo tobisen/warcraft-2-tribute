@@ -83,6 +83,7 @@
   "src/gameplay/organicTerrain.test.ts",
   "src/gameplay/population.test.ts",
   "src/gameplay/productionQueue.test.ts",
+  "src/gameplay/projectileDomains.test.ts",
   "src/gameplay/rally.test.ts",
   "src/gameplay/referenceTerrain.test.ts",
   "src/gameplay/releaseMatrix.test.ts",

@@ -63,13 +63,13 @@ Krav/acceptans: Ensam vald enhet visar HP och separata namngivna attacker med fa
 
 Non-goals: städning, release och andra planerade funktioner.
 
-### RTS-234 — Projektilenheter mot skepp och flygare — In Progress
+### RTS-234 — Projektilenheter mot skepp och flygare — Done
 
 Krav/acceptans: Gemensam target selection/range/movement/hit/damage för ground/sea/air. Meleebegränsningar och skademodifierare bevaras; konkreta undantag dokumenteras/testas. Combatintegration och browser.
 
 Non-goals: städning, release och andra planerade funktioner.
 
-### RTS-235 — Synliga byggnadsuppgraderingar — Todo
+### RTS-235 — Synliga byggnadsuppgraderingar — In Progress
 
 Krav/acceptans: Inventera faktiska nivåer/specialiseringar; befintliga godkända assets och tydliga markörer. Position/footprint/collision består. Rendering-/Save-tester och browser före/efter.
 

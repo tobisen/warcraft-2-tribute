@@ -8,7 +8,7 @@ import type { Footprint } from './placement';
 
 export interface Tile { column: number; row: number }
 export interface WorldMap {
-  ignoreAttackOcclusion?:boolean;enemyPassageBlocks?:Footprint[];bodyHalf?:number;
+  attackAcrossWater?:boolean;ignoreAttackOcclusion?:boolean;enemyPassageBlocks?:Footprint[];bodyHalf?:number;
   linearCollision?:true;
   interactionTarget?:Footprint;
   design?:TerrainDesign;

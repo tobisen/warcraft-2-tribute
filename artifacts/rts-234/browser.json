@@ -1,0 +1,22 @@
+[
+  {
+    "hits": [
+      {
+        "domain": "land",
+        "shots": 1,
+        "hp": 988
+      },
+      {
+        "domain": "sea",
+        "shots": 1,
+        "hp": 988
+      },
+      {
+        "domain": "air",
+        "shots": 1,
+        "hp": 988
+      }
+    ],
+    "errors": []
+  }
+]
