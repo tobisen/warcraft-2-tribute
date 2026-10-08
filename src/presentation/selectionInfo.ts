@@ -1,3 +1,5 @@
+import './unitStats.css';
+import {unitAttacks} from './unitAttacks';
 import './researchQueue.css';
 import {researchSummary} from '../gameplay/research';
 import {workerToolsConfig} from '../config/workerTools';
@@ -39,7 +41,7 @@ export function selectionInfo(m:MatchState,building:BuildingSelection,resourceId
  const faction=factionForTeam(m,'player'),selected=[...m.gathering.units,...(m.navy?.ships??[])].filter(u=>u.selected);
  if(selected.length>1){const infos=selected.map(u=>selectionInfo({...m,gathering:{...m.gathering,units:m.gathering.units.map(x=>({...x,selected:x.id===u.id}))},navy:m.navy?{...m.navy,ships:m.navy.ships.map(x=>({...x,selected:x.id===u.id}))}:undefined},null));const counts=new Map<string,number>();for(const info of infos)counts.set(info.name,(counts.get(info.name)??0)+1);return {name:`${selected.length} units selected`,detail:`${[...counts].map(([name,n])=>`${name} ×${n}`).join(' · ')}`,hp:infos.reduce((n,x)=>n+(x.hp??0),0),maxHP:infos.reduce((n,x)=>n+(x.maxHP??0),0),stats:['Combined health',...Array.from(new Set(selected.map(orderSummary)))],portrait:null};}
  const u=selected[0];
- if(u){const role:UnitArt=u.kind==='ship'?u.role??'warship':u.kind==='worker'?'worker':u.archetype??'soldier';const data=u.kind==='ship'?faction.naval.units[u.role??'warship']:faction.units[role as 'worker'|'soldier'|'archer'|'catapult'|'ballista'|'specialist'|'air'];const stats=[orderSummary(u),`Speed ${data.speed} px/s`,`Supply ${data.supply}`];
+ if(u){const role:UnitArt=u.kind==='ship'?u.role??'warship':u.kind==='worker'?'worker':u.archetype??'soldier';const data=u.kind==='ship'?faction.naval.units[u.role??'warship']:faction.units[role as 'worker'|'soldier'|'archer'|'catapult'|'ballista'|'specialist'|'air'];const stats=[...unitAttacks(m,u),orderSummary(u),`Speed ${data.speed} px/s`,`Supply ${data.supply}`];
   if(u.kind==='worker')stats.push(`Cargo ${u.cargo.toFixed(1)} / ${faction.units.worker.capacity} ${u.cargoType??'wood'}`,`Gather ${faction.units.worker.gatherPerSecond}/s`,`Damage ${workerCombatConfig.damagePerSecond}/s · Range ${workerCombatConfig.range}px`);
   else if(role==='transport')stats.push(`Passengers ${u.kind==='ship'?(u.passengers?.length??0):0} / ${navyConfig.transport.capacity}`);
   else {const combat=u.kind==='ship'?faction.naval.units[u.role??'warship']:faction.units[role as 'soldier'|'archer'|'catapult'|'ballista'|'specialist'|'air'];if(combat.range!==undefined)stats.push(`Range ${combat.range} px`);if('damagePerSecond' in combat&&combat.damagePerSecond!==undefined)stats.push(`Damage ${combat.damagePerSecond}/s`);if(combat.damage!==undefined)stats.push(`Damage ${combat.damage}/hit`);}
@@ -73,6 +75,7 @@ export function renderSelectionInfo(info:SelectionInfo,m?:MatchState):void {
  document.getElementById('selection-health')!.textContent=info.hp===null?'':`HP ${Math.ceil(info.hp)} / ${info.maxHP}${info.mana!==undefined?` · Mana ${Math.floor(info.mana)} / ${info.maxMana}`:''}`;
  const health=document.getElementById('selection-health-bar') as HTMLProgressElement;health.hidden=info.hp===null;health.max=info.maxHP??1;health.value=info.hp??0;
  const stats=document.getElementById('selection-stats')!;stats.title=info.stats.join(' · ');stats.textContent=info.stats.filter(s=>s.startsWith('Order:')||s.startsWith('Cargo')||s.startsWith('Supply')||s.startsWith('Production:')||s.startsWith('Research:')||s.startsWith('Enemy')||s.startsWith('Workers:')||s.startsWith('Effects:')).join(' · ');
+ let attacks=document.getElementById('unit-attack-details');if(!attacks){attacks=document.createElement('div');attacks.id='unit-attack-details';document.getElementById('selection-info')!.append(attacks);}attacks.replaceChildren(...info.stats.filter(s=>s.startsWith('Attack:')||s.startsWith('Attack cooldown')||s.startsWith('Damage before')).map(s=>{const line=document.createElement('div');line.textContent=s;return line;}));attacks.hidden=!attacks.childElementCount;
  let research=document.getElementById('research-queue-summary');if(!research){research=document.createElement('div');research.id='research-queue-summary';document.getElementById('selection-info')!.append(research);}research.textContent=m?.research?researchSummary(m.research,factionForTeam(m,'player').id):'';research.hidden=!m?.research?.job&&!m?.research?.queue?.length;
  document.getElementById('selection-info')!.title=[info.name,info.detail,...info.stats].join(' · ');
 }

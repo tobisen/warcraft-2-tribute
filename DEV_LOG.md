@@ -1,3 +1,17 @@
+## 2026-10-08 — RTS-233 enhetsstats
+
+Vald soloenhet visar HP samt separat attackrad per giltig målklass med namn/typ,
+faktisk utgående skada efter attacktech/ability/spell, range och cooldown/intervall.
+Worker använder egen2damage/s, healer behåller sin faktiska melee; scout/transport
+saknar attack. Target armor/counters anges som efterföljande modifierare. Configens
+begripliga enhetsnamn består. Gruppvyn behåller HP/composition/orders utan attacker.
+Riktade33/3 PASS; slutlig unit524/91 PASS15.34s, strict build497ms och diff PASS.
+Browser800 Native solo/group/HP/techdamage PASS0pageerrors; bilder visuellt granskade
+under artifacts/rts-233. Browser hittade DOM-filter, rättat; harnessens felaktiga
+namn/range rättade till faktiska Archer160px. Första build hittade unionindexering,
+rättad före slutlig unit/build. Slutreview utan kvarstående fynd.
+Ingen balansvärdesändring, release eller CI-claim. Userändringar bevarade.
+
 ## 2026-10-08 — RTS-232 forskningskö
 
 FIFO med engångsbetalning vid enqueue, unik aktiv/köad forskning och befintliga

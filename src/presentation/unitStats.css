@@ -1,0 +1,15 @@
+#unit-attack-details {
+ position:fixed;
+ bottom:190px;
+ left:12px;
+ max-width:calc(100vw - 24px);
+ padding:5px 8px;
+ border:1px solid #998456;
+ background:#142c25ee;
+ color:#ece1ba;
+ font-size:11px;
+ line-height:1.5;
+ z-index:3;
+ pointer-events:none;
+}
+#unit-attack-details[hidden] {display:none;}

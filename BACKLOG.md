@@ -57,13 +57,13 @@ Krav/acceptans: FIFO med befintlig kostnad/prerequisites; aktiv progress och kö
 
 Non-goals: städning, release och andra planerade funktioner.
 
-### RTS-233 — Visa enhetsstats — In Progress
+### RTS-233 — Visa enhetsstats — Done
 
 Krav/acceptans: Ensam vald enhet visar HP och separata namngivna attacker med faktisk modifierad skada, räckvidd, cooldown och målklasser. Begripliga namn och kompakt gruppvy. Presentationstester och browser.
 
 Non-goals: städning, release och andra planerade funktioner.
 
-### RTS-234 — Projektilenheter mot skepp och flygare — Todo
+### RTS-234 — Projektilenheter mot skepp och flygare — In Progress
 
 Krav/acceptans: Gemensam target selection/range/movement/hit/damage för ground/sea/air. Meleebegränsningar och skademodifierare bevaras; konkreta undantag dokumenteras/testas. Combatintegration och browser.
 

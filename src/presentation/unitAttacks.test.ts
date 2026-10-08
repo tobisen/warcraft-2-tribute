@@ -1,0 +1,10 @@
+import {expect,it} from 'vitest';
+import {createMatch} from '../gameplay/match';
+import {factions,factionIds,factionsForPlayer} from '../config/factions';
+import {unitAttacks} from './unitAttacks';
+import {selectionInfo} from './selectionInfo';
+import type {Soldier} from '../gameplay/gathering';
+const soldier=(archetype?:Soldier['archetype']):Soldier=>({kind:'soldier',archetype,id:'unit-20',selected:true,hp:40,cargo:0,position:{x:300,y:300},target:{x:300,y:300},order:{kind:'idle'}});
+it.each(factionIds)('%s exposes each target attack, actual range/cooldown and tech-modified damage',f=>{const m=createMatch('survival','normal',factionsForPlayer(f));m.research!.attack=1;const u=soldier('archer'),cfg=factions[f].units.archer,stats=unitAttacks(m,u);expect(stats.join(' ')).toContain(`${cfg.range}px`);expect(stats.join(' ')).toContain(`${cfg.attackInterval}s cooldown`);expect(stats.join(' ')).toContain(`${Number((cfg.damage!*factions[f].upgrades.attack.multiplier).toFixed(2))} damage/hit`);expect(stats.filter(s=>s.startsWith('Attack:')).length).toBe(cfg.targets!.length);});
+it('keeps worker damage unmodified and no attacks on noncombat units',()=>{const m=createMatch();m.research!.attack=2;expect(unitAttacks(m,m.gathering.units[0])[0]).toContain('2 damage/s');for(const role of ['scout'] as const)expect(unitAttacks(m,soldier(role))).toEqual(['Attack: None']);});
+it('shows live effects and solo health; compact group omits per-attack detail',()=>{const m=createMatch();const u=soldier('archer');u.spellEffects=[{spell:'rally',sourceFaction:'clans',remainingSeconds:5}];m.gathering.units=[u];expect(unitAttacks(m,u).join(' ')).toContain('15.6 damage/hit');expect(selectionInfo(m,null).hp).toBe(40);expect(selectionInfo(m,null).stats.join(' ')).toContain('Attack: Projectile');m.gathering.units.push({...soldier(),id:'unit-21'});expect(selectionInfo(m,null).stats.join(' ')).not.toContain('Attack:');expect(selectionInfo(m,null).detail).not.toContain('unit-20');});
