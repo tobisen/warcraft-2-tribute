@@ -1,3 +1,40 @@
+## 2026-10-08 — RTS-220 levererad; RTS-221–228 återstår
+
+Användarens aktuella uppdrag omfattar RTS-220–228. Endast RTS-220 är
+implementerad, verifierad och pushad i denna leverans: `15bd869` till
+befintlig `origin/main`. Uppdraget som helhet är inte färdigt. Nästa task är
+RTS-221 (Healer), sedan RTS-222–228 i BACKLOG-ordning. Ingen release,
+städning eller kartombyggnad har startats. Ingen delegering.
+
+RTS-220: fem fraktionsunika cavalry-/Stable-varianter, bas-II-prerequisite,
+shared production/cost/supply, melee-motvikt, AI, campaign-unlocks,
+selection/Tech Tree/musklick/hotkeys, save/load och egna CC0 pixelassets.
+Grundstats: 45wood/25gold, 12s, 2supply, 110HP, 230speed; infantry-melee
+har 1.5× skada mot cavalry. Stable kostar 70wood/30gold, tar 10s och har
+160HP. GAME_DESIGN/BACKLOG/DEV_LOG och assetkällor beskriver detaljer.
+
+Ny verifiering för220: riktade98/8 PASS, unit511/89 PASS, build inklusive
+strict typecheck PASS och diffcheck PASS. Browser vid native800×600 för
+samtliga fem fraktioner: faktisk mouse build/train/move/attack, Tech Tree,
+Save/Load och restart PASS. Artifacts finns i `artifacts/rts-220/`.
+Sprites/ikoner är enkel procedural pixelart; delad ridergrundform och
+upprepade deathframes är konkreta begränsningar. Ingen mänsklig balans-
+eller slutanimationsverifiering hävdas. Full regression för hela etappen
+återstår; ingen ny CI/Pages-/releaseverifiering har gjorts.
+
+RTS-221 påbörjades lokalt men var ofärdig och gav fyra typecheckfel i
+UI-kopplingarna. Den försöksändringen återställdes till verifierad220-kod;
+healer är Todo och inga ofärdiga healer-assets/gameplay lämnas som leverans.
+Föreslagen startpunkt är befintlig Academy och Heal-spell, med separata
+målregler för levande biologiska egna/allierade enheter, manuell Heal och
+valbar autocast. Byggnader, själv, döda och mekaniska enheter måste undantas;
+nya tester måste täcka samtidiga healers, mana/cooldown och teams/vision.
+Detta är en implementation att göra, inte redan verifierat beteende.
+
+Befintliga ändringar i `src/style.css`, `assets/sources/units.mjs`,
+`docs/` och `:memory:.ses` är bevarade och inte inkluderade i taskcommit.
+Nedanstående äldre överlämning är historisk och ersätter inte detta mandat.
+
 ## 2026-10-07 — RTS-212 två hemliga bossar färdiga
 
 Nytt uttryckligt uppdrag efter219: genomför212, sedan stopp före213. Två

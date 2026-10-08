@@ -4473,3 +4473,13 @@ utan kvarstående blockerande fynd. Task Done; taskvis commit/push.
 Tidigare gröna checks återanvänds för oförändrade lifecycle-system; omkörningar
 ovan motiverades av konkreta reviewfynd/testfel. Ingen ny release eller
 CI-/Pages-/mänsklig balansstatus hävdas.
+
+
+### RTS-220 taskpush och ofullständig etapp
+
+RTS-220 pushad som15bd869 till origin/main. RTS-221–228 återstår; hela
+användaruppdraget är inte färdigt. En lokal221-prototyp gav fyra UI-typecheckfel
+och återställdes till verifierad220-kod utan att beröra användarens CSS,
+units.mjs eller otrackade docs/memory.221 står Todo. HANDOFF redovisar
+leveransen och återstående arbete. Ingen ny kodverifiering gjordes för denna
+rena dokumentuppdatering;220:s tidigare checks gäller dess oförändrade kod.
