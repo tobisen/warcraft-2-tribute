@@ -26,8 +26,15 @@ function category(id:string):CommandCategory{return id==='dismiss-units'?'Select
 export function commandRows():CommandRow[]{return [...basics,...hotkeys.map(h=>({category:category(h.button),command:h.button.split('-').map((w,i)=>i===0?w[0]!.toUpperCase()+w.slice(1):w).join(' '),gesture:h.key,explanation:h.label.split(/(?<=\.)\s+/)[0]!,action:h.button}))];}
 export function renderCommandsView():void{
  const panel=document.getElementById('pause-commands-panel')!;if(panel.hidden||panel.childElementCount)return;
+ const tabs=document.createElement('nav');tabs.className='command-tabs';tabs.setAttribute('role','tablist');tabs.setAttribute('aria-label','Command sections');panel.append(tabs);
+ const buttons:HTMLButtonElement[]=[],sections:HTMLElement[]=[];
+ const activate=(index:number,focus=false)=>{buttons.forEach((button,i)=>{button.setAttribute('aria-selected',String(i===index));button.tabIndex=i===index?0:-1;sections[i]!.hidden=i!==index;});panel.scrollTop=0;if(focus)buttons[index]!.focus();};
  for(const category of commandCategories){const section=document.createElement('section'),h=document.createElement('h3'),table=document.createElement('table'),head=document.createElement('thead'),header=document.createElement('tr');h.textContent=category;
+  const button=document.createElement('button'),index=buttons.length;button.type='button';button.textContent=category;button.id=`commands-tab-${category.toLowerCase()}`;button.setAttribute('role','tab');button.setAttribute('aria-controls',`commands-section-${category.toLowerCase()}`);
+  section.id=`commands-section-${category.toLowerCase()}`;section.setAttribute('role','tabpanel');section.setAttribute('aria-labelledby',button.id);section.tabIndex=0;
+  button.addEventListener('click',()=>activate(index));button.addEventListener('keydown',event=>{const next=event.key==='ArrowRight'?(index+1)%commandCategories.length:event.key==='ArrowLeft'?(index+commandCategories.length-1)%commandCategories.length:event.key==='Home'?0:event.key==='End'?commandCategories.length-1:null;if(next===null)return;event.preventDefault();event.stopPropagation();activate(next,true);});buttons.push(button);sections.push(section);tabs.append(button);
   for(const name of ['Command','Key / gesture','What it does']){const th=document.createElement('th');th.scope='col';th.textContent=name;header.append(th);}head.append(header);table.append(head);const body=document.createElement('tbody');
   for(const row of commandRows().filter(r=>r.category===category)){const tr=document.createElement('tr');if(row.action)tr.dataset.commandAction=row.action;for(const value of [row.command,row.gesture,row.explanation]){const td=document.createElement('td');td.textContent=value;tr.append(td);}body.append(tr);}table.append(body);section.append(h,table);panel.append(section);
  }
+ activate(0);
 }

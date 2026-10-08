@@ -45,6 +45,19 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
+### UI-tillägg 2026-10-08 — Commands med sektionsflikar — Done
+
+Avgränsat uppdrag: en flik per befintlig sektion Selection/Movement/Combat/
+Economy/Building/Camera. Endast vald sektions tabell visas; alla befintliga
+kommandon och keybindings bevaras. Flikar ligger kvar vid scroll, tabellens
+innehåll scrollar inom modalen och Close förblir nåbar. ARIA-tabs med
+piltangenter/Home/End och fokus till vald flik; sektionsbyte börjar högst upp.
+Äldre flex-shrink:0 korrigerad för hjälp-panelerna så overflow faktiskt scrollar.
+Ny browser800×600/1280×720 PASS för samtliga flikar/rader, keyboard, faktisk
+scroll och Close med250ms musklick. Unit511/89, strict build och diff PASS.
+Ingen ny release/Pages eller bred gameplay-regression. Användarändringar bevarade.
+
+
 ### UI-korrigering 2026-10-08 — Close över flera renderframes — Done
 
 Användarens återrapport visade att tidigare snabba browserklick inte täckte

@@ -44,3 +44,11 @@
 /* Keep the two help toggles reachable while their pause dialog is open. */
 #app[data-phase='paused']:has(#game-toolbar:is([data-pause-page='tech'],[data-pause-page='commands'])) #tech-tree-button,
 #app[data-phase='paused']:has(#game-toolbar:is([data-pause-page='tech'],[data-pause-page='commands'])) #commands-button { position:relative; z-index:95; }
+
+/* Section tabs remain reachable while a long command table scrolls. */
+#pause-commands-panel .command-tabs { position:sticky; top:0; z-index:1; display:flex; flex-wrap:wrap; gap:6px; padding:4px 0 8px; background:#172422; }
+#pause-commands-panel [role='tab'] { font-size:12px; padding:6px 10px; }
+#pause-commands-panel [role='tab'][aria-selected='true'] { background:#59603f; border-color:#e2bc72; }
+#pause-commands-panel [role='tabpanel'] { margin:8px 0 0; }
+#pause-commands-panel table { table-layout:fixed; }
+#game-toolbar #pause-tech-panel,#game-toolbar #pause-commands-panel { flex-shrink:1; }

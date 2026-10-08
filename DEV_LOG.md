@@ -1,5 +1,26 @@
 # Development log
 
+## 2026-10-08 — Commands: flikar och scroll
+
+Befintliga sex kommandosektioner har egna ARIA-flikar och tabpaneler.
+Endast aktiv sektion visas; samma kommandorader/keybindings återanvänds.
+Sticky flikraden förblir nåbar vid scroll och byte återställer scrollTop.
+Vänster/höger/Home/End växlar flik och flyttar fokus. Close ligger utanför
+scrollinnehållet. Hjälppaneler får flex-shrink:1 för att upphäva äldre
+`#game-toolbar>*`-regel som annars klippte innehållet utan fungerande scroll.
+
+Ny `npm run test:unit`511 tests/89 filer PASS (inklusive alla live keybindings),
+`npm run build` med strict typecheck PASS (befintlig chunkvarning),
+`git diff --check` PASS. Playwright native800×600/1280×720 PASS:
+sex flikar, samtliga rader jämförda med commandRows, bara en synlig sektion,
+piltangenter/Home/End, verklig overflow-scroll622/502px, sticky flikar,
+scrollreset och Close med250ms musklick; inga pageerrors. Även forsknings-
+rader och Tech Tree/Commands Close/Back regressionskontrollerade.
+`/private/tmp/commands-tabs-800.png` visuellt granskad;1280-bild finns bredvid.
+Build/browser upprepades efter konkret upptäckt flex-shrink-fel. Ingen bred
+campaign/fullregression, ny release eller CI/Pages hävdas. CSS/units/docs bevarade.
+
+
 ## 2026-10-08 — Close: korrigerat avbrutet musklick
 
 Tidigare UI-kontroll använde för snabba klick och missade användarens fel.
