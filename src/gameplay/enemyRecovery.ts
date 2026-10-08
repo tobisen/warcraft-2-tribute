@@ -26,6 +26,7 @@ export function prepareEnemyRecovery(m:MatchState):MatchState {
 }
 export function advanceEnemyRecovery(m:MatchState,delta:number):MatchState {
  if(!m.enemyRecovery||!m.enemyProduction||!hasEnemyBase(m.combat,m.map))return m;
+ delta=Math.max(0,delta-(m.enemyProduction.baseDevelopment?.remainingSeconds??0));
  const g=view(m),result=updateQueuedProduction(g,m.enemyRecovery.production,delta,{kind:'base'},{map:enemyNavigationMap(m.map),enemies:[...m.gathering.units,...m.combat.enemies.filter(e=>e.kind!=='worker')]});
  const existing=new Set(g.units.map(u=>u.id));
  const spawned=result.gathering.units.filter(u=>!existing.has(u.id)).map(unit=>{const u=unit as Worker;return {id:`enemy-worker-${u.id.slice(5)}`,owner:'enemy' as const,kind:'worker' as const,hp:u.hp!,position:u.position,work:{cargo:0,target:u.target,order:{kind:'idle' as const}}};});

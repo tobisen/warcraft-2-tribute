@@ -17,6 +17,7 @@ export function visionObservers(state:MatchState):VisionObserver[]{
  for(const b of state.placement.bases??[])if(b.hp>0&&b.construction.remainingSeconds===0)building(b.id,b.footprint,fogConfig.baseRadius);
  if(state.combat.baseHP>0)building('base',baseFootprint(state.gathering.base),fogConfig.baseRadius);
  if(state.placement.barracks&&(state.placement.barracksHP??1)>0&&state.placement.construction?.remainingSeconds===0)building('barracks',state.placement.barracks,fogConfig.barracksRadius);
+ const stable=state.placement.stable;if(stable&&stable.hp>0&&stable.construction.remainingSeconds===0)building('stable',stable.footprint,fogConfig.forgeRadius);
  const academy=state.placement.academy;if(academy&&academy.hp>0&&academy.construction.remainingSeconds===0)building('academy',academy.footprint,fogConfig.forgeRadius);
  const forge=state.placement.forge;if(forge&&forge.hp>0&&forge.construction.remainingSeconds===0)building('forge',forge.footprint,fogConfig.forgeRadius);
  for(const t of state.placement.defenses??[])if(t.hp>0&&t.construction.remainingSeconds===0)building(t.id,t.footprint,t.kind==='tower'?208:48);

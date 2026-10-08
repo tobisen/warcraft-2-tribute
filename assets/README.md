@@ -211,3 +211,15 @@ RTS-158: utökad originaldialog med aktivitet/ras/rollvariation och lokal speech
 RTS-159: worldatlas256×384/51 frames. wildlife.mjs innehåller egna32px djur/props; inga rasterreferenser. Två idle- och fyra gångposer. Se sources/wildlife-159.md och artifacts/rts-159. Kart-/djurgranskning är separat från kvarstående attackljudslyssning och saknade röstinspelningar.
 
 PRIO-04: scripts/export-wildlife-audio.py exporterar egna stiliserade hjort-/kanin-/rävläten med endast Python-standardbibliotek. `npm run audio:export` inkluderar även dessa efter det befintliga soundfile-exportsteget. Mono24kHz/16bit WAV-masters/runtime och public/audio/wildlife-manifest.json; ingen OGG behövs för dessa korta clips. Se sources/interactive-wildlife.md för provenance, neutral gameplay och kvarstående faktisk lyssning.
+
+
+## RTS-220 — Cavalry och Stable
+
+[sources/cavalry.mjs](sources/cavalry.mjs) är ny egen integer-pixelkomposition
+(CC0), exporterad med [export-cavalry](../scripts/export-cavalry.mjs). Inga
+externa bilder eller modifieringar av användarens units.mjs. Separat atlas
+innehåller fem mounts (horse/wolf/stag/ram/boar), teamfärger, åtta riktningar,
+idle/walk/attack/death och fyra byggstadier för fem Stable-motsvarigheter.
+Ikoner/porträtt croppar samma sprites. Detta är enkel procedural native-art;
+fyra deathframes använder samma fallna pose och riders återanvänder grundform.
+Ingen separat målad slutanimation eller mänskligt kvalitetsgodkännande hävdas.

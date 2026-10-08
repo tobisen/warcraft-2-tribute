@@ -1,3 +1,4 @@
+import {cavalryRules} from '../config/cavalry';
 import {bossRules} from '../config/bosses';
 import {upgradeMultiplier} from '../config/upgrades';
 import type {PlayerId} from '../config/players';
@@ -34,7 +35,7 @@ import type { GatheringState, Unit,WorkerOrder,ResourceType } from './gathering'
 import { moveTowards, type Position } from './movement';
 
 export interface EnemyWork {cargo:number;cargoType?:ResourceType;target:Position;order:WorkerOrder}
-export interface Enemy extends SpellState {boss?:import('../config/bosses').BossId;playerId?:PlayerId;faction?:FactionId;mana?:number;role?:'soldier'|'archer'|'catapult'|'specialist'|'air';attackCooldown?:number;ability?:import('./abilities').AbilityState;legacyProfile?:true; owner?:'enemy'; kind?:'ship'|'unit'|'base'|'worker'|'building';navalLanding?:true;buildingType?:'academy'|'harbor'|'outpost'|'barracks'|'farm'|'forge';construction?:import('./placement').ConstructionJob;work?:EnemyWork; order?:{kind:'idle'}|{kind:'defend';targetId:string}|{kind:'muster'|'attack-move';destination:Position}; id: string; position: Position; hp: number; footprint?:Footprint; navigation?: RouteState }
+export interface Enemy extends SpellState {boss?:import('../config/bosses').BossId;playerId?:PlayerId;faction?:FactionId;mana?:number;role?:'soldier'|'archer'|'catapult'|'specialist'|'air'|'cavalry';attackCooldown?:number;ability?:import('./abilities').AbilityState;legacyProfile?:true; owner?:'enemy'; kind?:'ship'|'unit'|'base'|'worker'|'building';navalLanding?:true;buildingType?:'stable'|'academy'|'harbor'|'outpost'|'barracks'|'farm'|'forge';construction?:import('./placement').ConstructionJob;work?:EnemyWork; order?:{kind:'idle'}|{kind:'defend';targetId:string}|{kind:'muster'|'attack-move';destination:Position}; id: string; position: Position; hp: number; footprint?:Footprint; navigation?: RouteState }
 export interface CombatState {baseDevelopment?:import('../config/baseUpgrade').BaseDevelopment; baseOwner?:'player'; enemies: Enemy[]; baseHP: number; projectiles?:Projectile[]; nextProjectileNumber?:number; destroyedEnemyFootprints?:Footprint[]; enemyUpgrades?:{attack:number;defense:number};upgrades?:{attack:number;defense:number} }
 
 export function enemyAt(enemies: Enemy[], point: Position): Enemy | undefined {
@@ -132,13 +133,13 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
       cooldown=Math.max(0,cooldown-time);
       return {...unit,position:step.position,attackCooldown:cooldown,...(step.navigation?{navigation:step.navigation}:{})};
     }
-    damage.set(enemy.id, (damage.get(enemy.id) ?? 0) + step.attackSeconds * (stats.damagePerSecond??combatConfig.soldierDamagePerSecond)*(unit.kind==='worker'?1:attackMultiplier*abilityEffects(gathering,unit).attackMultiplier*spellModifiers(unit).attack));
+    damage.set(enemy.id, (damage.get(enemy.id) ?? 0) + step.attackSeconds * (stats.damagePerSecond??combatConfig.soldierDamagePerSecond)*(unit.kind==='soldier'&&!unit.archetype&&enemy.role==='cavalry'?cavalryRules.infantryDamageMultiplier:1)*(unit.kind==='worker'?1:attackMultiplier*abilityEffects(gathering,unit).attackMultiplier*spellModifiers(unit).attack));
     return { ...unit, position: step.position, ...(step.navigation ? {navigation:step.navigation}: {}) };
   });
   // Both sides attack from the same live snapshot, so lethal blows are simultaneous.
   const playerDamage = new Map<string, number>();
   const originalTargets=scope?.targets??playerTargets(gathering,combat,placement,navy);
-  const priority={academy:2,wall:2,gate:2,tower:2,ship:0,harbor:2,soldier:0,worker:1,barracks:2,farm:2,forge:2,base:3};
+  const priority={stable:5,academy:2,wall:2,gate:2,tower:2,ship:0,harbor:2,soldier:0,worker:1,barracks:2,farm:2,forge:2,base:3};
   const enemyGathering={...gathering,faction:enemyFaction};
   const movingEnemies = combat.enemies.filter(e => e.hp > 0).map(enemy => {
     if(scope?.side==='player')return enemy;
@@ -188,7 +189,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
       }
       return {...enemy,position:step.position,attackCooldown:Math.max(0,cooldown-time),...(step.navigation?{navigation:step.navigation}:{})};
     }
-    playerDamage.set(target.id,(playerDamage.get(target.id)??0)+step.attackSeconds*stats.damagePerSecond*multiplier*abilityEffects(enemyGathering,soldier).attackMultiplier*spellModifiers(soldier).attack);
+    playerDamage.set(target.id,(playerDamage.get(target.id)??0)+step.attackSeconds*stats.damagePerSecond*(enemy.role==='soldier'&&gathering.units.some(u=>u.id===target.id&&u.kind==='soldier'&&u.archetype==='cavalry')?cavalryRules.infantryDamageMultiplier:1)*multiplier*abilityEffects(enemyGathering,soldier).attackMultiplier*spellModifiers(soldier).attack);
     return {...cooling,position:step.position,...(step.navigation?{navigation:step.navigation}:{})};
   });
   const visibleProjectile=(enemy:Enemy,p:Projectile)=>projectileVisible?projectileVisible(enemy,p):!visible||units.some(u=>u.id===p.shooterId&&u.kind==='soldier'&&visible(enemy,u));
@@ -207,7 +208,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
   if(scope?.side==='enemy')playerDamage.clear();
   units=units.map(unit=>unit.hp!==undefined?{...unit,hp:Math.max(0,unit.hp-(playerDamage.get(unit.id)??0)*(unit.kind==='soldier'?defenseMultiplier*abilityEffects(gathering,unit).defenseMultiplier*spellModifiers(unit).defense:1))}:unit);
   const surviving=removeDeadUnits({...gathering,units});units=surviving.units;
-  const nextPlacement=placement?{...placement,...(placement.academy?{academy:{...placement.academy,hp:Math.max(0,placement.academy.hp-(playerDamage.get('academy')??0))}}:{}),...(placement.bases?{bases:placement.bases.map(b=>({...b,hp:Math.max(0,b.hp-(playerDamage.get(b.id)??0))}))}:{}),...(placement.defenses?{defenses:placement.defenses.map(t=>({...t,hp:Math.max(0,t.hp-(playerDamage.get(t.id)??0))}))}:{}),
+  const nextPlacement=placement?{...placement,...(placement.stable?{stable:{...placement.stable,hp:Math.max(0,placement.stable.hp-(playerDamage.get('stable')??0))}}:{}),...(placement.academy?{academy:{...placement.academy,hp:Math.max(0,placement.academy.hp-(playerDamage.get('academy')??0))}}:{}),...(placement.bases?{bases:placement.bases.map(b=>({...b,hp:Math.max(0,b.hp-(playerDamage.get(b.id)??0))}))}:{}),...(placement.defenses?{defenses:placement.defenses.map(t=>({...t,hp:Math.max(0,t.hp-(playerDamage.get(t.id)??0))}))}:{}),
     ...(placement.forge?{forge:{...placement.forge,hp:Math.max(0,placement.forge.hp-(playerDamage.get('forge')??0))}}:{}),
     ...(placement.barracks?{barracksHP:Math.max(0,(placement.barracksHP??combatConfig.barracksHP)-(playerDamage.get('barracks')??0))}:{}),
     ...(placement.farms?{farms:placement.farms.map(f=>({...f,hp:Math.max(0,(f.hp??combatConfig.farmHP)-(playerDamage.get(f.id)??0))}))}:{})}:undefined;

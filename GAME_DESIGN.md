@@ -1414,3 +1414,44 @@ Warship är nu också sjöbaserad AA:16 normal skada men12 mot luft, samma192ran
 ## RTS-178 — Flerfasmål spelbara
 
 Nya starter följer [CAMPAIGN_DESIGN.md](CAMPAIGN_DESIGN.md): fyra faser för sex missioner, fem för Coastal Banner; First Steps behåller sin tutorial. Forest Watch/Outpost använder Frontier och Siege Highlands. Finite waves startar efter preparation/exploration (samma count/intervall); Save51 bevarar start och permanent phase. HUD visar engelskt aktuellt mål utan enemy/fog-leak. Äldre sparade matcher behåller tidigare mål/kartor. Uppskattad mänsklig20–40min är fortfarande inte verifierad.
+
+
+## RTS-220 — Mounted cavalry and Stable
+
+Fast mounted melee raiders flank and raid; infantry remains cheaper and
+receives ×1.5 melee damage against cavalry on either team. Cavalry uses
+existing faction attack/defense research and faction self-buffs. No new
+resource, hero or ability engine. Shared cavalry: 45 wood/25 gold, 12s,
+2 supply, 110 HP, 230px/s, 28px body, 32px range, 20 DPS. Ordinary infantry
+is slower but cheaper and is the direct counter; focus fire still matters.
+These are initial config values, not human-tested balance.
+
+| Faction | Mounted unit | Production building |
+| --- | --- | --- |
+| Human | Knight | Stable |
+| Orcs | Wolf Rider | Wolf Den |
+| Elves | Stag Rider | Stag Sanctuary |
+| Dwarves | Ram Rider | Ram Enclosure |
+| Goblins | Boar Rider | Boar Pen |
+
+Stable: completed main building level II required, 70 wood/30 gold, 10s
+worker construction, 160 HP, 64×64 footprint, one per player. Dedicated
+three-job FIFO reuses the production/cost/refund/spawn/supply/rally code.
+The unit requires completed Stable and base II at admission. Accepted jobs
+continue after prerequisites disappear, until producer or all main bases
+are destroyed. AI uses the existing bounded building planner, pays base-II
+80 wood/60 gold over20s, pauses worker training during that upgrade, then
+builds/trains at the same stable/cavalry cost/time. Combat/domain/fog rules
+are shared. Cavalry joins existing bounded composition decisions.
+
+Campaigns unlock Stable and cavalry at mission3 with base upgrades;
+mission1–2 remain locked in UI/gameplay/hotkeys. X builds the faction Stable;
+F10 trains cavalry from its selection. Mouse controls, tooltips, portraits,
+queue cancellation, Commands and Tech Tree expose the role/dependencies.
+Save persists producer/job state and AI base development; old snapshots
+without cavalry army weights default to1. Restart clears the new states.
+
+Original native procedural pixel sprites/icons have five distinct mounts,
+ras-specific names/colors and building stages. Death frames repeat a fallen
+pose; no separately painted final death animation or human art approval is
+claimed. Source/license: [assets](assets/README.md#rts-220--cavalry-och-stable).

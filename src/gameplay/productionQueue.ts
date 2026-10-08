@@ -9,7 +9,7 @@ import type { GatheringState } from './gathering';
 import type { WorldMap } from './map';
 import type { Position } from './movement';
 export interface ProductionJob {
-  id:string; kind:'transport'|'warship'|'worker'|'soldier'|'archer'|'catapult'|'specialist'|'air'; supply?:number; cost:ResourceCost;
+  id:string; kind:'transport'|'warship'|'worker'|'soldier'|'archer'|'catapult'|'specialist'|'air'|'cavalry'; supply?:number; cost:ResourceCost;
   durationSeconds:number; remainingSeconds:number;legacyRecipe?:true;
 }
 const base:ProductionBuilding={kind:'base'};
@@ -18,7 +18,7 @@ export function productionJobCount(p:ProductionState):number {
 }
 export function canEnqueue(g:GatheringState,p:ProductionState,b:ProductionBuilding=base,pop?:Population):boolean {
   const recipe=productionRecipe(g,b);
-  return unitAvailability(productionFaction(g),b.kind==='base'?'worker':b.unitType??'soldier',b.kind==='base'?undefined:b.technology,g.campaignContent)===null && productionJobCount(p)<queueConfig.maxJobs && (!pop||hasPopulation(pop,recipe.supply))
+  return (b.kind==='base'||(b.producer??'barracks')===recipe.trainedAt) && unitAvailability(productionFaction(g),b.kind==='base'?'worker':b.unitType??'soldier',b.kind==='base'?undefined:b.technology,g.campaignContent)===null && productionJobCount(p)<queueConfig.maxJobs && (!pop||hasPopulation(pop,recipe.supply))
     && canAfford(g,recipe.cost)
     && b.ready!==false && (b.kind==='base'||b.footprint!==null&&soldierSpawn(b.footprint,recipe.size,b.bounds)!==null);
 }
@@ -53,7 +53,7 @@ export function updateQueuedProduction(gathering:GatheringState,production:Produ
   let g=gathering,p=production,remaining=Math.max(0,delta);
   while(p.queue!.length) {
     const time=p.remainingSeconds??p.queue![0].remainingSeconds;
-    const result=updateProduction(g,p,remaining,building.kind==='barracks'?{...building,unitType:p.queue![0].kind==='air'?'air':p.queue![0].kind==='specialist'?'specialist':p.queue![0].kind==='catapult'?'catapult':p.queue![0].kind==='archer'?'archer':'soldier'}:building,context);
+    const result=updateProduction(g,p,remaining,building.kind==='barracks'?{...building,unitType:p.queue![0].kind==='cavalry'?'cavalry':p.queue![0].kind==='air'?'air':p.queue![0].kind==='specialist'?'specialist':p.queue![0].kind==='catapult'?'catapult':p.queue![0].kind==='archer'?'archer':'soldier'}:building,context);
     if(result.production.remainingSeconds!==null) {
       const queue=p.queue!.map((j,i)=>i===0?{...j,remainingSeconds:result.production.remainingSeconds!}:j);
       return {gathering:result.gathering,production:{...result.production,queue}};

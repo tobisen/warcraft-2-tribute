@@ -31,7 +31,7 @@ export interface NavyState {harbor:Harbor|null;ships:Ship[];production:Productio
 export const createNavy=():NavyState=>({harbor:null,ships:[],production:{remainingSeconds:null,nextUnitNumber:1}});
 export const shipRecipe=(m:MatchState,role:'warship'|'transport'='warship')=>factionForTeam(m,'player').naval.units[role];
 export function matchPopulation(m:MatchState):Population {
- const pop=populationState({...m.gathering,...(m.combat.baseHP<=0?{primaryDropoff:false}:{})},m.placement,[m.production,m.soldierProduction,...(m.placement.bases??[]).map(b=>b.production),...(m.navy?[m.navy.production]:[])]);
+ const pop=populationState({...m.gathering,...(m.combat.baseHP<=0?{primaryDropoff:false}:{})},m.placement,[m.production,m.soldierProduction,...(m.placement.stable?[m.placement.stable.production]:[]),...(m.placement.bases??[]).map(b=>b.production),...(m.navy?[m.navy.production]:[])]);
  return {...pop,used:pop.used+(m.navy?.ships??[]).reduce((n,s)=>n+shipRecipe(m,s.role).supply,0)+populationState({...m.gathering,units:passengerUnits(m.navy)},m.placement,[]).used};
 }
 export function harborFootprint(point:Position):Footprint {return buildingFootprint(point,'harbor');}

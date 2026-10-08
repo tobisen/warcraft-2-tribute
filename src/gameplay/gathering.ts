@@ -20,7 +20,7 @@ import type { SelectableUnit } from './selection';
 
 export type ResourceType = 'wood' | 'gold';
 export type WorkerOrder = {kind:'attack';enemyId:string} | {kind:'repair';buildingId:import('./buildingSelection').BuildingSelection&string} |  { kind: 'idle' } | { kind: 'move' }
-  | { kind: 'gather' | 'deliver'; nodeId: string } | {kind:'build';buildingId:`base-${number}`|`wall-${number}`|`gate-${number}`|`tower-${number}`|'academy'|'harbor'|'outpost'|'barracks'|'forge'|`farm-${number}`};
+  | { kind: 'gather' | 'deliver'; nodeId: string } | {kind:'build';buildingId:`base-${number}`|`wall-${number}`|`gate-${number}`|`tower-${number}`|'stable'|'academy'|'harbor'|'outpost'|'barracks'|'forge'|`farm-${number}`};
 export interface Worker extends SelectableUnit, importOrderState {
   navigation?: RouteState;
   kind: 'worker';
@@ -34,7 +34,7 @@ export interface Soldier extends SelectableUnit, SpellState, importOrderState {
   mana?:number;
   ability?:AbilityState;
   faction?:FactionId;
-  archetype?: 'archer'|'catapult'|'specialist'|'air';
+  archetype?: 'archer'|'catapult'|'specialist'|'air'|'cavalry';
   attackCooldown?: number;
   autoOrigin?: Position;
   attackMoveTarget?: Position;

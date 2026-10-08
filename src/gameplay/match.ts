@@ -75,6 +75,7 @@ import { updateCombat, type CombatState } from './combat';
 import { updateGathering, type GatheringState } from './gathering';
 import { placementObstacles, type PlacementState } from './placement';
 import type { ProductionState } from './production';
+import {updateCavalryProduction} from './cavalry';
 import { updateQueuedProduction } from './productionQueue';
 import { updateWaves, type WaveState } from './waves';
 
@@ -208,7 +209,7 @@ function advance(state: MatchState, delta: number, scope?:CombatScope): MatchSta
   state=syncDropoffs(state);
   const forestBefore=state.gathering;
   let gathering = updateGathering({...state.gathering,...(state.research?.workerTools?{workerToolsLevel:state.research.workerTools}:{})}, ownDelta, state.map,{elapsedSeconds:state.waves.elapsedSeconds,gateFor,services});
-  state=updateEnemyGathering({...state,gathering},delta,gateFor,services);state={...state,map:syncForestObstacles(forestBefore,state.gathering,state.map)};const enemyBuilding=updateEnemyConstruction(state,delta,gateFor);state=enemyBuilding.match;gathering=state.gathering;
+  state=updateEnemyGathering({...state,gathering},delta,gateFor,services);state={...state,map:syncForestObstacles(forestBefore,state.gathering,state.map)};const enemyWorkerDelta=Math.max(0,delta-(state.enemyProduction?.baseDevelopment?.remainingSeconds??0));const enemyBuilding=updateEnemyConstruction(state,delta,gateFor);state=enemyBuilding.match;gathering=state.gathering;
   state=updateEnemyExpansion(state,delta,gateFor);gathering=state.gathering;
   state=updateEnemyNaval(state,delta);gathering=state.gathering;
   state=updateAutomaticGates(updateTowers(state,ownDelta));gathering=state.gathering;
@@ -219,7 +220,7 @@ function advance(state: MatchState, delta: number, scope?:CombatScope): MatchSta
   const vision=state.fog?matchFog({...state,gathering:building.gathering,combat,placement:building.placement}):undefined;
   const fight=updateCombat(building.gathering,prepareBossCombat({...state,gathering:building.gathering,fog:vision},combat),delta,state.map,building.placement,vision?(e=>entityVisible(vision,'player',e)):undefined,vision?((t)=>entityVisible(vision,'enemy',{position:{x:t.footprint.x+t.footprint.width/2,y:t.footprint.y+t.footprint.height/2},...(t.kind==='ship'||t.kind==='worker'||t.kind==='soldier'?{}:{footprint:t.footprint})})):undefined,vision?(e=>entityVisible(vision,'player',e)):undefined,gateFor,state.navy,vision?(e=>entityVisible(vision,'player',e)):undefined,state.factions?.enemy??defaultFactions.enemy,vision?e=>entityVisible(vision,'player',e):undefined,scope);
   let cleaned=cleanDestroyed({...state,...(fight.navy?{navy:fight.navy}:{}),gathering:fight.gathering,...finishBossCombat(state,fight.combat),placement:fight.placement??building.placement});
-  cleaned=advanceEnemyRecovery(cleaned,delta);
+  cleaned=advanceEnemyRecovery(cleaned,enemyWorkerDelta);
   const enemyPolicy=advanceEnemyPolicy(cleaned,delta);
   const research=updateResearch(cleaned.research??createResearch(),cleaned.placement,ownDelta,true,cleaned.factions?.player??defaultFactions.player,hasMainBase(cleaned));
   const baseStep=advanceBaseUpgrade(cleaned,ownDelta);cleaned=baseStep.match;
@@ -234,7 +235,7 @@ function advance(state: MatchState, delta: number, scope?:CombatScope): MatchSta
   const incoming=scenarioConfig[cleaned.scenario??'survival'].waves?updateWaves(cleaned.waves,ai.combat,delta,campaignWaveSchedule(cleaned),cleaned.campaignRun&&cleaned.map.id==='frontier'?{x:1248,y:144,spacing:32}:undefined):{combat:ai.combat,waves:{...cleaned.waves,elapsedSeconds:cleaned.waves.elapsedSeconds+delta}};
   let updated:MatchState={...cleaned,...(enemyPolicy?{enemyPolicy}:{}),...(vision?{fog:vision}:{}),research,...(enemy.state?{enemyProduction:enemy.state}:{}),...(ai.state?{enemyAI:ai.state}:{}),gathering:soldier.gathering,combat:incoming.combat,waves:incoming.waves,
     production:{...worker.production,nextUnitNumber},soldierProduction:{...soldier.production,nextUnitNumber}};
-  if(scope?.side!=='enemy')updated=updateExtraBaseProduction(updated,baseStep.productionSeconds);
+  if(scope?.side!=='enemy'){updated=updateExtraBaseProduction(updated,baseStep.productionSeconds);updated=updateCavalryProduction(updated,ownDelta);}
   const beforeNavyCompletion=readyBuildings(updated);
   updated=updateTransportTransfers(updateNavy(updated,ownDelta),ownDelta);
   updated={...updated,statLedger:recordCompletions(beforeNavyCompletion,updated)};

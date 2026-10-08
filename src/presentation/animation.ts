@@ -1,6 +1,6 @@
 import {factions,type FactionId} from '../config/factions';
 import type {Position} from '../gameplay/movement';
-export type UnitArt='worker'|'soldier'|'archer'|'catapult'|'warship'|'transport'|'specialist'|'air';
+export type UnitArt='worker'|'soldier'|'archer'|'catapult'|'warship'|'transport'|'specialist'|'air'|'cavalry';
 export type Action='idle'|'walk'|'attack'|'death'|'gather'|'build';
 export const directions=['e','se','s','sw','w','nw','n','ne'] as const;
 export type Facing=typeof directions[number];
@@ -20,7 +20,7 @@ export interface DeathEffect {motion:Motion;expires:number}
 export function deathEffect(previous:Motion,time:number,visible:boolean,removed:boolean):DeathEffect|null{return visible&&removed?{motion:{...previous,action:'death',since:time,position:{...previous.position}},expires:time+.5}:null;}
 export function effectAlive(effect:DeathEffect,time:number,visible:boolean):boolean{return visible&&time<effect.expires;}
 
-export function artAtlas(type:UnitArt):'units'|'naval'|'air'{return type==='air'?'air':type==='warship'||type==='transport'?'naval':'units';}
+export function artAtlas(type:UnitArt):'units'|'naval'|'air'|'cavalry'{return type==='cavalry'?'cavalry': type==='air'?'air':type==='warship'||type==='transport'?'naval':'units';}
 
 /** Labels sit above the detailed land silhouettes, without changing its body or origin. */
 export function unitOverlayOffsets(type:UnitArt,faction:FactionId='crown'){

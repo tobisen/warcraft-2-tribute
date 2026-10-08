@@ -37,3 +37,5 @@ writeFileSync(new URL('naval-atlas.png',output),png(navalImage));writeFileSync(n
 await import('./export-visual-refresh.mjs');
 
 await import('./export-boss-assets.mjs');
+
+await import('./export-cavalry.mjs');

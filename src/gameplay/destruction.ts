@@ -31,13 +31,14 @@ export function cleanDestroyed(state:MatchState):MatchState {
   const deadBases=(state.placement.bases??[]).filter(b=>b.hp<=0);
   const barDead=state.placement.barracks!==null&&state.placement.barracksHP!==undefined&&state.placement.barracksHP<=0;
   const harborDead=!!state.navy?.harbor&&state.navy.harbor.hp<=0;
+  const stableDead=!!state.placement.stable&&state.placement.stable.hp<=0;
   const academyDead=!!state.placement.academy&&state.placement.academy.hp<=0;
   const forgeDead=!!state.placement.forge&&state.placement.forge.hp<=0;
   const deadDefenses=(state.placement.defenses??[]).filter(t=>t.hp<=0);
   const deadFarms=(state.placement.farms??[]).filter(f=>f.hp!==undefined&&f.hp<=0);
-  const deadSites=new Set<string>([...(academyDead?['academy']:[]),...(harborDead?['harbor']:[]),...(forgeDead?['forge']:[]),...(barDead?['barracks']:[]),...deadBases.map(b=>b.id),...deadFarms.map(f=>f.id),...deadDefenses.map(t=>t.id)]);
+  const deadSites=new Set<string>([...(stableDead?['stable']:[]),...(academyDead?['academy']:[]),...(harborDead?['harbor']:[]),...(forgeDead?['forge']:[]),...(barDead?['barracks']:[]),...deadBases.map(b=>b.id),...deadFarms.map(f=>f.id),...deadDefenses.map(t=>t.id)]);
   state={...state,statLedger:recordBuildingDeaths(state,deadSites.size,(state.combat.destroyedEnemyFootprints?.length??0)+state.combat.enemies.filter(e=>e.hp<=0&&e.footprint).length)};
-  const removed:Footprint[]=[...(academyDead?[state.placement.academy!.footprint]:[]),...deadBases.map(b=>b.footprint),...deadDefenses.map(t=>t.footprint),...(harborDead?[state.navy!.harbor!.footprint]:[]),...(forgeDead?[state.placement.forge!.footprint]:[]),...(state.combat.destroyedEnemyFootprints??[]),...state.combat.enemies.filter(e=>e.hp<=0&&e.footprint).map(e=>e.footprint!),...(baseDead?[baseFootprint(gathering.base)]:[]),...(barDead?[state.placement.barracks!]:[]),...deadFarms.map(f=>f.footprint)];
+  const removed:Footprint[]=[...(stableDead?[state.placement.stable!.footprint]:[]),...(academyDead?[state.placement.academy!.footprint]:[]),...deadBases.map(b=>b.footprint),...deadDefenses.map(t=>t.footprint),...(harborDead?[state.navy!.harbor!.footprint]:[]),...(forgeDead?[state.placement.forge!.footprint]:[]),...(state.combat.destroyedEnemyFootprints??[]),...state.combat.enemies.filter(e=>e.hp<=0&&e.footprint).map(e=>e.footprint!),...(baseDead?[baseFootprint(gathering.base)]:[]),...(barDead?[state.placement.barracks!]:[]),...deadFarms.map(f=>f.footprint)];
   const obstacles=state.map.obstacles.filter(o=>!removed.some(f=>equalFoot(o,f)));
   const alive=new Set(gathering.units.map(u=>u.id));
   const paused=(job:ConstructionJob|undefined)=>job?.builderId&&!alive.has(job.builderId)?{...job,builderId:null}:job;
@@ -46,6 +47,7 @@ export function cleanDestroyed(state:MatchState):MatchState {
     placement={...placement,...(forgeDead?{forge:undefined}:placement.forge?{forge:{...placement.forge,construction:paused(placement.forge.construction)!}}:{}),...(barDead?{barracks:null,barracksHP:undefined,barracksOwner:undefined,construction:undefined}:{construction:paused(placement.construction)}),
       ...(placement.farms?{farms:placement.farms.filter(f=>!deadFarms.includes(f)).map(f=>({...f,construction:paused(f.construction)!}))}:{})};
   }
+  if(placement.stable)placement={...placement,stable:stableDead?undefined:{...placement.stable,construction:paused(placement.stable.construction)!,production:allBasesDead?clearProduction(placement.stable.production):placement.stable.production}};
   if(placement.academy)placement={...placement,academy:academyDead?undefined:{...placement.academy,construction:paused(placement.academy.construction)!}};
   if(placement.bases)placement={...placement,bases:placement.bases.filter(b=>b.hp>0).map(b=>({...b,construction:paused(b.construction)!}))};
   if(state.enemyProduction){const dead=state.combat.enemies.filter(e=>e.hp<=0&&e.work);if(dead.length){const lost={wood:state.enemyProduction.lostCargo?.wood??0,gold:state.enemyProduction.lostCargo?.gold??0};for(const e of dead)lost[e.work!.cargoType??'wood']+=e.work!.cargo;state={...state,enemyProduction:{...state.enemyProduction,lostCargo:lost}};}}

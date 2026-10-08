@@ -12,7 +12,7 @@ import type { CombatState,Enemy } from './combat';
 import type { GatheringState,Unit } from './gathering';
 import type {Population} from './population';
 import type { WorldMap } from './map';
-export interface EnemyProductionState {wood:number;gold:number;cap:number;production:ProductionState;acceptedJobs:number;roster?:true;durationSeconds?:number;extracted?:{wood:number;gold:number};spent?:{wood:number;gold:number};lostCargo?:{wood:number;gold:number}}
+export interface EnemyProductionState {baseDevelopment?:import('../config/baseUpgrade').BaseDevelopment;wood:number;gold:number;cap:number;production:ProductionState;acceptedJobs:number;roster?:true;durationSeconds?:number;extracted?:{wood:number;gold:number};spent?:{wood:number;gold:number};lostCargo?:{wood:number;gold:number}}
 export function createEnemyProduction(profile:{budget:{wood:number;gold:number};cap:number;durationSeconds:number}=enemyProductionConfig,roster=false):EnemyProductionState {
  return {...(roster?{roster:true as const}:{}),wood:profile.budget.wood,gold:profile.budget.gold,cap:profile.cap,...(profile===enemyProductionConfig?{}:{durationSeconds:profile.durationSeconds}),
  production:{remainingSeconds:null,nextUnitNumber:1},acceptedJobs:0};
@@ -30,7 +30,7 @@ export function updateEnemyProduction(state:EnemyProductionState,combat:CombatSt
  if(buildings&&(!buildings.site?.footprint||buildings.site.construction?.remainingSeconds!==0))return {combat,state};
  let next=state,c=combat,time=Math.max(0,delta);
  const profile=faction?factions[faction]:undefined;
- const roleBuilding=(role:Exclude<UnitRole,'worker'>)=>({kind:'barracks' as const,bounds:map,technology:buildings?.technology,unitType:role,footprint:(map.design==='regions'?combat.enemies.find(e=>e.buildingType==='outpost'&&e.hp>0&&e.construction?.remainingSeconds===0)?.footprint:undefined)??buildings?.site?.footprint??base.footprint!,jobCost:profile?profile.units[role].cost:enemyProductionConfig.cost,durationSeconds:Math.max(1,(state.durationSeconds??enemyProductionConfig.durationSeconds)+(profile?profile.units[role].durationSeconds-5:0))});
+ const roleBuilding=(role:Exclude<UnitRole,'worker'>)=>({kind:'barracks' as const,producer:role==='cavalry'?'stable' as const:'barracks' as const,bounds:map,technology:buildings?.technology,unitType:role,footprint:role==='cavalry'?combat.enemies.find(e=>e.buildingType==='stable'&&e.hp>0&&e.construction?.remainingSeconds===0)?.footprint??null:(map.design==='regions'?combat.enemies.find(e=>e.buildingType==='outpost'&&e.hp>0&&e.construction?.remainingSeconds===0)?.footprint:undefined)??buildings?.site?.footprint??base.footprint!,jobCost:profile?profile.units[role].cost:enemyProductionConfig.cost,durationSeconds:role==='cavalry'?profile!.units.cavalry.durationSeconds:Math.max(1,(state.durationSeconds??enemyProductionConfig.durationSeconds)+(profile?profile.units[role].durationSeconds-5:0))});
  for(;;){
   const units:Unit[]=c.enemies.filter(e=>!e.footprint).map(e=>enemySoldier(e,faction??'clans'));
   let g:GatheringState={faction,units,wood:next.wood,goldBalance:next.gold,base:base.position,node:{id:'unused',position:base.position,remaining:0}};

@@ -45,6 +45,14 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
+Nytt mandat 2026-10-08: RTS-220–228 i ordning, en task åt gången.
+RTS-220 är verifierad; RTS-221 följer efter dess taskpush. Städning, release och kartombyggnad är pausade.
+Taskvis riktade tester, native800-browser, unit/strict build/diff, docs och
+commit/push till origin/main. Full regression vid etappslut; stanna efter228.
+Befintliga style.css/units.mjs/docs/:memory:.ses bevaras. Ingen delegering.
+Äldre avslutsmandat nedan är historik och startar inga andra tasks.
+
+
 Release0.4.0 / Buildd003daa är publicerad och faktiskt CI-/Pages-/browser-verifierad.
 RTS-213 är Done inom nytt uttryckligt releaseuppdrag; körningen avslutas här.
 Lokala CSS/units.mjs/docs/:memory:.ses är bevarade och utanför releasen.
@@ -5650,3 +5658,87 @@ Tidigare ljudgodkännande från användaren består; ingen ny agentlyssning häv
 Slutuppdateringen ändrar enbart Markdown och återanvänder ovanstående faktiskt
 passerade kodchecks. CSS/units.mjs/docs/:memory:.ses bevaras och lämnas utanför.
 Befintlig Pages-praktik/version/changelog används utan ny tag/releaseinfrastruktur.
+
+## Nytt innehållsmandat — RTS-220–228 (2026-10-08)
+
+Gemensamt: fem rasers motsvarande roller med engelska namn, egna sprites/ikoner,
+gemensam config för stats/kostnad/supply/tid/prerequisites, musklick/hotkeys/
+tooltips/Tech Tree och kampanjspärrar. Samma kostnader/förmågor/målregler för
+AI. Bevara fog/lag/save/load/restart. Dokumentera källor och konkreta temporära
+assets; automatiska tester är inte grafisk eller mänsklig balansverifiering.
+Inga hjältar/inventory/resurstyper/uppdrag/terrängombyggnad/generell abilitymotor/
+bred AI-refaktor/ytterligare roller. Taskvis docs, riktad verifiering och
+commit/push utan force; inget Done med centrala återstående krav.
+
+### RTS-220 — Cavalry och Stable — Done
+Snabb beriden melee för flank/räd, separat Stable/rasmotsvarighet efter base II.
+Dyrare än infanteri, befintliga stridsbonusar och lämplig befintlig anti-cavalry
+enhet. Verifiera produktion, prerequisite, kostnad, supply, rörelse/combat och
+faktisk musproduktion/användning/sprites/ikoner vid800×600.
+
+Levererat: fem mounted-varianter/Stable, paid producer/FIFO/supply/fog/Save,
+X/F10, infantry ×1.5 mot cavalry, gemensamma stridsbonusar och campaign3.
+AI betalar baseII och Stable, använder cavalry i bounded composition.
+Verifierat: slutliga riktade98/8, unit511/89, strict build/diff/review och
+faktisk femras Native800 musupgrade/build/train/move/attack/skada/TechTree/
+SaveLoad/restart PASS; [belägg](artifacts/rts-220/browser.json). Representativa
+production/rider/TechTreebilder visuellt granskade. Egen procedural CC0-art,
+upprepad fallpose/death och delad ridergrundform dokumenterade; ingen mänsklig
+balans-/slutartclaim. Ingen ny release/fullkampanj/CI/Pages hävdas.
+
+### RTS-221 — Healer — Todo
+Support producerad i befintlig academy där möjligt. Mana/cooldown/visuell Heal,
+manuell och valbar autocast. Levande egna/allierade, synliga skadade giltiga
+enheter inom range, inte self/buildings/dead och aldrig över maxHP. Samordna
+flera healers; definiera mekaniska mål. Återanvänd spells. Testa mål/lag/mana/
+cooldown/autocast/konkurrens/död/range samt beständigt state/save/restart.
+
+### RTS-222 — Giant — Todo
+Stor stark långsam dyr ground-roll, hög supply/base-tier i befintlig avancerad
+produktion. Bonus mot byggnader, sårbar för fokuseld. Ogre/golem/treant/
+mekanisk variant; kropp/clicksize, vanliga passager och grupporder fungerar.
+Verifiera produktion/building damage/navigation/selection/group orders.
+
+### RTS-223 — Flygproduktion och obestyckad scout — Todo
+Befintlig lämplig produktion eller Aviary/Hangar-motsvarighet. Scout före tungt
+flyg, snabb/ömtålig/unarmed, air navigation inom bounds och befintlig vision.
+Scout Route med flera waypoints loopar till avbrott. Auto Scout från egen
+explored-karta, inget dolt fiendestate och begränsad omplanering. Manuella
+order avbryter. Testa rörelse/vision/bounds/routes/autoscout/save/load/restart.
+
+### RTS-224 — Tornspecialisering och luftvärn — Todo
+Grundtorn ground-only. Permanent alternativ Anti-Air (air-only/lång range)
+eller Ground Defense (ground-only/mer damage). Forskning/kostnad/tid, samma
+footprint och återanvänd upgrade; definiera aktivitet under jobb. Distinkt art/
+ikon och måltyper i tooltip/stats. Ingen dubbelkostnad/uppgradering. Befintlig
+archer har redan air-targets. Testa val/kostnad/domains/död under jobb/save.
+
+### RTS-225 — Tungt stridsflyg — Todo
+Utöka befintlig air-roll/rasnamn/assets, ingen andra tung-flyg-dubblett. Dyr,
+lång produktion/hög supply/tier, mark+luftanfall, tydligt skild från scout.
+Produktion i flygbyggnaden/lämplig befintlig motsvarighet. Air-counter,
+melee immunity, projectile/target/AI-domains. Testa combat/produktion/AI.
+
+### RTS-226 — Rollspecifik forskning — Todo
+Cavalry Armor (armor), Healer Training (enbart max mana), Scout Optics
+(submarine-detection kortare än vision). Gemensam kostnad/tid/bonus, inga
+dubbla befintliga bonusar. Egna befintliga/framtida enheter och Tech Tree.
+Testa prerequisites/bonus/ägarskap/dubbelforskning/save/load/restart.
+
+### RTS-227 — Submarine och detection — Todo
+Shipyard/nuvarande Harbor efter forskning, endast navigerbart vatten och
+attack mot fartyg. Dold även i vanlig vision utan närliggande behörig/allierad
+detector+sikt. Scout Optics och lämplig befintlig sjödetector. Definiera reveal
+vid attack. Integrera befintlig fog; inga minimap/selection/AI-läckor eller
+osynlig jakt efter detectionförlust. Testa navigation/domains/detection/
+förlust/lag/informationsläckor/save/load/restart.
+
+### RTS-228 — Befintliga två bossar och worker-skatter — Todo
+Utöka RTS-212 Bramblemaw/Gravelheart på befintliga Frontier/Highlands; inga
+bossdubbletter. Behåll optional victory-oberoende områdescombat/fog/art/
+ändlig configbelöning och armékrav utan healer. Definiera en styrka/svaghet
+per monster och anti-exploit. Endast levande worker hämtar, till dess ägare
+exakt en gång; konkurrens/save säkra. AI samma upptäckts-/belöningsregler
+(nuvarande212 ignorerar AI och tillåter ground-combat loot). Testa combat/
+leash/victory/fog/worker race/save. Efter228 full regression och HANDOFF med
+nya roller/checks/asset-/balansbegränsningar/hashar; stanna utan release.

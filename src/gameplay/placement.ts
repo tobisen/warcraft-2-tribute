@@ -37,7 +37,8 @@ export interface ExtraBase {id:`base-${number}`;owner:'player';hp:number;footpri
 export interface PlacementState {
   bases?:ExtraBase[];nextBaseNumber?:number;
   defenses?:import('./towers').Defense[];nextDefenseNumber?:number;
-  kind?:'academy'|'base'|'harbor'|'barracks'|'farm'|'forge'|'tower'|'wall'|'gate';
+  kind?:'stable'|'academy'|'base'|'harbor'|'barracks'|'farm'|'forge'|'tower'|'wall'|'gate';
+  stable?:{id:'stable';owner:'player';hp:number;footprint:Footprint;construction:ConstructionJob;production:import('./production').ProductionState};
   academy?:{id:'academy';owner:'player';hp:number;footprint:Footprint;construction:ConstructionJob};
   forge?:{id:'forge';owner:'player';hp:number;footprint:Footprint;construction:ConstructionJob};
   farms?:Farm[];
@@ -49,9 +50,9 @@ export interface PlacementState {
   barracksHP?:number;
 }
 
-export function buildingFootprint(point: Position,kind:'academy'|'base'|'harbor'|'barracks'|'farm'|'forge'|'tower'|'wall'|'gate'='barracks'): Footprint {
+export function buildingFootprint(point: Position,kind:'stable'|'academy'|'base'|'harbor'|'barracks'|'farm'|'forge'|'tower'|'wall'|'gate'='barracks'): Footprint {
   if(kind==='tower'||kind==='wall'||kind==='gate')return {x:Math.floor(point.x/32)*32,y:Math.floor(point.y/32)*32,width:defenseConfig[kind].size,height:32};
-  const config=kind==='academy'?academyConfig:kind==='base'?extraBaseConfig:kind==='harbor'?navyConfig.harbor:kind==='forge'?forgeConfig:kind==='farm'?farmConfig:barracksConfig;
+  const config=kind==='academy'||kind==='stable'?academyConfig:kind==='base'?extraBaseConfig:kind==='harbor'?navyConfig.harbor:kind==='forge'?forgeConfig:kind==='farm'?farmConfig:barracksConfig;
   const size = config.tileSize * config.footprintTiles;
   return {
     x: Math.floor(point.x / config.tileSize) * config.tileSize,
@@ -71,8 +72,8 @@ export function placementObstacles(state: GatheringState): Footprint[] {
   ];
 }
 
-export function beginPlacement(state: PlacementState,kind:'academy'|'base'|'harbor'|'barracks'|'farm'|'forge'|'tower'|'wall'|'gate'='barracks',world:{width:number;height:number}=worldConfig): PlacementState {
-  return kind==='academy'&&state.academy || kind==='base'&&(state.bases?.length??0)>=extraBaseConfig.maxCount || kind==='forge'&&state.forge || kind==='barracks'&&state.barracks || kind==='farm'&&(state.farms?.length??0)>=farmLimit(world)
+export function beginPlacement(state: PlacementState,kind:'stable'|'academy'|'base'|'harbor'|'barracks'|'farm'|'forge'|'tower'|'wall'|'gate'='barracks',world:{width:number;height:number}=worldConfig): PlacementState {
+  return kind==='stable'&&state.stable || kind==='academy'&&state.academy || kind==='base'&&(state.bases?.length??0)>=extraBaseConfig.maxCount || kind==='forge'&&state.forge || kind==='barracks'&&state.barracks || kind==='farm'&&(state.farms?.length??0)>=farmLimit(world)
     ? state : { ...state, active:true,...(kind!=='barracks'?{kind}: {kind:undefined}) };
 }
 
@@ -86,6 +87,7 @@ function checkPlacement(state: PlacementState, point: Position, wood: number, ob
   if(context?.technology){const locked=buildingAvailability(productionFaction(context.gathering),kind==='tower'||kind==='wall'||kind==='gate'?'base':kind,context.technology);if(locked)return locked;}
   if(kind==='base'&&(state.bases?.length??0)>=extraBaseConfig.maxCount)return 'Maximum three main buildings';
   if(kind==='harbor')return uiText.harborUsesCoastRules;
+  if(kind==='stable'&&state.stable)return 'Stable already built';
   if(kind==='academy'&&state.academy)return 'Academy already built';
   if(kind==='forge'&&state.forge)return uiText.forgeExists;
   if (kind==='barracks'&&state.barracks) return uiText.barracksExists;
@@ -98,7 +100,7 @@ function checkPlacement(state: PlacementState, point: Position, wood: number, ob
     && rect.y < other.y + other.height && rect.y + rect.height > other.y)) {
     return uiText.overlapsTheBaseOrAResourceNode;
   }
-  if (!canAfford({wood,goldBalance:context?.gathering.goldBalance},(kind==='base'?extraBaseConfig.cost:kind==='tower'||kind==='wall'||kind==='gate'?defenseConfig[kind].cost:context?productionFaction(context.gathering).buildings[kind].cost:kind==='academy'?academyConfig.cost:costs[kind]))) return uiText.notEnoughWoodOrGold;
+  if (!canAfford({wood,goldBalance:context?.gathering.goldBalance},(kind==='base'?extraBaseConfig.cost:kind==='tower'||kind==='wall'||kind==='gate'?defenseConfig[kind].cost:context?productionFaction(context.gathering).buildings[kind].cost:kind==='academy'?academyConfig.cost:kind==='stable'?{wood:70,gold:30}:costs[kind]))) return uiText.notEnoughWoodOrGold;
   if (context) {
     if([...context.map.obstacles,...(context.map.enemyPassageBlocks??[])].some(o=>overlaps(rect,o)))return uiText.overlapsTerrainOrABuilding;
     if(context.gathering.units.some(u=>!isAir(u)&&overlaps(rect,unitBody(u.position,u.kind==='worker'?unitStats.size:combatUnitStats(u).size)))
@@ -113,7 +115,7 @@ function checkPlacement(state: PlacementState, point: Position, wood: number, ob
           && !canReachFootprint(after,worker.position,target,range))return uiText.blocksAWorkerRouteToTheBaseOr;
       }
     }
-    const sites=[...(state.academy&&state.academy.construction.remainingSeconds>0?[{footprint:state.academy.footprint,job:state.academy.construction}]:[]),...(state.bases??[]).filter(b=>b.construction.remainingSeconds>0).map(b=>({footprint:b.footprint,job:b.construction})),...(state.forge&&state.forge.construction.remainingSeconds>0?[{footprint:state.forge.footprint,job:state.forge.construction}]:[]),...(state.barracks&&state.construction&&state.construction.remainingSeconds>0
+    const sites=[...(state.stable&&state.stable.construction.remainingSeconds>0?[{footprint:state.stable.footprint,job:state.stable.construction}]:[]),...(state.academy&&state.academy.construction.remainingSeconds>0?[{footprint:state.academy.footprint,job:state.academy.construction}]:[]),...(state.bases??[]).filter(b=>b.construction.remainingSeconds>0).map(b=>({footprint:b.footprint,job:b.construction})),...(state.forge&&state.forge.construction.remainingSeconds>0?[{footprint:state.forge.footprint,job:state.forge.construction}]:[]),...(state.barracks&&state.construction&&state.construction.remainingSeconds>0
       ? [{footprint:state.barracks,job:state.construction}]:[]),
       ...(state.farms??[]).filter(f=>f.construction.remainingSeconds>0).map(f=>({footprint:f.footprint,job:f.construction}))];
     for(const site of sites) {
@@ -122,6 +124,7 @@ function checkPlacement(state: PlacementState, point: Position, wood: number, ob
         && !canReachFootprint(after,builder.position,site.footprint,barracksConfig.constructionRange))return uiText.blocksTheBuilderRoute;
     }
     const exit=(map:WorldMap,foot:Footprint,kind:'base'|'barracks')=>spawnCandidates(map,foot,kind).some(p=>hasSpawnExit(map,p));
+    if(state.stable&&exit(context.map,state.stable.footprint,'barracks')&&!exit(after,state.stable.footprint,'barracks')||kind==='stable'&&!exit(after,rect,'barracks'))return uiText.blocksAProductionExit;
     if((state.bases??[]).some(b=>exit(context.map,b.footprint,'base')&&!exit(after,b.footprint,'base'))||kind==='base'&&!exit(after,rect,'base'))return uiText.blocksAProductionExit;
     if(exit(context.map,base,'base') && !exit(after,base,'base') || kind==='barracks' && !exit(after,rect,'barracks')
       || state.barracks && exit(context.map,state.barracks,'barracks') && !exit(after,state.barracks,'barracks'))return uiText.blocksAProductionExit;
@@ -150,14 +153,14 @@ export function placeBuilding(state: PlacementState, point: Position, wood: numb
   if (state.kind==='harbor'||state.kind==='tower'||state.kind==='wall'||state.kind==='gate'||!state.active || placementError(state, point, wood, obstacles, context)) return { placement: state, wood, ...(context?{map:context.map}:{}) };
   const kind=state.kind??'barracks';
   const rect=buildingFootprint(point,kind);
-  const id: `base-${number}`|'academy'|'barracks'|'forge'|`farm-${number}` = kind==='academy'?'academy':kind==='base'?`base-${state.nextBaseNumber??1}`:kind==='forge'?'forge':kind==='barracks'?'barracks':`farm-${state.nextFarmNumber??1}`;
+  const id: `base-${number}`|'stable'|'academy'|'barracks'|'forge'|`farm-${number}` = kind==='stable'?'stable':kind==='academy'?'academy':kind==='base'?`base-${state.nextBaseNumber??1}`:kind==='forge'?'forge':kind==='barracks'?'barracks':`farm-${state.nextFarmNumber??1}`;
   const builder=context?.gathering.units.filter(u=>u.kind==='worker'&&u.selected)
     .sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}))[0];
   const factionRecipe=productionFaction(context?.gathering??{}).buildings[kind];
   const recipe=kind==='base'?{...factionRecipe,cost:extraBaseConfig.cost,constructionSeconds:extraBaseConfig.constructionSeconds}:factionRecipe;
   const paid=payCost({...context?.gathering,wood},recipe.cost);
   return {
-    placement: kind==='academy'?{...state,active:false,kind:undefined,academy:{id:'academy',owner:'player',hp:recipe.hp,footprint:rect,construction:{remainingSeconds:recipe.constructionSeconds,builderId:builder?.id??null}}}:kind==='base'?{...state,active:false,kind:undefined,nextBaseNumber:(state.nextBaseNumber??1)+1,bases:[...(state.bases??[]),{id:id as `base-${number}`,owner:'player',hp:recipe.hp,footprint:rect,construction:{remainingSeconds:recipe.constructionSeconds,builderId:builder?.id??null},production:{remainingSeconds:null,queue:[],nextJobNumber:1,nextUnitNumber:Math.max(4,...(context?.gathering.units??[]).map(u=>Number(u.id.slice(5))+1))}}]}:kind==='forge'?{...state,active:false,kind:undefined,forge:{id:'forge',owner:'player',hp:recipe.hp,footprint:rect,construction:{remainingSeconds:recipe.constructionSeconds,builderId:builder?.id??null}}}:kind==='barracks'
+    placement: kind==='stable'?{...state,active:false,kind:undefined,stable:{id:'stable',owner:'player',hp:recipe.hp,footprint:rect,production:{remainingSeconds:null,queue:[],nextUnitNumber:Math.max(4,...(context?.gathering.units??[]).map(u=>Number(u.id.slice(5))+1))},construction:{remainingSeconds:recipe.constructionSeconds,builderId:builder?.id??null}}}:kind==='academy'?{...state,active:false,kind:undefined,academy:{id:'academy',owner:'player',hp:recipe.hp,footprint:rect,construction:{remainingSeconds:recipe.constructionSeconds,builderId:builder?.id??null}}}:kind==='base'?{...state,active:false,kind:undefined,nextBaseNumber:(state.nextBaseNumber??1)+1,bases:[...(state.bases??[]),{id:id as `base-${number}`,owner:'player',hp:recipe.hp,footprint:rect,construction:{remainingSeconds:recipe.constructionSeconds,builderId:builder?.id??null},production:{remainingSeconds:null,queue:[],nextJobNumber:1,nextUnitNumber:Math.max(4,...(context?.gathering.units??[]).map(u=>Number(u.id.slice(5))+1))}}]}:kind==='forge'?{...state,active:false,kind:undefined,forge:{id:'forge',owner:'player',hp:recipe.hp,footprint:rect,construction:{remainingSeconds:recipe.constructionSeconds,builderId:builder?.id??null}}}:kind==='barracks'
       ? {...state,active:false,kind:undefined,barracks:rect,barracksOwner:'player',barracksHP:recipe.hp,...(builder?{construction:{remainingSeconds:recipe.constructionSeconds,builderId:builder.id}}:{})}
       : {...state,active:false,kind:undefined,nextFarmNumber:(state.nextFarmNumber??1)+1,
         farms:[...(state.farms??[]),{owner:'player',hp:recipe.hp,id:id as `farm-${number}`,footprint:rect,construction:{remainingSeconds:recipe.constructionSeconds,builderId:builder?.id??null}}]},

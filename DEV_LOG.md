@@ -4410,3 +4410,66 @@ Tidigare ljudgodkännande från användaren består; ingen ny agentlyssning häv
 Slutuppdateringen ändrar enbart Markdown och återanvänder ovanstående faktiskt
 passerade kodchecks. CSS/units.mjs/docs/:memory:.ses bevaras och lämnas utanför.
 Befintlig Pages-praktik/version/changelog används utan ny tag/releaseinfrastruktur.
+
+
+## 2026-10-08 — Nytt mandat RTS-220–228, inventering
+
+Nästa lediga ID220; nio tasks i beställd ordning. Fem faktiska raser finns i
+src/config/factions.ts. Befintliga roller worker/soldier/archer/catapult/
+specialist/air, base/barracks/farm/forge/academy samt Harbor/navy. Specialist
+har mana och ras-spells (tre raser har heal), men ingen separat healer-roll.
+Befintlig air-roll har fem rasvarianter; Goblin Airship saknar air-target och
+behöver utökas i225. Archer kan redan attackera luft. Basnivåer/produktion/
+research/Tech Tree/kampanjspärrar/fog/save återanvänds. Bossar från212 finns,
+men skatter tillåter marktrupper och enemy-AI ignorerar dem;228 ändrar det.
+main med origin git@github.com:tobisen/warcraft-2-tribute.git. Lokala ändringar
+i style.css/units.mjs och otrackade docs/:memory:.ses lämnas orörda. Inga nya
+kodchecks eller grafisk-/balansverifiering hävdas av denna inventering.
+
+
+## 2026-10-08 — RTS-220 implementation och granskning
+
+Fem mounted-roller/Stable-motsvarigheter med gemensam recipe, egen FIFO och
+producer-spärr; befintlig navigation/combat/research/supply/fog/Save/restart.
+Infantry ×1.5 melee mot cavalry symmetriskt i shared combat. Campaignmission3
+låser upp. X/F10, faktisk musbuild/train/rally/queue/cancel, actionicons och
+Tech Tree. Egen CC0 cavalry.mjs/separat atlas; units.mjs bevarad.
+
+Granskning rättade F9-kollision (Worker Tools behållerF9), AI:s composition
+roster, faktisk technology vid AI-building admission, stable spawn-exit-
+skydd, sista-bas-köclear, ägarfaction/collision och Savecounter/legacyweights.
+Tidiga tester hittade gamla rosterantal och felaktigt18→20 infantry-DPS i
+ny assertion; rättade efter configkontroll. Browserharness rättade ett extra
+route-parentespar och antagande om synligt Speed i den befintliga kompakta
+statspanelen. Chrome behöver sandboxeskalering; temporära tomma profiler.
+
+Riktade första38/6 och lifecycle96/10 PASS; sammansatta AI/queue/Save/lag103/8
+PASS. Efter reviewändringar slutlig cavalry/AI/recovery/composition/factionSave/
+TechTree54/6 PASS. Femras-browser Native800 betald musbasupgrade/build/train,
+rörelse/attack/skada, SaveLoad/restart,0pageerrors; fixturefinansiering via
+ordinarie resourcecheat och explicita.1s-matchticks. Bilder/belägg i
+artifacts/rts-220; Crown-production och Elf-rider visuellt granskade.
+Artwork är enkel procedural art; upprepade deathframes och gemensam rider-
+grundform dokumenterade, ingen mänsklig balans- eller slutartclaim.
+Slutlig unit/build/diff-resultat kompletteras före commit. Ingen ny release,
+bred kampanjregression eller CI/Pages-status hävdas.
+
+Extra slutgranskning: campaignContent:s gamla testproducer antog barracks för
+alla roller; fixture använder nu korrekt Stable för cavalry. Riktad
+enemyPolicycheck hittade preemption av befintlig academyprioritet; bas-II
+väntar nu tills academy är klar när den är tillåten, med tidig unlock på
+kampanjnivåer där academy är spärrad. Exakt enemy-worker-time remainder
+bevaras även uppgraderingens sista tick. Browserattackfixturen behåller
+fiendeworkerns last/ledger efter flytt; Tech Tree syncas explicit när
+harness pausat den automatiska renderloopen. Tidigare timeout/Save-fel i
+fixturerna är diagnostik, inte PASS.
+
+Slutlig220: riktade98/8 PASS34.34s; unit511/89 PASS21.94s; build inklusive
+strict typecheck PASS976ms med befintlig bundlevarning; manifest89unit/111
+integration, script-syntax och git diff --check PASS. Femras Native800 slutlig
+actual mouse attack/build/train/move, TechTree och SaveLoad/restart PASS.
+Crown-TechTree-bild också visuellt granskad. Egen diffgranskning avslutad
+utan kvarstående blockerande fynd. Task Done; taskvis commit/push.
+Tidigare gröna checks återanvänds för oförändrade lifecycle-system; omkörningar
+ovan motiverades av konkreta reviewfynd/testfel. Ingen ny release eller
+CI-/Pages-/mänsklig balansstatus hävdas.

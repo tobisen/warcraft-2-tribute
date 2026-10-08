@@ -9,7 +9,7 @@ import { unitBody } from './spawning';
 import type { GatheringState } from './gathering';
 import type { CombatState } from './combat';
 import type { PlacementState, Footprint } from './placement';
-export interface PlayerTarget {domain?:TargetDomain;id:string;kind:'wall'|'gate'|'tower'|'ship'|'harbor'|'soldier'|'worker'|'base'|'barracks'|'farm'|'forge'|'academy';owner:'player';hp:number;footprint:Footprint}
+export interface PlayerTarget {domain?:TargetDomain;id:string;kind:'wall'|'gate'|'tower'|'ship'|'harbor'|'soldier'|'worker'|'base'|'barracks'|'farm'|'forge'|'academy'|'stable';owner:'player';hp:number;footprint:Footprint}
 export function playerTargets(g:GatheringState,c:CombatState,p?:PlacementState,navy?:NavyState):PlayerTarget[] {
   const targets:PlayerTarget[]=g.units.flatMap(u=>u.hp!==undefined&&u.hp>0 ? [{domain:targetDomain(u),id:u.id,kind:u.kind,owner:'player',hp:u.hp,
     footprint:unitBody(u.position,u.kind==='soldier'?combatUnitStats(u).size:unitStats.size)}]:[]);
@@ -18,6 +18,7 @@ export function playerTargets(g:GatheringState,c:CombatState,p?:PlacementState,n
   for(const b of p?.bases??[])if(b.hp>0)targets.push({id:b.id,kind:'base',owner:'player',hp:b.hp,footprint:b.footprint});
   if(c.baseHP>0)targets.push({id:'base',kind:'base',owner:'player',hp:c.baseHP,footprint:baseFootprint(g.base)});
   if(p?.barracks&&(p.barracksHP??combatConfig.barracksHP)>0)targets.push({id:'barracks',kind:'barracks',owner:'player',hp:p.barracksHP??combatConfig.barracksHP,footprint:p.barracks});
+  if(p?.stable&&p.stable.hp>0)targets.push({id:'stable',kind:'stable',owner:'player',hp:p.stable.hp,footprint:p.stable.footprint});
   if(p?.academy&&p.academy.hp>0)targets.push({id:'academy',kind:'academy',owner:'player',hp:p.academy.hp,footprint:p.academy.footprint});
   if(p?.forge&&p.forge.hp>0)targets.push({id:'forge',kind:'forge',owner:'player',hp:p.forge.hp,footprint:p.forge.footprint});
   for(const farm of p?.farms??[])if((farm.hp??combatConfig.farmHP)>0)targets.push({id:farm.id,kind:'farm',owner:'player',hp:farm.hp??combatConfig.farmHP,footprint:farm.footprint});

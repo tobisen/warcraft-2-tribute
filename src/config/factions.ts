@@ -16,8 +16,8 @@ import {forgeConfig,upgradeConfig,academyConfig} from './upgrades';
 // Stable identity is independent of team ownership and presentation.
 export const factionIds=['crown','clans','elves','dwarves','goblins'] as const;
 export type FactionId=typeof factionIds[number];
-export type UnitRole='worker'|'soldier'|'archer'|'catapult'|'specialist'|'air';
-export type BuildingRole='base'|'barracks'|'farm'|'forge'|'academy';
+export type UnitRole='worker'|'soldier'|'archer'|'catapult'|'specialist'|'air'|'cavalry';
+export type BuildingRole='base'|'barracks'|'farm'|'forge'|'academy'|'stable';
 export type UpgradeRole='attack'|'defense';
 export interface MatchFactions {player:FactionId;enemy:FactionId}
 export const defaultFactions:Readonly<MatchFactions>={player:'crown',enemy:'clans'};
@@ -31,10 +31,10 @@ interface UnitData {
   damageByDomain?:Partial<Record<TargetDomain,number>>;
   mana?:ManaDefinition;
   combatMode?:'melee'|'projectile';
-  art?:'worker'|'soldier'|'archer'|'catapult'|'specialist'|'air';
+  art?:'worker'|'soldier'|'archer'|'catapult'|'specialist'|'air'|'cavalry';
   prerequisites?:UnitPrerequisites;
   role:UnitRole;cost:ResourceCost;durationSeconds:number;supply:number;
-  trainedAt:'base'|'barracks';hp:number;speed:number;size:number;
+  trainedAt:'base'|'barracks'|'stable';hp:number;speed:number;size:number;
   range?:number;aggroRange?:number;damagePerSecond?:number;damage?:number;
   attackInterval?:number;projectileSpeed?:number;projectileLifetime?:number;
   hitRadius?:number;splashRadius?:number;
@@ -72,7 +72,7 @@ const units={
   archer:{role:'archer',trainedAt:'barracks',...archerData},
   catapult:{role:'catapult',trainedAt:'barracks',...catapultData},
  specialist:{role:'specialist',combatMode:'melee',art:'soldier',trainedAt:'barracks',cost:{wood:30,gold:15},durationSeconds:8,supply:2,hp:100,speed:130,size:24,range:32,aggroRange:140,damagePerSecond:14,prerequisites:{buildings:['forge'],research:{defense:1}}},
-} satisfies Record<Exclude<UnitRole,'air'>,UnitData>;
+} satisfies Record<Exclude<UnitRole,'air'|'cavalry'>,UnitData>;
 const buildings:Record<BuildingRole,BuildingData>={
   base:{role:'base',cost:{wood:0,gold:0},hp:combatConfig.baseHP,size:gatheringConfig.baseSize,
     placeable:false,constructionSeconds:0,constructionRange:0,populationCapacity:populationConfig.baseCap},
@@ -83,6 +83,7 @@ const buildings:Record<BuildingRole,BuildingData>={
     placeable:true,constructionSeconds:farmConfig.constructionSeconds,constructionRange:farmConfig.constructionRange,populationCapacity:farmConfig.supply},
   forge:{role:'forge',prerequisites:{buildings:['base']},cost:costs.forge,hp:forgeConfig.hp,size:forgeConfig.tileSize*forgeConfig.footprintTiles,
     placeable:true,constructionSeconds:forgeConfig.constructionSeconds,constructionRange:forgeConfig.constructionRange,populationCapacity:0},
+  stable:{role:'stable',prerequisites:{baseLevel:2,buildings:['base']},cost:{wood:70,gold:30},hp:160,size:64,placeable:true,constructionSeconds:10,constructionRange:24,populationCapacity:0},
   academy:{role:'academy',prerequisites:{buildings:['forge'],research:{attack:1,defense:1}},cost:academyConfig.cost,hp:academyConfig.hp,size:64,placeable:true,constructionSeconds:10,constructionRange:24,populationCapacity:0},
 };
 const upgrades:Record<UpgradeRole,UpgradeData>={
@@ -93,10 +94,10 @@ const upgrades:Record<UpgradeRole,UpgradeData>={
 };
 const factionNames={crown:{label:uiText.crownAlliance,unitNames:{worker:uiText.worker,soldier:uiText.guard,archer:uiText.archer,catapult:uiText.catapult,specialist:'Banner Guard'},buildingNames:{academy:'Royal Academy',base:uiText.keep,barracks:uiText.barracks,farm:uiText.farm,forge:uiText.forge}},clans:{label:uiText.ironClan,unitNames:{worker:uiText.clanWorker,soldier:uiText.axeWarrior,archer:uiText.hunter,catapult:uiText.stoneThrower,specialist:'Raider'},buildingNames:{academy:'War Circle',base:uiText.stronghold,barracks:uiText.warHut,farm:uiText.cattlePen,forge:uiText.smithy}},elves:{label:'Elves',unitNames:{worker:'Grove Tender',soldier:'Warden',archer:'Longbow',catapult:'Ballista',specialist:'Marksman'},buildingNames:{academy:'Moon Archive',base:'Grove Hall',barracks:'Ranger Lodge',farm:'Garden',forge:'Moon Workshop'}},dwarves:{label:'Dwarves',unitNames:{worker:'Miner',soldier:'Iron Guard',archer:'Crossbow',catapult:'Cannon',specialist:'Bulwark'},buildingNames:{academy:'Runestone Academy',base:'Stone Hold',barracks:'Guard Hall',farm:'Storehouse',forge:'Foundry'}},goblins:{label:'Goblins',unitNames:{worker:'Tinkerer',soldier:'Scrapper',archer:'Slinger',catapult:'Mortar',specialist:'Grenadier'},buildingNames:{academy:'Engineering College',base:'Workshop Hall',barracks:'Scrap Yard',farm:'Supply Shack',forge:'Lab'}}};
 function defineFaction(id:FactionId):FactionDefinition {
-  const recipes:Record<UnitRole,UnitData>={...units,air:{...airConfig[id],role:'air' as const,domain:'air' as const,combatMode:'projectile' as const,trainedAt:'barracks' as const,size:28,aggroRange:240,projectileSpeed:300,projectileLifetime:3,hitRadius:18,prerequisites:{buildings:['forge'] as const,research:{attack:1,defense:1}}}};
+  const recipes:Record<UnitRole,UnitData>={...units,cavalry:{role:'cavalry',combatMode:'melee',trainedAt:'stable',cost:{wood:45,gold:25},durationSeconds:12,supply:2,hp:110,speed:230,size:28,range:32,aggroRange:140,damagePerSecond:20,prerequisites:{baseLevel:2,buildings:['stable']}},air:{...airConfig[id],role:'air' as const,domain:'air' as const,combatMode:'projectile' as const,trainedAt:'barracks' as const,size:28,aggroRange:240,projectileSpeed:300,projectileLifetime:3,hitRadius:18,prerequisites:{buildings:['forge'] as const,research:{attack:1,defense:1}}}};
   const unitDefinitions={} as FactionDefinition['units'];
   for(const role of Object.keys(recipes) as UnitRole[]){const data=recipes[role];unitDefinitions[role]={targets:role==='archer'?bowTargets:role==='catapult'?siegeTargets:groundMeleeTargets,...data,cost:{...data.cost},id:`${id}:unit:${role}`,faction:id};}
-  return {id,...factionNames[id],unitNames:{...factionNames[id].unitNames,air:airConfig[id].name},artPrefix:id==='crown'?'':`${id}-`,naval:{harbor:{...navyConfig.harbor,cost:{...navyConfig.harbor.cost},name:'Harbor'},units:{warship:{...navyConfig.ship,cost:{...navyConfig.ship.cost},id:`${id}:naval:warship`,role:'warship',name:'Warship'},transport:{...navyConfig.ship,...navyConfig.transport,cost:{...navyConfig.transport.cost},id:`${id}:naval:transport`,role:'transport',name:'Transport'}}},roster:['worker','soldier','archer','catapult'],
+  return {id,...factionNames[id],unitNames:{...factionNames[id].unitNames,cavalry:({crown:'Knight',clans:'Wolf Rider',elves:'Stag Rider',dwarves:'Ram Rider',goblins:'Boar Rider'})[id],air:airConfig[id].name},buildingNames:{...factionNames[id].buildingNames,stable:({crown:'Stable',clans:'Wolf Den',elves:'Stag Sanctuary',dwarves:'Ram Enclosure',goblins:'Boar Pen'})[id]},artPrefix:id==='crown'?'':`${id}-`,naval:{harbor:{...navyConfig.harbor,cost:{...navyConfig.harbor.cost},name:'Harbor'},units:{warship:{...navyConfig.ship,cost:{...navyConfig.ship.cost},id:`${id}:naval:warship`,role:'warship',name:'Warship'},transport:{...navyConfig.ship,...navyConfig.transport,cost:{...navyConfig.transport.cost},id:`${id}:naval:transport`,role:'transport',name:'Transport'}}},roster:['worker','soldier','archer','catapult'],
     units:unitDefinitions,
     buildings:Object.fromEntries(Object.entries(buildings).map(([role,data])=>[role,{...data,cost:{...data.cost},id:`${id}:building:${role}`,faction:id}])) as FactionDefinition['buildings'],
     upgrades:Object.fromEntries(Object.entries(upgrades).map(([role,data])=>[role,{...data,cost:{...data.cost},id:`${id}:upgrade:${role}`,faction:id}])) as FactionDefinition['upgrades'],
@@ -192,3 +193,5 @@ for(const id of factionIds)factions[id].units.specialist.mana={...manaConfig[id]
 
 // RTS-168: approved first air roster; final art remains separate.
 for(const id of factionIds){factions[id].roster=[...factions[id].roster,'air'];if(id==='elves')factions[id].units.specialist.targets=bowTargets;}
+
+for(const id of factionIds)factions[id].roster=[...factions[id].roster,'cavalry'];

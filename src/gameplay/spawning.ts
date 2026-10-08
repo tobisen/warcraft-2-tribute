@@ -10,7 +10,7 @@ import type { Unit } from './gathering';
 
 export interface PositionedBody {boss?:BossId;position:Position;kind?:string;role?:string;archetype?:string}
 export function otherBodySize(body:PositionedBody):number {
-  return body.boss?bossRules.size:body.kind==='ship'?navyConfig.ship.size:body.role==='catapult'||body.archetype==='catapult'?combatUnitStats({archetype:'catapult'}).size:soldierStats.size;
+  return body.boss?bossRules.size:body.kind==='ship'?navyConfig.ship.size:body.role==='cavalry'||body.archetype==='cavalry'?28:body.role==='catapult'||body.archetype==='catapult'?combatUnitStats({archetype:'catapult'}).size:soldierStats.size;
 }
 
 export function unitBody(position:Position,size:number):Footprint {
