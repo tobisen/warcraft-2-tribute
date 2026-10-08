@@ -1,0 +1,199 @@
+{
+  "browser": "155.0.8059.39",
+  "results": [
+    {
+      "width": 800,
+      "kind": "wall",
+      "wood": 960,
+      "gold": 1000,
+      "count": 4,
+      "last": {
+        "id": "wall-4",
+        "kind": "wall",
+        "owner": "player",
+        "footprint": {
+          "x": 576,
+          "y": 384,
+          "width": 32,
+          "height": 32
+        },
+        "hp": 180,
+        "construction": {
+          "remainingSeconds": 3,
+          "builderId": "unit-1"
+        },
+        "level": 1,
+        "upgradeRemaining": null,
+        "cooldown": 0,
+        "readyAfter": 0.01664666666666664
+      },
+      "handlerMs": [
+        172.79999995231628
+      ],
+      "units": 99,
+      "errors": []
+    },
+    {
+      "width": 800,
+      "kind": "gate",
+      "wood": 940,
+      "gold": 995,
+      "count": 4,
+      "last": {
+        "id": "gate-4",
+        "kind": "gate",
+        "open": false,
+        "owner": "player",
+        "footprint": {
+          "x": 576,
+          "y": 384,
+          "width": 32,
+          "height": 32
+        },
+        "hp": 240,
+        "construction": {
+          "remainingSeconds": 5,
+          "builderId": "unit-1"
+        },
+        "level": 1,
+        "upgradeRemaining": null,
+        "cooldown": 0,
+        "readyAfter": 0.01664666666666664
+      },
+      "handlerMs": [
+        92
+      ],
+      "units": 99,
+      "errors": []
+    },
+    {
+      "width": 800,
+      "kind": "tower",
+      "wood": 920,
+      "gold": 980,
+      "count": 4,
+      "last": {
+        "id": "tower-4",
+        "kind": "tower",
+        "owner": "player",
+        "footprint": {
+          "x": 576,
+          "y": 384,
+          "width": 32,
+          "height": 32
+        },
+        "hp": 160,
+        "construction": {
+          "remainingSeconds": 8,
+          "builderId": "unit-1"
+        },
+        "level": 1,
+        "upgradeRemaining": null,
+        "cooldown": 0,
+        "readyAfter": 0.016633333333333312
+      },
+      "handlerMs": [
+        168.59999990463257
+      ],
+      "units": 99,
+      "errors": []
+    },
+    {
+      "width": 1280,
+      "kind": "wall",
+      "wood": 960,
+      "gold": 1000,
+      "count": 4,
+      "last": {
+        "id": "wall-4",
+        "kind": "wall",
+        "owner": "player",
+        "footprint": {
+          "x": 576,
+          "y": 384,
+          "width": 32,
+          "height": 32
+        },
+        "hp": 180,
+        "construction": {
+          "remainingSeconds": 3,
+          "builderId": "unit-1"
+        },
+        "level": 1,
+        "upgradeRemaining": null,
+        "cooldown": 0,
+        "readyAfter": 0.01663999999999999
+      },
+      "handlerMs": [
+        169.19999980926514
+      ],
+      "units": 99,
+      "errors": []
+    },
+    {
+      "width": 1280,
+      "kind": "gate",
+      "wood": 940,
+      "gold": 995,
+      "count": 4,
+      "last": {
+        "id": "gate-4",
+        "kind": "gate",
+        "open": false,
+        "owner": "player",
+        "footprint": {
+          "x": 576,
+          "y": 384,
+          "width": 32,
+          "height": 32
+        },
+        "hp": 240,
+        "construction": {
+          "remainingSeconds": 5,
+          "builderId": "unit-1"
+        },
+        "level": 1,
+        "upgradeRemaining": null,
+        "cooldown": 0,
+        "readyAfter": 0.016639999999999985
+      },
+      "handlerMs": [
+        88.5
+      ],
+      "units": 99,
+      "errors": []
+    },
+    {
+      "width": 1280,
+      "kind": "tower",
+      "wood": 920,
+      "gold": 980,
+      "count": 4,
+      "last": {
+        "id": "tower-4",
+        "kind": "tower",
+        "owner": "player",
+        "footprint": {
+          "x": 576,
+          "y": 384,
+          "width": 32,
+          "height": 32
+        },
+        "hp": 160,
+        "construction": {
+          "remainingSeconds": 8,
+          "builderId": "unit-1"
+        },
+        "level": 1,
+        "upgradeRemaining": null,
+        "cooldown": 0,
+        "readyAfter": 0.01663666666666665
+      },
+      "handlerMs": [
+        168.5
+      ],
+      "units": 99,
+      "errors": []
+    }
+  ]
+}

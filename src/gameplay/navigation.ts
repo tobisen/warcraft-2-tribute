@@ -87,7 +87,7 @@ export function findRoute(map: WorldMap, start: Position, destination: Position,
   const target=map.interactionTarget;
   const cacheKey=`${target?`${target.x},${target.y},${target.width},${target.height}`:''}:${map.width}:${map.height}:${map.tileSize}:${map.revision}:${half}:${destination.x},${destination.y}`;
   let cache=goalCache.get(map.obstacles);if(!cache||cache.length!==map.obstacles.length){cache={length:map.obstacles.length,goals:new Map()};goalCache.set(map.obstacles,cache);}
-  let tree=cache.goals.get(cacheKey);if(!tree){const queue=connectors(map,destination,half);tree={queue,cursor:0,parent:new Map(queue.map(t=>[key(t),null])),depth:new Map(queue.map(t=>[key(t),0]))};if(cache.goals.size>=8)cache.goals.delete(cache.goals.keys().next().value!);cache.goals.set(cacheKey,tree);}
+  let tree=cache.goals.get(cacheKey);if(!tree){const queue=connectors(map,destination,half);tree={queue,cursor:0,parent:new Map(queue.map(t=>[key(t),null])),depth:new Map(queue.map(t=>[key(t),0]))};if(cache.goals.size>=32)cache.goals.delete(cache.goals.keys().next().value!);cache.goals.set(cacheKey,tree);}
   const starts=connectors(map,start,half),startKeys=new Set(starts.map(key));
   let bestDepth=Math.min(...starts.map(t=>tree!.depth.get(key(t))??Infinity));
   // A single bounded reverse BFS serves carriers sharing a delivery point. Finish
@@ -96,6 +96,8 @@ export function findRoute(map: WorldMap, start: Position, destination: Position,
     const tile=tree.queue[tree.cursor++],center=tileCenter(map,tile)!,depth=tree.depth.get(key(tile))!;
     for(const [dx,dy]of [[0,-1],[1,0],[0,1],[-1,0]]){const neighbor={column:tile.column+dx,row:tile.row+dy},id=key(neighbor);if(tree.parent.has(id))continue;const next=tileCenter(map,neighbor);if(next&&segmentFits(map,center,next,half)){tree.parent.set(id,tile);tree.depth.set(id,depth+1);tree.queue.push(neighbor);if(startKeys.has(id))bestDepth=Math.min(bestDepth,depth+1);}}
   }
+  // More small shared goals, with the previous eight-full-search node budget.
+  while(cache.goals.size>1&&[...cache.goals.values()].reduce((sum,t)=>sum+t.queue.length,0)>navigationConfig.maxVisited*8)cache.goals.delete(cache.goals.keys().next().value!);
   const first=starts.find(t=>tree!.depth.get(key(t))===bestDepth);if(!first)return {ok:false,error:'unreachable'};
   const route:Position[]=[];let current:Tile|null=first;while(current){route.push(tileCenter(map,current)!);current=tree.parent.get(key(current))??null;}
   if(!same(route[route.length-1],destination))route.push({...destination});

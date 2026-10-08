@@ -83,6 +83,15 @@ export function cancelPlacement(state: PlacementState): PlacementState {
   return { ...state, active: false };
 }
 
+const candidateMaps=new WeakMap<WorldMap,{obstacles:WorldMap['obstacles'];length:number;revision:number;rect:Footprint;map:WorldMap}>();
+/** Share one proposed terrain snapshot across placement and fortification checks. */
+export function placementMap(map:WorldMap,rect:Footprint):WorldMap{
+ const cached=candidateMaps.get(map);
+ if(cached&&cached.obstacles===map.obstacles&&cached.length===map.obstacles.length&&cached.revision===map.revision&&cached.map.width===map.width&&cached.map.height===map.height&&cached.map.tileSize===map.tileSize&&cached.map.bodyHalf===map.bodyHalf&&cached.map.interactionTarget===map.interactionTarget&&cached.map.enemyPassageBlocks===map.enemyPassageBlocks&&cached.map.ignoreAttackOcclusion===map.ignoreAttackOcclusion&&cached.rect.x===rect.x&&cached.rect.y===rect.y&&cached.rect.width===rect.width&&cached.rect.height===rect.height)return cached.map;
+ const proposed=replaceObstacles(map,[...map.obstacles,rect]);
+ candidateMaps.set(map,{obstacles:map.obstacles,length:map.obstacles.length,revision:map.revision,rect:{...rect},map:proposed});return proposed;
+}
+
 function checkPlacement(state: PlacementState, point: Position, wood: number, obstacles: Footprint[], context?: PlacementContext, preview=false): string | null {
   const kind=state.kind??'barracks';
   const locked=contentReason(context?.gathering.campaignContent,'buildings',kind);if(locked)return locked;
@@ -110,7 +119,7 @@ function checkPlacement(state: PlacementState, point: Position, wood: number, ob
     if(context.gathering.units.some(u=>!isAir(u)&&overlaps(rect,unitBody(u.position,u.kind==='worker'?unitStats.size:combatUnitStats(u).size)))
       || context.enemies.some(e=>!isAir(e)&&overlaps(rect,unitBody(e.position,otherBodySize(e)))))return uiText.overlapsAUnit;
     if(preview)return context.gathering.units.some(u=>u.kind==='worker'&&u.selected)?null:uiText.selectAWorkerToBuild;
-    const after=replaceObstacles(context.map,[...context.map.obstacles,rect]);
+    const after=placementMap(context.map,rect);
     const [base]=placementObstacles(context.gathering);
     for(const worker of context.gathering.units.filter((u):u is Extract<Unit,{kind:'worker'}>=>u.kind==='worker')) {
       const nodes=workerResourceTargets(context.gathering,worker);
@@ -143,7 +152,7 @@ function checkPlacement(state: PlacementState, point: Position, wood: number, ob
     const builder=context.gathering.units.filter(u=>u.kind==='worker' && u.selected)
       .sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}))[0];
     if (!builder) return uiText.selectAWorkerToBuild;
-    const after=replaceObstacles(context.map,[...context.map.obstacles,rect]);
+    const after=placementMap(context.map,rect);
     if (!canReachFootprint(after,builder.position,rect,barracksConfig.constructionRange)) return uiText.theBuildingSiteCannotBeReached;
   }
   return null;
@@ -170,7 +179,7 @@ export function placeBuilding(state: PlacementState, point: Position, wood: numb
       : {...state,active:false,kind:undefined,nextFarmNumber:(state.nextFarmNumber??1)+1,
         farms:[...(state.farms??[]),{owner:'player',hp:recipe.hp,id:id as `farm-${number}`,footprint:rect,construction:{remainingSeconds:recipe.constructionSeconds,builderId:builder?.id??null}}]},
     wood:paid.wood,
-    ...(context && builder ? {map:replaceObstacles(context.map,[...context.map.obstacles,rect]),
+    ...(context && builder ? {map:placementMap(context.map,rect),
       gathering:{...payCost({...context.gathering,wood},recipe.cost),units:context.gathering.units.map((u):Unit=>
         u.id===builder.id&&u.kind==='worker'?{...u,commandMode:undefined,orderQueue:undefined,navigation:undefined,order:{kind:'build',buildingId:id}}:u)}}:{}),
   };

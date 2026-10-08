@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';import {mkdir,writeFile} from 'node:fs/promises';
 const {chromium}=await import(process.env.W2T_PLAYWRIGHT_MODULE??'playwright-core');
 const browser=await chromium.launch({headless:true,...(process.env.W2T_BROWSER_EXECUTABLE?{executablePath:process.env.W2T_BROWSER_EXECUTABLE}:{})});
-const out='artifacts/wall-drag';await mkdir(out,{recursive:true});
+const out=process.env.W2T_ARTIFACT_DIR??'artifacts/wall-drag';await mkdir(out,{recursive:true});
 try{const results=[];for(const width of [800,1280]){
  const page=await browser.newPage({viewport:{width,height:width===800?600:720}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.addInitScript(width=>localStorage.setItem('warcraft-2-tribute.preferences.v1',JSON.stringify({version:1,settings:{display:{resolution:`${width}x${width===800?600:720}`,mode:'native'}}})),width);

@@ -1,0 +1,155 @@
+{
+  "browser": "155.0.8059.39",
+  "results": [
+    {
+      "kind": "wall",
+      "label": "wall",
+      "rowCount": 3,
+      "rowReason": null,
+      "rowMs": 89.39999985694885,
+      "safety": null,
+      "safetyMs": 2.700000047683716,
+      "error": null,
+      "checkMs": 5.699999809265137,
+      "coldPlaceMs": 25.600000143051147,
+      "placeMs": 5.700000047683716,
+      "placed": true,
+      "footprint": {
+        "x": 576,
+        "y": 384,
+        "width": 32,
+        "height": 32
+      },
+      "map": {
+        "width": 2048,
+        "height": 2048
+      },
+      "actors": 6
+    },
+    {
+      "kind": "gate",
+      "label": "gate",
+      "rowCount": 3,
+      "rowReason": null,
+      "rowMs": 99.20000004768372,
+      "safety": null,
+      "safetyMs": 0.5,
+      "error": null,
+      "checkMs": 4.299999952316284,
+      "coldPlaceMs": 19.299999952316284,
+      "placeMs": 3.4000000953674316,
+      "placed": true,
+      "footprint": {
+        "x": 576,
+        "y": 384,
+        "width": 32,
+        "height": 32
+      },
+      "map": {
+        "width": 2048,
+        "height": 2048
+      },
+      "actors": 6
+    },
+    {
+      "kind": "tower",
+      "label": "tower",
+      "rowCount": 3,
+      "rowReason": null,
+      "rowMs": 91.39999985694885,
+      "safety": null,
+      "safetyMs": 3.0999999046325684,
+      "error": null,
+      "checkMs": 5.5,
+      "coldPlaceMs": 25.100000143051147,
+      "placeMs": 5.5,
+      "placed": true,
+      "footprint": {
+        "x": 576,
+        "y": 384,
+        "width": 32,
+        "height": 32
+      },
+      "map": {
+        "width": 2048,
+        "height": 2048
+      },
+      "actors": 6
+    },
+    {
+      "kind": "wall",
+      "label": "wall-many",
+      "rowCount": 3,
+      "rowReason": null,
+      "rowMs": 459.59999990463257,
+      "safety": null,
+      "safetyMs": 60,
+      "error": null,
+      "checkMs": 113.29999995231628,
+      "coldPlaceMs": 144.40000009536743,
+      "placeMs": 114.20000004768372,
+      "placed": true,
+      "footprint": {
+        "x": 576,
+        "y": 384,
+        "width": 32,
+        "height": 32
+      },
+      "map": {
+        "width": 2048,
+        "height": 2048
+      },
+      "actors": 102
+    },
+    {
+      "kind": "gate",
+      "label": "gate-many",
+      "rowCount": 3,
+      "rowReason": null,
+      "rowMs": 460.2000000476837,
+      "safety": null,
+      "safetyMs": 0.40000009536743164,
+      "error": null,
+      "checkMs": 60.5,
+      "coldPlaceMs": 82.20000004768372,
+      "placeMs": 59.59999990463257,
+      "placed": true,
+      "footprint": {
+        "x": 576,
+        "y": 384,
+        "width": 32,
+        "height": 32
+      },
+      "map": {
+        "width": 2048,
+        "height": 2048
+      },
+      "actors": 102
+    },
+    {
+      "kind": "tower",
+      "label": "tower-many",
+      "rowCount": 3,
+      "rowReason": null,
+      "rowMs": 460.09999990463257,
+      "safety": null,
+      "safetyMs": 59.90000009536743,
+      "error": null,
+      "checkMs": 111.89999985694885,
+      "coldPlaceMs": 143.5,
+      "placeMs": 111.79999995231628,
+      "placed": true,
+      "footprint": {
+        "x": 576,
+        "y": 384,
+        "width": 32,
+        "height": 32
+      },
+      "map": {
+        "width": 2048,
+        "height": 2048
+      },
+      "actors": 102
+    }
+  ]
+}

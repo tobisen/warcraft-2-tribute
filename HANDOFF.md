@@ -1,3 +1,27 @@
+## 2026-10-08 — Snabb fortificationplacering — Done
+
+Nytt uttryckligt uppdrag efter murdrag: wall/gate/tower tar2–3sek vid klick.
+Flaskhalsen var route/admission, inte grid32-snappning. Delad kandidatmap,
+filtrerade contactkandidater≤32,32goalträd inom gammal8-fullsearch-nodebudget,
+boolean builderwitness, efter-route först/ingen jämförelse av identisk
+friendly gate-routing och ingen dubbel validering per accepterat mursegment.
+Befintliga kostnader, fog, anti-trap/delivery/producer-regler, grafik och caps
+behålls. Preview och click/drag består; ingen ny närhetssuggestion behövdes.
+
+Ny mätning från isolerad HEAD1042b23 före mot workspace efter:102aktörer,
+wall1337,4→144,4ms, gate876,6→82,2ms, tower1309,2→143,5ms coldplace;
+3paidmurar8191–8202→460ms. [Mätning/fixturer](artifacts/placement-performance/README.md).
+Fysiska6Chrome800/1280-clicks med99egna:88,5–172,8ms inklusive UI,
+korrekt betalning/sitekind/count och0runtimeerrors. Ingen allmaskingaranti.
+Murdrag/SaveLoad/sekventiellt färdigt/Escape/rightclick/HUDrelease/zoom1,5
+PASS; egna nya artefakter i placement-performance/wall-drag och800preview
+granskat, tidigare taskbilder bevarade. Riktade86/7 PASS2,64s, unit517/90
+PASS18,12s, strict build PASS530ms; befintlig chunkvarning kvar.
+Full `npm test`:1807/207 PASS480,71s på slutlig kod. Review utan kvarstående
+fynd; syntax/diff och docs/länkar PASS. Ingen ny roadmaptask,
+release/CI/Pages eller mänsklig fullmatch-/ljudverifiering påstås.
+CSS/units.mjs/docs/:memory:.ses bevaras. Stanna efter detta användaruppdrag.
+
 ## 2026-10-08 — Dragbygge av murar — Done
 
 Välj Wall, håll vänster musknapp och dra en sammanhängande gridlinje;

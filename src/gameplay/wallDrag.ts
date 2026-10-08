@@ -18,8 +18,9 @@ export function placeWallLine(m:MatchState,points:Position[]){
  const ids=new Set<string>();
  for(const p of points.slice(0,32)){
   const active={...next,placement:{...next.placement,active:true,kind:'wall' as const}};
-  reason=towerPlacementError(active,p);if(reason)break;
-  const placed=placeTower(active,p);if(!first)first=placed;next=placed;count++;ids.add(placed.placement.defenses!.at(-1)!.id);
+  const placed=placeTower(active,p);
+  if(placed===active){reason=towerPlacementError(active,p);break;}
+  if(!first)first=placed;next=placed;count++;ids.add(placed.placement.defenses!.at(-1)!.id);
  }
  if(first){const worker=first.gathering.units.find(u=>u.kind==='worker'&&u.order.kind==='build'&&ids.has(u.order.buildingId))!;
   next={...next,gathering:{...next.gathering,units:next.gathering.units.map(u=>u.id===worker.id?worker:u)},placement:{...next.placement,defenses:next.placement.defenses!.map(t=>ids.has(t.id)?{...t,construction:{...t.construction,builderId:worker.id}}:t)}};

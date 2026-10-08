@@ -4,7 +4,7 @@ import {hasMainBase} from './extraBases';
 import {nodeRadius} from './gathering';
 import {isAir} from './domains';
 import {enemySize} from './enemyBody';
-import type {MatchState} from './match';import type {Footprint} from './placement';import {placementObstacles,workerResourceTargets} from './placement';import {replaceObstacles,overlaps,enemyNavigationMap} from './map';import {canReachFootprint} from './approach';import {spawnCandidates,hasSpawnExit,unitBody} from './spawning';import {combatUnitStats,unitStats} from '../config/unit';
+import type {MatchState} from './match';import type {Footprint} from './placement';import {placementObstacles,workerResourceTargets,placementMap} from './placement';import {replaceObstacles,overlaps,enemyNavigationMap} from './map';import {canReachFootprint} from './approach';import {spawnCandidates,hasSpawnExit,unitBody} from './spawning';import {combatUnitStats,unitStats} from '../config/unit';
 const same=(a:Footprint,b:Footprint)=>a.x===b.x&&a.y===b.y&&a.width===b.width&&a.height===b.height;
 /** Completed friendly gates are passable even while their visual doors are closed. */
 export function withGateRules(m:MatchState):MatchState {
@@ -24,11 +24,13 @@ export function updateAutomaticGates(m:MatchState):MatchState {
  return withGateRules(changed?{...m,placement:{...m.placement,defenses}}:m);
 }
 export function fortificationSafety(m:MatchState,rect:Footprint,friendlyPassage=false):string|null{
- const after=replaceObstacles(m.map,[...m.map.obstacles,rect]),anchors=[placementObstacles(m.gathering)[0],...(m.placement.barracks?[m.placement.barracks]:[]),...(m.placement.forge?[m.placement.forge.footprint]:[]),...(m.placement.farms??[]).map(f=>f.footprint),...(m.navy?.harbor?[m.navy.harbor.footprint]:[]),...m.combat.enemies.filter(e=>e.footprint).map(e=>e.footprint!)];
+ const after=placementMap(m.map,rect),anchors=[placementObstacles(m.gathering)[0],...(m.placement.barracks?[m.placement.barracks]:[]),...(m.placement.forge?[m.placement.forge.footprint]:[]),...(m.placement.farms??[]).map(f=>f.footprint),...(m.navy?.harbor?[m.navy.harbor.footprint]:[]),...m.combat.enemies.filter(e=>e.footprint).map(e=>e.footprint!)];
  const actors=[...m.gathering.units.filter(u=>!isAir(u)).map(u=>({position:u.position,half:(u.kind==='worker'?unitStats.size:combatUnitStats(u).size)/2,enemy:false})),...m.combat.enemies.filter(e=>!isAir(e)&&!e.footprint&&e.kind!=='ship').map(e=>({position:e.position,half:enemySize(e)/2,enemy:true}))];
- for(const u of actors){if(overlaps(rect,unitBody(u.position,u.half*2)))return 'Overlaps a unit';const beforeMap=u.enemy?enemyNavigationMap(m.map):m.map,afterMap=u.enemy?enemyNavigationMap(after):friendlyPassage?m.map:after;
+ const enemyBefore=enemyNavigationMap(m.map),enemyAfter=enemyNavigationMap(after);
+ for(const u of actors){if(overlaps(rect,unitBody(u.position,u.half*2)))return 'Overlaps a unit';const beforeMap=u.enemy?enemyBefore:m.map,afterMap=u.enemy?enemyAfter:friendlyPassage?m.map:after;
+  if(beforeMap===afterMap)continue;
   const resourceAnchors=u.enemy?[]:m.gathering.units.filter(w=>w.kind==='worker'&&w.position.x===u.position.x&&w.position.y===u.position.y).flatMap(w=>w.kind==='worker'?workerResourceTargets(m.gathering,w).map(n=>({x:n.position.x-nodeRadius(n),y:n.position.y-nodeRadius(n),width:nodeRadius(n)*2,height:nodeRadius(n)*2})):[]);
-  for(const anchor of [...anchors,...resourceAnchors])if(canReachFootprint({...beforeMap,bodyHalf:u.half},u.position,anchor,24)&&!canReachFootprint({...afterMap,bodyHalf:u.half},u.position,anchor,24))return 'Would trap a unit or block a required delivery route';
+  for(const anchor of [...anchors,...resourceAnchors])if(!canReachFootprint({...afterMap,bodyHalf:u.half},u.position,anchor,24)&&canReachFootprint({...beforeMap,bodyHalf:u.half},u.position,anchor,24))return 'Would trap a unit or block a required delivery route';
  }
  for(const [foot,kind]of [[placementObstacles(m.gathering)[0],'base'],...(m.placement.barracks?[[m.placement.barracks,'barracks'] as const]:[])] as const){const exit=(map:typeof after)=>spawnCandidates(map,foot,kind).some(p=>hasSpawnExit(map,p));if(exit(m.map)&&!exit(friendlyPassage?m.map:after))return 'Blocks a production exit';}
  for(const e of m.combat.enemies.filter(e=>e.footprint&&(e.kind==='base'||e.buildingType==='barracks'||e.buildingType==='outpost'))){const exit=(map:typeof after)=>spawnCandidates(enemyNavigationMap(map),e.footprint!,'barracks').some(p=>hasSpawnExit(enemyNavigationMap(map),p));if(exit(m.map)&&!exit(friendlyPassage?m.map:after))return 'Blocks an enemy production exit';}

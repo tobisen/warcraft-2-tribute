@@ -24,6 +24,26 @@ täckning. Alla caches är härledda; Save, balans, grafik och entitetstak best�
 [Prestandamätning och verifiering](PERFORMANCE.md).
 
 
+## Snabb fortification-admission
+
+`placementMap` delar en enda föreslagen terrängkopia mellan worker-/site-/
+spawn-regler och fortificationSafety. WeakMap per live map, endast senaste
+rect; obstacle-identitet/längd/revision och relevanta geometri-/siktfält
+förnyar den. Snappning är fortsatt32px floor och preview kör billiga regler.
+`approachRoute` återanvänder upp till32 filtrerade contact-kandidater per
+obstacle-array, nycklade på footprint/range/kroppsstorlek/world/revision/
+interactionTarget/occlusion. Aktörens avståndsortering och ursprungliga
+index/tieordning består; destinationsobjekt kopieras som tidigare.
+Befintlig navigationcache kan hålla32 små målträd men behåller nodebudgeten
+för8 fulla searches. FortificationSafety delar hostile maps och kontrollerar
+om en route finns efter placering först; då behövs ingen före-sökning.
+Oförändrad friendly gate-geometri behöver ingen routejämförelse. Builder-
+admission behöver bara en reachable-witness, inte kortaste byggvägen.
+Murdrag validerar accepterade segment en gång. Ingen cached admission finns:
+aktörers positioner, fog, bank och övriga gameplayvillkor läses varje gång.
+Grafik, tak, betalda jobb, anti-trap/regler och Saveformat består.
+[Lokala mätningar](artifacts/placement-performance/README.md).
+
 ## Dragbygge av murar
 
 `wallDrag.wallLine` skapar en sammanhängande 32px-gridlinje, högst32 celler.

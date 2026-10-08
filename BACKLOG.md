@@ -45,6 +45,20 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
+### Prestanda 2026-10-08 — snabb fortificationplacering — Done
+
+Nytt användaruppdrag: wall/gate/tower-klick tar2–3s; mät och effektivisera
+placering nära befintliga murar. Behåll grafik, caps, kostnader, fog,
+byggsekvens och anti-trap/required-route/production-exit-regler. Undersök
+positionsförslag bara om det behövs; inga nya roadmaptasks eller assets.
+
+Route-/contact-/proposed-map-cache och borttagen dubbel admission ger
+wall/tower cold1337/1309→144/144ms och gate877→82ms i102-aktörsfixtur;
+fysiska800/1280-klick89–173ms. Ingen ny närhetssuggestion behövdes.
+Riktade86/7, unit517/90, strict build, full1807/207 och diff/review PASS.
+Se PERFORMANCE/HANDOFF och artifacts/placement-performance. Uppdrag avslutat.
+
+
 ### UI 2026-10-08 — logisk knappordning — Done
 
 Bygg/forskning sorteras stabilt efter förkunskapskrav: startbyggen först,

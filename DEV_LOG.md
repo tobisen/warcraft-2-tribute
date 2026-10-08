@@ -5015,3 +5015,35 @@ blur/resize, som separat riktad/unit/build/browser täcker. Syntax/diff och
 länkcheck PASS. Knappordning commit/push ecc2482. Review utan kvarstående
 fynd; CSS/units.mjs/docs och
 :memory:.ses bevaras. Ingen ny release eller roadmap.
+
+
+## 2026-10-08 — Snabbare wall/gate/tower-admission
+
+Mätt intill3paidmurar:102aktörer ger coldWall1337,4→144,4ms,
+gate876,6→82,2ms, tower1309,2→143,5ms;3murar8191–8202→460ms.
+Isolerad HEAD1042b23 via git archive/Vite5189 mot ändrad workspace5188,
+samma Chrome; scripts/check-fortification-performance.mjs/JSON. Fysisk
+native800/1280 med99egna:88,5–172,8ms inklusive syncVisuals, korrekt
+kostnad/antal/footprint och0pageerrors. Mätningar är bounded syntetiska
+fixtures, ingen allmän prestanda- eller fullmatchgaranti.
+
+Snappning är enkel floor, flaskhalsen var upprepade route-/contact-sökningar.
+Delad proposed map, actoroberoende contactkandidater≤32 med fullgeometrinyckel,
+32goalträd inom tidigare8fullsearch-nodebudget, efter-route först i safety,
+friendly gate delar oförändrad routing, builderwitness och en validator per
+accepterat dragsegment. Inga positions-/admission-resultat cachas. All grafik,
+spelarregler, caps, stats och Saveformat består. Ingen närhetssuggestion
+införd eftersom rutnätsförhandsvisningen fungerar och kostnaden var admission.
+
+Riktad `npm test --` approach/navigation/gates/towers/placement/construction/
+gathering86/7 PASS2,64s; slutlig unit517/90 PASS18,12s; build med strict
+TypeScript PASS530ms och befintlig bundlevarning. Cachekriterier testade mot
+färsk geometri vid kropp/range/targets/occlusion/push/revision/resize.
+Murdrag native800/1280 Save/Load/sequentialfinish/cost/cancel/singleclickzoom
+PASS, artifacts/placement-performance/wall-drag;800preview visuellt granskad.
+Full regression `npm test`:1807/207 PASS480,71s på slutlig kod. Syntax/
+diff/dokumentreferenser PASS. Alla nya cachetester ingår i befintliga
+unitklassificerade filer; berörda integrationer och bred etappregression körda.
+Granskning av cache-/state-livscykel, routebool, regler och scope utan fynd.
+Befintligt RTS-197-performancescript återställdes och ny harness fick eget
+namn; CSS/units.mjs/docs/:memory:.ses bevarade. Ingen ny release/roadmap.

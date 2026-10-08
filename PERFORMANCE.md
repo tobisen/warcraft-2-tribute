@@ -4,7 +4,31 @@ Användaruppdraget behåller grafik, upplösning, animationer, gameplaytakt och
 samtliga maxtak för enheter/byggnader. Ingen config-, asset-, Save-version-
 eller balansändring ingår. Användarens CSS/units.mjs/docs bevaras.
 
-## Ny faktisk före/efter-mätning
+## Fortificationplacering — ny mätning efter1042b23
+
+Snappningen var inte flaskhalsen. Full admission sökte upprepade routes
+per aktör/ankare, med separata identiska proposed maps och8-goal-cache som
+kastade användbara träd. Murdrag validerade varje accepterad site två gånger.
+Nu delas proposed terrain och filtrerade contact-kandidater,32små målträd
+ryms inom tidigare8-full-search-nodebudget, builder använder boolean witness,
+friendly gate jämför inte identisk routing och fortificationSafety söker
+efter-route först. Accepterade mursegment valideras en gång.
+
+| Kontrollerad fixture102 aktörer | Före kall placering | Efter |
+| --- | ---: | ---: |
+| Wall intill3murar |1337,4ms|144,4ms|
+| Gate intill3murar |876,6ms|82,2ms|
+| Tower intill3murar |1309,2ms|143,5ms|
+| Tre betalda mursegment |8190,7–8201,9ms|459,6–460,2ms|
+
+Fysisk Chrome800/1280,99egna enheter: samtliga6mouseclicks88,5–172,8ms
+inklusive syncVisuals och korrekt betalning/antal. Before kördes isolerat
+från HEAD1042b23, after i workspace, samma lokala Chrome och fixture.
+Enstaka kallmätningar, ingen allmän hårdvarugaranti eller fullmatch.
+[Fixture/JSON/reproduktion](artifacts/placement-performance/README.md).
+Stats, assets, grid32, fog, caps, Saveformat och route/anti-trap-regler består.
+
+## Tidigare faktisk före/efter-mätning — större arméer
 
 Chrome155.0.8059.39 headless på denna Mac, lokal Vite devserver, display
 Native1280×720; matchcanvas1280×488 efter HUD. Samma CSS/assets, kamera,

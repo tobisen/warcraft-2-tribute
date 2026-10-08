@@ -20,11 +20,13 @@ export function canInteract(map: WorldMap, point: Position, target: Footprint, r
   return !!map.ignoreAttackOcclusion||segmentFits(targetFreeMap(map,target),point,edge,0);
 }
 
-export function approachRoute(map: WorldMap, position: Position, target: Footprint, range: number,
-  commandNumber=1,reachableOnly=false): RouteState {
-  if(canInteract(map,position,target,range))return {commandNumber,destination:{...position},
-    waypoints:[],revision:map.revision,status:'arrived'};
-  const half=map.bodyHalf??navigationConfig.halfBody;
+const candidateCache=new WeakMap<WorldMap['obstacles'],{length:number;entries:Map<string,{point:Position;index:number}[]>}>();
+/** Contact geometry is independent of the actor; retain original tie indices. */
+function interactionCandidates(map:WorldMap,target:Footprint,range:number){
+ const half=map.bodyHalf??navigationConfig.halfBody,t=map.interactionTarget;
+ const cacheKey=`${map.width}:${map.height}:${map.tileSize}:${map.revision}:${half}:${!!map.ignoreAttackOcclusion}:${t?`${t.x},${t.y},${t.width},${t.height}`:''}:${target.x},${target.y},${target.width},${target.height}:${range}`;
+ let cache=candidateCache.get(map.obstacles);if(!cache||cache.length!==map.obstacles.length){cache={length:map.obstacles.length,entries:new Map()};candidateCache.set(map.obstacles,cache);}
+ const cached=cache.entries.get(cacheKey);if(cached)return cached;
   const points: Position[]=[
     {x:target.x-half,y:target.y+target.height/2},{x:target.x+target.width+half,y:target.y+target.height/2},
     {x:target.x+target.width/2,y:target.y-half},{x:target.x+target.width/2,y:target.y+target.height+half},
@@ -35,11 +37,21 @@ export function approachRoute(map: WorldMap, position: Position, target: Footpri
       const point=tileCenter(map,{column,row});if(point)points.push(point);
     }
   }
+ const result=points.map((point,index)=>({point,index})).filter(c=>canInteract(map,c.point,target,range));
+ if(cache.entries.size>=32)cache.entries.delete(cache.entries.keys().next().value!);
+ cache.entries.set(cacheKey,result);return result;
+}
+
+export function approachRoute(map: WorldMap, position: Position, target: Footprint, range: number,
+  commandNumber=1,reachableOnly=false): RouteState {
+  if(canInteract(map,position,target,range))return {commandNumber,destination:{...position},
+    waypoints:[],revision:map.revision,status:'arrived'};
+  const points=interactionCandidates(map,target,range);
   let best: {waypoints:Position[];point:Position;length:number;index:number}|undefined;
   // Straight distance is a lower bound for any route. Search the most promising
   // contact first, then skip BFSs that cannot improve it. Keep original tie order.
-  const candidates=points.map((point,index)=>({point,index,bound:Math.hypot(point.x-position.x,point.y-position.y)}))
-    .filter(c=>canInteract(map,c.point,target,range)).sort((a,b)=>a.bound-b.bound||a.index-b.index);
+  const candidates=points.map(({point,index})=>({point,index,bound:Math.hypot(point.x-position.x,point.y-position.y)}))
+    .sort((a,b)=>a.bound-b.bound||a.index-b.index);
   for(const {point,index,bound} of candidates) {
     if(best&&bound>best.length+1e-9)break;
     const result=findRoute(map,position,point);if(!result.ok)continue;

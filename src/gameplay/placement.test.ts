@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   barracksFootprint, beginPlacement, cancelPlacement, placeBarracks,
-  placementError, placementObstacles, type PlacementState,
+  placementError, placementObstacles, placementMap, type PlacementState,
 } from './placement';
 import { gatheringConfig } from '../config/gathering';
 
@@ -75,4 +75,13 @@ describe('barracks placement', () => {
     expect(placeBarracks(cancelled,{x:100,y:100},100,obstacles)).toEqual({placement:cancelled,wood:100});
     expect(active.active).toBe(true);
   });
+});
+
+it('proposed terrain is shared only for the same geometry and does not mutate live terrain',()=>{
+ const map={width:640,height:512,tileSize:32,revision:0,obstacles:[] as {x:number;y:number;width:number;height:number}[]},rect={x:320,y:256,width:32,height:32};
+ const proposed=placementMap(map,rect);expect(placementMap(map,{...rect})).toBe(proposed);expect(map.obstacles).toEqual([]);expect(proposed.revision).toBe(1);
+ expect(placementMap(map,{...rect,x:352})).not.toBe(proposed);
+ map.obstacles.push({x:128,y:128,width:32,height:32});expect(placementMap(map,rect).obstacles).toHaveLength(2);
+ map.obstacles[0].x=160;map.revision++;expect(placementMap(map,rect).obstacles[0].x).toBe(160);
+ const sized={...map,bodyHalf:12};const first=placementMap(sized,rect);sized.bodyHalf=20;expect(placementMap(sized,rect)).not.toBe(first);expect(placementMap(sized,rect).bodyHalf).toBe(20);
 });
