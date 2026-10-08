@@ -103,8 +103,8 @@ import { createSession,sessionTransition,changeOptions,gameplayDelta,type MatchS
 import { hotkeys,hotkeyButton,dispatchHotkey } from '../presentation/hotkeys';
 import { bindGroup,recallGroup,combineSelection,validGroup,type ControlGroups } from '../gameplay/controlGroups';
 import { gameplayKeyAllowed,keyboardContext } from '../presentation/keyboard';
-import { entityVisible,knownResource,placementVisible } from '../gameplay/visibility';
-import { isVisible } from '../gameplay/fog';
+import { entityPresented,entityVisible,knownResource,placementVisible } from '../gameplay/visibility';
+import { isExplored,isVisible } from '../gameplay/fog';
 import { drawFog } from '../presentation/fogView';
 import { createFog,type FogState,type Team } from '../gameplay/fog';
 import { visibleMinimapData } from '../presentation/minimap';
@@ -1009,7 +1009,7 @@ export class BootScene extends Phaser.Scene {
     (document.getElementById('dismiss-units') as HTMLButtonElement).disabled=!dismissProposal(this.currentMatch());
     this.hpBars?.clear();
     const routePoints=this.scoutRouteMode?this.scoutRoutePoints:this.gathering.units.flatMap(u=>u.kind==='soldier'&&u.selected&&u.scouting?.mode==='route'?u.scouting.waypoints:[]);for(let i=0;i<routePoints.length;i++){const a=routePoints[i]!,b=routePoints[(i+1)%routePoints.length]!;this.hpBars?.lineStyle(2,0x86dbe6,.8).strokeCircle(a.x,a.y,5);if(routePoints.length>1)this.hpBars?.lineBetween(a.x,a.y,b.x,b.y);}
-    const visibleEnemies=[...this.combat.enemies,...bossEnemies(this.currentMatch(),true)].filter(e=>entityVisible(this.fog,'player',e));
+    const allEnemies=[...this.combat.enemies,...bossEnemies(this.currentMatch(),true)],visibleEnemies=allEnemies.filter(e=>entityVisible(this.fog,'player',e)),presentedEnemies=allEnemies.filter(e=>entityPresented(this.fog,'player',e));
     const markers = orderMarkers(this.gathering, {...this.combat,enemies:visibleEnemies}, this.outcome==='playing',this.placement.barracks,this.placement.farms,this.placement.forge?.footprint,this.navy?.harbor?.footprint,this.placement.bases,this.placement.academy?.footprint);
     markers.push(...navalOrderMarkers(this.navy,{...this.combat,enemies:visibleEnemies},this.outcome==='playing'));
     for (const [id, visual] of this.orderVisuals) {
@@ -1087,14 +1087,14 @@ export class BootScene extends Phaser.Scene {
       }
     }
     for (const [id, visual] of this.enemyVisuals) {
-      if (!visibleEnemies.some(e => e.id === id)) {
+      if (!presentedEnemies.some(e => e.id === id)) {
         this.removedVisual(id,!this.combat.enemies.some(e=>e.id===id)&&!this.enemyNaval?.passengers.some(e=>e.id===id));visual.body.destroy(); visual.label.destroy(); this.enemyVisuals.delete(id);
       }
     }
     const visibleShots=this.outcome==='playing'?(this.combat.projectiles??[]).filter(p=>isVisible(this.fog,'player',p.position)&&(!p.submarine||!p.owner||!this.fog.concealedIds?.player.includes(p.shooterId??''))):[];
     for(const [id,visual] of this.projectileVisuals)if(!visibleShots.some(p=>p.id===id)){visual.destroy();this.projectileVisuals.delete(id);}
     for(const shot of visibleShots){if(!this.projectileVisuals.has(shot.id))this.projectileVisuals.set(shot.id,this.add.graphics().setDepth(effectConfig.projectileDepth));drawProjectile(this.projectileVisuals.get(shot.id)!,shot);}
-    for (const enemy of visibleEnemies) {
+    for (const enemy of presentedEnemies) {
       if(enemy.boss){
         const b=bossDefinitions[enemy.boss],cooldown=enemy.attackCooldown??0,frame=enemy.hp<=0?3:cooldown>b.attackInterval-.22?2:cooldown<.22&&this.gathering.units.some(u=>Math.hypot(u.position.x-enemy.position.x,u.position.y-enemy.position.y)<=bossRules.range)?1:0;
         let v=this.enemyVisuals.get(enemy.id);if(!v){v={body:this.add.image(enemy.position.x,enemy.position.y,'bosses',`${b.id}-${frame}`).setOrigin(.5,.78),label:this.add.text(enemy.position.x,enemy.position.y-52,'',{fontSize:'12px',color:'#f1d79a',backgroundColor:'#17271ddd'}).setOrigin(.5,1).setDepth(10)};this.enemyVisuals.set(enemy.id,v);}
@@ -1201,7 +1201,7 @@ export class BootScene extends Phaser.Scene {
   }
 
   private syncBossLoot():void {
-    const visible=Object.entries(this.bosses?.guardians??{}).filter(([id,v])=>v.hp<=0&&isVisible(this.fog,'player',bossLootPosition(id as BossId))),ids=new Set(visible.map(([id])=>id));
+    const visible=Object.entries(this.bosses?.guardians??{}).filter(([id,v])=>v.hp<=0&&isExplored(this.fog,'player',bossLootPosition(id as BossId))),ids=new Set(visible.map(([id])=>id));
     for(const [id,v]of this.bossLootVisuals)if(!ids.has(id)){v.image.destroy();v.label.destroy();this.bossLootVisuals.delete(id);}
     for(const [id,v]of visible){const b=bossDefinitions[id as BossId],p=bossLootPosition(b.id),text=v.claimed?`Claimed by ${v.claimedBy??'player'}`:`${b.name}'s hoard · Worker collect: +${b.reward.wood} wood +${b.reward.gold} gold`;let art=this.bossLootVisuals.get(id);if(!art){art={image:this.add.image(p.x,p.y,'reference-terrain','chest-closed').setOrigin(.5,.75),label:this.add.text(p.x,p.y-28,text,{fontSize:'11px',color:'#efdaa4',backgroundColor:'#17271ddd'}).setOrigin(.5,1).setDepth(10)};this.bossLootVisuals.set(id,art);}art.image.setFrame(v.claimed?'chest-open':'chest-closed');art.label.setText(text);}
   }

@@ -1,3 +1,24 @@
+## 2026-10-08 — Scoutade bossar/fynd/byggnader — Done
+
+Bossar, skatter, orekryterade karaktärer/hjältefynd och byggnader visas nu
+även i explored utan current vision, på karta och minimap. Bossloot omfattas.
+Svart outforskad fog döljer dem fortfarande; vanliga fiendetrupper kräver
+current vision. Combat/input/rewards/audio fortsätter använda entityVisible;
+entityPresented är separat. Befintlig explored-Save återanvänds. Visning
+följer aktuell landmark-state, utan nytt last-seen- eller hero-enhetssystem.
+Öppnade kistor består; rekryterade fyndkaraktärer försvinner från platsen.
+
+Ny riktad54/5 PASS8,62s, unit515/90 PASS14,07s, strict build491ms och
+syntax/diff/länkchecks PASS. Faktisk Chrome800/1280 dark-hidden/scout/retreat,
+alla sprites/markörer, ordinary-troop-hidden, ingen remote claim, fysisk
+Save/Load/restart och bossloot PASS. [Browserresultat/bilder](artifacts/explored-landmarks/browser.json)
+via `scripts/check-explored-landmarks.mjs`; fyra representativa bilder granskade.
+Ingen ny bred fullregression/campaign för ren presentation; tidigare1800/207
+är historisk verifiering av prestandauppdraget. Befintlig chunkvarning kvar.
+
+User CSS/units.mjs/docs/ och :memory:.ses bevarade. Ingen ny CI/Pages,
+release eller roadmaptask; stanna efter detta avgränsade uppdrag.
+
 ## 2026-10-08 — Prestanda för stora arméer/byggnader — Done
 
 Användarens avgränsade uppdrag är klart. Framevis kartresursgenerering,

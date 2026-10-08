@@ -1,0 +1,69 @@
+{
+  "browser": "155.0.8059.39",
+  "results": [
+    {
+      "width": 800,
+      "before": {
+        "boss": false,
+        "finds": 0,
+        "enemyBuilding": false,
+        "markers": 0
+      },
+      "explored": {
+        "boss": true,
+        "building": true,
+        "finds": true,
+        "currentSight": false,
+        "explored": true,
+        "bossMarker": true,
+        "buildingMarker": true,
+        "findMarkers": true,
+        "ordinaryTroops": false,
+        "claimed": 0
+      },
+      "loaded": {
+        "boss": true,
+        "building": true,
+        "finds": 3
+      },
+      "reset": {
+        "boss": false,
+        "finds": 0,
+        "loot": 0
+      },
+      "errors": []
+    },
+    {
+      "width": 1280,
+      "before": {
+        "boss": false,
+        "finds": 0,
+        "enemyBuilding": false,
+        "markers": 0
+      },
+      "explored": {
+        "boss": true,
+        "building": true,
+        "finds": true,
+        "currentSight": false,
+        "explored": true,
+        "bossMarker": true,
+        "buildingMarker": true,
+        "findMarkers": true,
+        "ordinaryTroops": false,
+        "claimed": 0
+      },
+      "loaded": {
+        "boss": true,
+        "building": true,
+        "finds": 3
+      },
+      "reset": {
+        "boss": false,
+        "finds": 0,
+        "loot": 0
+      },
+      "errors": []
+    }
+  ]
+}

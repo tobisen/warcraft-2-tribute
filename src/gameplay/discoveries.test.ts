@@ -85,3 +85,19 @@ it('treasure cannot finish the gathering lesson and a rescued soldier cannot fin
  const recruit=m.gathering.units.find(u=>u.kind==='soldier')!;m.gathering.units.push({...recruit,id:'unit-5',position:{x:688,y:352}});
  expect(updateTutorial(m).tutorial?.step).toBe(5);
 });
+
+it('keeps explored treasures and recruits on map/minimap through retreat and Save/Load without collecting remotely',()=>{
+ const m=fixture(),start={...m.gathering.units[0].position},finds=mapDiscoveries(m.map.id!,m.map.design);
+ for(let i=0;i<finds.length;i++)scout(m,i);
+ m.gathering.units[0]={...m.gathering.units[0],position:start,target:start};m.fog=matchFog(m);
+ expect(finds.every(d=>!isVisible(m.fog!,'player',d.position))).toBe(true);
+ expect(visibleDiscoveries(m).map(d=>d.id)).toEqual(finds.map(d=>d.id));
+ expect(visibleMinimapData(m).markers.filter(d=>d.id.includes('discovery')).map(d=>d.id)).toEqual(finds.map(d=>d.id));
+ expect(updateDiscoveries(m)).toBe(m);expect(m.discoveries!.claimed).toEqual([]);
+ const loaded=decodeSave(encodeSave(m,view));expect(loaded.ok).toBe(true);if(!loaded.ok)return;
+ expect(visibleDiscoveries(loaded.match).map(d=>d.id)).toEqual(finds.map(d=>d.id));
+ expect(visibleDiscoveries(fixture())).toEqual([]);
+ m.discoveries!.claimed.push(finds[0].id,finds[2].id);
+ expect(visibleDiscoveries(m).find(d=>d.id===finds[0].id)?.opened).toBe(true);
+ expect(visibleDiscoveries(m).some(d=>d.id===finds[2].id)).toBe(false);
+});

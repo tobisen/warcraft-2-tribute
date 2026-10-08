@@ -1,13 +1,21 @@
 import { isExplored,isVisible,type FogState,type Team } from './fog';
 import type { Footprint } from './placement';
 import type { Position } from './movement';
-export interface VisibleEntity {id?:string;position:Position;footprint?:Footprint}
+export interface VisibleEntity {id?:string;position:Position;footprint?:Footprint;boss?:unknown}
 /** Units require a visible center; seeing any building cell reveals that complete object. */
 export function entityVisible(fog:FogState,team:Team,entity:VisibleEntity):boolean {
  if(entity.id&&fog.concealedIds?.[team].includes(entity.id))return false;
  if(!entity.footprint)return isVisible(fog,team,entity.position);
  const r=entity.footprint;
  for(let row=Math.max(0,Math.floor(r.y/fog.tileSize));row<Math.min(fog.rows,Math.ceil((r.y+r.height)/fog.tileSize));row++)for(let col=Math.max(0,Math.floor(r.x/fog.tileSize));col<Math.min(fog.columns,Math.ceil((r.x+r.width)/fog.tileSize));col++)if(fog.teams[team].visible[row*fog.columns+col])return true;
+ return false;
+}
+/** Presentation memory for stationary landmarks; ordinary troops still need current sight. */
+export function entityPresented(fog:FogState,team:Team,entity:VisibleEntity):boolean {
+ if(entity.id&&fog.concealedIds?.[team].includes(entity.id))return false;
+ if(!entity.footprint)return entity.boss?(isExplored(fog,team,entity.position)||isVisible(fog,team,entity.position)):isVisible(fog,team,entity.position);
+ const r=entity.footprint;
+ for(let row=Math.max(0,Math.floor(r.y/fog.tileSize));row<Math.min(fog.rows,Math.ceil((r.y+r.height)/fog.tileSize));row++)for(let col=Math.max(0,Math.floor(r.x/fog.tileSize));col<Math.min(fog.columns,Math.ceil((r.x+r.width)/fog.tileSize));col++)if(fog.teams[team].explored[row*fog.columns+col]||fog.teams[team].visible[row*fog.columns+col])return true;
  return false;
 }
 export function knownResource(fog:FogState,position:Position):boolean{return isExplored(fog,'player',position);}

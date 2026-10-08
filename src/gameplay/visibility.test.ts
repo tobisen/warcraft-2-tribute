@@ -1,7 +1,7 @@
 import { advanceProjectiles } from './projectiles';
 import { describe,expect,it } from 'vitest';
 import { createFog,updateFog } from './fog';
-import { entityVisible,knownResource,placementVisible } from './visibility';
+import { entityPresented,entityVisible,knownResource,placementVisible } from './visibility';
 import {createClassicMatch as createMatch} from './testHelpers/classicMatch';
 import {updateMatch} from './match';
 import { visibleMinimapData } from '../presentation/minimap';
@@ -22,9 +22,9 @@ describe('shared fog information contract',()=>{
   s.combat.enemies[0].hp=1;s.combat.enemies[0].position={x:1100,y:144};s.combat.enemies[0].footprint={x:1088,y:96,width:96,height:96};s.gathering.node.remaining=1;s.gathering.gold!.remaining=1;
   expect(visibleMinimapData(s)).toEqual(before);expect(matchLabels(s)).toEqual(hud);
  });
- it('reveals objects only during current vision and keeps no last-seen enemy data',()=>{
+ it('keeps scouted buildings in explored terrain while ordinary troops need current vision',()=>{
   const s=createMatch('skirmish');s.fog=updateFog(s.fog!,[{id:'scout',owner:'player',position:{x:880,y:144},radius:192}]);expect(visibleMinimapData(s).markers.some(m=>m.id==='enemy-base')).toBe(true);
-  s.fog=updateFog(s.fog,[]);expect(visibleMinimapData(s).markers.some(m=>m.owner==='enemy')).toBe(false);expect(s.fog.teams.player.explored.some(Boolean)).toBe(true);
+  s.fog=updateFog(s.fog,[]);expect(visibleMinimapData(s).markers.some(m=>m.id==='enemy-base')).toBe(true);expect(entityVisible(s.fog,'player',s.combat.enemies[0])).toBe(false);expect(s.fog.teams.player.explored.some(Boolean)).toBe(true);
  });
  it('blocks hidden manual attack and acquisition, drops navigation, and causes no hidden damage',()=>{
   const g=gathering(),c:CombatState={enemies:[enemy()],baseHP:240};g.units=orderAttack(g.units,'hidden');g.units[0].navigation={destination:{x:430,y:300},waypoints:[{x:430,y:300}],commandNumber:1,revision:0,status:'moving'};
@@ -62,4 +62,13 @@ describe('shared fog information contract',()=>{
 
 it('retains the legitimate exploration route cache while a hidden base goal is approached',()=>{
  const s=createMatch('skirmish');s.gathering.units=[];s.combat.enemies=[s.combat.enemies[0],{id:'wave-fixture',hp:36,position:{x:740,y:60},order:{kind:'attack-move',destination:{x:400,y:450}}}];const next=updateMatch(s,.1),enemy=next.combat.enemies.find(e=>e.id==='wave-fixture')!;expect(enemy.navigation?.targetId).toBe('explore-goal');expect(enemy.navigation?.waypoints.length).toBeGreaterThan(0);expect(next.combat.baseHP).toBe(240);
+});
+
+it('presentation keeps explored bosses/buildings but respects dark fog, concealment and team boundaries',()=>{
+ const f=createFog({width:128,height:96}),position={x:48,y:48},boss={id:'boss',boss:'guardian',position},building={id:'base',position,footprint:{x:32,y:32,width:64,height:64}},troop={id:'troop',position};
+ expect(entityPresented(f,'player',boss)).toBe(false);expect(entityPresented(f,'player',building)).toBe(false);
+ f.teams.player.explored[5]=true;
+ expect(entityPresented(f,'player',boss)).toBe(true);expect(entityPresented(f,'player',building)).toBe(true);expect(entityPresented(f,'player',troop)).toBe(false);
+ expect(entityVisible(f,'player',boss)).toBe(false);expect(entityVisible(f,'player',building)).toBe(false);expect(entityPresented(f,'enemy',boss)).toBe(false);
+ f.concealedIds={player:['boss','base'],enemy:[]};expect(entityPresented(f,'player',boss)).toBe(false);expect(entityPresented(f,'player',building)).toBe(false);
 });

@@ -1,5 +1,17 @@
 # Arkitektur
 
+## Utforskade landmärken och aktuell gameplay-sikt
+
+`entityPresented` visar bossar och byggnader i explored terräng; vanliga
+fiendetrupper kräver current vision. Discoveries och bossloot använder
+explored för kroppar/etiketter/minimap. Den svarta fogoverlayen behålls.
+Scenen använder separata presented/visible-listor så ordermarkers/audio
+inte får den utökade presentationssynen. `entityVisible`, insamlingsvillkor
+samt combat/AI/input består; befintliga explored-Save-data räcker.
+Detta är aktuell presentation i explored-geometri, inget nytt last-seen-
+snapshotsystem. Rekryterade fyndkaraktärer försvinner; öppnade kistor kvarstår.
+
+
 ## Prestanda — härledda renderings- och kollisionscachar
 
 Matchsettings memoiserar senaste texten med samtliga visade options som nyckel.

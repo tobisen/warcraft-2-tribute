@@ -54,11 +54,11 @@ it('campaign victory does not require the optional guardian and replay resets it
  const fresh=startCampaignMission(progress,'ridge-convoy','beginner',{player:'crown',enemy:'clans'})!;expect(fresh.bosses!.guardians.gravelheart).toEqual({hp:1400,attackCooldown:0,claimed:false,engaged:false});
 });
 
-it('prevents building over a living guardian body and reveals its marker only through current vision',()=>{
+it('prevents building over a living guardian body and keeps its explored marker when the scout leaves',()=>{
  const m=match('bramblemaw'),b=bossDefinitions.bramblemaw;m.gathering.wood=1000;m.gathering.units[0].selected=true;m.gathering.units[0].position={x:b.position.x-100,y:b.position.y};m.fog=matchFog(m);
  expect(visibleMinimapData(m).markers.some(p=>p.id===bossEnemyId('bramblemaw'))).toBe(true);
  expect(placementPreviewError(beginPlacement(m.placement,'farm'),{x:b.position.x-32,y:b.position.y-32},m.gathering.wood,placementObstacles(m.gathering),{map:m.map,gathering:m.gathering,enemies:battleEnemies(m)})).toMatch(/unit/i);
- const hidden=structuredClone(m);hidden.gathering.units[0].position={x:272,y:240};hidden.fog=matchFog(hidden);expect(visibleMinimapData(hidden).markers.some(p=>p.id===bossEnemyId('bramblemaw'))).toBe(false);
+ const hidden=structuredClone(m);hidden.gathering.units[0].position={x:272,y:240};hidden.fog=matchFog(hidden);expect(isVisible(hidden.fog!,'player',bossDefinitions.bramblemaw.position)).toBe(false);expect(visibleMinimapData(hidden).markers.some(p=>p.id===bossEnemyId('bramblemaw'))).toBe(true);
 });
 
 it('uses normal projectiles to retaliate against aircraft and saves an active encounter in flight',()=>{
@@ -102,3 +102,14 @@ it('old claimed saves migrate to player ownership without granting twice; invali
 });
 
 it("preserves a live player attack order through cleanup and active save/load",()=>{let m=match("bramblemaw"),b=bossDefinitions.bramblemaw;m.gathering.units=[{id:"unit-4",kind:"soldier",owner:"player",hp:60,cargo:0,selected:true,position:{x:b.position.x-112,y:b.position.y},target:b.position,order:{kind:"attack",enemyId:bossEnemyId(b.id)}}];m.production.nextUnitNumber=5;m.soldierProduction.nextUnitNumber=5;m.fog=matchFog(m);m=updateMatch(m,.05);expect(m.gathering.units[0].order.kind).toBe("attack");const loaded=decodeSave(encodeSave(m,view));expect(loaded).toMatchObject({ok:true});});
+
+it('keeps explored boss loot on the minimap but never reveals it in unexplored terrain',()=>{
+ const m=match('bramblemaw'),loot=bossLootPosition('bramblemaw');m.bosses!.guardians.bramblemaw!.hp=0;
+ expect(visibleMinimapData(m).markers.some(p=>p.id==='boss-loot-bramblemaw')).toBe(false);
+ m.gathering.units[0].position={...loot};m.fog=matchFog(m);
+ m.gathering.units[0].position={x:280,y:300};m.fog=matchFog(m);
+ expect(isVisible(m.fog!,'player',loot)).toBe(false);
+ expect(visibleMinimapData(m).markers.find(p=>p.id==='boss-loot-bramblemaw')?.color).toBe('#ebc863');
+ m.bosses!.guardians.bramblemaw!.claimed=true;
+ expect(visibleMinimapData(m).markers.find(p=>p.id==='boss-loot-bramblemaw')?.color).toBe('#82775b');
+});

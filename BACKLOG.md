@@ -45,6 +45,26 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
+### Fog 2026-10-08 — scoutade landmärken — Done
+
+Användaruppdrag: bossar, skatter, rekryterbara karaktärer/hjältefynd och
+byggnader ska ligga kvar i utforskad terräng när aktuell sikt försvinner,
+men döljas av svart outforskad fog. Befintlig explored-data återanvänds för
+sprite/label/minimap och bossloot. Vanliga enemytrupper samt combat/order/
+reward/audio behåller current-vision-regler; inga nya hero-/Save-/balansfält.
+Öppnade kistor ligger kvar; rekryterade karaktärer lämnar fyndplatsen.
+
+Riktade visibility/discoveries/bosses/minimap/minimapView54/5 PASS8,62s;
+unit515/90 PASS14,07s, strict build491ms och diff/länkchecks PASS.
+Faktisk Chrome800/1280: dark-hidden→scout→retreat/explored, samtliga marker-
+typer, ordinary-troop-hidden, ingen remote claim, Save/Load, bossloot och
+restart PASS0pageerrors. Fyra representativa bilder visuellt granskade.
+[Browserbelägg](artifacts/explored-landmarks/browser.json) och senaste
+HANDOFF/DEV_LOG beskriver scope. Ingen ny bred kampanj/fullregression,
+CI/Pages eller release; föregående1800/207 är historiskt prestandabelägg.
+Användarens CSS/units.mjs/docs/ och :memory:.ses bevaras.
+
+
 ### Prestanda 2026-10-08 — stora arméer och byggnader — Done
 
 Nytt avgränsat användaruppdrag: optimera när fler enheter/byggnader finns,

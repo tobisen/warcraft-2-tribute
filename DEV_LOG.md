@@ -1,5 +1,48 @@
 # Development log
 
+## 2026-10-08 — Scoutade landmärken kvar under utforskad fog
+
+Ny presentationregel `entityPresented`: bosscenter eller någon byggnadscell
+får visas med explored; concealment respekteras och vanliga enemytrupper
+kräver fortfarande aktuell sikt. `entityVisible` för combat/input/acquisition
+är oförändrad. BootScene skiljer presentedEnemies från visibleEnemies för
+sprites kontra ordermarkers/audio. Discoveries visar utforskade skatter och
+ännu orekryterade karaktärer; bossloot visas på världskarta och minimap.
+Fogruns/opacitet/dark-fog behålls. Inga nya Save-fält, hero-enhetssystem,
+balansändringar eller roadmaptasks; bevarad utforskning i befintlig Save.
+Visning följer befintlig explored-geometri och aktuell landmark-state,
+inte en ny historisk last-seen-snapshot eller permanent syn på flyttande trupper.
+
+Riktad `npm test -- src/gameplay/visibility.test.ts
+src/gameplay/discoveries.test.ts src/gameplay/bosses.test.ts
+src/presentation/minimap.test.ts src/presentation/minimapView.test.ts`:
+54 tests/5 filer PASS8,62s. Nya regressioner täcker current-vs-explored,
+svart fog, båda team/concealment, upptäckta fynd efter retreat/SaveLoad,
+opened/claimed-recruit samt död bossloot/claimed färg. Äldre två tester
+som krävde att scoutade boss-/byggnadsmarkörer försvann uppdaterades till
+användarens nya krav; den första körningen med gamla förväntningar var ej PASS.
+Slutlig `npm run test:unit`515/90 PASS14,07s och `npm run build` inklusive
+strict typecheck PASS491ms; befintlig chunkvarning kvarstår. Diff och nya
+lokala dokumentreferenser PASS. Ingen ny fullregression/bred campaign-
+simulering för denna presentationändring; prestandauppdragets1800/207 är
+historiskt belägg och påstås inte verifiera den nya fogregeln.
+
+`scripts/check-explored-landmarks.mjs`: faktisk Chrome155, Native800×600 och
+1280×720, explicit paused scouting-fixture använder matchFog samt vanlig
+scene-sync. Dark-hidden→scout→retreat med all currentSight=false bekräftar
+boss/building/discoveries/minimap, utan ordinary enemytrupper eller remote
+reward. Fysiska Save/Load/restart-knappar PASS; bossloot/inga läckande
+restart-sprites PASS. [Resultat](artifacts/explored-landmarks/browser.json).
+Boss800/recruit800/building1280/treasure1280 visuellt granskade. Harnessen
+rättade ett initialt syntaxfel samt tog om screenshots utan pausmodalen;
+dessa första capture-/syntaxförsök är inte slutligt visuellt belägg.
+
+Review utan blockerande fynd: scoped presentationpolicy, separata siktkrav,
+explored-persistens, claim/despawn/restart och fogoverlay kontrollerade.
+User CSS/units.mjs/docs/ och :memory:.ses bevarade. Ingen agentdelegering,
+ny version eller ny CI/Pages-/mänsklig matchverifiering hävdas.
+
+
 ## 2026-10-08 — Prestanda för större arméer/byggnader
 
 Avgränsat användaruppdrag, utan roadmap-/kart-/releasearbete. Grafikkvalitet,
