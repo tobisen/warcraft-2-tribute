@@ -41,3 +41,4 @@ await import('./export-boss-assets.mjs');
 await import('./export-cavalry.mjs');
 
 await import('./export-healers.mjs');
+await import('./export-giants.mjs');

@@ -235,3 +235,8 @@ leveransen ovan beskriver förebilden och gäller endast construction stages.
 [Source, prompts and CC0](sources/visual-refresh/healers.md). Original painted
 five-faction atlas, blue/red teams, genuine walk/cast poses in existing style.
 `export-healers.mjs` packs only the new atlas; user units.mjs is preserved.
+
+## RTS-222 — Giants
+
+[Source, prompt and CC0](sources/visual-refresh/giants.md). Five original painted
+heavy-role variants, genuine walking/smash poses, existing export/team pipeline.

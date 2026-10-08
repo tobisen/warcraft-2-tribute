@@ -10,7 +10,7 @@ import {factions,type FactionId,type TechnologyState} from '../config/factions';
 import {updateCombat,type Enemy} from './combat';
 import {createEnemyAI,updateEnemyAI} from './enemyAI';
 import {enemyAIConfig} from '../config/enemyAI';
-const tech:TechnologyState={baseLevel:2,buildings:['base','barracks','forge','farm','stable','academy'],research:{attack:1,defense:1}};
+const tech:TechnologyState={baseLevel:3,buildings:['base','barracks','forge','farm','stable','academy'],research:{attack:2,defense:2}};
 const view={camera:{x:0,y:0},building:null};
 describe('adaptive paid combined armies',()=>{
  it('observes visible threats only and limits plan decisions to one per second',()=>{

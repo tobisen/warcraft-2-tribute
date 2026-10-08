@@ -1,0 +1,145 @@
+{
+  "fixture": "Actual menu/clicks; resource-cheat funding, seeded completed Forge/research II/base III; .1s gameplay ticks; enemy Forge staged for attack probe",
+  "results": [
+    {
+      "faction": "crown",
+      "actualMouseAcademyBuildTrainMoveBuildingAttack": true,
+      "queued": {
+        "wood": 99830,
+        "gold": 99890,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "giant",
+          "supply": 4,
+          "cost": {
+            "wood": 90,
+            "gold": 70
+          },
+          "durationSeconds": 24,
+          "remainingSeconds": 24
+        }
+      },
+      "fought": {
+        "ordered": {
+          "kind": "attack",
+          "enemyId": "enemy-forge"
+        },
+        "hp": 59.6875
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "clans",
+      "actualMouseAcademyBuildTrainMoveBuildingAttack": true,
+      "queued": {
+        "wood": 99830,
+        "gold": 99890,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "giant",
+          "supply": 4,
+          "cost": {
+            "wood": 90,
+            "gold": 70
+          },
+          "durationSeconds": 24,
+          "remainingSeconds": 24
+        }
+      },
+      "fought": {
+        "ordered": {
+          "kind": "attack",
+          "enemyId": "enemy-forge"
+        },
+        "hp": 43.95000000000002
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "elves",
+      "actualMouseAcademyBuildTrainMoveBuildingAttack": true,
+      "queued": {
+        "wood": 99830,
+        "gold": 99890,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "giant",
+          "supply": 4,
+          "cost": {
+            "wood": 90,
+            "gold": 70
+          },
+          "durationSeconds": 24,
+          "remainingSeconds": 24
+        }
+      },
+      "fought": {
+        "ordered": {
+          "kind": "attack",
+          "enemyId": "enemy-forge"
+        },
+        "hp": 49.6875
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "dwarves",
+      "actualMouseAcademyBuildTrainMoveBuildingAttack": true,
+      "queued": {
+        "wood": 99830,
+        "gold": 99890,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "giant",
+          "supply": 4,
+          "cost": {
+            "wood": 90,
+            "gold": 70
+          },
+          "durationSeconds": 24,
+          "remainingSeconds": 24
+        }
+      },
+      "fought": {
+        "ordered": {
+          "kind": "attack",
+          "enemyId": "enemy-forge"
+        },
+        "hp": 49.6875
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "goblins",
+      "actualMouseAcademyBuildTrainMoveBuildingAttack": true,
+      "queued": {
+        "wood": 99830,
+        "gold": 99890,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "giant",
+          "supply": 4,
+          "cost": {
+            "wood": 90,
+            "gold": 70
+          },
+          "durationSeconds": 24,
+          "remainingSeconds": 24
+        }
+      },
+      "fought": {
+        "ordered": {
+          "kind": "attack",
+          "enemyId": "enemy-forge"
+        },
+        "hp": 43.95000000000002
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    }
+  ]
+}

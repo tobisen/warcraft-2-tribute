@@ -1478,3 +1478,21 @@ range/mana/cooldown revalidated at commit. Green pulses and casting pose provide
 feedback. Mana/cooldown/autocast/Academy queue survive Save; pulses are transient.
 Original painted assets match the roster with documented mirrored/shaded facing
 and collapse death limitations. Technical tests do not establish human balance.
+
+## RTS-222 — Giants
+
+Hill Titan / Ogre Brute / Ancient Treant / Runic Golem / Clockwork Colossus share
+Academy FIFO with healers. Base III, completed Academy and attack/defense II:
+90wood + 70gold, 24s, 4supply, 320HP, 65speed, 38px melee range, 30DPS and
+2.5× damage against buildings, before normal combat upgrade modifiers. Their
+slow approach and large supply/resource investment expose them to focused fire;
+no extra armor or immunity. Organic Human/Orc/Elf giants can be healed, Dwarf/
+Goblin constructs cannot. [Insert] trains at selected Academy.
+
+Navigation uses30px body to fit normal32px corridors; click box44px and sprite
+up to54px tall make them larger visually. Existing group formation/order rules
+apply. AI buys base III for120wood/100gold/30s after Academy and research II,
+pauses worker queues under existing base-upgrade rules and trains the identical
+24s/4supply recipe. Save supports AI tierIII, mixed Academy FIFO, new role/army
+weights and restart clears production. Campaign unlock at mission7. Human
+balance remains unverified; graphics use the original painted roster style.

@@ -35,7 +35,7 @@ import type { GatheringState, Unit,WorkerOrder,ResourceType } from './gathering'
 import { moveTowards, type Position } from './movement';
 
 export interface EnemyWork {cargo:number;cargoType?:ResourceType;target:Position;order:WorkerOrder}
-export interface Enemy extends SpellState {healFlash?:number;healAutocast?:boolean;boss?:import('../config/bosses').BossId;playerId?:PlayerId;faction?:FactionId;mana?:number;role?:'soldier'|'archer'|'catapult'|'specialist'|'air'|'cavalry'|'healer';attackCooldown?:number;ability?:import('./abilities').AbilityState;legacyProfile?:true; owner?:'enemy'; kind?:'ship'|'unit'|'base'|'worker'|'building';navalLanding?:true;buildingType?:'stable'|'academy'|'harbor'|'outpost'|'barracks'|'farm'|'forge';construction?:import('./placement').ConstructionJob;work?:EnemyWork; order?:{kind:'idle'}|{kind:'defend';targetId:string}|{kind:'muster'|'attack-move';destination:Position}; id: string; position: Position; hp: number; footprint?:Footprint; navigation?: RouteState }
+export interface Enemy extends SpellState {healFlash?:number;healAutocast?:boolean;boss?:import('../config/bosses').BossId;playerId?:PlayerId;faction?:FactionId;mana?:number;role?:'soldier'|'archer'|'catapult'|'specialist'|'air'|'cavalry'|'healer'|'giant';attackCooldown?:number;ability?:import('./abilities').AbilityState;legacyProfile?:true; owner?:'enemy'; kind?:'ship'|'unit'|'base'|'worker'|'building';navalLanding?:true;buildingType?:'stable'|'academy'|'harbor'|'outpost'|'barracks'|'farm'|'forge';construction?:import('./placement').ConstructionJob;work?:EnemyWork; order?:{kind:'idle'}|{kind:'defend';targetId:string}|{kind:'muster'|'attack-move';destination:Position}; id: string; position: Position; hp: number; footprint?:Footprint; navigation?: RouteState }
 export interface CombatState {baseDevelopment?:import('../config/baseUpgrade').BaseDevelopment; baseOwner?:'player'; enemies: Enemy[]; baseHP: number; projectiles?:Projectile[]; nextProjectileNumber?:number; destroyedEnemyFootprints?:Footprint[]; enemyUpgrades?:{attack:number;defense:number};upgrades?:{attack:number;defense:number} }
 
 export function enemyAt(enemies: Enemy[], point: Position): Enemy | undefined {
@@ -133,7 +133,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
       cooldown=Math.max(0,cooldown-time);
       return {...unit,position:step.position,attackCooldown:cooldown,...(step.navigation?{navigation:step.navigation}:{})};
     }
-    damage.set(enemy.id, (damage.get(enemy.id) ?? 0) + step.attackSeconds * (stats.damagePerSecond??combatConfig.soldierDamagePerSecond)*(unit.kind==='soldier'&&!unit.archetype&&enemy.role==='cavalry'?cavalryRules.infantryDamageMultiplier:1)*(unit.kind==='worker'?1:attackMultiplier*abilityEffects(gathering,unit).attackMultiplier*spellModifiers(unit).attack));
+    damage.set(enemy.id, (damage.get(enemy.id) ?? 0) + step.attackSeconds * (stats.damagePerSecond??combatConfig.soldierDamagePerSecond)*(enemy.footprint?stats.buildingDamageMultiplier??1:1)*(unit.kind==='soldier'&&!unit.archetype&&enemy.role==='cavalry'?cavalryRules.infantryDamageMultiplier:1)*(unit.kind==='worker'?1:attackMultiplier*abilityEffects(gathering,unit).attackMultiplier*spellModifiers(unit).attack));
     return { ...unit, position: step.position, ...(step.navigation ? {navigation:step.navigation}: {}) };
   });
   // Both sides attack from the same live snapshot, so lethal blows are simultaneous.
@@ -189,7 +189,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
       }
       return {...enemy,position:step.position,attackCooldown:Math.max(0,cooldown-time),...(step.navigation?{navigation:step.navigation}:{})};
     }
-    playerDamage.set(target.id,(playerDamage.get(target.id)??0)+step.attackSeconds*stats.damagePerSecond*(enemy.role==='soldier'&&gathering.units.some(u=>u.id===target.id&&u.kind==='soldier'&&u.archetype==='cavalry')?cavalryRules.infantryDamageMultiplier:1)*multiplier*abilityEffects(enemyGathering,soldier).attackMultiplier*spellModifiers(soldier).attack);
+    playerDamage.set(target.id,(playerDamage.get(target.id)??0)+step.attackSeconds*stats.damagePerSecond*(!['soldier','worker','ship'].includes(target.kind)?opponent.units[enemy.role??'soldier'].buildingDamageMultiplier??1:1)*(enemy.role==='soldier'&&gathering.units.some(u=>u.id===target.id&&u.kind==='soldier'&&u.archetype==='cavalry')?cavalryRules.infantryDamageMultiplier:1)*multiplier*abilityEffects(enemyGathering,soldier).attackMultiplier*spellModifiers(soldier).attack);
     return {...cooling,position:step.position,...(step.navigation?{navigation:step.navigation}:{})};
   });
   const visibleProjectile=(enemy:Enemy,p:Projectile)=>projectileVisible?projectileVisible(enemy,p):!visible||units.some(u=>u.id===p.shooterId&&u.kind==='soldier'&&visible(enemy,u));

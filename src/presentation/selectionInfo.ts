@@ -20,7 +20,7 @@ import type {BuildingSelection} from '../gameplay/buildingSelection';
 import type {MatchState} from '../gameplay/match';
 import {artAtlas,motion,unitFrame,type UnitArt} from './animation';
 import {buildingFrame} from './assets';
-export interface SelectionInfo {mana?:number;maxMana?:number;name:string;detail:string;hp:number|null;maxHP:number|null;stats:string[];portrait:{atlas:'units'|'naval'|'buildings'|'cavalry'|'healer'|'air'|'world'|'reference-terrain';frame:string}|null}
+export interface SelectionInfo {mana?:number;maxMana?:number;name:string;detail:string;hp:number|null;maxHP:number|null;stats:string[];portrait:{atlas:'units'|'naval'|'buildings'|'cavalry'|'healer'|'giant'|'air'|'world'|'reference-terrain';frame:string}|null}
 const empty=():SelectionInfo=>({name:'No selection',detail:'Click a unit, building or resource, or drag to select a group.',hp:null,maxHP:null,stats:[],portrait:null});
 /** Presentation only: reads selected player entities, only visible enemy buildings and known resources. Stats are baseline recipes. */
 export function selectionInfo(m:MatchState,building:BuildingSelection,resourceId:string|null=null,animalId:string|null=null):SelectionInfo {
@@ -55,7 +55,7 @@ export function selectionInfo(m:MatchState,building:BuildingSelection,resourceId
  const stats:string[]=team==='enemy'?['Enemy building · Inspection only']:kind==='farm'?[`Supply capacity +${f.buildings.farm.populationCapacity}`]:kind==='base'?[`Supply capacity ${f.buildings.base.populationCapacity}`]:[];
  if(team==='player'){
   if(remaining>0)stats.unshift(description);
-  const roles=kind==='base'?['worker'] as const:kind==='academy'?['healer'] as const:kind==='stable'?['cavalry'] as const:kind==='barracks'?f.roster.filter(r=>f.units[r].trainedAt==='barracks'):[];
+  const roles=kind==='base'?['worker'] as const:kind==='academy'?['healer','giant'] as const:kind==='stable'?['cavalry'] as const:kind==='barracks'?f.roster.filter(r=>f.units[r].trainedAt==='barracks'):[];
   for(const role of roles){const reason=unitAvailability(f,role,technologyFor(m,'player'));stats.push(`${f.unitNames[role]}: ${reason??'Available'}`);}
   const production=kind==='base'?selectedBase(m,building)?.production:kind==='stable'?m.placement.stable?.production:kind==='barracks'?m.soldierProduction:kind==='harbor'?m.navy?.production:undefined;
   if(production)stats.push(`Production: ${production.queue?.length??0} queued`);

@@ -46,7 +46,7 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 ## Current Focus
 
 Nytt mandat 2026-10-08: RTS-220–228 i ordning, en task åt gången.
-RTS-220 grafik och RTS-221 verifierade; RTS-222 är nästa task, därefter223–228. Städning, release och kartombyggnad är pausade.
+RTS-220 grafik samt RTS-221–222 verifierade; RTS-223 är nästa task, därefter224–228. Städning, release och kartombyggnad är pausade.
 Taskvis riktade tester, native800-browser, unit/strict build/diff, docs och
 commit/push till origin/main. Full regression vid etappslut; stanna efter228.
 Befintliga style.css/units.mjs/docs/:memory:.ses bevaras. Ingen delegering.
@@ -5709,11 +5709,19 @@ allies/organic air giltiga; self/dead/buildings/catapult/mechanical air/ships
 ogiltiga. Shared costs10s, opt-in autocast, färska HP-mål, saved flags/queue,
 team-authoritative HP och målad originalart. Ingen mänsklig balansclaim.
 
-### RTS-222 — Giant — Todo
+### RTS-222 — Giant — Done
 Stor stark långsam dyr ground-roll, hög supply/base-tier i befintlig avancerad
 produktion. Bonus mot byggnader, sårbar för fokuseld. Ogre/golem/treant/
 mekanisk variant; kropp/clicksize, vanliga passager och grupporder fungerar.
 Verifiera produktion/building damage/navigation/selection/group orders.
+
+RTS-222 belägg: riktade90/10, unit511/89, strict build/review/diff PASS.
+Femras native800 actual mouse production/move/building-attack/TechTree/
+SaveLoad/restart PASS0pageerrors i [browser](artifacts/rts-222/browser.json).
+Mixed Academy FIFO, paid24s/4supply, baseIII/researchII och AI120/100/30s
+baseIII, symmetric2.5× byggnadsskada. Navigation30/click44/art54; normal32px
+passage och grouporder testade. Egen målad femrasart, samma facing/deathlimits
+som roster; mänsklig balans ej verifierad. Användarens ändringar bevarade.
 
 ### RTS-223 — Flygproduktion och obestyckad scout — Todo
 Befintlig lämplig produktion eller Aviary/Hangar-motsvarighet. Scout före tungt

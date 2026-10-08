@@ -120,6 +120,7 @@ import { costs } from '../config/economy';
 import { costLabel } from '../gameplay/economy';
 import { stopSelected } from '../gameplay/orders';
 import { orderMarkers,navalOrderMarkers } from '../presentation/orders';
+import {trainGiant} from '../gameplay/giants';
 import {trainHealer,healerBuilding,toggleHealAutocast} from '../gameplay/healers';
 import {selectedSpellForSlot} from '../gameplay/spells';
 import {trainCavalry,cavalryBuilding} from '../gameplay/cavalry';
@@ -287,7 +288,7 @@ export class BootScene extends Phaser.Scene {
     super('BootScene');
   }
 
-  preload():void {for(const key of ['world','buildings','units','ui','naval','air','reference-terrain','bosses','cavalry','healer'])if(!this.textures.exists(key))this.load.atlas(key,`${import.meta.env.BASE_URL}assets/${key}-atlas.png`,`${import.meta.env.BASE_URL}assets/${key}-atlas.json`);}
+  preload():void {for(const key of ['world','buildings','units','ui','naval','air','reference-terrain','bosses','cavalry','healer','giant'])if(!this.textures.exists(key))this.load.atlas(key,`${import.meta.env.BASE_URL}assets/${key}-atlas.png`,`${import.meta.env.BASE_URL}assets/${key}-atlas.json`);}
 
   create(): void {
     this.audioSnapshot=undefined;this.combatSoundSnapshot=undefined;gameAudio.setPhase('menu');gameAudio.reset();
@@ -492,6 +493,7 @@ export class BootScene extends Phaser.Scene {
       this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>button.removeEventListener('click',research));
     }
     const stableButton=document.getElementById('build-stable') as HTMLButtonElement,beginStable=()=>begin('stable');setActionLabel(stableButton,`Build ${factions[this.factions.player].buildingNames.stable}`);stableButton.addEventListener('click',beginStable);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>stableButton.removeEventListener('click',beginStable));
+    const giantButton=document.getElementById('train-giant') as HTMLButtonElement,trainHeavy=()=>{if(this.selectedBuilding!=='academy')return;this.applyMatch(trainGiant(this.currentMatch()));this.syncVisuals();};giantButton.addEventListener('click',trainHeavy);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>giantButton.removeEventListener('click',trainHeavy));
     const healerButton=document.getElementById('train-healer') as HTMLButtonElement,trainSupport=()=>{if(this.selectedBuilding!=='academy')return;this.applyMatch(trainHealer(this.currentMatch()));this.syncVisuals();};healerButton.addEventListener('click',trainSupport);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>healerButton.removeEventListener('click',trainSupport));
     const autoHealButton=document.getElementById('autocast-heal')!,toggleHeal=()=>{this.applyMatch(toggleHealAutocast(this.currentMatch()));this.syncVisuals();};autoHealButton.addEventListener('click',toggleHeal);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>autoHealButton.removeEventListener('click',toggleHeal));
     const cavalryButton=document.getElementById('train-cavalry') as HTMLButtonElement,trainMounted=()=>{if(this.selectedBuilding!=='stable')return;this.applyMatch(trainCavalry(this.currentMatch()));this.syncVisuals();};cavalryButton.addEventListener('click',trainMounted);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>cavalryButton.removeEventListener('click',trainMounted));
@@ -860,7 +862,7 @@ export class BootScene extends Phaser.Scene {
       if(!this.drag.shift||this.allSelectable().some(u=>u.selected))this.selectedBuilding = null;
     } else {
       const selected = selectWorldTarget(this.allSelectable(), end, this.gathering.base,
-        this.placement.barracks, u=>u.kind==='ship'?navyConfig.ship.size:u.kind==='worker'?unitStats.size:combatUnitStats(u).size,this.navy?.harbor?.footprint,resourceNodes(this.gathering),n=>knownResource(this.fog,n.position)||!!n.grove&&isVisible(this.fog,'player',end));
+        this.placement.barracks, u=>u.kind==='ship'?navyConfig.ship.size:u.kind==='worker'?unitStats.size:combatUnitStats(u).selectionSize??combatUnitStats(u).size,this.navy?.harbor?.footprint,resourceNodes(this.gathering),n=>knownResource(this.fog,n.position)||!!n.grove&&isVisible(this.fog,'player',end));
       if(!selected.units.some(u=>u.selected)){const building=inspectBuildingAt(this.currentMatch(),end);selected.building=building;if(building)selected.resource=null;}
       this.selectedResource=selected.resource;
       if(this.drag.shift&&!selected.building&&!selected.resource){
@@ -1037,6 +1039,7 @@ export class BootScene extends Phaser.Scene {
     this.productionStatus.textContent = productionLabel(this.gathering,baseSelection?.production??this.production, this.outcome,{kind:'base'},population);
     const barracks = { kind: 'barracks' as const, bounds:this.map,technology:technologyFor(this.currentMatch(),'player'), footprint: this.placement.barracks, ready:barracksReady(this.placement) };
     this.soldierButton.disabled = !allowsProduction(this.selectedBuilding, 'barracks', this.placement.barracks !== null, this.gameplayActive()) || !this.gameplayActive() || !canEnqueue(this.gathering, this.soldierProduction, barracks,population);
+    const giantButton=document.getElementById('train-giant') as HTMLButtonElement;setActionLabel(giantButton,`Train ${factions[this.factions.player].unitNames.giant}`);giantButton.disabled=this.selectedBuilding!=='academy'||!this.gameplayActive();
     const healerButton=document.getElementById('train-healer') as HTMLButtonElement;setActionLabel(healerButton,`Train ${factions[this.factions.player].unitNames.healer}`);healerButton.disabled=this.selectedBuilding!=='academy'||!this.gameplayActive();
     (document.getElementById('autocast-heal') as HTMLButtonElement).disabled=!this.gameplayActive();
     const cavalryButton=document.getElementById('train-cavalry') as HTMLButtonElement;setActionLabel(cavalryButton,`Train ${factions[this.factions.player].unitNames.cavalry}`);cavalryButton.disabled=this.selectedBuilding!=='stable'||!this.gameplayActive()||!this.placement.stable||!canEnqueue(this.gathering,this.placement.stable.production,cavalryBuilding(this.currentMatch()),population);
@@ -1078,7 +1081,7 @@ export class BootScene extends Phaser.Scene {
       }
 
       if (!this.enemyVisuals.has(enemy.id)) this.enemyVisuals.set(enemy.id, {
-        body: enemy.footprint?this.add.image(enemy.position.x,enemy.position.y,enemy.buildingType==='stable'?'cavalry':'buildings',buildingFrame((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base','enemy',enemy.construction?.remainingSeconds??0,enemy.buildingType==='outpost'||enemy.buildingType==='academy'?10:5,(enemy.faction??this.factions.enemy))).setOrigin(buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').x,buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').y):enemy.kind==='ship'?this.add.image(enemy.position.x,enemy.position.y,'naval',`${factions[(enemy.faction??this.factions.enemy)].artPrefix}transport-enemy-s-idle-0`).setOrigin(.5,40/64):this.add.image(enemy.position.x,enemy.position.y,isAir(enemy)?'air':enemy.role==='healer'?'healer':enemy.role==='cavalry'?'cavalry':'units',isAir(enemy)?`${(enemy.faction??this.factions.enemy)}-air-enemy-s-idle-0`:`${factions[(enemy.faction??this.factions.enemy)].artPrefix}${enemy.kind==='worker'?'worker':enemy.role??'soldier'}-enemy-s-idle-0`).setOrigin(unitOrigin(enemy.kind==='worker'?'worker':enemy.role??'soldier').x,unitOrigin(enemy.kind==='worker'?'worker':enemy.role??'soldier').y),
+        body: enemy.footprint?this.add.image(enemy.position.x,enemy.position.y,enemy.buildingType==='stable'?'cavalry':'buildings',buildingFrame((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base','enemy',enemy.construction?.remainingSeconds??0,enemy.buildingType==='outpost'||enemy.buildingType==='academy'?10:5,(enemy.faction??this.factions.enemy))).setOrigin(buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').x,buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').y):enemy.kind==='ship'?this.add.image(enemy.position.x,enemy.position.y,'naval',`${factions[(enemy.faction??this.factions.enemy)].artPrefix}transport-enemy-s-idle-0`).setOrigin(.5,40/64):this.add.image(enemy.position.x,enemy.position.y,isAir(enemy)?'air':enemy.role==='giant'?'giant':enemy.role==='healer'?'healer':enemy.role==='cavalry'?'cavalry':'units',isAir(enemy)?`${(enemy.faction??this.factions.enemy)}-air-enemy-s-idle-0`:`${factions[(enemy.faction??this.factions.enemy)].artPrefix}${enemy.kind==='worker'?'worker':enemy.role??'soldier'}-enemy-s-idle-0`).setOrigin(unitOrigin(enemy.kind==='worker'?'worker':enemy.role??'soldier').x,unitOrigin(enemy.kind==='worker'?'worker':enemy.role??'soldier').y),
         label: this.add.text(0, 0, '', { fontSize: '14px', color: '#ffffff' }).setOrigin(0.5, 0),
       });
       const playerColor=this.multiplePlayers?.roster.find(p=>p.id===enemy.playerId)?.color;

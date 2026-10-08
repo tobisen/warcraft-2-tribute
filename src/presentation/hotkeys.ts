@@ -1,6 +1,7 @@
 import {text as uiText} from '../text';
 import { gameplayKeyAllowed,type KeyContext } from './keyboard';
 export const hotkeys=[
+ {key:'INSERT',button:'train-giant',label:'Train a slow heavy building-smashing giant at Academy after base III and research II.'},
  {key:'F11',button:'train-healer',label:'Train healing support in Academy.'},
  {key:'F12',button:'autocast-heal',label:'Toggle healer autocast: visible damaged biological allies only.'},
  {key:'X',button:'build-stable',label:'Build the faction stable after main building level II.'},

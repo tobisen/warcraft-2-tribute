@@ -25,7 +25,7 @@ export interface ProductionState {
   blockedSpawnKey?: string;
   nextUnitNumber: number;
 }
-export type ProductionBuilding = { kind: 'base';footprint?:Footprint;ready?:boolean } | { kind: 'barracks'; footprint: Footprint | null; ready?:boolean;bounds?:Pick<WorldMap,'width'|'height'>;technology?:TechnologyState;producer?:'barracks'|'stable'|'academy';unitType?:'soldier'|'archer'|'catapult'|'specialist'|'air'|'cavalry'|'healer';jobCost?:ResourceCost;durationSeconds?:number };
+export type ProductionBuilding = { kind: 'base';footprint?:Footprint;ready?:boolean } | { kind: 'barracks'; footprint: Footprint | null; ready?:boolean;bounds?:Pick<WorldMap,'width'|'height'>;technology?:TechnologyState;producer?:'barracks'|'stable'|'academy';unitType?:'soldier'|'archer'|'catapult'|'specialist'|'air'|'cavalry'|'healer'|'giant';jobCost?:ResourceCost;durationSeconds?:number };
 const base: ProductionBuilding = { kind: 'base' };
 
 export function soldierSpawn(footprint: Footprint,size=soldierStats.size,bounds:Pick<WorldMap,'width'|'height'>=worldConfig): Position | null {
@@ -81,7 +81,7 @@ export function updateProduction(gathering: GatheringState, production: Producti
   const common = { owner:'player' as const, id: `unit-${number}`, position, target: { ...position }, selected: false };
   const unit: Unit = building.kind === 'base'
     ? { ...common, kind: 'worker', hp:recipe.hp, cargo: 0, order: { kind: 'idle' } }
-    : { ...common, kind: 'soldier',...(building.kind==='barracks'&&building.unitType==='healer'?{healAutocast:false,autoDisabled:true}:{}), ...(recipe.mana?{mana:recipe.mana.initial}:{}), ...(building.kind==='barracks'&&building.unitType&&building.unitType!=='soldier'?{archetype:building.unitType,...(building.unitType==='specialist'||building.unitType==='air'||building.unitType==='cavalry'||building.unitType==='healer'?{faction:gathering.faction??'crown'}:{})}:{}), cargo: 0, hp:recipe.hp, order: { kind: 'idle' } };
+    : { ...common, kind: 'soldier',...(building.kind==='barracks'&&building.unitType==='healer'?{healAutocast:false,autoDisabled:true}:{}), ...(recipe.mana?{mana:recipe.mana.initial}:{}), ...(building.kind==='barracks'&&building.unitType&&building.unitType!=='soldier'?{archetype:building.unitType,...(building.unitType==='specialist'||building.unitType==='air'||building.unitType==='cavalry'||building.unitType==='healer'||building.unitType==='giant'?{faction:gathering.faction??'crown'}:{})}:{}), cargo: 0, hp:recipe.hp, order: { kind: 'idle' } };
   return {
     gathering: { ...gathering, units: [...gathering.units, context && production.rally
       ? {...commandMappedMove([{...unit,selected:true}],production.rally,context.map)[0],selected:false} : unit] },

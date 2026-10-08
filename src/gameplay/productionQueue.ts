@@ -9,7 +9,7 @@ import type { GatheringState } from './gathering';
 import type { WorldMap } from './map';
 import type { Position } from './movement';
 export interface ProductionJob {
-  id:string; kind:'transport'|'warship'|'worker'|'soldier'|'archer'|'catapult'|'specialist'|'air'|'cavalry'|'healer'; supply?:number; cost:ResourceCost;
+  id:string; kind:'transport'|'warship'|'worker'|'soldier'|'archer'|'catapult'|'specialist'|'air'|'cavalry'|'healer'|'giant'; supply?:number; cost:ResourceCost;
   durationSeconds:number; remainingSeconds:number;legacyRecipe?:true;
 }
 const base:ProductionBuilding={kind:'base'};
@@ -53,7 +53,7 @@ export function updateQueuedProduction(gathering:GatheringState,production:Produ
   let g=gathering,p=production,remaining=Math.max(0,delta);
   while(p.queue!.length) {
     const time=p.remainingSeconds??p.queue![0].remainingSeconds;
-    const result=updateProduction(g,p,remaining,building.kind==='barracks'?{...building,unitType:p.queue![0].kind==='healer'?'healer':p.queue![0].kind==='cavalry'?'cavalry':p.queue![0].kind==='air'?'air':p.queue![0].kind==='specialist'?'specialist':p.queue![0].kind==='catapult'?'catapult':p.queue![0].kind==='archer'?'archer':'soldier'}:building,context);
+    const result=updateProduction(g,p,remaining,building.kind==='barracks'?{...building,unitType:p.queue![0].kind==='giant'?'giant':p.queue![0].kind==='healer'?'healer':p.queue![0].kind==='cavalry'?'cavalry':p.queue![0].kind==='air'?'air':p.queue![0].kind==='specialist'?'specialist':p.queue![0].kind==='catapult'?'catapult':p.queue![0].kind==='archer'?'archer':'soldier'}:building,context);
     if(result.production.remainingSeconds!==null) {
       const queue=p.queue!.map((j,i)=>i===0?{...j,remainingSeconds:result.production.remainingSeconds!}:j);
       return {gathering:result.gathering,production:{...result.production,queue}};

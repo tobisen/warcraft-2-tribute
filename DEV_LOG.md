@@ -4538,3 +4538,21 @@ Crown healbild granskad. Scripts syntax/manifest/diff/review kontrollerade;
 tests är inte mänsklig balans.220-docEOF whitespace upptäcktes efter dess
 push och är nu rättad; ingen misslyckad diffcheck hävdas som PASS.
 Användarens style.css/units.mjs/docs/memory bevaras; fortsätter222.
+
+
+### 2026-10-08 — RTS-222 giants
+
+Fem high-tier Academy-varianter, shared healer/giant FIFO med exact24s och
+4supply, gemensam 2.5× building-melee skada även AI. Stats320HP/65speed/
+30DPS/38range, kostnad90/70, baseIII/researchII, campaign7. AI betalar120/100
+baseIII över30s; generic tieradvance och Savevalidering utökade. Tolerans1e-9
+rättar flyttalsrest vid deadline. Storlek30 navigation (32px corridor/group
+prov),44 click,54px art/56anchor. Construct giants undantas Heal. Insert unikt
+snabbkommando (första J kolliderade med transport; unitcheck fångade det).
+Riktade90/10 PASS4.78s, unit511/89 PASS15.95s, strict build PASS776ms med
+befintlig bundlevarning. Tidiga farm-fixtures hade fel size/counter, enemyattack
+räknade gångtid; korrigerade. Femras native800 mouse Academybuild/train/move/
+actualbuildingdamage/TechTree/save/restart PASS0pageerrors; slutlig omkörning
+uppdaterar Insert-belägg och verifierar AI-deadlinefix. Crown/Goblin bilder
+visuellt granskade. Spriteprompter/källor/CC0 och konkreta facing/deathlimits
+dokumenterade. Ingen mänsklig balans/nyrelease/bred kampanjregression.
