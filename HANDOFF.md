@@ -1,3 +1,13 @@
+## 2026-10-08 — CI-fix efter RTS-220
+
+GitHub Actions37718031065 för15bd869 fallerade i Human-roster-testet:
+förväntningen saknade cavalry. humans.test.ts uppdaterad till den nya
+explicita rostern; inga runtimeändringar. Lokal verifiering: Human4/1,
+unit511/89, full regression1717/200, strict build och diffcheck PASS.
+Ny CI-status efter fixpush rapporteras separat; tidigare220-uppgifter om
+lokala checks innebär inte att dess GitHubkörning passerade. RTS-221–228
+är fortsatt Todo. Användarens tidigare ändringar är bevarade.
+
 ## 2026-10-08 — RTS-220 levererad; RTS-221–228 återstår
 
 Användarens aktuella uppdrag omfattar RTS-220–228. Endast RTS-220 är

@@ -4483,3 +4483,22 @@ och återställdes till verifierad220-kod utan att beröra användarens CSS,
 units.mjs eller otrackade docs/memory.221 står Todo. HANDOFF redovisar
 leveransen och återstående arbete. Ingen ny kodverifiering gjordes för denna
 rena dokumentuppdatering;220:s tidigare checks gäller dess oförändrade kod.
+
+
+### 2026-10-08 — RTS-220 CI-fix: Human-roster
+
+Användaren rapporterade fallerande GitHubtester. Actions37718031065 för
+15bd869 fallerade i npm test; check-annoteringen pekar på humans.test.ts:14.
+Human-rosterförväntningen saknade cavalry efter220, medan motsvarande Orc/
+Elf-förväntningar redan var uppdaterade. Testets explicita roster uppdaterad;
+ingen runtime-, grafik- eller balansändring. Befintliga CSS/units.mjs/docs/
+memory bevarade. Human integration4/1 PASS1.00s; unit511/89 PASS24.44s;
+build inklusive strict typecheck PASS981ms med befintlig bundlevarning.
+Full regression körs eftersom den tidigare riktade verifieringen missade
+Human-testet. Slutresultat, diffgranskning och push redovisas nedan när klara.
+
+Slutlig full regression1717/200 PASS673.52s. git diff --check PASS;
+egen granskning av testförväntning/config och docs utan kvarstående fynd.
+CI-fix omfattar bara rosterförväntning och dokumentation; ingen browser-
+omkörning behövs. Ny GitHubkörning efter push rapporteras separat från de
+lokala resultaten. Föregående15bd869-CI är verifierat röd, inte grön.

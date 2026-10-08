@@ -46,7 +46,7 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 ## Current Focus
 
 Nytt mandat 2026-10-08: RTS-220–228 i ordning, en task åt gången.
-RTS-220 är pushad15bd869; RTS-221 är aktuell. Städning, release och kartombyggnad är pausade.
+RTS-220 är pushad15bd869; Human-roster CI-fix verifierad lokalt1717/200. RTS-221 är nästa task. Städning, release och kartombyggnad är pausade.
 Taskvis riktade tester, native800-browser, unit/strict build/diff, docs och
 commit/push till origin/main. Full regression vid etappslut; stanna efter228.
 Befintliga style.css/units.mjs/docs/:memory:.ses bevaras. Ingen delegering.
