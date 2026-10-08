@@ -46,7 +46,7 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 ## Current Focus
 
 Nytt mandat 2026-10-08: RTS-220–228 i ordning, därefter användarens tillägg RTS-229, en task åt gången.
-RTS-220 grafik samt RTS-221–222 verifierade; RTS-223 är verifierad med separat flygbyggnad; nästa task225, därefter226–229. Städning, release och kartombyggnad är pausade.
+RTS-220 grafik samt RTS-221–222 verifierade; RTS-223 är verifierad med separat flygbyggnad; nästa task226, därefter227–229. Städning, release och kartombyggnad är pausade.
 Taskvis riktade tester, native800-browser, unit/strict build/diff, docs och
 commit/push till origin/main. Full regression vid etappslut; stanna efter229.
 Befintliga style.css/units.mjs/docs/:memory:.ses bevaras. Ingen delegering.
@@ -5752,11 +5752,19 @@ Native800 femras×tvåval build/upgrade/actualprojectile/TechTree/SaveLoad/
 restart PASS0pageerrors, artifacts/rts-224/browser.json; Crown art granskad.
 Ingen mänsklig balans.
 
-### RTS-225 — Tungt stridsflyg — Todo
+### RTS-225 — Tungt stridsflyg — Done
 Utöka befintlig air-roll/rasnamn/assets, ingen andra tung-flyg-dubblett. Dyr,
 lång produktion/hög supply/tier, mark+luftanfall, tydligt skild från scout.
 Produktion i flygbyggnaden/lämplig befintlig motsvarighet. Air-counter,
 melee immunity, projectile/target/AI-domains. Testa combat/produktion/AI.
+
+Verifiering: senaste riktade75/4 PASS20.39s (dessförinnan ävenScout9),
+unit511/89 PASS16.61s; strict build PASS720ms. Native800 actual flight-
+build/train/move/rightclick-air-attack/TechTree/SaveLoad/restart femras
+PASS0pageerrors, artifacts/rts-225/browser.json; Crown art granskad.
+Befintlig roster/art återanvänd; dyr30s/4supply/baseIII/researchII/Academy.
+AI exakt30s; Save66 oldqueue fullrefund en gång, färdiga HP bevaras. Ingen
+mänsklig balans/nyCI- eller Pagesrapport.
 
 ### RTS-226 — Rollspecifik forskning — Todo
 Cavalry Armor (armor), Healer Training (enbart max mana), Scout Optics

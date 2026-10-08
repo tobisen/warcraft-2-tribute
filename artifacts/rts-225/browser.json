@@ -1,0 +1,145 @@
+{
+  "fixture": "Actual menu/clicks; resource-cheat funding, seeded base III/Forge/Academy/research II; .1s gameplay ticks; visible opposing scout staged for actual projectile attack",
+  "results": [
+    {
+      "faction": "crown",
+      "actualMouseFlightBuildTrainMoveAirCombat": true,
+      "queued": {
+        "wood": 99825,
+        "gold": 99885,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "air",
+          "supply": 4,
+          "cost": {
+            "wood": 95,
+            "gold": 75
+          },
+          "durationSeconds": 30,
+          "remainingSeconds": 30
+        }
+      },
+      "fought": {
+        "order": {
+          "kind": "attack",
+          "enemyId": "enemy-produced-4"
+        },
+        "hp": 0
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "clans",
+      "actualMouseFlightBuildTrainMoveAirCombat": true,
+      "queued": {
+        "wood": 99825,
+        "gold": 99885,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "air",
+          "supply": 4,
+          "cost": {
+            "wood": 95,
+            "gold": 75
+          },
+          "durationSeconds": 30,
+          "remainingSeconds": 30
+        }
+      },
+      "fought": {
+        "order": {
+          "kind": "attack",
+          "enemyId": "enemy-produced-4"
+        },
+        "hp": 0
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "elves",
+      "actualMouseFlightBuildTrainMoveAirCombat": true,
+      "queued": {
+        "wood": 99825,
+        "gold": 99885,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "air",
+          "supply": 4,
+          "cost": {
+            "wood": 95,
+            "gold": 75
+          },
+          "durationSeconds": 30,
+          "remainingSeconds": 30
+        }
+      },
+      "fought": {
+        "order": {
+          "kind": "attack",
+          "enemyId": "enemy-produced-4"
+        },
+        "hp": 0
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "dwarves",
+      "actualMouseFlightBuildTrainMoveAirCombat": true,
+      "queued": {
+        "wood": 99825,
+        "gold": 99885,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "air",
+          "supply": 4,
+          "cost": {
+            "wood": 95,
+            "gold": 75
+          },
+          "durationSeconds": 30,
+          "remainingSeconds": 30
+        }
+      },
+      "fought": {
+        "order": {
+          "kind": "attack",
+          "enemyId": "enemy-produced-4"
+        },
+        "hp": 0
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "goblins",
+      "actualMouseFlightBuildTrainMoveAirCombat": true,
+      "queued": {
+        "wood": 99825,
+        "gold": 99885,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "air",
+          "supply": 4,
+          "cost": {
+            "wood": 95,
+            "gold": 75
+          },
+          "durationSeconds": 30,
+          "remainingSeconds": 30
+        }
+      },
+      "fought": {
+        "order": {
+          "kind": "attack",
+          "enemyId": "enemy-produced-4"
+        },
+        "hp": 0
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    }
+  ]
+}

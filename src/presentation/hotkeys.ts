@@ -16,7 +16,7 @@ export const hotkeys=[
  {key:'Y',button:'build-base',label:'Build an additional main base with a worker: 100 wood + 60 gold, 12 seconds. Separate worker queue and rally; shared resources, supply and technology.'},
  {key:'F6',button:'hold-position',label:'Hold position: attack visible targets in range without pursuing. Normal orders replace the queue; Shift adds move, attack, attack-move, gather, hold or patrol (max 32). Hold and patrol continue until replaced or stopped.'},
  {key:'F7',button:'patrol-units',label:'Patrol between your current position and the clicked point; combat units attack-move and resume after target loss. Shift appends.'},
- {key:'F5',button:'train-air',label:'Train the faction flyer at a completed flight building; Forge and both research upgrades required.'},
+ {key:'F5',button:'train-air',label:'Train the faction flyer at a completed flight building; Base III,Academy and both research II required; 95 wood,75 gold,30 seconds,4 supply.'},
  {key:'F2',button:'cast-heal',label:'Healing spell (faction loadout): choose a visible damaged allied ground combat unit in spell range. Escape or right-click cancels without cost.'},
  {key:'F3',button:'cast-ward',label:'Buff spell (faction loadout): choose a visible allied ground combat unit in spell range. Escape or right-click cancels without cost.'},
  {key:'F4',button:'cast-hex',label:'Debuff spell (faction loadout): choose a visible hostile ground combat unit in spell range. Escape or right-click cancels without cost.'},

@@ -1528,3 +1528,20 @@ to Ground Defense. N/F14 select modes. Config domain mask follows acquisition
 and projectile impact; current fog/teams still gate acquisition. Existing
 bow anti-air remains. Distinct painted source and miniature action icons;
 TechTree/tooltips/selection state describe targets/range/damage.
+
+## RTS-225 — Heavy combat air
+
+Existing Gryphon Rider/Wyvern Rider/Great Eagle/Gyrocopter/Airship are the
+heavy role; no duplicate. All use dedicated faction flight producer,95wood/
+75gold/30s/4supply,baseIII+Forge+Academy+attackII+defenseII. HP180/150/140/
+160/220 by faction; existing movement/projectiles/ranges and painted art
+retained. Each can attack land and air; Goblin now gains air-targets while
+retaining bomb splash. Elf/Dwarf existing air damage multipliers define
+counter strengths; bows and permanent Anti-Air defend against every flyer.
+Ground melee/siege still cannot hit air. Scouts35HP/1supply/6s unarmed remain
+early and faster. AI pays exactly30s without difficulty timing offsets.
+Save66 preserves completed old aircraft HP; legacy paid queued aircraft
+are canceled with full original cost refunded once, for player and enemy.
+Other FIFO entries/counters/rally/paid times persist. This avoids converting
+cheap old recipes to high-tier units and allows old matches to build their
+new producer. Strict old recipe/duplicate-ID validation precedes refunds.

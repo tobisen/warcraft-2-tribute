@@ -69,6 +69,7 @@ export function actionPanel(m:MatchState,building:BuildingSelection,playing:bool
    const production=role==='worker'?selectedBase(m,building)?.production:naval?m.navy?.production:role==='healer'||role==='giant'?m.placement.academy?.production:role==='cavalry'?m.placement.stable?.production:role==='air'||role==='scout'?m.placement.aviary?.production:m.soldierProduction;
    producing=!!production?.queue?.some(j=>j.kind===role);
    const remaining=role==='worker'?(m.placement.bases?.find(b=>b.id===building)?.construction.remainingSeconds??0):naval?m.navy?.harbor?.construction.remainingSeconds??1:role==='healer'||role==='giant'?m.placement.academy?.construction.remainingSeconds??1:role==='cavalry'?m.placement.stable?.construction.remainingSeconds??1:role==='air'||role==='scout'?m.placement.aviary?.construction.remainingSeconds??1:m.placement.construction?.remainingSeconds??0;
+   if(role==='air')summary='Heavy combat flyer · 95 wood +75 gold · 30s ·4 supply ·base III,Academy,research II · attacks ground and air; bows/Anti-Air towers counter';
    if(role==='scout')summary='Unarmed flying scout · 35 HP · 240px/s · 288px vision · 1 supply · 6s · base II';
    if(role==='giant')summary='Heavy ground siege bruiser · 320 HP · 65px/s · 4 supply · 24s · 2.5× building damage; vulnerable to focused ranged fire';
    if(role==='healer')summary='Healing support · 55 HP · 100 max mana · Heal 25 HP, 20 mana, 160px, 6s cooldown · no self, buildings or mechanical targets';

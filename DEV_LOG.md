@@ -4592,3 +4592,19 @@ AI-target fick uniktID så att ordinarieproducedID inteförväxlades; Forge
 fixtureHP använderfraktionsconfig. Assetprompts/CC0/tintlimit dokumenterade.
 Scoutingbrowserartefakter223 läggs med här efter223-kodcommit. Användarens
 CSS/units.mjs/docs bevarade. Ingen mänsklig balans/CI/Pages/release hävdas.
+
+## RTS-225 — Existing heavy air extended
+
+Fem befintliga flygarroller/art behålls. Dedikerad223-producent, gemensam
+95/75/30s/4supply,baseIII/Forge/Academy/researchII,HP180/150/140/160/220.
+Goblins gainsair targetmask; befintliga Elf/Dwarf countermodifiers och
+projectiles/flight retained. AI30s exakt, inget timingoffset. Save66 migrerar
+65/äldre: färdiga enheterHP kvar, old queuedair avbryts med fulloriginalcost
+refund en gång från strikt historiskkostnad/tid/supply. Player/enemy och
+multiplayershell följer; blandadFIFO övrigprogressbevarad. Dupliceradelegacy
+jobIDs/felcost avvisas. Femrasmigrationtests inkluderarrefundtwoLoads/HP.
+Senaste riktade75/4 PASS20.39s; tidigareScoutrouting9 ävenPASS; unit511/89
+PASS16.61s; strict build720msPASS, befintligbundlevarning. Native800
+femras actualmouse flightbuild/train/rally/move/rightclickairattack/
+TechTree/save/restart PASS0pageerrors. Crown existingheavy art granskad.
+Inga nyaassets/ljud/mänskligbalans/nyCI/Pages/release. Userfiles bevarade.
