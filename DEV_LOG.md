@@ -1,5 +1,55 @@
 # Development log
 
+## 2026-10-08 — Prestanda för större arméer/byggnader
+
+Avgränsat användaruppdrag, utan roadmap-/kart-/releasearbete. Grafikkvalitet,
+assets, animation-/sikt-/simulationstakt och samtliga unit/building-maxtak
+består. Användarens style.css, units.mjs, docs/ och :memory:.ses bevaras.
+
+CPU-profiler identifierade framevis organic-resource-generering i
+matchSettingsSummary, identiska combat-target-hinderlistor/kollisionsindex
+samt upprepade ID-collations och fogrektanglar. Ändringarna memoiserar visade
+settings, delar16 geometrier per terrängsnapshot, återanvänder256 spatiala
+celluppslag, jämför separationsrank och ritar lika fogrutor som horisontella
+runs. Derived WeakMap-cachar är begränsade och sparas inte; flytt/revision/
+längd invalidierar. Inga balans-, Save- eller takändringar.
+
+Slutlig headless Chrome155 native1280×720 (canvas1280×488), samma128-aktör/
+32-murfixture och10s CPU-profil före/efter: update median56,3→14,4ms,
+p9562,5→18,3ms, observerad FPS16,81→58,70. Alla aktörer/murar kvar och
+0pageerrors. [PERFORMANCE.md](PERFORMANCE.md) innehåller råa resultat,
+reproduktionsharness och metodgränser; detta är injicerad stress, inte en
+betald/mänsklig helmatch eller hårdvaruoberoende60FPS-garanti.
+
+Riktade navigation/combat/approach/separation/gates/traffic67/7 PASS; extra
+cache-regression combatNavigation8/1 PASS. Nya tests täcker identiskt resultat
+med frisk hinderlista efter20 målflyttar/eviction/revision/längd, interaction-
+exclusion, förändrade settings och exakt fogpixel/opacity/clippning.
+Slutlig unit515/90 PASS19,50s; strict build PASS565ms, befintlig chunkvarning.
+Testmanifestets disjunkta90unit/117integration validerat. Full regression:
+`npm test`1800/207 PASS524,55s. `git diff --check` PASS; nya docs-länkar
+kontrollerade. Slutlig review utan blockerande fynd.
+
+Faktisk Chrome800/1280: långsamma klick, Commands-flikar/scroll/fokus,
+Tech Tree/Close, researchlayout, fysisk selection/högerklick/rörelse samt
+pausad Save/Load PASS. Gamla/nya GPU-renderade fog-PNG:er byteidentiska för
+player/enemy×zoom0,75/1/1,5/2 (8 kontroller). Före/efterbilder visuellt
+granskade. Ingen ny CI/Pages eller mänsklig balans-/ljudclaim.
+
+Review: inga blockerande fynd i slutlig diff; kontrollerade cachelivscykler,
+invalidiering, target-exclusion, numeriska collationties, opacitet och att
+config/assets/scenens timestep inte ändrats. Ingen separat agent använd.
+
+Ej PASS-försök: de första stressharnesserna väntade felaktigt på en wrapper
+som Phaser inte använder för update; de timeoutade och korrigerades till
+preupdate/postupdate. Testets ogiltiga speed2 gav initialt typecheckfel och
+ersattes av giltig0,75. En tidigare fullregression avbröts när den andra
+profilen belade combat-index-flaskhalsen; ny slutregression startades efter
+sista gameplayändringen. Minimap-runexperimentet återtogs för att bevara
+ursprunglig fractional-pixel-ritning. Dessa äldre körningar räknas inte som
+slutlig verifiering.
+
+
 ## 2026-10-08 — Commands: flikar och scroll
 
 Befintliga sex kommandosektioner har egna ARIA-flikar och tabpaneler.

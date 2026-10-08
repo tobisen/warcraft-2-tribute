@@ -75,3 +75,17 @@ describe('combat navigation', () => {
   });
 
 });
+
+it('shared target geometry stays equivalent to a fresh obstacle snapshot after movement and terrain changes',async()=>{
+ const {combatApproach}=await import('./combat');
+ const map={width:800,height:600,tileSize:32,revision:0,obstacles:[{x:400,y:0,width:32,height:256},...Array.from({length:40},(_,i)=>({x:i*16,y:500,width:8,height:8}))]};
+ const target={x:500,y:144,width:24,height:24};
+ const check=()=>{
+  const warm=combatApproach(map,{x:300,y:144},target,'target',84,32,.1);
+  const fresh=combatApproach({...map,obstacles:map.obstacles.map(o=>({...o}))},{x:300,y:144},{...target},'target',84,32,.1);
+  expect(warm).toEqual(fresh);expect(combatApproach(map,{x:300,y:144},target,'target',84,32,.1)).toEqual(fresh);
+ };
+ check();for(let i=0;i<20;i++){target.x=500+i*4;check();}target.x=500;check();
+ map.obstacles[0].height=320;map.revision++;check();
+ map.obstacles.push({x:320,y:0,width:32,height:192});check();
+});

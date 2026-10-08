@@ -58,6 +58,17 @@ function approach(position: Position, target: Position, speed: number, range: nu
   };
 }
 
+// Shared attackers must not rebuild the whole terrain index for an identical target body.
+// Geometry, terrain revision and initialization length invalidate this bounded derived cache.
+const targetObstacleCache=new WeakMap<WorldMap['obstacles'],{revision:number;length:number;targets:Map<string,Footprint[]>}>();
+function combatObstacles(map:WorldMap,target:Footprint):Footprint[]{
+ if(map.ignoreAttackOcclusion)return map.obstacles;
+ let cache=targetObstacleCache.get(map.obstacles);
+ if(!cache||cache.revision!==map.revision||cache.length!==map.obstacles.length){cache={revision:map.revision,length:map.obstacles.length,targets:new Map()};targetObstacleCache.set(map.obstacles,cache);}
+ const key=`${target.x},${target.y},${target.width},${target.height}`,cached=cache.targets.get(key);if(cached)return cached;
+ const obstacles=[...map.obstacles,{...target}];if(cache.targets.size>=16)cache.targets.delete(cache.targets.keys().next().value!);cache.targets.set(key,obstacles);return obstacles;
+}
+
 export function combatApproach(map: WorldMap, position: Position, target: Footprint, targetId: string,
   speed: number, range: number, delta: number, cached?: RouteState, gate?:MovementGate) {
   const center={x:target.x+target.width/2,y:target.y+target.height/2};
@@ -66,7 +77,7 @@ export function combatApproach(map: WorldMap, position: Position, target: Footpr
   if(canInteract(map,position,target,range))return {position:{...position},attackSeconds:delta,
     navigation:{commandNumber:cached?.commandNumber??1,destination:{...position},waypoints:[],
       revision:map.revision,status:'arrived' as const,goalKey,targetId,retryAfter}};
-  const targetMap={...map,obstacles:map.ignoreAttackOcclusion?map.obstacles:[...map.obstacles,target]};
+  const targetMap={...map,obstacles:combatObstacles(map,target)};
   if(cached?.targetId && cached.targetId!==targetId && retryAfter>0 && cached.revision===map.revision) {
     return {position:{...position},attackSeconds:0,navigation:{...cached,targetId,goalKey,
       waypoints:[],status:'arrived' as const,retryAfter}};

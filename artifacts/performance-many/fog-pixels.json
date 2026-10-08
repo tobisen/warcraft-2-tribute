@@ -1,0 +1,46 @@
+{
+  "browser": "155.0.8059.39",
+  "results": [
+    {
+      "team": "player",
+      "zoom": 0.75,
+      "pixelIdentical": true
+    },
+    {
+      "team": "player",
+      "zoom": 1,
+      "pixelIdentical": true
+    },
+    {
+      "team": "player",
+      "zoom": 1.5,
+      "pixelIdentical": true
+    },
+    {
+      "team": "player",
+      "zoom": 2,
+      "pixelIdentical": true
+    },
+    {
+      "team": "enemy",
+      "zoom": 0.75,
+      "pixelIdentical": true
+    },
+    {
+      "team": "enemy",
+      "zoom": 1,
+      "pixelIdentical": true
+    },
+    {
+      "team": "enemy",
+      "zoom": 1.5,
+      "pixelIdentical": true
+    },
+    {
+      "team": "enemy",
+      "zoom": 2,
+      "pixelIdentical": true
+    }
+  ],
+  "errors": []
+}

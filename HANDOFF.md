@@ -1,3 +1,31 @@
+## 2026-10-08 — Prestanda för stora arméer/byggnader — Done
+
+Användarens avgränsade uppdrag är klart. Framevis kartresursgenerering,
+identiska combat-hinderlistor/index, spatiala uppslag, ID-collations och
+fogrektanglar optimerade. Grafikkvalitet, assets, upplösning, animationer,
+gameplay-/siktuppdateringar och samtliga unit/building-maxtak bevaras.
+Ingen roadmaptask, kartombyggnad, ny version eller release startad.
+
+Ny faktisk Chrome155 stressprofil:128 aktörer+32 murar, Native1280×720
+(canvas1280×488), update median56,3→14,4ms/p9562,5→18,3ms; observerad
+FPS16,81→58,70. Detta är en explicit ovan-supply-fixture, inte betald
+utbyggnad eller hårdvaruoberoende FPS-garanti. [PERFORMANCE.md](PERFORMANCE.md)
+har före/efter-JSON/bilder och två reproducerbara browserharness.
+
+Slutliga nya checks: full1800/207 PASS524,55s, unit515/90 PASS19,50s,
+strict build PASS565ms och diff/länkchecks PASS. Riktade combat/navigation/
+approach/separation/gates/traffic67/7 samt extra combat-cachetest8/1 PASS.
+Native800/1280 fysisk selection/rightclick/movement, pausad Save/Load,
+Tech Tree/Commands/Close/scroll/keyboard och researchlayout PASS.
+Gamla/nya GPU-fog-PNG:er byteidentiska vid båda teamen×fyra zoomnivåer.
+Slutlig review utan blockerande fynd; ingen agentdelegering.
+
+Befintlig chunkvarning kvarstår. Tidiga harness-timeouts/ogiltig test-speed
+är rättade; första fullregressionen avbröts för den belagda andra
+optimeringen och räknas inte som PASS. Ingen ny CI/Pages eller mänsklig
+match-/balans-/ljudverifiering hävdas. User style.css/units.mjs/docs/ och
+:memory:.ses är bevarade utanför leveransen. Stanna efter detta uppdrag.
+
 ## 2026-10-08 — Release0.5.0 published and verified
 
 [Play0.5.0](https://tobisen.github.io/warcraft-2-tribute/) actually shows

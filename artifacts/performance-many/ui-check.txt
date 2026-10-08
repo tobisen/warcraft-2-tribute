@@ -1,0 +1,40 @@
+800 {
+  count: 8,
+  rows: [ 449, 497 ],
+  bottom: 541,
+  bar: {
+    x: 0,
+    y: 416,
+    width: 800,
+    height: 184,
+    top: 416,
+    right: 800,
+    bottom: 600,
+    left: 0
+  },
+  columns: '44px 44px 44px 44px'
+}
+scroll { top: 622, height: 490, total: 1112 }
+800 PASS six tabs/all rows, arrow/Home/End navigation, overflow scroll, sticky tabs, slow Close
+800 PASS physical selection/rightclick/movement and paused Save/Load
+800 PASS research <=2 rows, Close after scroll/reopen, paused Back
+1280 {
+  count: 8,
+  rows: [ 569, 637 ],
+  bottom: 701,
+  bar: {
+    x: 0,
+    y: 536,
+    width: 1280,
+    height: 184,
+    top: 536,
+    right: 1280,
+    bottom: 720,
+    left: 0
+  },
+  columns: '64px 64px 64px 64px'
+}
+scroll { top: 502, height: 610, total: 1112 }
+1280 PASS six tabs/all rows, arrow/Home/End navigation, overflow scroll, sticky tabs, slow Close
+1280 PASS physical selection/rightclick/movement and paused Save/Load
+1280 PASS research <=2 rows, Close after scroll/reopen, paused Back

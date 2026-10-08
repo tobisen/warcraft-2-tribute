@@ -45,6 +45,24 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
+### Prestanda 2026-10-08 — stora arméer och byggnader — Done
+
+Nytt avgränsat användaruppdrag: optimera när fler enheter/byggnader finns,
+utan sänkt grafikkvalitet, ändrade maxtak eller långsammare gameplay/animationer.
+Profilera faktisk browser, ändra belagda flaskhalsar, verifiera navigation/
+combat/fog/UI/Save och uppdatera docs. Befintlig CSS, units.mjs och docs/
+bevaras. Ingen roadmaptask, kartombyggnad eller release startas.
+
+Belagda flaskhalsar i settings/combat/index/separation/fog optimerade.
+Ny jämförbar Chrome1280 stressprofil med128 aktörer/32 murar: median update
+56,3→14,4ms och observerad FPS16,81→58,70. Maxtak, assets/grafik, animationer
+samt gameplay-/siktfrekvens består. Fog-PNG byteidentisk i8 team/zoomfall.
+Native800/1280 fysisk movement/SaveLoad/UI PASS. Slutlig fullregression
+1800/207 PASS524,55s, unit515/90 PASS19,50s, strict build/diff PASS.
+[PERFORMANCE.md](PERFORMANCE.md) och senaste HANDOFF/DEV_LOG redovisar
+metod, tidigare avbrutna försök och begränsningar. Ingen ny CI/Pages hävdas.
+
+
 ### UI-tillägg 2026-10-08 — Commands med sektionsflikar — Done
 
 Avgränsat uppdrag: en flik per befintlig sektion Selection/Movement/Combat/

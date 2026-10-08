@@ -50,3 +50,15 @@ describe('hand-authored world map', () => {
     expect(createMatch().map).toEqual(fresh);
   });
 });
+
+it('reuses spatial candidates while honoring interaction exclusions and obstacle revisions',async()=>{
+ const {nearbyObstacles}=await import('./map');
+ const obstacles=Array.from({length:40},(_,i)=>({x:i*32,y:64,width:32,height:32}));
+ const map={...createMap(),width:2048,height:512,obstacles};const area={x:65,y:65,width:10,height:10};
+ const first=nearbyObstacles(map,area);expect(nearbyObstacles(map,{...area,x:70})).toBe(first);
+ const target=obstacles[2];expect(nearbyObstacles({...map,interactionTarget:target},area)).not.toContain(target);
+ expect(nearbyObstacles(map,area)).toContain(target);
+ const revised=replaceObstacles(map,obstacles.filter(o=>o!==target));expect(nearbyObstacles(revised,area)).not.toContainEqual(target);
+ // Initialization additions to the same array must invalidate both index and query cache.
+ const added={...target};map.obstacles.push(added);expect(nearbyObstacles(map,area)).toContain(added);
+});

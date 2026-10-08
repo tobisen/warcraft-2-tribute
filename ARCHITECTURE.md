@@ -1,5 +1,17 @@
 # Arkitektur
 
+## Prestanda — härledda renderings- och kollisionscachar
+
+Matchsettings memoiserar senaste texten med samtliga visade options som nyckel.
+Combat delar upp till16 målgeometri/hinder-snapshots per obstacle-array; revision
+eller ändrad längd förnyar dem. Map-indexet har256 cached cellområden och
+filtrerar interactionTarget separat. WeakMap-livscykler behåller inte gamla
+matcher. Separationens lokala ID-rank behåller numerisk locale-tieordning.
+Fogruns slår samman lika horisontella opaciteter utan ändrad sikt eller pixel-
+täckning. Alla caches är härledda; Save, balans, grafik och entitetstak består.
+[Prestandamätning och verifiering](PERFORMANCE.md).
+
+
 ## Sammanhängande fortifications och automatisk gatepassage
 
 Gameplay-modulen `fortifications` härleder grannmasker från aktuella wall/gate-

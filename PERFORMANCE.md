@@ -1,3 +1,80 @@
+# Prestanda — större arméer/byggnader, 2026-10-08
+
+Användaruppdraget behåller grafik, upplösning, animationer, gameplaytakt och
+samtliga maxtak för enheter/byggnader. Ingen config-, asset-, Save-version-
+eller balansändring ingår. Användarens CSS/units.mjs/docs bevaras.
+
+## Ny faktisk före/efter-mätning
+
+Chrome155.0.8059.39 headless på denna Mac, lokal Vite devserver, display
+Native1280×720; matchcanvas1280×488 efter HUD. Samma CSS/assets, kamera,
+Highlands-fixture och10s mätfönster med CPU-profiler aktiva i båda körningar.
+Referenskod: `a0c7ba0`. Fixture:116 egna workers/soldiers,12 fiendetrupper,
+32 färdiga sammanhängande murar samt befintliga baser. Extra HP/enheter och
+murar injiceras uttryckligen över betald supply; produktionstak ändras inte.
+Vanliga order/Save/Load verifieras separat. Fem första frames utesluts.
+
+| Mätvärde | Före | Efter |
+| --- | ---: | ---: |
+| Update CPU median |56,30ms|14,40ms|
+| Update CPU p95 |62,50ms|18,30ms|
+| Visual/HUD sync median |22,30ms|3,20ms|
+| Session/settings sync median |18,50ms|0,10ms|
+| Frame-intervall median |66,60ms|16,70ms|
+| Frame-intervall p95 |66,70ms|16,80ms|
+| Observerad FPS,1000/medelintervall |16,81|58,70|
+| Update-samples efter warmup |166|585|
+
+[Befintlig kod](artifacts/performance-many/baseline.json) och
+[optimerad kod](artifacts/performance-many/after.json) har båda kvar alla128
+aktörer/32 murar, playing-outcome och0 pageerrors. Medianens CPU-kostnad
+minskar cirka74%. Detta är ett aktivt stressfall, inte deterministiskt replay:
+lägre framekostnad ger olika framåtskriden gameplaytid under samma wall-time.
+Ingen allmän60FPS-, maximal-armé- eller GPU/minnesgaranti hävdas. Nuvarande
+mätning omfattar inte full mänsklig match, mobil eller annan hårdvara.
+
+## Belagda ändringar
+
+- Matchsettings återanvänder senaste sammanfattningen tills ett visat val
+  ändras. Kartans fasta terräng/resurslager genererades tidigare varje frame.
+- Combat återanvänder högst16 hinderlistor för identisk målgeometri per
+  terrängsnapshot. Flytt/ändrad storlek, revision och initialization-push
+  förnyar resultaten; cacharna är härledda och följer inte med i saves.
+- Spatiala kollisionsuppslag återanvänder högst256 cellområden per index.
+  Interaction-target filtreras efter uppslaget; revision/längd invalidierar.
+- Separation beräknar numerisk ID-ordning en gång och återanvänder rangtal
+  i grannjämförelser. Även likvärdiga collations jämförs som tidigare.
+- Fog förenar horisontellt intilliggande rutor med samma opacitet. En mörk
+  karta får en rektangel per rad i stället för en per ruta. Siktuppdatering,
+  sprites, pixelgrafik och minimapritning behåller tidigare beteende.
+
+GPU-renderade canvas-PNG:er för gamla/nya fogritningen är byteidentiska för
+båda teamen vid zoom0,75/1/1,5/2:
+[faktisk browserkontroll](artifacts/performance-many/fog-pixels.json).
+Native800/1280 verifierar fysisk selection/högerklick/rörelse, pausad Save/
+Load, researchlayout, Tech Tree/Commands/Close, scroll och tangentnavigation:
+[UI-logg](artifacts/performance-many/ui-check.txt). Stressbilderna
+[före](artifacts/performance-many/baseline.png)/[efter](artifacts/performance-many/after.png)
+är visuellt granskade; olika simulationstid förklarar position-/fogskillnader.
+
+## Upprepning
+
+Starta Vite på127.0.0.1:5188. Extern Playwright/Chrome behövs, utan nya
+runtime-dependencies. Sätt W2T_PLAYWRIGHT_MODULE och W2T_BROWSER_EXECUTABLE
+för lokal installation, sedan:
+
+```sh
+node scripts/check-many-performance.mjs
+node scripts/check-fog-pixels.mjs
+```
+
+W2T_UI_URL kan byta server; W2T_PERFORMANCE_STAGE väljer resultatnamn för
+stressmätningen och W2T_CPU_PROFILE_FILE sparar valfri rå CPU-profil utanför
+repo. Referensmätningen måste köras med referenskod och samma CSS/assets.
+Slutliga checks och eventuella begränsningar redovisas i DEV_LOG/HANDOFF.
+
+---
+
 # Prestanda – RTS-065
 
 Mätmiljö: MacBook Air, macOS 15.7.4 arm64, Node 20.20/npm 10.8.2,
