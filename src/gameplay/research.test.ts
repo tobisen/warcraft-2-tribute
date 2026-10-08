@@ -16,11 +16,11 @@ describe('Forge and research',()=>{
   expect(beginPlacement(r.placement,'forge')).toBe(r.placement);
   const built=updateConstruction(r.gathering!,r.placement,r.map!,6);expect(built.placement.forge!.construction.remainingSeconds).toBe(0);expect(built.gathering.units[0].order.kind).toBe('idle');expect(built.placement.farms).toEqual([]);
  });
- it('requires completed live Forge, affordability, idle research and uncompleted level',()=>{
+ it('requires completed live Forge, affordability, unique research and uncompleted level',()=>{
   const s=ready(),r=createResearch();s.placement.forge!.construction.remainingSeconds=1;
   expect(startResearch(s.gathering,r,s.placement,'attack').gathering).toBe(s.gathering);s.placement.forge!.construction.remainingSeconds=0;
   const first=startResearch(s.gathering,r,s.placement,'attack');expect(first.gathering).toMatchObject({wood:160,goldBalance:90});
-  expect(startResearch(first.gathering,first.research,s.placement,'defense').gathering).toBe(first.gathering);
+  expect(startResearch(first.gathering,first.research,s.placement,'defense').research.queue).toEqual(['defense']);
   const finished=updateResearch(first.research,s.placement,8);expect(finished).toEqual({attack:1,defense:0,job:null});
   expect(startResearch(first.gathering,finished,s.placement,'attack').research).toBe(finished);
   s.gathering.goldBalance=9;expect(startResearch(s.gathering,r,s.placement,'defense').gathering).toBe(s.gathering);

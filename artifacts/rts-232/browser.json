@@ -1,0 +1,9 @@
+[
+  {
+    "physicalClicks": true,
+    "FIFO": true,
+    "progress": true,
+    "saveLoadRestart": true,
+    "errors": []
+  }
+]

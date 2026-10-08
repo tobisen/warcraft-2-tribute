@@ -1,0 +1,15 @@
+#research-queue-summary {
+ position:fixed;
+ top:92px;
+ left:12px;
+ max-width:calc(100vw - 24px);
+ padding:5px 8px;
+ border:1px solid #998456;
+ background:#142c25ee;
+ color:#ece1ba;
+ font-size:12px;
+ line-height:1.4;
+ z-index:3;
+ pointer-events:none;
+}
+#research-queue-summary[hidden] {display:none;}

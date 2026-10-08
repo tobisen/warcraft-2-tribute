@@ -1,3 +1,19 @@
+## 2026-10-08 — RTS-232 forskningskö
+
+FIFO med engångsbetalning vid enqueue, unik aktiv/köad forskning och befintliga
+prerequisites. Oförbrukad ticktid fortsätter nästa jobb; producerförlust avbryter
+beroende aktiva/köade jobb utan refund. Paus består. Statusrad med faktisk procent,
+återstående sekunder och namngiven kö syns vid800×600. Actions/TechTree använder
+samma kövillkor; befintliga musklick/snabbkommandon. Save70 validerar FIFO/unikhet/
+prerequisites och migrerar69 utan kö; äldre ometiketterade köer avvisas.
+Ny riktad43/5 PASS samt41/5 PASS. Unit517/90 PASS, strict build och diff PASS.
+CSS-importen som rättade klippning motiverar slutlig upprepad unit/build.
+Chrome800 Native fysiska forskningsklick/progress/FIFO/SaveLoad/restart PASS,
+0pageerrors; screenshot visuellt granskad. Sandbox-Chrome SIGABRT, eskalerad
+lokal körning fungerade; första harnessnamn Defense rättat till Plate Craft.
+Underlag artifacts/rts-232. Review av kö/state/save/UI utan kvarstående fynd.
+Ingen release/CI/Pages eller mänsklig balansclaim. User CSS/units.mjs/docs bevaras.
+
 # Development log
 
 ## 2026-10-08 — Scoutade landmärken kvar under utforskad fog

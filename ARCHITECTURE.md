@@ -1,3 +1,12 @@
+## RTS-232 — Forskningskö
+
+ResearchState.queue är optional FIFO av unika ResearchKind med redan betald
+kostnad. En aktiv eller köad kind blockerar dubbelbetalning. Prerequisites och
+kostnad gäller vid enqueue, kvarvarande producerkrav revalideras varje tick;
+byggnadsförlust tar bort beroende jobb utan refund enligt tidigare regel.
+Delta konsumeras en gång över jobbyten. Save70 validerar både aktivt och köat
+innehåll; genuin69 migreras utan queue. UI-status hämtas från samma recipes/state.
+
 # Arkitektur
 
 ## Rivning av egna byggnader

@@ -45,6 +45,49 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
+### Ny avgränsad batch RTS-232–237
+
+Nytt uttryckligt mandat2026-10-08 ersätter releasestoppet. En task åt gången,
+checks/docs/commit/push till origin/main; stoppa efter237. Ingen release,
+kartombyggnad eller andra planerade funktioner. Befintliga användarändringar bevaras.
+
+### RTS-232 — Köa forskning — Done
+
+Krav/acceptans: FIFO med befintlig kostnad/prerequisites; aktiv progress och köordning, revalidering vid byggnadsförlust, inga dubbla jobb/debiteringar. Musklick/snabbkommandon och Save/Load/restart. Riktade kö-/kostnads-/Save-tester och browser.
+
+Non-goals: städning, release och andra planerade funktioner.
+
+### RTS-233 — Visa enhetsstats — In Progress
+
+Krav/acceptans: Ensam vald enhet visar HP och separata namngivna attacker med faktisk modifierad skada, räckvidd, cooldown och målklasser. Begripliga namn och kompakt gruppvy. Presentationstester och browser.
+
+Non-goals: städning, release och andra planerade funktioner.
+
+### RTS-234 — Projektilenheter mot skepp och flygare — Todo
+
+Krav/acceptans: Gemensam target selection/range/movement/hit/damage för ground/sea/air. Meleebegränsningar och skademodifierare bevaras; konkreta undantag dokumenteras/testas. Combatintegration och browser.
+
+Non-goals: städning, release och andra planerade funktioner.
+
+### RTS-235 — Synliga byggnadsuppgraderingar — Todo
+
+Krav/acceptans: Inventera faktiska nivåer/specialiseringar; befintliga godkända assets och tydliga markörer. Position/footprint/collision består. Rendering-/Save-tester och browser före/efter.
+
+Non-goals: städning, release och andra planerade funktioner.
+
+### RTS-236 — Flera produktionsbyggnader av samma typ — Todo
+
+Krav/acceptans: Spelare/AI får flera instanser med individuella köer, gemensam ekonomi/supply och fungerande selection/UI. Explicit campaignbegränsning består. Parallellproduktion, Save/restart och browser.
+
+Non-goals: städning, release och andra planerade funktioner.
+
+### RTS-237 — Flera workers på samma byggprojekt — Todo
+
+Krav/acceptans: Anslut till befintligt betalt bygge; konfigurerbar avtagande byggbonus. Nya order/blockering/död lämnar kvarvarande builders korrekta. Ingen dubbeldebitering/progress/completion. Save/restart, riktade tester och browser.
+
+Non-goals: städning, release och andra planerade funktioner.
+
+
 ### Release0.6.0 — Done
 
 Användaren beställer ny release med Kraken och senaste commitade ändringar.

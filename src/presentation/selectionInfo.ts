@@ -1,3 +1,5 @@
+import './researchQueue.css';
+import {researchSummary} from '../gameplay/research';
 import {workerToolsConfig} from '../config/workerTools';
 import {upgradeMultiplier} from '../config/upgrades';
 import {workerCombatConfig} from '../config/unit';
@@ -62,14 +64,15 @@ export function selectionInfo(m:MatchState,building:BuildingSelection,resourceId
   if(kind==='harbor')stats.push(`${f.naval.units.transport.name} · ${f.naval.units.warship.name}`);
   if(kind==='base')stats.push(`Base level ${m.combat.baseDevelopment?.level??1}`,m.combat.baseDevelopment?.remainingSeconds!=null?`Upgrade: ${m.combat.baseDevelopment.remainingSeconds.toFixed(1)}s; worker training paused`:'Worker training active');
   if(kind==='base'){const level=m.research?.workerTools??0,next=workerToolsConfig[Math.min(2,level)];stats.push(`Research: Worker Tools ${level}/3${level>=3?' · Complete':` · Next: ${Math.round((1-next.timeMultiplier)*100)}% shorter wood/gold gathering · ${next.cost.wood} wood + ${next.cost.gold} gold · ${next.durationSeconds}s`}`);}
-  if(kind==='academy'||kind==='forge'||kind==='base')stats.push(`Research: Attack ${m.research?.attack??0} / Defense ${m.research?.defense??0}`,m.research?.job?`${m.research.job.kind}: ${m.research.job.remainingSeconds.toFixed(1)}s remaining`:'Attack / Defense research requires a completed forge');
+  if(kind==='academy'||kind==='forge'||kind==='base')stats.push(`Research: Attack ${m.research?.attack??0} / Defense ${m.research?.defense??0}`,m.research?researchSummary(m.research,f.id):'Research idle');
  }
  return {name,detail:team==='enemy'?'Visible enemy building · No orders or private production data':remaining>0?`Construction ${remaining.toFixed(1)}s remaining`:description,hp,maxHP,stats,portrait:kind==='tower'&&tower?.level===2?{atlas:'tower-specializations',frame:`${f.artPrefix}tower-${tower.specialization??'ground'}-${team}-${hp<=80?'damaged':'complete'}`}:kind==='outpost'?null:{atlas:kind==='siegeWorks'?'siegeWorks':kind==='aviary'?'aviary':kind==='stable'?'cavalry':'buildings',frame:kind==='gate'&&m.placement.defenses?.find(t=>t.id===building)?.open?`${f.artPrefix}gate-player-open`:buildingFrame(kind,team,remaining,kind==='academy'?10:kind==='base'&&building?.startsWith('base-')?12:5,f.id,hp,kind==='tower'?m.placement.defenses?.find(t=>t.id===building)?.level??1:kind==='base'&&team==='player'?m.combat.baseDevelopment?.level??1:1)}};
 }
-export function renderSelectionInfo(info:SelectionInfo):void {
+export function renderSelectionInfo(info:SelectionInfo,m?:MatchState):void {
  document.getElementById('selection-name')!.textContent=info.name;const detail=document.getElementById('selection-detail')!;detail.title=info.detail;detail.textContent=info.detail.length>65&&!info.name.endsWith(' units selected')?'Details: hover to inspect':info.detail;
  document.getElementById('selection-health')!.textContent=info.hp===null?'':`HP ${Math.ceil(info.hp)} / ${info.maxHP}${info.mana!==undefined?` · Mana ${Math.floor(info.mana)} / ${info.maxMana}`:''}`;
  const health=document.getElementById('selection-health-bar') as HTMLProgressElement;health.hidden=info.hp===null;health.max=info.maxHP??1;health.value=info.hp??0;
  const stats=document.getElementById('selection-stats')!;stats.title=info.stats.join(' · ');stats.textContent=info.stats.filter(s=>s.startsWith('Order:')||s.startsWith('Cargo')||s.startsWith('Supply')||s.startsWith('Production:')||s.startsWith('Research:')||s.startsWith('Enemy')||s.startsWith('Workers:')||s.startsWith('Effects:')).join(' · ');
+ let research=document.getElementById('research-queue-summary');if(!research){research=document.createElement('div');research.id='research-queue-summary';document.getElementById('selection-info')!.append(research);}research.textContent=m?.research?researchSummary(m.research,factionForTeam(m,'player').id):'';research.hidden=!m?.research?.job&&!m?.research?.queue?.length;
  document.getElementById('selection-info')!.title=[info.name,info.detail,...info.stats].join(' · ');
 }

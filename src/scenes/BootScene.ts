@@ -1066,7 +1066,7 @@ export class BootScene extends Phaser.Scene {
     this.buildingRing.setVisible(selectedFootprint !== null);
     if (selectedFootprint) this.buildingRing.setPosition(selectedFootprint.x, selectedFootprint.y)
       .setSize(selectedFootprint.width, selectedFootprint.height);
-    const info=selectionInfo(this.currentMatch(),this.selectedBuilding,this.selectedResource,this.selectedAnimal);renderSelectionInfo(info);
+    const info=selectionInfo(this.currentMatch(),this.selectedBuilding,this.selectedResource,this.selectedAnimal);renderSelectionInfo(info,this.currentMatch());
     const portrait=document.getElementById('selection-portrait') as HTMLCanvasElement;portrait.hidden=!info.portrait;this.paintPortrait(portrait,info.portrait);
     renderSelectedIcons(selectedIcons(this.currentMatch()),(canvas,asset)=>this.paintPortrait(canvas,asset));
     renderTopBar(this.currentMatch());

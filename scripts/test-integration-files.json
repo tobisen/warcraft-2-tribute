@@ -88,6 +88,7 @@
   "src/gameplay/releaseMatrix.test.ts",
   "src/gameplay/repair.test.ts",
   "src/gameplay/research.test.ts",
+  "src/gameplay/researchQueue.test.ts",
   "src/gameplay/resourceQueue.test.ts",
   "src/gameplay/resourceSelection.test.ts",
   "src/gameplay/roleResearch.test.ts",
