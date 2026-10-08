@@ -240,3 +240,10 @@ five-faction atlas, blue/red teams, genuine walk/cast poses in existing style.
 
 [Source, prompt and CC0](sources/visual-refresh/giants.md). Five original painted
 heavy-role variants, genuine walking/smash poses, existing export/team pipeline.
+
+## RTS-223 — Scouts and flight buildings
+
+[Sources, prompts and CC0](sources/visual-refresh/scouts.md). Five painted
+scout variants with four flight poses and five dedicated painted producers.
+Native800 screenshots and mouse/save probes: artifacts/rts-223. Direction
+mirroring, collapse death and translucent construction limits documented.

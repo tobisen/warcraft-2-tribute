@@ -20,7 +20,7 @@ import type { SelectableUnit } from './selection';
 
 export type ResourceType = 'wood' | 'gold';
 export type WorkerOrder = {kind:'attack';enemyId:string} | {kind:'repair';buildingId:import('./buildingSelection').BuildingSelection&string} |  { kind: 'idle' } | { kind: 'move' }
-  | { kind: 'gather' | 'deliver'; nodeId: string } | {kind:'build';buildingId:`base-${number}`|`wall-${number}`|`gate-${number}`|`tower-${number}`|'stable'|'academy'|'harbor'|'outpost'|'barracks'|'forge'|`farm-${number}`};
+  | { kind: 'gather' | 'deliver'; nodeId: string } | {kind:'build';buildingId:`base-${number}`|`wall-${number}`|`gate-${number}`|`tower-${number}`|'aviary'|'stable'|'academy'|'harbor'|'outpost'|'barracks'|'forge'|`farm-${number}`};
 export interface Worker extends SelectableUnit, importOrderState {
   healFlash?:number;
   navigation?: RouteState;
@@ -32,11 +32,12 @@ export interface Worker extends SelectableUnit, importOrderState {
   cargoType?: ResourceType;
 }
 export interface Soldier extends SelectableUnit, SpellState, importOrderState {
+  scouting?:import('./scouting').ScoutState;
   healAutocast?:boolean;
   mana?:number;
   ability?:AbilityState;
   faction?:FactionId;
-  archetype?: 'archer'|'catapult'|'specialist'|'air'|'cavalry'|'healer'|'giant';
+  archetype?: 'archer'|'catapult'|'specialist'|'air'|'cavalry'|'healer'|'giant'|'scout';
   attackCooldown?: number;
   autoOrigin?: Position;
   attackMoveTarget?: Position;

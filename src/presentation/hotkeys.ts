@@ -1,6 +1,10 @@
 import {text as uiText} from '../text';
 import { gameplayKeyAllowed,type KeyContext } from './keyboard';
 export const hotkeys=[
+ {key:'F13',button:'build-aviary',label:'Build a dedicated flight producer after base II; 80 wood, 40 gold, 12 seconds.'},
+ {key:'END',button:'train-scout',label:'Train an unarmed flyer at the flight building after base II.'},
+ {key:'PAGEUP',button:'scout-route',label:'Add multiple waypoints, click this action again to start repeating Scout Route.'},
+ {key:'PAGEDOWN',button:'auto-scout',label:'Explore using your own explored map; manual orders cancel.'},
  {key:'INSERT',button:'train-giant',label:'Train a slow heavy building-smashing giant at Academy after base III and research II.'},
  {key:'F11',button:'train-healer',label:'Train healing support in Academy.'},
  {key:'F12',button:'autocast-heal',label:'Toggle healer autocast: visible damaged biological allies only.'},
@@ -11,7 +15,7 @@ export const hotkeys=[
  {key:'Y',button:'build-base',label:'Build an additional main base with a worker: 100 wood + 60 gold, 12 seconds. Separate worker queue and rally; shared resources, supply and technology.'},
  {key:'F6',button:'hold-position',label:'Hold position: attack visible targets in range without pursuing. Normal orders replace the queue; Shift adds move, attack, attack-move, gather, hold or patrol (max 32). Hold and patrol continue until replaced or stopped.'},
  {key:'F7',button:'patrol-units',label:'Patrol between your current position and the clicked point; combat units attack-move and resume after target loss. Shift appends.'},
- {key:'F5',button:'train-air',label:'Train the faction flyer at a completed barracks; Forge and both research upgrades required.'},
+ {key:'F5',button:'train-air',label:'Train the faction flyer at a completed flight building; Forge and both research upgrades required.'},
  {key:'F2',button:'cast-heal',label:'Healing spell (faction loadout): choose a visible damaged allied ground combat unit in spell range. Escape or right-click cancels without cost.'},
  {key:'F3',button:'cast-ward',label:'Buff spell (faction loadout): choose a visible allied ground combat unit in spell range. Escape or right-click cancels without cost.'},
  {key:'F4',button:'cast-hex',label:'Debuff spell (faction loadout): choose a visible hostile ground combat unit in spell range. Escape or right-click cancels without cost.'},

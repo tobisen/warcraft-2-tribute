@@ -92,6 +92,7 @@
   "src/gameplay/resourceSelection.test.ts",
   "src/gameplay/save.test.ts",
   "src/gameplay/scenarios.test.ts",
+  "src/gameplay/scouting.test.ts",
   "src/gameplay/seaMission.test.ts",
   "src/gameplay/separation.test.ts",
   "src/gameplay/session.test.ts",

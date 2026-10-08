@@ -42,3 +42,6 @@ await import('./export-cavalry.mjs');
 
 await import('./export-healers.mjs');
 await import('./export-giants.mjs');
+
+await import('./export-scouts.mjs');
+await import('./export-aviaries.mjs');

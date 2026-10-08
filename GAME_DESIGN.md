@@ -1496,3 +1496,21 @@ pauses worker queues under existing base-upgrade rules and trains the identical
 24s/4supply recipe. Save supports AI tierIII, mixed Academy FIFO, new role/army
 weights and restart clears production. Campaign unlock at mission7. Human
 balance remains unverified; graphics use the original painted roster style.
+
+## RTS-223 — Dedicated flight production and scouting
+
+Royal Aviary / Wyvern Roost / Moonwing Sanctuary / Aerial Hangar / Sky Dock
+cost80 wood40 gold,12s,150HP,64px footprint; baseII. All new scout/heavy
+flyer production uses its independent FIFO/rally, never Barracks. Existing
+accepted Barracks flyer jobs retain paid recipe until completion. Scout:
+Sky Owl / Bat Scout / Moonwing / Survey Drone / Spotter Balloon,25/15,6s,
+1supply,35HP,240speed,288vision,zero attacks. Scout precedes heavy-air
+Forge/research prerequisites. END trains, F13 builds; PageUp collects2–16
+waypoints and second click starts loop; PageDown Auto Scout. Manual move,
+hold, patrol and stop clear the persistent scout state. Auto Scout samples
+only its owner's/team's explored bits at128px intervals, replans no more
+than every5s at arrival, falls back to world quadrants when fully explored.
+AI pays identical cost/time and uses its own enemy/team fog. Air bounds
+and existing movement handle obstacles. Dwarf/Goblin mechanical scouts
+cannot receive Heal. Campaign3 unlocks producer/scout; painted source and
+limitations in assets/sources/visual-refresh/scouts.md.

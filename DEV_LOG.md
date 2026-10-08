@@ -4556,3 +4556,23 @@ actualbuildingdamage/TechTree/save/restart PASS0pageerrors; slutlig omkörning
 uppdaterar Insert-belägg och verifierar AI-deadlinefix. Crown/Goblin bilder
 visuellt granskade. Spriteprompter/källor/CC0 och konkreta facing/deathlimits
 dokumenterade. Ingen mänsklig balans/nyrelease/bred kampanjregression.
+
+## RTS-223 — Scout och separat flygbyggnad
+
+Användarens nya krav: alla flygare har egen fraktionsbyggnad; katapult och
+ballista i separat framtida RTS-229 enligt uttryckligt tillägg. Fem målade
+scouts/flygbyggnader,Separat FIFO/rally/supply,80/40/12s/150HP producent och
+25/15/6s/1supply/35HP/240speed/288vision scout. Unarmed målmask; två nya
+order,2–16 loopwaypoints och Auto Scout endast egna explored bits, max5s.
+Manual move/hold/patrol/stop avbryter. AIscouts egna Auto-rutter, inga
+combatgrupper; samma kostnad/tid/teknik. Building construction/repair/HP/
+death/fog/minimap/teamprojection/save och global unitcounter kopplade.
+Befintliga accepterade Barracks flygarjobb får avsluta utan ny kostnad; nya
+avvisas där. Campaign3. END/PageUp/PageDown/F13 unika hotkeys, TechTree.
+Riktade131/10 PASS18.65s; unit511/89 PASS15.00s; strict build PASS. Browser
+alla5 native800 riktiga build/train/rally/route/Auto/TechTree/save/restart
+PASS0pageerrors. Kronans sprite/byggnad/ruttikoner granskade. Testfixturer
+rättade owner/counters och korrekt separata producenter; browserfångad
+disabled-state behövde faktisk reset och flygaren rallyflytt före klickval.
+Inga nya ljud/mänsklig balans/nyCI- eller Pagesbelägg. Assetkällor/CC0 och
+facing/death/constructionlimits dokumenterade. Användarens ändringar kvar.

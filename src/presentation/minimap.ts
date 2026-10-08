@@ -42,6 +42,7 @@ export function minimapData(state:MatchState,visible:MinimapVisibility=()=>true)
  if(state.combat.baseHP>0)rect('base','player',baseFootprint(state.gathering.base),'#5fa9df');
  for(const b of state.placement.bases??[])rect(b.id,'player',b.footprint,'#5fa9df');
  if(state.placement.barracks)rect('barracks','player',state.placement.barracks,'#d09153');
+ if(state.placement.aviary)rect('aviary','player',state.placement.aviary.footprint,'#cbbb82');
  if(state.placement.stable)rect('stable','player',state.placement.stable.footprint,'#cbbb82');
  if(state.placement.academy)rect('academy','player',state.placement.academy.footprint,'#cbbb82');
  if(state.placement.forge)rect('forge','player',state.placement.forge.footprint,'#989ea8');

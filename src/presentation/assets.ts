@@ -34,7 +34,7 @@ export function terrainEdges(column:number,row:number,mapId:MapId='arena'):strin
  return edges;
 }
 
-export type BuildingKind='stable'|'academy'|'wall'|'gate'|'tower'|'base'|'barracks'|'farm'|'forge'|'harbor';
+export type BuildingKind='aviary'|'stable'|'academy'|'wall'|'gate'|'tower'|'base'|'barracks'|'farm'|'forge'|'harbor';
 export function buildingFrame(kind:BuildingKind,owner:'player'|'enemy',remaining=0,total=5,faction:FactionId='crown',hp?:number,level=1):string{
  const maxHP=kind==='tower'||kind==='wall'||kind==='gate'?defenseConfig[kind].hp:kind==='harbor'?factions[faction].naval.harbor.hp:factions[faction].buildings[kind].hp;
  const stage=remaining>total/2?'foundation':remaining>0?'building':hp!==undefined&&hp>0&&hp<=maxHP*buildingArtConfig.damagedFraction?'damaged':'complete';

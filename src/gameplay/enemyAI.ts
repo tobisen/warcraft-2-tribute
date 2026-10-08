@@ -13,7 +13,7 @@ export interface Defender {id:string;groupId?:string;destination?:Position}
 export interface EnemyAIState {reserve:string[];defenders:Defender[];threatId:string|null;elapsedSeconds:number;nextGroupNumber:number;groups:EnemyGroup[];lastDispatchSeconds:number|null}
 export const createEnemyAI=():EnemyAIState=>({reserve:[],defenders:[],threatId:null,elapsedSeconds:0,nextGroupNumber:1,groups:[],lastDispatchSeconds:null});
 export function updateEnemyAI(state:EnemyAIState,combat:CombatState,map:WorldMap,playerBase:Position,delta:number,playerUnits:Unit[]=[],settings:EnemyAISettings=enemyAIConfig,visible?:PlayerVisibility,faction:FactionId='clans'){
- const elapsedSeconds=state.elapsedSeconds+Math.max(0,delta),alive=new Set(combat.enemies.filter(e=>e.hp>0&&e.kind!=='base').map(e=>e.id));
+ const elapsedSeconds=state.elapsedSeconds+Math.max(0,delta),alive=new Set(combat.enemies.filter(e=>e.hp>0&&e.kind!=='base'&&e.role!=='scout').map(e=>e.id));
  let groups=state.groups.map(g=>({...g,members:g.members.filter(id=>alive.has(id)),destinations:Object.fromEntries(Object.entries(g.destinations).filter(([id])=>alive.has(id)))})).filter(g=>g.members.length);
  const defense=updateEnemyDefense({...state,groups},combat,map,playerBase,playerUnits,settings,visible,faction);groups=defense.state.groups;
  let enemies=defense.combat.enemies,nextGroupNumber=state.nextGroupNumber,lastDispatchSeconds=state.lastDispatchSeconds;
@@ -30,7 +30,7 @@ export function updateEnemyAI(state:EnemyAIState,combat:CombatState,map:WorldMap
   return {...g,status:'muster',startedAt:elapsedSeconds,dispatchedAt:undefined,destinations:Object.fromEntries(orders.map(u=>[u.id,{...u.target}]))};
  });
  const assigned=new Set([...groups.flatMap(g=>g.members),...defense.protectedIds]);
- const recruits=enemies.filter(e=>e.hp>0&&e.id.startsWith('enemy-produced-')&&!e.navalLanding&&!assigned.has(e.id)).sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}));
+ const recruits=enemies.filter(e=>e.hp>0&&e.role!=='scout'&&e.id.startsWith('enemy-produced-')&&!e.navalLanding&&!assigned.has(e.id)).sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}));
  for(const recruit of recruits){
   let group=groups.find(g=>g.status==='muster'&&g.members.length<settings.groupSize);
   if(!group){group={id:`enemy-group-${nextGroupNumber++}`,status:'muster',members:[],destinations:{},startedAt:elapsedSeconds};groups.push(group);}

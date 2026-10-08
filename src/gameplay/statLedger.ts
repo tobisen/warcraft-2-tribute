@@ -4,7 +4,7 @@ export const createStatLedger=(legacy=false):StatLedger=>({player:{built:0,destr
 /** Starting bases do not count as construction. Completed sites count before combat. */
 export function readyBuildings(m:MatchState):{player:Set<string>;enemy:Set<string>} {
  const p=m.placement;
- return {player:new Set([...(p.stable&&p.stable.hp>0&&p.stable.construction.remainingSeconds===0?['stable']:[]),...(p.academy&&p.academy.hp>0&&p.academy.construction.remainingSeconds===0?['academy']:[]),...(p.bases??[]).filter(b=>b.hp>0&&b.construction.remainingSeconds===0).map(b=>b.id),
+ return {player:new Set([...(p.aviary&&p.aviary.hp>0&&p.aviary.construction.remainingSeconds===0?['aviary']:[]),...(p.stable&&p.stable.hp>0&&p.stable.construction.remainingSeconds===0?['stable']:[]),...(p.academy&&p.academy.hp>0&&p.academy.construction.remainingSeconds===0?['academy']:[]),...(p.bases??[]).filter(b=>b.hp>0&&b.construction.remainingSeconds===0).map(b=>b.id),
   ...(p.barracks&&(p.barracksHP??1)>0&&p.construction?.remainingSeconds===0?['barracks']:[]),
   ...(p.forge&&p.forge.hp>0&&p.forge.construction.remainingSeconds===0?['forge']:[]),
   ...(p.defenses??[]).filter(t=>t.hp>0&&t.construction.remainingSeconds===0).map(t=>t.id),

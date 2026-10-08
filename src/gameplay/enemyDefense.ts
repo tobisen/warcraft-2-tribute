@@ -17,9 +17,9 @@ export type PlayerVisibility=(unit:Unit,observer:Enemy)=>boolean;
 export function updateEnemyDefense(state:EnemyAIState,combat:CombatState,map:WorldMap,playerBase:Position,
  player:Unit[],settings:EnemyAISettings,visible:PlayerVisibility=()=>true,faction:FactionId='clans'){
  let enemies=combat.enemies,groups=state.groups;
- const base=enemyBase(combat,map),alive=new Set(enemies.filter(e=>e.hp>0).map(e=>e.id));
+ const base=enemyBase(combat,map),alive=new Set(enemies.filter(e=>e.hp>0&&e.role!=='scout').map(e=>e.id));
  let reserve=base?state.reserve.filter(id=>alive.has(id)):[],defenders=state.defenders.filter(d=>alive.has(d.id));
- const produced=enemies.filter(e=>e.hp>0&&e.id.startsWith('enemy-produced-')&&!e.navalLanding);
+ const produced=enemies.filter(e=>e.hp>0&&e.role!=='scout'&&e.id.startsWith('enemy-produced-')&&!e.navalLanding);
  if(base)for(const e of [...produced].sort((a,b)=>Math.hypot(a.position.x-base.position.x,a.position.y-base.position.y)-Math.hypot(b.position.x-base.position.x,b.position.y-base.position.y)||a.id.localeCompare(b.id,'en',{numeric:true}))){
   if(reserve.length>=settings.reserveCount)break;if(!reserve.includes(e.id))reserve.push(e.id);
  }

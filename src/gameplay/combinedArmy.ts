@@ -22,8 +22,8 @@ export function prepareArmyPlan(m:MatchState):MatchState {
 }
 /** Ratios include accepted reservations; never change an already paid job or bypass prerequisites. */
 export function compositionRole(plan:ArmyPlan,combat:CombatState,production:ProductionState,faction:keyof typeof factions=defaultFactions.enemy,technology?:TechnologyState,maxArmy?:number,embarked=0,acceptedJobs=0):ArmyRole|undefined {
- const committed=combat.enemies.filter(e=>e.hp>0&&!e.footprint&&e.kind!=='worker'&&e.kind!=='ship'&&!isAir(e)).reduce((n,e)=>n+factions[faction].units[e.role??'soldier'].supply,embarked)+(production.queue??[]).filter(j=>j.kind!=='air').reduce((n,j)=>n+(j.supply??1),0);
- const available=armyRoles.filter(role=>!unitAvailability(factions[faction],role,technology)&&(maxArmy!==2||role==='air'||factions[faction].units[role].supply===1)&&(role==='air'||committed+factions[faction].units[role].supply<=(maxArmy??Infinity)));
+ const committed=combat.enemies.filter(e=>e.hp>0&&!e.footprint&&e.kind!=='worker'&&e.kind!=='ship'&&!isAir(e)).reduce((n,e)=>n+factions[faction].units[e.role??'soldier'].supply,embarked)+(production.queue??[]).filter(j=>j.kind!=='air'&&j.kind!=='scout').reduce((n,j)=>n+(j.supply??1),0);
+ const available=armyRoles.filter(role=>!unitAvailability(factions[faction],role,technology)&&(maxArmy!==2||role==='air'||role==='scout'||factions[faction].units[role].supply===1)&&(role==='air'||role==='scout'||committed+factions[faction].units[role].supply<=(maxArmy??Infinity)));
  const count=(role:ArmyRole)=>combat.enemies.filter(e=>e.hp>0&&!e.footprint&&e.kind!=='worker'&&(e.role??'soldier')===role).length+(production.queue??[]).filter(j=>j.kind===role).length+(role==='soldier'?embarked:0);
  return available.sort((a,b)=>count(a)/plan.weights[a]-count(b)/plan.weights[b]||(armyRoles.indexOf(a)-acceptedJobs%armyRoles.length+armyRoles.length)%armyRoles.length-(armyRoles.indexOf(b)-acceptedJobs%armyRoles.length+armyRoles.length)%armyRoles.length)[0];
 }

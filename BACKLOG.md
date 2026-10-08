@@ -45,10 +45,10 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
-Nytt mandat 2026-10-08: RTS-220–228 i ordning, en task åt gången.
-RTS-220 grafik samt RTS-221–222 verifierade; RTS-223 är nästa task, därefter224–228. Städning, release och kartombyggnad är pausade.
+Nytt mandat 2026-10-08: RTS-220–228 i ordning, därefter användarens tillägg RTS-229, en task åt gången.
+RTS-220 grafik samt RTS-221–222 verifierade; RTS-223 är verifierad med separat flygbyggnad; nästa task224, därefter225–229. Städning, release och kartombyggnad är pausade.
 Taskvis riktade tester, native800-browser, unit/strict build/diff, docs och
-commit/push till origin/main. Full regression vid etappslut; stanna efter228.
+commit/push till origin/main. Full regression vid etappslut; stanna efter229.
 Befintliga style.css/units.mjs/docs/:memory:.ses bevaras. Ingen delegering.
 Äldre avslutsmandat nedan är historik och startar inga andra tasks.
 
@@ -5723,12 +5723,20 @@ baseIII, symmetric2.5× byggnadsskada. Navigation30/click44/art54; normal32px
 passage och grouporder testade. Egen målad femrasart, samma facing/deathlimits
 som roster; mänsklig balans ej verifierad. Användarens ändringar bevarade.
 
-### RTS-223 — Flygproduktion och obestyckad scout — Todo
-Befintlig lämplig produktion eller Aviary/Hangar-motsvarighet. Scout före tungt
+### RTS-223 — Flygproduktion och obestyckad scout — Done
+Användartillägg 2026-10-08: alla flygare kräver egen fraktionsbyggnad; ingen ny flygproduktion i Barracks. Scout före tungt
 flyg, snabb/ömtålig/unarmed, air navigation inom bounds och befintlig vision.
 Scout Route med flera waypoints loopar till avbrott. Auto Scout från egen
 explored-karta, inget dolt fiendestate och begränsad omplanering. Manuella
 order avbryter. Testa rörelse/vision/bounds/routes/autoscout/save/load/restart.
+
+Verifiering: riktade131/10 PASS18.65s; unit511/89 PASS15.00s; strict
+build PASS; native800 actual flight-build/train/rally/route/Auto/TechTree/
+SaveLoad/restart femras PASS0pageerrors, artifacts/rts-223/browser.json.
+Crown production/routebilder visuellt granskade. Barracks producer avvisar
+båda flygarroller; egen byggnad/shared paid FIFO/bounds/owner fog/save och
+förstörelse provade. AI antar samma betalda6s scout och egen fog. Full
+regression samlas vid229; mänsklig balans ej kontrollerad.
 
 ### RTS-224 — Tornspecialisering och luftvärn — Todo
 Grundtorn ground-only. Permanent alternativ Anti-Air (air-only/lång range)
@@ -5766,3 +5774,11 @@ exakt en gång; konkurrens/save säkra. AI samma upptäckts-/belöningsregler
 (nuvarande212 ignorerar AI och tillåter ground-combat loot). Testa combat/
 leash/victory/fog/worker race/save. Efter228 full regression och HANDOFF med
 nya roller/checks/asset-/balansbegränsningar/hashar; stanna utan release.
+
+### RTS-229 — Separat belägringsproduktion och ballista — Todo
+Uttryckligt användartillägg 2026-10-08: katapult flyttas från Barracks till egen
+fraktionsbyggnad. Lägg till ballista i samma byggnad, med distinkt art/ikon och
+direktskott/hög byggnadsskada jämfört med katapultens splash. Samma betalda
+produktion, prerequisites, supply, AI/campaign/fog/teams/save/restart,
+native800-musflöde och taskvisa checks/docs/commit/push som220–228.
+Efter denna sista beställda task: full regression och HANDOFF; ingen release.

@@ -1,3 +1,4 @@
+import {updateFlightProduction} from './flightProduction';
 import {createBosses,prepareBossCombat,finishBossCombat,updateBossRewards,type BossState} from './bosses';
 import {regionDefinition} from '../config/mapRegions';
 import {hasEnemyBase} from './enemyBases';
@@ -75,6 +76,7 @@ import { updateCombat, type CombatState } from './combat';
 import { updateGathering, type GatheringState } from './gathering';
 import { placementObstacles, type PlacementState } from './placement';
 import type { ProductionState } from './production';
+import {prepareScouting} from './scouting';
 import {prepareHealers,updateHealerProduction} from './healers';
 import {updateCavalryProduction} from './cavalry';
 import { updateQueuedProduction } from './productionQueue';
@@ -204,7 +206,7 @@ function advance(state: MatchState, delta: number, scope?:CombatScope): MatchSta
   state=prepareEnemyExpansion(state);
   state=prepareEnemyConstruction(state);
   state=prepareEnemyGathering(state);
-  state=prepareEnemyScout(state);
+  state=prepareEnemyScout(state);state=prepareScouting(state,scope?.side);
   const gateFor=trafficGates(state.map,[...state.gathering.units.filter(u=>!isAir(u)).map(u=>({id:`player:${u.id}`,position:u.position,fixed:u.commandMode?.kind==='hold'||u.order.kind==='idle'&&u.navigation?.status==='arrived',half:(u.kind==='worker'?workerStats(state.gathering.faction):combatUnitStats(u,state.gathering.faction)).size/2,speed:(u.kind==='worker'?workerStats(state.gathering.faction):combatUnitStats(u,state.gathering.faction)).speed,active:u.order.kind!=='idle',waypoints:u.navigation?.waypoints??[u.target]})),...state.combat.enemies.filter(e=>!isAir(e)&&e.kind!=='ship'&&!e.footprint&&e.hp>0).map(e=>({id:`enemy:${e.id}`,position:e.position,half:enemySize(e)/2,speed:e.kind==='worker'?workerStats(state.factions?.enemy??defaultFactions.enemy).speed:enemyUnitStats(e,state.factions?.enemy).speed,active:e.work?e.work.order.kind!=='idle':e.order?.kind!=='idle',waypoints:e.navigation?.waypoints??(e.work?[e.work.target]:undefined)??(e.order?.kind==='muster'||e.order?.kind==='attack-move'?[e.order.destination]:[])}))],state.waves.elapsedSeconds,delta);
   const services=resourceServices({...state.gathering,units:[...state.gathering.units,...state.combat.enemies.flatMap(e=>{const worker=enemyWorker(e);return worker?[worker]:[];})]},state.map,state.waves.elapsedSeconds);
   state=syncDropoffs(state);
@@ -236,7 +238,7 @@ function advance(state: MatchState, delta: number, scope?:CombatScope): MatchSta
   const incoming=scenarioConfig[cleaned.scenario??'survival'].waves?updateWaves(cleaned.waves,ai.combat,delta,campaignWaveSchedule(cleaned),cleaned.campaignRun&&cleaned.map.id==='frontier'?{x:1248,y:144,spacing:32}:undefined):{combat:ai.combat,waves:{...cleaned.waves,elapsedSeconds:cleaned.waves.elapsedSeconds+delta}};
   let updated:MatchState={...cleaned,...(enemyPolicy?{enemyPolicy}:{}),...(vision?{fog:vision}:{}),research,...(enemy.state?{enemyProduction:enemy.state}:{}),...(ai.state?{enemyAI:ai.state}:{}),gathering:soldier.gathering,combat:incoming.combat,waves:incoming.waves,
     production:{...worker.production,nextUnitNumber},soldierProduction:{...soldier.production,nextUnitNumber}};
-  if(scope?.side!=='enemy'){updated=updateExtraBaseProduction(updated,baseStep.productionSeconds);updated=updateCavalryProduction(updated,ownDelta);updated=updateHealerProduction(updated,ownDelta);}
+  if(scope?.side!=='enemy'){updated=updateExtraBaseProduction(updated,baseStep.productionSeconds);updated=updateCavalryProduction(updated,ownDelta);updated=updateHealerProduction(updated,ownDelta);updated=updateFlightProduction(updated,ownDelta);}
   const beforeNavyCompletion=readyBuildings(updated);
   updated=updateTransportTransfers(updateNavy(updated,ownDelta),ownDelta);
   updated={...updated,statLedger:recordCompletions(beforeNavyCompletion,updated)};

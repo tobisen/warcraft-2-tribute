@@ -20,11 +20,12 @@ export interface OrderState {
 }
 export const orderQueueLimit=32;
 function supports(u:Unit|Ship,o:QueuedOrder):boolean {
+ if(u.kind==='soldier'&&u.archetype==='scout'&&['attack','attack-move','hunt'].includes(o.kind))return false;
  return o.kind==='hunt'?u.kind==='soldier'||u.kind==='ship'&&u.role!=='transport':o.kind==='gather'?u.kind==='worker':o.kind==='attack-move'?u.kind==='soldier':o.kind==='attack'?u.kind==='worker'||u.kind==='soldier'||u.kind==='ship'&&u.role!=='transport':true;
 }
 function start(m:MatchState,u:Unit|Ship,o:QueuedOrder):Unit|Ship {
  if(o.kind==='hunt'&&(u.kind==='soldier'||u.kind==='ship'&&u.role!=='transport')){const animal=matchAnimals(m).find(a=>a.id===o.animalId);return {...u,commandMode:undefined,orderQueue:undefined,navigation:undefined,...(u.kind==='soldier'?{attackMoveTarget:undefined,autoOrigin:undefined,autoDisabled:false}:{}),target:{...(animal?.position??u.position)},order:animal?.hp?{kind:'hunt',animalId:o.animalId}:{kind:'idle'}};}
- const selected={...u,selected:true,commandMode:undefined,orderQueue:undefined,navigation:undefined};
+ const selected={...u,scouting:undefined,selected:true,commandMode:undefined,orderQueue:undefined,navigation:undefined};
  if(o.kind==='hold')return {...selected,selected:u.selected,target:{...u.position},order:{kind:'idle'},...(u.kind==='soldier'?{autoDisabled:false,autoOrigin:undefined,attackMoveTarget:undefined}:{}),commandMode:{kind:'hold'}};
  if(u.kind==='ship'){
   const single={...m,navy:{...m.navy!,ships:[selected as Ship]}};
@@ -44,10 +45,11 @@ export function issueOrder(m:MatchState,o:QueuedOrder,append=false):MatchState {
  const shipGroup=destination&&o.kind!=='attack-move'?new Map((commandShips(m,destination)?.ships??[]).map(u=>[u.id,u])):undefined;
  const apply=(u:Unit|Ship):Unit|Ship=>{
   if(!u.selected||!supports(u,o))return u;
+  if(u.kind==='soldier')u={...u,scouting:undefined};
   const allocated=u.kind==='ship'?shipGroup?.get(u.id):group?.get(u.id);
   const command=destination&&allocated?{...o,destination:{...allocated.target}} as QueuedOrder:o;
-  if(append&&(u.order.kind!=='idle'||u.commandMode||u.orderQueue?.length))return {...u,orderQueue:[...(u.orderQueue??[]),structuredClone(command)].slice(0,orderQueueLimit)};
-  return (o.kind==='move'||o.kind==='attack-move')&&allocated?{...allocated,selected:u.selected}:start(m,u,command);
+  if(append&&(u.order.kind!=='idle'||u.commandMode||u.orderQueue?.length))return {...u,...(u.kind==='soldier'?{scouting:undefined}:{}),orderQueue:[...(u.orderQueue??[]),structuredClone(command)].slice(0,orderQueueLimit)};
+  return (o.kind==='move'||o.kind==='attack-move')&&allocated?{...allocated,...(allocated.kind==='soldier'?{scouting:undefined}:{}),selected:u.selected}:start(m,u,command);
  };
  return {...m,gathering:{...m.gathering,units:m.gathering.units.map(u=>apply(u) as Unit)},...(m.navy?{navy:{...m.navy,ships:m.navy.ships.map(u=>{const ship=apply(u) as Ship;return !append&&u.transfer&&(u.selected&&supports(u,o)||m.gathering.units.some(unit=>unit.selected&&supports(unit,o)&&u.transfer!.unitIds.includes(unit.id)))?{...ship,transfer:undefined}:ship;})}}:{})};
 }
@@ -74,7 +76,7 @@ export function prepareOrders(m:MatchState):MatchState {
    if(o.kind==='gather'&&!resourceNodes(m.gathering).some(n=>n.id===o.nodeId))continue;
    return {...start(m,u,o),orderQueue:pending.length?pending:undefined};
   }
-  return {...u,orderQueue:undefined};
+  return {...u,...(u.kind==='soldier'?{scouting:undefined}:{}),orderQueue:undefined};
  };
  return {...m,gathering:{...m.gathering,units:m.gathering.units.map(u=>apply(u) as Unit)},...(m.navy?{navy:{...m.navy,ships:m.navy.ships.map(u=>apply(u) as Ship)}}:{})};
 }
