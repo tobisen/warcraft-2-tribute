@@ -71,7 +71,7 @@ export function cleanDestroyed(state:MatchState):MatchState {
   const enemyBaseAlive=hasEnemyBase({...state.combat,enemies:liveEnemies},state.map);
   const enemyWorkers=new Set(liveEnemies.filter(e=>e.kind==='worker').map(e=>e.id));
   const readyEnemies=liveEnemies.map(e=>e.construction?.builderId&&!enemyWorkers.has(e.construction.builderId)?{...e,construction:{...e.construction,builderId:null}}:e).map(e=>e.work?.order.kind==='build'&&!liveEnemies.some(site=>site.id===`enemy-${e.work!.order.kind==='build'?e.work!.order.buildingId:''}`)?{...e,navigation:undefined,work:{...e.work,order:{kind:'idle' as const}}}:e);
-  const enemies=readyEnemies.map(e=>e.work&&!enemyBaseAlive?{...e,navigation:undefined,work:{...e.work,order:{kind:'idle' as const}}}:e.order?.kind==='defend'&&!targets.has(e.order.targetId)?{...e,navigation:undefined,order:{kind:'idle' as const}}:e.navigation?.targetId&&e.navigation.targetId!=='explore-goal'&&!targets.has(e.navigation.targetId)?{...e,navigation:undefined}:e);
+  const enemies=readyEnemies.map(e=>!enemyBaseAlive&&e.production?{...e,production:clearProduction(e.production)}:e).map(e=>e.work&&!enemyBaseAlive?{...e,navigation:undefined,work:{...e.work,order:{kind:'idle' as const}}}:e.order?.kind==='defend'&&!targets.has(e.order.targetId)?{...e,navigation:undefined,order:{kind:'idle' as const}}:e.navigation?.targetId&&e.navigation.targetId!=='explore-goal'&&!targets.has(e.navigation.targetId)?{...e,navigation:undefined}:e);
   const production=baseDead?clearProduction(state.production):state.production;
   const soldierProduction=allBasesDead||barDead?clearProduction(state.soldierProduction):state.soldierProduction;
   const enemyAlive=new Set(enemies.map(e=>e.id));

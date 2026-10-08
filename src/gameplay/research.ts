@@ -28,6 +28,7 @@ export function startResearch(g:GatheringState,r:ResearchState,p:PlacementState,
 }
 export function updateResearch(r:ResearchState,p:PlacementState,delta:number,playing=true,faction:FactionId='crown',mainReady=true):ResearchState {
  if(!playing)return r;
+ if(!mainReady)return r.job||r.queue?.length?{...r,job:null,...(r.queue?{queue:[]}:{})}:r;
  const valid=(kind:ResearchKind)=>isRoleResearch(kind)?roleResearchConfig[kind].buildings.every(b=>{const site=p[b];return !!site&&site.hp>0&&site.construction.remainingSeconds===0||!!p.producers?.some(s=>s.kind===b&&s.hp>0&&s.construction.remainingSeconds===0);}):kind==='workerTools'?mainReady:forgeReady(p)&&(researchLevel(r,kind)<1||academyReady(p));
  let queue=(r.queue??[]).filter(valid),job=r.job;
  if(job&&!valid(job.kind))job=null;

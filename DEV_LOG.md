@@ -1,3 +1,12 @@
+## 2026-10-08 — Slutlägeskorrigering RTS-232/236
+
+Vid förlust av alla huvudbaser töms aktiv/queued research och extra AI-producerköer,
+liksom befintliga primärköer. Terminal Save är nu verifierad för betald forskningskö.
+Ny riktad edge/destruction/producer/multiworker28/4 PASS2.79s och separat slutlig
+research4/1 PASS1.33s; unit524/91 PASS25.34s, strict build1.11s/diff PASS.
+Kontroller upprepade på grund av konkreta gameplayfixar, inte rutinmässigt.
+Samlad fullregression startas på denna slutliga kod.
+
 ## 2026-10-08 — RTS-236 komplettering efter slutgranskning
 
 AI:s extra harbor saknades i första leveransen. Återanvänder placeHarbor/trainShip/
