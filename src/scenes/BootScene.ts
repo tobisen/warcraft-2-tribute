@@ -30,7 +30,7 @@ import {aiProfiles,isAIProfile} from '../config/aiProfiles';
 import {issueOrder} from '../gameplay/commandOrders';
 import {airPresentation} from '../config/air';
 import {isAir} from '../gameplay/domains';
-import {spellDefinition,spellForSlot,spellSlots,type SpellId} from '../config/spells';
+import {spellDefinition,spellSlots,type SpellId} from '../config/spells';
 import {castSpell,selectedSpellCaster,spellCasterReason,spellTargetAt,spellTargetReason} from '../gameplay/spells';
 import {orderRepair} from '../gameplay/repair';
 import {defenseConfig} from '../config/defenses';
@@ -120,6 +120,8 @@ import { costs } from '../config/economy';
 import { costLabel } from '../gameplay/economy';
 import { stopSelected } from '../gameplay/orders';
 import { orderMarkers,navalOrderMarkers } from '../presentation/orders';
+import {trainHealer,healerBuilding,toggleHealAutocast} from '../gameplay/healers';
+import {selectedSpellForSlot} from '../gameplay/spells';
 import {trainCavalry,cavalryBuilding} from '../gameplay/cavalry';
 import { setRally } from '../gameplay/rally';
 import { allowsProduction, baseFootprint, type BuildingSelection } from '../gameplay/buildingSelection';
@@ -285,7 +287,7 @@ export class BootScene extends Phaser.Scene {
     super('BootScene');
   }
 
-  preload():void {for(const key of ['world','buildings','units','ui','naval','air','reference-terrain','bosses','cavalry'])if(!this.textures.exists(key))this.load.atlas(key,`${import.meta.env.BASE_URL}assets/${key}-atlas.png`,`${import.meta.env.BASE_URL}assets/${key}-atlas.json`);}
+  preload():void {for(const key of ['world','buildings','units','ui','naval','air','reference-terrain','bosses','cavalry','healer'])if(!this.textures.exists(key))this.load.atlas(key,`${import.meta.env.BASE_URL}assets/${key}-atlas.png`,`${import.meta.env.BASE_URL}assets/${key}-atlas.json`);}
 
   create(): void {
     this.audioSnapshot=undefined;this.combatSoundSnapshot=undefined;gameAudio.setPhase('menu');gameAudio.reset();
@@ -355,13 +357,13 @@ export class BootScene extends Phaser.Scene {
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.attackMoveButton.removeEventListener('click',beginAttackMove));
     this.queuePanel=document.getElementById('production-queue')!;
     const cancelJob=(event:MouseEvent)=>{
-      if(!this.gameplayActive()||!selectedBase(this.currentMatch(),this.selectedBuilding)&&!['stable','barracks','harbor'].includes(this.selectedBuilding??''))return;
+      if(!this.gameplayActive()||!selectedBase(this.currentMatch(),this.selectedBuilding)&&!['academy','stable','barracks','harbor'].includes(this.selectedBuilding??''))return;
       const button=event.target instanceof Element?event.target.closest<HTMLButtonElement>('button[data-job-id]'):null;
       if(!button||!this.queuePanel.contains(button))return;
-      const p=this.selectedBuilding==='stable'?this.placement.stable!.production:this.selectedBuilding==='harbor'?this.navy!.production:selectedBase(this.currentMatch(),this.selectedBuilding)?.production??this.soldierProduction;
+      const p=this.selectedBuilding==='academy'?this.placement.academy!.production!:this.selectedBuilding==='stable'?this.placement.stable!.production:this.selectedBuilding==='harbor'?this.navy!.production:selectedBase(this.currentMatch(),this.selectedBuilding)?.production??this.soldierProduction;
       const result=cancelProduction(this.gathering,p,button.dataset.jobId!,true);
       this.gathering=result.gathering;
-      if(this.selectedBuilding==='stable')this.placement={...this.placement,stable:{...this.placement.stable!,production:result.production}};else if(this.selectedBuilding==='harbor')this.navy={...this.navy!,production:result.production};else if(this.selectedBuilding==='base')this.production=result.production;else if(this.selectedBuilding?.startsWith('base-'))this.placement={...this.placement,bases:this.placement.bases!.map(b=>b.id===this.selectedBuilding?{...b,production:result.production}:b)};else this.soldierProduction=result.production;
+      if(this.selectedBuilding==='academy')this.placement={...this.placement,academy:{...this.placement.academy!,production:result.production}};else if(this.selectedBuilding==='stable')this.placement={...this.placement,stable:{...this.placement.stable!,production:result.production}};else if(this.selectedBuilding==='harbor')this.navy={...this.navy!,production:result.production};else if(this.selectedBuilding==='base')this.production=result.production;else if(this.selectedBuilding?.startsWith('base-'))this.placement={...this.placement,bases:this.placement.bases!.map(b=>b.id===this.selectedBuilding?{...b,production:result.production}:b)};else this.soldierProduction=result.production;
       this.syncVisuals();
     };
     this.queuePanel.addEventListener('click',cancelJob);
@@ -490,6 +492,8 @@ export class BootScene extends Phaser.Scene {
       this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>button.removeEventListener('click',research));
     }
     const stableButton=document.getElementById('build-stable') as HTMLButtonElement,beginStable=()=>begin('stable');setActionLabel(stableButton,`Build ${factions[this.factions.player].buildingNames.stable}`);stableButton.addEventListener('click',beginStable);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>stableButton.removeEventListener('click',beginStable));
+    const healerButton=document.getElementById('train-healer') as HTMLButtonElement,trainSupport=()=>{if(this.selectedBuilding!=='academy')return;this.applyMatch(trainHealer(this.currentMatch()));this.syncVisuals();};healerButton.addEventListener('click',trainSupport);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>healerButton.removeEventListener('click',trainSupport));
+    const autoHealButton=document.getElementById('autocast-heal')!,toggleHeal=()=>{this.applyMatch(toggleHealAutocast(this.currentMatch()));this.syncVisuals();};autoHealButton.addEventListener('click',toggleHeal);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>autoHealButton.removeEventListener('click',toggleHeal));
     const cavalryButton=document.getElementById('train-cavalry') as HTMLButtonElement,trainMounted=()=>{if(this.selectedBuilding!=='stable')return;this.applyMatch(trainCavalry(this.currentMatch()));this.syncVisuals();};cavalryButton.addEventListener('click',trainMounted);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>cavalryButton.removeEventListener('click',trainMounted));
     const academyButton=document.getElementById('build-academy') as HTMLButtonElement,beginAcademy=()=>begin('academy');setActionLabel(academyButton,`Build ${factions[this.factions.player].buildingNames.academy} – ${costLabel(factions[this.factions.player].buildings.academy.cost)}`);academyButton.addEventListener('click',beginAcademy);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>academyButton.removeEventListener('click',beginAcademy));
     const beginBase=()=>begin('base'),baseButton=document.getElementById('build-base') as HTMLButtonElement;setActionLabel(baseButton,`Build ${factions[this.factions.player].buildingNames.base} – ${costLabel(extraBaseConfig.cost)}`);baseButton.addEventListener('click',beginBase);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>baseButton.removeEventListener('click',beginBase));
@@ -574,7 +578,7 @@ export class BootScene extends Phaser.Scene {
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       this.soldierButton.removeEventListener('click', trainSoldier);
     });
-    for(const slot of spellSlots){const button=document.getElementById(`cast-${slot}`) as HTMLButtonElement,begin=()=>{const id=spellForSlot(this.factions.player,slot);if(!id)return;const caster=selectedSpellCaster(this.currentMatch(),id);if(!caster||spellCasterReason(this.currentMatch(),caster.id,id))return;this.placement=cancelPlacement(this.placement);this.unloadMode=null;this.attackMoveMode=false;this.patrolMode=false;this.repairMode=false;this.spellMode=this.spellMode===id?null:id;this.spellFeedback='';this.syncVisuals();};button.addEventListener('click',begin);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>button.removeEventListener('click',begin));}
+    for(const slot of spellSlots){const button=document.getElementById(`cast-${slot}`) as HTMLButtonElement,begin=()=>{const id=selectedSpellForSlot(this.currentMatch(),slot);if(!id)return;const caster=selectedSpellCaster(this.currentMatch(),id);if(!caster||spellCasterReason(this.currentMatch(),caster.id,id))return;this.placement=cancelPlacement(this.placement);this.unloadMode=null;this.attackMoveMode=false;this.patrolMode=false;this.repairMode=false;this.spellMode=this.spellMode===id?null:id;this.spellFeedback='';this.syncVisuals();};button.addEventListener('click',begin);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>button.removeEventListener('click',begin));}
     const airButton=document.getElementById('train-air') as HTMLButtonElement,trainAir=()=>{if(!allowsProduction(this.selectedBuilding,'barracks',this.placement.barracks!==null,this.gameplayActive()))return;const result=enqueueProduction(this.gathering,this.soldierProduction,{kind:'barracks',bounds:this.map,technology:technologyFor(this.currentMatch(),'player'),footprint:this.placement.barracks,ready:barracksReady(this.placement),unitType:'air'},matchPopulation(this.currentMatch()));this.gathering=result.gathering;this.soldierProduction=result.production;this.syncVisuals();};airButton.addEventListener('click',trainAir);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>airButton.removeEventListener('click',trainAir));
     const abilityButton=document.querySelector<HTMLButtonElement>('#unit-ability')!;
     const activateAbility=()=>{this.gathering=useAbility(this.gathering,this.gameplayActive());this.syncVisuals();};
@@ -765,10 +769,11 @@ export class BootScene extends Phaser.Scene {
     } else if (pointer.button === 2) {
       if(this.selectedBuilding||this.gathering.units.some(u=>u.selected))gameAudio.play('command');
       if (this.selectedBuilding) {
-        if(!selectedBase(this.currentMatch(),this.selectedBuilding)&&this.selectedBuilding!=='barracks'&&this.selectedBuilding!=='stable'){this.syncVisuals();return;}
+        if(!selectedBase(this.currentMatch(),this.selectedBuilding)&&this.selectedBuilding!=='barracks'&&this.selectedBuilding!=='stable'&&this.selectedBuilding!=='academy'){this.syncVisuals();return;}
         if (this.selectedBuilding === 'base') this.production = setRally(this.production, world, this.map,
           baseFootprint(this.gathering.base), 'base');
         else if(this.selectedBuilding.startsWith('base-'))this.placement={...this.placement,bases:this.placement.bases!.map(b=>b.id===this.selectedBuilding?{...b,production:setRally(b.production,world,this.map,b.footprint,'base')}:b)};
+        else if(this.selectedBuilding==='academy'&&this.placement.academy)this.placement={...this.placement,academy:{...this.placement.academy,production:setRally(this.placement.academy.production??{remainingSeconds:null,nextUnitNumber:Math.max(this.production.nextUnitNumber,this.soldierProduction.nextUnitNumber)},world,this.map,this.placement.academy.footprint,'barracks')}};
         else if(this.selectedBuilding==='stable')this.placement={...this.placement,stable:{...this.placement.stable!,production:setRally(this.placement.stable!.production,world,this.map,this.placement.stable!.footprint,'barracks')}};
         else this.soldierProduction = setRally(this.soldierProduction, world, this.map, this.placement.barracks, 'barracks');
         this.syncVisuals();
@@ -1015,7 +1020,7 @@ export class BootScene extends Phaser.Scene {
     this.trainButton.parentElement!.style.visibility = baseSelection ? 'visible' : 'hidden';
     this.soldierButton.parentElement!.style.visibility = this.selectedBuilding === 'barracks' ? 'visible' : 'hidden';
     const selectedProduction = baseSelection ? baseSelection.production
-      : this.selectedBuilding==='stable'?this.placement.stable?.production: this.selectedBuilding === 'barracks' ? this.soldierProduction : this.selectedBuilding==='harbor'?this.navy!.production:null;
+      : this.selectedBuilding==='academy'?this.placement.academy?.production: this.selectedBuilding==='stable'?this.placement.stable?.production: this.selectedBuilding === 'barracks' ? this.soldierProduction : this.selectedBuilding==='harbor'?this.navy!.production:null;
     renderSelectedQueue(selectedQueue(this.currentMatch(),this.selectedBuilding,this.gameplayActive()),(canvas,asset)=>this.paintPortrait(canvas,asset));
     this.rallyMarker.setVisible(selectedProduction?.rally !== undefined);
     if (selectedProduction?.rally) this.rallyMarker.setPosition(selectedProduction.rally.x, selectedProduction.rally.y);
@@ -1032,6 +1037,8 @@ export class BootScene extends Phaser.Scene {
     this.productionStatus.textContent = productionLabel(this.gathering,baseSelection?.production??this.production, this.outcome,{kind:'base'},population);
     const barracks = { kind: 'barracks' as const, bounds:this.map,technology:technologyFor(this.currentMatch(),'player'), footprint: this.placement.barracks, ready:barracksReady(this.placement) };
     this.soldierButton.disabled = !allowsProduction(this.selectedBuilding, 'barracks', this.placement.barracks !== null, this.gameplayActive()) || !this.gameplayActive() || !canEnqueue(this.gathering, this.soldierProduction, barracks,population);
+    const healerButton=document.getElementById('train-healer') as HTMLButtonElement;setActionLabel(healerButton,`Train ${factions[this.factions.player].unitNames.healer}`);healerButton.disabled=this.selectedBuilding!=='academy'||!this.gameplayActive();
+    (document.getElementById('autocast-heal') as HTMLButtonElement).disabled=!this.gameplayActive();
     const cavalryButton=document.getElementById('train-cavalry') as HTMLButtonElement;setActionLabel(cavalryButton,`Train ${factions[this.factions.player].unitNames.cavalry}`);cavalryButton.disabled=this.selectedBuilding!=='stable'||!this.gameplayActive()||!this.placement.stable||!canEnqueue(this.gathering,this.placement.stable.production,cavalryBuilding(this.currentMatch()),population);
     const stableButton=document.getElementById('build-stable') as HTMLButtonElement;stableButton.disabled=!this.gameplayActive()||this.placement.active||!!this.placement.stable||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected);
     const airButton=document.getElementById('train-air') as HTMLButtonElement;setActionLabel(airButton,`Train ${factions[this.factions.player].unitNames.air}`);airButton.disabled=!allowsProduction(this.selectedBuilding,'barracks',this.placement.barracks!==null,this.gameplayActive())||!canEnqueue(this.gathering,this.soldierProduction,{...barracks,unitType:'air'},population);
@@ -1071,7 +1078,7 @@ export class BootScene extends Phaser.Scene {
       }
 
       if (!this.enemyVisuals.has(enemy.id)) this.enemyVisuals.set(enemy.id, {
-        body: enemy.footprint?this.add.image(enemy.position.x,enemy.position.y,enemy.buildingType==='stable'?'cavalry':'buildings',buildingFrame((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base','enemy',enemy.construction?.remainingSeconds??0,enemy.buildingType==='outpost'||enemy.buildingType==='academy'?10:5,(enemy.faction??this.factions.enemy))).setOrigin(buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').x,buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').y):enemy.kind==='ship'?this.add.image(enemy.position.x,enemy.position.y,'naval',`${factions[(enemy.faction??this.factions.enemy)].artPrefix}transport-enemy-s-idle-0`).setOrigin(.5,40/64):this.add.image(enemy.position.x,enemy.position.y,isAir(enemy)?'air':enemy.role==='cavalry'?'cavalry':'units',isAir(enemy)?`${(enemy.faction??this.factions.enemy)}-air-enemy-s-idle-0`:`${factions[(enemy.faction??this.factions.enemy)].artPrefix}${enemy.kind==='worker'?'worker':enemy.role??'soldier'}-enemy-s-idle-0`).setOrigin(unitOrigin(enemy.kind==='worker'?'worker':enemy.role??'soldier').x,unitOrigin(enemy.kind==='worker'?'worker':enemy.role??'soldier').y),
+        body: enemy.footprint?this.add.image(enemy.position.x,enemy.position.y,enemy.buildingType==='stable'?'cavalry':'buildings',buildingFrame((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base','enemy',enemy.construction?.remainingSeconds??0,enemy.buildingType==='outpost'||enemy.buildingType==='academy'?10:5,(enemy.faction??this.factions.enemy))).setOrigin(buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').x,buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').y):enemy.kind==='ship'?this.add.image(enemy.position.x,enemy.position.y,'naval',`${factions[(enemy.faction??this.factions.enemy)].artPrefix}transport-enemy-s-idle-0`).setOrigin(.5,40/64):this.add.image(enemy.position.x,enemy.position.y,isAir(enemy)?'air':enemy.role==='healer'?'healer':enemy.role==='cavalry'?'cavalry':'units',isAir(enemy)?`${(enemy.faction??this.factions.enemy)}-air-enemy-s-idle-0`:`${factions[(enemy.faction??this.factions.enemy)].artPrefix}${enemy.kind==='worker'?'worker':enemy.role??'soldier'}-enemy-s-idle-0`).setOrigin(unitOrigin(enemy.kind==='worker'?'worker':enemy.role??'soldier').x,unitOrigin(enemy.kind==='worker'?'worker':enemy.role??'soldier').y),
         label: this.add.text(0, 0, '', { fontSize: '14px', color: '#ffffff' }).setOrigin(0.5, 0),
       });
       const playerColor=this.multiplePlayers?.roster.find(p=>p.id===enemy.playerId)?.color;
@@ -1081,9 +1088,10 @@ export class BootScene extends Phaser.Scene {
       visual.body.setPosition(enemy.position.x, enemy.position.y);
       if(enemy.footprint)visual.body.setFrame(buildingFrame(enemy.buildingType==='outpost'?'base':enemy.buildingType??'base','enemy',enemy.construction?.remainingSeconds??0,enemy.buildingType==='outpost'||enemy.buildingType==='academy'?10:5,(enemy.faction??this.factions.enemy),enemy.hp));
       if(enemy.kind==='ship')this.animateUnit(enemy.id,visual.body,enemy.position,'idle','transport','enemy',undefined,enemy.faction);
-      if(!enemy.footprint&&enemy.kind!=='ship'){const target=enemy.order?.kind==='defend'?this.gathering.units.find(u=>enemy.order?.kind==='defend'&&u.id===enemy.order.targetId)?.position:enemy.navigation?.targetId==='base'?this.gathering.base:undefined;const action:Action=enemy.navigation?.targetId&&enemy.navigation.targetId!=='explore-goal'&&enemy.navigation.status==='arrived'?'attack':enemy.work?.order.kind==='gather'?'gather':'idle';this.animateUnit(enemy.id,visual.body,enemy.position,action,enemy.kind==='worker'?'worker':enemy.role??'soldier','enemy',target,enemy.faction);}
+      if(!enemy.footprint&&enemy.kind!=='ship'){const target=enemy.order?.kind==='defend'?this.gathering.units.find(u=>enemy.order?.kind==='defend'&&u.id===enemy.order.targetId)?.position:enemy.navigation?.targetId==='base'?this.gathering.base:undefined;const action:Action=enemy.role==='healer'&&(enemy.healFlash??0)>this.waves.elapsedSeconds?'attack':enemy.navigation?.targetId&&enemy.navigation.targetId!=='explore-goal'&&enemy.navigation.status==='arrived'?'attack':enemy.work?.order.kind==='gather'?'gather':'idle';this.animateUnit(enemy.id,visual.body,enemy.position,action,enemy.kind==='worker'?'worker':enemy.role??'soldier','enemy',target,enemy.faction);}
       visual.label.setPosition(enemy.position.x,enemy.position.y-(enemy.kind==='ship'?48:90)).setVisible(!!enemy.footprint||enemy.kind==='ship').setText(`${enemy.buildingType==='outpost'?uiText.resourceOutpost:''}${enemy.kind==='ship'?'Transport':enemy.buildingType==='harbor'?uiText.harbor:factions[(enemy.faction??this.factions.enemy)].buildingNames[(enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base']} ${Math.ceil(enemy.hp)} HP`);
       for(const kind of ['buff','debuff'])if(enemy.spellEffects?.some(e=>spellDefinition(e.spell,e.sourceFaction).kind===kind))this.hpBars?.lineStyle(2,kind==='buff'?0x86dbe6:0xc18ce5,.9).strokeCircle(enemy.position.x,enemy.position.y,kind==='buff'?18:21);
+      if((enemy.healFlash??0)>this.waves.elapsedSeconds)this.hpBars?.lineStyle(3,0x82e6a0,.9).strokeCircle(enemy.position.x,enemy.position.y,19);
       if(isAir(enemy)){visual.body.setY(enemy.position.y-airPresentation.height).setDepth(12);this.hpBars?.fillStyle(0x091311,.45).fillEllipse(enemy.position.x,enemy.position.y,28,9);}
       this.drawHP(enemy.position,enemy.hp,enemyMaximumHP(enemy,(enemy.faction??this.factions.enemy)),enemy.footprint?64:24,enemy.footprint?70:enemy.kind==='ship'?29:unitOverlayOffsets(enemy.kind==='worker'?'worker':enemy.role??'soldier',(enemy.faction??this.factions.enemy)).hp,tint);
     }
@@ -1103,12 +1111,13 @@ export class BootScene extends Phaser.Scene {
       const enemy=unit.order.kind==='attack'?visibleEnemies.find(e=>e.hp>0&&unit.order.kind==='attack'&&e.id===unit.order.enemyId):undefined;
       const attackRange=unit.kind==='soldier'?(unit.archetype==='archer'?archerConfig.range:unit.archetype==='catapult'?catapultConfig.range:combatConfig.soldierRange):workerCombatConfig.range;
       const animalTarget=unit.order.kind==='hunt'?animalPoses.find(a=>unit.order.kind==='hunt'&&a.id===unit.order.animalId):undefined;
-      const action:Action=unit.order.kind==='hunt'&&unit.navigation?.status==='arrived'?'attack':unit.order.kind==='attack'&&enemy&&canInteract(this.map,unit.position,enemyBody(enemy),attackRange)?'attack':unit.order.kind==='gather'&&marker&&Math.hypot(marker.position.x-unit.position.x,marker.position.y-unit.position.y)<=gatheringConfig.nodeRadius+gatheringConfig.range?'gather':(unit.order.kind==='build'||unit.order.kind==='repair')&&unit.navigation?.status==='arrived'?'build':'idle';
+      const action:Action=unit.kind==='soldier'&&unit.archetype==='healer'&&(unit.healFlash??0)>this.waves.elapsedSeconds?'attack':unit.order.kind==='hunt'&&unit.navigation?.status==='arrived'?'attack':unit.order.kind==='attack'&&enemy&&canInteract(this.map,unit.position,enemyBody(enemy),attackRange)?'attack':unit.order.kind==='gather'&&marker&&Math.hypot(marker.position.x-unit.position.x,marker.position.y-unit.position.y)<=gatheringConfig.nodeRadius+gatheringConfig.range?'gather':(unit.order.kind==='build'||unit.order.kind==='repair')&&unit.navigation?.status==='arrived'?'build':'idle';
       this.animateUnit(unit.id,visual.body,unit.position,action,unit.kind==='worker'?'worker':unit.archetype??'soldier','player',animalTarget?.position??enemy?.position??marker?.position);
       visual.ring.setPosition(unit.position.x, unit.position.y).setVisible(unit.selected);
       visual.cargo.setPosition(unit.position.x, unit.position.y - unitOverlayOffsets(unit.kind==='worker'?'worker':unit.archetype??'soldier',this.factions.player).cargo)
         .setVisible(unit.kind==='worker'&&unit.selected).setText(unit.kind==='worker'?`${unit.cargo.toFixed(1)}/${gatheringConfig.capacity} ${unit.cargoType??'wood'}`:'');
       if(unit.kind==='soldier')for(const kind of ['buff','debuff'])if(unit.spellEffects?.some(e=>spellDefinition(e.spell,e.sourceFaction).kind===kind))this.hpBars?.lineStyle(2,kind==='buff'?0x86dbe6:0xc18ce5,.9).strokeCircle(unit.position.x,unit.position.y,kind==='buff'?18:21);
+      if((unit.healFlash??0)>this.waves.elapsedSeconds)this.hpBars?.lineStyle(3,0x82e6a0,.9).strokeCircle(unit.position.x,unit.position.y,19);
       if(isAir(unit)){visual.body.setY(unit.position.y-airPresentation.height).setDepth(12);this.hpBars?.fillStyle(0x091311,.45).fillEllipse(unit.position.x,unit.position.y,28,9);}
       this.drawHP(unit.position,unit.hp??combatConfig.workerHP,unit.kind==='worker'?factions[this.factions.player].units.worker.hp:factions[this.factions.player].units[unit.archetype??'soldier'].hp,unit.kind==='soldier'&&unit.archetype==='catapult'?40:24,unitOverlayOffsets(unit.kind==='worker'?'worker':unit.archetype??'soldier',this.factions.player).hp,0x7398c1);
     }
@@ -1118,7 +1127,7 @@ export class BootScene extends Phaser.Scene {
     for(const [id,e] of this.impacts){if(!impactAlive(e.impact,this.visualTime,p=>isVisible(this.fog,'player',p))){e.visual.destroy();this.impacts.delete(id);}else e.visual.setFrame(impactFrame(e.impact,this.visualTime));}
     for(const [id,d] of this.deaths){if(!effectAlive(d.effect,this.visualTime,isVisible(this.fog,'player',d.effect.motion.position))){d.visual.destroy();this.deaths.delete(id);}else d.visual.setFrame(unitFrame(d.effect.motion,this.visualTime));}
     if(this.fogOverlay)drawFog(this.fogOverlay,this.fog,this.fogPreview??'player');
-    for(const slot of spellSlots){const id=spellForSlot(this.factions.player,slot),button=document.getElementById(`cast-${slot}`) as HTMLButtonElement,caster=id?selectedSpellCaster(this.currentMatch(),id):undefined;button.disabled=!id||!caster||!!spellCasterReason(this.currentMatch(),caster.id,id);setActionLabel(button,id?spellDefinition(id,this.factions.player).name:'Unavailable');button.setAttribute('aria-pressed',String(!!id&&this.spellMode===id));}
+    for(const slot of spellSlots){const id=selectedSpellForSlot(this.currentMatch(),slot),button=document.getElementById(`cast-${slot}`) as HTMLButtonElement,caster=id?selectedSpellCaster(this.currentMatch(),id):undefined;button.disabled=!id||!caster||!!spellCasterReason(this.currentMatch(),caster.id,id);setActionLabel(button,id?spellDefinition(id,this.factions.player).name:'Unavailable');button.setAttribute('aria-pressed',String(!!id&&this.spellMode===id));}
     for(const shortcut of hotkeys){const button=document.getElementById(shortcut.button) as HTMLButtonElement;setActionLabel(button,`${button.textContent?.replace(/\s+\[[A-Z0-9]+\]$/,'')} [${shortcut.key}]`);}
     for(const id of ['hold-position','patrol-units'])(document.getElementById(id) as HTMLButtonElement).disabled=!this.gameplayActive()||!this.allSelectable().some(u=>u.selected);
     renderActionIcons(this.factions.player,(atlas,name)=>{const f=this.textures.get(atlas).get(name);return {image:f.source.image as HTMLImageElement,x:f.cutX,y:f.cutY,width:f.cutWidth,height:f.cutHeight};});

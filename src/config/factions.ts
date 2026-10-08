@@ -16,7 +16,7 @@ import {forgeConfig,upgradeConfig,academyConfig} from './upgrades';
 // Stable identity is independent of team ownership and presentation.
 export const factionIds=['crown','clans','elves','dwarves','goblins'] as const;
 export type FactionId=typeof factionIds[number];
-export type UnitRole='worker'|'soldier'|'archer'|'catapult'|'specialist'|'air'|'cavalry';
+export type UnitRole='worker'|'soldier'|'archer'|'catapult'|'specialist'|'air'|'cavalry'|'healer';
 export type BuildingRole='base'|'barracks'|'farm'|'forge'|'academy'|'stable';
 export type UpgradeRole='attack'|'defense';
 export interface MatchFactions {player:FactionId;enemy:FactionId}
@@ -26,15 +26,16 @@ export const isFactionId=(value:unknown):value is FactionId=>factionIds.some(id=
 export interface TechnologyState {academyAllowed?:boolean;campaignContent?:import('./campaignContent').CampaignContent;baseLevel?:number;buildings:readonly BuildingRole[];research:Partial<Record<UpgradeRole,number>>}
 export interface UnitPrerequisites {baseLevel?:number;buildings?:readonly BuildingRole[];research?:Partial<Record<UpgradeRole,number>>}
 interface UnitData {
+  healable?:boolean;
   domain?:'land'|'air';
   targets?:readonly TargetDomain[];
   damageByDomain?:Partial<Record<TargetDomain,number>>;
   mana?:ManaDefinition;
   combatMode?:'melee'|'projectile';
-  art?:'worker'|'soldier'|'archer'|'catapult'|'specialist'|'air'|'cavalry';
+  art?:'worker'|'soldier'|'archer'|'catapult'|'specialist'|'air'|'cavalry'|'healer';
   prerequisites?:UnitPrerequisites;
   role:UnitRole;cost:ResourceCost;durationSeconds:number;supply:number;
-  trainedAt:'base'|'barracks'|'stable';hp:number;speed:number;size:number;
+  trainedAt:'base'|'barracks'|'stable'|'academy';hp:number;speed:number;size:number;
   range?:number;aggroRange?:number;damagePerSecond?:number;damage?:number;
   attackInterval?:number;projectileSpeed?:number;projectileLifetime?:number;
   hitRadius?:number;splashRadius?:number;
@@ -70,9 +71,9 @@ const units={
     supply:1,trainedAt:'barracks',hp:combatConfig.soldierHP,speed:soldierStats.speed,size:soldierStats.size,
     range:combatConfig.soldierRange,aggroRange:combatConfig.soldierAggroRange,damagePerSecond:combatConfig.soldierDamagePerSecond},
   archer:{role:'archer',trainedAt:'barracks',...archerData},
-  catapult:{role:'catapult',trainedAt:'barracks',...catapultData},
+  catapult:{healable:false,role:'catapult',trainedAt:'barracks',...catapultData},
  specialist:{role:'specialist',combatMode:'melee',art:'soldier',trainedAt:'barracks',cost:{wood:30,gold:15},durationSeconds:8,supply:2,hp:100,speed:130,size:24,range:32,aggroRange:140,damagePerSecond:14,prerequisites:{buildings:['forge'],research:{defense:1}}},
-} satisfies Record<Exclude<UnitRole,'air'|'cavalry'>,UnitData>;
+} satisfies Record<Exclude<UnitRole,'air'|'cavalry'|'healer'>,UnitData>;
 const buildings:Record<BuildingRole,BuildingData>={
   base:{role:'base',cost:{wood:0,gold:0},hp:combatConfig.baseHP,size:gatheringConfig.baseSize,
     placeable:false,constructionSeconds:0,constructionRange:0,populationCapacity:populationConfig.baseCap},
@@ -94,10 +95,10 @@ const upgrades:Record<UpgradeRole,UpgradeData>={
 };
 const factionNames={crown:{label:uiText.crownAlliance,unitNames:{worker:uiText.worker,soldier:uiText.guard,archer:uiText.archer,catapult:uiText.catapult,specialist:'Banner Guard'},buildingNames:{academy:'Royal Academy',base:uiText.keep,barracks:uiText.barracks,farm:uiText.farm,forge:uiText.forge}},clans:{label:uiText.ironClan,unitNames:{worker:uiText.clanWorker,soldier:uiText.axeWarrior,archer:uiText.hunter,catapult:uiText.stoneThrower,specialist:'Raider'},buildingNames:{academy:'War Circle',base:uiText.stronghold,barracks:uiText.warHut,farm:uiText.cattlePen,forge:uiText.smithy}},elves:{label:'Elves',unitNames:{worker:'Grove Tender',soldier:'Warden',archer:'Longbow',catapult:'Ballista',specialist:'Marksman'},buildingNames:{academy:'Moon Archive',base:'Grove Hall',barracks:'Ranger Lodge',farm:'Garden',forge:'Moon Workshop'}},dwarves:{label:'Dwarves',unitNames:{worker:'Miner',soldier:'Iron Guard',archer:'Crossbow',catapult:'Cannon',specialist:'Bulwark'},buildingNames:{academy:'Runestone Academy',base:'Stone Hold',barracks:'Guard Hall',farm:'Storehouse',forge:'Foundry'}},goblins:{label:'Goblins',unitNames:{worker:'Tinkerer',soldier:'Scrapper',archer:'Slinger',catapult:'Mortar',specialist:'Grenadier'},buildingNames:{academy:'Engineering College',base:'Workshop Hall',barracks:'Scrap Yard',farm:'Supply Shack',forge:'Lab'}}};
 function defineFaction(id:FactionId):FactionDefinition {
-  const recipes:Record<UnitRole,UnitData>={...units,cavalry:{role:'cavalry',combatMode:'melee',trainedAt:'stable',cost:{wood:45,gold:25},durationSeconds:12,supply:2,hp:110,speed:230,size:28,range:32,aggroRange:140,damagePerSecond:20,prerequisites:{baseLevel:2,buildings:['stable']}},air:{...airConfig[id],role:'air' as const,domain:'air' as const,combatMode:'projectile' as const,trainedAt:'barracks' as const,size:28,aggroRange:240,projectileSpeed:300,projectileLifetime:3,hitRadius:18,prerequisites:{buildings:['forge'] as const,research:{attack:1,defense:1}}}};
+  const recipes:Record<UnitRole,UnitData>={...units,healer:{role:'healer',combatMode:'melee',trainedAt:'academy',cost:{wood:40,gold:30},durationSeconds:10,supply:2,hp:55,speed:125,size:24,range:24,aggroRange:80,damagePerSecond:2,mana:{max:100,initial:50,regenerationPerSecond:1,role:'Healing support'},prerequisites:{buildings:['academy']}},cavalry:{role:'cavalry',combatMode:'melee',trainedAt:'stable',cost:{wood:45,gold:25},durationSeconds:12,supply:2,hp:110,speed:230,size:28,range:32,aggroRange:140,damagePerSecond:20,prerequisites:{baseLevel:2,buildings:['stable']}},air:{...airConfig[id],role:'air' as const,domain:'air' as const,combatMode:'projectile' as const,trainedAt:'barracks' as const,size:28,aggroRange:240,projectileSpeed:300,projectileLifetime:3,hitRadius:18,prerequisites:{buildings:['forge'] as const,research:{attack:1,defense:1}}}};
   const unitDefinitions={} as FactionDefinition['units'];
   for(const role of Object.keys(recipes) as UnitRole[]){const data=recipes[role];unitDefinitions[role]={targets:role==='archer'?bowTargets:role==='catapult'?siegeTargets:groundMeleeTargets,...data,cost:{...data.cost},id:`${id}:unit:${role}`,faction:id};}
-  return {id,...factionNames[id],unitNames:{...factionNames[id].unitNames,cavalry:({crown:'Knight',clans:'Wolf Rider',elves:'Stag Rider',dwarves:'Ram Rider',goblins:'Boar Rider'})[id],air:airConfig[id].name},buildingNames:{...factionNames[id].buildingNames,stable:({crown:'Stable',clans:'Wolf Den',elves:'Stag Sanctuary',dwarves:'Ram Enclosure',goblins:'Boar Pen'})[id]},artPrefix:id==='crown'?'':`${id}-`,naval:{harbor:{...navyConfig.harbor,cost:{...navyConfig.harbor.cost},name:'Harbor'},units:{warship:{...navyConfig.ship,cost:{...navyConfig.ship.cost},id:`${id}:naval:warship`,role:'warship',name:'Warship'},transport:{...navyConfig.ship,...navyConfig.transport,cost:{...navyConfig.transport.cost},id:`${id}:naval:transport`,role:'transport',name:'Transport'}}},roster:['worker','soldier','archer','catapult'],
+  return {id,...factionNames[id],unitNames:{...factionNames[id].unitNames,healer:({crown:'Chaplain',clans:'Spirit Mender',elves:'Grove Healer',dwarves:'Rune Priest',goblins:'Field Medic'})[id],cavalry:({crown:'Knight',clans:'Wolf Rider',elves:'Stag Rider',dwarves:'Ram Rider',goblins:'Boar Rider'})[id],air:airConfig[id].name},buildingNames:{...factionNames[id].buildingNames,stable:({crown:'Stable',clans:'Wolf Den',elves:'Stag Sanctuary',dwarves:'Ram Enclosure',goblins:'Boar Pen'})[id]},artPrefix:id==='crown'?'':`${id}-`,naval:{harbor:{...navyConfig.harbor,cost:{...navyConfig.harbor.cost},name:'Harbor'},units:{warship:{...navyConfig.ship,cost:{...navyConfig.ship.cost},id:`${id}:naval:warship`,role:'warship',name:'Warship'},transport:{...navyConfig.ship,...navyConfig.transport,cost:{...navyConfig.transport.cost},id:`${id}:naval:transport`,role:'transport',name:'Transport'}}},roster:['worker','soldier','archer','catapult'],
     units:unitDefinitions,
     buildings:Object.fromEntries(Object.entries(buildings).map(([role,data])=>[role,{...data,cost:{...data.cost},id:`${id}:building:${role}`,faction:id}])) as FactionDefinition['buildings'],
     upgrades:Object.fromEntries(Object.entries(upgrades).map(([role,data])=>[role,{...data,cost:{...data.cost},id:`${id}:upgrade:${role}`,faction:id}])) as FactionDefinition['upgrades'],
@@ -195,3 +196,6 @@ for(const id of factionIds)factions[id].units.specialist.mana={...manaConfig[id]
 for(const id of factionIds){factions[id].roster=[...factions[id].roster,'air'];if(id==='elves')factions[id].units.specialist.targets=bowTargets;}
 
 for(const id of factionIds)factions[id].roster=[...factions[id].roster,'cavalry'];
+
+for(const id of factionIds)factions[id].roster=[...factions[id].roster,'healer'];
+factions.dwarves.units.air.healable=false;factions.goblins.units.air.healable=false;

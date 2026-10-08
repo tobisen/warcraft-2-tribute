@@ -57,6 +57,7 @@
   "src/gameplay/gates.test.ts",
   "src/gameplay/goldStock.test.ts",
   "src/gameplay/groupMovement.test.ts",
+  "src/gameplay/healers.test.ts",
   "src/gameplay/highlands.test.ts",
   "src/gameplay/highscoreSave.test.ts",
   "src/gameplay/humans.test.ts",

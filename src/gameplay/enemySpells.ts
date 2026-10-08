@@ -25,6 +25,6 @@ export function prepareEnemySpells(m:MatchState):MatchState{
 export function untilSpellBoundary(m:MatchState):number{
  const effects=[...m.gathering.units.flatMap(u=>u.kind==='soldier'?u.spellEffects??[]:[]),...m.combat.enemies.flatMap(e=>e.spellEffects??[])];
  const expiry=Math.min(Infinity,...effects.map(e=>e.remainingSeconds).filter(t=>t>1e-9));
- const decision=m.combat.enemies.some(e=>e.hp>0&&e.kind==='unit'&&e.role==='specialist')?(Math.floor((m.waves.elapsedSeconds+1e-9)/spellAIConfig.decisionSeconds)+1)*spellAIConfig.decisionSeconds-m.waves.elapsedSeconds:Infinity;
+ const decision=(m.gathering.units.some(u=>u.kind==='soldier'&&u.hp>0&&u.archetype==='healer')||m.combat.enemies.some(e=>e.hp>0&&e.kind==='unit'&&(e.role==='specialist'||e.role==='healer')))?(Math.floor((m.waves.elapsedSeconds+1e-9)/spellAIConfig.decisionSeconds)+1)*spellAIConfig.decisionSeconds-m.waves.elapsedSeconds:Infinity;
  return Math.min(expiry,decision);
 }

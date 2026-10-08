@@ -5,6 +5,7 @@ import {matchFog} from './matchFog';
 import {updateAutomaticGates,withGateRules} from './gates';
 import {enemyBody} from './enemyBody';
 import {abilityEffects} from './abilities';
+import {prepareHealers} from './healers';
 import {untilSpellBoundary} from './enemySpells';
 import type {PlayerDefinition,PlayerId} from '../config/players';
 import {supportedPlayerCounts} from '../config/players';
@@ -78,7 +79,7 @@ export function syncProjectedCombat(m:MatchState):MatchState{
  if(!m.multiplePlayers)return m;
  const byId=new Map(m.combat.enemies.map(e=>[e.id,e]));
  return {...m,multiplePlayers:{...m.multiplePlayers,ai:m.multiplePlayers.ai.map(bot=>({...bot,state:{...bot.state,combat:{...bot.state.combat,enemies:bot.state.combat.enemies.map(e=>{
- const updated=byId.get(globalEntityId(bot.id,e.id));return updated?{...e,hp:updated.hp,mana:updated.mana,spellEffects:updated.spellEffects,spellCooldowns:updated.spellCooldowns}:e;
+ const updated=byId.get(globalEntityId(bot.id,e.id));return updated?{...e,hp:updated.hp,healFlash:updated.healFlash,mana:updated.mana,spellEffects:updated.spellEffects,spellCooldowns:updated.spellCooldowns}:e;
  })}}}))}};
 }
 function targets(m:MatchState,actor:PlayerId):PlayerTarget[]{
@@ -125,6 +126,7 @@ export function updateMultiplePlayers(m:MatchState,delta:number):MatchState{
  current.outcome=teamOutcome(current);
  if(current.outcome!=='playing')return shareTeamVision(current);
  while(remaining>1e-9&&current.outcome==='playing'){
+  current=prepareHealers(shareTeamVision(current));
   const timed={...current,gathering:{...current.gathering,units:playerEliminated(current,'player')?[]:current.gathering.units},combat:{...current.combat,enemies:current.combat.enemies.filter(e=>!playerEliminated(current,e.playerId??'enemy'))}};
   const activeTimes=[...timed.gathering.units.flatMap(u=>u.kind==='soldier'?[u.ability?.activeSeconds??0]:[]),...timed.combat.enemies.map(e=>e.ability?.activeSeconds??0)].filter(t=>t>1e-9);
   const step=Math.min(remaining,.25,untilSpellBoundary(timed),...activeTimes),snapshot=current,damage=new Map<string,number>(),sources=new Map<string,PlayerId>();

@@ -39,7 +39,7 @@ export interface PlacementState {
   defenses?:import('./towers').Defense[];nextDefenseNumber?:number;
   kind?:'stable'|'academy'|'base'|'harbor'|'barracks'|'farm'|'forge'|'tower'|'wall'|'gate';
   stable?:{id:'stable';owner:'player';hp:number;footprint:Footprint;construction:ConstructionJob;production:import('./production').ProductionState};
-  academy?:{id:'academy';owner:'player';hp:number;footprint:Footprint;construction:ConstructionJob};
+  academy?:{id:'academy';owner:'player';hp:number;footprint:Footprint;construction:ConstructionJob;production?:import('./production').ProductionState};
   forge?:{id:'forge';owner:'player';hp:number;footprint:Footprint;construction:ConstructionJob};
   farms?:Farm[];
   nextFarmNumber?:number;

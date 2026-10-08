@@ -1,0 +1,160 @@
+{
+  "fixture": "Actual menu/clicks; resource-cheat funding, seeded completed Forge/research I; .1s gameplay ticks; wounded target staging for Heal probes",
+  "results": [
+    {
+      "faction": "crown",
+      "actualMouseAcademyBuildTrainManualHealAutocast": true,
+      "queued": {
+        "wood": 99880,
+        "gold": 99930,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "healer",
+          "supply": 2,
+          "cost": {
+            "wood": 40,
+            "gold": 30
+          },
+          "durationSeconds": 10,
+          "remainingSeconds": 10
+        }
+      },
+      "manual": {
+        "mana": 30,
+        "cooldown": 6,
+        "hp": 30,
+        "pulse": true
+      },
+      "auto": {
+        "hp": 30,
+        "enabled": true
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "clans",
+      "actualMouseAcademyBuildTrainManualHealAutocast": true,
+      "queued": {
+        "wood": 99880,
+        "gold": 99930,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "healer",
+          "supply": 2,
+          "cost": {
+            "wood": 40,
+            "gold": 30
+          },
+          "durationSeconds": 10,
+          "remainingSeconds": 10
+        }
+      },
+      "manual": {
+        "mana": 30,
+        "cooldown": 6,
+        "hp": 35,
+        "pulse": true
+      },
+      "auto": {
+        "hp": 35,
+        "enabled": true
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "elves",
+      "actualMouseAcademyBuildTrainManualHealAutocast": true,
+      "queued": {
+        "wood": 99880,
+        "gold": 99930,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "healer",
+          "supply": 2,
+          "cost": {
+            "wood": 40,
+            "gold": 30
+          },
+          "durationSeconds": 10,
+          "remainingSeconds": 10
+        }
+      },
+      "manual": {
+        "mana": 30,
+        "cooldown": 6,
+        "hp": 28,
+        "pulse": true
+      },
+      "auto": {
+        "hp": 28,
+        "enabled": true
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "dwarves",
+      "actualMouseAcademyBuildTrainManualHealAutocast": true,
+      "queued": {
+        "wood": 99880,
+        "gold": 99930,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "healer",
+          "supply": 2,
+          "cost": {
+            "wood": 40,
+            "gold": 30
+          },
+          "durationSeconds": 10,
+          "remainingSeconds": 10
+        }
+      },
+      "manual": {
+        "mana": 30,
+        "cooldown": 6,
+        "hp": 35,
+        "pulse": true
+      },
+      "auto": {
+        "hp": 35,
+        "enabled": true
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "goblins",
+      "actualMouseAcademyBuildTrainManualHealAutocast": true,
+      "queued": {
+        "wood": 99880,
+        "gold": 99930,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "healer",
+          "supply": 2,
+          "cost": {
+            "wood": 40,
+            "gold": 30
+          },
+          "durationSeconds": 10,
+          "remainingSeconds": 10
+        }
+      },
+      "manual": {
+        "mana": 30,
+        "cooldown": 6,
+        "hp": 24,
+        "pulse": true
+      },
+      "auto": {
+        "hp": 24,
+        "enabled": true
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    }
+  ]
+}

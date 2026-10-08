@@ -46,7 +46,7 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 ## Current Focus
 
 Nytt mandat 2026-10-08: RTS-220–228 i ordning, en task åt gången.
-RTS-220 grafik rättad och verifierad; RTS-221–228 fortsätter i ordning utan tidigare förtida stopp. Städning, release och kartombyggnad är pausade.
+RTS-220 grafik och RTS-221 verifierade; RTS-222 är nästa task, därefter223–228. Städning, release och kartombyggnad är pausade.
 Taskvis riktade tester, native800-browser, unit/strict build/diff, docs och
 commit/push till origin/main. Full regression vid etappslut; stanna efter228.
 Befintliga style.css/units.mjs/docs/:memory:.ses bevaras. Ingen delegering.
@@ -5693,12 +5693,21 @@ representativa Crown/Elf-bilder granskade. Riktade30/3, unit511/89 och strict
 build PASS. Begränsningar: mirrored/shaded perspectives, collapse/fade death
 samt procedural construction, inte den tidigare skissartade slutbilden.
 
-### RTS-221 — Healer — Todo
+### RTS-221 — Healer — Done
 Support producerad i befintlig academy där möjligt. Mana/cooldown/visuell Heal,
 manuell och valbar autocast. Levande egna/allierade, synliga skadade giltiga
 enheter inom range, inte self/buildings/dead och aldrig över maxHP. Samordna
 flera healers; definiera mekaniska mål. Återanvänd spells. Testa mål/lag/mana/
 cooldown/autocast/konkurrens/död/range samt beständigt state/save/restart.
+
+RTS-221 belägg: riktade102/11 PASS24.85s, unit511/89 PASS20.75s, strict build
+PASS och diff/review. Femras actual mouse Academy build/train/manual Heal/
+autocast/TechTree/SaveLoad/restart native800 PASS0pageerrors. Fixtures seedar
+Forge/research I och cheatfinansiering; faktiska HP/mana/cooldown och output
+kontrolleras. [Browser](artifacts/rts-221/browser.json). Biologiska workers/
+allies/organic air giltiga; self/dead/buildings/catapult/mechanical air/ships
+ogiltiga. Shared costs10s, opt-in autocast, färska HP-mål, saved flags/queue,
+team-authoritative HP och målad originalart. Ingen mänsklig balansclaim.
 
 ### RTS-222 — Giant — Todo
 Stor stark långsam dyr ground-roll, hög supply/base-tier i befintlig avancerad

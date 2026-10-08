@@ -3,7 +3,7 @@ import {buildingFrame,type BuildingKind} from './assets';
 import {unitFrame,motion,artAtlas,type UnitArt} from './animation';
 import {actionIds,type ActionId} from './actionPanel';
 export interface ActionIcon {atlas?:string;frame?:string;glyph?:string;badge?:'research'|'upgrade'}
-const glyphs:Partial<Record<ActionId,string>>={'cast-heal':'heal','cast-ward':'ward','cast-hex':'hex','repair-building':'repair','attack-move':'advance','unit-ability':'ability','unload-transport':'unload','hold-position':'hold','patrol-units':'patrol','stop-units':'stop','dismiss-units':'dismiss'};
+const glyphs:Partial<Record<ActionId,string>>={'autocast-heal':'autocast','cast-heal':'heal','cast-ward':'ward','cast-hex':'hex','repair-building':'repair','attack-move':'advance','unit-ability':'ability','unload-transport':'unload','hold-position':'hold','patrol-units':'patrol','stop-units':'stop','dismiss-units':'dismiss'};
 export function actionIcon(id:ActionId,faction:FactionId):ActionIcon {
  if(id.startsWith('build-'))return {atlas:id==='build-stable'?'cavalry':'buildings',frame:buildingFrame(id.slice(6) as BuildingKind,'player',0,5,faction)};
  if(id.startsWith('train-')){const type=(id==='train-ship'?'warship':id.slice(6)) as UnitArt;return {atlas:artAtlas(type),frame:unitFrame(motion(undefined,{x:0,y:0},'idle',0,type,'player',undefined,faction),0)};}
@@ -18,7 +18,8 @@ function drawGlyph(c:CanvasRenderingContext2D,glyph:string){
  const rect=(x:number,y:number,w:number,h:number,color='#e9d295')=>{c.fillStyle=color;c.fillRect(x,y,w,h);};
  const line=(x:number,y:number,tx:number,ty:number,color='#e9d295')=>{const steps=Math.max(Math.abs(tx-x),Math.abs(ty-y));for(let i=0;i<=steps;i++)rect(Math.round(x+(tx-x)*i/steps),Math.round(y+(ty-y)*i/steps),2,2,color);};
  const arrow=(x:number,y:number,tx:number,ty:number)=>{line(x,y,tx,ty);if(x!==tx){const d=tx>x?-1:1;line(tx,ty,tx+d*5,ty-4);line(tx,ty,tx+d*5,ty+4);}else{const d=ty>y?-1:1;line(tx,ty,tx-4,ty+d*5);line(tx,ty,tx+4,ty+d*5);}};
- if(glyph==='heal'){rect(12,5,7,22,'#d3eee2');rect(5,12,22,7,'#d3eee2');rect(14,8,3,16,'#82c889');}
+ if(glyph==='autocast'){arrow(4,5,26,5);arrow(26,26,4,26);rect(13,9,5,15,'#82c889');rect(8,14,15,5,'#82c889');}
+ else if(glyph==='heal'){rect(12,5,7,22,'#d3eee2');rect(5,12,22,7,'#d3eee2');rect(14,8,3,16,'#82c889');}
  else if(glyph==='ward'||glyph==='hold'){line(6,6,25,6);line(6,6,8,21);line(25,6,23,21);line(8,21,16,27);line(23,21,16,27);rect(12,10,8,10,glyph==='ward'?'#86dbe6':'#e0ac53');if(glyph==='hold'){rect(2,9,2,13);rect(28,9,2,13);}}
  else if(glyph==='hex'){line(4,16,13,7,'#c18ce5');line(13,7,27,16,'#c18ce5');line(4,16,16,25,'#c18ce5');line(16,25,27,16,'#c18ce5');rect(14,12,4,9,'#d6a4f0');}
  else if(glyph==='repair'){line(9,26,22,9,'#c79965');rect(13,4,14,6,'#afbbc8');rect(12,8,5,5,'#afbbc8');}

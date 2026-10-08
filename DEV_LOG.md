@@ -4518,3 +4518,23 @@ construction och mirrored/shaded facing/collapse death konkret dokumenterade.
 Ingen balansspeltest/release/fullkampanj. Egen review/diff och source alpha
 kontrollerad. Fortsätter221 efter taskpush; förtida stopp från äldre handoff
 ersätts av uttryckligt fortsatt221–228-uppdrag.
+
+
+### 2026-10-08 — RTS-221 healer färdig
+
+Fem Academy-recept/namn, independent FIFO/rally/refund/supply och exact10s AI,
+biological Heal med manual/opt-in autocast, mana/cooldown, .5s beslut/färska HP,
+team-ägarskap/sikt och transient green pulses/castpose. Saved autocast/queue/
+mana/cooldown, återställd type identity och legacy armyweights. Inga resurrection/
+mekaniska/building/selfmål. Fem målad-original sprites med etablerad export.
+F11/F12/F2, actions/ikoner/Tech Tree/selection/cancel/rally kopplade.
+Tidiga fixtures hade fel Academy HP, saknad fog för Save och cooldown i
+relationstest; rättades. Strict-testfixture cargo saknades, rättades till0.
+Riktade102/11 PASS24.85s, unit511/89 PASS20.75s; final strict build PASS,
+befintlig bundlevarning. Femras native800 actualmouse Academybuild/train/
+manualheal/autocast/TechTree/save/restart PASS0pageerrors. Forge/research I
+seedade/cheatledger funding, wounded targets staged; inga naturliga helmatches.
+Crown healbild granskad. Scripts syntax/manifest/diff/review kontrollerade;
+tests är inte mänsklig balans.220-docEOF whitespace upptäcktes efter dess
+push och är nu rättad; ingen misslyckad diffcheck hävdas som PASS.
+Användarens style.css/units.mjs/docs/memory bevaras; fortsätter222.

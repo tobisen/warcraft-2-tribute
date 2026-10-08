@@ -1459,3 +1459,22 @@ death uses collapse/fade. Construction stages remain procedural. No human
 balance or user art approval claimed. Source/license:
 [assets](assets/sources/visual-refresh/cavalry.md).
 
+## RTS-221 — Healing support
+
+Each completed Academy has an independent FIFO shared with its future advanced
+recipes, same refund/rally/supply rules. Chaplain / Spirit Mender / Grove Healer /
+Rune Priest / Field Medic: 40wood + 30gold, 10s, 2supply, 55HP, 125speed, weak
+2DPS melee; 100max/50initial mana, 1mana/s. Campaign unlock at mission6,
+respecting the existing Academy prerequisite (Forge, attack/defense I).
+
+Heal: 25HP, 20mana, 160px range, 6s cooldown; clamps to recipe maxHP. Manual
+[F2], opt-in player autocast [F12], Academy training [F11]. AI pays the identical
+10s recipe and enables autocast. Twice-per-second decisions use fresh HP,
+prioritize largest damage and avoid topping off a target already healed in that
+decision. Living own/allied visible biological units including workers and
+organic air can be healed; self, dead, buildings, catapults, Dwarf/Goblin
+mechanical air and all ships are excluded. No resurrection. Relation/vision/
+range/mana/cooldown revalidated at commit. Green pulses and casting pose provide
+feedback. Mana/cooldown/autocast/Academy queue survive Save; pulses are transient.
+Original painted assets match the roster with documented mirrored/shaded facing
+and collapse death limitations. Technical tests do not establish human balance.

@@ -75,6 +75,7 @@ import { updateCombat, type CombatState } from './combat';
 import { updateGathering, type GatheringState } from './gathering';
 import { placementObstacles, type PlacementState } from './placement';
 import type { ProductionState } from './production';
+import {prepareHealers,updateHealerProduction} from './healers';
 import {updateCavalryProduction} from './cavalry';
 import { updateQueuedProduction } from './productionQueue';
 import { updateWaves, type WaveState } from './waves';
@@ -235,7 +236,7 @@ function advance(state: MatchState, delta: number, scope?:CombatScope): MatchSta
   const incoming=scenarioConfig[cleaned.scenario??'survival'].waves?updateWaves(cleaned.waves,ai.combat,delta,campaignWaveSchedule(cleaned),cleaned.campaignRun&&cleaned.map.id==='frontier'?{x:1248,y:144,spacing:32}:undefined):{combat:ai.combat,waves:{...cleaned.waves,elapsedSeconds:cleaned.waves.elapsedSeconds+delta}};
   let updated:MatchState={...cleaned,...(enemyPolicy?{enemyPolicy}:{}),...(vision?{fog:vision}:{}),research,...(enemy.state?{enemyProduction:enemy.state}:{}),...(ai.state?{enemyAI:ai.state}:{}),gathering:soldier.gathering,combat:incoming.combat,waves:incoming.waves,
     production:{...worker.production,nextUnitNumber},soldierProduction:{...soldier.production,nextUnitNumber}};
-  if(scope?.side!=='enemy'){updated=updateExtraBaseProduction(updated,baseStep.productionSeconds);updated=updateCavalryProduction(updated,ownDelta);}
+  if(scope?.side!=='enemy'){updated=updateExtraBaseProduction(updated,baseStep.productionSeconds);updated=updateCavalryProduction(updated,ownDelta);updated=updateHealerProduction(updated,ownDelta);}
   const beforeNavyCompletion=readyBuildings(updated);
   updated=updateTransportTransfers(updateNavy(updated,ownDelta),ownDelta);
   updated={...updated,statLedger:recordCompletions(beforeNavyCompletion,updated)};
@@ -265,6 +266,7 @@ export function updateMatch(state: MatchState, deltaSeconds: number, scope?:Comb
     const capture=operationFor(current.scenario);
     const untilObjective=!current.campaignRun&&definition.victory==='timer'?Math.max(0,definition.holdSeconds!-current.waves.elapsedSeconds):capture?.kind==='capture'&&(!current.campaignRun||campaignPhase(current)?.goal==='operation')&&controlsCapture(current)?Math.max(0,capture.holdSeconds-(current.capture?.holdSeconds??0)):Infinity;
     const untilService=(Math.floor((current.waves.elapsedSeconds+1e-9)/trafficConfig.resourceWindowSeconds)+1)*trafficConfig.resourceWindowSeconds-current.waves.elapsedSeconds;
+    if(!scope)current=prepareHealers(current);
     if(scope?.side!=='player'){current=prepareEnemySpells(current);current=prepareEnemyAbilities(current);}
     const untilAbility=Math.min(Infinity,...current.combat.enemies.flatMap(e=>[e.ability?.activeSeconds??0,e.ability?.cooldownSeconds??0].filter(t=>t>1e-9)),...current.gathering.units.flatMap(u=>u.kind==='soldier'&&(u.ability?.activeSeconds??0)>1e-9?[u.ability!.activeSeconds]:[]));
     const step = Math.min(untilSpellBoundary(current),current.enemyPolicy?.research.job?.remainingSeconds??Infinity,untilAbility,remaining, untilWave,untilObjective,untilService,current.research?.job?.remainingSeconds??Infinity);

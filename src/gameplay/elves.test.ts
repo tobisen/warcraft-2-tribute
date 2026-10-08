@@ -15,7 +15,7 @@ import {matchLabels} from '../presentation/hud';
 
 it('Elves use a faster, lighter ranged roster and their own woodland economy recipes',()=>{
  const f=factions.elves,m=createMatch('tutorial','beginner',factionsForPlayer('elves'));
- expect(f.roster).toEqual(['worker','soldier','archer','catapult','specialist','air','cavalry']);
+ expect(f.roster).toEqual(['worker','soldier','archer','catapult','specialist','air','cavalry','healer']);
  expect(matchLabels(m).health).toBe('Grove Hall: 220 / 220 HP');
  expect(m.gathering.units[0].hp).toBe(28);
  const worker={...m.gathering.units[0],position:{x:200,y:200},target:{x:400,y:200},order:{kind:'move' as const}};

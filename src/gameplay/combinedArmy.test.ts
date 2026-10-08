@@ -10,7 +10,7 @@ import {factions,type FactionId,type TechnologyState} from '../config/factions';
 import {updateCombat,type Enemy} from './combat';
 import {createEnemyAI,updateEnemyAI} from './enemyAI';
 import {enemyAIConfig} from '../config/enemyAI';
-const tech:TechnologyState={baseLevel:2,buildings:['base','barracks','forge','farm','stable'],research:{attack:1,defense:1}};
+const tech:TechnologyState={baseLevel:2,buildings:['base','barracks','forge','farm','stable','academy'],research:{attack:1,defense:1}};
 const view={camera:{x:0,y:0},building:null};
 describe('adaptive paid combined armies',()=>{
  it('observes visible threats only and limits plan decisions to one per second',()=>{
@@ -26,7 +26,7 @@ describe('adaptive paid combined armies',()=>{
  });
  it.each(Object.keys(factions) as FactionId[])('produces front/ranged/siege/magic/air for %s with exact paid reservations',faction=>{
   const m=createMatch('skirmish','normal',{player:'crown',enemy:faction});const f=factions[faction],state={...createEnemyProduction(undefined,true),wood:1000,gold:1000,cap:100,spent:{wood:0,gold:0}},base=m.combat.enemies.find(e=>e.kind==='base')!,site={...base,construction:{remainingSeconds:0,builderId:null}},plan={weights:{...combinedArmyConfig.weights},nextDecisionSeconds:1};
-  const result=updateEnemyProduction(state,{...m.combat,enemies:[base,{...base,id:'enemy-stable',kind:'building',buildingType:'stable',construction:{remainingSeconds:0,builderId:null}}]},m.gathering,m.map,100,faction,{armyPlan:plan,technology:tech,site,population:{cap:100,used:0,reserved:0}});const roles=new Set(result.combat.enemies.map(e=>e.role));for(const role of armyRoles)expect(roles.has(role)).toBe(true);
+  const result=updateEnemyProduction(state,{...m.combat,enemies:[base,{...base,id:'enemy-academy',kind:'building',buildingType:'academy',construction:{remainingSeconds:0,builderId:null}},{...base,id:'enemy-stable',kind:'building',buildingType:'stable',construction:{remainingSeconds:0,builderId:null}}]},m.gathering,m.map,100,faction,{armyPlan:plan,technology:tech,site,population:{cap:100,used:0,reserved:0}});const roles=new Set(result.combat.enemies.map(e=>e.role));for(const role of armyRoles)expect(roles.has(role)).toBe(true);
   expect(result.state.wood+result.state.spent!.wood).toBe(1000);expect(result.state.gold+result.state.spent!.gold).toBe(1000);expect(result.state.acceptedJobs).toBeGreaterThan(5);expect(result.combat.enemies.filter(e=>e.role).every(e=>e.hp===f.units[e.role!].hp)).toBe(true);
  });
  it('siege supports attacks by shooting a visible tower before a closer worker, never a hidden tower',()=>{

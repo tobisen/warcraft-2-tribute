@@ -1,6 +1,8 @@
 import {text as uiText} from '../text';
 import { gameplayKeyAllowed,type KeyContext } from './keyboard';
 export const hotkeys=[
+ {key:'F11',button:'train-healer',label:'Train healing support in Academy.'},
+ {key:'F12',button:'autocast-heal',label:'Toggle healer autocast: visible damaged biological allies only.'},
  {key:'X',button:'build-stable',label:'Build the faction stable after main building level II.'},
  {key:'F10',button:'train-cavalry',label:'Train mounted cavalry at a completed stable; infantry counters cavalry.'},
  {key:'F9',button:'research-workerTools',label:'Research Worker Tools I–III at a completed main building. Wood/gold gathering takes 10/20/30% less time; each level replaces the previous bonus. Capacity remains 5.'},

@@ -11,7 +11,7 @@ import {unitFrame,motion} from '../presentation/animation';
 
 it('Human roster exposes distinct specialist art and named research/naval recipes with gated siege',()=>{
  const f=factions.crown,m=createMatch('tutorial');
- expect(f.label).toBe('Human');expect(f.roster).toEqual(['worker','soldier','archer','catapult','specialist','air','cavalry']);
+ expect(f.label).toBe('Human');expect(f.roster).toEqual(['worker','soldier','archer','catapult','specialist','air','cavalry','healer']);
  expect(f.units.specialist).toMatchObject({art:'specialist',hp:100,speed:130,cost:{wood:30,gold:15},durationSeconds:8,supply:2});
  expect(f.upgrades.attack.name).toBe('Tempered Arms');expect(f.upgrades.defense.name).toBe('Plate Craft');expect(f.naval.units.warship.name).toBe('Cutter');
  expect(unitFrame(motion(undefined,{x:0,y:0},'idle',0,'specialist','player',undefined,'crown'),0)).toBe('specialist-player-s-idle-0');

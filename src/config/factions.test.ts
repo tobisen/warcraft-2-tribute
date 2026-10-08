@@ -11,7 +11,7 @@ import {createMatch,updateMatch} from '../gameplay/match';
 it('implemented factions define all shared roles with distinct, globally unique type IDs',()=>{
   const ids=new Set<string>();
   for(const id of factionIds){const f=factions[id];
-    expect(Object.keys(f.units)).toEqual(['worker','soldier','archer','catapult','specialist','cavalry','air']);
+    expect(Object.keys(f.units)).toEqual(['worker','soldier','archer','catapult','specialist','healer','cavalry','air']);
     expect(Object.keys(f.buildings)).toEqual(['base','barracks','farm','forge','stable','academy']);
     expect(Object.keys(f.upgrades)).toEqual(['attack','defense']);
     for(const group of [f.units,f.buildings,f.upgrades])for(const [role,type] of Object.entries(group)){
@@ -19,7 +19,7 @@ it('implemented factions define all shared roles with distinct, globally unique 
       expect(ids.has(type.id)).toBe(false);ids.add(type.id);
     }
   }
-  expect(ids.size).toBe(75);
+  expect(ids.size).toBe(80);
 });
 it('catalog values preserve current baseline and costs do not alias the other faction',()=>{
   for(const f of [factions.crown]){

@@ -229,3 +229,9 @@ imagegen-målade rasterkällor i befintlig visual-refresh-stil. Se
 [sources/visual-refresh/cavalry.md](sources/visual-refresh/cavalry.md) för
 prompter/källor/licens/export och faktiska begränsningar. Den äldre procedural-
 leveransen ovan beskriver förebilden och gäller endast construction stages.
+
+## RTS-221 — Healers
+
+[Source, prompts and CC0](sources/visual-refresh/healers.md). Original painted
+five-faction atlas, blue/red teams, genuine walk/cast poses in existing style.
+`export-healers.mjs` packs only the new atlas; user units.mjs is preserved.

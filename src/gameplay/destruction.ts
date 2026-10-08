@@ -48,7 +48,7 @@ export function cleanDestroyed(state:MatchState):MatchState {
       ...(placement.farms?{farms:placement.farms.filter(f=>!deadFarms.includes(f)).map(f=>({...f,construction:paused(f.construction)!}))}:{})};
   }
   if(placement.stable)placement={...placement,stable:stableDead?undefined:{...placement.stable,construction:paused(placement.stable.construction)!,production:allBasesDead?clearProduction(placement.stable.production):placement.stable.production}};
-  if(placement.academy)placement={...placement,academy:academyDead?undefined:{...placement.academy,construction:paused(placement.academy.construction)!}};
+  if(placement.academy)placement={...placement,academy:academyDead?undefined:{...placement.academy,construction:paused(placement.academy.construction)!,...(placement.academy.production?{production:allBasesDead?clearProduction(placement.academy.production):placement.academy.production}:{})}};
   if(placement.bases)placement={...placement,bases:placement.bases.filter(b=>b.hp>0).map(b=>({...b,construction:paused(b.construction)!}))};
   if(state.enemyProduction){const dead=state.combat.enemies.filter(e=>e.hp<=0&&e.work);if(dead.length){const lost={wood:state.enemyProduction.lostCargo?.wood??0,gold:state.enemyProduction.lostCargo?.gold??0};for(const e of dead)lost[e.work!.cargoType??'wood']+=e.work!.cargo;state={...state,enemyProduction:{...state.enemyProduction,lostCargo:lost}};}}
   const liveEnemies=state.combat.enemies.filter(e=>e.hp>0);

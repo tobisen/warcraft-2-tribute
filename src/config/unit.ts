@@ -3,14 +3,14 @@ import {soldierStats,unitStats} from './unitDefaults';
 export {soldierStats,unitStats} from './unitDefaults';
 import {catapultConfig} from './catapult';
 import {archerConfig} from './archer';
-type CombatProfile={faction?:FactionId;archetype?:'archer'|'catapult'|'specialist'|'air'|'cavalry'};
+type CombatProfile={faction?:FactionId;archetype?:'archer'|'catapult'|'specialist'|'air'|'cavalry'|'healer'};
 export function combatUnitStats(unit:CombatProfile,faction?:FactionId){
  const role=unit.archetype??'soldier',baseline=role==='catapult'?catapultConfig:role==='archer'?archerConfig:soldierStats;
  return {...baseline,...factions[faction??unit.faction??'crown'].units[role]};
 }
 export function rangedStats(unit:CombatProfile,faction?:FactionId){
  const role=unit.archetype??'soldier',profile=factions[faction??unit.faction??'crown'].units[role];
- if(role==='specialist'&&profile.combatMode!=='projectile'||role==='soldier'||role==='cavalry')return null;
+ if(role==='specialist'&&profile.combatMode!=='projectile'||role==='soldier'||role==='cavalry'||role==='healer')return null;
  const baseline=role==='catapult'?catapultConfig:archerConfig;
  return {...baseline,...profile} as typeof archerConfig|typeof catapultConfig;
 }
