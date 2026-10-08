@@ -46,7 +46,7 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 ## Current Focus
 
 Nytt mandat 2026-10-08: RTS-220–228 i ordning, därefter användarens tillägg RTS-229, en task åt gången.
-RTS-220 grafik samt RTS-221–222 verifierade; RTS-223 är verifierad med separat flygbyggnad; nästa task226, därefter227–229. Städning, release och kartombyggnad är pausade.
+RTS-220 grafik samt RTS-221–222 verifierade; RTS-223 är verifierad med separat flygbyggnad; nästa task227, därefter228–229. Städning, release och kartombyggnad är pausade.
 Taskvis riktade tester, native800-browser, unit/strict build/diff, docs och
 commit/push till origin/main. Full regression vid etappslut; stanna efter229.
 Befintliga style.css/units.mjs/docs/:memory:.ses bevaras. Ingen delegering.
@@ -5766,11 +5766,20 @@ Befintlig roster/art återanvänd; dyr30s/4supply/baseIII/researchII/Academy.
 AI exakt30s; Save66 oldqueue fullrefund en gång, färdiga HP bevaras. Ingen
 mänsklig balans/nyCI- eller Pagesrapport.
 
-### RTS-226 — Rollspecifik forskning — Todo
+### RTS-226 — Rollspecifik forskning — Done
 Cavalry Armor (armor), Healer Training (enbart max mana), Scout Optics
 (submarine-detection kortare än vision). Gemensam kostnad/tid/bonus, inga
 dubbla befintliga bonusar. Egna befintliga/framtida enheter och Tech Tree.
 Testa prerequisites/bonus/ägarskap/dubbelforskning/save/load/restart.
+
+Verifiering: riktade101/8 PASS28.88s, sista förbättradefuture-spawn-prov
+8/1 PASS1.31s; unit511/89 PASS23.62s; strict build PASS450ms. Femras
+sharedpaid12s research, duplicate/prereqs/death, dynamiccavarmor och
+150mana save/future50initial. AI45/30/12s utan delat fraktionsunlock.
+Native800 actual research/healerproduction/150manaUI/TechTree/SaveLoad/
+restart femras PASS0pageerrors, artifacts/rts-226/browser.json. Crown
+researchikoner granskade. Optics config128 klar; faktisk ubåtsdetektion227.
+Ingen mänsklig balans/ljud/nyCI/Pages.
 
 ### RTS-227 — Submarine och detection — Todo
 Shipyard/nuvarande Harbor efter forskning, endast navigerbart vatten och

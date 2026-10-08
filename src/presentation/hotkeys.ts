@@ -1,6 +1,9 @@
 import {text as uiText} from '../text';
 import { gameplayKeyAllowed,type KeyContext } from './keyboard';
 export const hotkeys=[
+ {key:'F15',button:'research-cavalryArmor',label:'Cavalry Armor:20% less incoming damage for your existing and future cavalry,45 wood/30 gold/12s,Forge+Stable.'},
+ {key:'F16',button:'research-healerTraining',label:'Healer Training:+50 maximum mana only,45 wood/30 gold/12s,Forge+Academy.'},
+ {key:'F17',button:'research-scoutOptics',label:'Scout Optics:128px submarine detection in current team vision,45 wood/30 gold/12s,Forge+flight building.'},
  {key:'F14',button:'upgrade-tower-air',label:'Permanently specialize this tower as Anti-Air: air-only,256px range; base II,Forge,attack I. Inactive for10s.'},
  {key:'F13',button:'build-aviary',label:'Build a dedicated flight producer after base II; 80 wood, 40 gold, 12 seconds.'},
  {key:'END',button:'train-scout',label:'Train an unarmed flyer at the flight building after base II.'},

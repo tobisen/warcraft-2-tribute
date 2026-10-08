@@ -1,3 +1,4 @@
+import {cavalryArmorMultiplier} from '../config/roleResearch';
 import {upgradeMultiplier} from '../config/upgrades';
 import {validPlayers} from './matchSettings';
 import {playerEliminated,teamOutcome} from './teamResults';
@@ -97,13 +98,13 @@ export function shareTeamVision(m:MatchState):MatchState{
 function playerDefense(m:MatchState,unit:Unit):number{
  if(unit.kind!=='soldier')return 1;
  const original=m.gathering.units.find((old):old is Soldier=>old.kind==='soldier'&&old.id===unit.id)??unit;
- return (upgradeMultiplier(factions[m.factions!.player].upgrades.defense.multiplier,m.research?.defense))*abilityEffects(m.gathering,original).defenseMultiplier*spellModifiers(original).defense;
+ return (upgradeMultiplier(factions[m.factions!.player].upgrades.defense.multiplier,m.research?.defense))*cavalryArmorMultiplier(original.archetype,m.research?.cavalryArmor)*abilityEffects(m.gathering,original).defenseMultiplier*spellModifiers(original).defense;
 }
 function aiDefense(m:MatchState,id:PlayerId,entity:Enemy):number{
  if(entity.footprint||entity.kind==='worker')return 1;
  const before=m.multiplePlayers!.ai.find(bot=>bot.id===id)!.state;
  const original=before.combat.enemies.find(old=>old.id===entity.id)??entity,faction=before.factions!.enemy;
- return (upgradeMultiplier(factions[faction].upgrades.defense.multiplier,before.enemyPolicy?.research.defense))*abilityEffects({...before.gathering,faction},enemySoldier(original,faction)).defenseMultiplier*spellModifiers(original).defense;
+ return (upgradeMultiplier(factions[faction].upgrades.defense.multiplier,before.enemyPolicy?.research.defense))*cavalryArmorMultiplier(original.role,before.enemyPolicy?.research.cavalryArmor)*abilityEffects({...before.gathering,faction},enemySoldier(original,faction)).defenseMultiplier*spellModifiers(original).defense;
 }
 function mergeEffects(current:SpellEffect[]|undefined,incoming:SpellEffect[]):SpellEffect[]{
  const channels=new Set(incoming.map(e=>spellDefinition(e.spell,e.sourceFaction).kind));

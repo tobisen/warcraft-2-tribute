@@ -1,0 +1,215 @@
+{
+  "fixture": "Actual menu/clicks; resource-cheat funding, seeded base III/Forge/Academy/research II; .1s gameplay ticks; completed Stable/flight site seeded; mana regeneration via actual shared clock helper to capacity",
+  "results": [
+    {
+      "faction": "crown",
+      "actualMouseResearchAndHealerProduction": true,
+      "paid": [
+        {
+          "kind": "cavalryArmor",
+          "queued": {
+            "wood": 99955,
+            "gold": 99970,
+            "job": {
+              "kind": "cavalryArmor",
+              "remainingSeconds": 12
+            }
+          }
+        },
+        {
+          "kind": "healerTraining",
+          "queued": {
+            "wood": 99910,
+            "gold": 99940,
+            "job": {
+              "kind": "healerTraining",
+              "remainingSeconds": 12
+            }
+          }
+        },
+        {
+          "kind": "scoutOptics",
+          "queued": {
+            "wood": 99865,
+            "gold": 99910,
+            "job": {
+              "kind": "scoutOptics",
+              "remainingSeconds": 12
+            }
+          }
+        }
+      ],
+      "healerMana": 150,
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "clans",
+      "actualMouseResearchAndHealerProduction": true,
+      "paid": [
+        {
+          "kind": "cavalryArmor",
+          "queued": {
+            "wood": 99955,
+            "gold": 99970,
+            "job": {
+              "kind": "cavalryArmor",
+              "remainingSeconds": 12
+            }
+          }
+        },
+        {
+          "kind": "healerTraining",
+          "queued": {
+            "wood": 99910,
+            "gold": 99940,
+            "job": {
+              "kind": "healerTraining",
+              "remainingSeconds": 12
+            }
+          }
+        },
+        {
+          "kind": "scoutOptics",
+          "queued": {
+            "wood": 99865,
+            "gold": 99910,
+            "job": {
+              "kind": "scoutOptics",
+              "remainingSeconds": 12
+            }
+          }
+        }
+      ],
+      "healerMana": 150,
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "elves",
+      "actualMouseResearchAndHealerProduction": true,
+      "paid": [
+        {
+          "kind": "cavalryArmor",
+          "queued": {
+            "wood": 99955,
+            "gold": 99970,
+            "job": {
+              "kind": "cavalryArmor",
+              "remainingSeconds": 12
+            }
+          }
+        },
+        {
+          "kind": "healerTraining",
+          "queued": {
+            "wood": 99910,
+            "gold": 99940,
+            "job": {
+              "kind": "healerTraining",
+              "remainingSeconds": 12
+            }
+          }
+        },
+        {
+          "kind": "scoutOptics",
+          "queued": {
+            "wood": 99865,
+            "gold": 99910,
+            "job": {
+              "kind": "scoutOptics",
+              "remainingSeconds": 12
+            }
+          }
+        }
+      ],
+      "healerMana": 150,
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "dwarves",
+      "actualMouseResearchAndHealerProduction": true,
+      "paid": [
+        {
+          "kind": "cavalryArmor",
+          "queued": {
+            "wood": 99955,
+            "gold": 99970,
+            "job": {
+              "kind": "cavalryArmor",
+              "remainingSeconds": 12
+            }
+          }
+        },
+        {
+          "kind": "healerTraining",
+          "queued": {
+            "wood": 99910,
+            "gold": 99940,
+            "job": {
+              "kind": "healerTraining",
+              "remainingSeconds": 12
+            }
+          }
+        },
+        {
+          "kind": "scoutOptics",
+          "queued": {
+            "wood": 99865,
+            "gold": 99910,
+            "job": {
+              "kind": "scoutOptics",
+              "remainingSeconds": 12
+            }
+          }
+        }
+      ],
+      "healerMana": 150,
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "goblins",
+      "actualMouseResearchAndHealerProduction": true,
+      "paid": [
+        {
+          "kind": "cavalryArmor",
+          "queued": {
+            "wood": 99955,
+            "gold": 99970,
+            "job": {
+              "kind": "cavalryArmor",
+              "remainingSeconds": 12
+            }
+          }
+        },
+        {
+          "kind": "healerTraining",
+          "queued": {
+            "wood": 99910,
+            "gold": 99940,
+            "job": {
+              "kind": "healerTraining",
+              "remainingSeconds": 12
+            }
+          }
+        },
+        {
+          "kind": "scoutOptics",
+          "queued": {
+            "wood": 99865,
+            "gold": 99910,
+            "job": {
+              "kind": "scoutOptics",
+              "remainingSeconds": 12
+            }
+          }
+        }
+      ],
+      "healerMana": 150,
+      "saveLoadRestart": true,
+      "errors": []
+    }
+  ]
+}

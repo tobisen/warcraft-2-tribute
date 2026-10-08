@@ -1545,3 +1545,19 @@ are canceled with full original cost refunded once, for player and enemy.
 Other FIFO entries/counters/rally/paid times persist. This avoids converting
 cheap old recipes to high-tier units and allows old matches to build their
 new producer. Strict old recipe/duplicate-ID validation precedes refunds.
+
+## RTS-226 — Role research
+
+Shared research FIFO, one job at a time; Cavalry Armor / Healer Training /
+Scout Optics each45wood30gold12s, one permanent level. Requirements:
+Forge+Stable / Forge+Academy / Forge+flight producer. Relevant prerequisite
+destruction cancels paid job without refund; completed research survives.
+Armor applies×0.8 incoming only to owner's existing/future cavalry, once
+with ordinary defense/ability/spell modifiers, also scoped multiplayer AI.
+Healer Training raises maximum100→150, retaining50initial/1regen/Heal25HP/
+20mana/160range/6cooldown. No instant mana refill. Scout Optics gives only
+scouts128px submarine detection, shorter than unchanged288px vision;
+RTS-227 consumes this detector config with current owner/team visibility.
+TechTree and three role portrait+research-badge icons, F15/F16/F17. AI
+prioritizes ordinary military upgrades then available paid role research,
+without shared faction/global unlocks. Campaign3 cav/optics,6 healer.

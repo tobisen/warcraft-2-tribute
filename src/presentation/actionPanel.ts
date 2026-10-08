@@ -1,3 +1,5 @@
+import {roleResearchConfig,isRoleResearch} from '../config/roleResearch';
+import {canResearch} from '../gameplay/research';
 import {workerToolsConfig} from '../config/workerTools';
 import {researchRecipe} from '../gameplay/research';
 import {extraBaseConfig} from '../config/extraBases';
@@ -28,7 +30,7 @@ import {forgeReady} from '../gameplay/research';
 import type {BuildingSelection} from '../gameplay/buildingSelection';
 import type {MatchState} from '../gameplay/match';
 import {hotkeys} from './hotkeys';
-export const actionIds=['build-aviary','train-scout','scout-route','auto-scout','train-giant','train-healer','autocast-heal','build-stable','train-cavalry','cast-heal','cast-ward','cast-hex','repair-building','build-wall','build-gate','build-tower','upgrade-tower','upgrade-tower-air','upgrade-base','train-worker','train-soldier','train-archer','train-catapult','train-specialist','train-air','train-transport','train-ship','build-academy','build-base','build-barracks','build-farm','build-forge','build-harbor','research-workerTools','research-attack','research-defense','attack-move','unit-ability','unload-transport','hold-position','patrol-units','stop-units','dismiss-units'] as const;
+export const actionIds=['research-cavalryArmor','research-healerTraining','research-scoutOptics','build-aviary','train-scout','scout-route','auto-scout','train-giant','train-healer','autocast-heal','build-stable','train-cavalry','cast-heal','cast-ward','cast-hex','repair-building','build-wall','build-gate','build-tower','upgrade-tower','upgrade-tower-air','upgrade-base','train-worker','train-soldier','train-archer','train-catapult','train-specialist','train-air','train-transport','train-ship','build-academy','build-base','build-barracks','build-farm','build-forge','build-harbor','research-workerTools','research-attack','research-defense','attack-move','unit-ability','unload-transport','hold-position','patrol-units','stop-units','dismiss-units'] as const;
 export type ActionId=typeof actionIds[number];
 export const actionGroups=['Orders','Build','Train','Research','Spells'] as const;
 export function actionGroup(id:ActionId):typeof actionGroups[number]{return id.startsWith('cast-')||id==='autocast-heal'?'Spells':id.startsWith('build-')?'Build':id.startsWith('train-')?'Train':id.startsWith('research-')||id.startsWith('upgrade-')?'Research':'Orders';}
@@ -77,6 +79,7 @@ export function actionPanel(m:MatchState,building:BuildingSelection,playing:bool
    const prerequisite=naval?null:unitAvailability(faction,role,technologyFor(m,'player'));
    reason=remaining>0?'Construction unfinished':prerequisite??(production&&productionJobCount(production)>=queueConfig.maxJobs?'Queue full':!hasPopulation(population,recipe.supply)?uiText.populationLimitReached:affordabilityReason(m.gathering,recipe.cost));
   }
+  else if(id.startsWith('research-')&&isRoleResearch(id.slice(9))){const kind=id.slice(9) as import('../config/roleResearch').RoleResearchKind,cfg=roleResearchConfig[kind],level=m.research?.[kind]??0;visible=base||building==='forge'||building==='academy'||building==='stable'||building==='aviary';cost=costLabel(cfg.cost);summary=cfg.description+` · ${cfg.durationSeconds}s`;prerequisites=cfg.buildings.map(b=>faction.buildingNames[b]).join(' + ');reason=level?'Already researched':m.research?.job?'Research in progress':!canResearch(m.gathering,m.research!,m.placement,kind,playing,hasMainBase(m))?'Complete prerequisites and afford research':'';active=m.research?.job?.kind===kind;}
   else if(id==='research-workerTools'){visible=base;const level=m.research?.workerTools??0,recipe=workerToolsConfig[Math.min(2,level)]!;cost=level>=3?undefined:costLabel(recipe.cost);summary=`Level ${level}/3 · ${level>=3?'30% shorter wood/gold gathering · Complete':`Next: ${Math.round((1-recipe.timeMultiplier)*100)}% shorter wood/gold gathering · ${recipe.durationSeconds}s research`}`;reason=level>=3?'Already researched':!hasMainBase(m)?'Base destroyed':(m.placement.bases?.find(b=>b.id===building)?.construction.remainingSeconds??0)>0?'Construction unfinished':m.research?.job?'Research in progress':affordabilityReason(m.gathering,recipe.cost);prerequisites=level>0?`Worker Tools ${['I','II','III'][level-1]}`:'Completed main building';active=m.research?.job?.kind==='workerTools';}
   else if(id.startsWith('research-')){visible=base||building==='forge'||building==='academy';const kind=id==='research-attack'?'attack':'defense';cost=costLabel(researchRecipe(faction,kind,m.research?.[kind]??0).cost);reason=(m.research?.[kind]??0)>=faction.upgrades[kind].maxLevel?'Already researched':researchAvailability(faction,kind,technologyFor(m,'player'))??(m.research?.job?'Research in progress':(m.research?.[kind]??0)>=faction.upgrades[kind].maxLevel?'Already researched':affordabilityReason(m.gathering,researchRecipe(faction,kind,m.research?.[kind]??0).cost));}
   else if(id==='attack-move')visible=land.some(u=>u.kind==='soldier'&&u.archetype!=='scout');
@@ -84,7 +87,7 @@ export function actionPanel(m:MatchState,building:BuildingSelection,playing:bool
   else if(id==='unload-transport'){visible=!!transport;reason=!transport?.passengers?.length?'Transport is empty':'';}
   else visible=any;
   if(id.startsWith('build-')){const kind=id.slice(6);active=!!m.placement.active&&(m.placement.kind??'barracks')===kind;if(kind==='stable'||kind==='academy'||kind==='barracks'||kind==='farm'||kind==='forge')prerequisites=prerequisiteLabel(faction.buildings[kind].prerequisites);}
-  if(id.startsWith('research-')&&id!=='research-workerTools'){const kind=id==='research-attack'?'attack':'defense';prerequisites=prerequisiteLabel((m.research?.[kind]??0)>=1?{buildings:['forge','academy']}:faction.upgrades[kind].prerequisites);active=m.research?.job?.kind===kind;}
+  if(id.startsWith('research-')&&id!=='research-workerTools'&&!isRoleResearch(id.slice(9))){const kind=id==='research-attack'?'attack':'defense';prerequisites=prerequisiteLabel((m.research?.[kind]??0)>=1?{buildings:['forge','academy']}:faction.upgrades[kind].prerequisites);active=m.research?.job?.kind===kind;}
   if(id==='upgrade-base')active=baseDevelopment(m).remainingSeconds!==null;
   if((id==='upgrade-tower'||id==='upgrade-tower-air'))active=!!m.placement.defenses?.find(t=>t.id===building)?.upgradeRemaining;
   reason=campaignActionReason(m,id)??reason;

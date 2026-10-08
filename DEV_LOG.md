@@ -4608,3 +4608,21 @@ PASS16.61s; strict build720msPASS, befintligbundlevarning. Native800
 femras actualmouse flightbuild/train/rally/move/rightclickairattack/
 TechTree/save/restart PASS0pageerrors. Crown existingheavy art granskad.
 Inga nyaassets/ljud/mänskligbalans/nyCI/Pages/release. Userfiles bevarade.
+
+## RTS-226 — Owner-scoped role research
+
+Tre12s/45wood30gold one-level forskningar i befintlig sharedresearchkön,
+producerprereqs, config/researchUI/egna roleportrait-badgeikoner/F15–17/
+TechTree/campaignlocks/save/AI. Cavalryarmor×.8 en gång med normaldefense,
+healermaxmana150 utan instantrefill/start/regen/Healändring, ScoutOptics
+128detectorconfig (faktiskdetection227). ArmorbådeCombat och multiplayer
+scopeddamage använder respektive ägaresresearch; mana ownerphase samma.
+Deathcancels relevantrolejobb utanrefund, färdigbonusbevarad. AI prioriterar
+normalmilitarytech och sedan relevantarolejobsmedsamma45/30/12s.
+Riktade101/8 PASS28.88s; extra futurehealerspawn/workerroleprov8/1 PASS1.31s;
+unit511/89 PASS23.62s; strict build450msPASS. Native8005ras actualresearch
+click/cost/deadline/healertrain/50initial/regento150/150UI/TechTree/save/restart
+PASS0pageerrors. Crownikoner granskade. Browserfixturbyggnader separerade
+för att inte välja aviary vidForgekant. Enemyarmortest använder Clans riktiga
+.8 basarmor, AIprerequisitefixture har Barracks/Farm och ingen unrelated
+expansion/recoverypriority. No mänskligbalans/ljud/nyCI/Pages/release.

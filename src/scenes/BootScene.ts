@@ -1,3 +1,4 @@
+import {roleResearchConfig,isRoleResearch} from '../config/roleResearch';
 import {flightBuilding,trainFlyer} from '../gameplay/flightProduction';
 import {fortificationConnections} from '../gameplay/fortifications';
 import {fortificationTexture} from '../presentation/fortifications';
@@ -491,7 +492,7 @@ export class BootScene extends Phaser.Scene {
     this.forgeButton.addEventListener('click',beginForge);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.forgeButton.removeEventListener('click',beginForge));
     this.researchButtons.clear();
-    for(const kind of ['workerTools','attack','defense'] as const){
+    for(const kind of ['workerTools','attack','defense','cavalryArmor','healerTraining','scoutOptics'] as const){
       const button=document.querySelector<HTMLButtonElement>(`#research-${kind}`)!;
       const research=()=>{const result=startResearch(this.gathering,this.research,this.placement,kind,this.gameplayActive(),hasMainBase(this.currentMatch()));this.gathering=result.gathering;this.research=result.research;this.syncVisuals();};
       this.researchButtons.set(kind,button);button.addEventListener('click',research);
@@ -913,7 +914,7 @@ export class BootScene extends Phaser.Scene {
     for(const [kind,button] of this.researchButtons){
       const level=researchLevel(this.research,kind),recipe=researchRecipe(factions[this.factions.player],kind,level);
       button.disabled=!canResearch(this.gathering,this.research,this.placement,kind,this.gameplayActive(),hasMainBase(this.currentMatch()));
-      setActionLabel(button,kind==='workerTools'?`Worker Tools ${['I','II','III'][Math.min(2,level)]} – level ${level}/3 · ${level>=3?'Complete':`${Math.round((1-workerToolsConfig[level]!.timeMultiplier)*100)}% shorter gathering · ${costLabel(recipe.cost)} · ${recipe.durationSeconds}s`}${this.research.job?.kind==='workerTools'?` · ${this.research.job.remainingSeconds.toFixed(1)}s left`:''}`:`${factions[this.factions.player].upgrades[kind].name} ${level===0?'I':'II'} – ${costLabel(recipe.cost)}`);
+      setActionLabel(button,isRoleResearch(kind)?`${roleResearchConfig[kind].name} · ${level?'Complete':costLabel(recipe.cost)} · ${roleResearchConfig[kind].description}`:kind==='workerTools'?`Worker Tools ${['I','II','III'][Math.min(2,level)]} – level ${level}/3 · ${level>=3?'Complete':`${Math.round((1-workerToolsConfig[level]!.timeMultiplier)*100)}% shorter gathering · ${costLabel(recipe.cost)} · ${recipe.durationSeconds}s`}${this.research.job?.kind==='workerTools'?` · ${this.research.job.remainingSeconds.toFixed(1)}s left`:''}`:`${factions[this.factions.player].upgrades[kind].name} ${level===0?'I':'II'} – ${costLabel(recipe.cost)}`);
     }
 
     if(!this.placement.barracks&&this.barracksVisual){this.barracksVisual.destroy();this.barracksVisual=undefined;}

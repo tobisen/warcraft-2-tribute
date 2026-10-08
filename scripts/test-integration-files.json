@@ -90,6 +90,7 @@
   "src/gameplay/research.test.ts",
   "src/gameplay/resourceQueue.test.ts",
   "src/gameplay/resourceSelection.test.ts",
+  "src/gameplay/roleResearch.test.ts",
   "src/gameplay/save.test.ts",
   "src/gameplay/scenarios.test.ts",
   "src/gameplay/scouting.test.ts",
