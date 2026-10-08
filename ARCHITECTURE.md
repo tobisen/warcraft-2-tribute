@@ -2067,3 +2067,18 @@ Save utelämnar selfDefense precis som navigation; Load återupptar uppgiften
 utan en sparad tillfällig motattack. Ingen schemaändring. Restart har rena data.
 Shared combat förmedlar onHit med ägarens globala ID och använder befintliga
 hostile targets/team vision. AI:s vanliga attack-/musterbeslut består.
+
+
+## RTS-240 — Röstvariation och orderprioritet
+
+405 manifestslots: fem selection/humor/move-varianter och tre av övriga cues
+per fem raser och worker/soldier/archer. De90 tillagda filerna återanvänder
+Kokoro/OpenVoice och befintliga licensierade timbres; inga runtime-modeller.
+Generate --only-missing och convert --only-new bevarar tidigare slutmasters.
+Var fjärde upprepat klick inom8s kan välja humor (65% draw), högst en per20s.
+Selection/ready/humor delar1.2s cooldown och en aktiv voice, utan kö.
+Move/attack/gather/error har egen1.2s ordercooldown och avbryter pågående
+selection/ready/humor om en inspelning finns. Stale ended callbacks skyddas
+med generation och GameAudio source identity; endast en voice-source spelar.
+SFX-duck/mute/master/voices/pause/reset använder befintlig graf. Röster för
+övriga roller saknas fortfarande; ingen text/TTS-fallback spelas som inspelning.

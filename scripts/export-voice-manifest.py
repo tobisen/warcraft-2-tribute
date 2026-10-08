@@ -24,9 +24,9 @@ if args.pilot:
 factions = ['crown', 'clans', 'elves', 'dwarves', 'goblins']
 roles = ['worker', 'soldier', 'archer']
 actions = ['selection', 'move', 'attack', 'gather', 'ready', 'error', 'humor']
-expected = {f'{f}-{r}-{a}-{i:02}' for f in factions for r in roles for a in actions for i in range(1, 4)}
+expected = {f'{f}-{r}-{a}-{i:02}' for f in factions for r in roles for a in actions for i in range(1, 6 if a in ['selection','humor','move'] else 4)}
 if len(entries) != len(expected) or {e['id'] for e in entries} != expected:
-    raise SystemExit('Expected exactly 315 unique five-faction/role/action recording slots.')
+    raise SystemExit('Expected exactly 405 unique five-faction/role/action recording slots.')
 output = root / 'public/audio/voices'
 output.mkdir(parents=True, exist_ok=True)
 recordings = []

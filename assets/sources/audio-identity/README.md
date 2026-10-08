@@ -4,7 +4,9 @@
 Authoring-/capturemanifestens false-flaggor beskriver agentens ursprungliga
 verifiering; de är inte en återkallelse av detta användargodkännande.
 
-315 aktiva egna engelska repliker, tre roller, sju actions och tre varianter.
+405 aktiva egna engelska repliker, tre roller och sju actions. Selection, humor
+och move har fem varianter; attack/gather/ready/error har tre. RTS-240 tillför
+90 egna korta repliker med befintliga offline röster/karaktärskällor.
 Runtime: `public/audio/voices/manifest.json`; masters: `assets/audio/voices`.
 [Manus och per-assetcredits](all-factions-voices.json),
 [basgenerering](generated-voices.json), [slutkonvertering](converted-voices.json),
@@ -252,3 +254,26 @@ originals/rpg: chop, handleCoins, clothBelt, knifeSlice, creak1, doorClose_1.
 [Källan](https://kenney.nl/assets/rpg-audio) och [arkivlicensen](originals/rpg/License.txt)
 verifierade. Inga production-SFX-byten/materialrouting hävdas; dessa återstår
 efter det lilla provets kvalitetsgrind.
+
+
+## RTS-240 — nya repliker2026-10-08
+
+90 nya egna selection/humor/move-repliker:18 per ras, sex per befintlig roll.
+Humans torr arbets-/tjänstehumor, Orcs burdus bokstavlighet, Elves överlägsen
+precision, Dwarves hantverk/gruff och Goblins försäljning/tveksamma uppfinningar.
+Tidigare315 entries och630 master/runtime-WAVs är byte-identiska. Generate
+--only-missing skapade90 baser; convert --only-new behandlade72 nya non-human
+filer med samma reference/checkpoint/licenser utan att skriva över äldre masters.
+Dvärgar har nu81 BY-SA-adaptationer; övriga CC0 med modelllicenser dokumenterade.
+Runtime405/405 WAVs exporteras; inga missing slots inom dessa tre roller.
+Specialist/siege/transport/warship och övriga nya rosterroller saknar fortsatt
+egna kompletta röstpaket. Manusslots är inte inspelningsbevis för dessa roller.
+
+[Browserbelägg](../../../artifacts/rts-240/browser.json) använder riktiga public
+WAVs, ingen tyst mock eller kandidat-route: alla fem raser,18 nya varianter/ras,
+klickspam, fysisk grupporder som avbryter humor, mixer/mute/volym/pause och
+scene-restart. Detta verifierar decoding/uppspelning/routing; **hörbar kvalitet
+är inte bedömd**, ingen faktisk agentlyssning hävdas. Tidigare användargodkännande
+för äldre paket består, det är inte ett nytt lyssningsgodkännande av dessa90.
+[Lyssningssida](../../../artifacts/rts-240/listen.html) innehåller25 representativa
+ljudprov för faktisk browserlyssning; servera projektet med Vite.

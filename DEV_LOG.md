@@ -5441,3 +5441,47 @@ Review: attribution för varje separat projektil, cooldown/orderrestore, work
 suspension, team filtering och transient Save granskade; inga blockerande fynd.
 Full regression återstår efter240; ingen release eller lyssningsclaim.
 User CSS/units.mjs/docs/:memory:.ses lämnas utanför taskcommit.
+
+
+## 2026-10-08 — RTS-240, användarens punkt8 — verifierad teknik, lyssning återstår
+
+90 egna engelska selection/repeat/move-repliker för fem raser, tre befintliga
+roller;405 faktiska lokala WAVs. Fem varianter för dessa cues, tre för andra.
+Humor:varfjärde upprepat klick inom8s,65% draw,20s cooldown. Bekräftelser får
+företräde framför selection/ready/humor med separat1.2s cooldown; gamla callbacks
+kan inte stoppa ny source/unducka mixern. Inga nya browserdependencies eller TTS.
+
+Generate --only-missing90/58.3s; convert --only-new72/26.7s återanvänder samma
+licensierade reference timbres. Övriga315 scriptentries och630 WAV-filer är
+byte-identiska före/efter. Modellers venv/checkpoints fanns redan i /private/tmp;
+ingen installation/nätmodell i spelet.405 masters/exporter/hashes/licenser PASS;
+mono PCM16, nya peak0.528–0.750, ingen digital clipping. Dwarf81 adaptationer
+behåller BY-SA. Källor/credits/generatednotice uppdaterade, egna manus, inga
+kopierade Warcraft/WoW-repliker. Detta är AI-ljud, inte mänskliga inspelningar.
+
+Riktade24/4 PASS274ms, slutlig unit530/92 PASS14.42s, strict build449ms PASS och
+diff PASS. Efter att public credits kompletterats återkördes build572ms PASS;
+ingen ny gameplaykod. Manifestklassificering/Python/Node-syntax PASS. Tidig
+AudioEngine-testförväntan för blockerad order uppdaterades till nya avsedda
+preemptionregeln; ingen gammal misslyckad körning räknas som PASS.
+
+Browser:alla fem raser med riktig public-fileloading/decoding och90 nya variants-
+starter, fysisk selection/draggrupp om3, grupporder, snabba klick, fysisk order
+som avbryter humor, SFX-duck/Voicevolym/mute/pause och faktiskt scene-restart PASS.
+Gruppdrag kompletterades i en motiverad andra browserkörning. Ingen tyst mock
+eller candidate-route. Underlag:artifacts/rts-240/browser.json, README.md och
+listen.html med25 prov. **Hörbar kvalitet/faktisk agentlyssning ej bedömd**;
+headless source-start är inte lyssning. Äldre användargodkännande kvarstår men
+ersätter inte ny lyssning. Övriga rosterrollers kompletta röstpaket saknas.
+240 lämnas In Progress, verifierad teknisk del levereras; ingen release/nya tasks.
+Samlad full regression `npm test`:1881/216 PASS524.96s. Syntax/länk/diff/review
+PASS. Ingen extra bred campaign-simulering utöver denna fullregression.
+User CSS/units.mjs/docs/:memory:.ses bevarade och exkluderas från commits.
+
+
+RTS-239 commit/push:e6d82de → origin/main PASS. RTS-240 levereras som verifierad
+teknisk delcommit, inte Done för faktisk lyssning. Granskning:originaldialogue,
+per-file licenses/hashparitet, generationsskydd/preemption/cooldown och
+capability för saknade roller kontrollerade utan blockerande tekniska fynd.
+Ljudets hörbara kvalitet bedömdes inte. Nästa åtgärd är faktisk240-lyssning;
+andra roadmaptasks och release startas inte.

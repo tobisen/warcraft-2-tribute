@@ -13,6 +13,7 @@ export class UnitVoices {
  private phase='menu';private last=-Infinity;private active=false;private generation=0;
  private selection?:{key:string;time:number;count:number};
  private history=new Map<string,string>();private activeGain=0;
+ private lastOrder=-Infinity;private lastCue?:VoiceClip['action'];
  private lastHumor=-Infinity;private clips:readonly VoiceClip[]=[];
  constructor(private settings:()=>AudioSettings,private now=()=>performance.now()/1000,
   private playback:VoicePlayback=silent,private random=()=>Math.random()){}
@@ -23,10 +24,16 @@ export class UnitVoices {
  onSettingsChange(){const gain=audioGain(this.settings(),'voices');if(gain===0||this.active&&gain!==this.activeGain)this.cancel();}
  speak(role:VoiceRole,action:VoiceAction,faction:FactionId):boolean{
   const now=this.now(),gain=audioGain(this.settings(),'voices');
-  if(this.phase!=='playing'||this.active||now-this.last<voiceConfig.cooldownSeconds||gain===0)return false;
+  if(this.phase!=='playing'||gain===0)return false;
   const cue=recordedVoiceAction(action),key=`${faction}:${role}:${cue}`;
   const clips=this.clips.filter(c=>c.faction===faction&&c.role===role&&c.action===cue&&this.playback.has(c.id));
   if(!clips.length)return false;
+  const confirmation=['move','attack','gather','error'].includes(cue);
+  const ambient=this.lastCue==='selection'||this.lastCue==='humor'||this.lastCue==='ready';
+  if(confirmation){
+   if(now-this.lastOrder<voiceConfig.cooldownSeconds||this.active&&!ambient)return false;
+   if(this.active)this.cancel();
+  }else if(this.active||now-this.last<voiceConfig.cooldownSeconds)return false;
   if(cue==='humor'&&now-this.lastHumor<voiceConfig.humorCooldownSeconds)return false;
   const previous=this.history.get(key),index=clips.findIndex(c=>c.id===previous);
   // Rotation prevents immediate repetition whenever two or more assets exist.
@@ -35,7 +42,7 @@ export class UnitVoices {
   const ended=()=>{if(generation===this.generation)this.active=false;};
   try{
    if(!this.playback.play(clip,gain*voiceConfig.gain,ended)){this.active=false;return false;}
-   this.last=now;this.history.set(key,clip.id);if(cue==='humor')this.lastHumor=now;
+   this.last=now;this.lastCue=cue;if(confirmation)this.lastOrder=now;this.history.set(key,clip.id);if(cue==='humor')this.lastHumor=now;
    return true;
   }catch{this.playback.stop();this.active=false;return false;}
  }
@@ -48,5 +55,5 @@ export class UnitVoices {
   return this.speak(role,'select',faction);
  }
  private cancel(){this.generation++;if(this.active)this.playback.stop();this.active=false;}
- reset(){this.cancel();this.last=-Infinity;this.lastHumor=-Infinity;this.history.clear();this.selection=undefined;}
+ reset(){this.cancel();this.last=-Infinity;this.lastOrder=-Infinity;this.lastCue=undefined;this.lastHumor=-Infinity;this.history.clear();this.selection=undefined;}
 }

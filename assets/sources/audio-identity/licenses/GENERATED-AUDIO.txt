@@ -6,7 +6,7 @@ Human, Orc, Elf and Goblin output recordings are dedicated to CC0 1.0
 Universal to the extent the project holds rights. See CC0-1.0.txt.
 
 Dwarf outputs derived from MaximB Drunk Dwarf Voice Pack are EXCLUDED
-from CC0: all63 adaptations remain CC-BY-SA-3.0. Attribution/source/license
+from CC0: all81 adaptations remain CC-BY-SA-3.0. Attribution/source/license
 and neural adaptation disclosure appear in public/audio/credits.html.
 
 Licensed character references: Tim Rockk (Orc), Hydroque (Elf), artisticdude

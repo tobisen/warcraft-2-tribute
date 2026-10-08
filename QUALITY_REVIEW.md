@@ -385,3 +385,21 @@ Tidigare ljudgodkännande från användaren består; ingen ny agentlyssning häv
 Slutuppdateringen ändrar enbart Markdown och återanvänder ovanstående faktiskt
 passerade kodchecks. CSS/units.mjs/docs/:memory:.ses bevaras och lämnas utanför.
 Befintlig Pages-praktik/version/changelog används utan ny tag/releaseinfrastruktur.
+
+
+## RTS-239–240 —2026-10-08
+
+Nya belägg:full1881/216 PASS524.96s, unit530/92 PASS14.42s, strict build572ms
+PASS/befintlig bundlevarning, syntax/länk/diff PASS.239 har9 nya integrationer
+för melee/projectile/worker/ship/range/sikt/dead/neworders/lag/Save/restart och
+faktisk800 viewportbrowser med fysisk moveorder.240 har90 egna nya lokala WAVs,
+405 manifestmasters; äldre315 entries/630 WAV-filer byte-identiska. Femras-
+browser använder verkliga public WAVs, fysisk selection/gruppdrag/order,
+90 nya variantstarter, humorinterrupt, mute/volym/pause och scene-restart PASS.
+
+Review av order/cargo/route-preservation och transient Save, positive weapon
+capability/hostile targeting samt voice preemption/generation/licensmetadata
+utan blockerande tekniska fynd. Hörbar ljudkvalitet/faktisk lyssning saknas;
+240 kvarstår In Progress. Browser source-start/headless decode ersätter inte
+provlyssning. [Lyssningsunderlag](artifacts/rts-240/README.md) skiljer detta från
+äldre användargodkännande. Ingen ny CI/Pages/release/naturlig mänsklig matchclaim.

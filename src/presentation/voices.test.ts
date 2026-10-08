@@ -26,11 +26,12 @@ it('chooses one own representative and distinguishes accepted and failed changed
  expect(voiceRole({...a,kind:'soldier',archetype:'archer'})).toBe('archer');expect(voiceRole({...a,kind:'ship',role:'transport'})).toBe('transport');
  expect(voiceOrderAction(gather)).toBe('gather');expect(voiceOrderAction({...a,order:{kind:'attack'}})).toBe('attack');expect(voiceOrderAction({...a,order:{kind:'move'}})).toBe('move');
 });
-it('provides three own variants for all five factions, three roles and seven actions with declared provenance and honest listening status',()=>{
- expect(script.entries).toHaveLength(315);expect(new Set(script.entries.map((e:VoiceClip)=>e.id)).size).toBe(315);
+it('provides five selection/humor/move and three other own variants for all five factions, three roles and seven actions with declared provenance and honest listening status',()=>{
+ expect(script.entries).toHaveLength(405);expect(new Set(script.entries.map((e:VoiceClip)=>e.id)).size).toBe(405);
  for(const faction of factionIds)for(const role of recordedVoiceRoles)for(const action of recordedVoiceActions){
   const entries=script.entries.filter((e:VoiceClip)=>e.faction===faction&&e.role===role&&e.action===action);
-  expect(entries).toHaveLength(3);expect(new Set(entries.map((e:VoiceClip)=>e.text)).size).toBe(3);
+  const count=['selection','humor','move'].includes(action)?5:3;
+  expect(entries).toHaveLength(count);expect(new Set(entries.map((e:VoiceClip)=>e.text)).size).toBe(count);
   for(const entry of entries){expect(entry.listeningVerified).toBe(false);if(entry.recording===null){expect(entry.license).toBeNull();}else{expect(recordedVoiceManifest({version:1,entries:[entry]})).toHaveLength(1);}}
  }
  expect(recordedVoiceManifest({version:1,entries:script.entries})).toHaveLength(script.entries.filter((e:VoiceClip)=>e.recording!==null).length);
@@ -43,11 +44,11 @@ it('accepts only local matching recording paths and declared provenance; ignores
 });
 it('routes recordings by faction, role and action, drops overlap/cooldown and rotates without immediate repeat',()=>{
  const f=fixture();expect(f.lane.speak('worker','select','crown')).toBe(false);f.lane.setPhase('playing');
- expect(f.lane.status.recordings).toBe(315);expect(f.lane.speak('worker','select','crown')).toBe(true);
- f.setTime(3);expect(f.lane.speak('soldier','attack','clans')).toBe(false);f.finish();
+ expect(f.lane.status.recordings).toBe(405);expect(f.lane.speak('worker','select','crown')).toBe(true);
  f.setTime(.5);expect(f.lane.speak('worker','select','crown')).toBe(false);
- f.setTime(3);expect(f.lane.speak('worker','select','crown')).toBe(true);expect(f.played[1].clip.id).not.toBe(f.played[0].clip.id);f.finish();
- let time=6;
+ f.setTime(3);expect(f.lane.speak('soldier','attack','clans')).toBe(true);f.finish();
+ f.setTime(6);expect(f.lane.speak('worker','select','crown')).toBe(true);expect(f.played[2].clip.id).not.toBe(f.played[0].clip.id);f.finish();
+ let time=9;
  for(const faction of factionIds)for(const role of recordedVoiceRoles)for(const action of ['select','move','attack','gather','ready','error'] as const){
   f.setTime(time);time+=3;expect(f.lane.speak(role,action,faction)).toBe(true);
   expect(f.played.at(-1)?.clip).toMatchObject({faction,role,action:action==='select'?'selection':action});f.finish();
@@ -70,18 +71,35 @@ it('missing recordings and playback failures are silent, do not consume cooldown
  f.playback.play=(clip,gain,ended)=>{f.played.push({clip,gain,ended});return true;};expect(f.lane.speak('worker','select','goblins')).toBe(true);
  expect(f.lane.speak('transport','select','goblins')).toBe(false);
 });
-it('humor requires six repeated clicks, a rare draw and its own cooldown; unavailable humor falls back to selection',()=>{
+it('humor requires four repeated clicks, a probability draw and its own cooldown; unavailable humor falls back to selection',()=>{
  const f=fixture(()=>0);f.lane.setPhase('playing');
  for(let i=0;i<12;i++){f.setTime(i*2);expect(f.lane.select('worker','dwarves','one')).toBe(true);f.finish();}
- expect(f.played.filter(p=>p.clip.action==='humor')).toHaveLength(1);expect(f.played[5].clip.action).toBe('humor');expect(f.played[11].clip.action).toBe('selection');
+ expect(f.played.filter(p=>p.clip.action==='humor')).toHaveLength(1);expect(f.played[3].clip.action).toBe('humor');expect(f.played[11].clip.action).toBe('selection');
  f.setTime(60);f.lane.select('worker','dwarves','two');f.finish();expect(f.played.at(-1)?.clip.action).toBe('selection');
  const ordinary=fixture();ordinary.lane.setPhase('playing');for(let i=0;i<18;i++){ordinary.setTime(i*2);ordinary.lane.select('worker','dwarves','one');ordinary.finish();}
  expect(ordinary.played.every(p=>p.clip.action==='selection')).toBe(true);
- const missing=fixture(()=>0);missing.playback.has=id=>!id.includes('-humor-');missing.lane.setPhase('playing');for(let i=0;i<6;i++){missing.setTime(i*2);expect(missing.lane.select('worker','clans','one')).toBe(true);missing.finish();}expect(missing.played.at(-1)?.clip.action).toBe('selection');
+ const missing=fixture(()=>0);missing.playback.has=id=>!id.includes('-humor-');missing.lane.setPhase('playing');for(let i=0;i<4;i++){missing.setTime(i*2);expect(missing.lane.select('worker','clans','one')).toBe(true);missing.finish();}expect(missing.played.at(-1)?.clip.action).toBe('selection');
 });
 it('arrival chooses one stable new voice, respects faction and silences initial/load/pause frames',()=>{
  const old={id:'unit-1',role:'worker' as const,faction:'crown' as const};
  const a={id:'unit-10',role:'soldier' as const,faction:'elves' as const},b={...a,id:'unit-2',faction:'goblins' as const};
  expect(readyVoiceSpeaker(undefined,[old],true)).toBeUndefined();expect(readyVoiceSpeaker([old],[old,a,b],false)).toBeUndefined();
  expect(readyVoiceSpeaker([old],[old,a,b],true)).toEqual(b);expect(readyVoiceSpeaker([old,a,b],[old,a,b],true)).toBeUndefined();
+});
+it('accepted orders immediately preempt selection or humor; stale completion cannot stop the new voice',()=>{
+ for(const action of ['select','repeat'] as const){
+  const f=fixture();f.lane.setPhase('playing');expect(f.lane.speak('worker',action,'goblins')).toBe(true);
+  const old=f.played[0].ended;f.setTime(.1);expect(f.lane.speak('worker','move','goblins')).toBe(true);
+  expect(f.playback.stop).toHaveBeenCalledTimes(1);expect(f.played[1].clip.action).toBe('move');old();expect(f.lane.status.speaking).toBe(true);
+  f.setTime(.2);expect(f.lane.speak('worker','attack','goblins')).toBe(false);expect(f.lane.select('worker','goblins','one')).toBe(false);expect(f.played).toHaveLength(2);
+ }
+});
+it('a missing confirmation does not cut off a valid selection and does not consume order cooldown',()=>{
+ const f=fixture();f.lane.setPhase('playing');f.lane.speak('worker','select','elves');f.setTime(.1);
+ f.playback.has=id=>!id.includes('-move-');expect(f.lane.speak('worker','move','elves')).toBe(false);expect(f.playback.stop).not.toHaveBeenCalled();
+ f.playback.has=()=>true;expect(f.lane.speak('worker','move','elves')).toBe(true);
+});
+it('all five humorous variants rotate without immediate repetition for every faction and role',()=>{
+ const f=fixture();f.lane.setPhase('playing');let time=0;
+ for(const faction of factionIds)for(const role of recordedVoiceRoles){const ids=[];for(let i=0;i<6;i++){f.setTime(time);time+=voiceConfig.humorCooldownSeconds+1;expect(f.lane.speak(role,'repeat',faction)).toBe(true);ids.push(f.played.at(-1)!.clip.id);f.finish();}expect(new Set(ids.slice(0,5)).size).toBe(5);expect(ids[5]).toBe(ids[0]);}
 });

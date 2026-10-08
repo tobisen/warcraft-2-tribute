@@ -6236,6 +6236,1716 @@
       "listeningVerified": false,
       "intermediateFilename": "assets/audio/voices/goblins-archer-humor-03.wav",
       "finalProvenance": "converted-voices.json"
+    },
+    "crown-worker-selection-04": {
+      "identity": {
+        "text": "My shovel has union representation.",
+        "voice": "bm_george",
+        "lang": "en-gb",
+        "speed": 1.04,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "7b5adb18522da8b69216895824162df3da726b67a60fec651f8f53e757354874",
+      "master": "assets/audio/voices/crown-worker-selection-04.wav",
+      "duration": 2.843875,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.07122534450335198,
+      "gain": 1.748149134708965,
+      "listeningVerified": false
+    },
+    "crown-worker-selection-05": {
+      "identity": {
+        "text": "Yes? The dirt has filed a complaint.",
+        "voice": "bm_george",
+        "lang": "en-gb",
+        "speed": 1.04,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "2b9a9cf343cc6d6baefaf2e87e63ec8bc0c920ac345ced7c70c661e45127de00",
+      "master": "assets/audio/voices/crown-worker-selection-05.wav",
+      "duration": 2.4459583333333335,
+      "sampleRate": 24000,
+      "peak": 0.6133936214226363,
+      "speechRmsBeforeGain": 0.07293553845055888,
+      "gain": 1.7823958355791623,
+      "listeningVerified": false
+    },
+    "crown-worker-humor-04": {
+      "identity": {
+        "text": "I dug a moat. Accounting called it a hole.",
+        "voice": "bm_george",
+        "lang": "en-gb",
+        "speed": 1.04,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "355bdd6aa38f11e0c888113773d8fb8c4488eaa99b29d047176d7a2a1e7dd84e",
+      "master": "assets/audio/voices/crown-worker-humor-04.wav",
+      "duration": 2.913708333333333,
+      "sampleRate": 24000,
+      "peak": 0.7020380401768167,
+      "speechRmsBeforeGain": 0.07098636787123547,
+      "gain": 1.8313375356210833,
+      "listeningVerified": false
+    },
+    "crown-worker-humor-05": {
+      "identity": {
+        "text": "The axe is management. I handle the branches.",
+        "voice": "bm_george",
+        "lang": "en-gb",
+        "speed": 1.04,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "31591414c96bd37dd5e2b5209ab46479a7d92aaac74f6c7fa7fc1916101aee40",
+      "master": "assets/audio/voices/crown-worker-humor-05.wav",
+      "duration": 3.154125,
+      "sampleRate": 24000,
+      "peak": 0.5904579932696387,
+      "speechRmsBeforeGain": 0.07120526394474802,
+      "gain": 1.825707718756214,
+      "listeningVerified": false
+    },
+    "crown-worker-move-04": {
+      "identity": {
+        "text": "Proceeding with reasonable enthusiasm.",
+        "voice": "bm_george",
+        "lang": "en-gb",
+        "speed": 1.04,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "27cf050b59ad9729d1d55d8e8d3280f0312de283dae37f5392256d9b257120b7",
+      "master": "assets/audio/voices/crown-worker-move-04.wav",
+      "duration": 3.04275,
+      "sampleRate": 24000,
+      "peak": 0.6451955496303353,
+      "speechRmsBeforeGain": 0.06941091776278316,
+      "gain": 1.8729042085898422,
+      "listeningVerified": false
+    },
+    "crown-worker-move-05": {
+      "identity": {
+        "text": "On my way. Overtime starts at dusk.",
+        "voice": "bm_george",
+        "lang": "en-gb",
+        "speed": 1.04,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "155883a01519a694d222e1c8ea1ec2c14901e961df82483a7d2be76029dbf618",
+      "master": "assets/audio/voices/crown-worker-move-05.wav",
+      "duration": 2.74575,
+      "sampleRate": 24000,
+      "peak": 0.5480234247545771,
+      "speechRmsBeforeGain": 0.07252699145433436,
+      "gain": 1.79243613161388,
+      "listeningVerified": false
+    },
+    "crown-soldier-selection-04": {
+      "identity": {
+        "text": "Armor polished. Confidence pending.",
+        "voice": "bm_george",
+        "lang": "en-gb",
+        "speed": 1.0192,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "2392a9ba4123699df279c14bb4231ecf08218623440c106893c085b24c9992d9",
+      "master": "assets/audio/voices/crown-soldier-selection-04.wav",
+      "duration": 2.5056666666666665,
+      "sampleRate": 24000,
+      "peak": 0.6345254961398049,
+      "speechRmsBeforeGain": 0.07378567721083566,
+      "gain": 1.761859549361283,
+      "listeningVerified": false
+    },
+    "crown-soldier-selection-05": {
+      "identity": {
+        "text": "Present. The helmet counts as formal wear.",
+        "voice": "bm_george",
+        "lang": "en-gb",
+        "speed": 1.0192,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "d4f94a3915ad55fc1537b3f53c5ef05e0dacfe2a675767267f8f5a2dfe334fe3",
+      "master": "assets/audio/voices/crown-soldier-selection-05.wav",
+      "duration": 2.9574583333333333,
+      "sampleRate": 24000,
+      "peak": 0.6293890944045353,
+      "speechRmsBeforeGain": 0.07260763419480108,
+      "gain": 1.7904453359714119,
+      "listeningVerified": false
+    },
+    "crown-soldier-humor-04": {
+      "identity": {
+        "text": "My battle plan has a very brave appendix.",
+        "voice": "bm_george",
+        "lang": "en-gb",
+        "speed": 1.0192,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "1319128a722c320c311f3175307a58e93bcb921c50ac83a382f3d67a18d74c05",
+      "master": "assets/audio/voices/crown-soldier-humor-04.wav",
+      "duration": 3.179708333333333,
+      "sampleRate": 24000,
+      "peak": 0.7413049528601815,
+      "speechRmsBeforeGain": 0.0697746337791685,
+      "gain": 1.863141272965191,
+      "listeningVerified": false
+    },
+    "crown-soldier-humor-05": {
+      "identity": {
+        "text": "I practiced my heroic pose. It chafes.",
+        "voice": "bm_george",
+        "lang": "en-gb",
+        "speed": 1.0192,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "3a848a2cd4e35472d0f598bd43f58a510b047faffac434735003a1c4b41ad923",
+      "master": "assets/audio/voices/crown-soldier-humor-05.wav",
+      "duration": 2.9567916666666667,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.0730978422565472,
+      "gain": 1.6794892101992882,
+      "listeningVerified": false
+    },
+    "crown-soldier-move-04": {
+      "identity": {
+        "text": "Marching. Paperwork can follow.",
+        "voice": "bm_george",
+        "lang": "en-gb",
+        "speed": 1.0192,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "dfb17d8cefad94581cb7e2a98debe56b8f20b327445538234547b48680795599",
+      "master": "assets/audio/voices/crown-soldier-move-04.wav",
+      "duration": 2.3854166666666665,
+      "sampleRate": 24000,
+      "peak": 0.6272572135277805,
+      "speechRmsBeforeGain": 0.07289295391326749,
+      "gain": 1.7834371228072605,
+      "listeningVerified": false
+    },
+    "crown-soldier-move-05": {
+      "identity": {
+        "text": "Moving out. Keep the parade short.",
+        "voice": "bm_george",
+        "lang": "en-gb",
+        "speed": 1.0192,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "f994e112dd704c4bce7e230ebdcf301b043aad4dd959aa39a5f3026027853d91",
+      "master": "assets/audio/voices/crown-soldier-move-05.wav",
+      "duration": 2.38625,
+      "sampleRate": 24000,
+      "peak": 0.5280161820838368,
+      "speechRmsBeforeGain": 0.07637349121777368,
+      "gain": 1.7021612856392028,
+      "listeningVerified": false
+    },
+    "crown-archer-selection-04": {
+      "identity": {
+        "text": "My aim is better than my small talk.",
+        "voice": "bm_george",
+        "lang": "en-gb",
+        "speed": 1.0712000000000002,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "4a9ccbf4a7f5ce71ea20a19077adf8890b362b36d0cb755a7f1f1d332408cd54",
+      "master": "assets/audio/voices/crown-archer-selection-04.wav",
+      "duration": 2.7904166666666668,
+      "sampleRate": 24000,
+      "peak": 0.5469824862852734,
+      "speechRmsBeforeGain": 0.07199992990428741,
+      "gain": 1.8055573133587015,
+      "listeningVerified": false
+    },
+    "crown-archer-selection-05": {
+      "identity": {
+        "text": "Reporting. Please stand behind the bow.",
+        "voice": "bm_george",
+        "lang": "en-gb",
+        "speed": 1.0712000000000002,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "f8944ac6d8da3627cbebc89c3e10d0d29e56fcc3871be86d677ad39906e42af0",
+      "master": "assets/audio/voices/crown-archer-selection-05.wav",
+      "duration": 2.591666666666667,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.07185009396843771,
+      "gain": 1.7727206927762598,
+      "listeningVerified": false
+    },
+    "crown-archer-humor-04": {
+      "identity": {
+        "text": "The arrows are numbered. Returning them is optional.",
+        "voice": "bm_george",
+        "lang": "en-gb",
+        "speed": 1.0712000000000002,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "bde7b3935f5f8ecfd2ffa00c69f9103c248f097505f6cb14ff45325c7ea07cda",
+      "master": "assets/audio/voices/crown-archer-humor-04.wav",
+      "duration": 3.166,
+      "sampleRate": 24000,
+      "peak": 0.6778149692666035,
+      "speechRmsBeforeGain": 0.0716596065226679,
+      "gain": 1.8141322051339683,
+      "listeningVerified": false
+    },
+    "crown-archer-humor-05": {
+      "identity": {
+        "text": "I requested a raise. They raised the target.",
+        "voice": "bm_george",
+        "lang": "en-gb",
+        "speed": 1.0712000000000002,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "fe634624c05447c94a049d309f9c077b0a2e7af34e0ba691775f3965db7387e7",
+      "master": "assets/audio/voices/crown-archer-humor-05.wav",
+      "duration": 3.0797083333333335,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.07157973006655749,
+      "gain": 1.6900675679862311,
+      "listeningVerified": false
+    },
+    "crown-archer-move-04": {
+      "identity": {
+        "text": "Taking position. Mind the sharp luggage.",
+        "voice": "bm_george",
+        "lang": "en-gb",
+        "speed": 1.0712000000000002,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "beda149effb19fd489e5769a24c3e9439f836a4227570ba5645294774ec0d94c",
+      "master": "assets/audio/voices/crown-archer-move-04.wav",
+      "duration": 2.6654583333333335,
+      "sampleRate": 24000,
+      "peak": 0.6901583240072818,
+      "speechRmsBeforeGain": 0.07301877153246426,
+      "gain": 1.7803641073611023,
+      "listeningVerified": false
+    },
+    "crown-archer-move-05": {
+      "identity": {
+        "text": "Moving. The quiver gets a window seat.",
+        "voice": "bm_george",
+        "lang": "en-gb",
+        "speed": 1.0712000000000002,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "72a4024303884d21e7182d9b2d5b29806daf40a5b37a627d3ed0c645c926a90c",
+      "master": "assets/audio/voices/crown-archer-move-05.wav",
+      "duration": 2.51875,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.07255602295743646,
+      "gain": 1.5683791680512038,
+      "listeningVerified": false
+    },
+    "clans-worker-selection-04": {
+      "identity": {
+        "text": "Me ready. Shovel less ready.",
+        "voice": "am_fenrir",
+        "lang": "en-us",
+        "speed": 0.94,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "05d8c5215a975b677d0ccaa75fcf57c7880db74ac9fc78994508d42589c188a1",
+      "master": "assets/audio/voices/clans-worker-selection-04.wav",
+      "duration": 1.6750833333333333,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.09213875094076035,
+      "gain": 1.1069890118532069,
+      "listeningVerified": false
+    },
+    "clans-worker-selection-05": {
+      "identity": {
+        "text": "What? Dirt started it.",
+        "voice": "am_fenrir",
+        "lang": "en-us",
+        "speed": 0.94,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "a8c7eab9e2e23c8d5eff1d411b726fc1b1349ca1dd735ed581b0a06dc0657abb",
+      "master": "assets/audio/voices/clans-worker-selection-05.wav",
+      "duration": 1.2584583333333332,
+      "sampleRate": 24000,
+      "peak": 0.7499999999999999,
+      "speechRmsBeforeGain": 0.10061278778814665,
+      "gain": 1.0245712725600538,
+      "listeningVerified": false
+    },
+    "clans-worker-humor-04": {
+      "identity": {
+        "text": "Boss say dig deep. Me found more dirt.",
+        "voice": "am_fenrir",
+        "lang": "en-us",
+        "speed": 0.94,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "8bb05790f7ffd181a089317b472cb4bd48ed04f7a40021a764bb9cd1b8fe81b3",
+      "master": "assets/audio/voices/clans-worker-humor-04.wav",
+      "duration": 2.5170833333333333,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.08683005103063164,
+      "gain": 1.1003012559553018,
+      "listeningVerified": false
+    },
+    "clans-worker-humor-05": {
+      "identity": {
+        "text": "Me build house. Roof keep falling upward wrong.",
+        "voice": "am_fenrir",
+        "lang": "en-us",
+        "speed": 0.94,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "72c357560c91dfc2dc57b693f33ed5b4939ca632574a200c9439d4a70346e1a5",
+      "master": "assets/audio/voices/clans-worker-humor-05.wav",
+      "duration": 2.891375,
+      "sampleRate": 24000,
+      "peak": 0.7500000000000001,
+      "speechRmsBeforeGain": 0.09042907540902483,
+      "gain": 1.0794117810586312,
+      "listeningVerified": false
+    },
+    "clans-worker-move-04": {
+      "identity": {
+        "text": "Me go. Rock can wait.",
+        "voice": "am_fenrir",
+        "lang": "en-us",
+        "speed": 0.94,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "3f7bb8dee79d18e033e9b9f639acf1321203c1bdcaefcf7b9402b0d5bb808afe",
+      "master": "assets/audio/voices/clans-worker-move-04.wav",
+      "duration": 1.427,
+      "sampleRate": 24000,
+      "peak": 0.7499999999999999,
+      "speechRmsBeforeGain": 0.09555075351456792,
+      "gain": 1.1893721152317178,
+      "listeningVerified": false
+    },
+    "clans-worker-move-05": {
+      "identity": {
+        "text": "Moving. Me bring angry shovel.",
+        "voice": "am_fenrir",
+        "lang": "en-us",
+        "speed": 0.94,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "f7d2cf6339e23125f44fbcde927e070ef78adbc231481ca9a75cb601ab2d0604",
+      "master": "assets/audio/voices/clans-worker-move-05.wav",
+      "duration": 1.6729583333333333,
+      "sampleRate": 24000,
+      "peak": 0.7499999999999999,
+      "speechRmsBeforeGain": 0.0931469605258109,
+      "gain": 1.0652368219634565,
+      "listeningVerified": false
+    },
+    "clans-soldier-selection-04": {
+      "identity": {
+        "text": "Me brought muscles. Plan optional.",
+        "voice": "am_fenrir",
+        "lang": "en-us",
+        "speed": 0.9211999999999999,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "7d02e10612a59ba759df0e583dd3fa58c36a4025ae61299e56e39312826a2d49",
+      "master": "assets/audio/voices/clans-soldier-selection-04.wav",
+      "duration": 2.119666666666667,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.08551041665873624,
+      "gain": 1.0024085641079379,
+      "listeningVerified": false
+    },
+    "clans-soldier-selection-05": {
+      "identity": {
+        "text": "Yes? Helmet squeezing good ideas.",
+        "voice": "am_fenrir",
+        "lang": "en-us",
+        "speed": 0.9211999999999999,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "70879e7075b4b5a98814e82a9d086cb656a3a77352fa2ead440351a5f6992bfd",
+      "master": "assets/audio/voices/clans-soldier-selection-05.wav",
+      "duration": 2.0109583333333334,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.09047456604589858,
+      "gain": 1.128099725780349,
+      "listeningVerified": false
+    },
+    "clans-soldier-humor-04": {
+      "identity": {
+        "text": "Me count victories on fingers. Need more fingers.",
+        "voice": "am_fenrir",
+        "lang": "en-us",
+        "speed": 0.9211999999999999,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "6ff950c739b879a7154f9c4b8149d3f66f18627859e2eefe7d325a604b2f5808",
+      "master": "assets/audio/voices/clans-soldier-humor-04.wav",
+      "duration": 3.252,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.08572280227745925,
+      "gain": 1.114016231623081,
+      "listeningVerified": false
+    },
+    "clans-soldier-humor-05": {
+      "identity": {
+        "text": "Me tried whispering. Broke a window.",
+        "voice": "am_fenrir",
+        "lang": "en-us",
+        "speed": 0.9211999999999999,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "ab749e2da20c80d646a3b62d120fbc1ead5b01122ab6694419ae5d5f5bbbf62d",
+      "master": "assets/audio/voices/clans-soldier-humor-05.wav",
+      "duration": 2.2848333333333333,
+      "sampleRate": 24000,
+      "peak": 0.7499999999999999,
+      "speechRmsBeforeGain": 0.08617756418231613,
+      "gain": 1.0515777749289286,
+      "listeningVerified": false
+    },
+    "clans-soldier-move-04": {
+      "identity": {
+        "text": "Me go there. There look breakable.",
+        "voice": "am_fenrir",
+        "lang": "en-us",
+        "speed": 0.9211999999999999,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "40bdcbbc55e8a1a2123d4f67d62e88c93ce7b12a884342c02ce5b637a2448420",
+      "master": "assets/audio/voices/clans-soldier-move-04.wav",
+      "duration": 1.79975,
+      "sampleRate": 24000,
+      "peak": 0.7500000000000001,
+      "speechRmsBeforeGain": 0.08974345658004793,
+      "gain": 1.2298516976782339,
+      "listeningVerified": false
+    },
+    "clans-soldier-move-05": {
+      "identity": {
+        "text": "Marching. Ground better behave.",
+        "voice": "am_fenrir",
+        "lang": "en-us",
+        "speed": 0.9211999999999999,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "edcab3cf3890a32725de2fe181fde69d8858889bb1f5e1fab8477124ba082739",
+      "master": "assets/audio/voices/clans-soldier-move-05.wav",
+      "duration": 2.1009166666666665,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.08413784774407639,
+      "gain": 1.0926564031997936,
+      "listeningVerified": false
+    },
+    "clans-archer-selection-04": {
+      "identity": {
+        "text": "Bow ready. Patience not loaded.",
+        "voice": "am_fenrir",
+        "lang": "en-us",
+        "speed": 0.9682,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "48a0df4d985cf283eb44f4356046b94d74016a8639024141a0b31183cfa65a7e",
+      "master": "assets/audio/voices/clans-archer-selection-04.wav",
+      "duration": 2.0688333333333335,
+      "sampleRate": 24000,
+      "peak": 0.7500000000000001,
+      "speechRmsBeforeGain": 0.08833937157283026,
+      "gain": 1.1952558031365155,
+      "listeningVerified": false
+    },
+    "clans-archer-selection-05": {
+      "identity": {
+        "text": "Point me at smaller problems.",
+        "voice": "am_fenrir",
+        "lang": "en-us",
+        "speed": 0.9682,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "cd0233fe90d2a348198a2844e7e3fffd65b842fe0d1fb7ce19258e51809939bf",
+      "master": "assets/audio/voices/clans-archer-selection-05.wav",
+      "duration": 1.5715416666666666,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.09258802583282146,
+      "gain": 1.226978167996392,
+      "listeningVerified": false
+    },
+    "clans-archer-humor-04": {
+      "identity": {
+        "text": "Me shoot warning arrow. Arrow not good at warning.",
+        "voice": "am_fenrir",
+        "lang": "en-us",
+        "speed": 0.9682,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "5ae926cbe201cbbe00ee878a58c72b114fa432f285bfc10b2f41cde641a3ddaf",
+      "master": "assets/audio/voices/clans-archer-humor-04.wav",
+      "duration": 2.8605416666666668,
+      "sampleRate": 24000,
+      "peak": 0.7500000000000001,
+      "speechRmsBeforeGain": 0.08183298381695589,
+      "gain": 1.3157793503396973,
+      "listeningVerified": false
+    },
+    "clans-archer-humor-05": {
+      "identity": {
+        "text": "Me aim with both eyes. Twice as suspicious.",
+        "voice": "am_fenrir",
+        "lang": "en-us",
+        "speed": 0.9682,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "2bb4febe90cfc42e67235a70d6805bf17c18cb7c67d5021cbed183de3a49b10f",
+      "master": "assets/audio/voices/clans-archer-humor-05.wav",
+      "duration": 2.698166666666667,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.08815551175312757,
+      "gain": 0.944720961210599,
+      "listeningVerified": false
+    },
+    "clans-archer-move-04": {
+      "identity": {
+        "text": "Moving. Keep arrows pointy.",
+        "voice": "am_fenrir",
+        "lang": "en-us",
+        "speed": 0.9682,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "b66a1b8e33b077215a6ad6e50e86e0e3c6816f03504683272ae76766267f7029",
+      "master": "assets/audio/voices/clans-archer-move-04.wav",
+      "duration": 1.9180416666666666,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.09049355940044533,
+      "gain": 1.0580515760941167,
+      "listeningVerified": false
+    },
+    "clans-archer-move-05": {
+      "identity": {
+        "text": "Me take spot. Spot better be good.",
+        "voice": "am_fenrir",
+        "lang": "en-us",
+        "speed": 0.9682,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "c2a308c890d3f6bd722d05bb49979db6282ab9588e8f861225d4768115363c13",
+      "master": "assets/audio/voices/clans-archer-move-05.wav",
+      "duration": 2.296708333333333,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.08628364798662501,
+      "gain": 1.0231204397082045,
+      "listeningVerified": false
+    },
+    "elves-worker-selection-04": {
+      "identity": {
+        "text": "Even the shovel deserves elegance.",
+        "voice": "bf_emma",
+        "lang": "en-gb",
+        "speed": 1.0,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "1b7b22ef7a9a9d5a671afb91dde8e246e03cd69bfa1740bcf57a8813e07c1db4",
+      "master": "assets/audio/voices/elves-worker-selection-04.wav",
+      "duration": 2.0323333333333333,
+      "sampleRate": 24000,
+      "peak": 0.7354095780974369,
+      "speechRmsBeforeGain": 0.07886762073420397,
+      "gain": 1.6483317081178348,
+      "listeningVerified": false
+    },
+    "elves-worker-selection-05": {
+      "identity": {
+        "text": "Yes? I was improving the soil.",
+        "voice": "bf_emma",
+        "lang": "en-gb",
+        "speed": 1.0,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "cf7dc32f0d103f94d8523f3d0cf01e90a00347fb0a52908b44af31e3257ee15c",
+      "master": "assets/audio/voices/elves-worker-selection-05.wav",
+      "duration": 2.0690416666666667,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.07313471729420574,
+      "gain": 1.618051489027218,
+      "listeningVerified": false
+    },
+    "elves-worker-humor-04": {
+      "identity": {
+        "text": "This tree has dreadful posture.",
+        "voice": "bf_emma",
+        "lang": "en-gb",
+        "speed": 1.0,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "3b75c52f732ec3918c7d178d173764d3daed5c8be7e139a3e92965f4d9dd6992",
+      "master": "assets/audio/voices/elves-worker-humor-04.wav",
+      "duration": 2.0005,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.08048983314243144,
+      "gain": 1.3928532781958347,
+      "listeningVerified": false
+    },
+    "elves-worker-humor-05": {
+      "identity": {
+        "text": "I composted the criticism. It finally became useful.",
+        "voice": "bf_emma",
+        "lang": "en-gb",
+        "speed": 1.0,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "9a810c90e908e9a1602c0f347505a6c4490ef8be120738dec7ece17d23fc34b4",
+      "master": "assets/audio/voices/elves-worker-humor-05.wav",
+      "duration": 3.51125,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.07289397132007011,
+      "gain": 1.5053698622295175,
+      "listeningVerified": false
+    },
+    "elves-worker-move-04": {
+      "identity": {
+        "text": "Gracefully relocating. With tools.",
+        "voice": "bf_emma",
+        "lang": "en-gb",
+        "speed": 1.0,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "811f37752be51bdc38b8fa20007704a5098d853e285980c950d1edc32b4d0243",
+      "master": "assets/audio/voices/elves-worker-move-04.wav",
+      "duration": 2.5185416666666667,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.07822773163546493,
+      "gain": 1.2367873581329294,
+      "listeningVerified": false
+    },
+    "elves-worker-move-05": {
+      "identity": {
+        "text": "I shall make that location presentable.",
+        "voice": "bf_emma",
+        "lang": "en-gb",
+        "speed": 1.0,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "48b5a0de88e7b26c9e61597fae9c0c262f6496e753f810f70ebbda5158185316",
+      "master": "assets/audio/voices/elves-worker-move-05.wav",
+      "duration": 2.284708333333333,
+      "sampleRate": 24000,
+      "peak": 0.7166051436068822,
+      "speechRmsBeforeGain": 0.0754721011630344,
+      "gain": 1.722490801192546,
+      "listeningVerified": false
+    },
+    "elves-soldier-selection-04": {
+      "identity": {
+        "text": "I trust this is an aesthetically sound assignment.",
+        "voice": "bf_emma",
+        "lang": "en-gb",
+        "speed": 0.98,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "792ee135c5f571989da3e9370717c368cc33c2bbeb2ca4d8b45e6322c7403342",
+      "master": "assets/audio/voices/elves-soldier-selection-04.wav",
+      "duration": 2.63225,
+      "sampleRate": 24000,
+      "peak": 0.7389549833347647,
+      "speechRmsBeforeGain": 0.07225476610820028,
+      "gain": 1.7991892715468378,
+      "listeningVerified": false
+    },
+    "elves-soldier-selection-05": {
+      "identity": {
+        "text": "Ready. Naturally.",
+        "voice": "bf_emma",
+        "lang": "en-gb",
+        "speed": 0.98,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "2399615aabc2c348afa13ee93b733231ee3b9e570beb71bf6c6de90a915fd176",
+      "master": "assets/audio/voices/elves-soldier-selection-05.wav",
+      "duration": 1.283125,
+      "sampleRate": 24000,
+      "peak": 0.7391256703532113,
+      "speechRmsBeforeGain": 0.08510172777417613,
+      "gain": 1.5275835567635576,
+      "listeningVerified": false
+    },
+    "elves-soldier-humor-04": {
+      "identity": {
+        "text": "My armor reflects light and poor judgment.",
+        "voice": "bf_emma",
+        "lang": "en-gb",
+        "speed": 0.98,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "60d4f4aec22e2e51b80473da783ef260dac14d18e76c2c2caa037f6970662eed",
+      "master": "assets/audio/voices/elves-soldier-humor-04.wav",
+      "duration": 2.467875,
+      "sampleRate": 24000,
+      "peak": 0.6653321095439586,
+      "speechRmsBeforeGain": 0.07576291431260879,
+      "gain": 1.7158790838430678,
+      "listeningVerified": false
+    },
+    "elves-soldier-humor-05": {
+      "identity": {
+        "text": "I rehearsed victory. Your applause was late.",
+        "voice": "bf_emma",
+        "lang": "en-gb",
+        "speed": 0.98,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "b5cbc960bcd52fbd84e69b909cd2a2e312dd82b597493df0fc566b3652b720ed",
+      "master": "assets/audio/voices/elves-soldier-humor-05.wav",
+      "duration": 2.843916666666667,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.07515254961138487,
+      "gain": 1.491631640224821,
+      "listeningVerified": false
+    },
+    "elves-soldier-move-04": {
+      "identity": {
+        "text": "A measured advance. Try to keep up.",
+        "voice": "bf_emma",
+        "lang": "en-gb",
+        "speed": 0.98,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "c041aa27c71500456b2ac27459b3f522fcab2c54bb4cc1d0aec2a3132b4e112f",
+      "master": "assets/audio/voices/elves-soldier-move-04.wav",
+      "duration": 2.3013333333333335,
+      "sampleRate": 24000,
+      "peak": 0.6652430445921541,
+      "speechRmsBeforeGain": 0.0752577042713006,
+      "gain": 1.7273978957869338,
+      "listeningVerified": false
+    },
+    "elves-soldier-move-05": {
+      "identity": {
+        "text": "Proceeding without unnecessary stomping.",
+        "voice": "bf_emma",
+        "lang": "en-gb",
+        "speed": 0.98,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "a3882e564964872866280313fedd02d702843d8c9ff8e6f0c0524d44eead970f",
+      "master": "assets/audio/voices/elves-soldier-move-05.wav",
+      "duration": 2.324875,
+      "sampleRate": 24000,
+      "peak": 0.6477557889413472,
+      "speechRmsBeforeGain": 0.07380445258982787,
+      "gain": 1.761411343601203,
+      "listeningVerified": false
+    },
+    "elves-archer-selection-04": {
+      "identity": {
+        "text": "A keen eye. Two, in fact.",
+        "voice": "bf_emma",
+        "lang": "en-gb",
+        "speed": 1.03,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "2ef708bc18ef91e6737b2afabbe9cc08c8fd1854c5102de4629c01e62226c0f2",
+      "master": "assets/audio/voices/elves-archer-selection-04.wav",
+      "duration": 1.904,
+      "sampleRate": 24000,
+      "peak": 0.5652432885018769,
+      "speechRmsBeforeGain": 0.07450104810866122,
+      "gain": 1.7449418941112411,
+      "listeningVerified": false
+    },
+    "elves-archer-selection-05": {
+      "identity": {
+        "text": "I see the point. Usually before you do.",
+        "voice": "bf_emma",
+        "lang": "en-gb",
+        "speed": 1.03,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "dab3be07bd61864cb8e282c6463dbd197d3579d50ba60b1d0f2a07a4dde562c4",
+      "master": "assets/audio/voices/elves-archer-selection-05.wav",
+      "duration": 2.5202916666666666,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.07504025565826933,
+      "gain": 1.7237544578557604,
+      "listeningVerified": false
+    },
+    "elves-archer-humor-04": {
+      "identity": {
+        "text": "My arrows have better manners than your guests.",
+        "voice": "bf_emma",
+        "lang": "en-gb",
+        "speed": 1.03,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "8ca46ca5806d11b742f2c18f1b5966290cbd89ed66974b2db38f3f38caeee98e",
+      "master": "assets/audio/voices/elves-archer-humor-04.wav",
+      "duration": 2.3993333333333333,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.07384272091875234,
+      "gain": 1.6561411107085915,
+      "listeningVerified": false
+    },
+    "elves-archer-humor-05": {
+      "identity": {
+        "text": "I missed once. The target apologized.",
+        "voice": "bf_emma",
+        "lang": "en-gb",
+        "speed": 1.03,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "07b8dc301df054488a3c92c12055fb56129d5914ee2720ee0fbf687fb97012c2",
+      "master": "assets/audio/voices/elves-archer-humor-05.wav",
+      "duration": 2.56475,
+      "sampleRate": 24000,
+      "peak": 0.6931388707248177,
+      "speechRmsBeforeGain": 0.07506698211479668,
+      "gain": 1.7317866835407962,
+      "listeningVerified": false
+    },
+    "elves-archer-move-04": {
+      "identity": {
+        "text": "Taking the tasteful route.",
+        "voice": "bf_emma",
+        "lang": "en-gb",
+        "speed": 1.03,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "6d28976e7db1add755fe3f56deebd9aa1b8119f7e009ca985dda62e4972b9111",
+      "master": "assets/audio/voices/elves-archer-move-04.wav",
+      "duration": 1.59725,
+      "sampleRate": 24000,
+      "peak": 0.6557234409955295,
+      "speechRmsBeforeGain": 0.08362996498882626,
+      "gain": 1.5544667514493067,
+      "listeningVerified": false
+    },
+    "elves-archer-move-05": {
+      "identity": {
+        "text": "A better vantage. How refreshing.",
+        "voice": "bf_emma",
+        "lang": "en-gb",
+        "speed": 1.03,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "b9f8c35041ccc2ef94f977a8e4e17d5479a3f44a8dbf7b4ad5bc84e149fa66d8",
+      "master": "assets/audio/voices/elves-archer-move-05.wav",
+      "duration": 1.9522083333333333,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.0776148822680847,
+      "gain": 1.557245294771854,
+      "listeningVerified": false
+    },
+    "dwarves-worker-selection-04": {
+      "identity": {
+        "text": "Tools ready. Tea dangerously low.",
+        "voice": "bm_fable",
+        "lang": "en-gb",
+        "speed": 0.97,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "760f571ce792076e93e434170ff9fe5735dc6794d88c9eb1f02b198602f7814f",
+      "master": "assets/audio/voices/dwarves-worker-selection-04.wav",
+      "duration": 2.9720416666666667,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.0543502451081888,
+      "gain": 1.525342467124361,
+      "listeningVerified": false
+    },
+    "dwarves-worker-selection-05": {
+      "identity": {
+        "text": "Aye. Make it worth the blisters.",
+        "voice": "bm_fable",
+        "lang": "en-gb",
+        "speed": 0.97,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "65cad406266d8b6f5c6ea1239dec8f74119a78ea44984158eee06f0c133f1f58",
+      "master": "assets/audio/voices/dwarves-worker-selection-05.wav",
+      "duration": 2.4834583333333335,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.0582297735708541,
+      "gain": 1.8442091503005098,
+      "listeningVerified": false
+    },
+    "dwarves-worker-humor-04": {
+      "identity": {
+        "text": "Stone never argues. Quality company.",
+        "voice": "bm_fable",
+        "lang": "en-gb",
+        "speed": 0.97,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "dd16d52dc9300c30350e28163f72504e7935d54026d4e623a53f3d1c77c7334d",
+      "master": "assets/audio/voices/dwarves-worker-humor-04.wav",
+      "duration": 3.3764166666666666,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.05627467344180514,
+      "gain": 1.4661698004928445,
+      "listeningVerified": false
+    },
+    "dwarves-worker-humor-05": {
+      "identity": {
+        "text": "My beard caught sawdust. Free insulation.",
+        "voice": "bm_fable",
+        "lang": "en-gb",
+        "speed": 0.97,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "d3706392f0232d3abd9933737248c8f712e703d155bc24ea9ff6d06a5470e81f",
+      "master": "assets/audio/voices/dwarves-worker-humor-05.wav",
+      "duration": 3.6050416666666667,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.053403759579496744,
+      "gain": 1.6640396567954747,
+      "listeningVerified": false
+    },
+    "dwarves-worker-move-04": {
+      "identity": {
+        "text": "Aye. Boots already objecting.",
+        "voice": "bm_fable",
+        "lang": "en-gb",
+        "speed": 0.97,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "e5c61a8ac54655fca793c262fe062fa138b94bc73580295e9ba81f6b417f2377",
+      "master": "assets/audio/voices/dwarves-worker-move-04.wav",
+      "duration": 2.925125,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.05912026670750032,
+      "gain": 2.064746998449631,
+      "listeningVerified": false
+    },
+    "dwarves-worker-move-05": {
+      "identity": {
+        "text": "On the move. Keep the kettle warm.",
+        "voice": "bm_fable",
+        "lang": "en-gb",
+        "speed": 0.97,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "f4a3d46375b27be7c526c558ae5ad8d82e72d525bcfa37eced79a6ea6b8d6984",
+      "master": "assets/audio/voices/dwarves-worker-move-05.wav",
+      "duration": 2.5669166666666667,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.061265848926322614,
+      "gain": 1.6144719519253183,
+      "listeningVerified": false
+    },
+    "dwarves-soldier-selection-04": {
+      "identity": {
+        "text": "Aye. Shield weighs less than your instructions.",
+        "voice": "bm_fable",
+        "lang": "en-gb",
+        "speed": 0.9506,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "fc36b9f9ed5c33c683c0c7ec36fe6e7a9a2daf814ce25e32d78741210cfbc4c6",
+      "master": "assets/audio/voices/dwarves-soldier-selection-04.wav",
+      "duration": 3.5569166666666665,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.05346065906506274,
+      "gain": 1.9223448005122936,
+      "listeningVerified": false
+    },
+    "dwarves-soldier-selection-05": {
+      "identity": {
+        "text": "Standing firm. Mostly from habit.",
+        "voice": "bm_fable",
+        "lang": "en-gb",
+        "speed": 0.9506,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "2e9868f25bafcc396d81039be87f9597a5382a5e2ebf74ca82f509b70194ad54",
+      "master": "assets/audio/voices/dwarves-soldier-selection-05.wav",
+      "duration": 3.079625,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.05510596131112846,
+      "gain": 1.7338327016584616,
+      "listeningVerified": false
+    },
+    "dwarves-soldier-humor-04": {
+      "identity": {
+        "text": "My armor has dents older than your commander.",
+        "voice": "bm_fable",
+        "lang": "en-gb",
+        "speed": 0.9506,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "9121817884d07f0224634160b2ac7f655bb96f648b139a26da4713f391d0dbe1",
+      "master": "assets/audio/voices/dwarves-soldier-humor-04.wav",
+      "duration": 3.4414166666666666,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.053756491924829314,
+      "gain": 2.192876613881574,
+      "listeningVerified": false
+    },
+    "dwarves-soldier-humor-05": {
+      "identity": {
+        "text": "Retreat? These boots came without reverse.",
+        "voice": "bm_fable",
+        "lang": "en-gb",
+        "speed": 0.9506,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "7cb0b538eac3f607f10764680a16e9be602509a5db1940641afde4ee314155b8",
+      "master": "assets/audio/voices/dwarves-soldier-humor-05.wav",
+      "duration": 3.482291666666667,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.05192476639295367,
+      "gain": 2.2737006449512,
+      "listeningVerified": false
+    },
+    "dwarves-soldier-move-04": {
+      "identity": {
+        "text": "Marching. Short legs, long memory.",
+        "voice": "bm_fable",
+        "lang": "en-gb",
+        "speed": 0.9506,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "4e4b912db3a1a5c30345757b8b9e9627e53ba121a5549b62197b6432141cdb8f",
+      "master": "assets/audio/voices/dwarves-soldier-move-04.wav",
+      "duration": 3.0849166666666665,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.056345275596120084,
+      "gain": 1.9301290925512946,
+      "listeningVerified": false
+    },
+    "dwarves-soldier-move-05": {
+      "identity": {
+        "text": "Aye. Solid ground preferred.",
+        "voice": "bm_fable",
+        "lang": "en-gb",
+        "speed": 0.9506,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "2e35ed6007c3f00f179494847f5b06d89641267f4b7c59fbe0979f2fe0b75d63",
+      "master": "assets/audio/voices/dwarves-soldier-move-05.wav",
+      "duration": 2.6422083333333335,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.056836206726569825,
+      "gain": 2.1493394298142348,
+      "listeningVerified": false
+    },
+    "dwarves-archer-selection-04": {
+      "identity": {
+        "text": "Bolt ready. Conversation loaded separately.",
+        "voice": "bm_fable",
+        "lang": "en-gb",
+        "speed": 0.9991,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "576859f3495c23a3ff295739b5613a6a6161980c47fde8bcf5f6cb35bf5e6204",
+      "master": "assets/audio/voices/dwarves-archer-selection-04.wav",
+      "duration": 3.559833333333333,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.05689828352364482,
+      "gain": 1.5336687027458067,
+      "listeningVerified": false
+    },
+    "dwarves-archer-selection-05": {
+      "identity": {
+        "text": "Aye. Something need ventilating?",
+        "voice": "bm_fable",
+        "lang": "en-gb",
+        "speed": 0.9991,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "85415457b80dd343fa93d2c7e740e13c945100a54d954d6d01685f10d6207157",
+      "master": "assets/audio/voices/dwarves-archer-selection-05.wav",
+      "duration": 2.634875,
+      "sampleRate": 24000,
+      "peak": 0.7499999999999999,
+      "speechRmsBeforeGain": 0.056888116939047204,
+      "gain": 2.0604180159184797,
+      "listeningVerified": false
+    },
+    "dwarves-archer-humor-04": {
+      "identity": {
+        "text": "I measure twice and shoot once. Usually.",
+        "voice": "bm_fable",
+        "lang": "en-gb",
+        "speed": 0.9991,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "f994e8c436e93faee833a31981bb71ea78b1814dff514446b09fa2aef4c4a782",
+      "master": "assets/audio/voices/dwarves-archer-humor-04.wav",
+      "duration": 3.338791666666667,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.05518109978275262,
+      "gain": 2.12435629522186,
+      "listeningVerified": false
+    },
+    "dwarves-archer-humor-05": {
+      "identity": {
+        "text": "The beard is a wind gauge. Precision equipment.",
+        "voice": "bm_fable",
+        "lang": "en-gb",
+        "speed": 0.9991,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "c707404ad04e9ac30be13300e3aacd765b876ba2c70d7bb7720e8d18b7efde51",
+      "master": "assets/audio/voices/dwarves-archer-humor-05.wav",
+      "duration": 3.621625,
+      "sampleRate": 24000,
+      "peak": 0.7499999999999999,
+      "speechRmsBeforeGain": 0.05292890537669621,
+      "gain": 2.3677807962667594,
+      "listeningVerified": false
+    },
+    "dwarves-archer-move-04": {
+      "identity": {
+        "text": "Taking position. Level ground, mind.",
+        "voice": "bm_fable",
+        "lang": "en-gb",
+        "speed": 0.9991,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "1ee99f9dcae96100c81d525a5f40137d4e551d5d0075be0a5347e1dd9bc826a6",
+      "master": "assets/audio/voices/dwarves-archer-move-04.wav",
+      "duration": 3.2811666666666666,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.05267356645173959,
+      "gain": 1.7810374731234,
+      "listeningVerified": false
+    },
+    "dwarves-archer-move-05": {
+      "identity": {
+        "text": "Moving. No scenic detours.",
+        "voice": "bm_fable",
+        "lang": "en-gb",
+        "speed": 0.9991,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "d2b7550e969c13e36e6f1e47bd626ff851a4775d5c68c4ffde66f9686aa52de8",
+      "master": "assets/audio/voices/dwarves-archer-move-05.wav",
+      "duration": 2.467625,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.062058599218149456,
+      "gain": 1.5194968062171141,
+      "listeningVerified": false
+    },
+    "goblins-worker-selection-04": {
+      "identity": {
+        "text": "Free estimate. Expensive execution.",
+        "voice": "am_puck",
+        "lang": "en-us",
+        "speed": 1.12,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "b4cf003c93dd77f779bc60bbce8bc24635ff6c72ede3096b365d6da6822e3a2c",
+      "master": "assets/audio/voices/goblins-worker-selection-04.wav",
+      "duration": 2.1027916666666666,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.09659235064099034,
+      "gain": 1.2908173469638806,
+      "listeningVerified": false
+    },
+    "goblins-worker-selection-05": {
+      "identity": {
+        "text": "Tools ready. Warranty carefully absent.",
+        "voice": "am_puck",
+        "lang": "en-us",
+        "speed": 1.12,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "1a1f22d2544eeefa2ae7f7d91c18590eb4bec71a47300b50fc3e67e8b6b1f380",
+      "master": "assets/audio/voices/goblins-worker-selection-05.wav",
+      "duration": 2.012,
+      "sampleRate": 24000,
+      "peak": 0.7427701673678574,
+      "speechRmsBeforeGain": 0.09985455519012176,
+      "gain": 1.3018935365790945,
+      "listeningVerified": false
+    },
+    "goblins-worker-humor-04": {
+      "identity": {
+        "text": "Safety meeting canceled. Excellent attendance.",
+        "voice": "am_puck",
+        "lang": "en-us",
+        "speed": 1.12,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "e2ddbba62adaa0af872404d87f12453f6f5b8f5938ec755533a06e8bd4e4a3f1",
+      "master": "assets/audio/voices/goblins-worker-humor-04.wav",
+      "duration": 2.4200416666666666,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.09164857522616697,
+      "gain": 1.4024011320801686,
+      "listeningVerified": false
+    },
+    "goblins-worker-humor-05": {
+      "identity": {
+        "text": "That smoke is a progress indicator.",
+        "voice": "am_puck",
+        "lang": "en-us",
+        "speed": 1.12,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "f5341af69ff18571d5380713c497a6571f60e12d5c8cee76dee562537d9b4c6a",
+      "master": "assets/audio/voices/goblins-worker-humor-05.wav",
+      "duration": 1.8927083333333334,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.09833362756327059,
+      "gain": 1.1255707984287295,
+      "listeningVerified": false
+    },
+    "goblins-worker-move-04": {
+      "identity": {
+        "text": "Moving. Travel fee applies.",
+        "voice": "am_puck",
+        "lang": "en-us",
+        "speed": 1.12,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "cbed63dd7b17d0364cb2be0098322123cfd06528a83f06aa203303733fe9ee3c",
+      "master": "assets/audio/voices/goblins-worker-move-04.wav",
+      "duration": 1.4327916666666667,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.1025288867299401,
+      "gain": 1.2402704900483335,
+      "listeningVerified": false
+    },
+    "goblins-worker-move-05": {
+      "identity": {
+        "text": "On my way. Keep the receipt.",
+        "voice": "am_puck",
+        "lang": "en-us",
+        "speed": 1.12,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "8438ba62aa64e09968a3cbbc09742ab46044c764ffddc24a676343e92a79b111",
+      "master": "assets/audio/voices/goblins-worker-move-05.wav",
+      "duration": 1.495,
+      "sampleRate": 24000,
+      "peak": 0.632434530605545,
+      "speechRmsBeforeGain": 0.10463500683120079,
+      "gain": 1.2424140250663767,
+      "listeningVerified": false
+    },
+    "goblins-soldier-selection-04": {
+      "identity": {
+        "text": "Combat tested. Results commercially sensitive.",
+        "voice": "am_puck",
+        "lang": "en-us",
+        "speed": 1.0976000000000001,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "1d2f0c37daad9c47bd3e52fdd3651e0177a6b11227a27a5004a4f8fd23b4fb42",
+      "master": "assets/audio/voices/goblins-soldier-selection-04.wav",
+      "duration": 2.62075,
+      "sampleRate": 24000,
+      "peak": 0.7499999999999999,
+      "speechRmsBeforeGain": 0.09571390694989725,
+      "gain": 1.147807441959401,
+      "listeningVerified": false
+    },
+    "goblins-soldier-selection-05": {
+      "identity": {
+        "text": "Ready! Mostly assembled.",
+        "voice": "am_puck",
+        "lang": "en-us",
+        "speed": 1.0976000000000001,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "f0fb7424ad3972cc101a371acf3a8842805863698a97c6d039f46f4a20870fae",
+      "master": "assets/audio/voices/goblins-soldier-selection-05.wav",
+      "duration": 1.268125,
+      "sampleRate": 24000,
+      "peak": 0.5626656701156552,
+      "speechRmsBeforeGain": 0.10178548202800627,
+      "gain": 1.2771958968001988,
+      "listeningVerified": false
+    },
+    "goblins-soldier-humor-04": {
+      "identity": {
+        "text": "My armor is rented. Please aim elsewhere.",
+        "voice": "am_puck",
+        "lang": "en-us",
+        "speed": 1.0976000000000001,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "4eb2df3edc5cd3aac368823af70e2b811ec139472a4001de090ac43bf76d92a8",
+      "master": "assets/audio/voices/goblins-soldier-humor-04.wav",
+      "duration": 2.4195416666666665,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.08832794634153605,
+      "gain": 1.456804793005862,
+      "listeningVerified": false
+    },
+    "goblins-soldier-humor-05": {
+      "identity": {
+        "text": "Heroism available in three payment plans.",
+        "voice": "am_puck",
+        "lang": "en-us",
+        "speed": 1.0976000000000001,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "c64e361ad51c5928435c9d1e10b0ec08913e8b2afe365144f60dbd3df712ce9c",
+      "master": "assets/audio/voices/goblins-soldier-humor-05.wav",
+      "duration": 2.332,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.09699725704341117,
+      "gain": 1.3273628976341731,
+      "listeningVerified": false
+    },
+    "goblins-soldier-move-04": {
+      "identity": {
+        "text": "Advancing. Refund policy stays behind.",
+        "voice": "am_puck",
+        "lang": "en-us",
+        "speed": 1.0976000000000001,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "7837058392b41ee3d9deab4c032412385affe974d61f7a8cb3039010ca10f71d",
+      "master": "assets/audio/voices/goblins-soldier-move-04.wav",
+      "duration": 2.25625,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.09284111434173846,
+      "gain": 1.334515657048049,
+      "listeningVerified": false
+    },
+    "goblins-soldier-move-05": {
+      "identity": {
+        "text": "New position! Same low survival estimate.",
+        "voice": "am_puck",
+        "lang": "en-us",
+        "speed": 1.0976000000000001,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "6a903682b150dc0e69f53d57c54dea5205845451e9ebcd9c2a78717663028fc5",
+      "master": "assets/audio/voices/goblins-soldier-move-05.wav",
+      "duration": 2.148041666666667,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.09672856050735454,
+      "gain": 1.2696497570985394,
+      "listeningVerified": false
+    },
+    "goblins-archer-selection-04": {
+      "identity": {
+        "text": "Projectile delivery. No signature required.",
+        "voice": "am_puck",
+        "lang": "en-us",
+        "speed": 1.1536000000000002,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "e2842623dd82a02ef6d849b375d7bd9e8252510176409c02adae315abe7ab9a7",
+      "master": "assets/audio/voices/goblins-archer-selection-04.wav",
+      "duration": 2.5395416666666666,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.09377875721419301,
+      "gain": 1.1096833280670233,
+      "listeningVerified": false
+    },
+    "goblins-archer-selection-05": {
+      "identity": {
+        "text": "Ready! Pointy end confirmed.",
+        "voice": "am_puck",
+        "lang": "en-us",
+        "speed": 1.1536000000000002,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "b6f7deaff71e5eb933cbe2a43188cdb75bf04fcb3aa8c8d8a951e5b8763c9289",
+      "master": "assets/audio/voices/goblins-archer-selection-05.wav",
+      "duration": 1.4792083333333332,
+      "sampleRate": 24000,
+      "peak": 0.7212118151467248,
+      "speechRmsBeforeGain": 0.09907662755164674,
+      "gain": 1.3121157150028497,
+      "listeningVerified": false
+    },
+    "goblins-archer-humor-04": {
+      "identity": {
+        "text": "Precision costs extra. Enthusiasm is included.",
+        "voice": "am_puck",
+        "lang": "en-us",
+        "speed": 1.1536000000000002,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "08eec278a4ff27f750b9e7825282e70a2a827f46046faa49b1e420ff95307d09",
+      "master": "assets/audio/voices/goblins-archer-humor-04.wav",
+      "duration": 3.125875,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.0913979114749385,
+      "gain": 0.9941187194957306,
+      "listeningVerified": false
+    },
+    "goblins-archer-humor-05": {
+      "identity": {
+        "text": "Exploding arrows? That is the premium subscription.",
+        "voice": "am_puck",
+        "lang": "en-us",
+        "speed": 1.1536000000000002,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "05d0fd21b7d799769131b2056f9a3ce2c5652d779d870cb18a4183b5bd46b5b5",
+      "master": "assets/audio/voices/goblins-archer-humor-05.wav",
+      "duration": 2.78875,
+      "sampleRate": 24000,
+      "peak": 0.7500000000000001,
+      "speechRmsBeforeGain": 0.09622811621184325,
+      "gain": 1.1369060700208211,
+      "listeningVerified": false
+    },
+    "goblins-archer-move-04": {
+      "identity": {
+        "text": "Moving to a profitable angle.",
+        "voice": "am_puck",
+        "lang": "en-us",
+        "speed": 1.1536000000000002,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "b298b6b1a04d588be5cfe56da235eece90ffdede9b102b9bf6870a9d8f6403e5",
+      "master": "assets/audio/voices/goblins-archer-move-04.wav",
+      "duration": 1.4975,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.09833564640202323,
+      "gain": 0.9842740523220027,
+      "listeningVerified": false
+    },
+    "goblins-archer-move-05": {
+      "identity": {
+        "text": "Relocating. Better sightlines, better margins.",
+        "voice": "am_puck",
+        "lang": "en-us",
+        "speed": 1.1536000000000002,
+        "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+        "stylesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+        "processingVersion": 1
+      },
+      "sha256": "a2260eb02be344569eb859a53e763ca449bfbcb10315c4f6173f631f9056a8de",
+      "master": "assets/audio/voices/goblins-archer-move-05.wav",
+      "duration": 2.6056666666666666,
+      "sampleRate": 24000,
+      "peak": 0.75,
+      "speechRmsBeforeGain": 0.090878150732979,
+      "gain": 1.3938787048944414,
+      "listeningVerified": false
     }
   },
   "model": "Kokoro-82M v1.0",

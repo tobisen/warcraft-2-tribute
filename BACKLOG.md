@@ -68,15 +68,29 @@ sedan71/7 inklusive9 nya försvarstester, unit527/92 och strict build421ms/diff
 PASS. Browser800 viewport: motattack94.6HP från100 utan pursuit, fysisk ny
 moveorder och återgång PASS; [belägg](artifacts/rts-239/browser.json).
 Granskning av changed combat/work/naval/lag/Save utan blockerande fynd.
-Full regression körs samlat efter240. Ingen mänsklig balans-/ljudbedömning.
+Samlad full regression efter240:1881/216 PASS524.96s. Ingen mänsklig balans-/ljudbedömning.
 
-### RTS-240 — Fler egna rasrepliker — Todo
+### RTS-240 — Fler egna rasrepliker — In Progress (teknik verifierad; lyssning återstår)
 
 Fler korta egna engelska selection/repeat/orderrepliker med rasidentitet,
 variantrotation/cooldown och en speaker vid gruppinput. Orderbekräftelser ska
 inte döljas av skämt. Befintlig lokal ljudrouting/licensregler, mute/master/voices.
 Browseruppspelning och ärlig redovisning av saknade inspelningar/lyssning.
 
+
+Verifierad implementation:90 egna nya engelska selection/humor/move-repliker
+med faktiska WAVs,18 per ras/worker-soldier-archer, totalt405. Samma befintliga
+licensierade timbres; äldre315 entries och630 master/runtimefiler byte-identiska.
+Fem varianter för selection/humor/move. Repeat efterfyra klick med65% draw och
+20s humorcooldown;1.2s lane-/ordercooldown, ingen kö. Bekräftelser preemptar
+selection/humor/ready utan att gameplayorder fördröjs. Alla fem rasers faktiska
+browserfiluppspelning, draggrupp/klickspam, fysisk orderinterrupt, mute/volym/
+SFX-duck/pause/scene-restart PASS. Riktade24/4 PASS; slutlig unit530/92 PASS14.42s,
+strict build/diff PASS. Ny build572ms efter creditsändring, ingen gameplayändring.
+[Belägg och lyssningsurval](artifacts/rts-240/README.md). Faktisk agentlyssning
+saknas; nya90 är inte mänskligt kvalitetsgodkända och240 markeras inte Done.
+Övriga rosterrollers kompletta röstpaket saknas fortfarande. Full regression1881/216 PASS524.96s
+före slutlig teknisk delcommit/push. Ingen release eller efterföljande tasks.
 
 ### RTS-238 — Uppmätt prestanda för markering och order — Done
 

@@ -52,7 +52,7 @@ try{
   assert.equal(await page.evaluate(()=>window.__audio.voices.status.speaking),false);
   await page.locator('#restart-match').click();await page.waitForFunction(()=>window.__gameCheck.scene.keys.BootScene.session.phase==='playing'&&!window.__gameCheck.scene.keys.BootScene.restartPending);
   const actualRestart=await page.evaluate(faction=>{const a=window.__audio;return {sameContext:a.context===window.__pilotContext,recordings:a.voices.status.recordings,settings:{...a.settings},canSpeak:a.voices.speak('worker','select',faction)};},faction);
-  assert(actualRestart.sameContext&&actualRestart.canSpeak);assert.equal(actualRestart.recordings,315);assert.equal(actualRestart.settings.voices,.2);
+  assert(actualRestart.sameContext&&actualRestart.canSpeak);assert.equal(actualRestart.recordings,405);assert.equal(actualRestart.settings.voices,.2);
   lifecycle.actualSceneRestart=actualRestart;
   assert.deepEqual(errors,[]);console.log('PASS technical fixture '+faction);results.push({faction,productionRecordings:publishedCount,selection:afterGroup[0],groupOrder:afterGroup[1],rapidClicksAccepted:1,lifecycle,errors});await page.close();
  }

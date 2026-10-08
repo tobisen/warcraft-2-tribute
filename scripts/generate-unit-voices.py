@@ -15,6 +15,7 @@ from kokoro_onnx import Kokoro
 parser=argparse.ArgumentParser()
 parser.add_argument('--model-dir',type=Path,required=True)
 parser.add_argument('--pilot',action='store_true')
+parser.add_argument('--only-missing',action='store_true',help='Author missing slots only; preserve existing recordings and timbres.')
 args=parser.parse_args()
 root=Path(__file__).resolve().parent.parent
 source=root/'assets/sources/audio-identity/all-factions-voices.json'
@@ -41,7 +42,7 @@ provenance.update({'model':'Kokoro-82M v1.0','modelSource':'https://huggingface.
  'tool':'kokoro-onnx 0.6.1 (MIT), numpy 2.5.3, soundfile 0.14.0','cast':cast,
  'outputLicense':'CC0-1.0, project-generated audio; model license remains Apache-2.0',
  'listeningVerified':False})
-selected=[e for e in data['entries'] if not args.pilot or (e['faction'] in ['crown','clans'] and e['role']=='worker' and e['action'] in ['selection','move','attack','gather','humor'] and e['id'].endswith('-01'))]
+selected=[e for e in data['entries'] if (not args.only_missing or e['recording'] is None) and (not args.pilot or (e['faction'] in ['crown','clans'] and e['role']=='worker' and e['action'] in ['selection','move','attack','gather','humor'] and e['id'].endswith('-01')))]
 start=time.monotonic()
 for index,e in enumerate(selected,1):
  target=master/f"{e['id']}.wav";profile=cast[e['faction']]
@@ -78,6 +79,6 @@ for index,e in enumerate(selected,1):
  source.write_text(json.dumps(data,indent=2)+'\n')
  provenance_path.write_text(json.dumps(provenance,indent=2)+'\n')
  print(f"{index}/{len(selected)} {e['id']} {provenance['entries'][e['id']]['duration']:.2f}s",flush=True)
-data['status']='Local AI-generated recordings; actual listening unverified; not human performances'
+data['status']='Local recorded AI dialogue, including additional own Kokoro lines; final listening unverified; not human performances'
 source.write_text(json.dumps(data,indent=2)+'\n')
 print(f'Finished {len(selected)} selected recordings in {time.monotonic()-start:.1f}s; actual listening NOT performed.',flush=True)

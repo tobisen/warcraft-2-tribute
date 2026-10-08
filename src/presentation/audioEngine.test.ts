@@ -63,7 +63,10 @@ it('recorded voices share the unlocked graph, route actual faction, duck only SF
  const source=sources.at(-1);expect(source.connect).toHaveBeenCalledWith(gains[2]);expect(source.playbackRate.value).toBe(1);
  expect(gains[0].gain.value).toBeCloseTo(originalSFX*voiceConfig.duckGain);expect(gains[0].gain.setTargetAtTime).toHaveBeenLastCalledWith(originalSFX*voiceConfig.duckGain,context.currentTime,.012);expect(gains[1].gain.value).toBeCloseTo(originalMusic);
  expect(gains[2].gain.value).toBeCloseTo(defaultAudio.master*defaultAudio.voices!*voiceConfig.gain);
- expect(engine.voices.speak('worker','move','goblins')).toBe(false);source.onended();expect(gains[0].gain.value).toBeCloseTo(originalSFX);
+ expect(engine.voices.speak('worker','select','goblins')).toBe(false);
+ const oldSelectionEnd=source.onended;expect(engine.voices.speak('worker','move','goblins')).toBe(true);expect(source.stop).toHaveBeenCalledTimes(1);
+ oldSelectionEnd();expect(engine.voices.status.speaking).toBe(true);expect(gains[0].gain.value).toBeCloseTo(originalSFX*voiceConfig.duckGain);
+ sources.at(-1).onended();expect(gains[0].gain.value).toBeCloseTo(originalSFX);
  context.currentTime=3;engine.setSettings({effects:0});
  engine.say({id:'unit-1',kind:'worker',selected:true,faction:'goblins',owner:'player',order:{kind:'move'},target:{x:0,y:0}},'move','crown');
  expect(engine.voices.status.speaking).toBe(true);expect(gains[0].gain.value).toBe(0);

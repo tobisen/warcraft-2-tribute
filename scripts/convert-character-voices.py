@@ -16,6 +16,7 @@ p.add_argument('--checkout',type=Path,required=True)
 p.add_argument('--model-dir',type=Path,required=True)
 p.add_argument('--base-dir',type=Path,required=True)
 p.add_argument('--pilot',action='store_true')
+p.add_argument('--only-new',action='store_true',help='Convert only slots without existing conversion provenance; preserve final masters.')
 args=p.parse_args()
 sys.path.insert(0,str(args.checkout))
 from openvoice import utils
@@ -49,12 +50,18 @@ targets={f:embedding([directory/path for path in paths]) for f,(_,_,paths,_) in 
 source_embeddings={f:embedding([args.base_dir/f'{f}-worker-selection-01.wav',args.base_dir/f'{f}-soldier-move-01.wav',args.base_dir/f'{f}-archer-attack-01.wav']) for f in refs}
 sha=lambda path:hashlib.sha256(path.read_bytes()).hexdigest()
 provenance={'model':'OpenVoice V2 converter','modelSource':'https://huggingface.co/myshell-ai/OpenVoiceV2','modelLicense':'MIT','checkpointSha256':sha(args.model_dir/'checkpoint.pth'),'configSha256':sha(args.model_dir/'config.json'),'toolCommit':(args.checkout/'.git/shallow').read_text().strip(),'references':{},'entries':{},'listeningVerified':False}
+if args.only_new:
+    old=json.loads((directory/'converted-voices.json').read_text())
+    if old['checkpointSha256']!=provenance['checkpointSha256'] or old['configSha256']!=provenance['configSha256']:raise ValueError('Existing conversion model identity differs')
+    provenance['entries']=old['entries']
 for f,(author,slug,paths,license) in refs.items():
     provenance['references'][f]=dict(author=author,source='https://opengameart.org/content/'+slug,license=license,files=[dict(path=str((directory/path).relative_to(root)),sha256=sha(directory/path)) for path in paths])
 out=root/'assets/audio/voices'
 start=time.monotonic()
+converted_count=0
 for e in data['entries']:
     f=e['faction']
+    if args.only_new and e['id'] in provenance['entries']:continue
     if f not in refs or args.pilot and not(e['role']=='worker' and e['action']=='selection' and e['id'].endswith('-01')):continue
     src=args.base_dir/f"{e['id']}.wav"
     s=spec(src)
@@ -72,9 +79,13 @@ for e in data['entries']:
     reference=provenance['references'][f]
     e.update(author=f"Project original dialogue/Kokoro base; neural tone derived from {reference['author']}",source=f"{reference['source']}; OpenVoiceV2 MIT https://huggingface.co/myshell-ai/OpenVoiceV2; Kokoro Apache-2.0 https://huggingface.co/hexgrad/Kokoro-82M",license=reference['license'],processing='Offline Kokoro original speech + OpenVoiceV2 learned reference-timbre conversion; no pitch shifting; DC removal;8ms fades; active speech RMS .13/peakcap .6;20/30ms margins;mono PCM16 22050Hz',listeningVerified=False)
     provenance['entries'][e['id']]=dict(baseSha256=sha(src),outputSha256=sha(target),peak=float(np.max(np.abs(x))),duration=len(x)/rate,rate=rate,gain=gain,reference=f,text=e['text'],listeningVerified=False)
+    converted_count+=1
+    if not args.pilot:
+        manifest.write_text(json.dumps(data,indent=2)+'\n')
+        (directory/'converted-voices.json').write_text(json.dumps(provenance,indent=2)+'\n')
     print(f"Converted {e['id']} {len(x)/rate:.2f}s",flush=True)
 if not args.pilot:
     data['status']='Local recorded AI dialogue with licensed character timbres; activated by user; final listening unverified'
     manifest.write_text(json.dumps(data,indent=2)+'\n')
 (directory/('converted-pilot.json' if args.pilot else 'converted-voices.json')).write_text(json.dumps(provenance,indent=2)+'\n')
-print(f'Converted {len(provenance["entries"])} clips in {time.monotonic()-start:.1f}s; no auditory-quality claim.',flush=True)
+print(f'Converted {converted_count} clips ({len(provenance["entries"])} documented in total) in {time.monotonic()-start:.1f}s; no auditory-quality claim.',flush=True)

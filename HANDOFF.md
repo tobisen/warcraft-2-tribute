@@ -1,3 +1,32 @@
+# Senaste överlämning — användarens punkt7–8, RTS-239–240 (2026-10-08)
+
+RTS-239 Done och pushad som e6d82de till origin/main. Enheter reagerar på faktiska
+melee-/projektilträffar, försvarar från sin plats och återupptar underliggande
+uppgift. Nya order och ogiltig/dold/död/utanför range angripare avbryter. Load
+behåller uppgift och nollställer transient försvar; restart rent. Lagstrid använder
+globala owner IDs/hostile targets. [Browserbelägg](artifacts/rts-239/browser.json).
+
+RTS-240:s implementation och tekniska verifiering är klara:90 egna nya repliker,
+405 faktiska lokala WAVs, fem selection/humor/move-varianter per ras/roll;
+orderbekräftelser avbryter selection/humor/ready. Cooldown/en voice/no queue,
+muting/volym och lifecycle består. Befintliga315 entries/630 WAV-filer bevarade.
+Riktade24/4, unit530/92, strict build och faktisk femras-browser PASS. Samlad
+full regression1881/216 PASS524.96s; unit530/92 PASS14.42s; strict build572ms
+PASS med befintlig bundlevarning, syntax/länk/diff PASS.
+
+**240 är inte Done:hörbar provlyssning och kvalitetsbedömning återstår.**
+[Lyssningssida](artifacts/rts-240/listen.html) med25 nya ljudprov nås via lokal
+Vite på `/artifacts/rts-240/listen.html`. [Protokoll](artifacts/rts-240/README.md)
+skiljer riktig WAV-decoding/source-start i headless browser från faktisk
+lyssning. Äldre godkännande är inte ett nytt kvalitetsgodkännande av dessa90.
+Specialist/siege/transport/warship och övriga rosterroller saknar fortfarande
+egna kompletta röstpaket. Ingen ny CI-/Pages-/release-/mänsklig balansclaim.
+
+Stanna inom detta uppdrag; nästa åtgärd är faktisk lyssning av240, inga andra
+automatiska roadmaptasks. User style.css/units.mjs/docs/:memory:.ses bevaras.
+
+---
+
 ## 2026-10-08 — RTS-238 prestanda vid markering/order avslutad
 
 Nytt uttryckligt prestandauppdrag efter237. En avgränsad optimering av uppmätt

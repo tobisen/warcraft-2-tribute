@@ -1,0 +1,611 @@
+{
+  "method": "Actual Chromium match input, published public/audio files with no candidate/silent-buffer routes; actual decode/playback of405 local voice files and22 SFX/music files. Technical routing only; final listening unverified",
+  "results": [
+    {
+      "faction": "crown",
+      "publishedRecordings": 405,
+      "selection": {
+        "id": "crown-worker-selection-01",
+        "gain": 0.38025000000000003
+      },
+      "groupOrder": {
+        "id": "crown-worker-move-01",
+        "gain": 0.38025000000000003
+      },
+      "groupSelection": {
+        "selected": 3,
+        "events": 1
+      },
+      "rapidClicksAccepted": 1,
+      "additions": [
+        {
+          "id": "crown-worker-selection-04",
+          "duration": 2.843875
+        },
+        {
+          "id": "crown-worker-selection-05",
+          "duration": 2.4459583333333335
+        },
+        {
+          "id": "crown-worker-humor-04",
+          "duration": 2.913708333333333
+        },
+        {
+          "id": "crown-worker-humor-05",
+          "duration": 3.154125
+        },
+        {
+          "id": "crown-worker-move-04",
+          "duration": 3.04275
+        },
+        {
+          "id": "crown-worker-move-05",
+          "duration": 2.74575
+        },
+        {
+          "id": "crown-soldier-selection-04",
+          "duration": 2.5056666666666665
+        },
+        {
+          "id": "crown-soldier-selection-05",
+          "duration": 2.9574583333333333
+        },
+        {
+          "id": "crown-soldier-humor-04",
+          "duration": 3.179708333333333
+        },
+        {
+          "id": "crown-soldier-humor-05",
+          "duration": 2.9567916666666667
+        },
+        {
+          "id": "crown-soldier-move-04",
+          "duration": 2.3854166666666665
+        },
+        {
+          "id": "crown-soldier-move-05",
+          "duration": 2.38625
+        },
+        {
+          "id": "crown-archer-selection-04",
+          "duration": 2.7904166666666668
+        },
+        {
+          "id": "crown-archer-selection-05",
+          "duration": 2.591666666666667
+        },
+        {
+          "id": "crown-archer-humor-04",
+          "duration": 3.166
+        },
+        {
+          "id": "crown-archer-humor-05",
+          "duration": 3.0797083333333335
+        },
+        {
+          "id": "crown-archer-move-04",
+          "duration": 2.6654583333333335
+        },
+        {
+          "id": "crown-archer-move-05",
+          "duration": 2.51875
+        }
+      ],
+      "humorInterruptedByPhysicalOrder": {
+        "id": "crown-worker-move-01",
+        "speaking": true,
+        "oneSource": true
+      },
+      "lifecycle": {
+        "duck": 0.20475000143051147,
+        "voice": 0.3802500069141388,
+        "music": 0,
+        "independent": 0.3802500069141388,
+        "mute": true,
+        "mutedSourceAbsent": true,
+        "volume": 0.11699999868869781,
+        "pause": true,
+        "restart": true,
+        "sourceCount": 1,
+        "actualSceneRestart": {
+          "sameContext": true,
+          "recordings": 405,
+          "settings": {
+            "master": 0.65,
+            "effects": 0.7,
+            "music": 0,
+            "voices": 0.2,
+            "muted": false
+          },
+          "canSpeak": true
+        }
+      },
+      "errors": []
+    },
+    {
+      "faction": "clans",
+      "publishedRecordings": 405,
+      "selection": {
+        "id": "clans-worker-selection-01",
+        "gain": 0.38025000000000003
+      },
+      "groupOrder": {
+        "id": "clans-worker-move-01",
+        "gain": 0.38025000000000003
+      },
+      "groupSelection": {
+        "selected": 3,
+        "events": 1
+      },
+      "rapidClicksAccepted": 1,
+      "additions": [
+        {
+          "id": "clans-worker-selection-04",
+          "duration": 1.7218541666666667
+        },
+        {
+          "id": "clans-worker-selection-05",
+          "duration": 1.3038958333333333
+        },
+        {
+          "id": "clans-worker-humor-04",
+          "duration": 2.5577708333333335
+        },
+        {
+          "id": "clans-worker-humor-05",
+          "duration": 2.9408958333333333
+        },
+        {
+          "id": "clans-worker-move-04",
+          "duration": 1.4664375
+        },
+        {
+          "id": "clans-worker-move-05",
+          "duration": 1.7218541666666667
+        },
+        {
+          "id": "clans-soldier-selection-04",
+          "duration": 2.1630208333333334
+        },
+        {
+          "id": "clans-soldier-selection-05",
+          "duration": 2.0585416666666667
+        },
+        {
+          "id": "clans-soldier-humor-04",
+          "duration": 3.3008125
+        },
+        {
+          "id": "clans-soldier-humor-05",
+          "duration": 2.3255625
+        },
+        {
+          "id": "clans-soldier-move-04",
+          "duration": 1.8495625
+        },
+        {
+          "id": "clans-soldier-move-05",
+          "duration": 2.1398125
+        },
+        {
+          "id": "clans-archer-selection-04",
+          "duration": 2.1165833333333333
+        },
+        {
+          "id": "clans-archer-selection-05",
+          "duration": 1.6173541666666666
+        },
+        {
+          "id": "clans-archer-humor-04",
+          "duration": 2.9060625
+        },
+        {
+          "id": "clans-archer-humor-05",
+          "duration": 2.743520833333333
+        },
+        {
+          "id": "clans-archer-move-04",
+          "duration": 1.9656666666666667
+        },
+        {
+          "id": "clans-archer-move-05",
+          "duration": 2.3371875
+        }
+      ],
+      "humorInterruptedByPhysicalOrder": {
+        "id": "clans-worker-move-01",
+        "speaking": true,
+        "oneSource": true
+      },
+      "lifecycle": {
+        "duck": 0.20475000143051147,
+        "voice": 0.3802500069141388,
+        "music": 0,
+        "independent": 0.3802500069141388,
+        "mute": true,
+        "mutedSourceAbsent": true,
+        "volume": 0.11699999868869781,
+        "pause": true,
+        "restart": true,
+        "sourceCount": 1,
+        "actualSceneRestart": {
+          "sameContext": true,
+          "recordings": 405,
+          "settings": {
+            "master": 0.65,
+            "effects": 0.7,
+            "music": 0,
+            "voices": 0.2,
+            "muted": false
+          },
+          "canSpeak": true
+        }
+      },
+      "errors": []
+    },
+    {
+      "faction": "elves",
+      "publishedRecordings": 405,
+      "selection": {
+        "id": "elves-worker-selection-01",
+        "gain": 0.38025000000000003
+      },
+      "groupOrder": {
+        "id": "elves-worker-move-01",
+        "gain": 0.38025000000000003
+      },
+      "groupSelection": {
+        "selected": 3,
+        "events": 1
+      },
+      "rapidClicksAccepted": 1,
+      "additions": [
+        {
+          "id": "elves-worker-selection-04",
+          "duration": 2.08175
+        },
+        {
+          "id": "elves-worker-selection-05",
+          "duration": 2.1165833333333333
+        },
+        {
+          "id": "elves-worker-humor-04",
+          "duration": 2.0469375
+        },
+        {
+          "id": "elves-worker-humor-05",
+          "duration": 3.5562291666666668
+        },
+        {
+          "id": "elves-worker-move-04",
+          "duration": 2.5577708333333335
+        },
+        {
+          "id": "elves-worker-move-05",
+          "duration": 2.3255625
+        },
+        {
+          "id": "elves-soldier-selection-04",
+          "duration": 2.673875
+        },
+        {
+          "id": "elves-soldier-selection-05",
+          "duration": 1.3271041666666668
+        },
+        {
+          "id": "elves-soldier-humor-04",
+          "duration": 2.5113333333333334
+        },
+        {
+          "id": "elves-soldier-humor-05",
+          "duration": 2.8828541666666667
+        },
+        {
+          "id": "elves-soldier-move-04",
+          "duration": 2.3487916666666666
+        },
+        {
+          "id": "elves-soldier-move-05",
+          "duration": 2.372
+        },
+        {
+          "id": "elves-archer-selection-04",
+          "duration": 1.9540416666666667
+        },
+        {
+          "id": "elves-archer-selection-05",
+          "duration": 2.569375
+        },
+        {
+          "id": "elves-archer-humor-04",
+          "duration": 2.441666666666667
+        },
+        {
+          "id": "elves-archer-humor-05",
+          "duration": 2.6042083333333332
+        },
+        {
+          "id": "elves-archer-move-04",
+          "duration": 1.6405833333333333
+        },
+        {
+          "id": "elves-archer-move-05",
+          "duration": 2.0004791666666666
+        }
+      ],
+      "humorInterruptedByPhysicalOrder": {
+        "id": "elves-worker-move-01",
+        "speaking": true,
+        "oneSource": true
+      },
+      "lifecycle": {
+        "duck": 0.20475000143051147,
+        "voice": 0.3802500069141388,
+        "music": 0,
+        "independent": 0.3802500069141388,
+        "mute": true,
+        "mutedSourceAbsent": true,
+        "volume": 0.11699999868869781,
+        "pause": true,
+        "restart": true,
+        "sourceCount": 1,
+        "actualSceneRestart": {
+          "sameContext": true,
+          "recordings": 405,
+          "settings": {
+            "master": 0.65,
+            "effects": 0.7,
+            "music": 0,
+            "voices": 0.2,
+            "muted": false
+          },
+          "canSpeak": true
+        }
+      },
+      "errors": []
+    },
+    {
+      "faction": "dwarves",
+      "publishedRecordings": 405,
+      "selection": {
+        "id": "dwarves-worker-selection-01",
+        "gain": 0.38025000000000003
+      },
+      "groupOrder": {
+        "id": "dwarves-worker-move-01",
+        "gain": 0.38025000000000003
+      },
+      "groupSelection": {
+        "selected": 3,
+        "events": 1
+      },
+      "rapidClicksAccepted": 1,
+      "additions": [
+        {
+          "id": "dwarves-worker-selection-04",
+          "duration": 3.0105625
+        },
+        {
+          "id": "dwarves-worker-selection-05",
+          "duration": 2.5229375
+        },
+        {
+          "id": "dwarves-worker-humor-04",
+          "duration": 3.4168958333333332
+        },
+        {
+          "id": "dwarves-worker-humor-05",
+          "duration": 3.6491041666666666
+        },
+        {
+          "id": "dwarves-worker-move-04",
+          "duration": 2.964125
+        },
+        {
+          "id": "dwarves-worker-move-05",
+          "duration": 2.6158125
+        },
+        {
+          "id": "dwarves-soldier-selection-04",
+          "duration": 3.6026666666666665
+        },
+        {
+          "id": "dwarves-soldier-selection-05",
+          "duration": 3.1266666666666665
+        },
+        {
+          "id": "dwarves-soldier-humor-04",
+          "duration": 3.4865625
+        },
+        {
+          "id": "dwarves-soldier-humor-05",
+          "duration": 3.5213958333333335
+        },
+        {
+          "id": "dwarves-soldier-move-04",
+          "duration": 3.1266666666666665
+        },
+        {
+          "id": "dwarves-soldier-move-05",
+          "duration": 2.6854791666666666
+        },
+        {
+          "id": "dwarves-archer-selection-04",
+          "duration": 3.6026666666666665
+        },
+        {
+          "id": "dwarves-archer-selection-05",
+          "duration": 2.673875
+        },
+        {
+          "id": "dwarves-archer-humor-04",
+          "duration": 3.3820833333333336
+        },
+        {
+          "id": "dwarves-archer-humor-05",
+          "duration": 3.6607083333333335
+        },
+        {
+          "id": "dwarves-archer-move-04",
+          "duration": 3.3240208333333334
+        },
+        {
+          "id": "dwarves-archer-move-05",
+          "duration": 2.5113333333333334
+        }
+      ],
+      "humorInterruptedByPhysicalOrder": {
+        "id": "dwarves-worker-move-01",
+        "speaking": true,
+        "oneSource": true
+      },
+      "lifecycle": {
+        "duck": 0.20475000143051147,
+        "voice": 0.3802500069141388,
+        "music": 0,
+        "independent": 0.3802500069141388,
+        "mute": true,
+        "mutedSourceAbsent": true,
+        "volume": 0.11699999868869781,
+        "pause": true,
+        "restart": true,
+        "sourceCount": 1,
+        "actualSceneRestart": {
+          "sameContext": true,
+          "recordings": 405,
+          "settings": {
+            "master": 0.65,
+            "effects": 0.7,
+            "music": 0,
+            "voices": 0.2,
+            "muted": false
+          },
+          "canSpeak": true
+        }
+      },
+      "errors": []
+    },
+    {
+      "faction": "goblins",
+      "publishedRecordings": 405,
+      "selection": {
+        "id": "goblins-worker-selection-01",
+        "gain": 0.38025000000000003
+      },
+      "groupOrder": {
+        "id": "goblins-worker-move-01",
+        "gain": 0.38025000000000003
+      },
+      "groupSelection": {
+        "selected": 3,
+        "events": 1
+      },
+      "rapidClicksAccepted": 1,
+      "additions": [
+        {
+          "id": "goblins-worker-selection-04",
+          "duration": 2.1514166666666665
+        },
+        {
+          "id": "goblins-worker-selection-05",
+          "duration": 2.0585416666666667
+        },
+        {
+          "id": "goblins-worker-humor-04",
+          "duration": 2.4648958333333333
+        },
+        {
+          "id": "goblins-worker-humor-05",
+          "duration": 1.9424375
+        },
+        {
+          "id": "goblins-worker-move-04",
+          "duration": 1.4780416666666667
+        },
+        {
+          "id": "goblins-worker-move-05",
+          "duration": 1.5360833333333332
+        },
+        {
+          "id": "goblins-soldier-selection-04",
+          "duration": 2.66225
+        },
+        {
+          "id": "goblins-soldier-selection-05",
+          "duration": 1.3155
+        },
+        {
+          "id": "goblins-soldier-humor-04",
+          "duration": 2.4648958333333333
+        },
+        {
+          "id": "goblins-soldier-humor-05",
+          "duration": 2.372
+        },
+        {
+          "id": "goblins-soldier-move-04",
+          "duration": 2.3023541666666665
+        },
+        {
+          "id": "goblins-soldier-move-05",
+          "duration": 2.1978541666666667
+        },
+        {
+          "id": "goblins-archer-selection-04",
+          "duration": 2.580979166666667
+        },
+        {
+          "id": "goblins-archer-selection-05",
+          "duration": 1.5244791666666666
+        },
+        {
+          "id": "goblins-archer-humor-04",
+          "duration": 3.1731041666666666
+        },
+        {
+          "id": "goblins-archer-humor-05",
+          "duration": 2.8364166666666666
+        },
+        {
+          "id": "goblins-archer-move-04",
+          "duration": 1.5360833333333332
+        },
+        {
+          "id": "goblins-archer-move-05",
+          "duration": 2.6506458333333334
+        }
+      ],
+      "humorInterruptedByPhysicalOrder": {
+        "id": "goblins-worker-move-01",
+        "speaking": true,
+        "oneSource": true
+      },
+      "lifecycle": {
+        "duck": 0.20475000143051147,
+        "voice": 0.3802500069141388,
+        "music": 0,
+        "independent": 0.3802500069141388,
+        "mute": true,
+        "mutedSourceAbsent": true,
+        "volume": 0.11699999868869781,
+        "pause": true,
+        "restart": true,
+        "sourceCount": 1,
+        "actualSceneRestart": {
+          "sameContext": true,
+          "recordings": 405,
+          "settings": {
+            "master": 0.65,
+            "effects": 0.7,
+            "music": 0,
+            "voices": 0.2,
+            "muted": false
+          },
+          "canSpeak": true
+        }
+      },
+      "errors": []
+    }
+  ],
+  "listeningVerified": false
+}
