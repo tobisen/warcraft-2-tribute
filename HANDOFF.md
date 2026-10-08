@@ -1,3 +1,23 @@
+## 2026-10-08 — RTS-238 prestanda vid markering/order avslutad
+
+Nytt uttryckligt prestandauppdrag efter237. En avgränsad optimering av uppmätt
+flaskhals: återanvänd projektilernas marineFlightMap-hinderlista och därmed
+befintligt collisionindex, invaliderat med revision/längd/kartprofil/arrayidentitet.
+Inga nya funktioner eller ändrad gameplay/balans/Save. Userändringar bevarade.
+
+Chrome lokal stress128kroppar/32murar: jämförbar kontroll medianupdate36.5→17.1ms
+/frame33.4→16.7ms. CPU-probe collisionlookup3.90→1.92s/10s och GC1.22→0.62s.
+12 verkliga markeringsklick och108-unit grupporder PASS; handler3–4ms respektive
+153–235ms. Orderplaneringens egen stora-gruppkostnad kvarstår. Live match mätts;
+inputfixturen fryses/centreras för jämförbara klickmål. Ingen full event-to-photon
+eller mätning på användarens dator/publika sidan hävdas. Underlag i
+[artifacts/rts-238](artifacts/rts-238/README.md).
+
+Riktade36/4 PASS, unit527/92 PASS22.78s, strict build866ms/diff/syntax PASS.
+Fullregression1869/215 PASS516.80s.238 Done; commit/push redovisas i
+git-logg och slutrapport. Stanna efter238; inga nya roadmapfunktioner/release.
+Äldre full1866/214 i232–237 nedan är historiskt belägg, inte238:s slutregression.
+
 ## 2026-10-08 — Batch RTS-232–237 avslutad
 
 Mandat: endast dessa sex tasks, taskvisa commits/push; ingen release/städning/

@@ -1,0 +1,54 @@
+{
+  "metrics": {
+    "timings": {
+      "syncNavy": {
+        "samples": 260,
+        "median": 0,
+        "p95": 0.10000014305114746,
+        "mean": 0.017692310076493484
+      },
+      "syncAudio": {
+        "samples": 260,
+        "median": 0.2999999523162842,
+        "p95": 0.5,
+        "mean": 0.33807692069273726
+      },
+      "syncSession": {
+        "samples": 260,
+        "median": 0.10000014305114746,
+        "p95": 0.20000004768371582,
+        "mean": 0.1211538553237915
+      },
+      "syncVisuals": {
+        "samples": 260,
+        "median": 3.5,
+        "p95": 5.5,
+        "mean": 3.7011538377174964
+      },
+      "update": {
+        "samples": 260,
+        "median": 36.5,
+        "p95": 42.299999952316284,
+        "mean": 36.27961538388179
+      },
+      "frame": {
+        "samples": 259,
+        "median": 33.399999999999636,
+        "p95": 50,
+        "mean": 38.157915057915034
+      }
+    },
+    "canvas": {
+      "width": 1280,
+      "height": 488
+    },
+    "units": 116,
+    "enemies": 12,
+    "walls": 32,
+    "elapsed": 8.144680000000001,
+    "outcome": "playing"
+  },
+  "errors": [],
+  "browser": "155.0.8059.39",
+  "headless": true
+}

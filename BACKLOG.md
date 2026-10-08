@@ -45,6 +45,27 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
+### RTS-238 — Uppmätt prestanda för markering och order — Done
+
+Nytt uppdrag2026-10-08: användaren upplever lagg vid markering/order. Mät
+browser-CPU/bildrutor och klick, optimera konkret flaskhals med befintliga system.
+Första CPU-profil: nearbyObstacles3.9s/10s och GC1.2s; marineFlightMap skapar
+nya hinderlistor och bygger om index upprepade gånger. Återanvänd immutable
+projektilkarta med korrekt invalidation för revision/hinder/kartprofil. Verifiera
+oförändrad collision mot vatten/sten/byggnader och browser före/efter, samt
+markering/order. Bevara gameplay/Save/restart och user CSS/units.mjs/docs/.
+Non-goals: nya funktioner, balans, städning eller release. Relevant regression,
+unit/strict build/diff och docs före leverans; stanna efter238.
+
+
+Resultat: marineFlightMap återanvänder filtrerad hinderlista och befintligt spatialt
+index, korrekt invaliderat efter revision/längd/profilbyte. Riktade36/4 PASS;
+unit527/92 PASS22.78s, strict build866ms/diff/syntax PASS; full1869/215 PASS516.80s.
+Chrome kontroll medianupdate36.5→17.1ms och medianframe33.4→16.7ms; faktiska12
+markeringsklick/108-unit order PASS. Handler3–4ms oförändrad, stor grupporder
+153–235ms kvarstår; ingen full event-to-photon/user-deviceclaim. [Underlag](artifacts/rts-238/README.md).
+Userändringar bevarade; stanna efter238, ingen release eller fler funktioner.
+
 ### Ny avgränsad batch RTS-232–237
 
 Nytt uttryckligt mandat2026-10-08 ersätter releasestoppet. En task åt gången,

@@ -1,0 +1,126 @@
+{
+  "before": [
+    {
+      "function": "nearbyObstacles",
+      "file": "map.ts",
+      "selfMs": 3899.3
+    },
+    {
+      "function": "(garbage collector)",
+      "file": "",
+      "selfMs": 1220.6
+    },
+    {
+      "function": "bodyFits",
+      "file": "map.ts",
+      "selfMs": 1036.8
+    },
+    {
+      "function": "(program)",
+      "file": "",
+      "selfMs": 668.2
+    },
+    {
+      "function": "separateBodies",
+      "file": "separation.ts",
+      "selfMs": 382.6
+    },
+    {
+      "function": "",
+      "file": "separation.ts",
+      "selfMs": 336.2
+    },
+    {
+      "function": "fillRect",
+      "file": "",
+      "selfMs": 232.4
+    },
+    {
+      "function": "",
+      "file": "combat.ts",
+      "selfMs": 207.3
+    },
+    {
+      "function": "updateFog",
+      "file": "fog.ts",
+      "selfMs": 137.0
+    },
+    {
+      "function": "",
+      "file": "traffic.ts",
+      "selfMs": 110.9
+    },
+    {
+      "function": "syncVisuals",
+      "file": "BootScene.ts",
+      "selfMs": 94.4
+    },
+    {
+      "function": "render",
+      "file": "minimapView.ts",
+      "selfMs": 81.6
+    }
+  ],
+  "after": [
+    {
+      "function": "nearbyObstacles",
+      "file": "map.ts",
+      "selfMs": 1923.3
+    },
+    {
+      "function": "(program)",
+      "file": "",
+      "selfMs": 883.9
+    },
+    {
+      "function": "separateBodies",
+      "file": "separation.ts",
+      "selfMs": 721.7
+    },
+    {
+      "function": "",
+      "file": "separation.ts",
+      "selfMs": 678.9
+    },
+    {
+      "function": "(garbage collector)",
+      "file": "",
+      "selfMs": 620.5
+    },
+    {
+      "function": "",
+      "file": "combat.ts?t=1791491111299",
+      "selfMs": 509.5
+    },
+    {
+      "function": "bodyFits",
+      "file": "map.ts",
+      "selfMs": 485.5
+    },
+    {
+      "function": "(idle)",
+      "file": "",
+      "selfMs": 412.8
+    },
+    {
+      "function": "fillRect",
+      "file": "",
+      "selfMs": 386.0
+    },
+    {
+      "function": "updateFog",
+      "file": "fog.ts?t=1791491111299",
+      "selfMs": 225.6
+    },
+    {
+      "function": "",
+      "file": "traffic.ts",
+      "selfMs": 163.4
+    },
+    {
+      "function": "render",
+      "file": "minimapView.ts?t=1791491111299",
+      "selfMs": 154.0
+    }
+  ]
+}

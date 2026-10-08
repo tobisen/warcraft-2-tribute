@@ -36,5 +36,9 @@ export function coastalFootprint(map:WorldMap,rect:Footprint):boolean {
  return waterArea>0&&waterArea<rect.width*rect.height;
 }
 
+const marineCache=new WeakMap<Footprint[],{key:string;length:number;obstacles:Footprint[]}>();
 /** Marine shots cross water; rocks and actual structures remain physical occluders. */
-export function marineFlightMap(map:WorldMap):WorldMap {const water=terrain(map).filter(p=>p.kind==='water');return {...map,obstacles:map.obstacles.filter(o=>{const i=water.findIndex(p=>sameRect(p,o));if(i<0)return true;water.splice(i,1);return false;})};}
+export function marineFlightMap(map:WorldMap):WorldMap {
+ const key=`${map.id}:${map.terrainLayout}:${map.resourceLayout}:${map.worldLayout}:${map.design}:${map.width}:${map.height}:${map.revision}`,cached=marineCache.get(map.obstacles);
+ if(cached?.key===key&&cached.length===map.obstacles.length)return {...map,obstacles:cached.obstacles};
+ const water=terrain(map).filter(p=>p.kind==='water');const obstacles=map.obstacles.filter(o=>{const i=water.findIndex(p=>sameRect(p,o));if(i<0)return true;water.splice(i,1);return false;});marineCache.set(map.obstacles,{key,length:map.obstacles.length,obstacles});return {...map,obstacles};}

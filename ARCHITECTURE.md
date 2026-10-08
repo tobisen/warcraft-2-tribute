@@ -2042,3 +2042,12 @@ references; migration68 preserves existing matches without injecting sea
 encounters. Current supported multi-AI maps have no configured sea encounters;
 no new starts, player type, victory rule or monster controller is introduced.
 See `src/gameplay/seaMonsters.test.ts` and `scripts/check-sea-monsters.mjs`.
+
+## RTS-238 — återanvänd projektilernas kollisionskarta
+
+marineFlightMap i [terrainNavigation.ts](src/gameplay/terrainNavigation.ts)
+återanvänder filtrerade hinderlistor via WeakMap på originalets immutable
+hinderlista. Revision, längd och kartprofil invaliderar, inklusive init-push.
+Det befintliga spatiala collisionindexet kan därmed återanvändas över många
+kontakt-/projektilkontroller. Vatten passerbart; rock/structure fortsatt blockerar,
+inget härlett cachefält sparas. Se [mätning](artifacts/rts-238/README.md).

@@ -1,3 +1,32 @@
+## 2026-10-08 — RTS-238 Done
+
+Full npm test1869/215 PASS516.80s på slutlig kod. Unit527/92 PASS22.78s,
+strict build866ms/diff/script syntax PASS; inga gröna checks upprepas efter
+rena dokumentändringen. Review: cache av immutable derived obstacles, WeakMap
+har svag livscykel och revision/längd/fullkartprofil styr invalidation; originalmap
+muteras inte. Existerande collision/nav/Save-regler består. Frameflaskhalsen
+minskad i CPU/browser, stora formationers direkta orderkostnad kvarstår.
+HANDOFF/BACKLOG/ARCHITECTURE och mätunderlag uppdaterade före commit/push.
+User CSS/units.mjs/docs/ och :memory:.ses exkluderade. Ingen ny release-/CI-/
+Pagesclaim eller andra tasks startas; stanna efter238.
+
+## 2026-10-08 — RTS-238 uppmätt klick-/orderprestanda (slutverifiering pågår)
+
+Användaren pekar ut markering/order. Chromeprofil128kroppar/32murar fann
+nearbyObstacles3.90s/10s och GC1.22s: marineFlightMap kopierade hinderlistan
+perkontakt/skott så spatialindex återbyggdes. WeakMap återanvänder härledda
+hinder för immutable snapshots med revision/längd/full kartprofil som guard.
+Stenar/strukturer och duplicate terrängformade byggnader bevaras; initpush/
+replacement/profilbyte invaliderar, inga gameplay/Save/balansändringar.
+Samma probe medianupdate29.6→13.9ms/frame33.3→16.7ms; kontroll medcacheoff
+36.5→17.1ms/frame33.4→16.7ms. Själva selection-handler3.5→3.4ms är oförändrad;
+108-unit order153–235ms kvarstår, ingen direkt orderlatencyförbättring hävdas.
+Faktiska12klick/grupporder PASS; första before-fixturens moving/offscreen mål
+rättat till centrerat/fruset mål för båda kontrollvarianter. Efterbild granskad.
+Riktade36/4 PASS, unit527/92 PASS22.78s och strict build866ms/diff/script syntax
+PASS. Fullregression pågår. Underlag artifacts/rts-238; CPU-profiler externa.
+User CSS/units.mjs/docs/ och memoryfil bevarade; inga nya funktioner/release.
+
 ## 2026-10-08 — RTS-237 Done och batch232–237 avslutad
 
 Slutlig full npm test1866/214 PASS579.98s efter mursekvensfixen. Unit524/91
