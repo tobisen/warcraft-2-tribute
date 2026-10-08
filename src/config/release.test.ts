@@ -6,5 +6,5 @@ it('package, lockfile and shared product release agree while historical changelo
  const packageInfo=JSON.parse(packageRaw);
  const lock=JSON.parse(lockRaw);
  expect(packageInfo.version).toBe(releaseVersion);expect(lock.version).toBe(releaseVersion);expect(lock.packages[''].version).toBe(releaseVersion);
- expect(changelog.map(entry=>entry.version)).toEqual([releaseVersion,'0.3.0','0.2.0','0.1.0']);
+ expect(changelog.map(entry=>entry.version)).toEqual([releaseVersion,'0.4.0','0.3.0','0.2.0','0.1.0']);
 });

@@ -4762,3 +4762,34 @@ reported as green. No new version/release task or live Pages browser check
 was performed. This final update is Markdown only: code checks and browser
 evidence above are reused explicitly; text/link/diff checks are new.
 The mandate through RTS-229 is complete; no further task is started.
+
+## New explicit release mandate —0.5.0
+
+User requests a new release after completed RTS-220–229 and actual green
+GitHub5851044/37764843004. Choose next minor0.5.0 for the expanded roster
+and dedicated production. Shared release config/package/lock synchronize;
+retain historical0.4.0 Changelog. Existing Pages workflow/push practice;
+no new tags/GitHub release infrastructure. User changes remain excluded.
+
+Clean clone /private/tmp/w2t-release050: npm ci49packages/audit0; unit511/89
+PASS22.83s, strict build867ms PASS; full regression running. Production
+release harness extends existing script with new Scout/Ballista TechTree
+details and latest Changelog expectation. Four viewport profiles PASS
+0pageerrors/0failed assets, campaign/skirmish/team/save/pause/replay/menu/
+fullscreen/resolutions/reload. Native800 and1280,1600 Native/Fit; explicit
+outcome/campaign-phase/spectator fixtures, not human playthroughs. One early
+harness needed syncVisuals after opening TechTree in the frozen scene.
+Concrete current payload exceeds historical early-game size budgets; measured
+64MiB/JS2.06MB/gzip540208 recorded in RELEASE_CHECKLIST. No budget PASS or
+new performance/real listening/human-balance claim. Publication pending
+final regression/commit, exact rebuild and actual CI/Pages/public browser.
+
+Clean release candidate full regression1795/206 PASS553.39s. Unit511/89
+PASS22.83s; strict build867ms and four-profile production browser PASS.
+Final self-review: synchronized versions/history, Save config unchanged,
+production subpath, new TechTree nodes, test fixtures, asset failures,
+user-file exclusion and recorded size/animation/balance limitations.
+No unknown blocking findings. Candidate source files are byte-identical
+to the reviewed version changes in the primary workspace.
+Publication remains pending exact release commit rebuild and actual CI/
+Pages/public browser verification; no release Done claim yet.

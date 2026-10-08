@@ -282,3 +282,45 @@ Tidigare ljudgodkännande från användaren består; ingen ny agentlyssning häv
 Slutuppdateringen ändrar enbart Markdown och återanvänder ovanstående faktiskt
 passerade kodchecks. CSS/units.mjs/docs/:memory:.ses bevaras och lämnas utanför.
 Befintlig Pages-praktik/version/changelog används utan ny tag/releaseinfrastruktur.
+
+## 2026-10-08 — Release0.5.0 candidate
+
+Explicit new release mandate supersedes the previous release pause.
+Product/package/lock version0.5.0; historical0.4.0 retained in Changelog.
+Current roster adds cavalry/Stable, healer/giant, Scout/Aviary, tower
+specializations, high-tier air, role research, Submarine/detection and
+worker-collected neutral guardian hoards, plus SiegeWorks/Catapult/Ballista.
+No new gameplay, terrain, tag infrastructure or asset cleanup is introduced.
+
+Clean local clone /private/tmp/w2t-release050 excludes user CSS/units.mjs/docs/
+:memory:.ses. npm ci:49packages,0audit vulnerabilities. New unit511/89
+PASS22.83s and strict build867ms PASS; full clean regression in progress.
+Production browser under /warcraft-2-tribute/:800/1280 Native and1600 Native/
+Fit PASS for version/changelog, new Scout/Ballista TechTree details, campaign/
+skirmish/teams/spectator fixtures, Save/Load, pause/replay/menu/fullscreen,
+resolution preferences/reload and PNG/audio HTTP requests.0runtime/asset
+errors. Report /private/tmp/w2t-release050-local/browser.json. First frozen
+fixture missed the required HUD sync before the Army tab; harness corrected
+with scene.syncVisuals, no game behavior changed.
+
+Measured candidate dist67096038bytes (~64MiB); JS2055787bytes, gzip540208
+bytes. Historical1.7MB/450kB/5MiB budgets from the smaller early asset profile
+are exceeded; no size-budget PASS is claimed. Existing painted atlases,
+large frame manifests and audio contribute to the present published game's
+payload. This version release reports that concrete limitation and makes
+no speculative compression/splitting/asset changes. Existing Vite chunk
+warning remains. Human match timing/balance, broader browser engines and
+new acoustic listening are not verified by these automated fixtures.
+
+Final commit, exact production rebuild, full regression and actual GitHub/
+public Pages verification follow below before declaring publication done.
+
+Clean release candidate full regression1795/206 PASS553.39s. Unit511/89
+PASS22.83s; strict build867ms and four-profile production browser PASS.
+Final self-review: synchronized versions/history, Save config unchanged,
+production subpath, new TechTree nodes, test fixtures, asset failures,
+user-file exclusion and recorded size/animation/balance limitations.
+No unknown blocking findings. Candidate source files are byte-identical
+to the reviewed version changes in the primary workspace.
+Publication remains pending exact release commit rebuild and actual CI/
+Pages/public browser verification; no release Done claim yet.

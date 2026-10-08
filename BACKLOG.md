@@ -45,12 +45,12 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
-Nytt mandat 2026-10-08: RTS-220–228 i ordning, därefter användarens tillägg RTS-229, en task åt gången.
-RTS-220 grafik samt RTS-221–222 verifierade; RTS-223 är verifierad med separat flygbyggnad; 229 är klar enligt senaste styrning om egen belägringsbyggnad/ballista. 227/228/229 är klara; fullregression1795/206 PASS och HANDOFF är uppdaterad. Aktuellt mandat är avslutat; GitHub37764843004 för5851044 är faktiskt grön (tests/build/Pages); slutdocs återanvänder kodchecks och stannar utan ny task/version. Städning, release och kartombyggnad är pausade.
-Taskvis riktade tester, native800-browser, unit/strict build/diff, docs och
-commit/push till origin/main. Full regression vid etappslut; stanna efter229.
-Befintliga style.css/units.mjs/docs/:memory:.ses bevaras. Ingen delegering.
-Äldre avslutsmandat nedan är historik och startar inga andra tasks.
+Nytt uttryckligt releaseuppdrag 2026-10-08: publicera0.5.0 av verifierade
+RTS-220–229. Befintlig version/changelog/Pages-praxis, ren releasekopia,
+unit/full regression/strict build/productionbrowser och faktisk CI/Pages-
+verifiering. Ingen ny gameplaytask, kartombyggnad eller städning. Bevara
+lokala style.css/units.mjs/docs/:memory:.ses. Efter release: HANDOFF och stopp.
+Tidigare paus av release är ersatt av detta uppdrag.
 
 
 Release0.4.0 / Buildd003daa är publicerad och faktiskt CI-/Pages-/browser-verifierad.

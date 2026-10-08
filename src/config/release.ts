@@ -1,6 +1,15 @@
 /** Product release version is independent of git/build identity and Save config. */
-export const releaseVersion='0.4.0';
-export const changelog=[{version:releaseVersion,title:'Connected fortifications and richer economies',changes:[
+export const releaseVersion='0.5.0';
+export const changelog=[{version:releaseVersion,title:'Expanded armies and dedicated production',changes:[
+ 'Mounted cavalry and faction Stables with artwork matching the painted roster.',
+ 'Healers and high-tier Giants from the Academy; flying Scouts with patrol routes and automatic exploration.',
+ 'Every aircraft comes from a dedicated faction Aviary, with heavier late-game aircraft and revised prerequisites.',
+ 'Catapults and new direct-fire Ballistas come from a dedicated faction siege workshop.',
+ 'Permanent ground or anti-air tower specialization and Cavalry Armor, Healer Training and Scout Optics research.',
+ 'Researched Submarines with sea-only torpedoes and current-vision detection by Warships and upgraded Scouts.',
+ 'Bramblemaw and Gravelheart have distinct strengths and weaknesses, fight either player, and leave one-time worker-collected hoards.',
+ 'Paid production, AI, Tech Tree, local saves and older-save migrations cover the new roster. Painted pose/direction coverage and human balance/listening remain documented limitations.',
+]}, {version:'0.4.0',title:'Connected fortifications and richer economies',changes:[
  'Connected walls and gates, single-cell placement and automatic passage for friendly troops.',
  'Ten times more gold in every mine; older saves receive the added reserves while preserving mined gold and statistics.',
  'At least five farms, with ten on larger maps, and a Next Mission button after campaign victories.',

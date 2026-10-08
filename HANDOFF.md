@@ -1,3 +1,22 @@
+## 2026-10-08 — Release0.5.0 in progress
+
+User explicitly authorizes the next release. Product/package/lock0.5.0
+and new Changelog describe completed RTS-220–229. Existing Pages workflow
+and release practice are reused; no new roadmap/terrain/cleanup work.
+
+Clean clone excludes user CSS/units.mjs/docs/:memory:.ses. Full1795/206
+PASS553.39s, unit511/89 PASS22.83s, strict build867ms PASS. Production
+Native800/1280 and1600 Native/Fit PASS0runtime/asset errors for version,
+Changelog, Scout/Ballista TechTree, campaign/skirmish/team/spectator
+fixtures, pause/Save/Load/replay/menu/fullscreen/resolutions/reload.
+Candidate reports /private/tmp/w2t-release050-local/browser.json.
+Existing size budget is exceeded (~64MiB dist,2.06MB JS/540208bytes gzip),
+recorded without claiming budget PASS. Human balance/listening and animation
+direction coverage remain concrete limitations.
+
+Release commit, exact rebuild and actual CI/Pages/public verification follow
+below before publication Done. Older release-paused text is historical.
+
 ## 2026-10-08 — RTS-220–229 current delivery
 
 The full requested scope is implemented. Dedicated Aviary produces every
