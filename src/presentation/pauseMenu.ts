@@ -10,7 +10,8 @@ export function syncPauseMenu(nextPhase:SessionPhase):void{
  el('pause-heading').textContent=tech?'Tech Tree':commands?'Commands':mission?'Mission':settings?uiText.settings:quit?uiText.quitToMainMenu:phase==='ended'?uiText.matchComplete:uiText.paused;
  el('pause-settings-button').hidden=!open||page!=='main';el('quit-request').hidden=!open||page!=='main';el('pause-back-button').hidden=!(settings||tech||commands||mission);el('pause-tech-button').hidden=!open||page!=='main';el('pause-tech-panel').hidden=!tech;el('pause-commands-button').hidden=!open||page!=='main';el('pause-commands-panel').hidden=!commands;el('pause-back-button').textContent=direct?'Close':uiText.backPlain;
  for(const [id,expanded]of [['tech-tree-button',tech],['commands-button',commands]] as const){el(id).setAttribute('aria-expanded',String(expanded));(el(id) as HTMLButtonElement).disabled=phase!=='playing'&&phase!=='paused';}el('pause-mission-panel').hidden=!mission;el('quit-confirm').hidden=!quit;
- if(tech||commands)el('pause-heading').after(el('pause-back-button'));
+ // Moving a pressed button between pointerdown and pointerup cancels its click.
+ if((tech||commands)&&el('pause-heading').nextElementSibling!==el('pause-back-button'))el('pause-heading').after(el('pause-back-button'));
  if(!open)return;
  for(const id of ['resume-match','restart-match','save-controls','session-status','match-results'])el(id).hidden=page!=='main'||id==='resume-match'&&phase!=='paused'||id==='match-results'&&phase!=='ended';
  for(const id of ['audio-controls','camera-controls','display-controls']){el(id).hidden=!settings;if(settings)(el(id) as HTMLDetailsElement).open=true;}

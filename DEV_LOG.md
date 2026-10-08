@@ -1,5 +1,19 @@
 # Development log
 
+## 2026-10-08 — Close: korrigerat avbrutet musklick
+
+Tidigare UI-kontroll använde för snabba klick och missade användarens fel.
+`syncPauseMenu` anropade `after` för Close varje renderframe även när knappen
+redan låg rätt; flytt under nedtryckt mus avbryter browserns click.
+Nu kontrolleras `nextElementSibling` före flytten, så DOM-noden ligger stilla.
+Browserkontroll med250ms mellan mouse.down/up misslyckades före fix och
+passerar efteråt vid native800×600/1280×720 för Tech Tree/Commands,
+scroll/reopen, direkt Close och pausmenyns Back. Inga pageerrors.
+Ny `npm run test:unit`511/89 PASS, `npm run build` med strict typecheck PASS
+(befintlig chunkvarning), `git diff --check` PASS. Ingen bred gameplay-
+regression eller ny release/Pages; användarens ändringar bevarade.
+
+
 ## 2026-10-08 — Småfix: två forskningsrader och stängbar Tech Tree
 
 Forskningsgruppen har fyra kolumner vid kompakt och stor native-layout.

@@ -45,6 +45,15 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
+### UI-korrigering 2026-10-08 — Close över flera renderframes — Done
+
+Användarens återrapport visade att tidigare snabba browserklick inte täckte
+vanliga klick över flera bildrutor. `syncPauseMenu` flyttade Close i DOM varje
+frame, vilket avbröt klick mellan pointerdown/up. Flytt sker nu bara om
+knappen inte redan ligger efter rubriken. Ny browserkontroll med250ms
+nedtryckt mus, scroll/reopen, Tech Tree/Commands och paus-Back vid800/1280
+PASS. Unit511/89, strict build och diff PASS. Ingen ny release/Pages.
+
 ### UI-tillägg 2026-10-08 — forskning och Tech Tree — Done
 
 Avgränsat användaruppdrag: huvudbyggnadens åtta forsknings-/uppgraderingsknappar
