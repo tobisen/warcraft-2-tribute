@@ -5178,3 +5178,27 @@ kvarstående fynd; diff/check och filreferenser PASS. Taskcommit/push till
 origin/main ingår; hash rapporteras till användaren. Stanna efter231.
 Ingen ny audio, riktningsuppsättning eller mänsklig balansspeltest;
 ingen release/CI/Pagesclaim. CSS/units.mjs/docs/:memory:.ses bevarade.
+
+## 2026-10-08 — Release0.6.0 candidate
+
+Nytt uttryckligt releasemandat: Kraken/sjömonster230–231 och commitade
+bygg-/UI-/fog-/prestandaförbättringar efter0.5.0. Gemensam version,
+package/lock0.6.0, historisk0.5.0-changelog kvar; Save69 oförändrad.
+Befintligt Pages-flöde, ingen ny tag-/releaseinfrastruktur.
+Ren clone /private/tmp/w2t-release060 från43b6430 med endast versionsändringar;
+user CSS/units.mjs/docs/:memory:.ses exkluderas. Samma lockdependencies
+via symlink. Ny unit517/90 PASS14.55s, strict build577ms PASS med befintlig
+chunkvarning. Senaste lokala fullregression1829/208 PASS483.38s från231
+är återanvänd historik för oförändrad gameplay; ingen ny lokal fullkörning
+hävdas. Releasecommitens fullregression körs och följs i faktisk CI före
+Done/publiceringsclaim. Lokal/public browser och exakta assethashar följer.
+Sandbox nekade previewbindning EPERM; start utanför sandbox fungerar.
+Första browserförsöket före serverstart gav connection refused, ej PASS.
+Ingen ny mänsklig balans-/ljudgranskning. Stanna efter release.
+
+Candidate production browser800/1280 Native och1600 Native/Fit PASS: version/
+changelog, TechTree, campaign/skirmish/team/spectator-fixtures, pause,
+SaveLoad/replay/menu/fullscreen/resolutions/reload,0runtime/assetfel.
+Rapport /private/tmp/w2t-release060-local/browser.json. Tekniska fixtures,
+inte mänskligt balansspeltest. Diff/review PASS; endast synkade versioner
+och changelog/test ändras. Commit följd av exakt rebuild/CI/public kontroll.

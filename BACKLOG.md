@@ -45,6 +45,14 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
+### Release0.6.0 — In Progress
+
+Användaren beställer ny release med Kraken och senaste commitade ändringar.
+Version/changelog, ren checkout, unit/strict build/production-browser,
+faktisk CI fullregression/Pages och publik browser/hashkontroll krävs.
+Befintliga ocommittade ändringar bevaras/exkluderas; ingen ny roadmaptask.
+
+
 ### RTS-231 — Kraken i spelets pixelstil — Done
 
 Byt sjöormens kodritade sprite mot en original kraken med pansrat huvud,

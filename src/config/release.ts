@@ -1,6 +1,14 @@
 /** Product release version is independent of git/build identity and Save config. */
-export const releaseVersion='0.5.0';
-export const changelog=[{version:releaseVersion,title:'Expanded armies and dedicated production',changes:[
+export const releaseVersion='0.6.0';
+export const changelog=[{version:releaseVersion,title:'Kraken encounters and smoother building controls',changes:[
+ 'Neutral Krakens patrol authored water regions on Islands, Shattered Coast and River Bend, with difficulty-scaled counts and bounded pursuit.',
+ 'Krakens threaten the human-controlled player\'s ships and coastal troops/buildings, never AI players, regardless of faction; fog and ordinary match objectives remain respected.',
+ 'Original painted pixel Kraken artwork with swimming, attack and sinking poses matches the guardian roster.',
+ 'Drag to build connected walls, sequential worker construction, and confirmed demolition of your own buildings.',
+ 'Build and research actions follow technology progression; scouted landmarks remain visible in explored fog.',
+ 'Faster fortification placement and large-army updates, with local Save/Load and restart preserved.',
+ 'Two Kraken swim poses; separate directional art and human balance playtesting remain limitations.',
+]}, {version:'0.5.0',title:'Expanded armies and dedicated production',changes:[
  'Mounted cavalry and faction Stables with artwork matching the painted roster.',
  'Healers and high-tier Giants from the Academy; flying Scouts with patrol routes and automatic exploration.',
  'Every aircraft comes from a dedicated faction Aviary, with heavier late-game aircraft and revised prerequisites.',
