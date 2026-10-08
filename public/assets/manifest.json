@@ -153,6 +153,13 @@
       "width": 768,
       "height": 480,
       "source": "assets/sources/visual-refresh/aviaries.png"
+    },
+    "tower-specializations": {
+      "image": "assets/tower-specializations-atlas.png",
+      "data": "assets/tower-specializations-atlas.json",
+      "width": 512,
+      "height": 320,
+      "source": "assets/sources/visual-refresh/tower-specializations.png"
     }
   },
   "frames": {
@@ -197639,6 +197646,606 @@
       "logicalFootprint": {
         "width": 64,
         "height": 64
+      }
+    },
+    "tower-ground-player-complete": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "tower-ground-player-damaged": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "tower-air-player-complete": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "tower-air-player-damaged": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "tower-ground-enemy-complete": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "tower-ground-enemy-damaged": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "tower-air-enemy-complete": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "tower-air-enemy-damaged": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "clans-tower-ground-player-complete": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "clans-tower-ground-player-damaged": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "clans-tower-air-player-complete": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "clans-tower-air-player-damaged": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "clans-tower-ground-enemy-complete": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "clans-tower-ground-enemy-damaged": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "clans-tower-air-enemy-complete": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "clans-tower-air-enemy-damaged": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "elves-tower-ground-player-complete": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "elves-tower-ground-player-damaged": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "elves-tower-air-player-complete": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "elves-tower-air-player-damaged": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "elves-tower-ground-enemy-complete": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "elves-tower-ground-enemy-damaged": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "elves-tower-air-enemy-complete": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "elves-tower-air-enemy-damaged": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "dwarves-tower-ground-player-complete": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "dwarves-tower-ground-player-damaged": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "dwarves-tower-air-player-complete": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "dwarves-tower-air-player-damaged": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "dwarves-tower-ground-enemy-complete": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "dwarves-tower-ground-enemy-damaged": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "dwarves-tower-air-enemy-complete": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "dwarves-tower-air-enemy-damaged": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "goblins-tower-ground-player-complete": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "goblins-tower-ground-player-damaged": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "goblins-tower-air-player-complete": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "goblins-tower-air-player-damaged": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "goblins-tower-ground-enemy-complete": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "goblins-tower-ground-enemy-damaged": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "goblins-tower-air-enemy-complete": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
+      }
+    },
+    "goblins-tower-air-enemy-damaged": {
+      "atlas": "tower-specializations",
+      "width": 64,
+      "height": 64,
+      "anchor": {
+        "x": 32,
+        "y": 48
+      },
+      "kind": "building",
+      "buildingType": "tower",
+      "logicalFootprint": {
+        "width": 32,
+        "height": 32
       }
     }
   }

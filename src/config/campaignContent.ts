@@ -22,7 +22,7 @@ export function campaignActionReason(m:MatchState,id:string):string|null{
  if(id.startsWith('research-'))return contentReason(c,'research',id.slice(9));
  if(id.startsWith('cast-'))return contentReason(c,'spells');
  if(id==='unit-ability')return contentReason(c,'abilities');
- if(id==='upgrade-base'||id==='upgrade-tower')return contentReason(c,'baseUpgrades');
+ if(id==='upgrade-base'||id==='upgrade-tower'||id==='upgrade-tower-air')return contentReason(c,'baseUpgrades');
  return null;
 }
 export function missionIntroduction(id:CampaignMissionId,faction:keyof typeof campaignSeries):string{

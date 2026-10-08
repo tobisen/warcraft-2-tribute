@@ -5,4 +5,4 @@ export const groundMeleeTargets=['land','building'] as const;
 export const bowTargets=['land','air','building'] as const;
 export const siegeTargets=['land','building'] as const;
 export const shipTargets=['land','sea','air','building'] as const;
-export const towerTargets=['land','sea','air'] as const;
+export const towerTargets=['land'] as const;

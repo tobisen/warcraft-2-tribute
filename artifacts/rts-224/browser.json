@@ -1,0 +1,880 @@
+{
+  "fixture": "Actual menu/clicks; resource-cheat funding, seeded completed Forge/attack I/base II; .1s gameplay ticks; visible uniquely numbered target staged for real projectile impact",
+  "results": [
+    {
+      "faction": "crown",
+      "actualMouseTowerBuildUpgradeCombat": true,
+      "mode": "ground",
+      "queued": {
+        "wood": 99910,
+        "gold": 99950,
+        "tower": {
+          "id": "tower-1",
+          "kind": "tower",
+          "owner": "player",
+          "footprint": {
+            "x": 480,
+            "y": 384,
+            "width": 32,
+            "height": 32
+          },
+          "hp": 160,
+          "construction": {
+            "remainingSeconds": 0,
+            "builderId": null
+          },
+          "level": 1,
+          "upgradeRemaining": 10,
+          "cooldown": 0,
+          "readyAfter": 0.026019983523935114,
+          "specialization": "ground"
+        }
+      },
+      "fight": {
+        "hp": 16,
+        "tower": {
+          "id": "tower-1",
+          "kind": "tower",
+          "owner": "player",
+          "footprint": {
+            "x": 480,
+            "y": 384,
+            "width": 32,
+            "height": 32
+          },
+          "hp": 160,
+          "construction": {
+            "remainingSeconds": 0,
+            "builderId": null
+          },
+          "level": 2,
+          "upgradeRemaining": null,
+          "cooldown": 0,
+          "readyAfter": 0,
+          "specialization": "ground"
+        },
+        "enemy": {
+          "id": "enemy-produced-3",
+          "owner": "enemy",
+          "kind": "unit",
+          "role": "soldier",
+          "hp": 16,
+          "position": {
+            "x": 869.3254276570816,
+            "y": 701.8579704227892
+          },
+          "order": {
+            "kind": "muster",
+            "destination": {
+              "x": 1504,
+              "y": 1728
+            }
+          },
+          "navigation": {
+            "commandNumber": 1,
+            "destination": {
+              "x": 1504,
+              "y": 1728
+            },
+            "waypoints": [
+              {
+                "x": 944,
+                "y": 784
+              },
+              {
+                "x": 976,
+                "y": 816
+              },
+              {
+                "x": 1008,
+                "y": 848
+              },
+              {
+                "x": 1040,
+                "y": 880
+              },
+              {
+                "x": 1392,
+                "y": 1008
+              },
+              {
+                "x": 1392,
+                "y": 1136
+              },
+              {
+                "x": 1424,
+                "y": 1712
+              },
+              {
+                "x": 1504,
+                "y": 1728
+              }
+            ],
+            "revision": 3,
+            "status": "moving"
+          }
+        },
+        "projectiles": []
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "crown",
+      "actualMouseTowerBuildUpgradeCombat": true,
+      "mode": "air",
+      "queued": {
+        "wood": 99910,
+        "gold": 99950,
+        "tower": {
+          "id": "tower-1",
+          "kind": "tower",
+          "owner": "player",
+          "footprint": {
+            "x": 480,
+            "y": 384,
+            "width": 32,
+            "height": 32
+          },
+          "hp": 160,
+          "construction": {
+            "remainingSeconds": 0,
+            "builderId": null
+          },
+          "level": 1,
+          "upgradeRemaining": 10,
+          "cooldown": 0,
+          "readyAfter": 0.026019983523935114,
+          "specialization": "air"
+        }
+      },
+      "fight": {
+        "hp": 0,
+        "tower": {
+          "id": "tower-1",
+          "kind": "tower",
+          "owner": "player",
+          "footprint": {
+            "x": 480,
+            "y": 384,
+            "width": 32,
+            "height": 32
+          },
+          "hp": 160,
+          "construction": {
+            "remainingSeconds": 0,
+            "builderId": null
+          },
+          "level": 2,
+          "upgradeRemaining": null,
+          "cooldown": 0.6,
+          "readyAfter": 0,
+          "specialization": "air"
+        },
+        "projectiles": []
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "clans",
+      "actualMouseTowerBuildUpgradeCombat": true,
+      "mode": "ground",
+      "queued": {
+        "wood": 99910,
+        "gold": 99950,
+        "tower": {
+          "id": "tower-1",
+          "kind": "tower",
+          "owner": "player",
+          "footprint": {
+            "x": 480,
+            "y": 384,
+            "width": 32,
+            "height": 32
+          },
+          "hp": 160,
+          "construction": {
+            "remainingSeconds": 0,
+            "builderId": null
+          },
+          "level": 1,
+          "upgradeRemaining": 10,
+          "cooldown": 0,
+          "readyAfter": 0.06556901525051212,
+          "specialization": "ground"
+        }
+      },
+      "fight": {
+        "hp": 16,
+        "tower": {
+          "id": "tower-1",
+          "kind": "tower",
+          "owner": "player",
+          "footprint": {
+            "x": 480,
+            "y": 384,
+            "width": 32,
+            "height": 32
+          },
+          "hp": 160,
+          "construction": {
+            "remainingSeconds": 0,
+            "builderId": null
+          },
+          "level": 2,
+          "upgradeRemaining": null,
+          "cooldown": 0,
+          "readyAfter": 0,
+          "specialization": "ground"
+        },
+        "enemy": {
+          "id": "enemy-produced-3",
+          "owner": "enemy",
+          "kind": "unit",
+          "role": "soldier",
+          "hp": 16,
+          "position": {
+            "x": 869.3254276570816,
+            "y": 701.8579704227892
+          },
+          "order": {
+            "kind": "muster",
+            "destination": {
+              "x": 1504,
+              "y": 1728
+            }
+          },
+          "navigation": {
+            "commandNumber": 1,
+            "destination": {
+              "x": 1504,
+              "y": 1728
+            },
+            "waypoints": [
+              {
+                "x": 944,
+                "y": 784
+              },
+              {
+                "x": 976,
+                "y": 816
+              },
+              {
+                "x": 1008,
+                "y": 848
+              },
+              {
+                "x": 1040,
+                "y": 880
+              },
+              {
+                "x": 1392,
+                "y": 1008
+              },
+              {
+                "x": 1392,
+                "y": 1136
+              },
+              {
+                "x": 1424,
+                "y": 1712
+              },
+              {
+                "x": 1504,
+                "y": 1728
+              }
+            ],
+            "revision": 3,
+            "status": "moving"
+          }
+        },
+        "projectiles": []
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "clans",
+      "actualMouseTowerBuildUpgradeCombat": true,
+      "mode": "air",
+      "queued": {
+        "wood": 99910,
+        "gold": 99950,
+        "tower": {
+          "id": "tower-1",
+          "kind": "tower",
+          "owner": "player",
+          "footprint": {
+            "x": 480,
+            "y": 384,
+            "width": 32,
+            "height": 32
+          },
+          "hp": 160,
+          "construction": {
+            "remainingSeconds": 0,
+            "builderId": null
+          },
+          "level": 1,
+          "upgradeRemaining": 10,
+          "cooldown": 0,
+          "readyAfter": 0.06556901525051212,
+          "specialization": "air"
+        }
+      },
+      "fight": {
+        "hp": 0,
+        "tower": {
+          "id": "tower-1",
+          "kind": "tower",
+          "owner": "player",
+          "footprint": {
+            "x": 480,
+            "y": 384,
+            "width": 32,
+            "height": 32
+          },
+          "hp": 160,
+          "construction": {
+            "remainingSeconds": 0,
+            "builderId": null
+          },
+          "level": 2,
+          "upgradeRemaining": null,
+          "cooldown": 0.6,
+          "readyAfter": 0,
+          "specialization": "air"
+        },
+        "projectiles": []
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "elves",
+      "actualMouseTowerBuildUpgradeCombat": true,
+      "mode": "ground",
+      "queued": {
+        "wood": 99910,
+        "gold": 99950,
+        "tower": {
+          "id": "tower-1",
+          "kind": "tower",
+          "owner": "player",
+          "footprint": {
+            "x": 480,
+            "y": 384,
+            "width": 32,
+            "height": 32
+          },
+          "hp": 160,
+          "construction": {
+            "remainingSeconds": 0,
+            "builderId": null
+          },
+          "level": 1,
+          "upgradeRemaining": 10,
+          "cooldown": 0,
+          "readyAfter": 0.05390116096370273,
+          "specialization": "ground"
+        }
+      },
+      "fight": {
+        "hp": 16,
+        "tower": {
+          "id": "tower-1",
+          "kind": "tower",
+          "owner": "player",
+          "footprint": {
+            "x": 480,
+            "y": 384,
+            "width": 32,
+            "height": 32
+          },
+          "hp": 160,
+          "construction": {
+            "remainingSeconds": 0,
+            "builderId": null
+          },
+          "level": 2,
+          "upgradeRemaining": null,
+          "cooldown": 0,
+          "readyAfter": 0,
+          "specialization": "ground"
+        },
+        "enemy": {
+          "id": "enemy-produced-3",
+          "owner": "enemy",
+          "kind": "unit",
+          "role": "soldier",
+          "hp": 16,
+          "position": {
+            "x": 869.3254276570816,
+            "y": 701.8579704227892
+          },
+          "order": {
+            "kind": "muster",
+            "destination": {
+              "x": 1504,
+              "y": 1728
+            }
+          },
+          "navigation": {
+            "commandNumber": 1,
+            "destination": {
+              "x": 1504,
+              "y": 1728
+            },
+            "waypoints": [
+              {
+                "x": 944,
+                "y": 784
+              },
+              {
+                "x": 976,
+                "y": 816
+              },
+              {
+                "x": 1008,
+                "y": 848
+              },
+              {
+                "x": 1040,
+                "y": 880
+              },
+              {
+                "x": 1392,
+                "y": 1008
+              },
+              {
+                "x": 1392,
+                "y": 1136
+              },
+              {
+                "x": 1424,
+                "y": 1712
+              },
+              {
+                "x": 1504,
+                "y": 1728
+              }
+            ],
+            "revision": 3,
+            "status": "moving"
+          }
+        },
+        "projectiles": []
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "elves",
+      "actualMouseTowerBuildUpgradeCombat": true,
+      "mode": "air",
+      "queued": {
+        "wood": 99910,
+        "gold": 99950,
+        "tower": {
+          "id": "tower-1",
+          "kind": "tower",
+          "owner": "player",
+          "footprint": {
+            "x": 480,
+            "y": 384,
+            "width": 32,
+            "height": 32
+          },
+          "hp": 160,
+          "construction": {
+            "remainingSeconds": 0,
+            "builderId": null
+          },
+          "level": 1,
+          "upgradeRemaining": 10,
+          "cooldown": 0,
+          "readyAfter": 0.05390116096370273,
+          "specialization": "air"
+        }
+      },
+      "fight": {
+        "hp": 0,
+        "tower": {
+          "id": "tower-1",
+          "kind": "tower",
+          "owner": "player",
+          "footprint": {
+            "x": 480,
+            "y": 384,
+            "width": 32,
+            "height": 32
+          },
+          "hp": 160,
+          "construction": {
+            "remainingSeconds": 0,
+            "builderId": null
+          },
+          "level": 2,
+          "upgradeRemaining": null,
+          "cooldown": 0.6,
+          "readyAfter": 0,
+          "specialization": "air"
+        },
+        "projectiles": []
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "dwarves",
+      "actualMouseTowerBuildUpgradeCombat": true,
+      "mode": "ground",
+      "queued": {
+        "wood": 99910,
+        "gold": 99950,
+        "tower": {
+          "id": "tower-1",
+          "kind": "tower",
+          "owner": "player",
+          "footprint": {
+            "x": 480,
+            "y": 384,
+            "width": 32,
+            "height": 32
+          },
+          "hp": 160,
+          "construction": {
+            "remainingSeconds": 0,
+            "builderId": null
+          },
+          "level": 1,
+          "upgradeRemaining": 10,
+          "cooldown": 0,
+          "readyAfter": 0.0011656954559244037,
+          "specialization": "ground"
+        }
+      },
+      "fight": {
+        "hp": 16,
+        "tower": {
+          "id": "tower-1",
+          "kind": "tower",
+          "owner": "player",
+          "footprint": {
+            "x": 480,
+            "y": 384,
+            "width": 32,
+            "height": 32
+          },
+          "hp": 160,
+          "construction": {
+            "remainingSeconds": 0,
+            "builderId": null
+          },
+          "level": 2,
+          "upgradeRemaining": null,
+          "cooldown": 0,
+          "readyAfter": 0,
+          "specialization": "ground"
+        },
+        "enemy": {
+          "id": "enemy-produced-3",
+          "owner": "enemy",
+          "kind": "unit",
+          "role": "soldier",
+          "hp": 16,
+          "position": {
+            "x": 869.3254276570816,
+            "y": 701.8579704227892
+          },
+          "order": {
+            "kind": "muster",
+            "destination": {
+              "x": 1504,
+              "y": 1728
+            }
+          },
+          "navigation": {
+            "commandNumber": 1,
+            "destination": {
+              "x": 1504,
+              "y": 1728
+            },
+            "waypoints": [
+              {
+                "x": 944,
+                "y": 784
+              },
+              {
+                "x": 976,
+                "y": 816
+              },
+              {
+                "x": 1008,
+                "y": 848
+              },
+              {
+                "x": 1040,
+                "y": 880
+              },
+              {
+                "x": 1392,
+                "y": 1008
+              },
+              {
+                "x": 1392,
+                "y": 1136
+              },
+              {
+                "x": 1424,
+                "y": 1712
+              },
+              {
+                "x": 1504,
+                "y": 1728
+              }
+            ],
+            "revision": 3,
+            "status": "moving"
+          }
+        },
+        "projectiles": []
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "dwarves",
+      "actualMouseTowerBuildUpgradeCombat": true,
+      "mode": "air",
+      "queued": {
+        "wood": 99910,
+        "gold": 99950,
+        "tower": {
+          "id": "tower-1",
+          "kind": "tower",
+          "owner": "player",
+          "footprint": {
+            "x": 480,
+            "y": 384,
+            "width": 32,
+            "height": 32
+          },
+          "hp": 160,
+          "construction": {
+            "remainingSeconds": 0,
+            "builderId": null
+          },
+          "level": 1,
+          "upgradeRemaining": 10,
+          "cooldown": 0,
+          "readyAfter": 0.0011656954559244037,
+          "specialization": "air"
+        }
+      },
+      "fight": {
+        "hp": 0,
+        "tower": {
+          "id": "tower-1",
+          "kind": "tower",
+          "owner": "player",
+          "footprint": {
+            "x": 480,
+            "y": 384,
+            "width": 32,
+            "height": 32
+          },
+          "hp": 160,
+          "construction": {
+            "remainingSeconds": 0,
+            "builderId": null
+          },
+          "level": 2,
+          "upgradeRemaining": null,
+          "cooldown": 0.6,
+          "readyAfter": 0,
+          "specialization": "air"
+        },
+        "projectiles": []
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "goblins",
+      "actualMouseTowerBuildUpgradeCombat": true,
+      "mode": "ground",
+      "queued": {
+        "wood": 99910,
+        "gold": 99950,
+        "tower": {
+          "id": "tower-1",
+          "kind": "tower",
+          "owner": "player",
+          "footprint": {
+            "x": 480,
+            "y": 384,
+            "width": 32,
+            "height": 32
+          },
+          "hp": 160,
+          "construction": {
+            "remainingSeconds": 0,
+            "builderId": null
+          },
+          "level": 1,
+          "upgradeRemaining": 10,
+          "cooldown": 0,
+          "readyAfter": 0.08979554091016534,
+          "specialization": "ground"
+        }
+      },
+      "fight": {
+        "hp": 16,
+        "tower": {
+          "id": "tower-1",
+          "kind": "tower",
+          "owner": "player",
+          "footprint": {
+            "x": 480,
+            "y": 384,
+            "width": 32,
+            "height": 32
+          },
+          "hp": 160,
+          "construction": {
+            "remainingSeconds": 0,
+            "builderId": null
+          },
+          "level": 2,
+          "upgradeRemaining": null,
+          "cooldown": 0,
+          "readyAfter": 0,
+          "specialization": "ground"
+        },
+        "enemy": {
+          "id": "enemy-produced-3",
+          "owner": "enemy",
+          "kind": "unit",
+          "role": "soldier",
+          "hp": 16,
+          "position": {
+            "x": 869.3254276570816,
+            "y": 701.8579704227893
+          },
+          "order": {
+            "kind": "muster",
+            "destination": {
+              "x": 1504,
+              "y": 1728
+            }
+          },
+          "navigation": {
+            "commandNumber": 1,
+            "destination": {
+              "x": 1504,
+              "y": 1728
+            },
+            "waypoints": [
+              {
+                "x": 944,
+                "y": 784
+              },
+              {
+                "x": 976,
+                "y": 816
+              },
+              {
+                "x": 1008,
+                "y": 848
+              },
+              {
+                "x": 1040,
+                "y": 880
+              },
+              {
+                "x": 1392,
+                "y": 1008
+              },
+              {
+                "x": 1392,
+                "y": 1136
+              },
+              {
+                "x": 1424,
+                "y": 1712
+              },
+              {
+                "x": 1504,
+                "y": 1728
+              }
+            ],
+            "revision": 3,
+            "status": "moving"
+          }
+        },
+        "projectiles": []
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "goblins",
+      "actualMouseTowerBuildUpgradeCombat": true,
+      "mode": "air",
+      "queued": {
+        "wood": 99910,
+        "gold": 99950,
+        "tower": {
+          "id": "tower-1",
+          "kind": "tower",
+          "owner": "player",
+          "footprint": {
+            "x": 480,
+            "y": 384,
+            "width": 32,
+            "height": 32
+          },
+          "hp": 160,
+          "construction": {
+            "remainingSeconds": 0,
+            "builderId": null
+          },
+          "level": 1,
+          "upgradeRemaining": 10,
+          "cooldown": 0,
+          "readyAfter": 0.08979554091016534,
+          "specialization": "air"
+        }
+      },
+      "fight": {
+        "hp": 0,
+        "tower": {
+          "id": "tower-1",
+          "kind": "tower",
+          "owner": "player",
+          "footprint": {
+            "x": 480,
+            "y": 384,
+            "width": 32,
+            "height": 32
+          },
+          "hp": 160,
+          "construction": {
+            "remainingSeconds": 0,
+            "builderId": null
+          },
+          "level": 2,
+          "upgradeRemaining": null,
+          "cooldown": 0.6,
+          "readyAfter": 0,
+          "specialization": "air"
+        },
+        "projectiles": []
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    }
+  ]
+}

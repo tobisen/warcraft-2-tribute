@@ -1514,3 +1514,17 @@ AI pays identical cost/time and uses its own enemy/team fog. Air bounds
 and existing movement handle obstacles. Dwarf/Goblin mechanical scouts
 cannot receive Heal. Campaign3 unlocks producer/scout; painted source and
 limitations in assets/sources/visual-refresh/scouts.md.
+
+## RTS-224 — Permanent tower choices
+
+Base tower: ground-only(land),176px,10damage/1.2s; never ships/air/buildings.
+BaseII+completed Forge+AttackI allow a permanent40wood30gold10s choice:
+Ground Defense192px/24damage/land only, or Anti-Air256px/16damage/air only.
+Footprint32px and160HP unchanged. Tower is inactive during the entire job;
+existing shots resolve normally. Exact completion uses1e-9 time tolerance.
+No repeat payment or switching; destroyed foundation/job disappears with
+no refund or revival. Existing level2 and pending older upgrades default
+to Ground Defense. N/F14 select modes. Config domain mask follows acquisition
+and projectile impact; current fog/teams still gate acquisition. Existing
+bow anti-air remains. Distinct painted source and miniature action icons;
+TechTree/tooltips/selection state describe targets/range/damage.

@@ -1,1 +1,2 @@
-export const defenseConfig={wall:{cost:{wood:10,gold:0},hp:180,size:32,seconds:3},gate:{cost:{wood:30,gold:5},hp:240,size:32,seconds:5},tower:{cost:{wood:50,gold:20},hp:160,size:32,seconds:8,range:176,damage:10,interval:1.2,speed:300},upgrade:{cost:{wood:40,gold:30},seconds:10,range:192,damage:16}} as const;
+export const defenseConfig={wall:{cost:{wood:10,gold:0},hp:180,size:32,seconds:3},gate:{cost:{wood:30,gold:5},hp:240,size:32,seconds:5},tower:{cost:{wood:50,gold:20},hp:160,size:32,seconds:8,range:176,damage:10,interval:1.2,speed:300},upgrade:{cost:{wood:40,gold:30},seconds:10,range:192,damage:24}} as const;
+export const towerSpecializations={ground:{range:192,damage:24,targets:['land'] as const},air:{range:256,damage:16,targets:['air'] as const}};

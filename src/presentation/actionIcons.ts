@@ -7,7 +7,8 @@ const glyphs:Partial<Record<ActionId,string>>={'scout-route':'route','auto-scout
 export function actionIcon(id:ActionId,faction:FactionId):ActionIcon {
  if(id.startsWith('build-'))return {atlas:id==='build-aviary'?'aviary':id==='build-stable'?'cavalry':'buildings',frame:buildingFrame(id.slice(6) as BuildingKind,'player',0,5,faction)};
  if(id.startsWith('train-')){const type=(id==='train-ship'?'warship':id.slice(6)) as UnitArt;return {atlas:artAtlas(type),frame:unitFrame(motion(undefined,{x:0,y:0},'idle',0,type,'player',undefined,faction),0)};}
- if(id==='upgrade-base'||id==='upgrade-tower')return {atlas:'buildings',frame:buildingFrame(id==='upgrade-base'?'base':'tower','player',0,5,faction,undefined,2),badge:'upgrade'};
+ if(id==='upgrade-tower'||id==='upgrade-tower-air')return {atlas:'tower-specializations',frame:`${faction==='crown'?'':faction+'-'}tower-${id==='upgrade-tower'?'ground':'air'}-player-complete`,badge:'upgrade'};
+ if(id==='upgrade-base')return {atlas:'buildings',frame:buildingFrame(id==='upgrade-base'?'base':'tower','player',0,5,faction,undefined,2),badge:'upgrade'};
  if(id==='research-workerTools')return {...actionIcon('train-worker',faction),badge:'research'};
  if(id.startsWith('research-'))return {atlas:'ui',frame:id==='research-attack'?'icon-attack':'icon-shield',badge:'research'};
  return {glyph:glyphs[id]};

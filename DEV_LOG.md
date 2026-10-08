@@ -4576,3 +4576,19 @@ rättade owner/counters och korrekt separata producenter; browserfångad
 disabled-state behövde faktisk reset och flygaren rallyflytt före klickval.
 Inga nya ljud/mänsklig balans/nyCI- eller Pagesbelägg. Assetkällor/CC0 och
 facing/death/constructionlimits dokumenterade. Användarens ändringar kvar.
+
+## RTS-224 — Permanent Ground Defense / Anti-Air
+
+Markgrundtorn176/10land-only; permanent40/30/10s valground192/24 eller
+air256/16, befintligAttackI+Forge/baseII, ingen dubbelcost/switch. Torn
+inaktivt underombyggnad; savedoptional specialization, gamla level2/pending
+defaultground. Sammafootprint32/HP160. Domainmask bådaacquisition/impact.
+Ny painted10sprite-master/ikonatlas och tooltip/stats/TechTree/N/F14.
+Riktade56/4 PASS3.37s; unit511/89 PASS15.90s; strict build PASS563ms.
+Browser alla5×2 native800 faktisk build/choice/cost/deadline/projectilehit/
+TechTree/SaveLoad/restart PASS0pageerrors. Crown bådamodegranskade.
+Browserfångad10s floatrest korrigerad1e-9, regression100×.1s ingår. Staged
+AI-target fick uniktID så att ordinarieproducedID inteförväxlades; Forge
+fixtureHP använderfraktionsconfig. Assetprompts/CC0/tintlimit dokumenterade.
+Scoutingbrowserartefakter223 läggs med här efter223-kodcommit. Användarens
+CSS/units.mjs/docs bevarade. Ingen mänsklig balans/CI/Pages/release hävdas.

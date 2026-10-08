@@ -247,3 +247,9 @@ heavy-role variants, genuine walking/smash poses, existing export/team pipeline.
 scout variants with four flight poses and five dedicated painted producers.
 Native800 screenshots and mouse/save probes: artifacts/rts-223. Direction
 mirroring, collapse death and translucent construction limits documented.
+
+## RTS-224 — Tower specializations
+
+[Source, prompt and CC0](sources/visual-refresh/tower-specializations.md).
+Ten painted faction/mode silhouettes, same32px logical footprint; complete
+and tint-damaged64px frames. Browser evidence in artifacts/rts-224.

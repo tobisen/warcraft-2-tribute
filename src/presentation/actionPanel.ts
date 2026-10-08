@@ -28,7 +28,7 @@ import {forgeReady} from '../gameplay/research';
 import type {BuildingSelection} from '../gameplay/buildingSelection';
 import type {MatchState} from '../gameplay/match';
 import {hotkeys} from './hotkeys';
-export const actionIds=['build-aviary','train-scout','scout-route','auto-scout','train-giant','train-healer','autocast-heal','build-stable','train-cavalry','cast-heal','cast-ward','cast-hex','repair-building','build-wall','build-gate','build-tower','upgrade-tower','upgrade-base','train-worker','train-soldier','train-archer','train-catapult','train-specialist','train-air','train-transport','train-ship','build-academy','build-base','build-barracks','build-farm','build-forge','build-harbor','research-workerTools','research-attack','research-defense','attack-move','unit-ability','unload-transport','hold-position','patrol-units','stop-units','dismiss-units'] as const;
+export const actionIds=['build-aviary','train-scout','scout-route','auto-scout','train-giant','train-healer','autocast-heal','build-stable','train-cavalry','cast-heal','cast-ward','cast-hex','repair-building','build-wall','build-gate','build-tower','upgrade-tower','upgrade-tower-air','upgrade-base','train-worker','train-soldier','train-archer','train-catapult','train-specialist','train-air','train-transport','train-ship','build-academy','build-base','build-barracks','build-farm','build-forge','build-harbor','research-workerTools','research-attack','research-defense','attack-move','unit-ability','unload-transport','hold-position','patrol-units','stop-units','dismiss-units'] as const;
 export type ActionId=typeof actionIds[number];
 export const actionGroups=['Orders','Build','Train','Research','Spells'] as const;
 export function actionGroup(id:ActionId):typeof actionGroups[number]{return id.startsWith('cast-')||id==='autocast-heal'?'Spells':id.startsWith('build-')?'Build':id.startsWith('train-')?'Train':id.startsWith('research-')||id.startsWith('upgrade-')?'Research':'Orders';}
@@ -57,7 +57,7 @@ export function actionPanel(m:MatchState,building:BuildingSelection,playing:bool
   else if(id==='autocast-heal'){const healers=land.filter(u=>u.kind==='soldier'&&u.archetype==='healer');visible=healers.length>0;active=healers.every(u=>u.kind==='soldier'&&u.healAutocast);summary='Toggle automatic Heal: visible damaged biological allies only; 20 mana, 6s cooldown';}
   else if(id==='repair-building'){visible=worker;cost='0.5 wood + 0.1 gold per restored HP';reason=m.gathering.wood<=0||(m.gathering.goldBalance??0)<=0?'Not enough wood or gold':'';}
   else if(id==='build-wall'||id==='build-gate'){visible=worker;cost=costLabel(defenseConfig[id==='build-wall'?'wall':'gate'].cost);reason=m.placement.active?'Finish or cancel placement':affordabilityReason(m.gathering,defenseConfig[id==='build-wall'?'wall':'gate'].cost);}
-  else if(id==='upgrade-tower'){visible=!!building?.startsWith('tower-');cost=costLabel(defenseConfig.upgrade.cost);reason=towerUpgradeReason(m,building??'')??'';}
+  else if((id==='upgrade-tower'||id==='upgrade-tower-air')){visible=!!building?.startsWith('tower-');summary=id==='upgrade-tower-air'?'Permanent Anti-Air: air-only, 256px range, 16 damage; inactive during 10s upgrade':'Permanent Ground Defense: ground-only, 192px range, 24 damage; inactive during 10s upgrade';cost=costLabel(defenseConfig.upgrade.cost);reason=towerUpgradeReason(m,building??'')??'';}
   else if(id==='build-tower'){visible=worker;cost=costLabel(defenseConfig.tower.cost);reason=m.placement.active?'Finish or cancel placement':affordabilityReason(m.gathering,defenseConfig.tower.cost);}
   else if(id==='upgrade-base'){visible=base;const b=baseDevelopment(m);cost=b.level<3?costLabel(baseUpgradeConfig[(b.level+1) as 2|3].cost):undefined;reason=(m.placement.bases?.find(b=>b.id===building)?.construction.remainingSeconds??0)>0?'Construction unfinished':baseUpgradeReason(m)??'';}
   else if(id==='build-base'){visible=worker;cost=costLabel(extraBaseConfig.cost);reason=m.placement.active?'Finish or cancel placement':(m.placement.bases?.length??0)>=extraBaseConfig.maxCount?'Maximum three main buildings':affordabilityReason(m.gathering,extraBaseConfig.cost);}
@@ -85,7 +85,7 @@ export function actionPanel(m:MatchState,building:BuildingSelection,playing:bool
   if(id.startsWith('build-')){const kind=id.slice(6);active=!!m.placement.active&&(m.placement.kind??'barracks')===kind;if(kind==='stable'||kind==='academy'||kind==='barracks'||kind==='farm'||kind==='forge')prerequisites=prerequisiteLabel(faction.buildings[kind].prerequisites);}
   if(id.startsWith('research-')&&id!=='research-workerTools'){const kind=id==='research-attack'?'attack':'defense';prerequisites=prerequisiteLabel((m.research?.[kind]??0)>=1?{buildings:['forge','academy']}:faction.upgrades[kind].prerequisites);active=m.research?.job?.kind===kind;}
   if(id==='upgrade-base')active=baseDevelopment(m).remainingSeconds!==null;
-  if(id==='upgrade-tower')active=!!m.placement.defenses?.find(t=>t.id===building)?.upgradeRemaining;
+  if((id==='upgrade-tower'||id==='upgrade-tower-air'))active=!!m.placement.defenses?.find(t=>t.id===building)?.upgradeRemaining;
   reason=campaignActionReason(m,id)??reason;
   result[id]={visible,reason:visible&&!playing?'Match is paused or ended':reason,cost,summary,prerequisites,producing,active};
  }

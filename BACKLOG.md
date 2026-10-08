@@ -46,7 +46,7 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 ## Current Focus
 
 Nytt mandat 2026-10-08: RTS-220–228 i ordning, därefter användarens tillägg RTS-229, en task åt gången.
-RTS-220 grafik samt RTS-221–222 verifierade; RTS-223 är verifierad med separat flygbyggnad; nästa task224, därefter225–229. Städning, release och kartombyggnad är pausade.
+RTS-220 grafik samt RTS-221–222 verifierade; RTS-223 är verifierad med separat flygbyggnad; nästa task225, därefter226–229. Städning, release och kartombyggnad är pausade.
 Taskvis riktade tester, native800-browser, unit/strict build/diff, docs och
 commit/push till origin/main. Full regression vid etappslut; stanna efter229.
 Befintliga style.css/units.mjs/docs/:memory:.ses bevaras. Ingen delegering.
@@ -5738,12 +5738,19 @@ båda flygarroller; egen byggnad/shared paid FIFO/bounds/owner fog/save och
 förstörelse provade. AI antar samma betalda6s scout och egen fog. Full
 regression samlas vid229; mänsklig balans ej kontrollerad.
 
-### RTS-224 — Tornspecialisering och luftvärn — Todo
+### RTS-224 — Tornspecialisering och luftvärn — Done
 Grundtorn ground-only. Permanent alternativ Anti-Air (air-only/lång range)
 eller Ground Defense (ground-only/mer damage). Forskning/kostnad/tid, samma
 footprint och återanvänd upgrade; definiera aktivitet under jobb. Distinkt art/
 ikon och måltyper i tooltip/stats. Ingen dubbelkostnad/uppgradering. Befintlig
 archer har redan air-targets. Testa val/kostnad/domains/död under jobb/save.
+
+Verifiering: riktade56/4 PASS3.37s, unit511/89 PASS15.90s, strict build
+PASS563ms. Båda val betalda40/30/10s efterbaseII/Forge/AttackI; inaktivt
+torn under jobb, permanentmask ävenimpact, död/save/legacydefaultground.
+Native800 femras×tvåval build/upgrade/actualprojectile/TechTree/SaveLoad/
+restart PASS0pageerrors, artifacts/rts-224/browser.json; Crown art granskad.
+Ingen mänsklig balans.
 
 ### RTS-225 — Tungt stridsflyg — Todo
 Utöka befintlig air-roll/rasnamn/assets, ingen andra tung-flyg-dubblett. Dyr,

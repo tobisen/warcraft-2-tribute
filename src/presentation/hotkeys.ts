@@ -1,6 +1,7 @@
 import {text as uiText} from '../text';
 import { gameplayKeyAllowed,type KeyContext } from './keyboard';
 export const hotkeys=[
+ {key:'F14',button:'upgrade-tower-air',label:'Permanently specialize this tower as Anti-Air: air-only,256px range; base II,Forge,attack I. Inactive for10s.'},
  {key:'F13',button:'build-aviary',label:'Build a dedicated flight producer after base II; 80 wood, 40 gold, 12 seconds.'},
  {key:'END',button:'train-scout',label:'Train an unarmed flyer at the flight building after base II.'},
  {key:'PAGEUP',button:'scout-route',label:'Add multiple waypoints, click this action again to start repeating Scout Route.'},
@@ -23,7 +24,7 @@ export const hotkeys=[
  {key:'M',button:'build-wall',label:'Build a wall with a selected worker. Placement preserves mandatory routes and exits.'},
  {key:'Q',button:'build-gate',label:'Build a gate with a selected worker. Completed gates automatically admit your troops and allies; enemies remain blocked.'},
  {key:'O',button:'build-tower',label:'Build a defense tower with a selected worker at a visible legal site.'},
- {key:'N',button:'upgrade-tower',label:'Upgrade the selected tower after completing base level 2 and a Forge.'},
+ {key:'N',button:'upgrade-tower',label:'Permanently specialize this tower as Ground Defense: ground-only,24 damage; base II,Forge,attack I. Inactive for10s.'},
  {key:'I',button:'upgrade-base',label:'Upgrade the selected base. All main-building worker queues pause and resumes with its remaining time intact.'},
  {key:'H',button:'build-harbor',label:'Build a harbor with a selected worker at a visible, valid coastal site. Pay the displayed cost at placement.'},
  {key:'J',button:'train-transport',label:'Train a transport at the selected completed harbor. Requires resources, supply and a free queue slot.'},

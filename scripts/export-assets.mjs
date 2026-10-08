@@ -45,3 +45,4 @@ await import('./export-giants.mjs');
 
 await import('./export-scouts.mjs');
 await import('./export-aviaries.mjs');
+await import('./export-tower-specializations.mjs');

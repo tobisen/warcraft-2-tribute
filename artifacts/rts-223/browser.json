@@ -1,0 +1,115 @@
+{
+  "fixture": "Actual menu/clicks; resource-cheat funding, seeded base II without Forge/research; .1s gameplay ticks; route and Auto Scout actual clicks",
+  "results": [
+    {
+      "faction": "crown",
+      "actualMouseBarracksBuildTrainMoveRouteAuto": true,
+      "queued": {
+        "wood": 99895,
+        "gold": 99945,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "scout",
+          "supply": 1,
+          "cost": {
+            "wood": 25,
+            "gold": 15
+          },
+          "durationSeconds": 6,
+          "remainingSeconds": 6
+        }
+      },
+      "scoutRoutesAndAuto": true,
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "clans",
+      "actualMouseBarracksBuildTrainMoveRouteAuto": true,
+      "queued": {
+        "wood": 99895,
+        "gold": 99945,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "scout",
+          "supply": 1,
+          "cost": {
+            "wood": 25,
+            "gold": 15
+          },
+          "durationSeconds": 6,
+          "remainingSeconds": 6
+        }
+      },
+      "scoutRoutesAndAuto": true,
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "elves",
+      "actualMouseBarracksBuildTrainMoveRouteAuto": true,
+      "queued": {
+        "wood": 99895,
+        "gold": 99945,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "scout",
+          "supply": 1,
+          "cost": {
+            "wood": 25,
+            "gold": 15
+          },
+          "durationSeconds": 6,
+          "remainingSeconds": 6
+        }
+      },
+      "scoutRoutesAndAuto": true,
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "dwarves",
+      "actualMouseBarracksBuildTrainMoveRouteAuto": true,
+      "queued": {
+        "wood": 99895,
+        "gold": 99945,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "scout",
+          "supply": 1,
+          "cost": {
+            "wood": 25,
+            "gold": 15
+          },
+          "durationSeconds": 6,
+          "remainingSeconds": 6
+        }
+      },
+      "scoutRoutesAndAuto": true,
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "goblins",
+      "actualMouseBarracksBuildTrainMoveRouteAuto": true,
+      "queued": {
+        "wood": 99895,
+        "gold": 99945,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "scout",
+          "supply": 1,
+          "cost": {
+            "wood": 25,
+            "gold": 15
+          },
+          "durationSeconds": 6,
+          "remainingSeconds": 6
+        }
+      },
+      "scoutRoutesAndAuto": true,
+      "saveLoadRestart": true,
+      "errors": []
+    }
+  ]
+}
