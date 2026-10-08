@@ -7,14 +7,15 @@ import { unitStats,workerStats } from '../config/unit';
 import type { GatheringState, Unit } from './gathering';
 import type { PlacementState, ConstructionJob, Footprint } from './placement';
 import type { WorldMap } from './map';
-type SiteId = `base-${number}`|`wall-${number}`|`gate-${number}`|`tower-${number}`| 'siegeWorks'|'aviary'|'stable'|'academy'|'harbor'|'outpost'|'barracks'|'forge'|`farm-${number}`;
+type SiteId = `producer-${number}`| `base-${number}`|`wall-${number}`|`gate-${number}`|`tower-${number}`| 'siegeWorks'|'aviary'|'stable'|'academy'|'harbor'|'outpost'|'barracks'|'forge'|`farm-${number}`;
 export function barracksReady(placement:PlacementState):boolean {
   return placement.barracks!==null && (!placement.construction || placement.construction.remainingSeconds===0);
 }
 export function resumeConstruction(gathering:GatheringState,placement:PlacementState,map:WorldMap,id:SiteId='barracks') {
+  const producer=placement.producers?.find(p=>p.id===id);
   const tower=placement.defenses?.find(t=>t.id===id);
   const expansion=placement.bases?.find(b=>b.id===id);
-  const farm=expansion??tower??(id==='siegeWorks'?placement.siegeWorks:undefined)??(id==='aviary'?placement.aviary:undefined)??(id==='stable'?placement.stable:undefined)??(id==='academy'?placement.academy:undefined)??(id==='forge'?placement.forge:placement.farms?.find(f=>f.id===id));
+  const farm=producer??expansion??tower??(id==='siegeWorks'?placement.siegeWorks:undefined)??(id==='aviary'?placement.aviary:undefined)??(id==='stable'?placement.stable:undefined)??(id==='academy'?placement.academy:undefined)??(id==='forge'?placement.forge:placement.farms?.find(f=>f.id===id));
   const rect=id==='barracks'?placement.barracks:farm?.footprint;
   const job=id==='barracks'?placement.construction:farm?.construction;
   if (!rect || !job || job.remainingSeconds<=0) return {gathering,placement};
@@ -22,7 +23,7 @@ export function resumeConstruction(gathering:GatheringState,placement:PlacementS
     .sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}))[0];
   if (!builder || approachRoute(map,builder.position,rect,barracksConfig.constructionRange).status==='blocked') return {gathering,placement};
   const updated={...job,builderId:builder.id};
-  return {placement:id==='barracks'?{...placement,construction:updated}
+  return {placement:producer?{...placement,producers:placement.producers!.map(p=>p.id===id?{...p,construction:updated}:p)}:id==='barracks'?{...placement,construction:updated}
       :id==='siegeWorks'?{...placement,siegeWorks:{...placement.siegeWorks!,construction:updated}}:id==='aviary'?{...placement,aviary:{...placement.aviary!,construction:updated}}:id==='stable'?{...placement,stable:{...placement.stable!,construction:updated}}:id==='academy'?{...placement,academy:{...placement.academy!,construction:updated}}:expansion?{...placement,bases:placement.bases!.map(b=>b.id===id?{...b,construction:updated}:b)}:tower?{...placement,defenses:placement.defenses!.map(t=>t.id===id?{...t,construction:updated}:t)}:id==='forge'?{...placement,forge:{...placement.forge!,construction:updated}}:{...placement,farms:placement.farms!.map(f=>f.id===id?{...f,construction:updated}:f)},
     gathering:{...gathering,units:gathering.units.map((u):Unit=>u.id===builder.id&&u.kind==='worker'
       ? {...u,commandMode:undefined,orderQueue:undefined,navigation:undefined,order:{kind:'build',buildingId:id}}
@@ -44,8 +45,11 @@ export function updateSite(gathering:GatheringState,job:ConstructionJob,rect:Foo
     gathering:{...gathering,units:gathering.units.map((u):Unit=>u.id!==builder.id || u.kind!=='worker'?u:
       {...u,position:step.position,target:{...step.position},navigation:done?undefined:{...step.route,goalKey},order:done?{kind:'idle'}:u.order})}};
 }
+const readyTimes=new WeakMap<ConstructionJob,number>();
+export function productionTimeAfterConstruction(job:ConstructionJob,delta:number){const readyAfter=readyTimes.get(job)??0;readyTimes.delete(job);return job.remainingSeconds>0?0:Math.max(0,delta-readyAfter);}
 export function updateConstruction(gathering:GatheringState,placement:PlacementState,map:WorldMap,delta:number,gateFor?:GateFor) {
   let next=gathering,construction=placement.construction;
+  const producers=placement.producers?.map(p=>{const r=updateSite(next,p.construction,p.footprint,p.id,map,delta,gateFor);next=r.gathering;if(r.completedAfterSeconds!==undefined)readyTimes.set(r.job,r.completedAfterSeconds);return {...p,construction:r.job};});
   let barracksReadyAfter:number|undefined;
   if (construction && placement.barracks) {
     const result=updateSite(next,construction,placement.barracks,'barracks',map,delta,gateFor);next=result.gathering;construction=result.job;barracksReadyAfter='completedAfterSeconds' in result?result.completedAfterSeconds:undefined;
@@ -61,5 +65,5 @@ export function updateConstruction(gathering:GatheringState,placement:PlacementS
     const result=updateSite(next,f.construction,f.footprint,f.id,map,delta,gateFor);next=result.gathering;
     return {...f,construction:result.job};
   });
-  return {barracksReadyAfter,gathering:next,placement:{...placement,...(siegeWorks?{siegeWorks}:{}),...(aviary?{aviary}:{}),...(stable?{stable}:{}),...(academy?{academy}:{}),...(bases?{bases}:{}),...(construction?{construction}:{}),...(farms?{farms}:{}),...(forge?{forge}:{})}};
+  return {barracksReadyAfter,gathering:next,placement:{...placement,...(producers?{producers}:{}),...(siegeWorks?{siegeWorks}:{}),...(aviary?{aviary}:{}),...(stable?{stable}:{}),...(academy?{academy}:{}),...(bases?{bases}:{}),...(construction?{construction}:{}),...(farms?{farms}:{}),...(forge?{forge}:{})}};
 }

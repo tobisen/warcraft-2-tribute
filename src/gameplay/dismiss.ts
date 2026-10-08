@@ -30,6 +30,6 @@ export function dismissBuilding(m:MatchState,id:Exclude<BuildingSelection,null>)
  else if(id==='barracks')next={...m,placement:{...m.placement,barracksHP:0}};
  else if(id==='harbor')next={...m,navy:{...m.navy!,harbor:{...m.navy!.harbor!,hp:0}}};
  else if(id==='forge'||id==='academy'||id==='stable'||id==='aviary'||id==='siegeWorks')next={...m,placement:{...m.placement,[id]:{...m.placement[id]!,hp:0}}};
- else next={...m,placement:{...m.placement,bases:m.placement.bases?.map(b=>b.id===id?{...b,hp:0}:b),farms:m.placement.farms?.map(b=>b.id===id?{...b,hp:0}:b),defenses:m.placement.defenses?.map(b=>b.id===id?{...b,hp:0}:b)}};
+ else next={...m,placement:{...m.placement,producers:m.placement.producers?.map(b=>b.id===id?{...b,hp:0}:b),bases:m.placement.bases?.map(b=>b.id===id?{...b,hp:0}:b),farms:m.placement.farms?.map(b=>b.id===id?{...b,hp:0}:b),defenses:m.placement.defenses?.map(b=>b.id===id?{...b,hp:0}:b)}};
  return updateMatch(next,0);
 }

@@ -32,7 +32,7 @@ export interface NavyState {harbor:Harbor|null;ships:Ship[];production:Productio
 export const createNavy=():NavyState=>({harbor:null,ships:[],production:{remainingSeconds:null,nextUnitNumber:1}});
 export const shipRecipe=(m:MatchState,role:'warship'|'transport'|'submarine'='warship')=>factionForTeam(m,'player').naval.units[role];
 export function matchPopulation(m:MatchState):Population {
- const pop=populationState({...m.gathering,...(m.combat.baseHP<=0?{primaryDropoff:false}:{})},m.placement,[m.production,m.soldierProduction,...(m.placement.academy?.production?[m.placement.academy.production]:[]),...(m.placement.siegeWorks?[m.placement.siegeWorks.production]:[]),...(m.placement.aviary?[m.placement.aviary.production]:[]),...(m.placement.stable?[m.placement.stable.production]:[]),...(m.placement.bases??[]).map(b=>b.production),...(m.navy?[m.navy.production]:[])]);
+ const pop=populationState({...m.gathering,...(m.combat.baseHP<=0?{primaryDropoff:false}:{})},m.placement,[m.production,m.soldierProduction,...(m.placement.producers??[]).map(p=>p.production),...(m.placement.academy?.production?[m.placement.academy.production]:[]),...(m.placement.siegeWorks?[m.placement.siegeWorks.production]:[]),...(m.placement.aviary?[m.placement.aviary.production]:[]),...(m.placement.stable?[m.placement.stable.production]:[]),...(m.placement.bases??[]).map(b=>b.production),...(m.navy?[m.navy.production]:[])]);
  return {...pop,used:pop.used+(m.navy?.ships??[]).reduce((n,s)=>n+shipRecipe(m,s.role).supply,0)+populationState({...m.gathering,units:passengerUnits(m.navy)},m.placement,[]).used};
 }
 export function harborFootprint(point:Position):Footprint {return buildingFootprint(point,'harbor');}
@@ -43,7 +43,6 @@ export function harborSpawn(m:MatchState,footprint:Footprint,occupancy=true,role
 }
 function checkHarborPlacement(m:MatchState,point:Position,preview=false):string|null {
  const locked=campaignActionReason(m,'build-harbor');if(locked)return locked;
- if(m.navy?.harbor)return uiText.harborExists;
  const rect=harborFootprint(point);if(m.fog&&!placementVisible(m.fog,rect))return uiText.theSiteMustBeVisible;if(!coastalFootprint(m.map,rect))return uiText.aHarborNeedsAFreeCoastWithLand;
  if(!canAfford(m.gathering,factionForTeam(m,'player').naval.harbor.cost))return uiText.notEnoughWoodOrGold;
  if(m.gathering.units.some(u=>!isAir(u)&&overlaps(rect,unitBody(u.position,u.kind==='worker'?unitStats.size:combatUnitStats(u).size)))||navalOccupants(m).some(b=>overlaps(rect,b))||(m.navy?.ships??[]).some(s=>overlaps(rect,unitBody(s.position,factionForTeam(m,'player').naval.units.warship.size))))return uiText.overlapsAUnit;
@@ -64,6 +63,9 @@ function checkHarborPlacement(m:MatchState,point:Position,preview=false):string|
 export const harborPlacementError=(m:MatchState,p:Position)=>checkHarborPlacement(m,p);
 export const harborPreviewError=(m:MatchState,p:Position)=>checkHarborPlacement(m,p,true);
 export function placeHarbor(m:MatchState,point:Position):MatchState {
+ if(m.navy?.harbor){const number=m.placement.nextProducerNumber??1,id=`producer-${number}` as const;
+ const result=placeHarbor({...m,navy:{...m.navy,harbor:null}},point);if(result.gathering===m.gathering||!result.navy?.harbor)return m;
+ const h=result.navy.harbor;return {...result,navy:m.navy,placement:{...result.placement,nextProducerNumber:number+1,producers:[...(m.placement.producers??[]),{...h,id,kind:'harbor',production:{remainingSeconds:null,queue:[],nextUnitNumber:m.navy.production.nextUnitNumber}}]},gathering:{...result.gathering,units:result.gathering.units.map(u=>u.id===h.construction.builderId&&u.kind==='worker'&&u.order.kind==='build'&&u.order.buildingId==='harbor'?{...u,order:{kind:'build',buildingId:id}}:u)}};}
  if(m.outcome!=='playing'||m.paused||!!m.multiplePlayers&&!hasMainBase(m)||!m.placement.active||m.placement.kind!=='harbor'||harborPlacementError(m,point))return m;
  const builder=m.gathering.units.filter(u=>u.kind==='worker'&&u.selected).sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}))[0],footprint=harborFootprint(point);
  return {...m,map:replaceObstacles(m.map,[...m.map.obstacles,footprint]),placement:{...m.placement,active:false,kind:undefined},navy:{...(m.navy??createNavy()),harbor:{owner:'player',hp:factionForTeam(m,'player').naval.harbor.hp,footprint,construction:{remainingSeconds:factionForTeam(m,'player').naval.harbor.constructionSeconds,builderId:builder.id}}},gathering:{...payCost(m.gathering,factionForTeam(m,'player').naval.harbor.cost),units:m.gathering.units.map(u=>u.id===builder.id&&u.kind==='worker'?{...u,commandMode:undefined,orderQueue:undefined,navigation:undefined,order:{kind:'build' as const,buildingId:'harbor' as const}}:u)}};

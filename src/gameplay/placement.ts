@@ -34,7 +34,11 @@ export interface PlacementContext {
 export interface ConstructionJob {remainingSeconds:number;builderId:string|null}
 export interface Farm {owner?:'player';hp?:number;id:`farm-${number}`;footprint:Footprint;construction:ConstructionJob}
 export interface ExtraBase {id:`base-${number}`;owner:'player';hp:number;footprint:Footprint;construction:ConstructionJob;production:import('./production').ProductionState}
+export type ProducerKind='barracks'|'stable'|'academy'|'aviary'|'siegeWorks'|'harbor';
+export type ProducerId=`producer-${number}`;
+export interface ExtraProducer {id:ProducerId;kind:ProducerKind;owner:'player';hp:number;footprint:Footprint;construction:ConstructionJob;production:import('./production').ProductionState}
 export interface PlacementState {
+  producers?:ExtraProducer[];nextProducerNumber?:number;
   bases?:ExtraBase[];nextBaseNumber?:number;
   defenses?:import('./towers').Defense[];nextDefenseNumber?:number;
   kind?:'siegeWorks'|'aviary'|'stable'|'academy'|'base'|'harbor'|'barracks'|'farm'|'forge'|'tower'|'wall'|'gate';
@@ -75,7 +79,7 @@ export function placementObstacles(state: GatheringState): Footprint[] {
 }
 
 export function beginPlacement(state: PlacementState,kind:'siegeWorks'|'aviary'|'stable'|'academy'|'base'|'harbor'|'barracks'|'farm'|'forge'|'tower'|'wall'|'gate'='barracks',world:{width:number;height:number}=worldConfig): PlacementState {
-  return kind==='siegeWorks'&&state.siegeWorks || kind==='aviary'&&state.aviary || kind==='stable'&&state.stable || kind==='academy'&&state.academy || kind==='base'&&(state.bases?.length??0)>=extraBaseConfig.maxCount || kind==='forge'&&state.forge || kind==='barracks'&&state.barracks || kind==='farm'&&(state.farms?.length??0)>=farmLimit(world)
+  return kind==='base'&&(state.bases?.length??0)>=extraBaseConfig.maxCount || kind==='forge'&&state.forge || kind==='farm'&&(state.farms?.length??0)>=farmLimit(world)
     ? state : { ...state, active:true,...(kind!=='barracks'?{kind}: {kind:undefined}) };
 }
 
@@ -98,12 +102,7 @@ function checkPlacement(state: PlacementState, point: Position, wood: number, ob
   if(context?.technology){const locked=buildingAvailability(productionFaction(context.gathering),kind==='tower'||kind==='wall'||kind==='gate'?'base':kind,context.technology);if(locked)return locked;}
   if(kind==='base'&&(state.bases?.length??0)>=extraBaseConfig.maxCount)return 'Maximum three main buildings';
   if(kind==='harbor')return uiText.harborUsesCoastRules;
-  if(kind==='siegeWorks'&&state.siegeWorks)return 'Siege producer already built';
-  if(kind==='aviary'&&state.aviary)return 'Flight building already built';
-  if(kind==='stable'&&state.stable)return 'Stable already built';
-  if(kind==='academy'&&state.academy)return 'Academy already built';
   if(kind==='forge'&&state.forge)return uiText.forgeExists;
-  if (kind==='barracks'&&state.barracks) return uiText.barracksExists;
   if (kind==='farm'&&(state.farms?.length??0)>=farmLimit(context?.map)) return uiText.farmLimit;
   const rect = buildingFootprint(point,kind);
   if (rect.x < 0 || rect.y < 0 || rect.x + rect.width > (context?.map.width??worldConfig.width) || rect.y + rect.height > (context?.map.height??worldConfig.height)) {
@@ -137,6 +136,7 @@ function checkPlacement(state: PlacementState, point: Position, wood: number, ob
         && !canReachFootprint(after,builder.position,site.footprint,barracksConfig.constructionRange))return uiText.blocksTheBuilderRoute;
     }
     const exit=(map:WorldMap,foot:Footprint,kind:'base'|'barracks')=>spawnCandidates(map,foot,kind).some(p=>hasSpawnExit(map,p));
+    if((state.producers??[]).some(b=>b.kind!=='harbor'&&exit(context.map,b.footprint,'barracks')&&!exit(after,b.footprint,'barracks')))return uiText.blocksAProductionExit;
     if(state.siegeWorks&&exit(context.map,state.siegeWorks.footprint,'barracks')&&!exit(after,state.siegeWorks.footprint,'barracks')||kind==='siegeWorks'&&!exit(after,rect,'barracks'))return uiText.blocksAProductionExit;
     if(state.stable&&exit(context.map,state.stable.footprint,'barracks')&&!exit(after,state.stable.footprint,'barracks')||kind==='stable'&&!exit(after,rect,'barracks'))return uiText.blocksAProductionExit;
     if((state.bases??[]).some(b=>exit(context.map,b.footprint,'base')&&!exit(after,b.footprint,'base'))||kind==='base'&&!exit(after,rect,'base'))return uiText.blocksAProductionExit;
@@ -164,6 +164,17 @@ export function placementPreviewError(state:PlacementState,point:Position,wood:n
 
 export function placeBuilding(state: PlacementState, point: Position, wood: number, obstacles: Footprint[], context?: PlacementContext):
   {placement:PlacementState;wood:number;map?:WorldMap;gathering?:GatheringState} {
+  const producerKind=state.kind??'barracks';
+  if(!context&&['barracks','stable','academy','aviary','siegeWorks'].includes(producerKind)&&(producerKind==='barracks'?state.barracks:state[producerKind as 'stable']))return {placement:state,wood};
+  if(state.active&&context&&['barracks','stable','academy','aviary','siegeWorks'].includes(producerKind)&&(producerKind==='barracks'?state.barracks:state[producerKind as 'stable'])){
+    const kind=producerKind as Exclude<ProducerKind,'harbor'>,number=state.nextProducerNumber??1,id=`producer-${number}` as const;
+    const temporary=kind==='barracks'?{...state,barracks:null,construction:undefined,barracksHP:undefined}:{...state,[kind]:undefined};
+    const result=placeBuilding(temporary,point,wood,obstacles,context);
+    if(!result.gathering||result.wood===wood)return {...result,placement:state};
+    const built=kind==='barracks'?{hp:result.placement.barracksHP!,footprint:result.placement.barracks!,construction:result.placement.construction!}:result.placement[kind]!;
+    const site:ExtraProducer={...built,id,kind,owner:'player',production:{remainingSeconds:null,queue:[],nextUnitNumber:Math.max(4,...result.gathering.units.map(u=>Number(u.id.slice(5))+1))}};
+    return {...result,placement:{...state,active:false,kind:undefined,nextProducerNumber:number+1,producers:[...(state.producers??[]),site]},gathering:{...result.gathering,units:result.gathering.units.map(u=>u.kind==='worker'&&u.order.kind==='build'&&u.order.buildingId===kind&&u.id===site.construction.builderId?{...u,order:{kind:'build',buildingId:id}}:u)}};
+  }
   if (state.kind==='harbor'||state.kind==='tower'||state.kind==='wall'||state.kind==='gate'||!state.active || placementError(state, point, wood, obstacles, context)) return { placement: state, wood, ...(context?{map:context.map}:{}) };
   const kind=state.kind??'barracks';
   const rect=buildingFootprint(point,kind);

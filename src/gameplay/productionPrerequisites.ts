@@ -20,6 +20,7 @@ export function technologyFor(m:import('./match').MatchState,team:'player'|'enem
   return {baseLevel:m.enemyProduction?.baseDevelopment?.level??1,academyAllowed:!academyCampaignReason(m),buildings,research:{attack:m.enemyPolicy?.research.attack??0,defense:m.enemyPolicy?.research.defense??0}};
  }
  if((m.combat.baseHP>0||(m.placement.bases??[]).some(b=>b.hp>0&&b.construction.remainingSeconds===0)))buildings.push('base');
+ for(const p of m.placement.producers??[])if(p.kind!=='harbor'&&p.hp>0&&p.construction.remainingSeconds===0&&!buildings.includes(p.kind))buildings.push(p.kind);
  if(m.placement.barracks&&(m.placement.barracksHP??1)>0&&(m.placement.construction?.remainingSeconds??0)===0)buildings.push('barracks');
  if(m.placement.siegeWorks&&m.placement.siegeWorks.hp>0&&m.placement.siegeWorks.construction.remainingSeconds===0)buildings.push('siegeWorks');
  if(m.placement.aviary&&m.placement.aviary.hp>0&&m.placement.aviary.construction.remainingSeconds===0)buildings.push('aviary');

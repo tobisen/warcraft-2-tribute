@@ -10,7 +10,7 @@ export type ResearchKind=RoleResearchKind|'attack'|'defense'|'workerTools';
 export interface ResearchState {queue?:ResearchKind[];cavalryArmor?:number;healerTraining?:number;scoutOptics?:number;submarineDesign?:number;attack:number;defense:number;workerTools?:number;job:{kind:ResearchKind;remainingSeconds:number}|null}
 export const createResearch=():ResearchState=>({attack:0,defense:0,job:null});
 export function forgeReady(p:PlacementState){return !!p.forge&&(p.forge.hp??0)>0&&p.forge.construction.remainingSeconds===0;}
-export function academyReady(p:PlacementState){return !!p.academy&&p.academy.hp>0&&p.academy.construction.remainingSeconds===0;}
+export function academyReady(p:PlacementState){return !!p.academy&&p.academy.hp>0&&p.academy.construction.remainingSeconds===0||!!p.producers?.some(b=>b.kind==='academy'&&b.hp>0&&b.construction.remainingSeconds===0);}
 export const researchLevel=(r:ResearchState,kind:ResearchKind)=>r[kind]??0;
 export function researchRecipe(f:import('../config/factions').FactionDefinition,kind:ResearchKind,level:number){
  if(isRoleResearch(kind))return roleResearchConfig[kind];
@@ -19,7 +19,7 @@ export function researchRecipe(f:import('../config/factions').FactionDefinition,
 }
 export function canResearch(g:GatheringState,r:ResearchState,p:PlacementState,kind:ResearchKind,playing=true,mainReady=true){
  const level=researchLevel(r,kind),f=productionFaction(g);
- const available=isRoleResearch(kind)?!contentReason(g.campaignContent,'research',kind)&&roleResearchConfig[kind].buildings.every(b=>{const site=p[b];return !!site&&site.hp>0&&site.construction.remainingSeconds===0;}):kind==='workerTools'?mainReady:!contentReason(g.campaignContent,'research',kind)&&researchAvailability(f,kind,{buildings:[...(forgeReady(p)?['forge' as const]:[]),...(academyReady(p)?['academy' as const]:[])],research:r})===null;
+ const available=isRoleResearch(kind)?!contentReason(g.campaignContent,'research',kind)&&roleResearchConfig[kind].buildings.every(b=>{const site=p[b];return !!site&&site.hp>0&&site.construction.remainingSeconds===0||!!p.producers?.some(s=>s.kind===b&&s.hp>0&&s.construction.remainingSeconds===0);}):kind==='workerTools'?mainReady:!contentReason(g.campaignContent,'research',kind)&&researchAvailability(f,kind,{buildings:[...(forgeReady(p)?['forge' as const]:[]),...(academyReady(p)?['academy' as const]:[])],research:r})===null;
  return playing&&available&&r.job?.kind!==kind&&!(r.queue??[]).includes(kind)&&level<(isRoleResearch(kind)?1:kind==='workerTools'?3:f.upgrades[kind].maxLevel)&&canAfford(g,researchRecipe(f,kind,level).cost);
 }
 export function startResearch(g:GatheringState,r:ResearchState,p:PlacementState,kind:ResearchKind,playing=true,mainReady=true){
@@ -28,7 +28,7 @@ export function startResearch(g:GatheringState,r:ResearchState,p:PlacementState,
 }
 export function updateResearch(r:ResearchState,p:PlacementState,delta:number,playing=true,faction:FactionId='crown',mainReady=true):ResearchState {
  if(!playing)return r;
- const valid=(kind:ResearchKind)=>isRoleResearch(kind)?roleResearchConfig[kind].buildings.every(b=>{const site=p[b];return !!site&&site.hp>0&&site.construction.remainingSeconds===0;}):kind==='workerTools'?mainReady:forgeReady(p)&&(researchLevel(r,kind)<1||academyReady(p));
+ const valid=(kind:ResearchKind)=>isRoleResearch(kind)?roleResearchConfig[kind].buildings.every(b=>{const site=p[b];return !!site&&site.hp>0&&site.construction.remainingSeconds===0||!!p.producers?.some(s=>s.kind===b&&s.hp>0&&s.construction.remainingSeconds===0);}):kind==='workerTools'?mainReady:forgeReady(p)&&(researchLevel(r,kind)<1||academyReady(p));
  let queue=(r.queue??[]).filter(valid),job=r.job;
  if(job&&!valid(job.kind))job=null;
  let next:ResearchState={...r,job,...(r.queue?{queue}: {})};

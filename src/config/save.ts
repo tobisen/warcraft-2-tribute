@@ -1,2 +1,2 @@
 // Keep the existing local slot so version-one saves can be found and migrated.
-export const saveConfig={key:'warcraft-2-tribute:save:v1',schemaVersion:2,configVersion:'tribute-config-70',maxBytes:4_000_000,maxUnits:128,maxNodes:200_000};
+export const saveConfig={key:'warcraft-2-tribute:save:v1',schemaVersion:2,configVersion:'tribute-config-71',maxBytes:4_000_000,maxUnits:128,maxNodes:200_000};

@@ -15,6 +15,7 @@ export function playerTargets(g:GatheringState,c:CombatState,p?:PlacementState,n
     footprint:unitBody(u.position,u.kind==='soldier'?combatUnitStats(u).size:unitStats.size)}]:[]);
   for(const ship of navy?.ships??[])if(ship.hp>0)targets.push({domain:'sea',id:ship.id,kind:'ship',navalRole:ship.role??'warship',owner:'player',hp:ship.hp,footprint:unitBody(ship.position,navyConfig.ship.size)});
   if(navy?.harbor&&navy.harbor.hp>0)targets.push({id:'harbor',kind:'harbor',owner:'player',hp:navy.harbor.hp,footprint:navy.harbor.footprint});
+  for(const b of p?.producers??[])if(b.hp>0)targets.push({id:b.id,kind:b.kind,owner:'player',hp:b.hp,footprint:b.footprint});
   for(const b of p?.bases??[])if(b.hp>0)targets.push({id:b.id,kind:'base',owner:'player',hp:b.hp,footprint:b.footprint});
   if(c.baseHP>0)targets.push({id:'base',kind:'base',owner:'player',hp:c.baseHP,footprint:baseFootprint(g.base)});
   if(p?.barracks&&(p.barracksHP??combatConfig.barracksHP)>0)targets.push({id:'barracks',kind:'barracks',owner:'player',hp:p.barracksHP??combatConfig.barracksHP,footprint:p.barracks});

@@ -1,0 +1,9 @@
+[
+  {
+    "physicalSecondBuild": true,
+    "physicalSeparateQueues": true,
+    "parallelProduction": true,
+    "save": true,
+    "errors": []
+  }
+]

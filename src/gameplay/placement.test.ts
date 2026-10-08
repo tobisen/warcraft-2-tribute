@@ -51,7 +51,7 @@ describe('barracks placement', () => {
     expect(placed.wood).toBe(60);
     expect(placed.placement).toEqual({active:false,barracks:{x:96,y:96,width:64,height:64},barracksOwner:'player',barracksHP:120});
     expect(placeBarracks(placed.placement, {x:200,y:200}, placed.wood, obstacles)).toEqual(placed);
-    expect(beginPlacement(placed.placement)).toEqual(placed.placement);
+    expect(beginPlacement(placed.placement).active).toBe(true);
     expect(placeBarracks({...placed.placement,active:true}, {x:200,y:200}, 100, obstacles).wood).toBe(100);
     expect(active.barracks).toBeNull();
   });

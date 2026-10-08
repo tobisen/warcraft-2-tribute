@@ -1,3 +1,20 @@
+## 2026-10-08 — RTS-236 produktionsinstanser
+
+Extra producer-ID:n behåller första kanoniska byggnaden och återanvänder placement,
+construction/production, navy, kostnader/tech/campaign. Varje instans har egen kö,
+shared population och globala unit/shipcounter. Selection ger läsbart ordinalnamn;
+train/cancel/rally/repair/dismiss/HP/fog/rendering fungerar på rätt instans.
+AI skirmish bygger andra landproducerare vid överskott och betalar sina egna köer.
+Särskild finite naval-assaultprofil i enemyNavalConfig behåller en författad hamn;
+nya sjöstrategier ingår inte. Save71 migrerar70 och validerar instans-/kö-/kustdata.
+Riktade80/7 +47/4 PASS (placement/queues/all producer roles/ship parallelism,
+construction/AI/Save/teams/campaign). Unit524/91 PASS18.97s, strict build739ms,
+diff PASS. Första nya hamnfixture saknade visibility/explored; rättat. Fann och
+rättade stale completiontid som annars blockerade efterföljande produktion.
+Chrome800 Native faktiska andra-bygg-/trainklick, separata köer/parallelspawn,
+Save-fixture PASS0pageerrors, visuellt granskade artifacts/rts-236. Inga breda
+kampanjsimuleringar eller release. Review: user CSS/units.mjs/docs/ exkluderas.
+
 ## 2026-10-08 — RTS-235 synliga uppgraderingar
 
 Inventering: faktisk byggnadsutveckling är huvudbyggnad I–III (gemensam nivå
