@@ -5047,3 +5047,25 @@ unitklassificerade filer; berörda integrationer och bred etappregression körda
 Granskning av cache-/state-livscykel, routebool, regler och scope utan fynd.
 Befintligt RTS-197-performancescript återställdes och ny harness fick eget
 namn; CSS/units.mjs/docs/:memory:.ses bevarade. Ingen ny release/roadmap.
+
+
+## 2026-10-08 — Delete egen byggnad
+
+Utökad befintlig dismissProposal/action/hotkey/dialog med own BuildingSelection.
+Fångat ID revalideras; HP0/updateMatch0 använder normal destruction, inga
+refunds/nya Savefält. Dialogtitel/action/confirmtext växlar till demolition;
+mainbase defeatvarning inkluderar kampanjoriginalbas. Rivet val rensas direkt;
+units/dismissledger och enemy/allierad-block består. Matrix över12site-/
+byggnadstyper, builders, paid queue, dependent research, immutability/bank/
+units/no-clock, invalid/paused/ended/enemy, lastbase defeat och paidwallSave.
+
+Riktade32/4 PASS1,21s; strict build485ms PASS med befintlig chunkvarning.
+Chrome800/1280 fysisk selection/Delete/cancel/confirm/SaveLoad/basevarning/
+enemyblock/unitDeleteEscape PASS0pageerrors;800-dialog granskad. Första
+fixtures saknade ProductionJobfält/string-ID och hade konstlad naval counter;
+rättade, inget code-checkPASS hävdas för de misslyckade körningarna. Browser
+fångade stale selection efter cleanup; confirm rensar nu rivet val direkt,
+ny browserkontroll PASS. Final unit517/90 PASS18,83s; full `npm test`1810/207 PASS475,57s
+på slutlig kod. Syntax/diff/dokumentreferenser PASS.
+Review utan kvarstående fynd;
+CSS/units.mjs/docs/:memory:.ses bevaras, ingen ny roadmap/release.

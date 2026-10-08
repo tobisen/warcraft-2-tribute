@@ -1,3 +1,28 @@
+## 2026-10-08 — Delete egen byggnad — Done
+
+Välj egen byggnad och tryck Delete eller Demolish Building-knappen.
+Befintlig confirmation dialog visar byggnadstext/ingen refund; Cancel/Escape
+lämnar den kvar. Huvudbyggnad som kan ge defeat varnas. Alla egna byggnader,
+sites, expansioner, farms, wall/gate/tower och harbor ingår; enemy/allierad-
+inspektion kan inte rivas. Bekräftat ID revalideras. HP0 + updateMatch0 ger
+befintlig destruction/supply/gate/nav/job/queue/research/outcome-cleanup.
+Rivet val rensas direkt. Unit-delete/dialogen består; ingen Saveversion.
+
+Riktade `npm test -- src/gameplay/dismiss.test.ts src/gameplay/destruction.test.ts
+src/presentation/actionPanel.test.ts src/presentation/hotkeys.test.ts`:32/4
+PASS1,21s. strict `npm run build` PASS485ms, befintlig chunkvarning kvar.
+Final `npm run test:unit`:517/90 PASS18,83s. `npm test`:1810/207 PASS475,57s på slutlig kod.
+Syntax/diff/dokumentreferenser PASS. Ny matrix provar alla
+byggnadstyper, no-refund/immutable state/builders/queue/research; egen betald
+mur roundtripSave och invalid/enemy/paused/ended IDs + defeatvarning ingår.
+Chrome800/1280 fysisk wallselection/Delete/cancel/actionclick/confirm,
+avmarkering/bank/unitantal/obstacle, SaveLoad, basevarningcancel, enemyblock
+samt unitDelete/Escape PASS0pageerrors. [Belägg/bilder](artifacts/demolition/browser.json)
+via `scripts/check-demolition.mjs`;800-dialog visuellt granskad.
+Review av target/revalidation/cleanup/input/Save utan kvarstående fynd.
+CSS/units.mjs/docs/:memory:.ses bevaras. Ingen ny roadmap/release/CI/Pages
+eller mänsklig fullmatch-/ljudverifiering påstås. Stanna efter uppdraget.
+
 ## 2026-10-08 — Snabb fortificationplacering — Done
 
 Nytt uttryckligt uppdrag efter murdrag: wall/gate/tower tar2–3sek vid klick.

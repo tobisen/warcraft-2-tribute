@@ -1,5 +1,19 @@
 # Arkitektur
 
+## Rivning av egna byggnader
+
+Befintlig Delete/action/dialog använder dismissProposal med transient
+BuildingSelection. Proposal fångar byggnads-ID; confirmation revaliderar
+levande egen target, paus/outcome/eliminering. dismissBuilding sätter HP0
+och updateMatch(...,0) återanvänder destruction för hinder, gate-blocks,
+builder-/repairorder, supply, köer, dependent research och defeat, utan
+förfluten tid/refund. Kampanjens originalbas och sista färdiga huvudbyggnaden
+gör proposalens varning aktiv. Unit-dismissal och dess removed-ledger består;
+byggnadsrivning räknas i befintlig destroyed-statistik, utan unit-kill-credit.
+Scenen rensar rivet val omedelbart och byter dialog/actiontext efter target.
+Ingen ny Saveversion eller bestående demolition-state.
+
+
 ## Utforskade landmärken och aktuell gameplay-sikt
 
 `entityPresented` visar bossar och byggnader i explored terräng; vanliga

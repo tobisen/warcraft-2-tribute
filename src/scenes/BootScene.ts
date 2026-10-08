@@ -45,7 +45,7 @@ import {wildlifeHabitats,wildlifeDetails,type Habitat} from '../presentation/wil
 import {combatAudioSnapshot,combatAudioCues,type CombatAudioSnapshot} from '../presentation/combatAudio';
 import {inspectBuildingAt,inspectedBuilding,savedBuildingSelection} from '../gameplay/buildingInspection';
 import {highscoreStore,renderHighscorePanels} from '../presentation/highscores';
-import {dismissProposal,dismissUnits,type DismissProposal} from '../gameplay/dismiss';
+import {dismissProposal,dismissUnits,dismissBuilding,type DismissProposal} from '../gameplay/dismiss';
 import {dismissMessage} from '../presentation/dismiss';
 import {renderOperation,operationMarkers} from '../presentation/operations';
 import type {CaptureState} from '../gameplay/operations';
@@ -609,8 +609,8 @@ export class BootScene extends Phaser.Scene {
     for(const [id,action] of [['start-match','start'],['pause-match','pause'],['resume-match','resume'],['new-match','new-match']] as const){const button=document.getElementById(id)!;const handler=()=>this.sessionAction(action);button.addEventListener('click',handler);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>button.removeEventListener('click',handler));}
     const dismissButton=document.getElementById('dismiss-units') as HTMLButtonElement,dialog=document.getElementById('dismiss-dialog') as HTMLDialogElement,cancelDismiss=document.getElementById('dismiss-cancel')!,confirmDismiss=document.getElementById('dismiss-confirm')!;
     const closeDismiss=()=>{this.pendingDismiss=undefined;dialog.close();this.skipGameplayFrame=true;this.syncVisuals();this.game.canvas.focus();};
-    const requestDismiss=()=>{const proposal=dismissProposal(this.currentMatch());if(!proposal||this.pendingDismiss)return;this.pendingDismiss=proposal;this.drag=undefined;this.cameraDrag=undefined;this.dragBox.setVisible(false);document.getElementById('dismiss-message')!.textContent=dismissMessage(proposal);dialog.showModal();this.syncVisuals();};
-    const confirm=()=>{const proposal=this.pendingDismiss;if(!proposal)return;closeDismiss();this.applyMatch(dismissUnits(this.currentMatch(),proposal.ids));if(this.outcome!=='playing')this.session=sessionTransition(this.session,'end');this.syncVisuals();};
+    const requestDismiss=()=>{const proposal=dismissProposal(this.currentMatch(),this.selectedBuilding);if(!proposal||this.pendingDismiss)return;this.pendingDismiss=proposal;this.drag=undefined;this.cameraDrag=undefined;this.dragBox.setVisible(false);document.getElementById('dismiss-heading')!.textContent=proposal.building?'Demolish Building':'Dismiss Unit';confirmDismiss.textContent=proposal.building?'Confirm Demolition':'Confirm Dismiss';document.getElementById('dismiss-message')!.textContent=dismissMessage(proposal);dialog.showModal();this.syncVisuals();};
+    const confirm=()=>{const proposal=this.pendingDismiss;if(!proposal)return;closeDismiss();const before=this.currentMatch(),next=proposal.building?dismissBuilding(before,proposal.building):dismissUnits(before,proposal.ids);this.applyMatch(next);if(proposal.building&&next!==before)this.selectedBuilding=null;if(this.outcome!=='playing')this.session=sessionTransition(this.session,'end');this.syncVisuals();};
     const cancelDialog=(event:Event)=>{event.preventDefault();closeDismiss();};
     dismissButton.addEventListener('click',requestDismiss);cancelDismiss.addEventListener('click',closeDismiss);confirmDismiss.addEventListener('click',confirm);dialog.addEventListener('cancel',cancelDialog);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{dismissButton.removeEventListener('click',requestDismiss);cancelDismiss.removeEventListener('click',closeDismiss);confirmDismiss.removeEventListener('click',confirm);dialog.removeEventListener('cancel',cancelDialog);this.pendingDismiss=undefined;dialog.close();});
@@ -1023,7 +1023,8 @@ export class BootScene extends Phaser.Scene {
     this.attackMoveButton.setAttribute('aria-pressed',String(this.attackMoveMode));
     setActionLabel(this.attackMoveButton,this.attackMoveMode?uiText.attackMoveClickADestinationEscapeCancels:'Attack-move');
     this.stopButton.disabled = !this.gameplayActive() || !this.allSelectable().some(u=>u.selected);
-    (document.getElementById('dismiss-units') as HTMLButtonElement).disabled=!dismissProposal(this.currentMatch());
+    setActionLabel(document.getElementById('dismiss-units') as HTMLButtonElement,this.selectedBuilding?'Demolish Building':'Dismiss Unit');
+    (document.getElementById('dismiss-units') as HTMLButtonElement).disabled=!dismissProposal(this.currentMatch(),this.selectedBuilding);
     this.hpBars?.clear();
     const routePoints=this.scoutRouteMode?this.scoutRoutePoints:this.gathering.units.flatMap(u=>u.kind==='soldier'&&u.selected&&u.scouting?.mode==='route'?u.scouting.waypoints:[]);for(let i=0;i<routePoints.length;i++){const a=routePoints[i]!,b=routePoints[(i+1)%routePoints.length]!;this.hpBars?.lineStyle(2,0x86dbe6,.8).strokeCircle(a.x,a.y,5);if(routePoints.length>1)this.hpBars?.lineBetween(a.x,a.y,b.x,b.y);}
     const allEnemies=[...this.combat.enemies,...bossEnemies(this.currentMatch(),true)],visibleEnemies=allEnemies.filter(e=>entityVisible(this.fog,'player',e)),presentedEnemies=allEnemies.filter(e=>entityPresented(this.fog,'player',e));

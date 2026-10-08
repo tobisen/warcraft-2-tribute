@@ -45,6 +45,16 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
+### UI 2026-10-08 — Delete egen byggnad — Done
+
+Välj egen byggnad och använd befintlig Delete/confirmation/actionknapp.
+Återanvänd destruction för hinder, köer, jobb, research och defeat; ingen
+refund och inga enemy-/allierade rivningar. Bevara grafik/caps/Saveformat.
+Riktade32/4, unit517/90, strict build och full1810/207 PASS; Chrome800/1280
+Delete/cancel/confirm/SaveLoad/unitregression PASS0pageerrors. Docs/review/
+diff PASS. Se HANDOFF och artifacts/demolition; ingen ny roadmap/release.
+
+
 ### Prestanda 2026-10-08 — snabb fortificationplacering — Done
 
 Nytt användaruppdrag: wall/gate/tower-klick tar2–3s; mät och effektivisera

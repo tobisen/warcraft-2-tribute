@@ -38,7 +38,7 @@ export const hotkeys=[
  {key:'K',button:'train-ship',label:'Train a warship at the selected completed harbor. Requires resources, supply and a free queue slot.'},
  {key:'L',button:'unload-transport',label:'Unload at the nearest visible reachable coast within 256px. All passengers must fit; choose land manually if no coast is found.'},
  {key:'V',button:'train-specialist',label:'Train the faction specialist at selected barracks. Requires its forge/research prerequisites, resources, supply and queue capacity.'},
- {key:'DELETE',button:'dismiss-units',label:'Dismiss selected own units. Confirmation includes transport passengers; no refund or kill credit.'},
+ {key:'DELETE',button:'dismiss-units',label:'Dismiss selected own units or demolish selected own building after confirmation. Transport passengers included; no refund.'},
  {key:'E',button:'unit-ability',label:uiText.factionAbilitySelectedCombatUnitsThatAreReady},
  {key:'S',button:'stop-units',label:uiText.stopSelectedUnits},
  {key:'A',button:'attack-move',label:uiText.attackMoveSelectACombatUnitThenClick},

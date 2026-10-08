@@ -1,0 +1,27 @@
+{
+  "browser": "155.0.8059.39",
+  "results": [
+    {
+      "width": 800,
+      "removed": {
+        "count": 0,
+        "wood": 190,
+        "units": 3,
+        "selected": null,
+        "obstacle": false
+      },
+      "errors": []
+    },
+    {
+      "width": 1280,
+      "removed": {
+        "count": 0,
+        "wood": 190,
+        "units": 3,
+        "selected": null,
+        "obstacle": false
+      },
+      "errors": []
+    }
+  ]
+}

@@ -1,6 +1,9 @@
+import {placeTower} from './towers';
+import {replaceObstacles} from './map';
+import {playerTargets} from './targets';
 import {expect,it} from 'vitest';
 import {createMatch,updateMatch,type MatchState} from './match';
-import {dismissProposal,dismissUnits} from './dismiss';
+import {dismissProposal,dismissUnits,dismissBuilding} from './dismiss';
 import {matchPopulation,createNavy} from './navy';
 import {matchStats} from './matchStats';
 import {decodeSave,encodeSave} from './save';
@@ -35,3 +38,31 @@ it('transport confirmation includes embarked cargo; removal frees all supply, lo
 });
 it('dismissing the named courier triggers defeat while remaining a removal, not a kill',()=>{const m=createMatch('mission-escort','normal',{player:'clans',enemy:'dwarves'}),next=dismissUnits(m,['unit-4']);expect(next.outcome).toBe('defeat');expect(matchStats(next).player).toMatchObject({removed:1,lost:0});expect(matchStats(next).enemy.killed).toBe(0);expect(updateMatch(next,100)).toBe(next);expect(decodeSave(encodeSave(next,view)).ok).toBe(true);});
 it('dismissal of the last banner holder resets capture immediately, without advancing time',()=>{let m:MatchState=createMatch('mission-capture');m.combat.enemies=[];m.gathering.units.push({id:'unit-4',kind:'soldier',owner:'player',hp:60,selected:true,cargo:0,position:{x:1600,y:384},target:{x:1600,y:384},order:{kind:'idle'}});m.production.nextUnitNumber=m.soldierProduction.nextUnitNumber=5;m=updateMatch(m,7);expect(m.capture?.holdSeconds).toBe(7);const next=dismissUnits(m,['unit-4']);expect(next.capture?.holdSeconds).toBe(0);expect(next.waves.elapsedSeconds).toBe(7);expect(next.outcome).toBe('playing');});
+
+it('demolishes every own building/site through normal cleanup without refund or deleting units',()=>{
+ for(const id of ['barracks','forge','academy','stable','aviary','siegeWorks','farm-1','base-1','wall-1','gate-1','tower-1','harbor'] as const){
+  const m=createMatch('skirmish'),footprint={x:640,y:448,width:64,height:64},construction={remainingSeconds:3,builderId:m.gathering.units[0].id},production={remainingSeconds:4,nextUnitNumber:4,queue:[{id:'job-1',kind:'worker' as const,cost:{wood:50,gold:0},durationSeconds:4,remainingSeconds:4}]};
+  const site={id,owner:'player' as const,hp:100,footprint,construction,production};
+  if(id==='barracks') {m.placement={...m.placement,barracks:footprint,barracksHP:100,construction};m.soldierProduction=production;}
+  else if(id==='harbor')m.navy={...createNavy(),harbor:site,production};
+  else if(id==='farm-1')m.placement.farms=[{...site,id:'farm-1'}];
+  else if(id==='base-1')m.placement.bases=[{...site,id:'base-1'}];
+  else if(id==='wall-1'||id==='gate-1'||id==='tower-1')m.placement.defenses=[{...site,id,kind:id==='wall-1'?'wall':id==='gate-1'?'gate':'tower',level:1,upgradeRemaining:null,cooldown:0}];
+  else m.placement={...m.placement,[id]:site};
+  m.map=replaceObstacles(m.map,[...m.map.obstacles,footprint]);m.gathering.units[0].order={kind:'build',buildingId:id};
+  if(id==='forge'){m.placement.forge!.construction.remainingSeconds=0;m.research!.job={kind:'attack',remainingSeconds:5};}
+  const before=JSON.stringify(m),proposal=dismissProposal(m,id)!;expect(proposal.building).toBe(id);expect(dismissMessage(proposal)).toContain('No refund');
+  const next=dismissBuilding(m,id);expect(playerTargets(next.gathering,next.combat,next.placement,next.navy).some(t=>t.id===id)).toBe(false);
+  if(id==='forge')expect(next.research!.job).toBeNull();if(id==='barracks')expect(next.soldierProduction.queue).toEqual([]);if(id==='harbor')expect(next.navy!.production.queue).toEqual([]);
+  expect(next.map.obstacles).not.toContainEqual(footprint);expect(next.gathering.units[0].order).toEqual({kind:'idle'});expect(next.gathering.units).toHaveLength(m.gathering.units.length);expect(next.gathering.wood).toBe(m.gathering.wood);expect(next.gathering.goldBalance).toBe(m.gathering.goldBalance);expect(next.waves.elapsedSeconds).toBe(0);expect(matchStats(next).enemy.killed).toBe(matchStats(m).enemy.killed);expect(JSON.stringify(m)).toBe(before);expect(dismissBuilding(next,id)).toBe(next);
+ }
+});
+it('revalidates own building IDs, blocks paused/ended/enemy demolition and warns before defeat',()=>{
+ const m=createMatch('skirmish');expect(dismissProposal(m,'enemy:enemy-base')).toBeNull();expect(dismissBuilding(m,'enemy:enemy-base')).toBe(m);expect(dismissBuilding(m,'wall-999')).toBe(m);
+ const paused={...m,paused:true};expect(dismissBuilding(paused,'base')).toBe(paused);const ended={...m,outcome:'victory' as const};expect(dismissBuilding(ended,'base')).toBe(ended);
+ expect(dismissMessage(dismissProposal(m,'base')!)).toContain('defeat');expect(dismissBuilding(m,'base').outcome).toBe('defeat');
+});
+it('demolished paid fortification survives Save/Load as removed, including released builder and obstacles',()=>{
+ const m=createMatch('skirmish');m.gathering.wood=100;m.gathering.units[0].selected=true;m.placement={...m.placement,active:true,kind:'wall'};const paid=placeTower(m,{x:480,y:384}),next=dismissBuilding(paid,'wall-1');
+ expect(next.gathering.wood).toBe(90);expect(next.placement.defenses).toEqual([]);const loaded=decodeSave(encodeSave(next,view));expect(loaded.ok,loaded.ok?'':loaded.error).toBe(true);if(loaded.ok){expect(loaded.match.placement.defenses).toEqual([]);expect(loaded.match.gathering.units[0].order).toEqual({kind:'idle'});}
+});
