@@ -32,3 +32,27 @@ coil poses, raised bite, sinking silhouette. The shared land guardian sources
 and their first two atlas rows remain unchanged. This small code-drawn creature
 has two swim frames, not separately painted directions;
 there is no new creature-specific sound. Browser evidence: artifacts/rts-230.
+
+## RTS-231 — Kraken replaces the sea serpent artwork
+
+Original `kraken.png`, generated with the built-in imagegen tool on 2026-10-08
+for this project. The user-provided illustrations were anatomy references;
+no third-party image was imported into the repository. The generated original
+and its exports are dedicated to CC0-1.0 on the same terms as the guardians.
+
+Prompt set: original game-ready detailed pixel-art Kraken, medieval fantasy
+RTS, matching existing guardian atlas painterly clustered pixels, dark outlines,
+restrained highlights and three-quarter overhead camera. Armored squid/octopus
+head with slate-blue and muted violet chitin plates, glowing amber-orange eyes,
+six chunky curling tentacles, pale suction cups and small teal water ripples.
+Four equal horizontal cells, common scale/waterline: idle swim, alternate swim,
+raised-tentacle attack, defeated sinking pose. Transparent background, generous
+padding, no serpent anatomy, text, ships, scenery, logos or watermark.
+
+Source inspected before export. The existing alpha-weighted reducer exports
+four 72×96 cells centered in 96×96 runtime frames; the historical `sea-serpent-*`
+frame keys remain for compatibility. Land guardian atlas rows are byte-exact
+unchanged. Gameplay, collision size, stats, map locations and Save69 remain.
+Two swimming poses and one attack/death pose; no separately painted directions
+or new audio. Browser evidence: artifacts/rts-231/browser.json.
+The earlier RTS-230 code-drawn serpent description above is historical.

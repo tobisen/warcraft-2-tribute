@@ -1,0 +1,515 @@
+{
+  "fixture": "Islands Hard Clans; empty storage; existing cheat ledger funds a seeded completed coastal harbor (charged cost), physical ship production/selection/attack clicks, real bounded match steps and save/load/restart. Technical scenario, not human balance play.",
+  "results": [
+    {
+      "width": 800,
+      "initial": {
+        "sea": [
+          {
+            "id": "channel",
+            "hp": 240,
+            "position": {
+              "x": 720.8901491730855,
+              "y": 690.2253729327139
+            },
+            "attackCooldown": 0,
+            "patrolIndex": 1
+          },
+          {
+            "id": "southern-route",
+            "hp": 240,
+            "position": {
+              "x": 1426.386956837262,
+              "y": 1072.2169960761148
+            },
+            "attackCooldown": 0,
+            "patrolIndex": 1
+          },
+          {
+            "id": "outer-sea",
+            "hp": 240,
+            "position": {
+              "x": 2322.273804128767,
+              "y": 1360.7579347095893
+            },
+            "attackCooldown": 0,
+            "patrolIndex": 1
+          }
+        ],
+        "visible": [],
+        "minimap": []
+      },
+      "setup": {
+        "foot": {
+          "x": 672,
+          "y": 832,
+          "width": 64,
+          "height": 64
+        },
+        "bank": {
+          "wood": 99960,
+          "gold": 99990
+        },
+        "sea": [
+          {
+            "id": "channel",
+            "hp": 240,
+            "position": {
+              "x": 720.8901491730855,
+              "y": 690.2253729327139
+            },
+            "attackCooldown": 0,
+            "patrolIndex": 1
+          },
+          {
+            "id": "southern-route",
+            "hp": 240,
+            "position": {
+              "x": 1426.386956837262,
+              "y": 1072.2169960761148
+            },
+            "attackCooldown": 0,
+            "patrolIndex": 1
+          },
+          {
+            "id": "outer-sea",
+            "hp": 240,
+            "position": {
+              "x": 2322.273804128767,
+              "y": 1360.7579347095893
+            },
+            "attackCooldown": 0,
+            "patrolIndex": 1
+          }
+        ]
+      },
+      "queued": {
+        "id": "harbor-job-1",
+        "kind": "warship",
+        "supply": 2,
+        "cost": {
+          "wood": 40,
+          "gold": 15
+        },
+        "durationSeconds": 8,
+        "remainingSeconds": 8
+      },
+      "production": {
+        "ship": {
+          "id": "ship-1",
+          "kind": "ship",
+          "owner": "player",
+          "hp": 100,
+          "selected": false,
+          "position": {
+            "x": 760,
+            "y": 864
+          },
+          "target": {
+            "x": 760,
+            "y": 864
+          },
+          "order": {
+            "kind": "idle"
+          },
+          "attackCooldown": 0
+        },
+        "sea": [
+          {
+            "id": "channel",
+            "hp": 240,
+            "position": {
+              "x": 724.6028772749904,
+              "y": 740.128787783194
+            },
+            "attackCooldown": 0.3999999999999989,
+            "patrolIndex": 1
+          },
+          {
+            "id": "southern-route",
+            "hp": 240,
+            "position": {
+              "x": 1742.5379882626848,
+              "y": 1100.9579989329713
+            },
+            "attackCooldown": 0,
+            "patrolIndex": 0
+          },
+          {
+            "id": "outer-sea",
+            "hp": 240,
+            "position": {
+              "x": 2526.0337630484346,
+              "y": 1428.6779210161449
+            },
+            "attackCooldown": 0,
+            "patrolIndex": 0
+          }
+        ],
+        "bank": {
+          "wood": 99920,
+          "gold": 99975
+        }
+      },
+      "ordered": {
+        "kind": "attack",
+        "enemyId": "enemy-sea-monster-channel"
+      },
+      "combat": {
+        "ship": {
+          "id": "ship-1",
+          "kind": "ship",
+          "owner": "player",
+          "hp": 64,
+          "selected": true,
+          "position": {
+            "x": 760,
+            "y": 864
+          },
+          "target": {
+            "x": 760,
+            "y": 864
+          },
+          "order": {
+            "kind": "attack",
+            "enemyId": "enemy-sea-monster-channel"
+          },
+          "attackCooldown": 1.4999999999999996,
+          "navigation": {
+            "commandNumber": 1,
+            "destination": {
+              "x": 760,
+              "y": 864
+            },
+            "waypoints": [],
+            "revision": 1,
+            "status": "arrived",
+            "targetId": "enemy-sea-monster-channel",
+            "goalKey": "naval:enemy-sea-monster-channel:752:752"
+          }
+        },
+        "sea": [
+          {
+            "id": "channel",
+            "hp": 224,
+            "position": {
+              "x": 752,
+              "y": 752
+            },
+            "attackCooldown": 0.622051382407353,
+            "patrolIndex": 1
+          },
+          {
+            "id": "southern-route",
+            "hp": 240,
+            "position": {
+              "x": 1599.1293665313342,
+              "y": 1087.9208515028486
+            },
+            "attackCooldown": 0,
+            "patrolIndex": 0
+          },
+          {
+            "id": "outer-sea",
+            "hp": 240,
+            "position": {
+              "x": 2389.423368129159,
+              "y": 1383.1411227097196
+            },
+            "attackCooldown": 0,
+            "patrolIndex": 0
+          }
+        ],
+        "projectiles": [
+          {
+            "bossProfile": "projectile",
+            "targets": [
+              "land",
+              "sea",
+              "air",
+              "building"
+            ],
+            "damageByDomain": {
+              "air": 0.75
+            },
+            "marine": true,
+            "id": "arrow-3",
+            "shooterId": "ship-1",
+            "targetId": "enemy-sea-monster-channel",
+            "position": {
+              "x": 760,
+              "y": 863.9999999999999
+            },
+            "destination": {
+              "x": 752,
+              "y": 752
+            },
+            "speed": 280,
+            "remainingLife": 2.9999999999999996,
+            "damage": 16,
+            "hitRadius": 20
+          }
+        ],
+        "water": true,
+        "outcome": "playing"
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "width": 1280,
+      "initial": {
+        "sea": [
+          {
+            "id": "channel",
+            "hp": 240,
+            "position": {
+              "x": 720.8897332155279,
+              "y": 690.2243330388199
+            },
+            "attackCooldown": 0,
+            "patrolIndex": 1
+          },
+          {
+            "id": "southern-route",
+            "hp": 240,
+            "position": {
+              "x": 1426.3858414368704,
+              "y": 1072.216894676079
+            },
+            "attackCooldown": 0,
+            "patrolIndex": 1
+          },
+          {
+            "id": "outer-sea",
+            "hp": 240,
+            "position": {
+              "x": 2322.272741603474,
+              "y": 1360.757580534491
+            },
+            "attackCooldown": 0,
+            "patrolIndex": 1
+          }
+        ],
+        "visible": [],
+        "minimap": []
+      },
+      "setup": {
+        "foot": {
+          "x": 672,
+          "y": 832,
+          "width": 64,
+          "height": 64
+        },
+        "bank": {
+          "wood": 99960,
+          "gold": 99990
+        },
+        "sea": [
+          {
+            "id": "channel",
+            "hp": 240,
+            "position": {
+              "x": 720.8897332155279,
+              "y": 690.2243330388199
+            },
+            "attackCooldown": 0,
+            "patrolIndex": 1
+          },
+          {
+            "id": "southern-route",
+            "hp": 240,
+            "position": {
+              "x": 1426.3858414368704,
+              "y": 1072.216894676079
+            },
+            "attackCooldown": 0,
+            "patrolIndex": 1
+          },
+          {
+            "id": "outer-sea",
+            "hp": 240,
+            "position": {
+              "x": 2322.272741603474,
+              "y": 1360.757580534491
+            },
+            "attackCooldown": 0,
+            "patrolIndex": 1
+          }
+        ]
+      },
+      "queued": {
+        "id": "harbor-job-1",
+        "kind": "warship",
+        "supply": 2,
+        "cost": {
+          "wood": 40,
+          "gold": 15
+        },
+        "durationSeconds": 8,
+        "remainingSeconds": 8
+      },
+      "production": {
+        "ship": {
+          "id": "ship-1",
+          "kind": "ship",
+          "owner": "player",
+          "hp": 100,
+          "selected": false,
+          "position": {
+            "x": 760,
+            "y": 864
+          },
+          "target": {
+            "x": 760,
+            "y": 864
+          },
+          "order": {
+            "kind": "idle"
+          },
+          "attackCooldown": 0
+        },
+        "sea": [
+          {
+            "id": "channel",
+            "hp": 240,
+            "position": {
+              "x": 724.6027455386533,
+              "y": 740.1278692975135
+            },
+            "attackCooldown": 0.3999999999999989,
+            "patrolIndex": 1
+          },
+          {
+            "id": "southern-route",
+            "hp": 240,
+            "position": {
+              "x": 1742.5379882626848,
+              "y": 1100.9579989329713
+            },
+            "attackCooldown": 0,
+            "patrolIndex": 0
+          },
+          {
+            "id": "outer-sea",
+            "hp": 240,
+            "position": {
+              "x": 2526.0337630484346,
+              "y": 1428.6779210161449
+            },
+            "attackCooldown": 0,
+            "patrolIndex": 0
+          }
+        ],
+        "bank": {
+          "wood": 99920,
+          "gold": 99975
+        }
+      },
+      "ordered": {
+        "kind": "attack",
+        "enemyId": "enemy-sea-monster-channel"
+      },
+      "combat": {
+        "ship": {
+          "id": "ship-1",
+          "kind": "ship",
+          "owner": "player",
+          "hp": 64,
+          "selected": true,
+          "position": {
+            "x": 760,
+            "y": 864
+          },
+          "target": {
+            "x": 760,
+            "y": 864
+          },
+          "order": {
+            "kind": "attack",
+            "enemyId": "enemy-sea-monster-channel"
+          },
+          "attackCooldown": 1.4999999999999996,
+          "navigation": {
+            "commandNumber": 1,
+            "destination": {
+              "x": 760,
+              "y": 864
+            },
+            "waypoints": [],
+            "revision": 1,
+            "status": "arrived",
+            "targetId": "enemy-sea-monster-channel",
+            "goalKey": "naval:enemy-sea-monster-channel:752:752"
+          }
+        },
+        "sea": [
+          {
+            "id": "channel",
+            "hp": 224,
+            "position": {
+              "x": 752,
+              "y": 752
+            },
+            "attackCooldown": 0.622061508686123,
+            "patrolIndex": 1
+          },
+          {
+            "id": "southern-route",
+            "hp": 240,
+            "position": {
+              "x": 1599.1293665313342,
+              "y": 1087.9208515028486
+            },
+            "attackCooldown": 0,
+            "patrolIndex": 0
+          },
+          {
+            "id": "outer-sea",
+            "hp": 240,
+            "position": {
+              "x": 2389.423368129159,
+              "y": 1383.1411227097196
+            },
+            "attackCooldown": 0,
+            "patrolIndex": 0
+          }
+        ],
+        "projectiles": [
+          {
+            "bossProfile": "projectile",
+            "targets": [
+              "land",
+              "sea",
+              "air",
+              "building"
+            ],
+            "damageByDomain": {
+              "air": 0.75
+            },
+            "marine": true,
+            "id": "arrow-3",
+            "shooterId": "ship-1",
+            "targetId": "enemy-sea-monster-channel",
+            "position": {
+              "x": 760,
+              "y": 863.9999999999999
+            },
+            "destination": {
+              "x": 752,
+              "y": 752
+            },
+            "speed": 280,
+            "remainingLife": 2.9999999999999996,
+            "damage": 16,
+            "hitRadius": 20
+          }
+        ],
+        "water": true,
+        "outcome": "playing"
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    }
+  ]
+}

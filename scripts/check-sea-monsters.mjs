@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {mkdir,writeFile} from 'node:fs/promises';
 const {chromium}=await import(process.env.W2T_PLAYWRIGHT_MODULE??'playwright-core');
-const browser=await chromium.launch({headless:true,executablePath:process.env.W2T_BROWSER_EXECUTABLE??'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'}),out='artifacts/rts-230';await mkdir(out,{recursive:true});
+const browser=await chromium.launch({headless:true,executablePath:process.env.W2T_BROWSER_EXECUTABLE??'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'}),out=process.env.W2T_SEA_ARTIFACTS??'artifacts/rts-230';await mkdir(out,{recursive:true});
 const results=[];
 try{for(const width of [800,1280]){
  const page=await browser.newPage({viewport:{width,height:width===800?600:720}}),errors=[];page.on('pageerror',e=>errors.push(e.message));

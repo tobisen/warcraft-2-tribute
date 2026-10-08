@@ -1,3 +1,28 @@
+
+## 2026-10-08 — RTS-231 Kraken i spelets pixelstil — Done
+
+Användarens två krakenreferenser styr anatomin: pansrat bläckfiskhuvud,
+lysande ögon och kraftiga tentakler. Original imagegen-källa kraken.png
+ersätter RTS-230:s kodritade orm via befintlig guardianexport/reducer.
+Blåvioletta chitinplattor, orange ögon, sugkoppar och små vattenkrusningar;
+fyra poser, två swim plus attack/sink. Källa och färdig96px-atlas visuellt
+inspekterade. Samma framekeys/Save69, collision/stats/AI/placeringar.
+Synligt namn Kraken. De två landguardianraderna är byte-exakt oförändrade.
+Source/licens/prompt/export dokumenterade i assets/sources/bosses/README.md.
+Browserharness får valbar artefaktmapp för att bevara230:s historiska belägg.
+
+Ny riktad sea/assets26/2 PASS4.91s; unit517/90 PASS16.39s; build inklusive
+strict typecheck PASS729ms, befintlig chunkvarning. Scriptsyntax/diff PASS.
+Chrome Islands Hard Clans800×600/1280×720 PASS, fog→upptäckt→skeppsattack,
+SaveLoad/restart,0pageerrors. Combat800/discovered1280 visuellt granskade.
+Sandboxad Chromestart avbröts med SIGABRT; godkänd start utanför sandbox
+passerade. artifacts/rts-231/browser.json och PNG visar ny design.
+Slutlig full regression1829/208 PASS483.38s på samma kod. Slutreview utan
+kvarstående fynd; diff/check och filreferenser PASS. Taskcommit/push till
+origin/main ingår; hash rapporteras till användaren. Stanna efter231.
+Ingen ny audio, riktningsuppsättning eller mänsklig balansspeltest;
+ingen release/CI/Pagesclaim. CSS/units.mjs/docs/:memory:.ses bevarade.
+
 ## 2026-10-08 — RTS-230 sjömonster — Done
 
 Nytt separat mandat: endast sjömonster, nästa lediga task230. Befintliga

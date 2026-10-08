@@ -45,6 +45,23 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
+### RTS-231 — Kraken i spelets pixelstil — Done
+
+Byt sjöormens kodritade sprite mot en original kraken med pansrat huvud,
+tentakler och varma ögon inspirerade av användarens referenser. Matcha
+befintliga bossars pixelstil; fyra swim/attack/sink-poser, transparent källa
+och reproducerbar export. Granska atlas och faktisk browser800/1280.
+Behåll gameplay, save-ID:n, stats och kartplaceringar. Docs/checks/commit/push.
+
+Resultat: original blåviolett pixelkraken med fyra swim/attack/sink-poser,
+reproducerbar guardianexport och namnet Kraken. Landguardianrader byte-exakt
+oförändrade. Riktade26/2, unit517/90, strict build, full1829/208 och
+syntax/diff/review PASS. Chrome800/1280 PASS; visuellt granskad i spelstorlek.
+[Browserunderlag](artifacts/rts-231/browser.json). Källa/prompt/licens i
+[assetdokumentationen](assets/sources/bosses/README.md). Inga nya ljud eller
+separat målade riktningar; ingen mänsklig balans-/CI-/Pagesclaim.
+
+
 ### RTS-230 — Sjömonster — Done
 
 Nytt uttryckligt uppdrag: neutrala vattenpatruller på lämpliga kartor,
