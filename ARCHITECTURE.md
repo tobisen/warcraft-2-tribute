@@ -24,6 +24,21 @@ täckning. Alla caches är härledda; Save, balans, grafik och entitetstak best�
 [Prestandamätning och verifiering](PERFORMANCE.md).
 
 
+## Dragbygge av murar
+
+`wallDrag.wallLine` skapar en sammanhängande 32px-gridlinje, högst32 celler.
+Scenen håller bara dragstart och billig förhandsvisning; släpp över spelvärlden
+kör `placeWallLine`, som använder samma `placeTower`-kostnader/fog/collision/
+fortificationSafety/reachability per segment och stannar vid första avslag.
+Alla accepterade sites betalas direkt. Arbetaren börjar vid första segmentet.
+Befintliga ConstructionJob.builderId knyter återstående segment till samma
+arbetare, utan nytt Savefält/version. updateTowers väljer nästa tilldelade
+ofärdiga mur först efter faktisk completion och börjar arbeta nästa steg,
+utan dubblerad deltatid. Stop/manuellt orderbyte/död återstartar inte bygget;
+högerklick kan återuppta en site. Ny fortificationplacering frigör tidigare
+muruppdrag för arbetaren. Escape/högerklick/HUD-släpp/blur avbryter draget
+utan betalning. Befintliga cap32 och byggtider består.
+
 ## Sammanhängande fortifications och automatisk gatepassage
 
 Gameplay-modulen `fortifications` härleder grannmasker från aktuella wall/gate-

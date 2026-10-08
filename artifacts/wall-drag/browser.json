@@ -1,0 +1,91 @@
+{
+  "browser": "155.0.8059.39",
+  "results": [
+    {
+      "width": 800,
+      "placed": {
+        "wood": 170,
+        "count": 3,
+        "remaining": [
+          3,
+          3,
+          3
+        ],
+        "order": {
+          "kind": "build",
+          "buildingId": "wall-1"
+        },
+        "drag": false
+      },
+      "finished": {
+        "wood": 170,
+        "count": 3,
+        "remaining": [
+          0,
+          0,
+          0
+        ],
+        "order": {
+          "kind": "idle"
+        },
+        "drag": false
+      },
+      "zoomSingle": {
+        "wood": 5,
+        "count": 1,
+        "remaining": [
+          3
+        ],
+        "order": {
+          "kind": "build",
+          "buildingId": "wall-1"
+        },
+        "drag": false
+      },
+      "errors": []
+    },
+    {
+      "width": 1280,
+      "placed": {
+        "wood": 170,
+        "count": 3,
+        "remaining": [
+          3,
+          3,
+          3
+        ],
+        "order": {
+          "kind": "build",
+          "buildingId": "wall-1"
+        },
+        "drag": false
+      },
+      "finished": {
+        "wood": 170,
+        "count": 3,
+        "remaining": [
+          0,
+          0,
+          0
+        ],
+        "order": {
+          "kind": "idle"
+        },
+        "drag": false
+      },
+      "zoomSingle": {
+        "wood": 5,
+        "count": 1,
+        "remaining": [
+          3
+        ],
+        "order": {
+          "kind": "build",
+          "buildingId": "wall-1"
+        },
+        "drag": false
+      },
+      "errors": []
+    }
+  ]
+}

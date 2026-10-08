@@ -5,7 +5,7 @@ import type {BuildingSelection} from '../gameplay/buildingSelection';
 export function commandFeedback(m:MatchState,building:BuildingSelection,modes:{spell?:{message:string;error:boolean};placementError:string|null;attackMove:boolean;unload:boolean}){
  if(modes.spell&&!m.paused&&m.outcome==='playing')return modes.spell;
  if(m.paused||m.outcome!=='playing')return {message:'',error:false};
- if(m.placement.active)return {message:modes.placementError?`${uiText.cannotBuildHere} · ${modes.placementError}`:'Valid site · Click to build. Escape/right-click cancels.',error:!!modes.placementError};
+ if(m.placement.active)return {message:modes.placementError?`${uiText.cannotBuildHere} · ${modes.placementError}`:m.placement.kind==='wall'?'Valid site · Click or drag to build walls. Escape/right-click cancels.':'Valid site · Click to build. Escape/right-click cancels.',error:!!modes.placementError};
  if(modes.attackMove)return {message:'Attack-move · Click a destination. Escape/right-click cancels.',error:false};
  if(modes.unload)return {message:'Unload · Click a visible landing within 64 px. Escape/right-click cancels.',error:false};
  const errors=[...m.gathering.units,...(m.navy?.ships??[])].filter(u=>u.selected&&u.navigation?.error).map(u=>`${u.id}: ${routeErrors[u.navigation!.error!]}`);

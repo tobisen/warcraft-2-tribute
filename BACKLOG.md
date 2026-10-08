@@ -52,10 +52,15 @@ avancerade producenter sist; Worker Tools/basuppgradering före forge-tech
 och rollspecialiseringar. Ingen dynamisk omflyttning vid resursändring.
 Riktade16/2, unit515/90, strict build och Chrome800/1280 PASS; se HANDOFF.
 
-### UI 2026-10-08 — dra murar — In progress
+### UI 2026-10-08 — dra murar — Done
 
-Nästa avgränsade användaruppdrag: dragplacera flera mursegment med befintliga
-kostnader, fog, placeringsregler och oförändrade tak. Ingen roadmapstart.
+Avgränsat användaruppdrag: dragplacera flera mursegment med befintliga
+kostnader, fog, placeringsregler och oförändrade tak. Förhandsvisa gridlinje;
+släpp placerar betalda giltiga segment fram till första avslag. Samma arbetare
+bygger dem i turordning över Save/Load; Stop återstartar inte arbete.
+Riktade38/5, unit515/90, strict build och Chrome800/1280 PASS.
+Full regression1805/207 PASS606,94s; slutlig syntax/diff/review PASS.
+Knappordning levererad ecc2482; murdrag levereras separat. Ingen roadmapstart.
 
 ### Fog 2026-10-08 — scoutade landmärken — Done
 

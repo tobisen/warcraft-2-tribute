@@ -1,3 +1,33 @@
+## 2026-10-08 — Dragbygge av murar — Done
+
+Välj Wall, håll vänster musknapp och dra en sammanhängande gridlinje;
+släpp över spelvärlden för att lägga betalda sites. Vanligt klick lägger en
+mur. Första ogiltiga/obetalbara segment stoppar raden; placerade segment
+består. Samma arbetare bygger i turordning, med befintliga builderId-fält
+över Save/Load, utan ny Saveversion. Stop/orderbyte återstartar inte jobb;
+ny placering av fortification frigör tidigare tilldelade mursites. Kostnad,
+byggtid, fog, route/producer-säkerhet, grafik och cap32 består.
+
+Riktade `npm test -- src/gameplay/towers.test.ts src/gameplay/gates.test.ts
+src/gameplay/construction.test.ts src/gameplay/orders.test.ts
+src/presentation/commandFeedback.test.ts`:38/5 PASS10,61s. Slutlig unit515/90
+PASS30,61s och `npm run build` inklusive strict typecheck PASS1,30s med
+befintlig chunkvarning. Ny unit/build efter synlig draginstruktion och
+blur/resize-cancel; bred regression startade före dessa slutliga UI-ändringar.
+`npm test`:1805/207 PASS606,94s. Slutliga UI-ändringar verifierades separat
+av riktade38/5, slutlig unit/build och browser enligt ovan. Syntax/diff och
+dokumentreferenser PASS. Knappordning commit/push ecc2482; murdrag separat.
+Båda småsakerna avslutade, inget ytterligare arbete startas.
+
+Faktisk Chrome800/1280 preview/no-early-payment,3paidwalls, första buildorder,
+Save/Load, alla tre färdiga via riktig updateMatch, Escape, högerklick,
+HUD-släpp och singleclick zoom1,5 PASS0pageerrors. [Browserresultat/bilder](artifacts/wall-drag/browser.json)
+via `scripts/check-wall-drag.mjs`; 800-preview/1280-complete granskade.
+Byggslutförande är en avgränsad teknisk simulering, inte ett mänskligt
+fullmatchspeltest. Review av gameplay/input/save/caps/diff utan kvarstående
+fynd. Befintlig style.css/units.mjs/docs/:memory:.ses bevaras. Ingen ny
+roadmaptask, version eller separat CI/Pages-/ljudverifiering påstås.
+
 ## 2026-10-08 — Logisk knappordning — Done
 
 Fast bygg-/forskningsordning efter prerequisites, med startbyggen och

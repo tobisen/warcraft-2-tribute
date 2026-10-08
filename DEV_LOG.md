@@ -4992,3 +4992,26 @@ unit515/90 PASS14,88s, strict build723ms PASS (befintlig chunkvarning),
 Chrome800/1280 ordning/låsningar/fysisk Worker Tools-betalning PASS utan
 pageerrors; representativa800-bilder granskade. Syntax/diff PASS. Ingen
 ny fullregression för statisk UI-ordning. Nästa task är dragbygge av murar.
+
+
+## 2026-10-08 — Dra flera murar
+
+wallLine ger sammanhängande gridlinje≤32; placeWallLine använder befintlig
+betald/visible/safe/reachable defense-admission och bygger giltigt prefix.
+Befintliga ConstructionJob.builderId återanvänds för sekventiellt bygge,
+start nästa steg efter completion utan extra elapsed work. Ny fortification
+släpper äldre walljobb för samma worker; Stop/orderbyte startar inte igen.
+Scenen previewar draget; Escape/rightclick/UI-släpp/blur/resize avbryter.
+Synlig instruktion anger drag. Grafik, stats och caps består.
+
+Ny riktad38/5 PASS10,61s; slutlig unit515/90 PASS30,61s och strict build1,30s
+PASS. Unit/build upprepades efter review-fix av synlig instruktion/blur/resize.
+Initialt Saveprov tog felaktigt bort fiendebyggnader men lämnade deras
+obstacles; fixture rättad och riktigt Save/Load PASS. Chrome800/1280
+fysisk musdrag/preview/3paid/SaveLoad/sekventiell completion/Escape/rightclick/
+HUDrelease/singleclickzoom1,5 PASS0runtimeerrors; representativa PNG granskade.
+Full regression `npm test`:1805/207 PASS606,94s. Start före slutlig UI-text/
+blur/resize, som separat riktad/unit/build/browser täcker. Syntax/diff och
+länkcheck PASS. Knappordning commit/push ecc2482. Review utan kvarstående
+fynd; CSS/units.mjs/docs och
+:memory:.ses bevaras. Ingen ny release eller roadmap.

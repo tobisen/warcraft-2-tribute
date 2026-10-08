@@ -1,3 +1,4 @@
+import {wallLine,placeWallLine} from '../gameplay/wallDrag';
 import {siegeBuilding,trainSiege} from '../gameplay/siegeProduction';
 import {roleResearchConfig,isRoleResearch} from '../config/roleResearch';
 import {flightBuilding,trainFlyer} from '../gameplay/flightProduction';
@@ -247,6 +248,8 @@ export class BootScene extends Phaser.Scene {
   private placementFeedbackError:string|null=null;
   private placementAttempt:{x:number;y:number;reason:string}|null=null;
   private previewPoint: Position = { x: 0, y: 0 };
+  private wallDrag:Position|undefined;
+  private wallPreview!:Phaser.GameObjects.Graphics;
   private placementClick = false;
   private placementPreview!: Phaser.GameObjects.Rectangle;
   private barracksVisual?: Phaser.GameObjects.Image;
@@ -391,13 +394,13 @@ export class BootScene extends Phaser.Scene {
     this.rallyMarker = this.add.circle(0, 0, 8).setStrokeStyle(2, 0x7bd389).setDepth(6).setVisible(false);
     this.buildingRing = this.add.rectangle(0, 0, 0, 0).setOrigin(0).setStrokeStyle(2, 0xffdc73).setDepth(effectConfig.selectionDepth).setVisible(false);
     this.cameras.main.setBounds(0, 0, this.map.width, this.map.height).setZoom(1).setScroll(loaded?.view.camera.x??0,loaded?.view.camera.y??0);
-    const resizeCamera=()=>{const oldView=this.visibleCamera(),v=viewportGeometry(this.scale.width,this.scale.height,this.map);const camera=this.cameras.main;camera.setViewport(v.camera.x,v.camera.y,v.camera.width,v.camera.height);camera.setBounds(0,0,this.map.width,this.map.height);this.setCameraScroll(clampCamera(oldView,this.map,this.visibleCamera()));this.drag=undefined;this.cameraDrag=undefined;this.dragBox?.setVisible(false);};
+    const resizeCamera=()=>{const oldView=this.visibleCamera(),v=viewportGeometry(this.scale.width,this.scale.height,this.map);const camera=this.cameras.main;camera.setViewport(v.camera.x,v.camera.y,v.camera.width,v.camera.height);camera.setBounds(0,0,this.map.width,this.map.height);this.setCameraScroll(clampCamera(oldView,this.map,this.visibleCamera()));this.wallDrag=undefined;this.wallPreview?.clear();this.drag=undefined;this.cameraDrag=undefined;this.dragBox?.setVisible(false);};
     resizeCamera();this.scale.on(Phaser.Scale.Events.RESIZE,resizeCamera);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.scale.off(Phaser.Scale.Events.RESIZE,resizeCamera));
     this.cameraDrag = undefined;
-    this.cameraInput=bindCameraInput(this.game.canvas,()=>{const c=this.cameras.main;return {zoom:c.zoom,scroll:this.visibleCamera(),world:this.map,camera:{x:c.x,y:c.y,width:c.width,height:c.height}};},()=>this.simulationActive()&&!this.cameraDrag&&!this.drag,p=>{this.setCameraScroll(p);if(this.placement.active)this.previewPoint=this.worldPoint(this.input.activePointer);},(zoom,p,anchor)=>{this.cameras.main.setZoom(zoom);this.setCameraScroll(p);if(this.placement.active){this.previewPoint=anchor;this.syncPlacement();}});
-    const cameraKey=(event:KeyboardEvent)=>{const shortcut=cameraShortcut(event.key,{...keyboardContext(event,this.gameplayActive()),ctrlKey:event.ctrlKey,metaKey:event.metaKey});if(!shortcut||this.drag||this.cameraDrag)return;event.preventDefault();const c=this.cameras.main,target=cameraFocus(shortcut==='base'?[this.gathering.base]:selectionFocusPoints(this.currentMatch(),this.selectedBuilding),this.map,this.visibleCamera());if(target){this.setCameraScroll(target);if(this.placement.active)this.previewPoint=this.worldPoint(this.input.activePointer);this.syncVisuals();}};
+    this.cameraInput=bindCameraInput(this.game.canvas,()=>{const c=this.cameras.main;return {zoom:c.zoom,scroll:this.visibleCamera(),world:this.map,camera:{x:c.x,y:c.y,width:c.width,height:c.height}};},()=>this.simulationActive()&&!this.cameraDrag&&!this.drag&&!this.wallDrag,p=>{this.setCameraScroll(p);if(this.placement.active)this.previewPoint=this.worldPoint(this.input.activePointer);},(zoom,p,anchor)=>{this.cameras.main.setZoom(zoom);this.setCameraScroll(p);if(this.placement.active){this.previewPoint=anchor;this.syncPlacement();}});
+    const cameraKey=(event:KeyboardEvent)=>{const shortcut=cameraShortcut(event.key,{...keyboardContext(event,this.gameplayActive()),ctrlKey:event.ctrlKey,metaKey:event.metaKey});if(!shortcut||this.drag||this.cameraDrag||this.wallDrag)return;event.preventDefault();const c=this.cameras.main,target=cameraFocus(shortcut==='base'?[this.gathering.base]:selectionFocusPoints(this.currentMatch(),this.selectedBuilding),this.map,this.visibleCamera());if(target){this.setCameraScroll(target);if(this.placement.active)this.previewPoint=this.worldPoint(this.input.activePointer);this.syncVisuals();}};
     window.addEventListener('keydown',cameraKey);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>window.removeEventListener('keydown',cameraKey));
-    const clearCameraGestures=()=>{this.cameraDrag=undefined;this.drag=undefined;this.dragBox?.setVisible(false);};window.addEventListener('blur',clearCameraGestures);
+    const clearCameraGestures=()=>{this.wallDrag=undefined;this.wallPreview?.clear();this.placementClick=false;this.cameraDrag=undefined;this.drag=undefined;this.dragBox?.setVisible(false);};window.addEventListener('blur',clearCameraGestures);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{this.cameraInput?.destroy();window.removeEventListener('blur',clearCameraGestures);});
     const preventMiddle = (event: MouseEvent) => { if (event.button === 1) event.preventDefault(); };
     this.game.canvas.addEventListener('mousedown', preventMiddle);
@@ -454,6 +457,8 @@ export class BootScene extends Phaser.Scene {
     this.drag = undefined;
     this.dragBox = this.add.rectangle(0, 0, 0, 0, 0xffdc73, 0.1)
       .setOrigin(0).setStrokeStyle(1, 0xffdc73).setVisible(false).setDepth(60);
+    this.wallDrag=undefined;
+    this.wallPreview=this.add.graphics().setDepth(51);
     this.placementClick = false;
     this.barracksVisual = undefined;
     const buildingSize = barracksConfig.tileSize * barracksConfig.footprintTiles;
@@ -469,6 +474,7 @@ export class BootScene extends Phaser.Scene {
       if(campaignActionReason(this.currentMatch(),`build-${kind}`))return;
       if(kind==='harbor'&&this.navy?.harbor)return;
       if(buildingAvailability(factions[this.factions.player],kind==='tower'||kind==='wall'||kind==='gate'?'base':kind,technologyFor(this.currentMatch(),'player')))return;
+      this.wallDrag=undefined;
       this.placement = beginPlacement(this.placement,kind,this.map);
       this.drag = undefined;
       this.dragBox.setVisible(false);
@@ -762,10 +768,12 @@ export class BootScene extends Phaser.Scene {
       this.placementClick = true;
       this.previewPoint = world;
       if (pointer.button === 2) {
+        this.wallDrag=undefined;
         this.placement = cancelPlacement(this.placement);
       } else if (pointer.button === 0) {
+        if(this.placement.kind==='wall'){this.wallDrag=world;this.syncPlacement();return;}
         if(!placementVisible(this.fog,buildingFootprint(world,this.placement.kind??'barracks'))){this.syncVisuals();return;}
-        if(this.placement.kind==='tower'||this.placement.kind==='wall'||this.placement.kind==='gate'){const match=this.currentMatch(),next=placeTower(match,world);if(next===match)this.rememberPlacementError(world,towerPlacementError(match,world));this.applyMatch(next);this.syncVisuals();return;}
+        if(this.placement.kind==='tower'||this.placement.kind==='gate'){const match=this.currentMatch(),next=placeTower(match,world);if(next===match)this.rememberPlacementError(world,towerPlacementError(match,world));this.applyMatch(next);this.syncVisuals();return;}
         if(this.placement.kind==='harbor'){const match=this.currentMatch(),next=placeHarbor(match,world);if(next===match)this.rememberPlacementError(world,harborPlacementError(match,world));this.applyMatch(next);this.syncVisuals();return;}
         const result = placeBuilding(this.placement, world, this.gathering.wood, placementObstacles(this.gathering),
           {technology:technologyFor(this.currentMatch(),'player'),map:this.map,gathering:this.gathering,enemies:battleEnemies(this.currentMatch())});
@@ -857,6 +865,12 @@ export class BootScene extends Phaser.Scene {
     if (!this.gameplayActive()) return;
     if (pointer.button === 1) { this.cameraDrag = undefined; return; }
     if (this.cameraDrag) return;
+    if(this.wallDrag&&pointer.button===0){
+      const start=this.wallDrag;this.wallDrag=undefined;
+      const c=this.cameras.main,overUI=pointer.event.target instanceof Element&&pointer.event.target.closest('#hud, #match-menu, #game-toolbar, #minimap-overlay, #top-bar, #bottom-bar');
+      if(this.placement.active&&this.placement.kind==='wall'&&!overUI&&pointer.x>=c.x&&pointer.y>=c.y&&pointer.x<c.x+c.width&&pointer.y<c.y+c.height){const result=placeWallLine(this.currentMatch(),wallLine(start,this.worldPoint(pointer)));this.applyMatch(result.match);if(result.reason)this.rememberPlacementError(this.worldPoint(pointer),result.reason);}
+      this.placementClick=false;this.syncVisuals();return;
+    }
     if (this.placementClick) {
       this.placementClick = false;
       return;
@@ -908,6 +922,9 @@ export class BootScene extends Phaser.Scene {
   }
 
   private syncPlacement(): void {
+    this.wallPreview.clear();
+    if(!this.placement.active||this.placement.kind!=='wall'||!this.gameplayActive())this.wallDrag=undefined;
+    if(this.wallDrag){const match=this.currentMatch(),budget=Math.min(32-(this.placement.defenses?.length??0),Math.floor(this.gathering.wood/defenseConfig.wall.cost.wood));let index=0;for(const p of wallLine(this.wallDrag,this.previewPoint)){const color=index++>=budget||towerPreviewError(match,p)?0xee8a86:0x71edb0;this.wallPreview.fillStyle(color,.25).fillRect(p.x,p.y,32,32).lineStyle(2,color).strokeRect(p.x,p.y,32,32);}}
     const forge=this.placement.forge;
     if(!forge&&this.forgeVisual){this.forgeVisual.destroy();this.forgeVisual=undefined;}
     if(forge&&!this.forgeVisual)this.forgeVisual=this.add.image(forge.footprint.x+forge.footprint.width/2,forge.footprint.y+forge.footprint.height/2,'buildings',buildingFrame('forge','player',forge.construction.remainingSeconds,5,this.factions.player,forge.hp)).setOrigin(.5,.75);
@@ -933,7 +950,7 @@ export class BootScene extends Phaser.Scene {
     this.farmButton?.setAttribute('aria-pressed',String(this.placement.active&&this.placement.kind==='farm'));this.forgeButton.setAttribute('aria-pressed',String(this.placement.active&&this.placement.kind==='forge'));
     this.buildButton.disabled = !this.gameplayActive() || this.placement.active || this.placement.barracks !== null || !this.gathering.units.some(u=>u.kind==='worker'&&u.selected);
     this.placementStatus.textContent = this.placement.active
-      ? `${error ?? uiText.validSite} – click to place, Escape/right-click to cancel`
+      ? `${error ?? uiText.validSite}${this.wallDrag?` · ${wallLine(this.wallDrag,this.previewPoint).length} walls`:''} – ${this.placement.kind==='wall'?'click or drag to build walls':'click to place'}, Escape/right-click to cancel`
       : !this.gameplayActive() ? this.session.phase==='paused'?uiText.pausedSimulationIsFrozen:uiText.theMatchHasEnded : this.placement.barracks ? barracksReady(this.placement) ? uiText.barracksComplete : `Construction: ${this.placement.construction!.remainingSeconds.toFixed(1)} s work remaining – right-click with a worker to resume` : !this.gathering.units.some(u=>u.kind==='worker'&&u.selected) ? uiText.selectAWorkerToBuild : `Costs ${costLabel(factions[this.factions.player].buildings.barracks.cost)} – choose a site`;
     if (this.placement.barracks && !this.barracksVisual) {
       const building = this.placement.barracks;
