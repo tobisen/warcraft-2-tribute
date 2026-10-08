@@ -30,3 +30,9 @@
 @media (min-width:1200px) {
  #action-panel #context-actions.spell-context [data-action-group] button { height:64px; min-height:64px; }
 }
+
+/* Eight main-building upgrades stay within two button rows. */
+#action-panel [data-action-group='Research']:not([data-action-group='Orders']) { grid-template-columns:repeat(4,44px); }
+@media (min-width:1200px) {
+ #action-panel [data-action-group='Research']:not([data-action-group='Orders']) { grid-template-columns:repeat(4,64px); }
+}

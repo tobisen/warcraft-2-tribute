@@ -35,3 +35,12 @@
 #app:not([data-phase='menu']) #game-toolbar:is([data-pause-page='tech'],[data-pause-page='commands']) #pause-heading { margin:0; padding-right:75px; font-size:24px; line-height:32px; }
 #app:not([data-phase='menu']) #game-toolbar:is([data-pause-page='tech'],[data-pause-page='commands']) #pause-back-button { position:absolute; top:14px; right:16px; }
 .technology-tiers { max-height:220px; }
+
+/* Scroll help content separately so Close stays visible and clickable. */
+#app:not([data-phase='menu']) #game-toolbar:is([data-pause-page='tech'],[data-pause-page='commands']) { overflow:hidden; }
+#game-toolbar:is([data-pause-page='tech'],[data-pause-page='commands']) #pause-heading { flex-shrink:0; }
+#pause-tech-panel,#pause-commands-panel { min-height:0; overflow:auto; }
+.technology-tiers { max-height:none; }
+/* Keep the two help toggles reachable while their pause dialog is open. */
+#app[data-phase='paused']:has(#game-toolbar:is([data-pause-page='tech'],[data-pause-page='commands'])) #tech-tree-button,
+#app[data-phase='paused']:has(#game-toolbar:is([data-pause-page='tech'],[data-pause-page='commands'])) #commands-button { position:relative; z-index:95; }

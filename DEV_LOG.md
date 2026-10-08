@@ -1,5 +1,23 @@
 # Development log
 
+## 2026-10-08 — Småfix: två forskningsrader och stängbar Tech Tree
+
+Forskningsgruppen har fyra kolumner vid kompakt och stor native-layout.
+Help-paneler scrollar separat från Close; Tech Tree/Commands är klickbara
+över modalfonden och samma knapp stänger aktuell vy. Byte mellan hjälpflikar
+bevarar direktöppningens återgång till spel. Pausmenyns Back bevarar paus.
+
+Ny verifiering: `npm run test:unit`511 tests/89 filer PASS;
+`npm run build` inklusive strict typecheck PASS (befintlig chunkvarning).
+Playwright med verkliga musklick native800×600 och1280×720 PASS: åtta knappar
+på två rader inom bottom bar, Close efter scroll/reopen, Tech Tree-toggle och
+Back från pausmenyn; inga pageerrors. Skärmbilder `/private/tmp/smallfix-800.png`
+och `/private/tmp/smallfix-1280.png`;800-bilden visuellt granskad.
+`git diff --check` PASS. Checks upprepades efter konkret specificitetsfel och
+ändrad togglelogik; inga breda gameplay-simuleringar behövdes för UI-fixen.
+Ingen ny release/CI/Pages-verifiering. Befintliga användarändringar bevaras.
+
+
 ## 2026-10-07 — RTS-212 två hemliga bossar färdiga
 
 Nytt uttryckligt uppdrag efter219: genomför212, sedan stopp före213. Två

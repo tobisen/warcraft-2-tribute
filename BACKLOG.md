@@ -45,6 +45,18 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
+### UI-tillägg 2026-10-08 — forskning och Tech Tree — Done
+
+Avgränsat användaruppdrag: huvudbyggnadens åtta forsknings-/uppgraderingsknappar
+visas i fyra kolumner, högst två knapprader. Tech Tree/Commands kan stängas
+med samma top bar-knapp; direkt öppnad hjälp återgår till spel, hjälp från
+pausmenyn återgår till pausmenyn. Close hålls utanför innehållets scrollning.
+Native browser800×600/1280×720 verifierar rader, panelgränser, verkliga klick,
+scroll/reopen och pausmenyns Back. Unit511/89 PASS, strict build PASS;
+befintlig chunkvarning kvarstår. Ingen bred campaign/fullregression eller ny
+release/Pages-kontroll för detta UI-tillägg. Användarens CSS/units/docs bevarade.
+
+
 Release0.5.0 är avslutad och faktiskt publicerad/verifierad:
 Buildb957568, GitHub37768721009 tests/strict build/Pages PASS,
 ren fullregression1795/206 och public productionbrowser800/1280/Native/Fit
