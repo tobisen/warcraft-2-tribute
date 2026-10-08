@@ -8,7 +8,7 @@ const factions=['crown','clans','elves','dwarves','goblins'],roles=['worker','so
 const sheets=Object.fromEntries([...factions,'air','buildings','naval','wildlife','fortifications-205'].map(id=>[id,readRGBA(new URL(`${id}.png`,dir))]));
 // Reviewed source row boundaries: generated banner poses need taller cells.
 const rowFractions={crown:[0,.2,.395,.583,.825,1],clans:[0,.2,.4,.6,.8,1],elves:[0,.185,.375,.575,.8,1],dwarves:[0,.21,.4,.585,.79,1],goblins:[0,.2,.4,.59,.79,1]};
-function cell(sheet,col,row,columns,rows,fractions,name){
+export function cell(sheet,col,row,columns,rows,fractions,name){
  const columnBounds=name==='buildings'?[0,246/1374,472/1374,710/1374,958/1374,1216/1374,1]:name==='fortifications-205'?[0,.285,.48,.745,1]:null;
  const x0=Math.floor((columnBounds?.[col]??col/columns)*sheet.width),x1=Math.floor((columnBounds?.[col+1]??(col+1)/columns)*sheet.width),y0=Math.floor((fractions?.[row]??row/rows)*sheet.height),y1=Math.floor((fractions?.[row+1]??(row+1)/rows)*sheet.height);
  const width=x1-x0,height=y1-y0,mask=new Uint8Array(width*height),visited=new Uint8Array(width*height),components=[];
@@ -30,7 +30,7 @@ function cell(sheet,col,row,columns,rows,fractions,name){
 }
 const sourceCache=new Map();function source(name,col,row,columns=4,rows=5){const key=`${name}/${col}/${row}`;if(!sourceCache.has(key))sourceCache.set(key,cell(sheets[name],col,row,columns,rows,(name==='wildlife'?[0,.42,.7,1]:name==='naval'?[0,.203,.408,.638,.809,1]:rowFractions[name]),name));return sourceCache.get(key);}
 /** Pack source poses at native scale; preserve alpha, anchors and logical bodies. */
-function draw(src,w,h,{bottom=h*.7,maxWidth=w-6,maxHeight=h-8,flip=false,owner='player',state='idle',index=0,direction='s',level=1,clanBanner=false,teamBand=true,nativeWildlife=false}={}){
+export function draw(src,w,h,{bottom=h*.7,maxWidth=w-6,maxHeight=h-8,flip=false,owner='player',state='idle',index=0,direction='s',level=1,clanBanner=false,teamBand=true,nativeWildlife=false}={}){
  let teamPixels=0;const out=new Surface(w,h),scale=Math.min(maxWidth/src.width,maxHeight/src.height),dw=Math.round(src.width*scale),dh=Math.round(src.height*scale),left=Math.round((w-dw)/2),top=Math.round(bottom-dh),collapse=state==='death'?Math.max(.25,1-index*.22):1;
  const key=`${dw}/${dh}/${nativeWildlife}`;src.reduced??=new Map();if(!src.reduced.has(key))src.reduced.set(key,reduceSprite(src,dw,dh));if(nativeWildlife){const native=new Uint8Array(dw*dh*4);for(let y=0;y<dh;y++)for(let x=0;x<dw;x++){const i=((src.y+Math.min(src.height-1,Math.floor(y/scale)))*src.sheet.width+src.x+Math.min(src.width-1,Math.floor(x/scale)))*4;native.set(src.sheet.data.subarray(i,i+4),(y*dw+x)*4);}src.reduced.set(key,native);}const pixels=src.reduced.get(key);
  for(let y=0;y<dh*collapse;y++)for(let x=0;x<dw;x++){const sx=flip?dw-1-x:x,sy=Math.min(dh-1,Math.floor(y/collapse)),i=(sy*dw+sx)*4,dy=state==='death'?Math.round(bottom-dh*collapse+y):top+y+(state==='walk'?[0,1,0,-1][index]:['attack','gather','build'].includes(state)?[0,1,2,0][index]:0),dx=left+x;if(dy<0||dy>=h||dx<0||dx>=w)continue;let [r,g,b,a]=pixels.subarray(i,i+4);if(a<96)continue;

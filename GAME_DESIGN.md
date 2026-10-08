@@ -1451,7 +1451,11 @@ queue cancellation, Commands and Tech Tree expose the role/dependencies.
 Save persists producer/job state and AI base development; old snapshots
 without cavalry army weights default to1. Restart clears the new states.
 
-Original native procedural pixel sprites/icons have five distinct mounts,
-ras-specific names/colors and building stages. Death frames repeat a fallen
-pose; no separately painted final death animation or human art approval is
-claimed. Source/license: [assets](assets/README.md#rts-220--cavalry-och-stable).
+Revised painted pixel sprites/icons match the existing visual-refresh roster:
+five distinct mounts and faction-specific Stable silhouettes. Original built-in
+imagegen masters use shared alpha cropping/reduction/team recoloring. Genuine
+walking/attack poses; western views mirror and northern views shade, while
+death uses collapse/fade. Construction stages remain procedural. No human
+balance or user art approval claimed. Source/license:
+[assets](assets/sources/visual-refresh/cavalry.md).
+

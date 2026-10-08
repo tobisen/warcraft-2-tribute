@@ -24,6 +24,6 @@ export function artAtlas(type:UnitArt):'units'|'naval'|'air'|'cavalry'{return ty
 
 /** Labels sit above the detailed land silhouettes, without changing its body or origin. */
 export function unitOverlayOffsets(type:UnitArt,faction:FactionId='crown'){
- const detailed=type==='worker'||type==='soldier'||type==='archer'||type==='specialist';
+ const detailed=type==='worker'||type==='soldier'||type==='archer'||type==='specialist'||type==='cavalry';
  return {hp:type==='air'?60:detailed?48:type==='catapult'?48:29,cargo:detailed?68:48};
 }

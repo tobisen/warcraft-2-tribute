@@ -123,7 +123,8 @@
       "data": "assets/cavalry-atlas.json",
       "width": 1536,
       "height": 6528,
-      "source": "assets/sources/cavalry.mjs"
+      "source": "assets/sources/cavalry.mjs",
+      "refreshSource": "assets/sources/visual-refresh/cavalry.md"
     }
   },
   "frames": {

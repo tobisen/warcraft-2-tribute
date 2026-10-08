@@ -4502,3 +4502,19 @@ egen granskning av testförväntning/config och docs utan kvarstående fynd.
 CI-fix omfattar bara rosterförväntning och dokumentation; ingen browser-
 omkörning behövs. Ny GitHubkörning efter push rapporteras separat från de
 lokala resultaten. Föregående15bd869-CI är verifierat röd, inte grön.
+
+
+### 2026-10-08 — RTS-220 grafikrättelse och återupptaget220–228-mandat
+
+Användaren avvisade skissartat cavalry och bad att hela kvarvarande uppdraget
+genomförs.220-art Done omprövades före rättelse. Egna imagegen-masters med
+befintligt Human-stilunderlag, riders/stables och befintlig shared alpha/
+reduction/team-export. Ingen units.mjs/style.css/docs/memory ändrad av oss.
+Riktade30/3 PASS2.00s; unit511/89 PASS16.13s; strict build PASS919ms med
+befintlig bundlevarning. Native800 actual mouse build/train/move/attack,
+Tech Tree och SaveLoad/restart samtliga femraser PASS0pageerrors; nya belägg
+artifacts/rts-220-art, Crown/Elf rendering visuellt granskad. Procedural
+construction och mirrored/shaded facing/collapse death konkret dokumenterade.
+Ingen balansspeltest/release/fullkampanj. Egen review/diff och source alpha
+kontrollerad. Fortsätter221 efter taskpush; förtida stopp från äldre handoff
+ersätts av uttryckligt fortsatt221–228-uppdrag.

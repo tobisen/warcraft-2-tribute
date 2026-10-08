@@ -1,0 +1,195 @@
+{
+  "fixture": "Real menu/clicks; resource-cheat funding; paused render with explicit .1s gameplay steps",
+  "results": [
+    {
+      "faction": "crown",
+      "actualMouseBaseUpgradeBuildTrainMoveAttack": true,
+      "fought": {
+        "ordered": {
+          "kind": "attack",
+          "enemyId": "enemy-worker-1"
+        },
+        "hp": 31
+      },
+      "queued": {
+        "wood": 99805,
+        "gold": 99885,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "cavalry",
+          "supply": 2,
+          "cost": {
+            "wood": 45,
+            "gold": 25
+          },
+          "durationSeconds": 12,
+          "remainingSeconds": 12
+        }
+      },
+      "movement": {
+        "before": {
+          "x": 598,
+          "y": 416
+        },
+        "after": {
+          "x": 600,
+          "y": 460
+        }
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "clans",
+      "actualMouseBaseUpgradeBuildTrainMoveAttack": true,
+      "fought": {
+        "ordered": {
+          "kind": "attack",
+          "enemyId": "enemy-worker-1"
+        },
+        "hp": 26
+      },
+      "queued": {
+        "wood": 99805,
+        "gold": 99885,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "cavalry",
+          "supply": 2,
+          "cost": {
+            "wood": 45,
+            "gold": 25
+          },
+          "durationSeconds": 12,
+          "remainingSeconds": 12
+        }
+      },
+      "movement": {
+        "before": {
+          "x": 598,
+          "y": 416
+        },
+        "after": {
+          "x": 600,
+          "y": 460
+        }
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "elves",
+      "actualMouseBaseUpgradeBuildTrainMoveAttack": true,
+      "fought": {
+        "ordered": {
+          "kind": "attack",
+          "enemyId": "enemy-worker-1"
+        },
+        "hp": 26
+      },
+      "queued": {
+        "wood": 99805,
+        "gold": 99885,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "cavalry",
+          "supply": 2,
+          "cost": {
+            "wood": 45,
+            "gold": 25
+          },
+          "durationSeconds": 12,
+          "remainingSeconds": 12
+        }
+      },
+      "movement": {
+        "before": {
+          "x": 598,
+          "y": 416
+        },
+        "after": {
+          "x": 600,
+          "y": 460
+        }
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "dwarves",
+      "actualMouseBaseUpgradeBuildTrainMoveAttack": true,
+      "fought": {
+        "ordered": {
+          "kind": "attack",
+          "enemyId": "enemy-worker-1"
+        },
+        "hp": 24.925595948545684
+      },
+      "queued": {
+        "wood": 99805,
+        "gold": 99885,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "cavalry",
+          "supply": 2,
+          "cost": {
+            "wood": 45,
+            "gold": 25
+          },
+          "durationSeconds": 12,
+          "remainingSeconds": 12
+        }
+      },
+      "movement": {
+        "before": {
+          "x": 598,
+          "y": 416
+        },
+        "after": {
+          "x": 600,
+          "y": 460
+        }
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "goblins",
+      "actualMouseBaseUpgradeBuildTrainMoveAttack": true,
+      "fought": {
+        "ordered": {
+          "kind": "attack",
+          "enemyId": "enemy-worker-1"
+        },
+        "hp": 26
+      },
+      "queued": {
+        "wood": 99805,
+        "gold": 99885,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "cavalry",
+          "supply": 2,
+          "cost": {
+            "wood": 45,
+            "gold": 25
+          },
+          "durationSeconds": 12,
+          "remainingSeconds": 12
+        }
+      },
+      "movement": {
+        "before": {
+          "x": 598,
+          "y": 416
+        },
+        "after": {
+          "x": 600,
+          "y": 460
+        }
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    }
+  ]
+}

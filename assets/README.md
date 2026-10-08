@@ -223,3 +223,9 @@ idle/walk/attack/death och fyra byggstadier för fem Stable-motsvarigheter.
 Ikoner/porträtt croppar samma sprites. Detta är enkel procedural native-art;
 fyra deathframes använder samma fallna pose och riders återanvänder grundform.
 Ingen separat målad slutanimation eller mänskligt kvalitetsgodkännande hävdas.
+
+RTS-220 rättelse2026-10-08: färdiga cavalry/Stable sprites ersatta med egna
+imagegen-målade rasterkällor i befintlig visual-refresh-stil. Se
+[sources/visual-refresh/cavalry.md](sources/visual-refresh/cavalry.md) för
+prompter/källor/licens/export och faktiska begränsningar. Den äldre procedural-
+leveransen ovan beskriver förebilden och gäller endast construction stages.

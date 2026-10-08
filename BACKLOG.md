@@ -46,7 +46,7 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 ## Current Focus
 
 Nytt mandat 2026-10-08: RTS-220–228 i ordning, en task åt gången.
-RTS-220 är pushad15bd869; Human-roster CI-fix verifierad lokalt1717/200. RTS-221 är nästa task. Städning, release och kartombyggnad är pausade.
+RTS-220 grafik rättad och verifierad; RTS-221–228 fortsätter i ordning utan tidigare förtida stopp. Städning, release och kartombyggnad är pausade.
 Taskvis riktade tester, native800-browser, unit/strict build/diff, docs och
 commit/push till origin/main. Full regression vid etappslut; stanna efter228.
 Befintliga style.css/units.mjs/docs/:memory:.ses bevaras. Ingen delegering.
@@ -5685,6 +5685,13 @@ SaveLoad/restart PASS; [belägg](artifacts/rts-220/browser.json). Representativa
 production/rider/TechTreebilder visuellt granskade. Egen procedural CC0-art,
 upprepad fallpose/death och delad ridergrundform dokumenterade; ingen mänsklig
 balans-/slutartclaim. Ingen ny release/fullkampanj/CI/Pages hävdas.
+
+RTS-220 grafikrättelse2026-10-08: egna målade riders/stables i befintlig
+visual-refresh-stil, genuina walking/strikeposer, samma exporter/team/anchors.
+Native800 femras actual mouse gameplay/portraits/TechTree/save/restart PASS;
+representativa Crown/Elf-bilder granskade. Riktade30/3, unit511/89 och strict
+build PASS. Begränsningar: mirrored/shaded perspectives, collapse/fade death
+samt procedural construction, inte den tidigare skissartade slutbilden.
 
 ### RTS-221 — Healer — Todo
 Support producerad i befintlig academy där möjligt. Mana/cooldown/visuell Heal,
