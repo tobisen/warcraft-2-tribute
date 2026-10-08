@@ -1,6 +1,6 @@
 import {updateSiegeProduction} from './siegeProduction';
 import {updateFlightProduction} from './flightProduction';
-import {createBosses,prepareBossCombat,finishBossCombat,updateBossRewards,type BossState} from './bosses';
+import {createBosses,prepareEnemyBossLoot,prepareBossCombat,finishBossCombat,updateBossRewards,type BossState} from './bosses';
 import {regionDefinition} from '../config/mapRegions';
 import {hasEnemyBase} from './enemyBases';
 import {hasMainBase,syncDropoffs,updateExtraBaseProduction} from './extraBases';
@@ -207,7 +207,7 @@ function advance(state: MatchState, delta: number, scope?:CombatScope): MatchSta
   state=prepareEnemyExpansion(state);
   state=prepareEnemyConstruction(state);
   state=prepareEnemyGathering(state);
-  state=prepareEnemyScout(state);state=prepareScouting(state,scope?.side);
+  state=prepareEnemyBossLoot(prepareEnemyScout(state));state=prepareScouting(state,scope?.side);
   const gateFor=trafficGates(state.map,[...state.gathering.units.filter(u=>!isAir(u)).map(u=>({id:`player:${u.id}`,position:u.position,fixed:u.commandMode?.kind==='hold'||u.order.kind==='idle'&&u.navigation?.status==='arrived',half:(u.kind==='worker'?workerStats(state.gathering.faction):combatUnitStats(u,state.gathering.faction)).size/2,speed:(u.kind==='worker'?workerStats(state.gathering.faction):combatUnitStats(u,state.gathering.faction)).speed,active:u.order.kind!=='idle',waypoints:u.navigation?.waypoints??[u.target]})),...state.combat.enemies.filter(e=>!isAir(e)&&e.kind!=='ship'&&!e.footprint&&e.hp>0).map(e=>({id:`enemy:${e.id}`,position:e.position,half:enemySize(e)/2,speed:e.kind==='worker'?workerStats(state.factions?.enemy??defaultFactions.enemy).speed:enemyUnitStats(e,state.factions?.enemy).speed,active:e.work?e.work.order.kind!=='idle':e.order?.kind!=='idle',waypoints:e.navigation?.waypoints??(e.work?[e.work.target]:undefined)??(e.order?.kind==='muster'||e.order?.kind==='attack-move'?[e.order.destination]:[])}))],state.waves.elapsedSeconds,delta);
   const services=resourceServices({...state.gathering,units:[...state.gathering.units,...state.combat.enemies.flatMap(e=>{const worker=enemyWorker(e);return worker?[worker]:[];})]},state.map,state.waves.elapsedSeconds);
   state=syncDropoffs(state);

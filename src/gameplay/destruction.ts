@@ -1,3 +1,4 @@
+import {bossEnemyId,type BossId} from '../config/bosses';
 import {isRoleResearch,roleResearchConfig} from '../config/roleResearch';
 import {hasEnemyBase} from './enemyBases';
 import {hasMainBase} from './extraBases';
@@ -56,13 +57,14 @@ export function cleanDestroyed(state:MatchState):MatchState {
   if(placement.academy)placement={...placement,academy:academyDead?undefined:{...placement.academy,construction:paused(placement.academy.construction)!,...(placement.academy.production?{production:allBasesDead?clearProduction(placement.academy.production):placement.academy.production}:{})}};
   if(placement.bases)placement={...placement,bases:placement.bases.filter(b=>b.hp>0).map(b=>({...b,construction:paused(b.construction)!}))};
   if(state.enemyProduction){const dead=state.combat.enemies.filter(e=>e.hp<=0&&e.work);if(dead.length){const lost={wood:state.enemyProduction.lostCargo?.wood??0,gold:state.enemyProduction.lostCargo?.gold??0};for(const e of dead)lost[e.work!.cargoType??'wood']+=e.work!.cargo;state={...state,enemyProduction:{...state.enemyProduction,lostCargo:lost}};}}
+  const liveBossIds=Object.entries(state.bosses?.guardians??{}).filter(([,b])=>b.hp>0).map(([id])=>bossEnemyId(id as BossId));
   const liveEnemies=state.combat.enemies.filter(e=>e.hp>0);
-  const units=gathering.units.map((u):Unit=>u.kind==='soldier'&&u.order.kind==='attack'&&!liveEnemies.some(e=>u.order.kind==='attack'&&e.id===u.order.enemyId)?{...u,navigation:undefined,target:{...u.position},order:{kind:'idle'}}:
+  const units=gathering.units.map((u):Unit=>u.kind==='soldier'&&u.order.kind==='attack'&&!liveBossIds.includes(u.order.enemyId)&&!liveEnemies.some(e=>u.order.kind==='attack'&&e.id===u.order.enemyId)?{...u,navigation:undefined,target:{...u.position},order:{kind:'idle'}}:
     (u.order.kind==='build'||u.order.kind==='repair')&&(deadSites.has(u.order.buildingId)||u.order.buildingId==='base'&&baseDead)
     ||allBasesDead&&(u.order.kind==='gather'||u.order.kind==='deliver')?{...u,navigation:undefined,target:{...u.position},order:{kind:'idle'}}:u);
   if(units.some((u,i)=>u!==gathering.units[i]))gathering={...gathering,units};
   if(placement.active&&!gathering.units.some(u=>u.kind==='worker'&&u.selected))placement={...placement,active:false};
-  const targets=new Set(playerTargets(gathering,state.combat,placement,state.navy).map(t=>t.id));
+  const targets=new Set([...liveBossIds,...playerTargets(gathering,state.combat,placement,state.navy).map(t=>t.id)]);
   const enemyBaseAlive=hasEnemyBase({...state.combat,enemies:liveEnemies},state.map);
   const enemyWorkers=new Set(liveEnemies.filter(e=>e.kind==='worker').map(e=>e.id));
   const readyEnemies=liveEnemies.map(e=>e.construction?.builderId&&!enemyWorkers.has(e.construction.builderId)?{...e,construction:{...e.construction,builderId:null}}:e).map(e=>e.work?.order.kind==='build'&&!liveEnemies.some(site=>site.id===`enemy-${e.work!.order.kind==='build'?e.work!.order.buildingId:''}`)?{...e,navigation:undefined,work:{...e.work,order:{kind:'idle' as const}}}:e);

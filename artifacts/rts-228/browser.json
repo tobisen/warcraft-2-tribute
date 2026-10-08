@@ -1,0 +1,525 @@
+{
+  "fixture": "Scoped campaign completions unlock mission; ledger-tracked funding; paid building/production APIs; 24 paid infantry staged near guardian; worker staged near hoard; real mouse attack and worker move, actual match steps",
+  "results": [
+    {
+      "run": {
+        "id": "bramblemaw",
+        "faction": "crown",
+        "series": "human-frontier-v1",
+        "mission": "forest-watch"
+      },
+      "initial": {
+        "bosses": {
+          "version": 1,
+          "guardians": {
+            "bramblemaw": {
+              "hp": 1100,
+              "attackCooldown": 0,
+              "claimed": false,
+              "engaged": false
+            }
+          }
+        },
+        "visibleBosses": []
+      },
+      "preparation": {
+        "fighters": [
+          {
+            "id": "unit-4",
+            "position": {
+              "x": 2232,
+              "y": 2480
+            }
+          },
+          {
+            "id": "unit-5",
+            "position": {
+              "x": 2272,
+              "y": 2480
+            }
+          },
+          {
+            "id": "unit-6",
+            "position": {
+              "x": 2312,
+              "y": 2480
+            }
+          },
+          {
+            "id": "unit-7",
+            "position": {
+              "x": 2352,
+              "y": 2480
+            }
+          },
+          {
+            "id": "unit-8",
+            "position": {
+              "x": 2192,
+              "y": 2520
+            }
+          },
+          {
+            "id": "unit-9",
+            "position": {
+              "x": 2232,
+              "y": 2520
+            }
+          },
+          {
+            "id": "unit-10",
+            "position": {
+              "x": 2272,
+              "y": 2520
+            }
+          },
+          {
+            "id": "unit-11",
+            "position": {
+              "x": 2312,
+              "y": 2520
+            }
+          },
+          {
+            "id": "unit-12",
+            "position": {
+              "x": 2352,
+              "y": 2520
+            }
+          },
+          {
+            "id": "unit-13",
+            "position": {
+              "x": 2152,
+              "y": 2560
+            }
+          },
+          {
+            "id": "unit-14",
+            "position": {
+              "x": 2192,
+              "y": 2560
+            }
+          },
+          {
+            "id": "unit-15",
+            "position": {
+              "x": 2232,
+              "y": 2560
+            }
+          },
+          {
+            "id": "unit-16",
+            "position": {
+              "x": 2272,
+              "y": 2560
+            }
+          },
+          {
+            "id": "unit-17",
+            "position": {
+              "x": 2312,
+              "y": 2560
+            }
+          },
+          {
+            "id": "unit-18",
+            "position": {
+              "x": 2152,
+              "y": 2600
+            }
+          },
+          {
+            "id": "unit-19",
+            "position": {
+              "x": 2192,
+              "y": 2600
+            }
+          },
+          {
+            "id": "unit-20",
+            "position": {
+              "x": 2232,
+              "y": 2600
+            }
+          },
+          {
+            "id": "unit-21",
+            "position": {
+              "x": 2272,
+              "y": 2600
+            }
+          },
+          {
+            "id": "unit-22",
+            "position": {
+              "x": 2152,
+              "y": 2640
+            }
+          },
+          {
+            "id": "unit-23",
+            "position": {
+              "x": 2192,
+              "y": 2640
+            }
+          },
+          {
+            "id": "unit-24",
+            "position": {
+              "x": 2232,
+              "y": 2640
+            }
+          },
+          {
+            "id": "unit-25",
+            "position": {
+              "x": 2152,
+              "y": 2680
+            }
+          },
+          {
+            "id": "unit-26",
+            "position": {
+              "x": 2192,
+              "y": 2680
+            }
+          },
+          {
+            "id": "unit-27",
+            "position": {
+              "x": 2232,
+              "y": 2680
+            }
+          }
+        ],
+        "bossPosition": {
+          "x": 2352,
+          "y": 2640
+        },
+        "name": "Bramblemaw",
+        "population": {
+          "cap": 28,
+          "used": 27,
+          "reserved": 0
+        },
+        "wood": 99420,
+        "gold": 99890,
+        "stats": {
+          "wood": {
+            "gathered": 0,
+            "delivered": 0,
+            "spent": 600
+          },
+          "gold": {
+            "gathered": 0,
+            "delivered": 0,
+            "spent": 120
+          },
+          "added": 24,
+          "lost": 0,
+          "killed": 0,
+          "built": 5,
+          "destroyed": 0,
+          "removed": 0
+        }
+      },
+      "battle": {
+        "ordered": 24,
+        "frames": 41,
+        "hp": 373.9917951355388,
+        "engaged": true,
+        "alive": 24
+      },
+      "defeated": {
+        "boss": {
+          "hp": 0,
+          "attackCooldown": 0,
+          "claimed": false,
+          "engaged": false
+        },
+        "alive": 23,
+        "outcome": "playing",
+        "wood": 99420,
+        "gold": 99890
+      },
+      "loot": {
+        "claimed": true,
+        "claimedBy": "player",
+        "wood": 99720,
+        "gold": 100090,
+        "before": {
+          "wood": 99420,
+          "gold": 99890
+        },
+        "ordered": true
+      },
+      "actualMouseAttack": true,
+      "paidArmy": true,
+      "woundedSaveLoad": true,
+      "claimedSaveLoad": true,
+      "restart": true,
+      "errors": []
+    },
+    {
+      "run": {
+        "id": "gravelheart",
+        "faction": "dwarves",
+        "series": "dwarves-road-v1",
+        "mission": "ridge-convoy"
+      },
+      "initial": {
+        "bosses": {
+          "version": 1,
+          "guardians": {
+            "gravelheart": {
+              "hp": 1400,
+              "attackCooldown": 0,
+              "claimed": false,
+              "engaged": false
+            }
+          }
+        },
+        "visibleBosses": []
+      },
+      "preparation": {
+        "fighters": [
+          {
+            "id": "unit-5",
+            "position": {
+              "x": 2920,
+              "y": 2672
+            }
+          },
+          {
+            "id": "unit-6",
+            "position": {
+              "x": 2640,
+              "y": 2792
+            }
+          },
+          {
+            "id": "unit-7",
+            "position": {
+              "x": 2680,
+              "y": 2792
+            }
+          },
+          {
+            "id": "unit-8",
+            "position": {
+              "x": 2720,
+              "y": 2792
+            }
+          },
+          {
+            "id": "unit-9",
+            "position": {
+              "x": 2600,
+              "y": 2832
+            }
+          },
+          {
+            "id": "unit-10",
+            "position": {
+              "x": 2640,
+              "y": 2832
+            }
+          },
+          {
+            "id": "unit-11",
+            "position": {
+              "x": 2680,
+              "y": 2832
+            }
+          },
+          {
+            "id": "unit-12",
+            "position": {
+              "x": 2600,
+              "y": 2872
+            }
+          },
+          {
+            "id": "unit-13",
+            "position": {
+              "x": 2640,
+              "y": 2872
+            }
+          },
+          {
+            "id": "unit-14",
+            "position": {
+              "x": 2680,
+              "y": 2872
+            }
+          },
+          {
+            "id": "unit-15",
+            "position": {
+              "x": 2720,
+              "y": 2872
+            }
+          },
+          {
+            "id": "unit-16",
+            "position": {
+              "x": 2880,
+              "y": 2872
+            }
+          },
+          {
+            "id": "unit-17",
+            "position": {
+              "x": 2600,
+              "y": 2912
+            }
+          },
+          {
+            "id": "unit-18",
+            "position": {
+              "x": 2640,
+              "y": 2912
+            }
+          },
+          {
+            "id": "unit-19",
+            "position": {
+              "x": 2680,
+              "y": 2912
+            }
+          },
+          {
+            "id": "unit-20",
+            "position": {
+              "x": 2720,
+              "y": 2912
+            }
+          },
+          {
+            "id": "unit-21",
+            "position": {
+              "x": 2760,
+              "y": 2912
+            }
+          },
+          {
+            "id": "unit-22",
+            "position": {
+              "x": 2840,
+              "y": 2912
+            }
+          },
+          {
+            "id": "unit-23",
+            "position": {
+              "x": 2880,
+              "y": 2912
+            }
+          },
+          {
+            "id": "unit-24",
+            "position": {
+              "x": 2920,
+              "y": 2912
+            }
+          },
+          {
+            "id": "unit-25",
+            "position": {
+              "x": 2640,
+              "y": 2952
+            }
+          },
+          {
+            "id": "unit-26",
+            "position": {
+              "x": 2680,
+              "y": 2952
+            }
+          },
+          {
+            "id": "unit-27",
+            "position": {
+              "x": 2720,
+              "y": 2952
+            }
+          },
+          {
+            "id": "unit-28",
+            "position": {
+              "x": 2760,
+              "y": 2952
+            }
+          }
+        ],
+        "bossPosition": {
+          "x": 2800,
+          "y": 2832
+        },
+        "name": "Gravelheart",
+        "population": {
+          "cap": 28,
+          "used": 28,
+          "reserved": 0
+        },
+        "wood": 99331,
+        "gold": 99900,
+        "stats": {
+          "wood": {
+            "gathered": 0,
+            "delivered": 0,
+            "spent": 709
+          },
+          "gold": {
+            "gathered": 0,
+            "delivered": 0,
+            "spent": 120
+          },
+          "added": 24,
+          "lost": 0,
+          "killed": 0,
+          "built": 5,
+          "destroyed": 0,
+          "removed": 0
+        }
+      },
+      "battle": {
+        "ordered": 24,
+        "frames": 41,
+        "hp": 1101.9938177727947,
+        "engaged": true,
+        "alive": 24
+      },
+      "defeated": {
+        "boss": {
+          "hp": 0,
+          "attackCooldown": 0,
+          "claimed": false,
+          "engaged": false
+        },
+        "alive": 24,
+        "outcome": "playing",
+        "wood": 99331,
+        "gold": 99900
+      },
+      "loot": {
+        "claimed": true,
+        "claimedBy": "player",
+        "wood": 99531,
+        "gold": 100250,
+        "before": {
+          "wood": 99331,
+          "gold": 99900
+        },
+        "ordered": true
+      },
+      "actualMouseAttack": true,
+      "paidArmy": true,
+      "woundedSaveLoad": true,
+      "claimedSaveLoad": true,
+      "restart": true,
+      "errors": []
+    }
+  ]
+}

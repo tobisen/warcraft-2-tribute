@@ -46,7 +46,7 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 ## Current Focus
 
 Nytt mandat 2026-10-08: RTS-220–228 i ordning, därefter användarens tillägg RTS-229, en task åt gången.
-RTS-220 grafik samt RTS-221–222 verifierade; RTS-223 är verifierad med separat flygbyggnad; 229 är klar enligt senaste styrning om egen belägringsbyggnad/ballista. 227 är klar; aktuell task228, därefter samlad slutregression och HANDOFF. Städning, release och kartombyggnad är pausade.
+RTS-220 grafik samt RTS-221–222 verifierade; RTS-223 är verifierad med separat flygbyggnad; 229 är klar enligt senaste styrning om egen belägringsbyggnad/ballista. 227/228/229 är klara; fullregression1795/206 PASS och HANDOFF är uppdaterad. Aktuellt mandat är avslutat; GitHub-status efter sista push redovisas separat. Städning, release och kartombyggnad är pausade.
 Taskvis riktade tester, native800-browser, unit/strict build/diff, docs och
 commit/push till origin/main. Full regression vid etappslut; stanna efter229.
 Befintliga style.css/units.mjs/docs/:memory:.ses bevaras. Ingen delegering.
@@ -5789,7 +5789,7 @@ vid attack. Integrera befintlig fog; inga minimap/selection/AI-läckor eller
 osynlig jakt efter detectionförlust. Testa navigation/domains/detection/
 förlust/lag/informationsläckor/save/load/restart.
 
-### RTS-228 — Befintliga två bossar och worker-skatter — Todo
+### RTS-228 — Befintliga två bossar och worker-skatter — Done
 Utöka RTS-212 Bramblemaw/Gravelheart på befintliga Frontier/Highlands; inga
 bossdubbletter. Behåll optional victory-oberoende områdescombat/fog/art/
 ändlig configbelöning och armékrav utan healer. Definiera en styrka/svaghet

@@ -1,3 +1,4 @@
+import {bossIncoming} from '../config/bosses';
 import {targetDomain,airMap} from './domains';
 import type {TargetDomain} from '../config/domains';
 import {marineFlightMap} from './terrainNavigation';
@@ -8,7 +9,7 @@ import type { Footprint } from './placement';
 import type { WorldMap } from './map';
 import { segmentFits } from './navigation';
 export interface Projectile {
- submarine?:true;targets?:readonly TargetDomain[];damageByDomain?:Partial<Record<TargetDomain,number>>;airborne?:true;owner?:'enemy';marine?:true;id:string; shooterId?:string; targetId:string; position:Position; destination:Position;
+ bossProfile?:import('../config/bosses').BossDamageProfile;submarine?:true;targets?:readonly TargetDomain[];damageByDomain?:Partial<Record<TargetDomain,number>>;airborne?:true;owner?:'enemy';marine?:true;id:string; shooterId?:string; targetId:string; position:Position; destination:Position;
  defenseMultiplier?:number;shooterFootprint?:Footprint;splashRadius?:number;targetFootprint?:Footprint;
  speed:number; remainingLife:number; damage:number; hitRadius:number;
 }
@@ -32,10 +33,10 @@ export function advanceProjectiles(projectiles:readonly Projectile[], enemies:re
     for(const victim of enemies){
       if(!visible(victim,p)||victim.hp<=0||!(p.targets??['land','sea','building']).includes(targetDomain(victim)))continue;
       const distance=victim.footprint?footprintDistance(p.destination,victim.footprint):Math.hypot(victim.position.x-p.destination.x,victim.position.y-p.destination.y);
-      if(distance<=p.splashRadius)damage.set(victim.id,(damage.get(victim.id)??0)+p.damage*(p.damageByDomain?.[targetDomain(victim)]??1)*(victim.fortification?p.defenseMultiplier??1:1));
+      if(distance<=p.splashRadius)damage.set(victim.id,(damage.get(victim.id)??0)+p.damage*(victim.boss&&p.bossProfile?bossIncoming(victim.boss,p.bossProfile):1)*(p.damageByDomain?.[targetDomain(victim)]??1)*(victim.fortification?p.defenseMultiplier??1:1));
     }
    }else if(enemy&&Math.hypot(enemy.position.x-p.destination.x,enemy.position.y-p.destination.y)<=p.hitRadius)
-    damage.set(enemy.id,(damage.get(enemy.id)??0)+p.damage*(p.damageByDomain?.[targetDomain(enemy)]??1)*(enemy.fortification?p.defenseMultiplier??1:1));
+    damage.set(enemy.id,(damage.get(enemy.id)??0)+p.damage*(enemy.boss&&p.bossProfile?bossIncoming(enemy.boss,p.bossProfile):1)*(p.damageByDomain?.[targetDomain(enemy)]??1)*(enemy.fortification?p.defenseMultiplier??1:1));
   }else if(p.remainingLife>time)alive.push({...p,position,remainingLife:p.remainingLife-time});
  }
  return {projectiles:alive,damage};

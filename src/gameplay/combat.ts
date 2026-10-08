@@ -1,6 +1,6 @@
 import {cavalryArmorMultiplier} from '../config/roleResearch';
 import {cavalryRules} from '../config/cavalry';
-import {bossRules} from '../config/bosses';
+import {bossRules,bossDamageProfile,bossIncoming} from '../config/bosses';
 import {upgradeMultiplier} from '../config/upgrades';
 import type {PlayerId} from '../config/players';
 import {airPresentation} from '../config/air';
@@ -124,7 +124,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
       const canFire=(!visible||visible(enemy,unit))&&(!map||isAir(unit)||isAir(enemy)||segmentFits(enemy.footprint?{...map,obstacles:map.obstacles.filter(o=>!(o.x===enemy.footprint!.x&&o.y===enemy.footprint!.y&&o.width===enemy.footprint!.width&&o.height===enemy.footprint!.height))}:map,step.position,enemy.position,0));
       while(canFire&&time>0&&time+1e-9>=cooldown) {
         time=Math.max(0,time-cooldown);
-        shots.push({projectile:{id:`arrow-${nextProjectileNumber++}`,shooterId:unit.id,targetId:enemy.id,
+        shots.push({projectile:{bossProfile:bossDamageProfile(unit.kind==='soldier'?unit.archetype:undefined,true),id:`arrow-${nextProjectileNumber++}`,shooterId:unit.id,targetId:enemy.id,
           position:{...step.position},destination:{...enemy.position},speed:ranged.projectileSpeed,
           targets:attackTargets(unit,gathering.faction??'crown'),...(isAir(unit)||isAir(enemy)?{airborne:true as const}:{}),...(combatUnitStats(unit,gathering.faction).damageByDomain?{damageByDomain:combatUnitStats(unit,gathering.faction).damageByDomain}:{}),...(unit.archetype==='catapult'?{defenseMultiplier:defenseBalanceConfig.siegeDefenseMultiplier}:{}),remainingLife:ranged.projectileLifetime,damage:ranged.damage*(enemy.footprint?stats.buildingDamageMultiplier??1:1)*attackMultiplier*abilityEffects(gathering,unit,delta-time).attackMultiplier*spellModifiers(unit,delta-time).attack,hitRadius:'hitRadius' in ranged?ranged.hitRadius:0,
           ...(enemy.footprint?{targetFootprint:{...enemy.footprint}}:{}),
@@ -134,12 +134,15 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
       cooldown=Math.max(0,cooldown-time);
       return {...unit,position:step.position,attackCooldown:cooldown,...(step.navigation?{navigation:step.navigation}:{})};
     }
-    damage.set(enemy.id, (damage.get(enemy.id) ?? 0) + step.attackSeconds * (stats.damagePerSecond??combatConfig.soldierDamagePerSecond)*(enemy.footprint?stats.buildingDamageMultiplier??1:1)*(unit.kind==='soldier'&&!unit.archetype&&enemy.role==='cavalry'?cavalryRules.infantryDamageMultiplier:1)*(unit.kind==='worker'?1:attackMultiplier*abilityEffects(gathering,unit).attackMultiplier*spellModifiers(unit).attack));
+    damage.set(enemy.id, (damage.get(enemy.id) ?? 0) + (enemy.boss?bossIncoming(enemy.boss,bossDamageProfile(unit.kind==='soldier'?unit.archetype:undefined)):1)*step.attackSeconds * (stats.damagePerSecond??combatConfig.soldierDamagePerSecond)*(enemy.footprint?stats.buildingDamageMultiplier??1:1)*(unit.kind==='soldier'&&!unit.archetype&&enemy.role==='cavalry'?cavalryRules.infantryDamageMultiplier:1)*(unit.kind==='worker'?1:attackMultiplier*abilityEffects(gathering,unit).attackMultiplier*spellModifiers(unit).attack));
     return { ...unit, position: step.position, ...(step.navigation ? {navigation:step.navigation}: {}) };
   });
   // Both sides attack from the same live snapshot, so lethal blows are simultaneous.
   const playerDamage = new Map<string, number>();
-  const originalTargets=scope?.targets??playerTargets(gathering,combat,placement,navy);
+  const neutralTargets:PlayerTarget[]=combat.enemies.filter(e=>e.boss&&e.hp>0).map(e=>({id:e.id,boss:e.boss,domain:'land',kind:'soldier',owner:'player',hp:e.hp,footprint:enemyBody(e)}));
+  const originalTargets=[...(scope?.targets??playerTargets(gathering,combat,placement,navy)),...neutralTargets];
+  const bossTargets:PlayerTarget[]=neutralTargets.length||combat.projectiles?.some(p=>p.shooterId?.startsWith('enemy-boss-'))?[...originalTargets.filter(t=>!t.boss),...combat.enemies.filter(e=>!e.boss&&e.hp>0).map(e=>({id:e.id,domain:targetDomain(e),kind:e.kind==='ship'?'ship' as const:e.kind==='worker'?'worker' as const:e.footprint?'barracks' as const:'soldier' as const,owner:'player' as const,hp:e.hp,footprint:enemyBody(e)}))]:[];
+  const bossTargetIds=new Set(bossTargets.map(t=>t.id));
   const enemyNavy=prepareEnemySubmarines(combat.enemies,originalTargets,scope?.side==='player'?0:delta,map,nextProjectileNumber,enemyFaction,upgradeMultiplier(opponent.upgrades.attack.multiplier,combat.enemyUpgrades?.attack),playerVisible);nextProjectileNumber=enemyNavy.next;shots.push(...enemyNavy.shots);
   const priority={siegeWorks:7,aviary:7,stable:5,academy:2,wall:2,gate:2,tower:2,ship:0,harbor:2,soldier:0,worker:1,barracks:2,farm:2,forge:2,base:3};
   const enemyGathering={...gathering,faction:enemyFaction};
@@ -155,7 +158,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
       return {...cooling,position:step.position,...(step.route?{navigation:step.route}:{})};
     }
 
-    const knownTargets=originalTargets.filter(t=>(enemy.boss?Math.hypot(t.footprint.x+t.footprint.width/2-enemy.position.x,t.footprint.y+t.footprint.height/2-enemy.position.y)<=bossRules.range:playerVisible(t,enemy))&&canAttackDomain(enemy,t,enemyFaction));
+    const knownTargets=(enemy.boss?bossTargets:originalTargets).filter(t=>(enemy.boss?Math.hypot(t.footprint.x+t.footprint.width/2-enemy.position.x,t.footprint.y+t.footprint.height/2-enemy.position.y)<=bossRules.range:playerVisible(t,enemy))&&canAttackDomain(enemy,t,enemyFaction));
     const nearby=knownTargets.filter(t=>t.kind!=='base').map(t=>({target:t,
       distance:Math.hypot(t.footprint.x+t.footprint.width/2-enemy.position.x,t.footprint.y+t.footprint.height/2-enemy.position.y)}))
       .filter(t=>t.distance<=stats.aggroRange).sort((a,b)=>a.distance-b.distance
@@ -182,7 +185,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
       const canFire=!!enemy.boss||!map||isAir(enemy)||target.domain==='air'||segmentFits({...map,obstacles:map.obstacles.filter(o=>!(o.x===footprint.x&&o.y===footprint.y&&o.width===footprint.width&&o.height===footprint.height))},step.position,center,0);
       while(canFire&&time>0&&time+1e-9>=cooldown){
         time=Math.max(0,time-cooldown);
-        shots.push({projectile:{owner:'enemy',id:`enemy-arrow-${nextProjectileNumber++}`,shooterId:enemy.id,targetId:target.id,
+        shots.push({projectile:{bossProfile:bossDamageProfile(enemy.role,true),owner:'enemy',id:`enemy-arrow-${nextProjectileNumber++}`,shooterId:enemy.id,targetId:target.id,
           position:{...step.position},destination:{...center},speed:ranged.projectileSpeed,remainingLife:ranged.projectileLifetime,
           targets:attackTargets(enemy,enemyFaction),...(enemy.boss||isAir(enemy)||target.domain==='air'?{airborne:true as const}:{}),...(stats.damageByDomain?{damageByDomain:stats.damageByDomain}:{}),...(enemy.role==='catapult'?{defenseMultiplier:defenseBalanceConfig.siegeDefenseMultiplier}:{}),damage:ranged.damage*(!['soldier','worker','ship'].includes(target.kind)?stats.buildingDamageMultiplier??1:1)*multiplier*abilityEffects(enemyGathering,soldier,delta-time).attackMultiplier*spellModifiers(soldier,delta-time).attack,
           hitRadius:'hitRadius' in ranged?ranged.hitRadius:0,targetFootprint:{...footprint},
@@ -191,20 +194,21 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
       }
       return {...enemy,position:step.position,attackCooldown:Math.max(0,cooldown-time),...(step.navigation?{navigation:step.navigation}:{})};
     }
-    playerDamage.set(target.id,(playerDamage.get(target.id)??0)+step.attackSeconds*stats.damagePerSecond*(!['soldier','worker','ship'].includes(target.kind)?opponent.units[enemy.role??'soldier'].buildingDamageMultiplier??1:1)*(enemy.role==='soldier'&&gathering.units.some(u=>u.id===target.id&&u.kind==='soldier'&&u.archetype==='cavalry')?cavalryRules.infantryDamageMultiplier:1)*multiplier*abilityEffects(enemyGathering,soldier).attackMultiplier*spellModifiers(soldier).attack);
+    playerDamage.set(target.id,(playerDamage.get(target.id)??0)+(target.boss?bossIncoming(target.boss,bossDamageProfile(enemy.role)):1)*step.attackSeconds*stats.damagePerSecond*(!['soldier','worker','ship'].includes(target.kind)?opponent.units[enemy.role??'soldier'].buildingDamageMultiplier??1:1)*(enemy.role==='soldier'&&gathering.units.some(u=>u.id===target.id&&u.kind==='soldier'&&u.archetype==='cavalry')?cavalryRules.infantryDamageMultiplier:1)*multiplier*abilityEffects(enemyGathering,soldier).attackMultiplier*spellModifiers(soldier).attack);
     return {...cooling,position:step.position,...(step.navigation?{navigation:step.navigation}:{})};
   });
   const visibleProjectile=(enemy:Enemy,p:Projectile)=>projectileVisible?projectileVisible(enemy,p):!visible||units.some(u=>u.id===p.shooterId&&u.kind==='soldier'&&visible(enemy,u));
-  const ownBodies=originalTargets.map(t=>{const moved=units.find(u=>u.id===t.id)??naval.navy?.ships.find(u=>u.id===t.id);const f=moved?unitFootprint(moved.position,t.footprint.width):t.footprint;return {id:t.id,hp:t.hp,...(t.domain==='air'?{role:'air' as const}:{}),...(t.kind==='ship'?{kind:'ship' as const}:{}),...(t.kind==='tower'||t.kind==='wall'||t.kind==='gate'?{fortification:true as const}:{}),position:{x:f.x+f.width/2,y:f.y+f.height/2},...(t.kind==='soldier'||t.kind==='worker'||t.kind==='ship'?{}:{footprint:f})};});
+  const targetBody=(t:PlayerTarget,includeEnemies=false)=>{const moved=units.find(u=>u.id===t.id)??naval.navy?.ships.find(u=>u.id===t.id)??(includeEnemies?movingEnemies.find(e=>e.id===t.id):undefined);const f=moved?unitFootprint(moved.position,t.footprint.width):t.footprint;return {id:t.id,hp:t.hp,...(t.boss?{boss:t.boss}:{}),...(t.domain==='air'?{role:'air' as const}:{}),...(t.kind==='ship'?{kind:'ship' as const}:{}),...(t.kind==='tower'||t.kind==='wall'||t.kind==='gate'?{fortification:true as const}:{}),position:{x:f.x+f.width/2,y:f.y+f.height/2},...(t.kind==='soldier'||t.kind==='worker'||t.kind==='ship'?{}:{footprint:f})};};
+  const ownBodies=originalTargets.map(t=>targetBody(t)),bossBodies=bossTargets.map(t=>targetBody(t,true));
   const enemyProjectileVisible=(body:Enemy,p:Projectile)=>{if(p.shooterId?.startsWith('enemy-boss-'))return Math.hypot(body.position.x-p.destination.x,body.position.y-p.destination.y)<=100;const target=originalTargets.find(t=>t.id===body.id),shooter=movingEnemies.find(e=>e.id===p.shooterId)??combat.enemies.find(e=>e.id===p.shooterId)??{id:p.shooterId??'historical-shooter',position:p.position,hp:1};return !!target&&playerVisible({...target,footprint:body.footprint??unitFootprint(body.position,target.footprint.width)},shooter);};
   const projectiles:Projectile[]=[];
   const advanceShot=(list:Projectile[],time:number,owner?:'enemy')=>{
-    const advanced=advanceProjectiles(list,owner?ownBodies:movingEnemies.filter(e=>!scope?.canTarget||scope.canTarget(e)),time,map,owner?enemyProjectileVisible:visibleProjectile);
+    const advanced=advanceProjectiles(list,owner&&list[0]?.shooterId?.startsWith('enemy-boss-')?bossBodies:owner?ownBodies:movingEnemies.filter(e=>!scope?.canTarget||scope.canTarget(e)),time,map,owner?enemyProjectileVisible:visibleProjectile);
     projectiles.push(...advanced.projectiles);const amounts=owner?playerDamage:damage;
     for(const [id,amount] of advanced.damage)amounts.set(id,(amounts.get(id)??0)+amount);
   };
   advanceShot((combat.projectiles??[]).filter(p=>!p.owner),delta);
-  advanceShot((combat.projectiles??[]).filter(p=>p.owner==='enemy'),delta,'enemy');
+  for(const p of (combat.projectiles??[]).filter(p=>p.owner==='enemy'))advanceShot([p],delta,'enemy');
   for(const shot of shots)advanceShot([shot.projectile],shot.time,shot.projectile.owner);
   scope?.onDamage?.(scope.side==='player'?damage:playerDamage);
   if(scope?.side==='enemy')playerDamage.clear();
@@ -217,9 +221,9 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
   const nextNavy=naval.navy?{...naval.navy,ships:naval.navy.ships.map(s=>({...s,hp:Math.max(0,s.hp-(playerDamage.get(s.id)??0)*defenseMultiplier)})),harbor:naval.navy.harbor?{...naval.navy.harbor,hp:Math.max(0,naval.navy.harbor.hp-(playerDamage.get('harbor')??0))}:null}:undefined;
   const nextCombat={...combat,baseHP:Math.max(0,combat.baseHP-(playerDamage.get('base')??0))};
   const aliveTargets=new Set((scope?.targets??playerTargets(surviving,nextCombat,nextPlacement,nextNavy)).filter(t=>t.hp>0).map(t=>t.id));
-  const enemies = movingEnemies.map(enemy => ({ ...enemy, hp: Math.max(0, enemy.hp - (damage.get(enemy.id) ?? 0)*(!enemy.footprint&&enemy.kind!=='worker'?(enemy.boss?1:upgradeMultiplier(opponent.upgrades.defense.multiplier,combat.enemyUpgrades?.defense))*cavalryArmorMultiplier(enemy.role,combat.enemyUpgrades?.cavalryArmor)*abilityEffects(enemyGathering,enemySoldier(enemy,enemyFaction)).defenseMultiplier*spellModifiers(enemy).defense:1)) }))
+  const enemies = movingEnemies.map(enemy => ({ ...enemy, hp: Math.max(0, enemy.hp - ((damage.get(enemy.id) ?? 0)+(enemy.boss||bossTargetIds.has(enemy.id)?playerDamage.get(enemy.id)??0:0))*(!enemy.footprint&&enemy.kind!=='worker'?(enemy.boss?1:upgradeMultiplier(opponent.upgrades.defense.multiplier,combat.enemyUpgrades?.defense))*cavalryArmorMultiplier(enemy.role,combat.enemyUpgrades?.cavalryArmor)*abilityEffects(enemyGathering,enemySoldier(enemy,enemyFaction)).defenseMultiplier*spellModifiers(enemy).defense:1)) }))
     .filter(e => e.hp > 0 || e.kind==='worker').map(enemy => enemy.navigation?.targetId && enemy.navigation.targetId!=='explore-goal' && !aliveTargets.has(enemy.navigation.targetId) ? {...enemy,navigation:undefined} : enemy);
-  const destroyedEnemyFootprints=movingEnemies.filter(e=>e.footprint&&e.hp-(damage.get(e.id)??0)<=0).map(e=>e.footprint!);
+  const destroyedEnemyFootprints=movingEnemies.filter(e=>e.footprint&&e.hp-(damage.get(e.id)??0)-(bossTargetIds.has(e.id)?playerDamage.get(e.id)??0:0)<=0).map(e=>e.footprint!);
   units = units.map(unit => unit.order.kind === 'attack'
     && !enemies.some(e => e.id === (unit.order.kind === 'attack' ? unit.order.enemyId : ''))
     ? { ...unit, navigation: undefined, order: { kind: 'idle' as const } } : unit);

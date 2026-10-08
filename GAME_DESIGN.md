@@ -1621,3 +1621,23 @@ is rebuilt on load. Four painted source poses/mirrored directions and reused
 cannon/voice feedback are documented inassets/sources/visual-refresh/submarines.md.
 Native800 visual checks and automated combat checks are not human balance
 or actual audio listening.
+
+## RTS-228 — Shared neutral guardians and worker hoards
+
+Existing Bramblemaw/Frontier and Gravelheart/Highlands remain optional,
+rooted, visible through ordinary fog and excluded from army/victory stats.
+Bramblemaw takes melee ×1.25 and non-siege projectile ×0.60; Gravelheart
+takes melee ×0.60 and catapult/ballista ×1.60. Both retaliate against either
+player's land/air/sea bodies and buildings within their 360px home range.
+An abandoned encounter resets HP/cooldown; guardian pursuit is prohibited.
+Strength/weakness appears with the world label. Existing sprites are reused.
+
+Only a live worker with current owner vision and a clear, reachable path
+within 48px of the hoard can collect. Eligible workers race by distance,
+then stable ID. One claim credits that worker's owner once: Bramblemaw
+300wood/200gold, Gravelheart200wood/350gold. Empty AI workers can route
+to currently seen hoards; construction/delivery duties are preserved.
+Save68 validates claim owner and separate owner reward ledgers; old claimed
+saves migrate to player ownership without another grant. Live boss attack
+orders and their in-flight shots survive save/load. There are no additional
+player starts on these two existing maps; no map roster changes are made.

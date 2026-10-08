@@ -1,3 +1,49 @@
+## 2026-10-08 — RTS-220–229 current delivery
+
+The full requested scope is implemented. Dedicated Aviary produces every
+aircraft; dedicated faction Siege Works produces Catapult and the new
+Ballista. Stable/cavalry artwork was replaced with painted assets matching
+the approved style. Healer, Giant, Scout, tower specializations, heavier
+aircraft prerequisites/stats, role research, Submarine/detection, and both
+existing neutral bosses are integrated with production, AI, UI and Save.
+
+Task commits: cavalry15bd869/artd4ed302/CIb9a2939; healer a683049;
+giant7c7bfca; scout/Aviaryd2f2e10; towers1101e38; heavyAir40e9591;
+research1d6b000; SiegeWorks/Ballista7bcba02; Submarine0d2e5b1.
+RTS-228 is Done. Final task hash and GitHub status follow after push.
+
+Final local verification: npm test1795/206 PASS597.61s; npm run test:unit
+511/89 PASS25.59s; npm run build (strict TypeScript included) PASS610ms;
+git diff --check, test classification and browser-script syntax PASS.
+Native800 both boss encounters PASS0pageerrors after final projectile fix.
+First full run1794PASS/1FAIL574.46s is historical, not the final result.
+Final self-review covered scoped projectiles, fog, paid producers, owner
+reward ledgers, attack references, save migration and readable world labels;
+no unresolved blocking findings. GitHub status after final push is recorded
+separately; local green results do not imply CI success.
+
+
+
+Native800 browser exercises all five factions' paid actions, queue/rally,
+Tech Tree, Save/Load/Restart for the new roles. Both guardian encounters
+use actual mouse attack and worker collection. Fixtures use tracked cheat
+funding, seed prerequisite tech/producers and stage legal unit positions;
+they establish UI/system behavior rather than natural match balance.
+Mechanics: [GAME_DESIGN.md](GAME_DESIGN.md). Browser evidence:
+[cavalry art](artifacts/rts-220-art/browser.json), [healer](artifacts/rts-221/browser.json),
+[giant](artifacts/rts-222/browser.json), [Scout/Aviary](artifacts/rts-223/browser.json),
+[towers](artifacts/rts-224/browser.json), [heavy air](artifacts/rts-225/browser.json),
+[research](artifacts/rts-226/browser.json), [Submarine](artifacts/rts-227/browser.json),
+[boss workers](artifacts/rts-228/browser.json), [siege](artifacts/rts-229/browser.json).
+
+Concrete limits: painted four-pose units, mirrored west/shaded north and
+existing/reused sounds; no new human listening or human balance/playtime
+sign-off. Existing terrain layouts and optional boss/victory separation
+remain. No new version, release task, map rebuild or cleanup is started.
+Existing Pages workflow runs on code push; its result is reported separately.
+Preserved user changes: src/style.css, assets/sources/units.mjs, docs/ and
+:memory:.ses. They are excluded from these task commits. No delegation.
+
 # RTS-212 — två valfria väktare,2026-10-07
 
 Bramblemaw/Frontier och Gravelheart/Highlands har egna transparenta original-

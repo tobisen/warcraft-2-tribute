@@ -4683,3 +4683,55 @@ Clans-fixturen tömdes innan staging så Save inte fick duplicerade IDs.
 Artworksource/licens/fyraposer/mirroring och återanvänt cannon/voice är
 konkret redovisade; inget nytt ljud/lyssning/mänskligbalans/CI/Pages/release.
 Full regression efter återstående228; CSS/units.mjs/docs bevarade.
+
+## RTS-228 — Neutral combat for both owners and worker-only hoards
+
+Bramblemaw melee×1.25/missiles×.60; Gravelheart melee×.60/siege×1.60.
+Existing rooted guardians retaliate against both owners, preserve ordinary
+fog, reset abandoned encounters and stay outside armies/victory statistics.
+Live worker race uses current owner vision, clear route, distance then ID;
+reward credits the winner's bank exactly once. AI routes empty non-building
+workers to seen reachable hoards; scout policy preserves loot moves. Save68
+validates owner ledgers, old player claims migrate once, and cleanup/save
+retain live guardian attack references. Boss projectile damage profiles
+also cover towers/naval attacks and only modify the guardian victim.
+
+Review caught cleanup dropping live guardian targets and strict Save rejecting
+player boss attacks. Actual native800 wounded Save exposed the latter; fixed
+with validated live guardian IDs and a targeted regression. New AI combat
+fixtures use legal terrain positions and sufficient mixed infantry/ballistas;
+strength tests deliberately use close no-map combat to isolate multipliers.
+
+GitHub227 check113247189936 annotations identified save.test/factionSave.test
+expecting original Fog shape in ordinary matches. Empty concealment caches
+now disappear when no live submarines exist, preserving the original shape
+and removing stale concealment after death. Targeted save/factionSave/sub
+41/3 PASS3.28s. Boss18/1 PASS5.26s. Unit511/89 PASS20.91s; final strict
+build/diff/full regression and CI results recorded below after completion.
+Native800 actual mouse army attack + worker collection, wounded/claimed
+Save/Load and Restart both maps; paid24infantry/fourfarms, cheat funding and
+legal unit staging. Existing boss sprites reused; no healer required.
+Label shortened after screenshot review. No new audio or human balance
+claim. User CSS/units.mjs/docs/:memory:.ses remain outside task commit.
+
+Final regression attempt1:1794PASS/1FAIL across206files574.46s.
+The sole failure was existing multiplePlayers projectile/save regression: a
+foreign AI base ID matched the shooter's local base, and target-body lookup
+used the wrong center. Enemy-position lookup now applies only to neutral
+guardian victim bodies; ordinary scoped targets retain their own positions.
+Targeted multiplePlayers+bosses32/2 PASS27.70s after this correction.
+This concrete failure warrants the second full run and renewed unit/build/
+browser checks: unit511/89 PASS25.59s, strict build610ms PASS; native800 both
+guardians PASS0pageerrors. Short labels now draw above terrain and below fog;
+Gravelheart screenshot reviewed for readable strength/weakness. No remaining
+review findings in queue, visibility, neutral combat, ledger or save scope.
+
+Final local verification: npm test1795/206 PASS597.61s; npm run test:unit
+511/89 PASS25.59s; npm run build (strict TypeScript included) PASS610ms;
+git diff --check, test classification and browser-script syntax PASS.
+Native800 both boss encounters PASS0pageerrors after final projectile fix.
+First full run1794PASS/1FAIL574.46s is historical, not the final result.
+Final self-review covered scoped projectiles, fog, paid producers, owner
+reward ledgers, attack references, save migration and readable world labels;
+no unresolved blocking findings. GitHub status after final push is recorded
+separately; local green results do not imply CI success.

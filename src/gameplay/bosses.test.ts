@@ -27,7 +27,7 @@ it.each(['bramblemaw','gravelheart'] as const)('%s is hidden, body-safe, reachab
 });
 it.each(['bramblemaw','gravelheart'] as const)('%s defeats a lone soldier but a substantial army can kill it with existing combat',id=>{
  const solo=fight(army(match(id),id,1),60);expect(solo.gathering.units).toHaveLength(0);expect(solo.bosses!.guardians[id]!.hp).toBeGreaterThan(0);
- const force=fight(army(match(id),id,12),60);expect(force.bosses!.guardians[id]!.hp).toBe(0);expect(force.gathering.units.length).toBeGreaterThan(0);expect(force.bosses!.guardians[id]!.claimed).toBe(false);
+ const combined=army(match(id),id,12);if(id==='gravelheart')combined.gathering.units=combined.gathering.units.map((u,i)=>i>=6&&u.kind==='soldier'?{...u,archetype:'ballista' as const,hp:factions.crown.units.ballista.hp}:u);const force=fight(combined,60);expect(force.bosses!.guardians[id]!.hp).toBe(0);expect(force.gathering.units.length).toBeGreaterThan(0);expect(force.bosses!.guardians[id]!.claimed).toBe(false);
 });
 it('fully resets an abandoned encounter, retaliates against buildings/air and never pursues outside its home',()=>{
  let m=match('bramblemaw');m.bosses!.guardians.bramblemaw!.hp=200;m.bosses!.guardians.bramblemaw!.attackCooldown=.5;
@@ -35,7 +35,7 @@ it('fully resets an abandoned encounter, retaliates against buildings/air and ne
  const b=bossDefinitions.bramblemaw,base={...m.combat,baseHP:240};m={...m,gathering:{...m.gathering,units:[]},placement:{...m.placement,farms:[{id:'farm-1',owner:'player',footprint:{x:b.position.x-96,y:b.position.y-96,width:64,height:64},hp:80,construction:{remainingSeconds:0,builderId:null}}]}};
  m.fog=matchFog(m);const r=updateCombat(m.gathering,prepareBossCombat(m,base),2,undefined,m.placement);expect(r.placement!.farms![0].hp).toBeLessThan(80);expect(r.combat.baseHP).toBe(240);
 });
-it('requires death, actual vision and living ground proximity; rewards once and preserves harvested-resource accounting',()=>{
+it('requires death, actual vision and living worker proximity; rewards once and preserves harvested-resource accounting',()=>{
  let m=match('bramblemaw');const p=bossLootPosition('bramblemaw');m.gathering.units[0].position=p;m.gathering.units[0].target=p;
  expect(updateBossRewards(m)).toBe(m);m.bosses!.guardians.bramblemaw!.hp=0;expect(updateBossRewards(m)).toBe(m);m.fog=matchFog(m);expect(updateBossRewards({...m,paused:true})).toMatchObject({bosses:{guardians:{bramblemaw:{claimed:false}}}});
  const next=updateBossRewards(m);expect(next.gathering.wood-m.gathering.wood).toBe(300);expect(next.gathering.goldBalance!-m.gathering.goldBalance!).toBe(200);expect(matchStats(next).player.wood).toEqual({gathered:0,delivered:0,spent:0});expect(updateBossRewards(next)).toBe(next);
@@ -68,3 +68,37 @@ it('uses normal projectiles to retaliate against aircraft and saves an active en
  const loaded=decodeSave(encodeSave({...m,paused:true},view));expect(loaded.ok,loaded.ok?'':loaded.error).toBe(true);if(!loaded.ok)throw Error(loaded.error);expect(loaded.match.combat.projectiles).toEqual(m.combat.projectiles);
  const attacked=updateMatch({...loaded.match,paused:false},.5);expect(attacked.gathering.units[0].hp).toBeLessThan(hp);expect(bossEnemies(attacked)[0].position).toEqual(b.position);
 });
+
+it.each(['bramblemaw','gravelheart'] as const)('%s has distinct, functional melee/projectile/siege resistance for both players',id=>{
+ const b=bossDefinitions[id];
+ for(const role of ['soldier','archer','ballista'] as const){
+  const m=match(id),cfg=factions.crown.units[role],position={x:b.position.x-20,y:b.position.y};m.gathering.units=[{id:'unit-4',kind:'soldier',...(role==='soldier'?{}:{archetype:role}),owner:'player',hp:cfg.hp,cargo:0,selected:false,position,target:position,order:{kind:'attack',enemyId:bossEnemyId(id)}}];
+  const boss=bossEnemies(m)[0],result=updateCombat(m.gathering,{...m.combat,enemies:[boss]},.5);const profile=role==='soldier'?'melee':role==='ballista'?'siege':'projectile';expect(b.hp-result.combat.enemies.find(e=>e.boss)?.hp!).toBeCloseTo((role==='soldier'?cfg.damagePerSecond!*.5:cfg.damage!)*b.incoming[profile]);
+  const opponent=factions.clans.units[role],ai={id:'enemy-produced-1',kind:'unit' as const,role,owner:'enemy' as const,hp:opponent.hp,position,order:{kind:'defend' as const,targetId:boss.id}};
+  const r=updateCombat({...m.gathering,units:[]},{...m.combat,enemies:[ai,boss]},.5,undefined,undefined,undefined,()=>true);expect(b.hp-r.combat.enemies.find(e=>e.boss)?.hp!).toBeCloseTo((role==='soldier'?opponent.damagePerSecond!*.5:opponent.damage!)*b.incoming[profile]);
+ }
+});
+it.each(['bramblemaw','gravelheart'] as const)('%s discovers, retaliates against and can be defeated by a substantial AI army without player vision',id=>{
+ let m=match(id);delete m.enemyAI;delete m.armyPlan;const b=bossDefinitions[id],cfg=factions.clans.units.soldier;m.gathering.units=[];
+ const force=Array.from({length:24},(_,i)=>({id:`enemy-produced-${i+1}`,kind:'unit' as const,role:i>=12&&id==='gravelheart'?'ballista' as const:'soldier' as const,owner:'enemy' as const,hp:i>=12&&id==='gravelheart'?factions.clans.units.ballista.hp:cfg.hp,position:{x:b.position.x-96+i%4*40,y:b.position.y-104+Math.floor(i/4)*40},order:{kind:'defend' as const,targetId:bossEnemyId(id)}}));const legal:{x:number;y:number}[]=[];for(let y=b.position.y-160;y<=b.position.y+160;y+=40)for(let x=b.position.x-160;x<=b.position.x+160;x+=40)if(Math.hypot(x-b.position.x,y-b.position.y)>70&&bodyFits(m.map,{x,y},16))legal.push({x,y});expect(legal.length).toBeGreaterThanOrEqual(force.length);force.forEach((u,i)=>u.position=legal[i]);m.combat.enemies.push(...force);m.enemyProduction!.production.nextUnitNumber=25;m.fog=matchFog(m);expect(isVisible(m.fog,'player',b.position)).toBe(false);expect(isVisible(m.fog,'enemy',b.position)).toBe(true);
+ const start=updateMatch(m,.2);expect(start.bosses!.guardians[id]!.engaged).toBe(true);expect(start.combat.projectiles?.some(p=>p.shooterId===bossEnemyId(id))||force.some(u=>!start.combat.enemies.find(e=>e.id===u.id)||start.combat.enemies.find(e=>e.id===u.id)!.hp<u.hp)).toBe(true);expect(decodeSave(encodeSave(start,view))).toMatchObject({ok:true});
+ let next=start;for(let i=0;i<1200&&next.bosses!.guardians[id]!.hp>0;i++){next.fog=matchFog(next);const r=updateCombat(next.gathering,prepareBossCombat(next,next.combat),.05,undefined,undefined,undefined,()=>true);next={...next,gathering:r.gathering,...finishBossCombat(next,r.combat)};}
+ expect(next.bosses!.guardians[id]!.hp).toBe(0);const survivors=next.combat.enemies.filter(e=>e.kind==='unit');expect(survivors.length).toBeGreaterThan(0);expect(survivors.length<force.length||survivors.some(u=>u.hp<force.find(f=>f.id===u.id)!.hp)).toBe(true);expect(next.gathering.wood).toBe(m.gathering.wood);expect(next.enemyAI?.groups.some(g=>g.members.includes(bossEnemyId(id)))??false).toBe(false);
+});
+it('living non-workers, dead workers and fog cannot claim; nearest eligible worker wins once, credited to its owner',()=>{
+ let m=match('bramblemaw'),p=bossLootPosition('bramblemaw');m.bosses!.guardians.bramblemaw!.hp=0;const worker=m.gathering.units[0];worker.position={...p};worker.target={...p};worker.hp=0;
+ m.gathering.units.push({id:'unit-4',kind:'soldier',owner:'player',hp:60,cargo:0,position:p,target:p,selected:false,order:{kind:'idle'}});m.fog=matchFog(m);expect(updateBossRewards(m)).toBe(m);worker.hp=30;worker.position={x:p.x-40,y:p.y};
+ const ai=m.combat.enemies.find(e=>e.kind==='worker')!;ai.position={x:p.x-16,y:p.y};ai.work={cargo:0,target:ai.position,order:{kind:'idle'}};m.fog=matchFog(m);const bank={...m.enemyProduction!},human=m.gathering.wood;m=updateBossRewards(m);expect(m.bosses!.guardians.bramblemaw).toMatchObject({claimed:true,claimedBy:'enemy'});expect(m.enemyProduction!.wood).toBe(bank.wood+300);expect(m.enemyProduction!.gold).toBe(bank.gold+200);expect(m.gathering.wood).toBe(human);expect(updateBossRewards(m)).toBe(m);
+ m.gathering.units=m.gathering.units.filter(u=>u.id!=='unit-4');const loaded=decodeSave(encodeSave(m,view));expect(loaded).toMatchObject({ok:true});if(loaded.ok){expect(updateBossRewards(loaded.match).enemyProduction!.wood).toBe(m.enemyProduction!.wood);expect(matchStats(loaded.match).player.wood.spent).toBe(0);}const raw=JSON.parse(encodeSave(m,view));raw.state.bosses.guardians.bramblemaw.claimedBy='player';expect(decodeSave(JSON.stringify(raw)).ok).toBe(false);
+});
+it('AI chooses a seen reachable hoard, moves a live empty worker and cannot route to an unseen hoard',async()=>{
+ const {prepareEnemyBossLoot}=await import('./bosses'),{prepareEnemyScout}=await import('./enemyKnowledge');let m=match('gravelheart'),p=bossLootPosition('gravelheart');m.bosses!.guardians.gravelheart!.hp=0;expect(prepareEnemyBossLoot(m)).toBe(m);
+ const ai=m.combat.enemies.find(e=>e.kind==='worker')!;ai.position={x:p.x-112,y:p.y};ai.work={cargo:0,target:ai.position,order:{kind:'idle'}};m.fog=matchFog(m);m=prepareEnemyBossLoot(m);expect(m.combat.enemies.find(e=>e.id===ai.id)?.work).toMatchObject({target:p,order:{kind:'move'}});expect(prepareEnemyScout(m).combat.enemies.find(e=>e.id===ai.id)?.work?.order.kind).toBe('move');
+ const bank={wood:m.enemyProduction!.wood,gold:m.enemyProduction!.gold};for(let i=0;i<40&&!m.bosses!.guardians.gravelheart!.claimed;i++)m=updateMatch(m,.1);expect(m.bosses!.guardians.gravelheart).toMatchObject({claimed:true,claimedBy:'enemy'});expect(m.enemyProduction!.gold).toBeGreaterThanOrEqual(bank.gold+350-40);expect(m.gathering.goldBalance).toBe(0);
+});
+it('old claimed saves migrate to player ownership without granting twice; invalid owner/live reward are rejected',()=>{
+ let m=match('bramblemaw'),p=bossLootPosition('bramblemaw');m.gathering.units[0].position=p;m.gathering.units[0].target=p;m.bosses!.guardians.bramblemaw!.hp=0;m.fog=matchFog(m);m=updateBossRewards(m);const old=JSON.parse(encodeSave(m,view));old.configVersion='tribute-config-67';delete old.state.bosses.guardians.bramblemaw.claimedBy;const loaded=decodeSave(JSON.stringify(old));expect(loaded).toMatchObject({ok:true});if(loaded.ok){expect(loaded.match.bosses!.guardians.bramblemaw!.claimedBy).toBe('player');expect(updateBossRewards(loaded.match).gathering.wood).toBe(m.gathering.wood);}
+ const bad=JSON.parse(encodeSave(m,view));bad.state.bosses.guardians.bramblemaw.claimedBy='ai-2';expect(decodeSave(JSON.stringify(bad)).ok).toBe(false);
+});
+
+it("preserves a live player attack order through cleanup and active save/load",()=>{let m=match("bramblemaw"),b=bossDefinitions.bramblemaw;m.gathering.units=[{id:"unit-4",kind:"soldier",owner:"player",hp:60,cargo:0,selected:true,position:{x:b.position.x-112,y:b.position.y},target:b.position,order:{kind:"attack",enemyId:bossEnemyId(b.id)}}];m.production.nextUnitNumber=5;m.soldierProduction.nextUnitNumber=5;m.fog=matchFog(m);m=updateMatch(m,.05);expect(m.gathering.units[0].order.kind).toBe("attack");const loaded=decodeSave(encodeSave(m,view));expect(loaded).toMatchObject({ok:true});});
