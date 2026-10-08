@@ -45,12 +45,19 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
-### Release0.6.0 — In Progress
+### Release0.6.0 — Done
 
 Användaren beställer ny release med Kraken och senaste commitade ändringar.
 Version/changelog, ren checkout, unit/strict build/production-browser,
 faktisk CI fullregression/Pages och publik browser/hashkontroll krävs.
 Befintliga ocommittade ändringar bevaras/exkluderas; ingen ny roadmaptask.
+
+Publicerad v0.6.0 / Build6ec8bee. [CI/Pages37824524952](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37824524952)
+PASS: install/fullregression871s/strict build/deploy. Lokal clean unit517/90,
+strict build och candidate/exact/public browser800/1280 Native/1600 Native/Fit
+PASS. Publik Kraken/fog/fyra poser PASS; JS/CSS/atlas byte-exakt releasebuild.
+HANDOFF/RELEASE_CHECKLIST skiljer ny CI från återanvänd lokal231-fullregression.
+Stanna efter release; användarens ändringar bevarade.
 
 
 ### RTS-231 — Kraken i spelets pixelstil — Done

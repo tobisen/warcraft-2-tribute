@@ -1,4 +1,47 @@
 
+## 2026-10-08 — Release0.6.0 publicerad och verifierad
+
+[Spela0.6.0](https://tobisen.github.io/warcraft-2-tribute/) visar faktiskt
+v0.6.0 / Build6ec8bee. Releasecommit6ec8bee är pushad till origin/main.
+[Actions37824524952](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37824524952)
+PASS för samma SHA: npm ci, full npm test871s, strict build och Pages-deploy.
+Deploy klar2026-10-08 20:52:52 Europe/Stockholm. Föregående Kraken-körning
+37823711004 är också faktiskt grön; releasekön väntades in utan avbrott.
+
+Ny lokal clean candidate unit517/90 PASS14.55s, strict build577ms PASS,
+exakt committed rebuild429ms PASS. Lokal full1829/208 PASS483.38s från231
+återanvänds uttryckligen som historiskt belägg för samma gameplay; releasens
+nya fullregression är verifierad i CI. Befintlig chunkvarning kvar.
+Candidate/exact/public production-browser800/1280 Native och1600 Native/Fit
+PASS: version/changelog/TechTree, campaign/skirmish/team/spectator-fixtures,
+pause/SaveLoad/replay/menu/fullscreen/resolutions/reload,0runtime/assetfel.
+Public/exact Kraken800/1280 Native PASS: initial fog-hidden, faktisk
+foggoffnow-input, korrekt Kraken-namn och fyra explicita renderingposer.
+Publik attack800 visuellt granskad. Poseharnessens första försök använde fel
+record/visual-ID-prefix och fallerade; rättat prefix passerade, och separat
+Native-körning rättade harnessens standard-Fit. Ingen produktionsfix behövdes.
+Tekniska fixtures/posekontroller är inte mänskligt balansspeltest.
+
+Publik JS index-DqodzVwB.js SHA256
+bd6868ec2e6d0f9d5d77115a651d406fb93295731967eff17db22d09cbf10be5,
+CSS index-CaiHEpyc.css SHA256
+41e4e0c0f47f4f6445ed8a0ae5d9510483ee76c118730a4be8a777b1551b736f,
+och bosses-atlas.png SHA256
+c3eaca721b47a0fd94fed6054bb479a7fbf994365b3b9773371d747fc48e5852
+är byte-exakt samma som ren lokal releasebuild. Underlag:
+/private/tmp/w2t-release060-public/browser.json,
+/private/tmp/w2t-release060-public-kraken/browser.json,
+/tmp/w2t-release060-public-hashes.json och /tmp/w2t-release060-jobs.json.
+Befintliga scripts/check-release.mjs samt tillfällig poseharness användes.
+
+Slutuppdateringen ändrar endast Markdown; text/länk/diff/review PASS,
+redovisade kodchecks återanvänds utan nya kodtester. User CSS/units.mjs/docs/
+:memory:.ses bevarade och exkluderade. Två swimposer, ej separat målade
+riktningar; ingen ny mänsklig balans-/ljud-/annan browsermotor-granskning.
+Befintlig stor bundle kvar. Befintlig Pages/version/changelog-praxis utan ny
+tag-/GitHub-releaseinfrastruktur. Releaseuppdrag klart; inga nya tasks startas.
+
+
 ## 2026-10-08 — Release0.6.0 candidate
 
 Nytt uttryckligt releasemandat: Kraken/sjömonster230–231 och commitade
