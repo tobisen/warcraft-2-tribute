@@ -1,3 +1,4 @@
+import {seaMonsterStep} from './bosses';
 import {cavalryArmorMultiplier} from '../config/roleResearch';
 import {cavalryRules} from '../config/cavalry';
 import {bossRules,bossDamageProfile,bossIncoming} from '../config/bosses';
@@ -36,7 +37,7 @@ import type { GatheringState, Unit,WorkerOrder,ResourceType } from './gathering'
 import { moveTowards, type Position } from './movement';
 
 export interface EnemyWork {cargo:number;cargoType?:ResourceType;target:Position;order:WorkerOrder}
-export interface Enemy extends SpellState {navalRole?:'submarine';scouting?:import('./scouting').ScoutState;healFlash?:number;healAutocast?:boolean;boss?:import('../config/bosses').BossId;playerId?:PlayerId;faction?:FactionId;mana?:number;role?:'soldier'|'archer'|'catapult'|'ballista'|'specialist'|'air'|'cavalry'|'healer'|'giant'|'scout';attackCooldown?:number;ability?:import('./abilities').AbilityState;legacyProfile?:true; owner?:'enemy'; kind?:'ship'|'unit'|'base'|'worker'|'building';navalLanding?:true;buildingType?:'siegeWorks'|'aviary'|'stable'|'academy'|'harbor'|'outpost'|'barracks'|'farm'|'forge';construction?:import('./placement').ConstructionJob;work?:EnemyWork; order?:{kind:'idle'}|{kind:'defend';targetId:string}|{kind:'muster'|'attack-move';destination:Position}; id: string; position: Position; hp: number; footprint?:Footprint; navigation?: RouteState }
+export interface Enemy extends SpellState {seaMonster?:{id:string;patrolIndex:number;active?:boolean};navalRole?:'submarine';scouting?:import('./scouting').ScoutState;healFlash?:number;healAutocast?:boolean;boss?:import('../config/bosses').BossId;playerId?:PlayerId;faction?:FactionId;mana?:number;role?:'soldier'|'archer'|'catapult'|'ballista'|'specialist'|'air'|'cavalry'|'healer'|'giant'|'scout';attackCooldown?:number;ability?:import('./abilities').AbilityState;legacyProfile?:true; owner?:'enemy'; kind?:'ship'|'unit'|'base'|'worker'|'building';navalLanding?:true;buildingType?:'siegeWorks'|'aviary'|'stable'|'academy'|'harbor'|'outpost'|'barracks'|'farm'|'forge';construction?:import('./placement').ConstructionJob;work?:EnemyWork; order?:{kind:'idle'}|{kind:'defend';targetId:string}|{kind:'muster'|'attack-move';destination:Position}; id: string; position: Position; hp: number; footprint?:Footprint; navigation?: RouteState }
 export interface CombatState {baseDevelopment?:import('../config/baseUpgrade').BaseDevelopment; baseOwner?:'player'; enemies: Enemy[]; baseHP: number; projectiles?:Projectile[]; nextProjectileNumber?:number; destroyedEnemyFootprints?:Footprint[]; enemyUpgrades?:{cavalryArmor?:number;attack:number;defense:number};upgrades?:{cavalryArmor?:number;attack:number;defense:number} }
 
 export function enemyAt(enemies: Enemy[], point: Position): Enemy | undefined {
@@ -150,14 +151,15 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
   });
   // Both sides attack from the same live snapshot, so lethal blows are simultaneous.
   const playerDamage = new Map<string, number>();
-  const neutralTargets:PlayerTarget[]=combat.enemies.filter(e=>e.boss&&e.hp>0).map(e=>({id:e.id,boss:e.boss,domain:'land',kind:'soldier',owner:'player',hp:e.hp,footprint:enemyBody(e)}));
+  const neutralTargets:PlayerTarget[]=combat.enemies.filter(e=>(e.boss||e.seaMonster)&&e.hp>0).map(e=>({id:e.id,boss:e.boss,domain:e.seaMonster?'sea':'land',kind:e.seaMonster?'ship':'soldier',owner:'player',hp:e.hp,footprint:enemyBody(e)}));
   const originalTargets=[...(scope?.targets??playerTargets(gathering,combat,placement,navy)),...neutralTargets];
-  const bossTargets:PlayerTarget[]=neutralTargets.length||combat.projectiles?.some(p=>p.shooterId?.startsWith('enemy-boss-'))?[...originalTargets.filter(t=>!t.boss),...combat.enemies.filter(e=>!e.boss&&e.hp>0).map(e=>({id:e.id,domain:targetDomain(e),kind:e.kind==='ship'?'ship' as const:e.kind==='worker'?'worker' as const:e.footprint?'barracks' as const:'soldier' as const,owner:'player' as const,hp:e.hp,footprint:enemyBody(e)}))]:[];
+  const bossTargets:PlayerTarget[]=neutralTargets.length||combat.projectiles?.some(p=>p.shooterId?.startsWith('enemy-boss-'))?[...originalTargets.filter(t=>!t.boss&&!t.id.startsWith('enemy-sea-monster-')),...combat.enemies.filter(e=>!e.boss&&e.hp>0).map(e=>({id:e.id,domain:targetDomain(e),kind:e.kind==='ship'?'ship' as const:e.kind==='worker'?'worker' as const:e.footprint?'barracks' as const:'soldier' as const,owner:'player' as const,hp:e.hp,footprint:enemyBody(e)}))]:[];
   const bossTargetIds=new Set(bossTargets.map(t=>t.id));
   const enemyNavy=prepareEnemySubmarines(combat.enemies,originalTargets,scope?.side==='player'?0:delta,map,nextProjectileNumber,enemyFaction,upgradeMultiplier(opponent.upgrades.attack.multiplier,combat.enemyUpgrades?.attack),playerVisible);nextProjectileNumber=enemyNavy.next;shots.push(...enemyNavy.shots);
   const priority={siegeWorks:7,aviary:7,stable:5,academy:2,wall:2,gate:2,tower:2,ship:0,harbor:2,soldier:0,worker:1,barracks:2,farm:2,forge:2,base:3};
   const enemyGathering={...gathering,faction:enemyFaction};
   const movingEnemies = enemyNavy.enemies.filter(e => e.hp > 0).map(enemy => {
+    if(enemy.seaMonster&&map){if(scope?.side==='enemy')return enemy;const result=seaMonsterStep(enemy,playerTargets({...gathering,units},combat,placement,naval.navy),map,delta);if(result.target)playerDamage.set(result.target.id,(playerDamage.get(result.target.id)??0)+result.damage);return result.enemy;}
     if(scope?.side==='player'||enemy.kind==='ship')return enemy;
     const stats=enemyUnitStats(enemy,enemyFaction),ranged=enemyRangedStats(enemy,enemyFaction);
     const cooling={...enemy,...(ranged?{attackCooldown:Math.max(0,(enemy.attackCooldown??0)-delta)}:{})};
@@ -231,8 +233,8 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
     ...(placement.farms?{farms:placement.farms.map(f=>({...f,hp:Math.max(0,(f.hp??combatConfig.farmHP)-(playerDamage.get(f.id)??0))}))}:{})}:undefined;
   const nextNavy=naval.navy?{...naval.navy,ships:naval.navy.ships.map(s=>({...s,hp:Math.max(0,s.hp-(playerDamage.get(s.id)??0)*defenseMultiplier)})),harbor:naval.navy.harbor?{...naval.navy.harbor,hp:Math.max(0,naval.navy.harbor.hp-(playerDamage.get('harbor')??0))}:null}:undefined;
   const nextCombat={...combat,baseHP:Math.max(0,combat.baseHP-(playerDamage.get('base')??0))};
-  const aliveTargets=new Set((scope?.targets??playerTargets(surviving,nextCombat,nextPlacement,nextNavy)).filter(t=>t.hp>0).map(t=>t.id));
-  const enemies = movingEnemies.map(enemy => ({ ...enemy, hp: Math.max(0, enemy.hp - ((damage.get(enemy.id) ?? 0)+(enemy.boss||bossTargetIds.has(enemy.id)?playerDamage.get(enemy.id)??0:0))*(!enemy.footprint&&enemy.kind!=='worker'?(enemy.boss?1:upgradeMultiplier(opponent.upgrades.defense.multiplier,combat.enemyUpgrades?.defense))*cavalryArmorMultiplier(enemy.role,combat.enemyUpgrades?.cavalryArmor)*abilityEffects(enemyGathering,enemySoldier(enemy,enemyFaction)).defenseMultiplier*spellModifiers(enemy).defense:1)) }))
+  const aliveTargets=new Set([...(scope?.targets??playerTargets(surviving,nextCombat,nextPlacement,nextNavy)).filter(t=>t.hp>0).map(t=>t.id),...movingEnemies.filter(e=>(e.boss||e.seaMonster)&&e.hp-(damage.get(e.id)??0)-(playerDamage.get(e.id)??0)>0).map(e=>e.id)]);
+  const enemies = movingEnemies.map(enemy => ({ ...enemy, hp: Math.max(0, enemy.hp - ((damage.get(enemy.id) ?? 0)+(enemy.boss||enemy.seaMonster||bossTargetIds.has(enemy.id)?playerDamage.get(enemy.id)??0:0))*(!enemy.footprint&&enemy.kind!=='worker'?(enemy.boss||enemy.seaMonster?1:upgradeMultiplier(opponent.upgrades.defense.multiplier,combat.enemyUpgrades?.defense))*cavalryArmorMultiplier(enemy.role,combat.enemyUpgrades?.cavalryArmor)*abilityEffects(enemyGathering,enemySoldier(enemy,enemyFaction)).defenseMultiplier*spellModifiers(enemy).defense:1)) }))
     .filter(e => e.hp > 0 || e.kind==='worker').map(enemy => enemy.navigation?.targetId && enemy.navigation.targetId!=='explore-goal' && !aliveTargets.has(enemy.navigation.targetId) ? {...enemy,navigation:undefined} : enemy);
   const destroyedEnemyFootprints=movingEnemies.filter(e=>e.footprint&&e.hp-(damage.get(e.id)??0)-(bossTargetIds.has(e.id)?playerDamage.get(e.id)??0:0)<=0).map(e=>e.footprint!);
   units = units.map(unit => unit.order.kind === 'attack'

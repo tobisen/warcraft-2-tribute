@@ -1,6 +1,6 @@
 import {updateSiegeProduction} from './siegeProduction';
 import {updateFlightProduction} from './flightProduction';
-import {createBosses,prepareEnemyBossLoot,prepareBossCombat,finishBossCombat,updateBossRewards,type BossState} from './bosses';
+import {createSeaMonsters,createBosses,prepareEnemyBossLoot,prepareBossCombat,finishBossCombat,updateBossRewards,type BossState} from './bosses';
 import {regionDefinition} from '../config/mapRegions';
 import {hasEnemyBase} from './enemyBases';
 import {hasMainBase,syncDropoffs,updateExtraBaseProduction} from './extraBases';
@@ -167,7 +167,8 @@ export function createMatch(scenario:MatchScenario='survival',difficulty:Difficu
   if(state.map.terrainLayout==='reference'&&!state.map.resourceLayout)for(const node of [state.gathering.node,...(state.gathering.extraNodes??[])])node.grove=groveForNode(node.id);
   state.map.obstacles.push(...placementObstacles(state.gathering));
   if(scenarioConfig[scenario].enemyBase&&scenario!=='siege-test'){addEnemyWorkers(state);state.enemyConstruction=createEnemyConstruction();state.enemyPolicy=createEnemyPolicy();state.enemyRecovery=createEnemyRecovery();state.enemyKnowledge=createEnemyKnowledge();}
-  if(!players&&(scenario==='skirmish'||campaignId))state.bosses=createBosses(state.map);
+  if(!players&&(scenario==='skirmish'||campaignId))state.bosses=createBosses(state.map,difficulty);
+  if(!players&&!state.bosses){const sea=createSeaMonsters(state.map,difficulty);if(sea.length)state.bosses={version:1,guardians:{},sea};}
   initializeOperation(state);
   state.fog=matchFog(state);
   return players?initializeMultiplePlayers(state,players):state;

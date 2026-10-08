@@ -1641,3 +1641,33 @@ Save68 validates claim owner and separate owner reward ledgers; old claimed
 saves migrate to player ownership without another grant. Live boss attack
 orders and their in-flight shots survive save/load. There are no additional
 player starts on these two existing maps; no map roster changes are made.
+
+## RTS-230 — Sea serpents
+
+New regional Islands and Shattered Coast matches have at most1 serpent on
+Beginner/Easy,2 on Normal,3 on Hard. River Bend caps at2. Other maps have no
+authored suitable sea-route encounter areas. Map definitions provide explicit
+area bounds and two patrol points per creature. The first coastal patrol is
+south of the northern campaign ferry/landing corridor (area y608–896),
+preserving that normal route. Initialization verifies full
+32px bodies and reachable water routes. Classic layouts and pre69 saves keep
+no sea serpents; new matches/restart use current map configuration.
+
+Neutral serpents live in the existing guardian state, never in an AI army or
+player roster. They do not count toward victory, defeat, bases or army stats.
+240HP,48px/s,96px bite range,18 damage every1.5s and224px acquisition range.
+They choose only the human player's actual units, fleet and buildings, for
+all races. Ships have priority, then beach units, then buildings; ties use
+distance and ID. Beach units must be within32px of actual water; buildings
+must touch the water boundary (1px numerical tolerance). Aircraft and inland
+bodies cannot be bitten. AI attacks can hurt them, but never cause retaliation
+or a target switch to AI. No loot or health reset on retreat.
+
+Patrol and pursuit use shared water navigation clipped to the authored area;
+losing a valid nearby target resumes the patrol. Ordinary current player
+vision reveals the moving creature and its marker; it has no stationary fog
+memory, vision source or advance warning in UI. Bite activation requires
+current player sight of the serpent. Save69 stores position,HP,cooldown and
+patrol index, validates water/area/roster and keeps ship/unit attack references.
+Code-drawn swimming/bite/sinking pixel poses use the existing boss atlas.
+Technical regression and browser scenarios do not establish human balance.

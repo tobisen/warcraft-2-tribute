@@ -34,10 +34,10 @@ describe('native pixel exports and logical anchors',()=>{
  });
 });
 
-it('exports eight distinct transparent guardian poses with local sources and bounded atlas frames',async()=>{
+it('exports twelve distinct transparent guardian and sea serpent poses with local sources and bounded atlas frames',async()=>{
  const {readRGBA}=await import('../scripts/read-rgba-png.mjs'),image=readRGBA(new URL('../public/assets/bosses-atlas.png',import.meta.url)),data=JSON.parse(file('public/assets/bosses-atlas.json'));
- expect(image.width).toBe(384);expect(image.height).toBe(192);expect(Object.keys(data.frames)).toHaveLength(8);
- for(const id of ['bramblemaw','gravelheart']){
-  const signatures=[];for(let i=0;i<4;i++){const f=data.frames[`${id}-${i}`].frame;expect(f.w).toBe(96);expect(f.h).toBe(96);expect(f.x+f.w).toBeLessThanOrEqual(image.width);expect(f.y+f.h).toBeLessThanOrEqual(image.height);const pixels=[];for(let y=0;y<f.h;y++)for(let x=0;x<f.w;x++)pixels.push(...image.data.subarray(((f.y+y)*image.width+f.x+x)*4,((f.y+y)*image.width+f.x+x)*4+4));expect(pixels.filter((v,j)=>j%4===3&&v>0).length).toBeGreaterThan(900);expect(pixels[3]).toBe(0);signatures.push(Buffer.from(pixels).toString('base64'));}expect(new Set(signatures).size).toBe(4);expect(file(`assets/sources/bosses/${id}.png`).length).toBeGreaterThan(1000);
+ expect(image.width).toBe(384);expect(image.height).toBe(288);expect(Object.keys(data.frames)).toHaveLength(12);
+ for(const id of ['bramblemaw','gravelheart','sea-serpent']){
+  const signatures=[];for(let i=0;i<4;i++){const f=data.frames[`${id}-${i}`].frame;expect(f.w).toBe(96);expect(f.h).toBe(96);expect(f.x+f.w).toBeLessThanOrEqual(image.width);expect(f.y+f.h).toBeLessThanOrEqual(image.height);const pixels=[];for(let y=0;y<f.h;y++)for(let x=0;x<f.w;x++)pixels.push(...image.data.subarray(((f.y+y)*image.width+f.x+x)*4,((f.y+y)*image.width+f.x+x)*4+4));expect(pixels.filter((v,j)=>j%4===3&&v>0).length).toBeGreaterThan(id==='sea-serpent'?100:900);expect(pixels[3]).toBe(0);signatures.push(Buffer.from(pixels).toString('base64'));}expect(new Set(signatures).size).toBe(4);expect(file(id==='sea-serpent'?'scripts/export-boss-assets.mjs':`assets/sources/bosses/${id}.png`).length).toBeGreaterThan(1000);
  }
 });

@@ -4,7 +4,7 @@ import {roleResearchConfig,isRoleResearch} from '../config/roleResearch';
 import {flightBuilding,trainFlyer} from '../gameplay/flightProduction';
 import {fortificationConnections} from '../gameplay/fortifications';
 import {fortificationTexture} from '../presentation/fortifications';
-import {bossDefinitions,bossRules,type BossId} from '../config/bosses';
+import {seaMonsterRules,bossDefinitions,bossRules,type BossId} from '../config/bosses';
 import {bossEnemies,battleEnemies,bossLootPosition,type BossState} from '../gameplay/bosses';
 import {applyCheat} from '../gameplay/cheats';
 import {bindCheatInput} from '../presentation/cheatInput';
@@ -1113,6 +1113,14 @@ export class BootScene extends Phaser.Scene {
     for(const [id,visual] of this.projectileVisuals)if(!visibleShots.some(p=>p.id===id)){visual.destroy();this.projectileVisuals.delete(id);}
     for(const shot of visibleShots){if(!this.projectileVisuals.has(shot.id))this.projectileVisuals.set(shot.id,this.add.graphics().setDepth(effectConfig.projectileDepth));drawProjectile(this.projectileVisuals.get(shot.id)!,shot);}
     for (const enemy of presentedEnemies) {
+      if(enemy.seaMonster){
+        const rules=seaMonsterRules,frame=enemy.hp<=0?3:(enemy.attackCooldown??0)>rules.attackInterval-.25?2:Math.floor(this.waves.elapsedSeconds*3)%2;
+        let v=this.enemyVisuals.get(enemy.id);if(!v){v={body:this.add.image(enemy.position.x,enemy.position.y,'bosses',`sea-serpent-${frame}`).setOrigin(.5,.78),label:this.add.text(0,0,'',{fontSize:'11px',color:'#e7d69b',backgroundColor:'#17271ddd'}).setOrigin(.5,1)};this.enemyVisuals.set(enemy.id,v);}
+        v.body.setPosition(enemy.position.x,enemy.position.y).setFrame(`sea-serpent-${frame}`).setDepth(1+enemy.position.y/this.map.height*4);
+        v.label.setPosition(enemy.position.x,enemy.position.y-54).setText(enemy.hp>0?`${rules.name} · Neutral\nBite range: ${rules.range} px`:`${rules.name} · Defeated`).setDepth(10);
+        if(enemy.hp>0){this.hpBars?.lineStyle(1,0x65c7a5,.25).strokeCircle(enemy.position.x,enemy.position.y,rules.range);this.drawHP(enemy.position,enemy.hp,rules.hp,32,45,0x65c7a5);}
+        continue;
+      }
       if(enemy.boss){
         const b=bossDefinitions[enemy.boss],cooldown=enemy.attackCooldown??0,frame=enemy.hp<=0?3:cooldown>b.attackInterval-.22?2:cooldown<.22&&this.gathering.units.some(u=>Math.hypot(u.position.x-enemy.position.x,u.position.y-enemy.position.y)<=bossRules.range)?1:0;
         let v=this.enemyVisuals.get(enemy.id);if(!v){v={body:this.add.image(enemy.position.x,enemy.position.y,'bosses',`${b.id}-${frame}`).setOrigin(.5,.78),label:this.add.text(enemy.position.x,enemy.position.y-52,'',{fontSize:'12px',color:'#f1d79a',backgroundColor:'#17271ddd'}).setOrigin(.5,1).setDepth(10)};this.enemyVisuals.set(enemy.id,v);}

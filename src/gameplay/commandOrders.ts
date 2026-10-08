@@ -1,3 +1,4 @@
+import {battleEnemies} from './bosses';
 import {hasMainBase} from './extraBases';
 import {playerEliminated} from './teamResults';
 import {canHarm} from './players';
@@ -71,7 +72,7 @@ export function prepareOrders(m:MatchState):MatchState {
   if(u.order.kind!=='idle'||u.kind==='soldier'&&u.attackMoveTarget||!u.orderQueue?.length)return u;
   const pending=[...u.orderQueue];
   while(pending.length){const o=pending.shift()!;
-   if(o.kind==='attack'&&!m.combat.enemies.some(e=>e.id===o.enemyId&&e.hp>0&&!playerEliminated(m,e.playerId??'enemy')&&canHarm('player',e.playerId??'enemy',m.multiplePlayers?.roster)&&(!m.fog||entityVisible(m.fog,'player',e))))continue;
+   if(o.kind==='attack'&&!battleEnemies(m).some(e=>e.id===o.enemyId&&e.hp>0&&!playerEliminated(m,e.playerId??'enemy')&&canHarm('player',e.playerId??'enemy',m.multiplePlayers?.roster)&&(!m.fog||entityVisible(m.fog,'player',e))))continue;
    if(o.kind==='hunt'&&!matchAnimals(m).some(a=>a.id===o.animalId&&a.hp>0&&(!m.fog||entityVisible(m.fog,'player',a))))continue;
    if(o.kind==='gather'&&!resourceNodes(m.gathering).some(n=>n.id===o.nodeId))continue;
    return {...start(m,u,o),orderQueue:pending.length?pending:undefined};

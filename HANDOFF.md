@@ -1,3 +1,64 @@
+## 2026-10-08 — RTS-230 sjömonster — Done
+
+Nytt separat mandat: endast sjömonster, nästa lediga task230. Befintliga
+roadmap-/kartuppdrag återupptas inte. Samtliga relevanta/slutliga checks och
+browser klara. Taskcommit/push till befintlig origin/main utan force ingår
+i leveransen; slutlig hash/push rapporteras till användaren.
+
+Islands och Shattered Coast: Beginner/Easy1, Normal2, Hard3. River Bend:
+1/1/2/2 med karttak2. Övriga kartor0; endast regionala sjövägsområden är
+konfigurerade. Kartornas cap/områdesrektanglar/patrullpunkter ligger i
+src/config/maps.ts och valideras mot water body/route vid init.
+240HP,48px/s,96px bett,224px aggro,18damage/1.5s. Skepp prioriteras, sedan
+spelarens strandunits≤32px från vatten, sedan direkt kustbyggnad≤1px tolerance.
+Endast human-owned mål oavsett ras; aldrig AI, inte heller retaliation.
+Befintlig guardian/combat/naval-route/damage/fog/cleanup används; inga nya
+spelare, baser, army/victorymål eller loot. Bounded pursuit och patrol även
+när ett närliggande mål är onåbart. Current sight krävs för presentation och
+attackaktivering; ingen fogmemory/monsterobserver eller förhandsinformation.
+Första kanalområdet ligger y608–896 och lämnar den normala norra
+kampanjöverfarten fri. En fullkörning hittade först två tappade kvarlämnade
+transporter trots victory; campaigntesternas assertions behölls, patrullen
+flyttades och fyra sena paid/objective/Save/progression/replay-fall är gröna.
+Sea/campaignLate23/2 PASS63.55s på slutplaceringen.
+
+Save69 bevarar HP/position/cooldown/patrolindex, neutrala attackrefs och
+in-flight vanliga projektiler. Gamla saves får inga inskjutna monster;
+restart initierar aktuell config. Döda kroppar får täckas av senare hamnar;
+levande records får inte stå i dynamiska hinder. Harbor/spawn kan inte läggas
+på levande monster. Stödda multi-AI-kartor saknar sådana vattenencounters.
+Egna code-native swim/bite/sink-pixelposer i bossatlas. Gamla guardian-RGBA
+verifierat exakt oförändrad. Två swimframes; inga separat målade riktningar
+eller ny creatureaudio. Mänsklig balans/helmatchspeltest återstår.
+
+Slutlig riktad sea/navy/combat/cleanup/orders/fog/Save/assets:160/15
+PASS34.51s. Final unit517/90 PASS15.41s, build inklusive strict TypeScript
+PASS443ms, befintlig chunkvarning kvar. Manifest/scriptsyntax/diff och
+nya filreferenser PASS. Första unit-fel var gammal atlasstorlek/count och
+rättades med bibehållna guardianassertions. Tre tidiga fullkörningar avbröts
+för asset-/review-/Savekorrigeringar och räknas inte som PASS. Ytterligare
+kampanjfel och en komplett1828 PASS/1 timeoutFAIL(591.98s) redovisas i
+DEV_LOG. Capture-testets5000ms-deadline behålls; stabil bounded-water
+obstacleidentitet återställer befintlig navcache och sea/operations42/2
+PASS5.55s. Capture2223ms PASS med oförändrad5000ms-budget efter fix. Slutlig
+Chrome800/1280 PASS inkluderar cachefix/slutplacering. Slutlig fullregression
+1829/208 PASS534.05s på samma kod. Detta ersätter timeoutkörningens aktuella
+status; tidigare felkörningar behålls som historik. Review utan kvarstående
+centrala fynd; docs efter passerade kodchecks, inga nya kodändringar.
+
+Chrome800×600/1280×720 Islands Hard Clans: initial hidden/minimap, fysisk
+betald warshipproduktion/selection/attack, bilateral combat, water bodies,
+SaveLoad/restart och0pageerrors PASS. Kusthamn är en betald seed; bank använder
+befintlig resourcecheatledger, och tiden stegas av riktiga updateMatch.
+[Rapport/bilder](artifacts/rts-230/browser.json), scripts/check-sea-monsters.mjs.
+Combat800 och discovered1280 visuellt granskade; slutlig combat800 med
+räckviddsring/label granskad. Ett inputtimingförsök misslyckades och ersattes
+av mouse100ms/selectionwait; det är inte PASS. Slutliga browserartefakter inkluderar
+Savefix och slutplacering, combat800 med range granskad.
+Ingen ny release, faktisk CI/Pages-verifiering, ljudlyssning eller mänsklig
+balansclaim. Användarens style.css/units.mjs/docs/:memory:.ses bevaras.
+Stanna efter detta uppdrag; inga nya roadmaptasks eller kartlayouter.
+
 ## 2026-10-08 — Delete egen byggnad — Done
 
 Välj egen byggnad och tryck Delete eller Demolish Building-knappen.

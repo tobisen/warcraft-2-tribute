@@ -115,7 +115,7 @@
       "image": "assets/bosses-atlas.png",
       "data": "assets/bosses-atlas.json",
       "width": 384,
-      "height": 192,
+      "height": 288,
       "source": "assets/sources/bosses/README.md"
     },
     "cavalry": {
@@ -227028,6 +227028,46 @@
       },
       "kind": "unit",
       "type": "submarine"
+    },
+    "sea-serpent-0": {
+      "atlas": "bosses",
+      "kind": "boss",
+      "width": 96,
+      "height": 96,
+      "anchor": {
+        "x": 48,
+        "y": 75
+      }
+    },
+    "sea-serpent-1": {
+      "atlas": "bosses",
+      "kind": "boss",
+      "width": 96,
+      "height": 96,
+      "anchor": {
+        "x": 48,
+        "y": 75
+      }
+    },
+    "sea-serpent-2": {
+      "atlas": "bosses",
+      "kind": "boss",
+      "width": 96,
+      "height": 96,
+      "anchor": {
+        "x": 48,
+        "y": 75
+      }
+    },
+    "sea-serpent-3": {
+      "atlas": "bosses",
+      "kind": "boss",
+      "width": 96,
+      "height": 96,
+      "anchor": {
+        "x": 48,
+        "y": 75
+      }
     }
   }
 }

@@ -5069,3 +5069,88 @@ ny browserkontroll PASS. Final unit517/90 PASS18,83s; full `npm test`1810/207 PA
 på slutlig kod. Syntax/diff/dokumentreferenser PASS.
 Review utan kvarstående fynd;
 CSS/units.mjs/docs/:memory:.ses bevaras, ingen ny roadmap/release.
+
+## 2026-10-08 — RTS-230 sjömonster — Done
+
+Nytt separat användaruppdrag efter rivningsflödet; nästa lediga ID230.
+Kartombyggnad och tidigare roadmapmandat återupptas inte. main/origin
+kontrollerade; befintlig style.css/units.mjs/docs/:memory:.ses lämnas utanför.
+
+Islands/Shattered Coast tre explicita vattenområden, River Bend två. Antal
+Beginner/Easy1, Normal2, Hard3 med Rivercap2; andra kartor0. Init validerar
+32px body och reachability för båda patrullpunkter. Befintliga guardianrecords,
+transient combatprojektion, delad water-route/naval approach, cooldown/damage,
+current fog/minimap och cleanup återanvänds. Inga nya spelare eller matchmål.
+240HP/48pxs/96range/224aggro/18damage/1.5s. Endast human-owned targets från
+den uppdaterade player-state, aldrig AI/foreign scoped targets och aldrig
+Humans-rasfilter. Skepp→beachunits≤32px→direkt kustbyggnad≤1px tolerance;
+air/inland förbjudet. Bounded pursuit; onåbart/förlorat mål återgår till
+patrull. Ingen retreatheal, loot eller ny audio. Save69 bevarar position/HP/
+cooldown/patrolindex, attackorders och normala shots;68 och äldre migreras utan
+nya monster i befintlig match. Restart initierar aktuell kartconfig.
+
+Browser fann shipattackorder som rensades av vanlig destructioncleanup;
+fix och full-update/inflightSave/death-test. AI shots till neutral target får
+bestå mellan frames; AI submarine kan skada monstret men tar aldrig retaliation.
+Granskning täckte också blockerad pursuit, overlap-säkert harbor/spawn och
+uppdaterad positionssnapshot så ett landmål som lämnat kusten inte används.
+Sista Save-granskningen lade till död kropp under senare byggd hamn: döda
+records valideras mot ursprunglig vattenterräng/områdesgräns, levande även
+mot dynamiska hinder.45/2 Save/sea PASS12.32s före de slutliga133/13.
+Slutliga browserartefakter inkluderar Savefixen och senare slutplacering.
+Egna code-native coil/swim/bite/sink-pixelposer i befintlig bossatlas, synligt
+namn/HP/96px ring. Separata riktningsmålningar och ny creatureaudio saknas.
+Första två landbossarnas RGBA-rader verifierat exakt oförändrade mot HEAD.
+
+Slutlig riktad `npm test --` seaMonsters/navy/destruction/commandOrders/bosses/
+navalCombat/submarines/coast/seaMission/load/terrainNavigation/campaignLate/operations/
+minimap/assets:
+160/15 PASS34.51s. Nya19 sjöfall klassade integration i disjunkt manifest.
+Final `npm run test:unit`:517/90 PASS15.41s. `npm run build` med strict
+TypeScript PASS443ms; befintlig >500KB chunkvarning kvar. Manifest/script-syntax/
+diffkontroll PASS. Första unit-körningen hittade gammal atlas192/8-assertion;
+uppdaterad till288/12, med oförändrade landbossassertions och separat sea-gräns.
+Tre tidigt startade fullkörningar avbröts för asset-/reviewkorrigeringar och
+räknas inte som passerade. Slutlig fullregression redovisas efter korrigeringshistoriken nedan.
+
+En avbruten fullkörning fann två riktiga campaignLate-fel (inte timeout):
+The Crossing/Coastal Banner vann, men deras kvarlämnade transport förstördes
+av den första kanalpatrullen och befintlig fleetassertion underkändes.
+Separat oförändrat campaignLate reproducerade2/4 fel. Kartconfigens första
+område flyttat till y608–896, patrol720/688→784/848, utan terrain-/mål-/
+combat-/testbotändring eller försvagade assertions. Norra kampanjöverfarten
+432 ligger utanför bett/pursuit. Samma risk kvar på södra sjövägen. Ny faktisk
+sea/campaignLate23/2 PASS63.55s, inklusive alla fyra sena paid/objective/
+progression/Save/replay-fall. Browser omkörd på slutområdet800/1280 PASS.
+Slutliga riktade137/14, unit517/90 och strict build PASS på denna kartconfig;
+senare slutlig fullregression redovisas nedan.
+
+Första fullständiga slutkörningen:1828 PASS/1 FAIL,208 filer,591.98s.
+Enda felet var operations capture-timestep/Save-testets5000ms-budget
+(9357ms), riktat reproducerat7009ms. Orsaken var ny obstacle-array varje
+monsterpatrullsteg, vilket slog ut befintliga collision/goal-tree-cacher.
+Bounded wateradaptern återanvänder nu immutable obstacleidentitet per
+water-snapshot/områdesgräns; nya hinder/revisioner skapar ny adapter.
+Inga assertions eller deadlines ändrade. Sea/operations42/2 PASS5.55s.
+Efter fix: isolerat capture-test2223ms PASS med oförändrad5000ms-budget;
+slutliga riktade160/15 PASS34.51s, unit517/90 PASS15.41s och strict
+build443ms PASS. Chrome800/1280 omkörd till PASS på exakt cachefix/slutplacering.
+Slutlig fullregression på samma kod1829/208 PASS534.05s. Detta ersätter
+591.98s-felkörningens aktuella status; den behålls som korrekt historik.
+Review av human-only målval/AI-angrepp, domäner/leash/cacher, fog/range,
+neutral victory/stats, live/dead Save/refs/cleanup/restart och assets utan
+kvarstående centrala fynd. Nya docsreferenser, scriptsyntax, manifest och
+slutlig diffcheck PASS. Docs efter kodchecks; inga fler kodändringar.
+Task230 Done; commit/push till befintlig origin/main utan force efter denna
+verifierade slutuppdatering, hash/push rapporteras i leveransen.
+
+Faktisk Chrome800×600/1280×720 Islands/Hard/Clans PASS0pageerrors; tom local
+storage, ledgerfunding och betald seeded färdig kusthamn, fysiska train/select/
+rightclickattack, riktiga matchsteps, fog/minimap före discovery, water-safe
+monsterpositioner, bilateral skada, SaveLoad och restart. Bilder combat800/
+discovered1280 visuellt granskade på tidigare placering; slutlig combat800 granskad; slutliga bilder med range sparade och combat800 granskad. Harness
+läste vid ett försök selection före inputtick;100ms mousepress och explicit
+selectionwait gav PASS. Det misslyckade försöket räknas inte som PASS.
+[Browserunderlag](artifacts/rts-230/browser.json), `scripts/check-sea-monsters.mjs`.
+Tekniskt avgränsat scenario, inget mänskligt balans-/helmatchspeltest och ingen
+ny release/CI/Pages-/ljudverifiering hävdas.

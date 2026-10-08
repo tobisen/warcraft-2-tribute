@@ -1,4 +1,4 @@
-import {bossDefinitions,bossRules} from '../config/bosses';
+import {seaMonsterRules,bossDefinitions,bossRules} from '../config/bosses';
 import {factions,type FactionId} from '../config/factions';
 import {combatConfig} from '../config/combat';
 import {forgeConfig} from '../config/upgrades';
@@ -9,6 +9,7 @@ import {rangedStats} from '../config/unit';
 
 /** Missing role is the pre-141 generic army profile, retained by old saves. */
 export function enemyUnitStats(e:Enemy,faction:FactionId='clans'){
+ if(e.seaMonster)return {...seaMonsterRules,damagePerSecond:0,supply:0,damageByDomain:undefined,buildingDamageMultiplier:1};
  if(e.boss){const b=bossDefinitions[e.boss];return {hp:b.hp,speed:0,size:bossRules.size,range:bossRules.range,aggroRange:bossRules.range,damagePerSecond:0,supply:0};}
  faction=e.faction??faction;
  const profile=e.role?factions[faction].units[e.role]:undefined;
@@ -23,6 +24,7 @@ export function enemySoldier(e:Enemy,faction:FactionId):Soldier{
 export const enemyRangedStats=(e:Enemy,faction:FactionId)=>e.boss?{range:bossRules.range,damage:bossDefinitions[e.boss].damage,attackInterval:bossDefinitions[e.boss].attackInterval,projectileSpeed:bossRules.projectileSpeed,projectileLifetime:bossRules.projectileLifetime,hitRadius:24,splashRadius:bossDefinitions[e.boss].splashRadius}:e.role?rangedStats(enemySoldier(e,faction),faction):undefined;
 export const enemySupply=(e:Enemy,faction:FactionId)=>e.kind==='worker'?1:e.kind==='ship'?factions[e.faction??faction].naval.units[e.navalRole??'transport'].supply:e.footprint?0:enemyUnitStats(e,faction).supply;
 export function enemyMaximumHP(e:Enemy,faction:FactionId):number{
+ if(e.seaMonster)return seaMonsterRules.hp;
  const f=factions[e.faction??faction];
  if(e.kind==='worker')return f.units.worker.hp;
  if(e.kind==='ship')return f.naval.units[e.navalRole??'transport'].hp;

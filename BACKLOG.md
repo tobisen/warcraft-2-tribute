@@ -45,6 +45,30 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
+### RTS-230 — Sjömonster — Done
+
+Nytt uttryckligt uppdrag: neutrala vattenpatruller på lämpliga kartor,
+Beginner/Easy1, Normal2, Hard3 med karttak och validerade kartplatser.
+Endast mänskliga spelarens mål oavsett ras; aldrig AI-retaliation.
+Vattensäkert begränsat område, skepp först, kustmål men aldrig inland.
+Återanvänd neutral combat/navigation/fog; inga nya spelare/matchmål.
+Tester: vatten/patrull/leash, skepp/kust/inland, AI/ras, fog, antal,
+Save/Load/restart. Kort sjökartbrowser och obligatoriska slutchecks;
+docs/commit/push. Inga andra roadmaptasks, release eller kartombyggnad.
+
+Resultat2026-10-08: Islands/Shattered Coast1/1/2/3 och River Bend1/1/2/2
+på Beginner/Easy/Normal/Hard; andra kartor0. Human-owned mål för alla raser,
+skepp→beachunits≤32px→direkt kustbyggnad, aldrig AI/retaliation/air/inland.
+Shared guardian/combat/waternav/fog, bounded patrol/leash, ingen army/base/
+victorypåverkan. Save69 och restart. Norra kampanjöverfarten bevarad genom
+sydligt patrullområde. Egna små swim/bite/sink-pixelposer,96px range/HP-label.
+Slutliga riktade160/15 PASS34.51s, unit517/90 PASS15.41s, strict build443ms,
+full1829/208 PASS534.05s, manifest/syntax/diff/review och faktiska Chrome800/
+1280 PASS0pageerrors. Capture-testets5000ms-budget består efter navcachefix.
+[Underlag](artifacts/rts-230/browser.json); DEV_LOG/HANDOFF redovisar tidigare
+felkörningar/korrigeringar, begränsad animation och ej mänsklig balansgranskning.
+CSS/units.mjs/docs/:memory:.ses bevarade. Ingen ny release/CI/Pagesclaim.
+
 ### UI 2026-10-08 — Delete egen byggnad — Done
 
 Välj egen byggnad och använd befintlig Delete/confirmation/actionknapp.

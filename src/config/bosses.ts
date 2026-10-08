@@ -12,3 +12,8 @@ export const bossEnemyId=(id:BossId)=>`enemy-boss-${id}`;
 export type BossDamageProfile='melee'|'projectile'|'siege';
 export const bossDamageProfile=(role:string|undefined,ranged=false):BossDamageProfile=>role==='catapult'||role==='ballista'?'siege':ranged?'projectile':'melee';
 export const bossIncoming=(id:BossId,profile:BossDamageProfile)=>bossDefinitions[id].incoming[profile];
+
+/** Shared neutral encounter tuning; Easy deliberately shares Beginner pressure. */
+export const seaMonsterRules={name:"Sea serpent",hp:240,size:32,speed:48,range:96,aggroRange:224,shoreRange:32,damage:18,attackInterval:1.5};
+export const seaMonsterCounts={beginner:1,easy:1,normal:2,hard:3} as const;
+export const seaMonsterEnemyId=(id:string)=>`enemy-sea-monster-${id}`;

@@ -22,3 +22,13 @@ Original source images remain unchanged. No synthetic movement poses: guardians
 are stationary. Attack poses and existing projectile/hit effects supply combat
 feedback; frame3 is a persistent defeated corpse. Agent browser inspection is recorded
 in `artifacts/rts-212/browser.json`, separately from automated asset checks.
+
+## RTS-230 — Sea serpent
+
+Original integer-pixel drawing in `scripts/export-boss-assets.mjs`, authored
+2026-10-08 for this project and dedicated to CC0-1.0. No imported raster or
+third-party character. Four96×96 cells in the third atlas row: two swimming
+coil poses, raised bite, sinking silhouette. The shared land guardian sources
+and their first two atlas rows remain unchanged. This small code-drawn creature
+has two swim frames, not separately painted directions;
+there is no new creature-specific sound. Browser evidence: artifacts/rts-230.

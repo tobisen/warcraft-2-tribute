@@ -1993,3 +1993,30 @@ Gate-art komprimeras horisontellt till en cell; anslutningsarmar centreras efter
 faktisk footprint. Maskerna stödjer både nya enrutsportar och äldre64px-portar.
 Decode tillåter explicit äldre gatebredd64 utan att flytta befintliga murar;
 nybyggande använder alltid32. Automatisk teamrouting följer faktisk footprint.
+
+## RTS-230: sea encounters in the existing guardian/combat pipeline
+
+`MapDefinition.seaMonsters` stores caps, named area rectangles and patrol
+points. `gameplay/bosses.ts` extends `BossState` with optional `sea` records;
+`bossEnemies`/`battleEnemies` provide transient combat and presentation bodies.
+`finishBossCombat` commits their HP/motion/cooldown and removes projections
+before ordinary AI, statistics and match outcome evaluation. Bounded water
+adapters keep obstacle-array identity stable while terrain/revision/obstacle
+changes invalidate them, allowing existing collision/goal-tree caches to work.
+It clears dead
+neutral defender references. Initialization checks body clearance and routes.
+
+The combat adapter derives targets directly from the human economy/fleet and
+placement, after this slice's human movement; it never uses the AI target
+roster or the Humans faction. Shared `navalCombat.attackStep` accepts an
+optional bounded water map for movement while retaining the original map for
+shot/contact occlusion. Shared cooldown/damage application handles bites and
+normal projectiles can damage the creature. Living neutral target IDs retain
+AI projectiles between frames. Serpents add no fog observers, and unlike
+stationary guardians they use ordinary current-sight presentation.
+
+Save69 adds strict optional sea-record validation and live neutral attack
+references; migration68 preserves existing matches without injecting sea
+encounters. Current supported multi-AI maps have no configured sea encounters;
+no new starts, player type, victory rule or monster controller is introduced.
+See `src/gameplay/seaMonsters.test.ts` and `scripts/check-sea-monsters.mjs`.

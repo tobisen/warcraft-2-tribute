@@ -1,3 +1,4 @@
+import {bossEnemies} from './bosses';
 import {hasMainBase} from './extraBases';
 import {campaignActionReason} from '../config/campaignContent';
 import {allocateFormation} from './formations';
@@ -35,16 +36,17 @@ export function matchPopulation(m:MatchState):Population {
  return {...pop,used:pop.used+(m.navy?.ships??[]).reduce((n,s)=>n+shipRecipe(m,s.role).supply,0)+populationState({...m.gathering,units:passengerUnits(m.navy)},m.placement,[]).used};
 }
 export function harborFootprint(point:Position):Footprint {return buildingFootprint(point,'harbor');}
+const navalOccupants=(m:MatchState)=>[...m.combat.enemies,...bossEnemies(m).filter(e=>e.seaMonster)].filter(e=>!e.footprint&&!isAir(e)).map(e=>unitBody(e.position,e.seaMonster?32:24));
 export function harborSpawn(m:MatchState,footprint:Footprint,occupancy=true,role:'warship'|'transport'|'submarine'='warship'):Position|null {
  const map={...domainMap(m.map,'water'),bodyHalf:shipRecipe(m,role).size/2,obstacles:[...domainMap(m.map,'water').obstacles,footprint]};
- return spawnCandidates(map,footprint,'barracks',shipRecipe(m,role).size).find(p=>hasSpawnExit(map,p)&&(!occupancy||![...m.gathering.units.filter(u=>!isAir(u)).map(u=>unitBody(u.position,u.kind==='worker'?unitStats.size:combatUnitStats(u).size)),...(m.navy?.ships??[]).map(u=>unitBody(u.position,shipRecipe(m,role).size)),...m.combat.enemies.filter(e=>!e.footprint&&!isAir(e)).map(e=>unitBody(e.position,24))].some(b=>overlaps(unitBody(p,shipRecipe(m,role).size),b))))??null;
+ return spawnCandidates(map,footprint,'barracks',shipRecipe(m,role).size).find(p=>hasSpawnExit(map,p)&&(!occupancy||![...m.gathering.units.filter(u=>!isAir(u)).map(u=>unitBody(u.position,u.kind==='worker'?unitStats.size:combatUnitStats(u).size)),...(m.navy?.ships??[]).map(u=>unitBody(u.position,shipRecipe(m,role).size)),...navalOccupants(m)].some(b=>overlaps(unitBody(p,shipRecipe(m,role).size),b))))??null;
 }
 function checkHarborPlacement(m:MatchState,point:Position,preview=false):string|null {
  const locked=campaignActionReason(m,'build-harbor');if(locked)return locked;
  if(m.navy?.harbor)return uiText.harborExists;
  const rect=harborFootprint(point);if(m.fog&&!placementVisible(m.fog,rect))return uiText.theSiteMustBeVisible;if(!coastalFootprint(m.map,rect))return uiText.aHarborNeedsAFreeCoastWithLand;
  if(!canAfford(m.gathering,factionForTeam(m,'player').naval.harbor.cost))return uiText.notEnoughWoodOrGold;
- if(m.gathering.units.some(u=>!isAir(u)&&overlaps(rect,unitBody(u.position,u.kind==='worker'?unitStats.size:combatUnitStats(u).size)))||m.combat.enemies.some(e=>!e.footprint&&!isAir(e)&&overlaps(rect,unitBody(e.position,24)))||(m.navy?.ships??[]).some(s=>overlaps(rect,unitBody(s.position,factionForTeam(m,'player').naval.units.warship.size))))return uiText.overlapsAUnit;
+ if(m.gathering.units.some(u=>!isAir(u)&&overlaps(rect,unitBody(u.position,u.kind==='worker'?unitStats.size:combatUnitStats(u).size)))||navalOccupants(m).some(b=>overlaps(rect,b))||(m.navy?.ships??[]).some(s=>overlaps(rect,unitBody(s.position,factionForTeam(m,'player').naval.units.warship.size))))return uiText.overlapsAUnit;
  const builder=m.gathering.units.filter(u=>u.kind==='worker'&&u.selected).sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}))[0];
  if(!builder)return uiText.selectAWorkerToBuild;
  if(preview)return null;
