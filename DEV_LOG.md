@@ -4983,3 +4983,12 @@ reused, text/link/diff checks are new. User style.css/units.mjs/docs/
 :memory:.ses are preserved and excluded. Existing Pages practice used
 without new tag infrastructure. Release mandate complete; no further task
 or map rebuild/cleanup is started.
+
+
+## 2026-10-08 — Logisk bygg-/forskningsordning
+
+Stabil actionIds-sortering efter teknikberoenden. Riktade16/2 PASS672ms,
+unit515/90 PASS14,88s, strict build723ms PASS (befintlig chunkvarning),
+Chrome800/1280 ordning/låsningar/fysisk Worker Tools-betalning PASS utan
+pageerrors; representativa800-bilder granskade. Syntax/diff PASS. Ingen
+ny fullregression för statisk UI-ordning. Nästa task är dragbygge av murar.

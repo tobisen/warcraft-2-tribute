@@ -1,3 +1,14 @@
+## 2026-10-08 — Logisk knappordning — Done
+
+Fast bygg-/forskningsordning efter prerequisites, med startbyggen och
+Worker Tools/basuppgradering först. Train/order-beteende och hotkeys består.
+Riktade actionPanel/technologyView16/2 PASS, unit515/90 PASS14,88s, strict
+build PASS723ms, diffcheck PASS. Chrome800/1280 faktisk researchbetalning
+och två-raders Research PASS0pageerrors; 800-bilder visuellt granskade.
+[Resultat/bilder](artifacts/action-order/browser.json),
+`scripts/check-action-order.mjs`. Ingen ny bred campaign/fullregression.
+Nästa användarbeställda småsak: dra flera murar. CSS/units.mjs/docs bevaras.
+
 ## 2026-10-08 — Scoutade bossar/fynd/byggnader — Done
 
 Bossar, skatter, orekryterade karaktärer/hjältefynd och byggnader visas nu

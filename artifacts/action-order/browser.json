@@ -1,0 +1,205 @@
+{
+  "browser": "155.0.8059.39",
+  "results": [
+    {
+      "width": 800,
+      "build": [
+        {
+          "id": "build-farm",
+          "disabled": false
+        },
+        {
+          "id": "build-barracks",
+          "disabled": false
+        },
+        {
+          "id": "build-wall",
+          "disabled": false
+        },
+        {
+          "id": "build-gate",
+          "disabled": false
+        },
+        {
+          "id": "build-tower",
+          "disabled": false
+        },
+        {
+          "id": "build-forge",
+          "disabled": false
+        },
+        {
+          "id": "build-harbor",
+          "disabled": false
+        },
+        {
+          "id": "build-base",
+          "disabled": false
+        },
+        {
+          "id": "build-stable",
+          "disabled": true
+        },
+        {
+          "id": "build-aviary",
+          "disabled": true
+        },
+        {
+          "id": "build-siegeWorks",
+          "disabled": true
+        },
+        {
+          "id": "build-academy",
+          "disabled": true
+        }
+      ],
+      "research": [
+        {
+          "id": "research-workerTools",
+          "disabled": false,
+          "row": 449
+        },
+        {
+          "id": "upgrade-base",
+          "disabled": false,
+          "row": 449
+        },
+        {
+          "id": "research-attack",
+          "disabled": true,
+          "row": 449
+        },
+        {
+          "id": "research-defense",
+          "disabled": true,
+          "row": 449
+        },
+        {
+          "id": "research-cavalryArmor",
+          "disabled": true,
+          "row": 497
+        },
+        {
+          "id": "research-scoutOptics",
+          "disabled": true,
+          "row": 497
+        },
+        {
+          "id": "research-healerTraining",
+          "disabled": true,
+          "row": 497
+        },
+        {
+          "id": "research-submarineDesign",
+          "disabled": true,
+          "row": 497
+        }
+      ],
+      "paid": {
+        "wood": 940,
+        "job": "workerTools"
+      },
+      "errors": []
+    },
+    {
+      "width": 1280,
+      "build": [
+        {
+          "id": "build-farm",
+          "disabled": false
+        },
+        {
+          "id": "build-barracks",
+          "disabled": false
+        },
+        {
+          "id": "build-wall",
+          "disabled": false
+        },
+        {
+          "id": "build-gate",
+          "disabled": false
+        },
+        {
+          "id": "build-tower",
+          "disabled": false
+        },
+        {
+          "id": "build-forge",
+          "disabled": false
+        },
+        {
+          "id": "build-harbor",
+          "disabled": false
+        },
+        {
+          "id": "build-base",
+          "disabled": false
+        },
+        {
+          "id": "build-stable",
+          "disabled": true
+        },
+        {
+          "id": "build-aviary",
+          "disabled": true
+        },
+        {
+          "id": "build-siegeWorks",
+          "disabled": true
+        },
+        {
+          "id": "build-academy",
+          "disabled": true
+        }
+      ],
+      "research": [
+        {
+          "id": "research-workerTools",
+          "disabled": false,
+          "row": 569
+        },
+        {
+          "id": "upgrade-base",
+          "disabled": false,
+          "row": 569
+        },
+        {
+          "id": "research-attack",
+          "disabled": true,
+          "row": 569
+        },
+        {
+          "id": "research-defense",
+          "disabled": true,
+          "row": 569
+        },
+        {
+          "id": "research-cavalryArmor",
+          "disabled": true,
+          "row": 637
+        },
+        {
+          "id": "research-scoutOptics",
+          "disabled": true,
+          "row": 637
+        },
+        {
+          "id": "research-healerTraining",
+          "disabled": true,
+          "row": 637
+        },
+        {
+          "id": "research-submarineDesign",
+          "disabled": true,
+          "row": 637
+        }
+      ],
+      "paid": {
+        "wood": 940,
+        "job": "workerTools"
+      },
+      "errors": []
+    }
+  ]
+}

@@ -45,6 +45,18 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
+### UI 2026-10-08 — logisk knappordning — Done
+
+Bygg/forskning sorteras stabilt efter förkunskapskrav: startbyggen först,
+avancerade producenter sist; Worker Tools/basuppgradering före forge-tech
+och rollspecialiseringar. Ingen dynamisk omflyttning vid resursändring.
+Riktade16/2, unit515/90, strict build och Chrome800/1280 PASS; se HANDOFF.
+
+### UI 2026-10-08 — dra murar — In progress
+
+Nästa avgränsade användaruppdrag: dragplacera flera mursegment med befintliga
+kostnader, fog, placeringsregler och oförändrade tak. Ingen roadmapstart.
+
 ### Fog 2026-10-08 — scoutade landmärken — Done
 
 Användaruppdrag: bossar, skatter, rekryterbara karaktärer/hjältefynd och
