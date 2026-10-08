@@ -45,12 +45,13 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
-Nytt uttryckligt releaseuppdrag 2026-10-08: publicera0.5.0 av verifierade
-RTS-220–229. Befintlig version/changelog/Pages-praxis, ren releasekopia,
-unit/full regression/strict build/productionbrowser och faktisk CI/Pages-
-verifiering. Ingen ny gameplaytask, kartombyggnad eller städning. Bevara
-lokala style.css/units.mjs/docs/:memory:.ses. Efter release: HANDOFF och stopp.
-Tidigare paus av release är ersatt av detta uppdrag.
+Release0.5.0 är avslutad och faktiskt publicerad/verifierad:
+Buildb957568, GitHub37768721009 tests/strict build/Pages PASS,
+ren fullregression1795/206 och public productionbrowser800/1280/Native/Fit
+PASS. HANDOFF/QUALITY_REVIEW/RELEASE_CHECKLIST redovisar nya belägg,
+storleks-/animations-/balansbegränsningar och bevarade användarändringar.
+Stanna: ingen ny roadmaptask, kartombyggnad eller städning startas.
+Tidigare releasepaus/pending-noteringar är historik.
 
 
 Release0.4.0 / Buildd003daa är publicerad och faktiskt CI-/Pages-/browser-verifierad.

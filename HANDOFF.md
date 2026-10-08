@@ -1,3 +1,39 @@
+## 2026-10-08 — Release0.5.0 published and verified
+
+[Play0.5.0](https://tobisen.github.io/warcraft-2-tribute/) actually shows
+**v0.5.0 / Buildb957568**. Release commit `b957568` pushed to origin/main.
+[Actions37768721009](https://github.com/tobisen/warcraft-2-tribute/actions/runs/37768721009)
+passed npm ci, full npm test (789s), strict build and Pages deploy for the
+same SHA. Deploy completed2026-10-08 13:28:03 Europe/Stockholm.
+
+New clean local verification: full1795/206 PASS553.39s, unit511/89
+PASS22.83s, strict build867ms; exact committed rebuild453ms PASS.
+Production browser candidate/exact/public:800/1280 Native and1600 Native/
+Fit PASS0runtime/asset failures, version/Changelog/Scout+Ballista TechTree,
+campaign/skirmish/team/spectator fixtures, pause/Save/Load/replay/menu,
+fullscreen/resolutions/reload and PNG/audio HTTP. These bounded fixtures
+are technical checks, not natural human full-match balance or listening.
+Actual public800 TechTree screenshot visually reviewed.
+
+Public JS index-CpfwM26v.js is byte-identical to exact local production,
+SHA2565022bd9e80911d3aeaa5141f07cbfffb2a607abc61f6cbc65c1be8b4d42984e1.
+Public CSS index-B3bLsssL.css also matches,
+SHA256b062f3e0d0aabf4c0d5c9a9223672d239b27ef74749a9b97e32702f302b0024b.
+Evidence: /private/tmp/w2t-release050-public/browser.json and
+/tmp/w2t-release050-public-hashes.json; existing scripts/check-release.mjs
+with explicit URL/version/build and temporary isolated browser contexts.
+
+Known limits: ~64MiB dist,2.06MB JS/540207bytes gzip exceeds historical
+early-game size budgets; no budget PASS claimed. Painted animation pose/
+direction coverage, human match timing/balance, other browser engines and
+new listening remain documented. No speculative asset/architecture changes.
+
+This final update is Markdown only: verified code checks are explicitly
+reused, text/link/diff checks are new. User style.css/units.mjs/docs/
+:memory:.ses are preserved and excluded. Existing Pages practice used
+without new tag infrastructure. Release mandate complete; no further task
+or map rebuild/cleanup is started.
+
 ## 2026-10-08 — Release0.5.0 in progress
 
 User explicitly authorizes the next release. Product/package/lock0.5.0
