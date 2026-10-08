@@ -10,7 +10,9 @@ existing neutral bosses are integrated with production, AI, UI and Save.
 Task commits: cavalry15bd869/artd4ed302/CIb9a2939; healer a683049;
 giant7c7bfca; scout/Aviaryd2f2e10; towers1101e38; heavyAir40e9591;
 research1d6b000; SiegeWorks/Ballista7bcba02; Submarine0d2e5b1.
-RTS-228 is Done. Final task hash and GitHub status follow after push.
+RTS-228 is Done and pushed: `c157717`. GitHub Actions37762745212 failed three roster-simulation instances at
+the default5s timeout. A scoped30s test deadline follows; actual replacement
+CI outcome is recorded separately below.
 
 Final local verification: npm test1795/206 PASS597.61s; npm run test:unit
 511/89 PASS25.59s; npm run build (strict TypeScript included) PASS610ms;

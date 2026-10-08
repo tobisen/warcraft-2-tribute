@@ -4735,3 +4735,21 @@ Final self-review covered scoped projectiles, fog, paid producers, owner
 reward ledgers, attack references, save migration and readable world labels;
 no unresolved blocking findings. GitHub status after final push is recorded
 separately; local green results do not imply CI success.
+
+## CI follow-up after RTS-228
+
+Code task c157717 pushed successfully; local full1795/206 PASS597.61s.
+GitHub37762745212 npm test ran984s and failed only three instances of
+enemyFactions.test.ts:58 at Vitest's default5000ms. No gameplay assertion
+failure was reported. This test executes up to1400 bounded full-match ticks
+per faction, paid tech/producer unlocks and casualties/replacement. Its own
+timeout is now30000ms; loops, assertions, worker concurrency and other test
+deadlines stay unchanged. Final code regression is reused because this
+follow-up changes only that test deadline and documentation. Targeted suite,
+unit/build/diff and actual replacement CI outcome follow below.
+
+Timeout follow-up validation: enemyFactions28/1 PASS14.35s; unit511/89
+PASS14.71s; strict build458ms PASS; diffcheck PASS. Review confirms this
+changes only the bounded long scenario's deadline and retains every roster/
+paid-economy/replacement assertion. Gameplay/full1795 regression and browser
+evidence are reused from unchanged c157717 code, not rerun for this deadline.

@@ -57,6 +57,7 @@ describe('faction-aware opponent army',()=>{
  });
  it.each(factionIds)('%s autonomous paid economy unlocks and replaces every roster role after combat losses',id=>{
   let m=createMatch('skirmish','normal',{player:'crown',enemy:id});
+  // Up to 1400 full-match ticks per faction need more than 5s on shared CI CPUs.
   // Explicit resilience fixture for the observed AI, not a paid player victory.
   m.combat.baseHP=1e8;delete m.capture;delete m.enemyRecovery;
   // Larger finite deposits isolate roster replacement from resource exhaustion.
@@ -71,7 +72,7 @@ describe('faction-aware opponent army',()=>{
   }
   expect([...observed].sort(),JSON.stringify({id,time:m.waves.elapsedSeconds,bank:m.enemyProduction,priority:enemyPriority(m),tech:technologyFor(m,'enemy'),catReason:unitAvailability(factions[id],'catapult',technologyFor(m,'enemy')),army:m.combat.enemies.filter(e=>e.role),chosen:m.armyPlan?compositionRole(m.armyPlan,m.combat,m.enemyProduction!.production,id,technologyFor(m,'enemy')):null,research:m.enemyPolicy,buildings:m.combat.enemies.filter(e=>e.footprint)})).toEqual([...roles].sort());
   expect(m.enemyPolicy?.research).toMatchObject({attack:2,defense:2});expect(m.enemyProduction?.spent?.wood).toBeGreaterThan(factions[id].buildings.barracks.cost.wood+factions[id].buildings.forge.cost.wood);expect(m.enemyProduction?.wood).toBeGreaterThanOrEqual(0);
- });
+ },30_000);
  it('NPC self-buffs only in visible combat and respects cooldown and game-time expiry',()=>{
   let m=createMatch('skirmish','normal',{player:'crown',enemy:'goblins'});m.fog=undefined;
   const enemy:Enemy={id:'enemy-produced-1',kind:'unit',owner:'enemy',role:'soldier',hp:40,position:{...m.gathering.units[0].position},order:{kind:'defend',targetId:'unit-1'}};
