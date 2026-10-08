@@ -1,3 +1,4 @@
+import {updateSiegeProduction} from './siegeProduction';
 import {updateFlightProduction} from './flightProduction';
 import {createBosses,prepareBossCombat,finishBossCombat,updateBossRewards,type BossState} from './bosses';
 import {regionDefinition} from '../config/mapRegions';
@@ -238,7 +239,7 @@ function advance(state: MatchState, delta: number, scope?:CombatScope): MatchSta
   const incoming=scenarioConfig[cleaned.scenario??'survival'].waves?updateWaves(cleaned.waves,ai.combat,delta,campaignWaveSchedule(cleaned),cleaned.campaignRun&&cleaned.map.id==='frontier'?{x:1248,y:144,spacing:32}:undefined):{combat:ai.combat,waves:{...cleaned.waves,elapsedSeconds:cleaned.waves.elapsedSeconds+delta}};
   let updated:MatchState={...cleaned,...(enemyPolicy?{enemyPolicy}:{}),...(vision?{fog:vision}:{}),research,...(enemy.state?{enemyProduction:enemy.state}:{}),...(ai.state?{enemyAI:ai.state}:{}),gathering:soldier.gathering,combat:incoming.combat,waves:incoming.waves,
     production:{...worker.production,nextUnitNumber},soldierProduction:{...soldier.production,nextUnitNumber}};
-  if(scope?.side!=='enemy'){updated=updateExtraBaseProduction(updated,baseStep.productionSeconds);updated=updateCavalryProduction(updated,ownDelta);updated=updateHealerProduction(updated,ownDelta);updated=updateFlightProduction(updated,ownDelta);}
+  if(scope?.side!=='enemy'){updated=updateExtraBaseProduction(updated,baseStep.productionSeconds);updated=updateCavalryProduction(updated,ownDelta);updated=updateHealerProduction(updated,ownDelta);updated=updateFlightProduction(updated,ownDelta);updated=updateSiegeProduction(updated,ownDelta);}
   const beforeNavyCompletion=readyBuildings(updated);
   updated=updateTransportTransfers(updateNavy(updated,ownDelta),ownDelta);
   updated={...updated,statLedger:recordCompletions(beforeNavyCompletion,updated)};

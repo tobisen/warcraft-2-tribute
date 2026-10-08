@@ -1561,3 +1561,32 @@ RTS-227 consumes this detector config with current owner/team visibility.
 TechTree and three role portrait+research-badge icons, F15/F16/F17. AI
 prioritizes ordinary military upgrades then available paid role research,
 without shared faction/global unlocks. Campaign3 cav/optics,6 healer.
+
+## RTS-229 — Dedicated siege workshop and ballista
+
+All five factions train catapults and ballistas at their own Siege Workshop,
+War Workshop, Siege Grove, Siege Foundry or Siege Yard. Barracks admission
+rejects both roles. Workshop: base II + completed Forge,90 wood/50 gold,
+12s,180HP,64px footprint. Paid independent FIFO/rally, supply, repair,
+construction resume, combat destruction, fog, teams, campaign and saves follow
+the existing dedicated producer lifecycle. Campaign6 unlocks siege workshops
+and ballistas alongside catapults; Elven splash siege is named Grove Catapult
+so it is distinct from the new direct-shot Grove Ballista.
+
+Ballista/Bolt Thrower/Grove Ballista/Iron Ballista/Bolt Launcher:65 wood,
+40 gold,16s,3 supply,90HP,75px/s,32px body,224px range,22 damage/2s,
+340px/s bolt. Land/buildings only, no splash,2× damage against buildings
+for both player and AI; mechanical and not healable. Catapult recipes and
+splash remain distinct. F18 builds the workshop; F19 trains the ballista.
+The former catapult hotkey uses the selected workshop. Save67 cancels old
+validated Barracks catapult jobs with a full one-time original-cost refund;
+existing catapults stay alive with their existing HP. New saved workshop
+queues preserve both roles and unique unit counters. Artwork provenance and
+specific source-pose limitations:assets/sources/visual-refresh/siege.md.
+
+AI reserves resources for required producer buildings and paid base upgrades;
+its finite authored build candidates include room for all actual producers.
+No map terrain/layout change. Heavy Goblin airship damage retains30 raw and40px
+splash, with land×.75/air×.65 to preserve comparable-cost ground AA counters
+and interceptor advantage under the shared heavy-flyer cost; building damage
+is unchanged. Automated balance fixtures are not human match balancing.

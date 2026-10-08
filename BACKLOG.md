@@ -46,7 +46,7 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 ## Current Focus
 
 Nytt mandat 2026-10-08: RTS-220–228 i ordning, därefter användarens tillägg RTS-229, en task åt gången.
-RTS-220 grafik samt RTS-221–222 verifierade; RTS-223 är verifierad med separat flygbyggnad; nästa task227, därefter228–229. Städning, release och kartombyggnad är pausade.
+RTS-220 grafik samt RTS-221–222 verifierade; RTS-223 är verifierad med separat flygbyggnad; 229 är klar enligt senaste styrning om egen belägringsbyggnad/ballista. Aktuell task227, därefter228 och samlad slutregression. Städning, release och kartombyggnad är pausade.
 Taskvis riktade tester, native800-browser, unit/strict build/diff, docs och
 commit/push till origin/main. Full regression vid etappslut; stanna efter229.
 Befintliga style.css/units.mjs/docs/:memory:.ses bevaras. Ingen delegering.
@@ -5799,7 +5799,7 @@ exakt en gång; konkurrens/save säkra. AI samma upptäckts-/belöningsregler
 leash/victory/fog/worker race/save. Efter228 full regression och HANDOFF med
 nya roller/checks/asset-/balansbegränsningar/hashar; stanna utan release.
 
-### RTS-229 — Separat belägringsproduktion och ballista — Todo
+### RTS-229 — Separat belägringsproduktion och ballista — Done
 Uttryckligt användartillägg 2026-10-08: katapult flyttas från Barracks till egen
 fraktionsbyggnad. Lägg till ballista i samma byggnad, med distinkt art/ikon och
 direktskott/hög byggnadsskada jämfört med katapultens splash. Samma betalda

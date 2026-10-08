@@ -1,0 +1,463 @@
+{
+  "fixture": "Actual menu/clicks; resource-cheat funding, seeded base III/Forge/Academy/research II; .1s gameplay ticks; visible opposing infantry staged for actual projectile attack; tactical AI paused during controlled combat",
+  "results": [
+    {
+      "faction": "crown",
+      "actualMouseSiegeBuildTrainMoveCombat": true,
+      "queued": {
+        "wood": 99845,
+        "gold": 99910,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "ballista",
+          "supply": 3,
+          "cost": {
+            "wood": 65,
+            "gold": 40
+          },
+          "durationSeconds": 16,
+          "remainingSeconds": 16
+        }
+      },
+      "fought": {
+        "order": {
+          "kind": "attack",
+          "enemyId": "enemy-produced-4"
+        },
+        "unit": {
+          "owner": "player",
+          "id": "unit-4",
+          "position": {
+            "x": 600,
+            "y": 460
+          },
+          "target": {
+            "x": 600,
+            "y": 460
+          },
+          "selected": true,
+          "kind": "soldier",
+          "archetype": "ballista",
+          "cargo": 0,
+          "hp": 90,
+          "order": {
+            "kind": "attack",
+            "enemyId": "enemy-produced-4"
+          },
+          "autoDisabled": false,
+          "navigation": {
+            "commandNumber": 1,
+            "destination": {
+              "x": 600,
+              "y": 460
+            },
+            "waypoints": [],
+            "revision": 4,
+            "status": "arrived",
+            "goalKey": "attack:enemy-produced-4:500:460",
+            "targetId": "enemy-produced-4",
+            "retryAfter": 0
+          },
+          "attackCooldown": 1.9999999999999993
+        },
+        "shots": [
+          {
+            "id": "arrow-2",
+            "shooterId": "unit-4",
+            "targetId": "enemy-produced-4",
+            "position": {
+              "x": 599.9999999999998,
+              "y": 460
+            },
+            "destination": {
+              "x": 500,
+              "y": 460
+            },
+            "speed": 340,
+            "targets": [
+              "land",
+              "building"
+            ],
+            "remainingLife": 2.9999999999999996,
+            "damage": 34.375,
+            "hitRadius": 18
+          }
+        ],
+        "hp": 15.625
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "clans",
+      "actualMouseSiegeBuildTrainMoveCombat": true,
+      "queued": {
+        "wood": 99845,
+        "gold": 99910,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "ballista",
+          "supply": 3,
+          "cost": {
+            "wood": 65,
+            "gold": 40
+          },
+          "durationSeconds": 16,
+          "remainingSeconds": 16
+        }
+      },
+      "fought": {
+        "order": {
+          "kind": "attack",
+          "enemyId": "enemy-produced-4"
+        },
+        "unit": {
+          "owner": "player",
+          "id": "unit-4",
+          "position": {
+            "x": 600,
+            "y": 460
+          },
+          "target": {
+            "x": 600,
+            "y": 460
+          },
+          "selected": true,
+          "kind": "soldier",
+          "archetype": "ballista",
+          "cargo": 0,
+          "hp": 90,
+          "order": {
+            "kind": "attack",
+            "enemyId": "enemy-produced-4"
+          },
+          "autoDisabled": false,
+          "navigation": {
+            "commandNumber": 1,
+            "destination": {
+              "x": 600,
+              "y": 460
+            },
+            "waypoints": [],
+            "revision": 4,
+            "status": "arrived",
+            "goalKey": "attack:enemy-produced-4:500:460",
+            "targetId": "enemy-produced-4",
+            "retryAfter": 0
+          },
+          "attackCooldown": 1.9999999999999993
+        },
+        "shots": [
+          {
+            "id": "arrow-2",
+            "shooterId": "unit-4",
+            "targetId": "enemy-produced-4",
+            "position": {
+              "x": 599.9999999999998,
+              "y": 460
+            },
+            "destination": {
+              "x": 500,
+              "y": 460
+            },
+            "speed": 340,
+            "targets": [
+              "land",
+              "building"
+            ],
+            "remainingLife": 2.9999999999999996,
+            "damage": 37.18000000000001,
+            "hitRadius": 18
+          }
+        ],
+        "hp": 12.819999999999993
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "elves",
+      "actualMouseSiegeBuildTrainMoveCombat": true,
+      "queued": {
+        "wood": 99845,
+        "gold": 99910,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "ballista",
+          "supply": 3,
+          "cost": {
+            "wood": 65,
+            "gold": 40
+          },
+          "durationSeconds": 16,
+          "remainingSeconds": 16
+        }
+      },
+      "fought": {
+        "order": {
+          "kind": "attack",
+          "enemyId": "enemy-produced-4"
+        },
+        "unit": {
+          "owner": "player",
+          "id": "unit-4",
+          "position": {
+            "x": 600,
+            "y": 460
+          },
+          "target": {
+            "x": 600,
+            "y": 460
+          },
+          "selected": true,
+          "kind": "soldier",
+          "archetype": "ballista",
+          "cargo": 0,
+          "hp": 90,
+          "order": {
+            "kind": "attack",
+            "enemyId": "enemy-produced-4"
+          },
+          "autoDisabled": false,
+          "navigation": {
+            "commandNumber": 1,
+            "destination": {
+              "x": 600,
+              "y": 460
+            },
+            "waypoints": [],
+            "revision": 4,
+            "status": "arrived",
+            "goalKey": "attack:enemy-produced-4:500:460",
+            "targetId": "enemy-produced-4",
+            "retryAfter": 0
+          },
+          "attackCooldown": 1.9999999999999993
+        },
+        "shots": [
+          {
+            "id": "arrow-2",
+            "shooterId": "unit-4",
+            "targetId": "enemy-produced-4",
+            "position": {
+              "x": 599.9999999999998,
+              "y": 460
+            },
+            "destination": {
+              "x": 500,
+              "y": 460
+            },
+            "speed": 340,
+            "targets": [
+              "land",
+              "building"
+            ],
+            "remainingLife": 2.9999999999999996,
+            "damage": 34.375,
+            "hitRadius": 18
+          }
+        ],
+        "hp": 15.625
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "dwarves",
+      "actualMouseSiegeBuildTrainMoveCombat": true,
+      "queued": {
+        "wood": 99845,
+        "gold": 99910,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "ballista",
+          "supply": 3,
+          "cost": {
+            "wood": 65,
+            "gold": 40
+          },
+          "durationSeconds": 16,
+          "remainingSeconds": 16
+        }
+      },
+      "fought": {
+        "order": {
+          "kind": "attack",
+          "enemyId": "enemy-produced-4"
+        },
+        "unit": {
+          "owner": "player",
+          "id": "unit-4",
+          "position": {
+            "x": 600,
+            "y": 460
+          },
+          "target": {
+            "x": 600,
+            "y": 460
+          },
+          "selected": true,
+          "kind": "soldier",
+          "archetype": "ballista",
+          "cargo": 0,
+          "hp": 90,
+          "order": {
+            "kind": "attack",
+            "enemyId": "enemy-produced-4"
+          },
+          "autoDisabled": false,
+          "navigation": {
+            "commandNumber": 1,
+            "destination": {
+              "x": 600,
+              "y": 460
+            },
+            "waypoints": [],
+            "revision": 4,
+            "status": "arrived",
+            "goalKey": "attack:enemy-produced-4:500:460",
+            "targetId": "enemy-produced-4",
+            "retryAfter": 0
+          },
+          "attackCooldown": 1.9999999999999993
+        },
+        "shots": [
+          {
+            "id": "arrow-2",
+            "shooterId": "unit-4",
+            "targetId": "enemy-produced-4",
+            "position": {
+              "x": 599.9999999999998,
+              "y": 460
+            },
+            "destination": {
+              "x": 500,
+              "y": 460
+            },
+            "speed": 340,
+            "targets": [
+              "land",
+              "building"
+            ],
+            "remainingLife": 2.9999999999999996,
+            "damage": 34.375,
+            "hitRadius": 18
+          }
+        ],
+        "hp": 15.625
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "goblins",
+      "actualMouseSiegeBuildTrainMoveCombat": true,
+      "queued": {
+        "wood": 99845,
+        "gold": 99910,
+        "job": {
+          "id": "barracks-job-1",
+          "kind": "ballista",
+          "supply": 3,
+          "cost": {
+            "wood": 65,
+            "gold": 40
+          },
+          "durationSeconds": 16,
+          "remainingSeconds": 16
+        }
+      },
+      "fought": {
+        "order": {
+          "kind": "attack",
+          "enemyId": "enemy-produced-4"
+        },
+        "unit": {
+          "owner": "player",
+          "id": "unit-4",
+          "position": {
+            "x": 600,
+            "y": 492.59022529285926
+          },
+          "target": {
+            "x": 600,
+            "y": 460
+          },
+          "selected": true,
+          "kind": "soldier",
+          "archetype": "ballista",
+          "cargo": 0,
+          "hp": 90,
+          "order": {
+            "kind": "attack",
+            "enemyId": "enemy-produced-4"
+          },
+          "autoDisabled": false,
+          "navigation": {
+            "commandNumber": 1,
+            "destination": {
+              "x": 600,
+              "y": 492.59022529285926
+            },
+            "waypoints": [],
+            "revision": 4,
+            "status": "arrived",
+            "goalKey": "attack:enemy-produced-4:500:460",
+            "targetId": "enemy-produced-4",
+            "retryAfter": 0
+          },
+          "attackCooldown": 1.9999999999999993
+        },
+        "shots": [
+          {
+            "id": "arrow-2",
+            "shooterId": "unit-5",
+            "targetId": "enemy-produced-4",
+            "position": {
+              "x": 546,
+              "y": 460
+            },
+            "destination": {
+              "x": 500,
+              "y": 460
+            },
+            "speed": 180,
+            "targets": [
+              "land",
+              "building"
+            ],
+            "defenseMultiplier": 1.5,
+            "remainingLife": 2.6999999999999997,
+            "damage": 43.940000000000005,
+            "hitRadius": 16,
+            "splashRadius": 64
+          },
+          {
+            "id": "arrow-3",
+            "shooterId": "unit-4",
+            "targetId": "enemy-produced-4",
+            "position": {
+              "x": 599.9999999999998,
+              "y": 492.5902252928592
+            },
+            "destination": {
+              "x": 500,
+              "y": 460
+            },
+            "speed": 340,
+            "targets": [
+              "land",
+              "building"
+            ],
+            "remainingLife": 2.9999999999999996,
+            "damage": 37.18000000000001,
+            "hitRadius": 18
+          }
+        ],
+        "hp": 12.819999999999993
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    }
+  ]
+}

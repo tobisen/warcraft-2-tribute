@@ -1,3 +1,4 @@
+import {siegeBuilding,trainSiege} from '../gameplay/siegeProduction';
 import {roleResearchConfig,isRoleResearch} from '../config/roleResearch';
 import {flightBuilding,trainFlyer} from '../gameplay/flightProduction';
 import {fortificationConnections} from '../gameplay/fortifications';
@@ -250,6 +251,7 @@ export class BootScene extends Phaser.Scene {
   private placementPreview!: Phaser.GameObjects.Rectangle;
   private barracksVisual?: Phaser.GameObjects.Image;
   private farmVisuals = new Map<string, Phaser.GameObjects.Image>();
+  private siegeWorksVisual?:Phaser.GameObjects.Image;
   private aviaryVisual?:Phaser.GameObjects.Image;
   private stableVisual?:Phaser.GameObjects.Image;
   private academyVisual?:Phaser.GameObjects.Image;
@@ -294,7 +296,7 @@ export class BootScene extends Phaser.Scene {
     super('BootScene');
   }
 
-  preload():void {for(const key of ['world','buildings','units','ui','naval','air','reference-terrain','bosses','cavalry','healer','giant','scout','aviary','tower-specializations'])if(!this.textures.exists(key))this.load.atlas(key,`${import.meta.env.BASE_URL}assets/${key}-atlas.png`,`${import.meta.env.BASE_URL}assets/${key}-atlas.json`);}
+  preload():void {for(const key of ['world','buildings','units','ui','naval','air','reference-terrain','bosses','cavalry','healer','giant','scout','aviary','ballista','siegeWorks','tower-specializations'])if(!this.textures.exists(key))this.load.atlas(key,`${import.meta.env.BASE_URL}assets/${key}-atlas.png`,`${import.meta.env.BASE_URL}assets/${key}-atlas.json`);}
 
   create(): void {
     this.audioSnapshot=undefined;this.combatSoundSnapshot=undefined;gameAudio.setPhase('menu');gameAudio.reset();
@@ -364,13 +366,13 @@ export class BootScene extends Phaser.Scene {
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.attackMoveButton.removeEventListener('click',beginAttackMove));
     this.queuePanel=document.getElementById('production-queue')!;
     const cancelJob=(event:MouseEvent)=>{
-      if(!this.gameplayActive()||!selectedBase(this.currentMatch(),this.selectedBuilding)&&!['aviary','academy','stable','barracks','harbor'].includes(this.selectedBuilding??''))return;
+      if(!this.gameplayActive()||!selectedBase(this.currentMatch(),this.selectedBuilding)&&!['siegeWorks','aviary','academy','stable','barracks','harbor'].includes(this.selectedBuilding??''))return;
       const button=event.target instanceof Element?event.target.closest<HTMLButtonElement>('button[data-job-id]'):null;
       if(!button||!this.queuePanel.contains(button))return;
-      const p=this.selectedBuilding==='aviary'?this.placement.aviary!.production:this.selectedBuilding==='academy'?this.placement.academy!.production!:this.selectedBuilding==='stable'?this.placement.stable!.production:this.selectedBuilding==='harbor'?this.navy!.production:selectedBase(this.currentMatch(),this.selectedBuilding)?.production??this.soldierProduction;
+      const p=this.selectedBuilding==='siegeWorks'?this.placement.siegeWorks!.production:this.selectedBuilding==='aviary'?this.placement.aviary!.production:this.selectedBuilding==='academy'?this.placement.academy!.production!:this.selectedBuilding==='stable'?this.placement.stable!.production:this.selectedBuilding==='harbor'?this.navy!.production:selectedBase(this.currentMatch(),this.selectedBuilding)?.production??this.soldierProduction;
       const result=cancelProduction(this.gathering,p,button.dataset.jobId!,true);
       this.gathering=result.gathering;
-      if(this.selectedBuilding==='aviary')this.placement={...this.placement,aviary:{...this.placement.aviary!,production:result.production}};else if(this.selectedBuilding==='academy')this.placement={...this.placement,academy:{...this.placement.academy!,production:result.production}};else if(this.selectedBuilding==='stable')this.placement={...this.placement,stable:{...this.placement.stable!,production:result.production}};else if(this.selectedBuilding==='harbor')this.navy={...this.navy!,production:result.production};else if(this.selectedBuilding==='base')this.production=result.production;else if(this.selectedBuilding?.startsWith('base-'))this.placement={...this.placement,bases:this.placement.bases!.map(b=>b.id===this.selectedBuilding?{...b,production:result.production}:b)};else this.soldierProduction=result.production;
+      if(this.selectedBuilding==='siegeWorks')this.placement={...this.placement,siegeWorks:{...this.placement.siegeWorks!,production:result.production}};else if(this.selectedBuilding==='aviary')this.placement={...this.placement,aviary:{...this.placement.aviary!,production:result.production}};else if(this.selectedBuilding==='academy')this.placement={...this.placement,academy:{...this.placement.academy!,production:result.production}};else if(this.selectedBuilding==='stable')this.placement={...this.placement,stable:{...this.placement.stable!,production:result.production}};else if(this.selectedBuilding==='harbor')this.navy={...this.navy!,production:result.production};else if(this.selectedBuilding==='base')this.production=result.production;else if(this.selectedBuilding?.startsWith('base-'))this.placement={...this.placement,bases:this.placement.bases!.map(b=>b.id===this.selectedBuilding?{...b,production:result.production}:b)};else this.soldierProduction=result.production;
       this.syncVisuals();
     };
     this.queuePanel.addEventListener('click',cancelJob);
@@ -448,7 +450,7 @@ export class BootScene extends Phaser.Scene {
     this.goldVisual=this.add.image(this.gathering.gold!.position.x,this.gathering.gold!.position.y,'world','gold-available').setOrigin(resourceOrigin.x,resourceOrigin.y);
     this.add.text(this.gathering.gold!.position.x, this.gathering.gold!.position.y+26, 'Gold',
       {fontSize:'16px',color:'#ffffff'}).setOrigin(.5,0);
-    this.aviaryVisual=undefined;this.stableVisual=undefined;this.academyVisual=undefined;this.extraBaseVisuals.clear();this.visuals.clear();this.defenseVisuals.clear();this.repairMode=false;this.spellMode=null;this.spellFeedback='';
+    this.siegeWorksVisual=undefined;this.aviaryVisual=undefined;this.stableVisual=undefined;this.academyVisual=undefined;this.extraBaseVisuals.clear();this.visuals.clear();this.defenseVisuals.clear();this.repairMode=false;this.spellMode=null;this.spellFeedback='';
     this.drag = undefined;
     this.dragBox = this.add.rectangle(0, 0, 0, 0, 0xffdc73, 0.1)
       .setOrigin(0).setStrokeStyle(1, 0xffdc73).setVisible(false).setDepth(60);
@@ -460,7 +462,7 @@ export class BootScene extends Phaser.Scene {
     this.buildButton = document.querySelector<HTMLButtonElement>('#build-barracks')!;
     this.placementStatus = document.querySelector<HTMLElement>('#placement-status')!;
     setActionLabel(this.buildButton,`Build ${factions[this.factions.player].buildingNames.barracks} – ${costLabel(factions[this.factions.player].buildings.barracks.cost)}`);
-    const begin = (kind:'aviary'|'stable'|'academy'|'base'|'harbor'|'barracks'|'farm'|'forge'|'tower'|'wall'|'gate'='barracks') => {
+    const begin = (kind:'siegeWorks'|'aviary'|'stable'|'academy'|'base'|'harbor'|'barracks'|'farm'|'forge'|'tower'|'wall'|'gate'='barracks') => {
       if (!this.gameplayActive()) return;
       if (!this.gathering.units.some(u=>u.kind==='worker' && u.selected)) return;
       this.unloadMode=null;this.scoutRouteMode=false;this.scoutRoutePoints=[];this.attackMoveMode=false;this.patrolMode=false;this.repairMode=false;this.spellMode=null;this.spellFeedback='';
@@ -498,6 +500,7 @@ export class BootScene extends Phaser.Scene {
       this.researchButtons.set(kind,button);button.addEventListener('click',research);
       this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>button.removeEventListener('click',research));
     }
+    const siegeWorksButton=document.getElementById('build-siegeWorks') as HTMLButtonElement,beginSiegeWorks=()=>begin('siegeWorks');setActionLabel(siegeWorksButton,`Build ${factions[this.factions.player].buildingNames.siegeWorks}`);siegeWorksButton.addEventListener('click',beginSiegeWorks);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>siegeWorksButton.removeEventListener('click',beginSiegeWorks));
     const aviaryButton=document.getElementById('build-aviary') as HTMLButtonElement,beginAviary=()=>begin('aviary');setActionLabel(aviaryButton,`Build ${factions[this.factions.player].buildingNames.aviary}`);aviaryButton.addEventListener('click',beginAviary);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>aviaryButton.removeEventListener('click',beginAviary));
     const stableButton=document.getElementById('build-stable') as HTMLButtonElement,beginStable=()=>begin('stable');setActionLabel(stableButton,`Build ${factions[this.factions.player].buildingNames.stable}`);stableButton.addEventListener('click',beginStable);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>stableButton.removeEventListener('click',beginStable));
     const scoutButton=document.getElementById('train-scout') as HTMLButtonElement,trainRecon=()=>{if(this.selectedBuilding!=='aviary')return;this.applyMatch(trainFlyer(this.currentMatch(),'scout'));this.syncVisuals();};scoutButton.addEventListener('click',trainRecon);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>scoutButton.removeEventListener('click',trainRecon));
@@ -563,13 +566,8 @@ export class BootScene extends Phaser.Scene {
     };
     this.catapultButton=document.querySelector<HTMLButtonElement>('#train-catapult')!;
     setActionLabel(this.catapultButton,`Train ${factions[this.factions.player].unitNames.catapult} – ${costLabel(factions[this.factions.player].units.catapult.cost)}`);
-    const trainCatapult=()=>{
-      if(!allowsProduction(this.selectedBuilding,'barracks',this.placement.barracks!==null,this.gameplayActive()))return;
-      const result=enqueueProduction(this.gathering,this.soldierProduction,
-        {kind:'barracks',bounds:this.map,technology:technologyFor(this.currentMatch(),'player'),footprint:this.placement.barracks,ready:barracksReady(this.placement),unitType:'catapult'},
-        matchPopulation(this.currentMatch()));
-      this.gathering=result.gathering;this.soldierProduction=result.production;this.syncVisuals();
-    };
+    const trainCatapult=()=>{if(this.selectedBuilding!=='siegeWorks')return;this.applyMatch(trainSiege(this.currentMatch(),'catapult'));this.syncVisuals();};
+    const ballistaButton=document.getElementById('train-ballista') as HTMLButtonElement,trainBallista=()=>{if(this.selectedBuilding!=='siegeWorks')return;this.applyMatch(trainSiege(this.currentMatch(),'ballista'));this.syncVisuals();};ballistaButton.addEventListener('click',trainBallista);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>ballistaButton.removeEventListener('click',trainBallista));
     this.specialistButton=document.querySelector<HTMLButtonElement>('#train-specialist')!;
     const specialist=factions[this.factions.player].units.specialist;
     setActionLabel(this.specialistButton,`Train ${factions[this.factions.player].unitNames.specialist} – ${costLabel(specialist.cost)} · ${specialist.durationSeconds} s`);
@@ -781,11 +779,12 @@ export class BootScene extends Phaser.Scene {
     } else if (pointer.button === 2) {
       if(this.selectedBuilding||this.gathering.units.some(u=>u.selected))gameAudio.play('command');
       if (this.selectedBuilding) {
-        if(!selectedBase(this.currentMatch(),this.selectedBuilding)&&this.selectedBuilding!=='barracks'&&this.selectedBuilding!=='aviary'&&this.selectedBuilding!=='stable'&&this.selectedBuilding!=='academy'){this.syncVisuals();return;}
+        if(!selectedBase(this.currentMatch(),this.selectedBuilding)&&this.selectedBuilding!=='barracks'&&this.selectedBuilding!=='siegeWorks'&&this.selectedBuilding!=='aviary'&&this.selectedBuilding!=='stable'&&this.selectedBuilding!=='academy'){this.syncVisuals();return;}
         if (this.selectedBuilding === 'base') this.production = setRally(this.production, world, this.map,
           baseFootprint(this.gathering.base), 'base');
         else if(this.selectedBuilding.startsWith('base-'))this.placement={...this.placement,bases:this.placement.bases!.map(b=>b.id===this.selectedBuilding?{...b,production:setRally(b.production,world,this.map,b.footprint,'base')}:b)};
         else if(this.selectedBuilding==='academy'&&this.placement.academy)this.placement={...this.placement,academy:{...this.placement.academy,production:setRally(this.placement.academy.production??{remainingSeconds:null,nextUnitNumber:Math.max(this.production.nextUnitNumber,this.soldierProduction.nextUnitNumber)},world,this.map,this.placement.academy.footprint,'barracks')}};
+        else if(this.selectedBuilding==='siegeWorks')this.placement={...this.placement,siegeWorks:{...this.placement.siegeWorks!,production:setRally(this.placement.siegeWorks!.production,world,this.map,this.placement.siegeWorks!.footprint,'barracks')}};
         else if(this.selectedBuilding==='aviary')this.placement={...this.placement,aviary:{...this.placement.aviary!,production:setRally(this.placement.aviary!.production,world,this.map,this.placement.aviary!.footprint,'barracks')}};
         else if(this.selectedBuilding==='stable')this.placement={...this.placement,stable:{...this.placement.stable!,production:setRally(this.placement.stable!.production,world,this.map,this.placement.stable!.footprint,'barracks')}};
         else this.soldierProduction = setRally(this.soldierProduction, world, this.map, this.placement.barracks, 'barracks');
@@ -797,6 +796,7 @@ export class BootScene extends Phaser.Scene {
       const tower=this.placement.defenses?.find(t=>t.construction.remainingSeconds>0&&world.x>=t.footprint.x&&world.x<=t.footprint.x+t.footprint.width&&world.y>=t.footprint.y&&world.y<=t.footprint.y+32);if(tower){const result=resumeConstruction(this.gathering,this.placement,this.map,tower.id);this.gathering=result.gathering;this.placement=result.placement;this.syncVisuals();return;}
       const forge=this.placement.forge;
       if(forge&&forge.construction.remainingSeconds>0&&world.x>=forge.footprint.x&&world.x<=forge.footprint.x+forge.footprint.width&&world.y>=forge.footprint.y&&world.y<=forge.footprint.y+forge.footprint.height){const result=resumeConstruction(this.gathering,this.placement,this.map,'forge');this.gathering=result.gathering;this.placement=result.placement;this.syncVisuals();return;}
+      const siegeWorks=this.placement.siegeWorks;if(siegeWorks&&siegeWorks.construction.remainingSeconds>0&&world.x>=siegeWorks.footprint.x&&world.x<=siegeWorks.footprint.x+64&&world.y>=siegeWorks.footprint.y&&world.y<=siegeWorks.footprint.y+64){const r=resumeConstruction(this.gathering,this.placement,this.map,'siegeWorks');this.gathering=r.gathering;this.placement=r.placement;this.syncVisuals();return;}
       const aviary=this.placement.aviary;if(aviary&&aviary.construction.remainingSeconds>0&&world.x>=aviary.footprint.x&&world.x<=aviary.footprint.x+64&&world.y>=aviary.footprint.y&&world.y<=aviary.footprint.y+64){const r=resumeConstruction(this.gathering,this.placement,this.map,'aviary');this.gathering=r.gathering;this.placement=r.placement;this.syncVisuals();return;}
       const stable=this.placement.stable;if(stable&&stable.construction.remainingSeconds>0&&world.x>=stable.footprint.x&&world.x<=stable.footprint.x+64&&world.y>=stable.footprint.y&&world.y<=stable.footprint.y+64){const r=resumeConstruction(this.gathering,this.placement,this.map,'stable');this.gathering=r.gathering;this.placement=r.placement;this.syncVisuals();return;}
       const academy=this.placement.academy;if(academy&&academy.construction.remainingSeconds>0&&world.x>=academy.footprint.x&&world.x<=academy.footprint.x+64&&world.y>=academy.footprint.y&&world.y<=academy.footprint.y+64){const r=resumeConstruction(this.gathering,this.placement,this.map,'academy');this.gathering=r.gathering;this.placement=r.placement;this.syncVisuals();return;}
@@ -936,6 +936,7 @@ export class BootScene extends Phaser.Scene {
       const building = this.placement.barracks;
       this.barracksVisual = this.add.image(building.x+building.width/2,building.y+building.height/2,'buildings',buildingFrame('barracks','player',this.placement.construction?.remainingSeconds,5,this.factions.player,this.placement.barracksHP??combatConfig.barracksHP)).setOrigin(.5,.75);
     }
+    const siegeWorks=this.placement.siegeWorks;if(!siegeWorks&&this.siegeWorksVisual){this.siegeWorksVisual.destroy();this.siegeWorksVisual=undefined;}if(siegeWorks){if(!this.siegeWorksVisual)this.siegeWorksVisual=this.add.image(siegeWorks.footprint.x+32,siegeWorks.footprint.y+32,'siegeWorks',buildingFrame('siegeWorks','player',siegeWorks.construction.remainingSeconds,12,this.factions.player,siegeWorks.hp)).setOrigin(.5,.75);this.siegeWorksVisual.setFrame(buildingFrame('siegeWorks','player',siegeWorks.construction.remainingSeconds,12,this.factions.player,siegeWorks.hp)).setDepth(1+(siegeWorks.footprint.y+32)/this.map.height*4);}
     const aviary=this.placement.aviary;if(!aviary&&this.aviaryVisual){this.aviaryVisual.destroy();this.aviaryVisual=undefined;}if(aviary){if(!this.aviaryVisual)this.aviaryVisual=this.add.image(aviary.footprint.x+32,aviary.footprint.y+32,'aviary',buildingFrame('aviary','player',aviary.construction.remainingSeconds,12,this.factions.player,aviary.hp)).setOrigin(.5,.75);this.aviaryVisual.setFrame(buildingFrame('aviary','player',aviary.construction.remainingSeconds,12,this.factions.player,aviary.hp)).setDepth(1+(aviary.footprint.y+32)/this.map.height*4);}
     const stable=this.placement.stable;if(!stable&&this.stableVisual){this.stableVisual.destroy();this.stableVisual=undefined;}if(stable){if(!this.stableVisual)this.stableVisual=this.add.image(stable.footprint.x+32,stable.footprint.y+32,'cavalry',buildingFrame('stable','player',stable.construction.remainingSeconds,10,this.factions.player,stable.hp)).setOrigin(.5,.75);this.stableVisual.setFrame(buildingFrame('stable','player',stable.construction.remainingSeconds,10,this.factions.player,stable.hp)).setDepth(1+(stable.footprint.y+32)/this.map.height*4);}
     const academy=this.placement.academy;if(!academy&&this.academyVisual){this.academyVisual.destroy();this.academyVisual=undefined;}if(academy){if(!this.academyVisual)this.academyVisual=this.add.image(academy.footprint.x+32,academy.footprint.y+32,'buildings',buildingFrame('academy','player',academy.construction.remainingSeconds,10,this.factions.player,academy.hp)).setOrigin(.5,.75);this.academyVisual.setFrame(buildingFrame('academy','player',academy.construction.remainingSeconds,10,this.factions.player,academy.hp)).setDepth(1+(academy.footprint.y+32)/this.map.height*4);}
@@ -1036,7 +1037,7 @@ export class BootScene extends Phaser.Scene {
     this.trainButton.parentElement!.style.visibility = baseSelection ? 'visible' : 'hidden';
     this.soldierButton.parentElement!.style.visibility = this.selectedBuilding === 'barracks' ? 'visible' : 'hidden';
     const selectedProduction = baseSelection ? baseSelection.production
-      : this.selectedBuilding==='aviary'?this.placement.aviary?.production:this.selectedBuilding==='academy'?this.placement.academy?.production: this.selectedBuilding==='stable'?this.placement.stable?.production: this.selectedBuilding === 'barracks' ? this.soldierProduction : this.selectedBuilding==='harbor'?this.navy!.production:null;
+      : this.selectedBuilding==='siegeWorks'?this.placement.siegeWorks!.production:this.selectedBuilding==='aviary'?this.placement.aviary?.production:this.selectedBuilding==='academy'?this.placement.academy?.production: this.selectedBuilding==='stable'?this.placement.stable?.production: this.selectedBuilding === 'barracks' ? this.soldierProduction : this.selectedBuilding==='harbor'?this.navy!.production:null;
     renderSelectedQueue(selectedQueue(this.currentMatch(),this.selectedBuilding,this.gameplayActive()),(canvas,asset)=>this.paintPortrait(canvas,asset));
     this.rallyMarker.setVisible(selectedProduction?.rally !== undefined);
     if (selectedProduction?.rally) this.rallyMarker.setPosition(selectedProduction.rally.x, selectedProduction.rally.y);
@@ -1053,6 +1054,8 @@ export class BootScene extends Phaser.Scene {
     this.productionStatus.textContent = productionLabel(this.gathering,baseSelection?.production??this.production, this.outcome,{kind:'base'},population);
     const barracks = { kind: 'barracks' as const, bounds:this.map,technology:technologyFor(this.currentMatch(),'player'), footprint: this.placement.barracks, ready:barracksReady(this.placement) };
     this.soldierButton.disabled = !allowsProduction(this.selectedBuilding, 'barracks', this.placement.barracks !== null, this.gameplayActive()) || !this.gameplayActive() || !canEnqueue(this.gathering, this.soldierProduction, barracks,population);
+    const ballistaButton=document.getElementById('train-ballista') as HTMLButtonElement;setActionLabel(ballistaButton,`Train ${factions[this.factions.player].unitNames.ballista}`);ballistaButton.disabled=this.selectedBuilding!=='siegeWorks'||!this.gameplayActive()||!this.placement.siegeWorks||!canEnqueue(this.gathering,this.placement.siegeWorks.production,siegeBuilding(this.currentMatch(),'ballista'),population);
+    const siegeWorksButton=document.getElementById('build-siegeWorks') as HTMLButtonElement;siegeWorksButton.disabled=!this.gameplayActive()||this.placement.active||!!this.placement.siegeWorks||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected);
     const scoutButton=document.getElementById('train-scout') as HTMLButtonElement;setActionLabel(scoutButton,`Train ${factions[this.factions.player].unitNames.scout}`);scoutButton.disabled=this.selectedBuilding!=='aviary'||!this.gameplayActive()||!this.placement.aviary||!canEnqueue(this.gathering,this.placement.aviary.production,flightBuilding(this.currentMatch(),'scout'),population);
     for(const id of ['scout-route','auto-scout'])(document.getElementById(id) as HTMLButtonElement).disabled=!this.gameplayActive()||!this.gathering.units.some(u=>u.kind==='soldier'&&u.archetype==='scout'&&u.selected);(document.getElementById('scout-route') as HTMLButtonElement).setAttribute('aria-pressed',String(this.scoutRouteMode));
     const giantButton=document.getElementById('train-giant') as HTMLButtonElement;setActionLabel(giantButton,`Train ${factions[this.factions.player].unitNames.giant}`);giantButton.disabled=this.selectedBuilding!=='academy'||!this.gameplayActive();
@@ -1063,7 +1066,7 @@ export class BootScene extends Phaser.Scene {
     const stableButton=document.getElementById('build-stable') as HTMLButtonElement;stableButton.disabled=!this.gameplayActive()||this.placement.active||!!this.placement.stable||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected);
     const airButton=document.getElementById('train-air') as HTMLButtonElement;setActionLabel(airButton,`Train ${factions[this.factions.player].unitNames.air}`);airButton.disabled=this.selectedBuilding!=='aviary'||!this.gameplayActive()||!this.placement.aviary||!canEnqueue(this.gathering,this.placement.aviary.production,flightBuilding(this.currentMatch(),'air'),population);
     this.specialistButton.disabled=!allowsProduction(this.selectedBuilding,'barracks',this.placement.barracks!==null,this.gameplayActive())||!canEnqueue(this.gathering,this.soldierProduction,{...barracks,unitType:'specialist'},population);
-    this.catapultButton.disabled=!allowsProduction(this.selectedBuilding,'barracks',this.placement.barracks!==null,this.gameplayActive())||!canEnqueue(this.gathering,this.soldierProduction,{...barracks,unitType:'catapult'},population);
+    this.catapultButton.disabled=this.selectedBuilding!=='siegeWorks'||!this.gameplayActive()||!this.placement.siegeWorks||!canEnqueue(this.gathering,this.placement.siegeWorks.production,siegeBuilding(this.currentMatch(),'catapult'),population);
     this.archerButton.disabled=!allowsProduction(this.selectedBuilding,'barracks',this.placement.barracks!==null,this.gameplayActive())||!canEnqueue(this.gathering,this.soldierProduction,{...barracks,unitType:'archer'},population);
     this.soldierProductionStatus.textContent = productionLabel(this.gathering, this.soldierProduction, this.outcome, barracks,population);
     const ability=abilityFor(this.gathering),abilityButton=document.querySelector<HTMLButtonElement>('#unit-ability')!;
@@ -1098,7 +1101,7 @@ export class BootScene extends Phaser.Scene {
       }
 
       if (!this.enemyVisuals.has(enemy.id)) this.enemyVisuals.set(enemy.id, {
-        body: enemy.footprint?this.add.image(enemy.position.x,enemy.position.y,enemy.buildingType==='aviary'?'aviary':enemy.buildingType==='stable'?'cavalry':'buildings',buildingFrame((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base','enemy',enemy.construction?.remainingSeconds??0,enemy.buildingType==='outpost'||enemy.buildingType==='academy'?10:5,(enemy.faction??this.factions.enemy))).setOrigin(buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').x,buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').y):enemy.kind==='ship'?this.add.image(enemy.position.x,enemy.position.y,'naval',`${factions[(enemy.faction??this.factions.enemy)].artPrefix}transport-enemy-s-idle-0`).setOrigin(.5,40/64):this.add.image(enemy.position.x,enemy.position.y,isAir(enemy)?enemy.role==='scout'?'scout':'air':enemy.role==='scout'?'scout':enemy.role==='giant'?'giant':enemy.role==='healer'?'healer':enemy.role==='cavalry'?'cavalry':'units',isAir(enemy)?`${(enemy.faction??this.factions.enemy)}-${enemy.role==='scout'?'scout':'air'}-enemy-s-idle-0`:`${factions[(enemy.faction??this.factions.enemy)].artPrefix}${enemy.kind==='worker'?'worker':enemy.role??'soldier'}-enemy-s-idle-0`).setOrigin(unitOrigin(enemy.kind==='worker'?'worker':enemy.role??'soldier').x,unitOrigin(enemy.kind==='worker'?'worker':enemy.role??'soldier').y),
+        body: enemy.footprint?this.add.image(enemy.position.x,enemy.position.y,enemy.buildingType==='siegeWorks'?'siegeWorks':enemy.buildingType==='aviary'?'aviary':enemy.buildingType==='stable'?'cavalry':'buildings',buildingFrame((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base','enemy',enemy.construction?.remainingSeconds??0,enemy.buildingType==='outpost'||enemy.buildingType==='academy'?10:5,(enemy.faction??this.factions.enemy))).setOrigin(buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').x,buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').y):enemy.kind==='ship'?this.add.image(enemy.position.x,enemy.position.y,'naval',`${factions[(enemy.faction??this.factions.enemy)].artPrefix}transport-enemy-s-idle-0`).setOrigin(.5,40/64):this.add.image(enemy.position.x,enemy.position.y,isAir(enemy)?enemy.role==='scout'?'scout':'air':enemy.role==='scout'?'scout':enemy.role==='ballista'?'ballista':enemy.role==='giant'?'giant':enemy.role==='healer'?'healer':enemy.role==='cavalry'?'cavalry':'units',isAir(enemy)?`${(enemy.faction??this.factions.enemy)}-${enemy.role==='scout'?'scout':'air'}-enemy-s-idle-0`:`${factions[(enemy.faction??this.factions.enemy)].artPrefix}${enemy.kind==='worker'?'worker':enemy.role??'soldier'}-enemy-s-idle-0`).setOrigin(unitOrigin(enemy.kind==='worker'?'worker':enemy.role??'soldier').x,unitOrigin(enemy.kind==='worker'?'worker':enemy.role??'soldier').y),
         label: this.add.text(0, 0, '', { fontSize: '14px', color: '#ffffff' }).setOrigin(0.5, 0),
       });
       const playerColor=this.multiplePlayers?.roster.find(p=>p.id===enemy.playerId)?.color;
@@ -1129,7 +1132,7 @@ export class BootScene extends Phaser.Scene {
       visual.body.setPosition(unit.position.x, unit.position.y);
       const marker=orderMarkers({ ...this.gathering,units:[{...unit,selected:true}] },{...this.combat,enemies:visibleEnemies},true,this.placement.barracks,this.placement.farms,this.placement.forge?.footprint)[0];
       const enemy=unit.order.kind==='attack'?visibleEnemies.find(e=>e.hp>0&&unit.order.kind==='attack'&&e.id===unit.order.enemyId):undefined;
-      const attackRange=unit.kind==='soldier'?(unit.archetype==='archer'?archerConfig.range:unit.archetype==='catapult'?catapultConfig.range:combatConfig.soldierRange):workerCombatConfig.range;
+      const attackRange=unit.kind==='soldier'?(unit.archetype==='ballista'?combatUnitStats(unit,this.factions.player).range!:unit.archetype==='archer'?archerConfig.range:unit.archetype==='catapult'?catapultConfig.range:combatConfig.soldierRange):workerCombatConfig.range;
       const animalTarget=unit.order.kind==='hunt'?animalPoses.find(a=>unit.order.kind==='hunt'&&a.id===unit.order.animalId):undefined;
       const action:Action=unit.kind==='soldier'&&unit.archetype==='healer'&&(unit.healFlash??0)>this.waves.elapsedSeconds?'attack':unit.order.kind==='hunt'&&unit.navigation?.status==='arrived'?'attack':unit.order.kind==='attack'&&enemy&&canInteract(this.map,unit.position,enemyBody(enemy),attackRange)?'attack':unit.order.kind==='gather'&&marker&&Math.hypot(marker.position.x-unit.position.x,marker.position.y-unit.position.y)<=gatheringConfig.nodeRadius+gatheringConfig.range?'gather':(unit.order.kind==='build'||unit.order.kind==='repair')&&unit.navigation?.status==='arrived'?'build':'idle';
       this.animateUnit(unit.id,visual.body,unit.position,action,unit.kind==='worker'?'worker':unit.archetype??'soldier','player',animalTarget?.position??enemy?.position??marker?.position);
@@ -1139,7 +1142,7 @@ export class BootScene extends Phaser.Scene {
       if(unit.kind==='soldier')for(const kind of ['buff','debuff'])if(unit.spellEffects?.some(e=>spellDefinition(e.spell,e.sourceFaction).kind===kind))this.hpBars?.lineStyle(2,kind==='buff'?0x86dbe6:0xc18ce5,.9).strokeCircle(unit.position.x,unit.position.y,kind==='buff'?18:21);
       if((unit.healFlash??0)>this.waves.elapsedSeconds)this.hpBars?.lineStyle(3,0x82e6a0,.9).strokeCircle(unit.position.x,unit.position.y,19);
       if(isAir(unit)){visual.body.setY(unit.position.y-airPresentation.height).setDepth(12);this.hpBars?.fillStyle(0x091311,.45).fillEllipse(unit.position.x,unit.position.y,28,9);}
-      this.drawHP(unit.position,unit.hp??combatConfig.workerHP,unit.kind==='worker'?factions[this.factions.player].units.worker.hp:factions[this.factions.player].units[unit.archetype??'soldier'].hp,unit.kind==='soldier'&&unit.archetype==='catapult'?40:24,unitOverlayOffsets(unit.kind==='worker'?'worker':unit.archetype??'soldier',this.factions.player).hp,0x7398c1);
+      this.drawHP(unit.position,unit.hp??combatConfig.workerHP,unit.kind==='worker'?factions[this.factions.player].units.worker.hp:factions[this.factions.player].units[unit.archetype??'soldier'].hp,unit.kind==='soldier'&&(unit.archetype==='catapult'||unit.archetype==='ballista')?40:24,unitOverlayOffsets(unit.kind==='worker'?'worker':unit.archetype??'soldier',this.factions.player).hp,0x7398c1);
     }
     const publicHealth=[...warningSnapshot(this.currentMatch()),...visibleEnemies.map(e=>({id:e.id,hp:e.hp,position:{...e.position}}))].filter(p=>isVisible(this.fog,'player',p.position));
     for(const hit of hitEffects(this.hitSnapshot,publicHealth,this.visualTime,this.gameplayActive()))this.addImpact(hit);

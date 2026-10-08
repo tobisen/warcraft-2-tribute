@@ -14,14 +14,14 @@ export function combatAudioSnapshot(m:MatchState,previous?:CombatAudioSnapshot):
  const building=(id:string,hp:number,rect:{x:number;y:number;width:number;height:number})=>bodies.push({id,hp,position:{x:rect.x+rect.width/2,y:rect.y+rect.height/2},building:true});
  if(p.barracks)building('barracks',p.barracksHP??factions[m.factions?.player??'crown'].buildings.barracks.hp,p.barracks);
  for(const f of p.farms??[])building(f.id,f.hp??factions[m.factions?.player??'crown'].buildings.farm.hp,f.footprint);
- if(p.academy)building('academy',p.academy.hp,p.academy.footprint);if(p.forge)building('forge',p.forge.hp,p.forge.footprint);if(n?.harbor)building('harbor',n.harbor.hp,n.harbor.footprint);
+ if(p.siegeWorks)building('siegeWorks',p.siegeWorks.hp,p.siegeWorks.footprint);if(p.academy)building('academy',p.academy.hp,p.academy.footprint);if(p.forge)building('forge',p.forge.hp,p.forge.footprint);if(n?.harbor)building('harbor',n.harbor.hp,n.harbor.footprint);
  for(const t of p.defenses??[])building(t.id,t.hp,t.footprint);
  for(const b of p.bases??[])building(b.id,b.hp,b.footprint);
  const attacks:AudibleAttack[]=[];
  for(const t of p.defenses??[])if(t.kind==='tower'&&t.hp>0&&t.construction.remainingSeconds===0){const position={x:t.footprint.x+16,y:t.footprint.y+16};attacks.push({id:t.id,position,visible:seen(position),cooldown:t.cooldown,sound:'bow',range:t.level===2?192:176});}
  for(const [team,units]of [['player',m.gathering.units],['enemy',m.combat.enemies]] as const)for(const u of units){
   if(u.kind==='worker'||u.kind==='base'||u.kind==='building'||'footprint'in u&&u.footprint)continue;
-  const type='archetype'in u?u.archetype??'soldier':'role'in u?u.role??'soldier':'soldier',stats=factions[m.factions?.[team]??'crown'].units[type==='archer'||type==='catapult'||type==='specialist'?type:'soldier'];
+  const type='archetype'in u?u.archetype??'soldier':'role'in u?u.role??'soldier':'soldier',stats=factions[m.factions?.[team]??'crown'].units[type==='ballista'||type==='archer'||type==='catapult'||type==='specialist'?type:'soldier'];
   const sound=u.kind==='ship'?'cannon':type==='catapult'?'siege':stats.projectileSpeed?'bow':'melee';
   const target='order'in u&&u.order?.kind==='attack'&&'enemyId'in u.order?u.order.enemyId:u.navigation?.targetId;
   attacks.push({id:u.id,position:{...u.position},visible:seen(u.position),cooldown:u.attackCooldown??0,sound,target,range:stats.range??32});

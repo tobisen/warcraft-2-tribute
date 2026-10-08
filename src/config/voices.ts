@@ -1,7 +1,7 @@
 import {factionIds,type FactionId} from './factions';
 /** Recorded local assets only; scripts and provenance live in the shared voice manifest. */
 export const voiceConfig={cooldownSeconds:1.2,gain:.9,humorClicks:6,humorChance:.15,humorCooldownSeconds:45,duckGain:.45};
-export type VoiceRole='worker'|'soldier'|'archer'|'catapult'|'specialist'|'transport'|'warship';
+export type VoiceRole='worker'|'soldier'|'archer'|'catapult'|'ballista'|'specialist'|'transport'|'warship';
 export type VoiceAction='select'|'order'|'move'|'attack'|'work'|'repeat'|'gather'|'ready'|'error';
 
 export const recordedVoiceRoles=['worker','soldier','archer'] as const;

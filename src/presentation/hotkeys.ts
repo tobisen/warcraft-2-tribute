@@ -5,6 +5,8 @@ export const hotkeys=[
  {key:'F16',button:'research-healerTraining',label:'Healer Training:+50 maximum mana only,45 wood/30 gold/12s,Forge+Academy.'},
  {key:'F17',button:'research-scoutOptics',label:'Scout Optics:128px submarine detection in current team vision,45 wood/30 gold/12s,Forge+flight building.'},
  {key:'F14',button:'upgrade-tower-air',label:'Permanently specialize this tower as Anti-Air: air-only,256px range; base II,Forge,attack I. Inactive for10s.'},
+ {key:'F18',button:'build-siegeWorks',label:'Build the dedicated siege workshop after Forge and base II.'},
+ {key:'F19',button:'train-ballista',label:'Train a direct-shot ballista at the siege workshop; double building damage.'},
  {key:'F13',button:'build-aviary',label:'Build a dedicated flight producer after base II; 80 wood, 40 gold, 12 seconds.'},
  {key:'END',button:'train-scout',label:'Train an unarmed flyer at the flight building after base II.'},
  {key:'PAGEUP',button:'scout-route',label:'Add multiple waypoints, click this action again to start repeating Scout Route.'},

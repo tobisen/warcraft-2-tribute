@@ -11,12 +11,12 @@ import {unitFrame,motion} from '../presentation/animation';
 
 it('Human roster exposes distinct specialist art and named research/naval recipes with gated siege',()=>{
  const f=factions.crown,m=createMatch('tutorial');
- expect(f.label).toBe('Human');expect(f.roster).toEqual(['worker','soldier','archer','catapult','specialist','air','cavalry','healer','giant','scout']);
+ expect(f.label).toBe('Human');expect(f.roster).toEqual(['worker','soldier','archer','catapult','specialist','air','cavalry','healer','giant','scout','ballista']);
  expect(f.units.specialist).toMatchObject({art:'specialist',hp:100,speed:130,cost:{wood:30,gold:15},durationSeconds:8,supply:2});
  expect(f.upgrades.attack.name).toBe('Tempered Arms');expect(f.upgrades.defense.name).toBe('Plate Craft');expect(f.naval.units.warship.name).toBe('Cutter');
  expect(unitFrame(motion(undefined,{x:0,y:0},'idle',0,'specialist','player',undefined,'crown'),0)).toBe('specialist-player-s-idle-0');
  m.placement.barracks={x:512,y:384,width:64,height:64};m.placement.construction={remainingSeconds:0,builderId:null};
- const panel=actionPanel(m,'barracks',true);expect(panel['train-specialist']).toMatchObject({visible:true,reason:'Complete Forge'});expect(panel['train-catapult'].reason).toBe('Complete Forge');
+ const panel=actionPanel(m,'barracks',true);expect(panel['train-specialist']).toMatchObject({visible:true,reason:'Complete Forge'});expect(panel['train-catapult'].visible).toBe(false);
 });
 it('completed Plate Craft unlocks a paid Human specialist, with atomic rejection before it finishes',()=>{
  const m=createMatch('tutorial');m.gathering.wood=100;m.gathering.goldBalance=50;
@@ -28,15 +28,15 @@ it('completed Plate Craft unlocks a paid Human specialist, with atomic rejection
  expect(updateQueuedProduction(yes.gathering,yes.production,7.99,building()).gathering.units).toHaveLength(3);
  const done=updateQueuedProduction(yes.gathering,yes.production,8,building());expect(done.gathering.units.at(-1)).toMatchObject({id:'unit-4',archetype:'specialist',hp:100,selected:false,order:{kind:'idle'}});
 });
-it('config24 migration preserves already paid siege jobs without requiring a retroactive Forge',()=>{
+it('config24 migration refunds old Barracks siege without requiring a retroactive workshop',()=>{
  const m=createMatch();m.gathering.wood=100;m.gathering.goldBalance=50;
- const b={kind:'barracks' as const,footprint:{x:512,y:384,width:64,height:64},unitType:'catapult' as const};
- const started=enqueueProduction(m.gathering,m.soldierProduction,{...b,technology:{buildings:['forge' as const],research:{}}});
+ const b={kind:'barracks' as const,footprint:{x:512,y:384,width:64,height:64},unitType:'catapult' as const,producer:'siegeWorks' as const};
+ const started=enqueueProduction(m.gathering,m.soldierProduction,{...b,technology:{baseLevel:2,buildings:['forge' as const,'siegeWorks' as const],research:{}}});
  m.gathering=started.gathering;m.soldierProduction=started.production;
  const d=JSON.parse(encodeSave(m,{camera:{x:0,y:0},building:null}));legacyTerrainFixture(d);d.configVersion='tribute-config-24';
  const loaded=decodeSave(JSON.stringify(d));expect(loaded.ok).toBe(true);if(!loaded.ok)return;
- expect(loaded.match.soldierProduction.queue).toEqual(m.soldierProduction.queue);expect(loaded.match.gathering.wood).toBe(60);
- const done=updateQueuedProduction(loaded.match.gathering,loaded.match.soldierProduction,10,b);expect(done.gathering.units.at(-1)).toMatchObject({archetype:'catapult',hp:80});
+ expect(loaded.match.soldierProduction.queue).toEqual([]);expect(loaded.match.gathering.wood).toBe(100);
+ const done=updateQueuedProduction(loaded.match.gathering,loaded.match.soldierProduction,10,b);expect(done.gathering.units).toHaveLength(3);
  expect(enqueueProduction(done.gathering,done.production,b).production).toBe(done.production);
 });
 it('Human enemy production spends its own recipe and does not debit the player',()=>{

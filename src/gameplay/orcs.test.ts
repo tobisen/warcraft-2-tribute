@@ -13,7 +13,7 @@ import {unitFrame,motion} from '../presentation/animation';
 
 it('Orc identity and recipes implement a distinct expanded offensive roster',()=>{
  const f=factions.clans,m=createMatch('tutorial','beginner',factionsForPlayer('clans'));
- expect(f.label).toContain('Orcs');expect(f.roster).toEqual(['worker','soldier','archer','catapult','specialist','air','cavalry','healer','giant','scout']);
+ expect(f.label).toContain('Orcs');expect(f.roster).toEqual(['worker','soldier','archer','catapult','specialist','air','cavalry','healer','giant','scout','ballista']);
  expect(f.units.worker).toMatchObject({hp:35,speed:155});expect(m.combat.baseHP).toBe(260);expect(matchLabels(m).health).toBe('Stronghold: 260 / 260 HP');expect(m.gathering.units[0].hp).toBe(35);
  expect(f.units.soldier).toMatchObject({cost:{wood:18,gold:6},hp:66,durationSeconds:6,damagePerSecond:20});
  expect(f.units.archer).toMatchObject({hp:45,speed:135,range:144,attackInterval:1.1});
@@ -39,25 +39,25 @@ it('Raider pays its own cost once, requires attack research and combines Fury wi
 });
 it('new Stone Thrower jobs require Forge, take eleven seconds and Save accepts their real cooldown',()=>{
  const m=createMatch('survival','normal',factionsForPlayer('clans'));m.gathering.wood=100;m.gathering.goldBalance=50;
- const b={kind:'barracks' as const,footprint:{x:512,y:384,width:64,height:64},unitType:'catapult' as const};
+ const b={kind:'barracks' as const,footprint:{x:512,y:384,width:64,height:64},unitType:'catapult' as const,producer:'siegeWorks' as const};
  expect(enqueueProduction(m.gathering,m.soldierProduction,b).production).toBe(m.soldierProduction);
- const start=enqueueProduction(m.gathering,m.soldierProduction,{...b,technology:{buildings:['forge' as const],research:{}}});
+ const start=enqueueProduction(m.gathering,m.soldierProduction,{...b,technology:{baseLevel:2,buildings:['forge' as const,'siegeWorks' as const],research:{}}});
  expect(start.production.remainingSeconds).toBe(11);expect(updateQueuedProduction(start.gathering,start.production,10,b).gathering.units).toHaveLength(3);
  const done=updateQueuedProduction(start.gathering,start.production,11,b);m.gathering=done.gathering;m.soldierProduction=done.production;m.production.nextUnitNumber=done.production.nextUnitNumber;
  const siege=m.gathering.units.at(-1)!;if(siege.kind==='soldier')siege.attackCooldown=2.1;
  expect(decodeSave(encodeSave(m,{camera:{x:0,y:0},building:null})).ok).toBe(true);
 });
-it('Save25 keeps older paid siege time and injured HP; new orders use the new recipe',()=>{
+it('Save25 refunds old Barracks siege once and preserves injured HP',()=>{
  const m=createMatch('survival','normal',factionsForPlayer('clans')),footprint={x:512,y:384,width:64,height:64};
  m.gathering.wood=100;m.gathering.goldBalance=50;m.gathering.units.forEach(u=>u.hp=30);m.combat.baseHP=240;
  m.placement={...m.placement,barracks:footprint,barracksHP:120,barracksOwner:'player',construction:{remainingSeconds:0,builderId:null}};m.map=replaceObstacles(m.map,[...m.map.obstacles,footprint]);
- const b={kind:'barracks' as const,footprint,unitType:'catapult' as const,technology:{buildings:['forge' as const],research:{}}};
+ const b={kind:'barracks' as const,footprint,unitType:'catapult' as const,producer:'siegeWorks' as const,technology:{baseLevel:2,buildings:['forge' as const,'siegeWorks' as const],research:{}}};
  const start=enqueueProduction(m.gathering,m.soldierProduction,b);m.gathering=start.gathering;m.soldierProduction=start.production;
  const d=JSON.parse(encodeSave(m,{camera:{x:0,y:0},building:'barracks'}));legacyTerrainFixture(d);d.configVersion='tribute-config-25';d.state.soldierProduction.queue[0].durationSeconds=10;d.state.soldierProduction.queue[0].remainingSeconds=4;d.state.soldierProduction.remainingSeconds=4;
  const loaded=decodeSave(JSON.stringify(d));expect(loaded.ok).toBe(true);if(!loaded.ok)return;
- expect(loaded.match.combat.baseHP).toBe(240);expect(loaded.match.gathering.units[0].hp).toBe(30);expect(loaded.match.gathering.wood).toBe(60);
- expect(loaded.match.soldierProduction.queue![0]).toMatchObject({durationSeconds:10,remainingSeconds:4,legacyRecipe:true,cost:{wood:40,gold:20}});
+ expect(loaded.match.combat.baseHP).toBe(240);expect(loaded.match.gathering.units[0].hp).toBe(30);expect(loaded.match.gathering.wood).toBe(100);
+ expect(loaded.match.soldierProduction.queue).toEqual([]);
  expect(decodeSave(encodeSave(loaded.match,{camera:{x:0,y:0},building:'barracks'})).ok).toBe(true);
- const done=updateQueuedProduction(loaded.match.gathering,loaded.match.soldierProduction,4,b);expect(done.gathering.units.at(-1)).toMatchObject({archetype:'catapult',hp:90});expect(done.gathering.wood).toBe(60);
+ const done=updateQueuedProduction(loaded.match.gathering,loaded.match.soldierProduction,4,b);expect(done.gathering.units).toHaveLength(3);expect(done.gathering.wood).toBe(100);
  const invalid=structuredClone(d);invalid.state.soldierProduction.queue[0].cost.wood=1;expect(decodeSave(JSON.stringify(invalid)).ok).toBe(false);
 });

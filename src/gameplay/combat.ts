@@ -36,7 +36,7 @@ import type { GatheringState, Unit,WorkerOrder,ResourceType } from './gathering'
 import { moveTowards, type Position } from './movement';
 
 export interface EnemyWork {cargo:number;cargoType?:ResourceType;target:Position;order:WorkerOrder}
-export interface Enemy extends SpellState {scouting?:import('./scouting').ScoutState;healFlash?:number;healAutocast?:boolean;boss?:import('../config/bosses').BossId;playerId?:PlayerId;faction?:FactionId;mana?:number;role?:'soldier'|'archer'|'catapult'|'specialist'|'air'|'cavalry'|'healer'|'giant'|'scout';attackCooldown?:number;ability?:import('./abilities').AbilityState;legacyProfile?:true; owner?:'enemy'; kind?:'ship'|'unit'|'base'|'worker'|'building';navalLanding?:true;buildingType?:'aviary'|'stable'|'academy'|'harbor'|'outpost'|'barracks'|'farm'|'forge';construction?:import('./placement').ConstructionJob;work?:EnemyWork; order?:{kind:'idle'}|{kind:'defend';targetId:string}|{kind:'muster'|'attack-move';destination:Position}; id: string; position: Position; hp: number; footprint?:Footprint; navigation?: RouteState }
+export interface Enemy extends SpellState {scouting?:import('./scouting').ScoutState;healFlash?:number;healAutocast?:boolean;boss?:import('../config/bosses').BossId;playerId?:PlayerId;faction?:FactionId;mana?:number;role?:'soldier'|'archer'|'catapult'|'ballista'|'specialist'|'air'|'cavalry'|'healer'|'giant'|'scout';attackCooldown?:number;ability?:import('./abilities').AbilityState;legacyProfile?:true; owner?:'enemy'; kind?:'ship'|'unit'|'base'|'worker'|'building';navalLanding?:true;buildingType?:'siegeWorks'|'aviary'|'stable'|'academy'|'harbor'|'outpost'|'barracks'|'farm'|'forge';construction?:import('./placement').ConstructionJob;work?:EnemyWork; order?:{kind:'idle'}|{kind:'defend';targetId:string}|{kind:'muster'|'attack-move';destination:Position}; id: string; position: Position; hp: number; footprint?:Footprint; navigation?: RouteState }
 export interface CombatState {baseDevelopment?:import('../config/baseUpgrade').BaseDevelopment; baseOwner?:'player'; enemies: Enemy[]; baseHP: number; projectiles?:Projectile[]; nextProjectileNumber?:number; destroyedEnemyFootprints?:Footprint[]; enemyUpgrades?:{cavalryArmor?:number;attack:number;defense:number};upgrades?:{cavalryArmor?:number;attack:number;defense:number} }
 
 export function enemyAt(enemies: Enemy[], point: Position): Enemy | undefined {
@@ -126,7 +126,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
         time=Math.max(0,time-cooldown);
         shots.push({projectile:{id:`arrow-${nextProjectileNumber++}`,shooterId:unit.id,targetId:enemy.id,
           position:{...step.position},destination:{...enemy.position},speed:ranged.projectileSpeed,
-          targets:attackTargets(unit,gathering.faction??'crown'),...(isAir(unit)||isAir(enemy)?{airborne:true as const}:{}),...(combatUnitStats(unit,gathering.faction).damageByDomain?{damageByDomain:combatUnitStats(unit,gathering.faction).damageByDomain}:{}),...(unit.archetype==='catapult'?{defenseMultiplier:defenseBalanceConfig.siegeDefenseMultiplier}:{}),remainingLife:ranged.projectileLifetime,damage:ranged.damage*attackMultiplier*abilityEffects(gathering,unit,delta-time).attackMultiplier*spellModifiers(unit,delta-time).attack,hitRadius:'hitRadius' in ranged?ranged.hitRadius:0,
+          targets:attackTargets(unit,gathering.faction??'crown'),...(isAir(unit)||isAir(enemy)?{airborne:true as const}:{}),...(combatUnitStats(unit,gathering.faction).damageByDomain?{damageByDomain:combatUnitStats(unit,gathering.faction).damageByDomain}:{}),...(unit.archetype==='catapult'?{defenseMultiplier:defenseBalanceConfig.siegeDefenseMultiplier}:{}),remainingLife:ranged.projectileLifetime,damage:ranged.damage*(enemy.footprint?stats.buildingDamageMultiplier??1:1)*attackMultiplier*abilityEffects(gathering,unit,delta-time).attackMultiplier*spellModifiers(unit,delta-time).attack,hitRadius:'hitRadius' in ranged?ranged.hitRadius:0,
           ...(enemy.footprint?{targetFootprint:{...enemy.footprint}}:{}),
           ...('splashRadius' in ranged?{splashRadius:ranged.splashRadius}:{})},time});
         cooldown=ranged.attackInterval;
@@ -140,7 +140,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
   // Both sides attack from the same live snapshot, so lethal blows are simultaneous.
   const playerDamage = new Map<string, number>();
   const originalTargets=scope?.targets??playerTargets(gathering,combat,placement,navy);
-  const priority={aviary:7,stable:5,academy:2,wall:2,gate:2,tower:2,ship:0,harbor:2,soldier:0,worker:1,barracks:2,farm:2,forge:2,base:3};
+  const priority={siegeWorks:7,aviary:7,stable:5,academy:2,wall:2,gate:2,tower:2,ship:0,harbor:2,soldier:0,worker:1,barracks:2,farm:2,forge:2,base:3};
   const enemyGathering={...gathering,faction:enemyFaction};
   const movingEnemies = combat.enemies.filter(e => e.hp > 0).map(enemy => {
     if(scope?.side==='player')return enemy;
@@ -183,7 +183,7 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
         time=Math.max(0,time-cooldown);
         shots.push({projectile:{owner:'enemy',id:`enemy-arrow-${nextProjectileNumber++}`,shooterId:enemy.id,targetId:target.id,
           position:{...step.position},destination:{...center},speed:ranged.projectileSpeed,remainingLife:ranged.projectileLifetime,
-          targets:attackTargets(enemy,enemyFaction),...(enemy.boss||isAir(enemy)||target.domain==='air'?{airborne:true as const}:{}),...(stats.damageByDomain?{damageByDomain:stats.damageByDomain}:{}),...(enemy.role==='catapult'?{defenseMultiplier:defenseBalanceConfig.siegeDefenseMultiplier}:{}),damage:ranged.damage*multiplier*abilityEffects(enemyGathering,soldier,delta-time).attackMultiplier*spellModifiers(soldier,delta-time).attack,
+          targets:attackTargets(enemy,enemyFaction),...(enemy.boss||isAir(enemy)||target.domain==='air'?{airborne:true as const}:{}),...(stats.damageByDomain?{damageByDomain:stats.damageByDomain}:{}),...(enemy.role==='catapult'?{defenseMultiplier:defenseBalanceConfig.siegeDefenseMultiplier}:{}),damage:ranged.damage*(!['soldier','worker','ship'].includes(target.kind)?stats.buildingDamageMultiplier??1:1)*multiplier*abilityEffects(enemyGathering,soldier,delta-time).attackMultiplier*spellModifiers(soldier,delta-time).attack,
           hitRadius:'hitRadius' in ranged?ranged.hitRadius:0,targetFootprint:{...footprint},
           ...('splashRadius' in ranged?{splashRadius:ranged.splashRadius}:{})},time});
         cooldown=ranged.attackInterval;

@@ -1,3 +1,6 @@
+import {enemyPriority} from './enemyPolicy';
+import {technologyFor,unitAvailability} from './productionPrerequisites';
+import {compositionRole} from './combinedArmy';
 import {legacyTerrainFixture} from './testHelpers/legacyTerrainFixture';
 import {describe,it,expect} from 'vitest';
 import {factions,factionIds} from '../config/factions';
@@ -12,10 +15,11 @@ const roles=['soldier','archer','catapult','specialist','air'] as const;
 describe('faction-aware opponent army',()=>{
  it.each(factionIds)('%s pays each full roster recipe once with exact timers, supply and distinct stats',id=>{
   const m=createMatch('skirmish','normal',{player:'crown',enemy:id}),f=factions[id];
-  let c=m.combat,state=createEnemyProduction({budget:{wood:1000,gold:1000},cap:roles.reduce((n,r)=>n+f.units[r].supply,0),durationSeconds:5},true);
-  const context={population:{cap:100,used:0,reserved:0},site:{...c.enemies[0],construction:{remainingSeconds:0,builderId:null}},technology:{buildings:['base','barracks','forge','farm'] as const,research:{attack:1,defense:1}}};
+  let c={...m.combat,enemies:[...m.combat.enemies,...(['siegeWorks','aviary','stable','academy'] as const).map(buildingType=>({...m.combat.enemies[0],id:`enemy-${buildingType}`,kind:'building' as const,buildingType,construction:{remainingSeconds:0,builderId:null}}))]},state=createEnemyProduction({budget:{wood:1000,gold:1000},cap:roles.reduce((n,r)=>n+f.units[r].supply,0),durationSeconds:5},true);
+  const context={population:{cap:100,used:0,reserved:0},site:{...c.enemies[0],construction:{remainingSeconds:0,builderId:null}},technology:{baseLevel:3,buildings:['base','barracks','forge','farm','siegeWorks','aviary','stable','academy'] as const,research:{attack:2,defense:2}}};
+  const originalRoster=f.roster;f.roster=['worker',...roles];try{
   const snapshots=new Map<string,NonNullable<typeof state.production.queue>[number]>();
-  for(let i=0;i<100;i++){
+  for(let i=0;i<200;i++){
    const before=state.wood+state.gold,r=updateEnemyProduction(state,c,m.gathering,m.map,.5,id,context);state=r.state;c=r.combat;
    for(const job of state.production.queue??[])snapshots.set(job.id,job);
    expect(state.wood+state.gold).toBeLessThanOrEqual(before);
@@ -25,6 +29,7 @@ describe('faction-aware opponent army',()=>{
   expect(state.wood).toBe(1000-roles.reduce((n,r)=>n+f.units[r].cost.wood,0));expect(state.gold).toBe(1000-roles.reduce((n,r)=>n+f.units[r].cost.gold,0));
   for(const e of army){expect(e.hp).toBe(f.units[e.role!].hp);expect(enemySupply(e,id)).toBe(f.units[e.role!].supply);expect(enemyUnitStats(e,id).speed).toBe(f.units[e.role!].speed);}
   for(const job of snapshots.values()){const recipe=f.units[job.kind as typeof roles[number]];expect(job.cost).toEqual(recipe.cost);expect(job.durationSeconds).toBe(recipe.durationSeconds);expect(job.supply).toBe(recipe.supply);}
+  }finally{f.roster=originalRoster;}
  });
  it.each(factionIds)('%s respects unavailable prerequisites, actual bank and supply',id=>{
   const m=createMatch('skirmish','normal',{player:'crown',enemy:id}),f=factions[id];
@@ -53,17 +58,19 @@ describe('faction-aware opponent army',()=>{
  it.each(factionIds)('%s autonomous paid economy unlocks and replaces every roster role after combat losses',id=>{
   let m=createMatch('skirmish','normal',{player:'crown',enemy:id});
   // Explicit resilience fixture for the observed AI, not a paid player victory.
-  m.combat.baseHP=10000;
+  m.combat.baseHP=1e8;delete m.capture;delete m.enemyRecovery;
+  // Larger finite deposits isolate roster replacement from resource exhaustion.
+  for(const node of [m.gathering.node,m.gathering.gold,...(m.gathering.extraNodes??[])])if(node)node.remaining*=10;
   const observed=new Set<string>();
-  for(let i=0;i<650&&observed.size<roles.length;i++){
+  for(let i=0;i<1400&&!roles.every(r=>observed.has(r));i++){
    m=updateMatch(m,1);
-   for(const e of m.combat.enemies)if(e.role)observed.add(e.role);
-   if(m.enemyPolicy?.research.attack===1&&m.enemyPolicy.research.defense===1){
-    const casualty=m.combat.enemies.find(e=>e.role&&e.role!=='specialist'&&e.role!=='catapult');if(casualty)casualty.hp=0;
+   for(const e of m.combat.enemies)if(e.role&&roles.includes(e.role as typeof roles[number]))observed.add(e.role);
+   if(m.enemyPolicy?.research.attack===2&&m.enemyPolicy.research.defense===2&&m.enemyProduction?.baseDevelopment?.level===3&&i%15===0){
+    const casualty=m.combat.enemies.find(e=>e.role);if(casualty)casualty.hp=0;
    }
   }
-  expect([...observed].sort(),JSON.stringify({id,time:m.waves.elapsedSeconds,bank:m.enemyProduction,research:m.enemyPolicy,buildings:m.combat.enemies.filter(e=>e.footprint)})).toEqual([...roles].sort());
-  expect(m.enemyPolicy?.research).toMatchObject({attack:1,defense:1});expect(m.enemyProduction?.spent?.wood).toBeGreaterThan(factions[id].buildings.barracks.cost.wood+factions[id].buildings.forge.cost.wood);expect(m.enemyProduction?.wood).toBeGreaterThanOrEqual(0);
+  expect([...observed].sort(),JSON.stringify({id,time:m.waves.elapsedSeconds,bank:m.enemyProduction,priority:enemyPriority(m),tech:technologyFor(m,'enemy'),catReason:unitAvailability(factions[id],'catapult',technologyFor(m,'enemy')),army:m.combat.enemies.filter(e=>e.role),chosen:m.armyPlan?compositionRole(m.armyPlan,m.combat,m.enemyProduction!.production,id,technologyFor(m,'enemy')):null,research:m.enemyPolicy,buildings:m.combat.enemies.filter(e=>e.footprint)})).toEqual([...roles].sort());
+  expect(m.enemyPolicy?.research).toMatchObject({attack:2,defense:2});expect(m.enemyProduction?.spent?.wood).toBeGreaterThan(factions[id].buildings.barracks.cost.wood+factions[id].buildings.forge.cost.wood);expect(m.enemyProduction?.wood).toBeGreaterThanOrEqual(0);
  });
  it('NPC self-buffs only in visible combat and respects cooldown and game-time expiry',()=>{
   let m=createMatch('skirmish','normal',{player:'crown',enemy:'goblins'});m.fog=undefined;

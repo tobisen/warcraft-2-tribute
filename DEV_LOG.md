@@ -4626,3 +4626,34 @@ PASS0pageerrors. Crownikoner granskade. Browserfixturbyggnader separerade
 för att inte välja aviary vidForgekant. Enemyarmortest använder Clans riktiga
 .8 basarmor, AIprerequisitefixture har Barracks/Farm och ingen unrelated
 expansion/recoverypriority. No mänskligbalans/ljud/nyCI/Pages/release.
+
+## RTS-229 — Egen belägringsverkstad och ballista
+
+Senaste användarstyrning prioriterade229 före227–228. Fem egna verkstäder
+(baseII+Forge90/50/12s), betald Catapult/Ballista-FIFO, rally, supply,
+AI/campaign/teams/fog/combat/repair/destruction/TechTree/F18–19 och Save67.
+Ballista65/40/16s3supply90HP75speed, direkt land/byggnadsskott22/2s×2
+byggnadsskada utan splash; egna femras sprites/source/licens redovisas i
+assets/sources/visual-refresh/siege.md. Gamla strikt validerade betalda
+Barracks-katapultjobb återbetalas en gång; färdiga enheter bevaras.
+
+Review av producent/prerequisites/counters/migration och slutlig diffcheck
+PASS. Unit511/89 PASS16.98s; riktade siege/policy/role/combined-army/balance/
+campaign/catapult138/7 PASS5.48s; autonom femras AI28/1 PASS13.80s.
+Strict build747ms PASS med befintlig bundlevarning. Native800 faktisk
+workshopplacering, Ballista+Catapult-knappar/FIFO, rally, ballistaprojektil,
+TechTree, save/load/restart för fem raser PASS0pageerrors; artifacts/rts-229.
+Browserfixturen finansierar med cheat och seedar tech, pausar taktisk AI under
+kontrollerat infanterimål. Fyra ritade ballistaposer och speglade västriktningar
+är konkret assetbegränsning, inget nytt ljud/mänskligt balansspeltest.
+
+Den första breda regressionen under229 gav34 fel/1733 pass innan slutfixar.
+Den hittade också äldre223/225-fixturer för Barracks-flyg/lågflyg-tech och
+AI som spenderade producerreserven på armén. Betalda base/producer-prioriteter
+och ändliga extra byggkandidater löser det; ingen terrängombyggnad. AI-testets
+ändliga resursdepositioner förstoras uttryckligt för att testa rosterersättning
+utan att förväxla uttömd ekonomi med produktionsfel. Goblin-heavy damageByDomain
+justerades land×.75/air×.65 för jämförbar kostnads AA-motvikt; automatiska
+balanstester passerar, mänsklig balans återstår. Alla observerade felgrupper
+har riktat verifierats gröna; full regression körs igen efter227–228.
+Ingen ny CI/Pages/release hävdas. User CSS/units.mjs/docs bevaras.

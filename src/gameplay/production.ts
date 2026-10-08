@@ -25,7 +25,7 @@ export interface ProductionState {
   blockedSpawnKey?: string;
   nextUnitNumber: number;
 }
-export type ProductionBuilding = { kind: 'base';footprint?:Footprint;ready?:boolean } | { kind: 'barracks'; footprint: Footprint | null; ready?:boolean;bounds?:Pick<WorldMap,'width'|'height'>;technology?:TechnologyState;producer?:'barracks'|'aviary'|'stable'|'academy';unitType?:'soldier'|'archer'|'catapult'|'specialist'|'air'|'cavalry'|'healer'|'giant'|'scout';jobCost?:ResourceCost;durationSeconds?:number };
+export type ProductionBuilding = { kind: 'base';footprint?:Footprint;ready?:boolean } | { kind: 'barracks'; footprint: Footprint | null; ready?:boolean;bounds?:Pick<WorldMap,'width'|'height'>;technology?:TechnologyState;producer?:'barracks'|'siegeWorks'|'aviary'|'stable'|'academy';unitType?:'soldier'|'archer'|'catapult'|'ballista'|'specialist'|'air'|'cavalry'|'healer'|'giant'|'scout';jobCost?:ResourceCost;durationSeconds?:number };
 const base: ProductionBuilding = { kind: 'base' };
 
 export function soldierSpawn(footprint: Footprint,size=soldierStats.size,bounds:Pick<WorldMap,'width'|'height'>=worldConfig): Position | null {

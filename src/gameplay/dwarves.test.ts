@@ -55,7 +55,7 @@ it('Ironclad and Heavy Ferry pay their distinct recipes and honor ten/eight-seco
 });
 it('Save28 accepts paid twelve-second Cannon jobs and Brace timers, never historical dwarf identities',()=>{
  const m=createMatch('survival','normal',factionsForPlayer('dwarves'));m.gathering.wood=100;m.gathering.goldBalance=50;
- const b={kind:'barracks' as const,footprint:{x:512,y:384,width:64,height:64},unitType:'catapult' as const,technology:{buildings:['forge' as const],research:{}}};
+ const b={kind:'barracks' as const,footprint:{x:512,y:384,width:64,height:64},unitType:'catapult' as const,producer:'siegeWorks' as const,technology:{baseLevel:2,buildings:['forge' as const,'siegeWorks' as const],research:{}}};
  const start=enqueueProduction(m.gathering,m.soldierProduction,b);m.gathering=start.gathering;m.soldierProduction=start.production;
  const json=encodeSave(m,{camera:{x:0,y:0},building:null});expect(decodeSave(json).ok).toBe(true);
  const done=updateQueuedProduction(m.gathering,m.soldierProduction,12,b);m.gathering={...done.gathering,units:done.gathering.units.map(u=>({...u,selected:u.kind==='soldier'}))};m.soldierProduction=done.production;m.production.nextUnitNumber=done.production.nextUnitNumber;

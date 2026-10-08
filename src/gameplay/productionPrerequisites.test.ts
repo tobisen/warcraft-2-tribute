@@ -17,7 +17,7 @@ it('failed prerequisites reject atomically, accepted jobs survive later prerequi
  const original=factions.crown;factions.crown=definition();
  try{
   const m=createMatch('skirmish');const g={...m.gathering,wood:100,goldBalance:100};
-  const b={kind:'barracks' as const,footprint:{x:512,y:384,width:64,height:64},unitType:'catapult' as const,bounds:m.map};
+  const b={kind:'barracks' as const,footprint:{x:512,y:384,width:64,height:64},unitType:'catapult' as const,producer:'siegeWorks' as const,bounds:m.map};
   const rejected=enqueueProduction(g,m.soldierProduction,b);
   expect(rejected.gathering).toBe(g);expect(rejected.production).toBe(m.soldierProduction);
   const accepted=enqueueProduction(g,m.soldierProduction,{...b,technology:{buildings:['forge'],research:{attack:1}}});

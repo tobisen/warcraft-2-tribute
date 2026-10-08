@@ -3,7 +3,7 @@ import {soldierStats,unitStats} from './unitDefaults';
 export {soldierStats,unitStats} from './unitDefaults';
 import {catapultConfig} from './catapult';
 import {archerConfig} from './archer';
-type CombatProfile={faction?:FactionId;archetype?:'archer'|'catapult'|'specialist'|'air'|'cavalry'|'healer'|'giant'|'scout'};
+type CombatProfile={faction?:FactionId;archetype?:'archer'|'catapult'|'ballista'|'specialist'|'air'|'cavalry'|'healer'|'giant'|'scout'};
 export function combatUnitStats(unit:CombatProfile,faction?:FactionId){
  const role=unit.archetype??'soldier',baseline=role==='catapult'?catapultConfig:role==='archer'?archerConfig:soldierStats;
  return {...baseline,...factions[faction??unit.faction??'crown'].units[role]};

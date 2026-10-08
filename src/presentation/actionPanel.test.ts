@@ -16,12 +16,12 @@ it('roster and prerequisite presentation agrees with real admission data',()=>{
  const original=factions.crown;
  factions.crown={...original,units:{...original.units,catapult:{...original.units.catapult,prerequisites:{buildings:['forge'],research:{attack:1}}}}};
  try{
-  const m=createMatch();m.gathering.wood=100;m.gathering.goldBalance=100;
-  expect(actionPanel(m,'barracks',true)['train-catapult']).toMatchObject({visible:true,cost:'40 wood + 20 gold',reason:'Complete Forge'});
+  const m=createMatch();m.gathering.wood=100;m.gathering.goldBalance=100;m.placement.siegeWorks={id:'siegeWorks',owner:'player',hp:180,footprint:{x:640,y:384,width:64,height:64},construction:{remainingSeconds:0,builderId:null},production:{remainingSeconds:null,nextUnitNumber:4}};
+  expect(actionPanel(m,'siegeWorks',true)['train-catapult']).toMatchObject({visible:true,cost:'40 wood + 20 gold',reason:'Complete Forge'});
   m.placement.forge={id:'forge',owner:'player',hp:120,footprint:{x:512,y:384,width:64,height:64},construction:{remainingSeconds:0,builderId:null}};
-  expect(actionPanel(m,'barracks',true)['train-catapult'].reason).toBe('Research attack 1');m.research!.attack=1;
-  expect(actionPanel(m,'barracks',true)['train-catapult'].reason).toBe('');
-  factions.crown={...factions.crown,roster:['worker','soldier']};expect(actionPanel(m,'barracks',true)['train-catapult'].visible).toBe(false);
+  expect(actionPanel(m,'siegeWorks',true)['train-catapult'].reason).toBe('Research attack 1');m.research!.attack=1;
+  expect(actionPanel(m,'siegeWorks',true)['train-catapult'].reason).toBe('');
+  factions.crown={...factions.crown,roster:['worker','soldier']};expect(actionPanel(m,'siegeWorks',true)['train-catapult'].visible).toBe(false);
  }finally{factions.crown=original;}
 });
 it('keeps prerequisites visible after unlocking and identifies active build, research and production',()=>{

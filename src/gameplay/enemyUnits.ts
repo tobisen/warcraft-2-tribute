@@ -29,6 +29,7 @@ export function enemyMaximumHP(e:Enemy,faction:FactionId):number{
  if(e.kind==='base')return e.legacyProfile?combatConfig.baseHP:f.buildings.base.hp;
  if(e.kind==='building'){
   if(e.buildingType==='outpost')return enemyExpansionConfig.hp;
+  if(e.buildingType==='siegeWorks')return f.buildings.siegeWorks.hp;
   if(e.buildingType==='aviary')return f.buildings.aviary.hp;
   if(e.buildingType==='stable')return f.buildings.stable.hp;
   if(e.buildingType==='academy')return f.buildings.academy.hp;

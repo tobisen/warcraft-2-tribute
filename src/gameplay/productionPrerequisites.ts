@@ -15,12 +15,13 @@ export function technologyFor(m:import('./match').MatchState,team:'player'|'enem
   for(const e of m.combat.enemies){
    if(e.hp<=0||e.construction&&e.construction.remainingSeconds>0)continue;
    const role=e.kind==='base'?'base':e.buildingType;
-   if(role==='base'||role==='barracks'||role==='farm'||role==='forge'||role==='academy'||role==='stable'||role==='aviary')if(!buildings.includes(role))buildings.push(role);
+   if(role==='base'||role==='barracks'||role==='farm'||role==='forge'||role==='academy'||role==='stable'||role==='aviary'||role==='siegeWorks')if(!buildings.includes(role))buildings.push(role);
   }
   return {baseLevel:m.enemyProduction?.baseDevelopment?.level??1,academyAllowed:!academyCampaignReason(m),buildings,research:{attack:m.enemyPolicy?.research.attack??0,defense:m.enemyPolicy?.research.defense??0}};
  }
  if((m.combat.baseHP>0||(m.placement.bases??[]).some(b=>b.hp>0&&b.construction.remainingSeconds===0)))buildings.push('base');
  if(m.placement.barracks&&(m.placement.barracksHP??1)>0&&(m.placement.construction?.remainingSeconds??0)===0)buildings.push('barracks');
+ if(m.placement.siegeWorks&&m.placement.siegeWorks.hp>0&&m.placement.siegeWorks.construction.remainingSeconds===0)buildings.push('siegeWorks');
  if(m.placement.aviary&&m.placement.aviary.hp>0&&m.placement.aviary.construction.remainingSeconds===0)buildings.push('aviary');
  if(m.placement.stable&&m.placement.stable.hp>0&&m.placement.stable.construction.remainingSeconds===0)buildings.push('stable');
  if(m.placement.academy&&m.placement.academy.hp>0&&m.placement.academy.construction.remainingSeconds===0)buildings.push('academy');
@@ -38,7 +39,7 @@ export function buildingAvailability(f:FactionDefinition,k:import('../config/fac
 export function researchAvailability(f:FactionDefinition,k:'attack'|'defense',t:TechnologyState):string|null{return contentReason(t.campaignContent,'research',k)??prerequisiteReason(f,(t.research[k]??0)>=1?{buildings:['forge','academy']}:f.upgrades[k].prerequisites,t);}
 export function techTree(m:import('./match').MatchState):string[]{const f=factionOf(m,'player'),t=technologyFor(m,'player');return [
  `${f.buildingNames.base}: level ${m.combat.baseDevelopment?.level??1} / 3`,
- ...(['barracks','farm','forge','academy','stable','aviary','harbor'] as const).map(k=>`${k==='harbor'?f.naval.harbor.name:f.buildingNames[k]} ← ${buildingAvailability(f,k,t)??'Available'}`),
+ ...(['barracks','farm','forge','academy','stable','aviary','siegeWorks','harbor'] as const).map(k=>`${k==='harbor'?f.naval.harbor.name:f.buildingNames[k]} ← ${buildingAvailability(f,k,t)??'Available'}`),
  ...f.roster.map(k=>`${f.unitNames[k]} @ ${f.buildingNames[f.units[k].trainedAt]} ← ${prerequisiteReason(f,{buildings:[f.units[k].trainedAt]},t)??unitAvailability(f,k,t)??'Available'}${f.units[k].prerequisites?.buildings?.length?` (needs ${f.units[k].prerequisites!.buildings!.map(b=>f.buildingNames[b]).join(', ')})`:''}`),
  ...(['attack','defense'] as const).map(k=>`${f.upgrades[k].name}: ${t.research[k]??0}/2 · I: forge; II: forge + ${f.buildingNames.academy} ← ${(t.research[k]??0)>=2?'Complete':researchAvailability(f,k,t)??'Available'}`)
  ];}

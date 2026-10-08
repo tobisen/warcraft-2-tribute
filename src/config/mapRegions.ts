@@ -6,7 +6,7 @@ import type {Position} from '../gameplay/movement';
 export const regionBases:Record<MapId,Footprint>={arena:{x:1632,y:1536,width:96,height:96},forest:{x:2560,y:2464,width:96,height:96},frontier:{x:3456,y:3232,width:96,height:96},river:{x:3456,y:3360,width:96,height:96},highlands:{x:3456,y:416,width:96,height:96},plains96:{x:3456,y:3296,width:96,height:96},plains128:{x:3456,y:3296,width:96,height:96},islands:{x:3200,y:416,width:96,height:96},coast:{x:3008,y:416,width:96,height:96}};
 export const regionThirdStart:Position={x:3504,y:496};
 export function regionExpansion(base:Footprint,mapId:MapId):Position{return {x:Math.max(384,base.x-384),y:Math.max(384,base.y+(mapId==='coast'||mapId==='islands'?128:-384))};}
-export function regionBuildSites(base:Footprint):Position[]{return [{x:base.x-192,y:base.y+96},{x:base.x+128,y:base.y+96},{x:base.x-192,y:base.y-96},{x:base.x+128,y:base.y-96},{x:base.x+32,y:base.y+192}];}
+export function regionBuildSites(base:Footprint):Position[]{return [{x:base.x-192,y:base.y+96},{x:base.x+128,y:base.y+96},{x:base.x-192,y:base.y-96},{x:base.x+128,y:base.y-96},{x:base.x+32,y:base.y+192},{x:base.x+128,y:base.y+192},{x:base.x-192,y:base.y+192},{x:base.x+224,y:base.y+96},{x:base.x+224,y:base.y-96}];}
 export function regionDefinition(id:MapId,original:MapDefinition,design?:TerrainDesign):MapDefinition{
  if(design!=='regions')return original;const b=regionBases[id];return {...original,enemyBase:b,enemyBuildSites:regionBuildSites(b),enemyMuster:{x:b.x-128,y:b.y+160},referenceResourceWaypoints:undefined,referenceAttackWaypoints:undefined,
  enemyResourceWaypoints:[{x:b.x-128,y:b.y-128},regionExpansion(b,id),{x:b.x-512,y:b.y+64}],

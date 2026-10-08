@@ -1,7 +1,7 @@
 import type {Position} from '../gameplay/movement';
 import type {VoiceRole,VoiceAction} from '../config/voices';
 export interface VoiceUnit {id:string;kind:string;selected:boolean;owner?:string;faction?:import('../config/factions').FactionId;archetype?:string;role?:string;order:{kind:string};target:Position;attackMoveTarget?:Position;navigation?:{status:string}}
-export function voiceRole(u:VoiceUnit):VoiceRole{return u.kind==='ship'?(u.role==='transport'?'transport':'warship'):u.kind==='worker'?'worker':u.archetype==='archer'?'archer':u.archetype==='catapult'?'catapult':u.archetype==='specialist'?'specialist':'soldier';}
+export function voiceRole(u:VoiceUnit):VoiceRole{return u.kind==='ship'?(u.role==='transport'?'transport':'warship'):u.kind==='worker'?'worker':u.archetype==='archer'?'archer':u.archetype==='catapult'||u.archetype==='ballista'?'catapult':u.archetype==='specialist'?'specialist':'soldier';}
 export function voiceSpeaker(units:readonly VoiceUnit[]):VoiceUnit|undefined{return units.filter(u=>u.selected&&(u.owner===undefined||u.owner==='player')).sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}))[0];}
 const orderKey=(u:VoiceUnit)=>JSON.stringify([u.order,u.target,u.attackMoveTarget]);
 export function voiceOrders(units:readonly VoiceUnit[]):Map<string,string>{return new Map(units.map(u=>[u.id,orderKey(u)]));}
