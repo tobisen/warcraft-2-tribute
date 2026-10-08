@@ -45,6 +45,39 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 
 ## Current Focus
 
+### Nytt uppdrag2026-10-08 — RTS-239–240
+
+Användarens punkt7–8 ersätter stoppet efter238. En task åt gången med
+checks/docs/commit/push till befintlig origin/main. Bevara user CSS/units.mjs/docs/
+och :memory:.ses. Ingen release eller andra roadmaptasks.
+
+### RTS-239 — Tillfälligt självförsvar — Done
+
+Stridsdugliga enheter reagerar på faktiska närstrids-/projektilträffar mot giltig,
+synlig angripare som vapnet kan skada. Behåll tidigare order/destination/last;
+avbryt vid ny spelarorder, död/dold/ogiltig angripare eller lämnad vapenräckvidd.
+Ingen förföljelse under självförsvar. Återanvänd lag-/AI-/målregler; Save/Load
+behåller uppgiften och restart nollställer avbrottet. Tester för melee/ranged,
+arbete/move, orderavbrott, obeväpnade/inkompatibla mål, lag och Save/restart.
+
+Resultat: orderbevarande stationärt avbrott för land/air/arbetare/egna beväpnade
+fartyg, actual melee/projectile attribution och globala ägar-ID:n i lagstrid.
+Ogiltig sikt/range/domän/nollskada släpper målet; nya order avbryter. Load
+återupptar underliggande uppgift, transient försvar sparas inte. Riktade94/8,
+sedan71/7 inklusive9 nya försvarstester, unit527/92 och strict build421ms/diff
+PASS. Browser800 viewport: motattack94.6HP från100 utan pursuit, fysisk ny
+moveorder och återgång PASS; [belägg](artifacts/rts-239/browser.json).
+Granskning av changed combat/work/naval/lag/Save utan blockerande fynd.
+Full regression körs samlat efter240. Ingen mänsklig balans-/ljudbedömning.
+
+### RTS-240 — Fler egna rasrepliker — Todo
+
+Fler korta egna engelska selection/repeat/orderrepliker med rasidentitet,
+variantrotation/cooldown och en speaker vid gruppinput. Orderbekräftelser ska
+inte döljas av skämt. Befintlig lokal ljudrouting/licensregler, mute/master/voices.
+Browseruppspelning och ärlig redovisning av saknade inspelningar/lyssning.
+
+
 ### RTS-238 — Uppmätt prestanda för markering och order — Done
 
 Nytt uppdrag2026-10-08: användaren upplever lagg vid markering/order. Mät

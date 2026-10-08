@@ -1,0 +1,31 @@
+{
+  "viewport": "800x600",
+  "start": {
+    "x": 241.6,
+    "y": 320
+  },
+  "hpBefore": 100,
+  "hpAfter": 94.6,
+  "order": {
+    "kind": "move"
+  },
+  "physicalRightClick": {
+    "pointer": {
+      "x": 499.2,
+      "y": 348.0000200379581,
+      "button": 2
+    },
+    "active": true,
+    "phase": "playing",
+    "selected": true,
+    "building": null,
+    "target": {
+      "x": 499.2,
+      "y": 348.0000200379581
+    },
+    "kind": "move",
+    "defending": false
+  },
+  "resumed": true,
+  "errors": []
+}

@@ -1,3 +1,4 @@
+import {defending} from './selfDefense';
 import {upgradeMultiplier} from '../config/upgrades';
 import type {TargetDomain} from '../config/domains';
 import type {Ship} from './navy';
@@ -29,7 +30,7 @@ export function updateWildlife(m:MatchState,delta:number):MatchState{
  const animals=matchAnimals(m),wildlife={...m.wildlife};
  const apply=(u:Soldier|Ship):Soldier|Ship=>{
   if(u.kind==='ship'&&u.role==='submarine'&&u.order.kind==='hunt')return {...u,navigation:undefined,order:{kind:'idle' as const}};
-  if(u.order.kind!=='hunt')return u;
+  if(defending(u)||u.order.kind!=='hunt')return u;
   const animal=animals.find(a=>u.order.kind==='hunt'&&a.id===u.order.animalId),hp=animal?(wildlife[animal.id]?.hp??animal.hp):0;
   const stop=()=>({...u,order:{kind:'idle' as const},navigation:undefined,target:{...u.position}});
   if(!animal||hp<=0||!canAttackDomain(u,{},m.gathering.faction??'crown')||!bodyFits(m.map,animal.position,10)||m.fog&&!isVisible(m.fog,'player',animal.position))return stop();

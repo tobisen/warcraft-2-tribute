@@ -1,3 +1,4 @@
+import {defending} from './selfDefense';
 import {battleEnemies} from './bosses';
 import {hasMainBase} from './extraBases';
 import {playerEliminated} from './teamResults';
@@ -16,6 +17,7 @@ import {orderAttack} from './combat';
 import {entityVisible} from './visibility';
 export type QueuedOrder = {kind:'move'|'attack-move'|'patrol';destination:Position}|{kind:'attack';enemyId:string}|{kind:'gather';nodeId:string}|{kind:'hold'}|{kind:'hunt';animalId:string};
 export interface OrderState {
+ selfDefense?:import('./selfDefense').SelfDefense;
  orderQueue?:QueuedOrder[];
  commandMode?:{kind:'hold'}|{kind:'patrol';origin:Position;destination:Position;returning:boolean};
 }
@@ -46,6 +48,7 @@ export function issueOrder(m:MatchState,o:QueuedOrder,append=false):MatchState {
  const shipGroup=destination&&o.kind!=='attack-move'?new Map((commandShips(m,destination)?.ships??[]).map(u=>[u.id,u])):undefined;
  const apply=(u:Unit|Ship):Unit|Ship=>{
   if(!u.selected||!supports(u,o))return u;
+  u={...u,selfDefense:undefined};
   if(u.kind==='soldier')u={...u,scouting:undefined};
   const allocated=u.kind==='ship'?shipGroup?.get(u.id):group?.get(u.id);
   const command=destination&&allocated?{...o,destination:{...allocated.target}} as QueuedOrder:o;
@@ -58,7 +61,7 @@ export function issueOrder(m:MatchState,o:QueuedOrder,append=false):MatchState {
 export function prepareOrders(m:MatchState):MatchState {
  const apply=(original:Unit|Ship):Unit|Ship=>{
   const u=original.order.kind==='attack'&&original.navigation?.status==='blocked'&&original.orderQueue?.length&&!original.commandMode?{...original,order:{kind:'idle' as const},navigation:undefined}:original;
-  if(u.commandMode?.kind==='hold')return u;
+  if(u.commandMode?.kind==='hold'||defending(u))return u;
   if(u.commandMode?.kind==='patrol'&&u.order.kind==='idle'&&!(u.kind==='soldier'&&u.attackMoveTarget)){
    const mode=u.commandMode;
    // A blocked patrol rests until terrain changes; never spin through unreachable endpoints.

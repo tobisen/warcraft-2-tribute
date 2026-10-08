@@ -99,6 +99,7 @@
   "src/gameplay/scouting.test.ts",
   "src/gameplay/seaMission.test.ts",
   "src/gameplay/seaMonsters.test.ts",
+  "src/gameplay/selfDefense.test.ts",
   "src/gameplay/separation.test.ts",
   "src/gameplay/session.test.ts",
   "src/gameplay/siegeProduction.test.ts",

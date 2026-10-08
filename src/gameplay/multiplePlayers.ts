@@ -1,3 +1,4 @@
+import {canDefend,enemyDefender} from './selfDefense';
 import {cavalryArmorMultiplier} from '../config/roleResearch';
 import {upgradeMultiplier} from '../config/upgrades';
 import {validPlayers} from './matchSettings';
@@ -115,9 +116,9 @@ function actorVision(m:MatchState,bot:AIPlayer):FogTeam{
  const observers=[...(playerEliminated(m,bot.id)?[]:visionObservers(bot.state)).filter(o=>o.owner==='enemy'),...alliedObservers(m,bot.id).map(o=>({...o,owner:'enemy' as const}))];
  return updateFog(old,observers,terrainPatches(m.map).filter(t=>t.kind==='rock').map(t=>({x:t.column*32,y:t.row*32,width:t.columns*32,height:t.rows*32}))).teams.enemy;
 }
-function updateHuman(m:MatchState,delta:number,damage:Map<string,number>):MatchState{
+function updateHuman(m:MatchState,delta:number,damage:Map<string,number>,hits:Map<string,string>):MatchState{
  const human={...m,aiContext:aiContext(m,'player'),combat:{...m.combat,projectiles:m.combat.projectiles?.filter(p=>!p.owner)},multiplePlayers:undefined,enemyProduction:undefined,enemyAI:undefined,enemyConstruction:undefined,enemyPolicy:undefined,enemyRecovery:undefined,enemyKnowledge:undefined,armyPlan:undefined};
- return updateMatch(human,delta,{side:'player',canTarget:e=>!playerEliminated(m,e.playerId??'enemy')&&canHarm('player',e.playerId??'enemy',m.multiplePlayers?.roster),onDamage:d=>{for(const [id,n] of d){damage.set(id,(damage.get(id)??0)+n);}}});
+ return updateMatch(human,delta,{side:'player',onHit:(id,attacker)=>{if(!hits.has(id))hits.set(id,attacker);},canTarget:e=>!playerEliminated(m,e.playerId??'enemy')&&canHarm('player',e.playerId??'enemy',m.multiplePlayers?.roster),onDamage:d=>{for(const [id,n] of d){damage.set(id,(damage.get(id)??0)+n);}}});
 }
 /** One bounded shared slice: each body/economy moves once; outgoing hits merge after all actors. */
 export function updateMultiplePlayers(m:MatchState,delta:number):MatchState{
@@ -130,9 +131,9 @@ export function updateMultiplePlayers(m:MatchState,delta:number):MatchState{
   current=prepareHealers(shareTeamVision(current));
   const timed={...current,gathering:{...current.gathering,units:playerEliminated(current,'player')?[]:current.gathering.units},combat:{...current.combat,enemies:current.combat.enemies.filter(e=>!playerEliminated(current,e.playerId??'enemy'))}};
   const activeTimes=[...timed.gathering.units.flatMap(u=>u.kind==='soldier'?[u.ability?.activeSeconds??0]:[]),...timed.combat.enemies.map(e=>e.ability?.activeSeconds??0)].filter(t=>t>1e-9);
-  const step=Math.min(remaining,.25,untilSpellBoundary(timed),...activeTimes),snapshot=current,damage=new Map<string,number>(),sources=new Map<string,PlayerId>();
+  const step=Math.min(remaining,.25,untilSpellBoundary(timed),...activeTimes),snapshot=current,damage=new Map<string,number>(),sources=new Map<string,PlayerId>(),hits=new Map<string,string>();
   const foreignEffects=new Map<string,import('./spells').SpellEffect[]>();
-  let human=playerEliminated(snapshot,'player')?{...snapshot,waves:{...snapshot.waves,elapsedSeconds:snapshot.waves.elapsedSeconds+step},combat:{...snapshot.combat,projectiles:[]}}:updateHuman(snapshot,step,damage);for(const id of damage.keys())sources.set(id,'player');
+  let human=playerEliminated(snapshot,'player')?{...snapshot,waves:{...snapshot.waves,elapsedSeconds:snapshot.waves.elapsedSeconds+step},combat:{...snapshot.combat,projectiles:[]}}:updateHuman(snapshot,step,damage,hits);for(const id of damage.keys())sources.set(id,'player');
   const ai=snapshot.multiplePlayers!.ai.map(bot=>{
    if(playerEliminated(snapshot,bot.id))return {...bot,state:{...bot.state,waves:{...human.waves},combat:{...bot.state.combat,projectiles:[]}}};
    const roster=snapshot.multiplePlayers!.roster.find(p=>p.id===bot.id)!;
@@ -150,7 +151,7 @@ export function updateMultiplePlayers(m:MatchState,delta:number):MatchState{
     ...(retired&&bot.state.enemyKnowledge?{enemyKnowledge:{...bot.state.enemyKnowledge,playerBase:null,attackScoutIndex:0}}:{}),
     ...(knownBase&&bot.state.enemyKnowledge?{enemyKnowledge:{...bot.state.enemyKnowledge,playerBase:{x:knownBase.footprint.x+knownBase.footprint.width/2,y:knownBase.footprint.y+knownBase.footprint.height/2}}}:{})};
    const beforeEffects=new Map(view.gathering.units.filter(u=>u.kind==='soldier').map(u=>[u.id,u.spellEffects??[]]));
-   view=updateMatch(view,step,{side:'enemy',targets:hostiles,onDamage:d=>{for(const [id,n] of d){damage.set(id,(damage.get(id)??0)+n);sources.set(id,bot.id);}}});
+   view=updateMatch(view,step,{side:'enemy',targets:hostiles,onHit:(id,attacker)=>{if(!hits.has(id))hits.set(id,globalEntityId(bot.id,attacker));},onDamage:d=>{for(const [id,n] of d){damage.set(id,(damage.get(id)??0)+n);sources.set(id,bot.id);}}});
    for(const u of view.gathering.units)if(u.kind==='soldier'){const changes=(u.spellEffects??[]).filter(effect=>!beforeEffects.get(u.id)?.some(old=>old.spell===effect.spell&&old.sourceFaction===effect.sourceFaction&&old.remainingSeconds>=effect.remainingSeconds));if(changes.length)foreignEffects.set(u.id,mergeEffects(foreignEffects.get(u.id),changes));}
    human={...human,map:view.map,gathering:{...human.gathering,node:view.gathering.node,gold:view.gathering.gold,extraNodes:view.gathering.extraNodes}};
    return {...bot,state:view,vision:view.fog!.teams.enemy};
@@ -164,7 +165,12 @@ export function updateMultiplePlayers(m:MatchState,delta:number):MatchState{
   human={...cleanDestroyed(human),multiplePlayers:{...human.multiplePlayers!,kills,ai:human.multiplePlayers!.ai.map(bot=>({...bot,state:cleanDestroyed(bot.state)}))}};
   human=freezeEliminated(human);human.outcome=teamOutcome(human);
   current=projectMultiplePlayers(human);current={...current,fog:matchFog(current)};
-  current=shareTeamVision(current);remaining-=step;
+  current=shareTeamVision(current);
+  const humanTargets=targets(current,'player');
+  const body=(t:PlayerTarget):Enemy=>({id:t.id,hp:t.hp,position:{x:t.footprint.x+t.footprint.width/2,y:t.footprint.y+t.footprint.height/2},kind:t.kind==='ship'?'ship':t.kind==='worker'?'worker':'unit',role:t.domain==='air'?'air':undefined,...(t.domain==='building'?{footprint:t.footprint}:{})});
+  const respond=(u:import('./gathering').Unit|import('./navy').Ship)=>{const t=humanTargets.find(t=>t.id===hits.get(u.id));return t&&canDefend(u,body(t),current.factions!.player,current.map,e=>!current.fog||entityVisible(current.fog,'player',e))?{...u,selfDefense:{attackerId:t.id,order:u.order}}:u;};
+  current={...current,gathering:{...current.gathering,units:current.gathering.units.map(u=>respond(u) as import('./gathering').Unit)},...(current.navy?{navy:{...current.navy,ships:current.navy.ships.map(u=>respond(u) as import('./navy').Ship)}}:{}),multiplePlayers:{...current.multiplePlayers!,ai:current.multiplePlayers!.ai.map(bot=>{const hostiles=targets(current,bot.id);return {...bot,state:{...bot.state,combat:{...bot.state.combat,enemies:bot.state.combat.enemies.map(e=>{const t=hostiles.find(t=>t.id===hits.get(globalEntityId(bot.id,e.id)));return t&&(e.work||e.order)&&!e.footprint&&canDefend(enemyDefender(e),body(t),bot.state.factions!.enemy,current.map,target=>entityVisible(bot.state.fog!,'enemy',target))?{...e,selfDefense:{attackerId:t.id,order:e.work?.order??e.order!}}:e;})}}};})}};
+  current=projectMultiplePlayers(current);remaining-=step;
  }
  return current;
 }

@@ -1,3 +1,4 @@
+import {defending} from './selfDefense';
 import {constructionRate} from '../config/construction';
 import {navyConfig} from '../config/navy';
 import { barracksConfig, farmConfig } from '../config/buildings';
@@ -32,7 +33,7 @@ export function resumeConstruction(gathering:GatheringState,placement:PlacementS
 }
 export function updateSite(gathering:GatheringState,job:ConstructionJob,rect:Footprint,id:SiteId,map:WorldMap,delta:number,gateFor?:GateFor) {
   if (job.remainingSeconds<=0) return {gathering,job};
-  const builders=gathering.units.filter(u=>u.kind==='worker'&&u.hp!>0&&u.order.kind==='build'&&u.order.buildingId===id);
+  const builders=gathering.units.filter(u=>u.kind==='worker'&&!defending(u)&&u.hp!>0&&u.order.kind==='build'&&u.order.buildingId===id);
   if(!builders.length)return {gathering,job};
   const range=id==='harbor'?navyConfig.harbor.constructionRange:id==='barracks'?barracksConfig.constructionRange:farmConfig.constructionRange,goalKey=`build:${id}`;
   const steps=builders.map(builder=>{const cached=builder.navigation,route=cached?.goalKey===goalKey&&cached.revision===map.revision?cached:{...approachRoute(map,builder.position,rect,range),goalKey};

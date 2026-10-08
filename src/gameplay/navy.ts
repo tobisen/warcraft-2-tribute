@@ -1,3 +1,4 @@
+import {defending} from './selfDefense';
 import {bossEnemies} from './bosses';
 import {hasMainBase} from './extraBases';
 import {campaignActionReason} from '../config/campaignContent';
@@ -84,7 +85,7 @@ export function updateNavy(m:MatchState,delta:number):MatchState {
  if(!m.navy||m.outcome!=='playing'||m.paused||!!m.multiplePlayers&&!hasMainBase(m)||!hasMainBase(m))return m;
  let navy=m.navy,gathering=m.gathering;
  if(navy.harbor){const built=updateSite(gathering,navy.harbor.construction,navy.harbor.footprint,'harbor',m.map,delta);gathering=built.gathering;navy={...navy,harbor:{...navy.harbor,construction:built.job}};}
- navy={...navy,ships:navy.ships.map(s=>{if(s.order.kind!=='move')return s;const route=s.navigation??planDomainRoute(m.map,'water',s.position,s.target,shipRecipe(m,s.role).size/2);const step=advanceDomainRoute(m.map,'water',s.position,route,shipRecipe(m,s.role).size/2,shipRecipe(m,s.role).speed,delta);return {...s,position:step.position,navigation:step.route,order:{kind:step.route.status==='moving'?'move' as const:'idle' as const}};})};
+ navy={...navy,ships:navy.ships.map(s=>{if(defending(s)||s.order.kind!=='move')return s;const route=s.navigation??planDomainRoute(m.map,'water',s.position,s.target,shipRecipe(m,s.role).size/2);const step=advanceDomainRoute(m.map,'water',s.position,route,shipRecipe(m,s.role).size/2,shipRecipe(m,s.role).speed,delta);return {...s,position:step.position,navigation:step.route,order:{kind:step.route.status==='moving'?'move' as const:'idle' as const}};})};
  let remaining=Math.max(0,delta),p=navy.production;
  const harbor=navy.harbor;
  if(harbor?.construction.remainingSeconds===0)while(p.queue?.length){

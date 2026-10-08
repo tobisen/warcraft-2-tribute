@@ -2051,3 +2051,19 @@ hinderlista. Revision, längd och kartprofil invaliderar, inklusive init-push.
 Det befintliga spatiala collisionindexet kan därmed återanvändas över många
 kontakt-/projektilkontroller. Vatten passerbart; rock/structure fortsatt blockerar,
 inget härlett cachefält sparas. Se [mätning](artifacts/rts-238/README.md).
+
+
+## RTS-239 — Självförsvar
+
+Faktiska melee-/projektilträffar förmedlar angripar-ID till ett transient
+selfDefense-avbrott. Vapendomän, positiv skada, aktuell sikt och kontakt/flight
+kontrolleras från enhetens plats. Ingen pursuit; endast redan nåbara mål.
+Underlying order/route/target/cargo/queue ligger kvar. Gathering, konstruktion,
+repair, hunting och naval movement vilar under det aktiva avbrottet. Combat
+använder en tillfällig attackvy och återställer ordern efter skada/cooldown.
+Orderobjektets identitet invaliderar avbrottet när en ny order utfärdas;
+explicit queueing rensar också avbrottet. Död/dold/utanför range rensar mål.
+Save utelämnar selfDefense precis som navigation; Load återupptar uppgiften
+utan en sparad tillfällig motattack. Ingen schemaändring. Restart har rena data.
+Shared combat förmedlar onHit med ägarens globala ID och använder befintliga
+hostile targets/team vision. AI:s vanliga attack-/musterbeslut består.

@@ -1,3 +1,4 @@
+import {defenseTarget} from './selfDefense';
 import {factions,type FactionId} from '../config/factions';
 import type {PlayerTarget} from './targets';
 import {shipTargets} from '../config/domains';
@@ -40,19 +41,20 @@ export function attackStep(ship:Ship,enemy:Enemy,delta:number,map:WorldMap|undef
  return {position:step.position,navigation:{...step.route,targetId:enemy.id,retryAfter:route.retryAfter},attackSeconds:step.route.status==='arrived'&&canShoot(map,step.position,enemy,cfg)?step.remaining:0};
 }
 /** Prepare movement/shots from the same live snapshot as land combat; damage applies afterwards. */
-export function prepareNavalCombat(navy:NavyState|undefined,enemies:readonly Enemy[],delta:number,map:WorldMap|undefined,nextProjectileNumber:number,attackMultiplier=1,visible:(e:Enemy)=>boolean=()=>true,cfg:ShipStats=navyConfig.ship){
+export function prepareNavalCombat(navy:NavyState|undefined,enemies:readonly Enemy[],delta:number,map:WorldMap|undefined,nextProjectileNumber:number,attackMultiplier=1,visible:(e:Enemy)=>boolean=()=>true,cfg:ShipStats=navyConfig.ship,faction:FactionId='crown'){
  const shots:{projectile:Projectile;time:number}[]=[];if(!navy||delta<=0)return {navy,shots,nextProjectileNumber};
  const ships=navy.ships.map(original=>{
   const stats:ShipStats=original.role==='submarine'?navyConfig.submarine:cfg;
-  let ship=original;if(ship.order.kind==='hunt')return ship;
-  if(ship.commandMode&&ship.role!=='transport'){const target=enemies.filter(e=>e.hp>0&&visible(e)&&stats.targets.includes(targetDomain(e))&&canShoot(map,ship.position,e,stats)).sort((a,b)=>Math.hypot(a.position.x-ship.position.x,a.position.y-ship.position.y)-Math.hypot(b.position.x-ship.position.x,b.position.y-ship.position.y)||a.id.localeCompare(b.id))[0];if(target)ship={...ship,order:{kind:'attack',enemyId:target.id}};else if(ship.order.kind==='attack')ship={...ship,navigation:undefined,order:{kind:'idle'}};}
+  const retaliation=defenseTarget(original,enemies,faction,map,visible);
+  let ship:Ship=retaliation?{...original,commandMode:{kind:'hold'},order:{kind:'attack',enemyId:retaliation.id}}:original.selfDefense?{...original,selfDefense:undefined}:original;if(ship.order.kind==='hunt')return ship;
+  if(!retaliation&&ship.commandMode&&ship.role!=='transport'){const target=enemies.filter(e=>e.hp>0&&visible(e)&&stats.targets.includes(targetDomain(e))&&canShoot(map,ship.position,e,stats)).sort((a,b)=>Math.hypot(a.position.x-ship.position.x,a.position.y-ship.position.y)-Math.hypot(b.position.x-ship.position.x,b.position.y-ship.position.y)||a.id.localeCompare(b.id))[0];if(target)ship={...ship,order:{kind:'attack',enemyId:target.id}};else if(ship.order.kind==='attack')ship={...ship,navigation:undefined,order:{kind:'idle'}};}
 
   if(ship.hp<=0||ship.role==='transport'||ship.order.kind!=='attack')return {...ship,attackCooldown:Math.max(0,(ship.attackCooldown??0)-delta)};
   const enemy=enemies.find(e=>ship.order.kind==='attack'&&e.id===ship.order.enemyId&&e.hp>0);
   if(!enemy||!stats.targets.includes(targetDomain(enemy))||!visible(enemy))return {...ship,navigation:undefined,attackCooldown:Math.max(0,(ship.attackCooldown??0)-delta),order:{kind:'idle' as const}};
   const step=attackStep(ship,enemy,delta,map,stats);let cooldown=Math.max(0,(ship.attackCooldown??0)-(delta-step.attackSeconds)),time=step.attackSeconds;
   while(time>0&&time+1e-9>=cooldown){time=Math.max(0,time-cooldown);shots.push({projectile:{bossProfile:'projectile' as const,targets:stats.targets,damageByDomain:stats.damageByDomain,...(isAir(enemy)?{airborne:true as const}:{}),marine:true,...(ship.role==='submarine'?{submarine:true as const}:{}),id:`arrow-${nextProjectileNumber++}`,shooterId:ship.id,targetId:enemy.id,position:{...step.position},destination:{...enemy.position},speed:stats.projectileSpeed,remainingLife:stats.projectileLifetime,damage:stats.damage*attackMultiplier,hitRadius:stats.hitRadius,...(enemy.footprint?{targetFootprint:{...enemy.footprint}}:{})},time});cooldown=stats.attackInterval;}
-  return {...ship,position:step.position,navigation:step.navigation,attackCooldown:Math.max(0,cooldown-time)};
+  return retaliation?{...original,attackCooldown:Math.max(0,cooldown-time)}:{...ship,position:step.position,navigation:step.navigation,attackCooldown:Math.max(0,cooldown-time)};
  });return {navy:{...navy,ships},shots,nextProjectileNumber};
 }
 

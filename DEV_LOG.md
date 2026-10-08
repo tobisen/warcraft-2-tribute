@@ -5419,3 +5419,25 @@ redovisade kodchecks återanvänds utan nya kodtester. User CSS/units.mjs/docs/
 riktningar; ingen ny mänsklig balans-/ljud-/annan browsermotor-granskning.
 Befintlig stor bundle kvar. Befintlig Pages/version/changelog-praxis utan ny
 tag-/GitHub-releaseinfrastruktur. Releaseuppdrag klart; inga nya tasks startas.
+
+
+## 2026-10-08 — RTS-239, användarens punkt7
+
+Självförsvar efter faktisk melee-/projektilträff; stationär tillfällig attackvy
+behåller uppgift/route/last och kontrollerar sikt/domän/range/positiv skada.
+Work/build/repair/hunt/naval movement vilar. Nya order invaliderar avbrottet;
+queueing rensar det. Globala attacker-ID:n för lagstrid följer hostile targets.
+Save utelämnar avbrottet och behåller ordinarie uppgift; restart är rent.
+
+Riktade94/8 PASS2.81s; efter granskning och kompletterad lag-/hunt-/source-
+hantering71/7 PASS19.55s, inklusive9 nya integrationsfall. Slutlig unit527/92
+PASS14.57s; build/strict typecheck PASS421ms (befintlig bundlevarning), diff PASS.
+Browser800 viewport PASS: verkligt canvas-högerklick avbryter, motattack står
+still, move återupptas. Deterministisk scene-fixtur fryser sys.sceneUpdate mellan
+steg; detta är inte naturligt fullmatchspel. Tidiga harnessförsök utan fiendebas
+frös i victory; kvarvarande byggnadsval och aktiv Phaser-callback rättades.
+Ingen av dessa försök räknas som PASS. Bild/JSON: artifacts/rts-239/.
+Review: attribution för varje separat projektil, cooldown/orderrestore, work
+suspension, team filtering och transient Save granskade; inga blockerande fynd.
+Full regression återstår efter240; ingen release eller lyssningsclaim.
+User CSS/units.mjs/docs/:memory:.ses lämnas utanför taskcommit.
