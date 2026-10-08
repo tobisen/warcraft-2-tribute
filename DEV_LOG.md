@@ -1,3 +1,34 @@
+## 2026-10-08 — RTS-236 komplettering efter slutgranskning
+
+AI:s extra harbor saknades i första leveransen. Återanvänder placeHarbor/trainShip/
+updateNavy genom en enemyprojektion: gemensam faktisk supply/bank, egen betald kö,
+global enemy-shipcounter, ingen dubbel skeppsrörelse. Skirmish söker närliggande
+kustplats; kampanjprofilen består. Submarinekö kräver faktisk research och första
+carrier så det ändliga transportanfallet inte ersätts. Save validerar extra AI-kö
+/kust; originalharbor och extra harbor har separata destructionreferenser.
+Ny riktad AI-kustbygge/betalning/parallelqueue/uniqueshiptest och befintlig naval/
+construction/multiworker33/4 PASS14.72s; unit524/91 PASS22.65s och strict build1.05s,
+diff PASS. Tidigare pågående fullregression avbröts för denna faktiska kodfix;
+full slutregression körs om. Befintlig spelarproducerbrowser återanvänds, ingen ny
+AI-grafik tillagd. Korrigeringen levereras separat innan237 avslutas.
+
+## 2026-10-08 — RTS-237 flera workers (slutverifiering pågår)
+
+Högerklick/resume ansluter alla valda nåbara workers utan att flytta bort befintliga
+byggare eller debitera kostnaden igen. Shared updateSite härleder deltagare från
+levande aktuella build-orders och integrerar ankomsttider styckvis. Konfigurerbart
+bidrag1,0.5,0.25 … (asymptotiskt2x) gäller land-/hamn-/AI-byggen. Bara faktisk
+kontakt bidrar; nya order/blockering/död ger ingen bonus. Completion sker en gång
+och frigör alla deltagare även dem på väg. Orders/progress sparas i befintliga
+Save71-fält; äldre enbyggar-saves fungerar utan nytt fält.
+Riktade28/3 +22/3 och slutliga6/1 PASS; första hamnfixture använde regionskarta
+med legacycoast, korrigerad till explicit classic fixture. Ny browser800 Native
+faktiskt högerklick med tre workers,1s→3.25 arbetss kvar,60wood efter en betalning,
+Save med tre orders och completion PASS0pageerrors; bilden visuellt granskad.
+Unit524/91 PASS22.90s, strict build1.01s PASS; samlad regression pågår.
+En tidigare fullkörning avbröts när nytillagd hamnfixture visade fel; inga PASSclaims
+för den avbrutna körningen. Slutlig regression startad efter fixturekorrigering.
+
 ## 2026-10-08 — RTS-236 produktionsinstanser
 
 Extra producer-ID:n behåller första kanoniska byggnaden och återanvänder placement,
@@ -5,8 +36,9 @@ construction/production, navy, kostnader/tech/campaign. Varje instans har egen k
 shared population och globala unit/shipcounter. Selection ger läsbart ordinalnamn;
 train/cancel/rally/repair/dismiss/HP/fog/rendering fungerar på rätt instans.
 AI skirmish bygger andra landproducerare vid överskott och betalar sina egna köer.
-Särskild finite naval-assaultprofil i enemyNavalConfig behåller en författad hamn;
-nya sjöstrategier ingår inte. Save71 migrerar70 och validerar instans-/kö-/kustdata.
+Slutgranskning rättade saknad AI-extra-hamn: skirmish bygger betald kusthamn,
+med egen submarinekö efter faktisk submarineDesign/initial carrier. Ursprungligt
+ändligt transportanfall består; kampanjens specifika profil utökas inte. Save71 migrerar70 och validerar instans-/kö-/kustdata.
 Riktade80/7 +47/4 PASS (placement/queues/all producer roles/ship parallelism,
 construction/AI/Save/teams/campaign). Unit524/91 PASS18.97s, strict build739ms,
 diff PASS. Första nya hamnfixture saknade visibility/explored; rättat. Fann och

@@ -83,14 +83,14 @@ Non-goals: städning, release och andra planerade funktioner.
 
 Resultat: separata instanser/köer för barracks/stable/academy/aviary/siegeWorks/harbor,
 gemensam supply/ekonomi och globala spawn-ID:n, selection/rally/dismiss/repair/fog.
-Skirmish-AI bygger andra landproducerare med betalda egna köer. Befintlig explicit
-ändlig naval-assaultprofil behåller sin författade hamn/transport, ingen ny flottstrategi.
+Skirmish-AI bygger andra landproducerare med betalda egna köer. Även skirmish-AI får extra kusthamn/egen submarinekö; det ursprungliga
+ändliga transportanfallet och kampanjens begränsningar består.
 Save71 validerar instanser/köer/obstacles och migrerar70; kampanjinnehåll består.
 Riktade80/7 +47/4 PASS, unit524/91 PASS18.97s, strict build739ms/diff PASS.
 Chrome800 faktiska bygg-/trainklick, två separata köer/parallelspawn och Save-fixture
 PASS, visuellt inspekterat [underlag](artifacts/rts-236/browser.json). Ingen release/CI-claim.
 
-### RTS-237 — Flera workers på samma byggprojekt — Todo
+### RTS-237 — Flera workers på samma byggprojekt — In Progress
 
 Krav/acceptans: Anslut till befintligt betalt bygge; konfigurerbar avtagande byggbonus. Nya order/blockering/död lämnar kvarvarande builders korrekta. Ingen dubbeldebitering/progress/completion. Save/restart, riktade tester och browser.
 

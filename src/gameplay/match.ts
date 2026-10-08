@@ -1,3 +1,4 @@
+import {prepareExtraEnemyHarbor,updateExtraEnemyHarbors} from './extraEnemyHarbor';
 import {updateExtraEnemyProduction} from './extraEnemyProduction';
 import {updateExtraProducers} from './extraProducers';
 import {updateSiegeProduction} from './siegeProduction';
@@ -204,7 +205,7 @@ function advance(state: MatchState, delta: number, scope?:CombatScope): MatchSta
   state=advanceMana(state,delta);
   state=updateRepair(state,ownDelta);
   state=prepareArmyPlan(observeEnemyKnowledge(state));
-  state=prepareEnemyNaval(state);
+  state=prepareEnemyNaval(state);state=prepareExtraEnemyHarbor(state);
   state=prepareEnemyRecovery(state);
   state=prepareEnemyPolicy(state);
   state=prepareEnemyExpansion(state);
@@ -242,7 +243,7 @@ function advance(state: MatchState, delta: number, scope?:CombatScope): MatchSta
   const incoming=scenarioConfig[cleaned.scenario??'survival'].waves?updateWaves(cleaned.waves,ai.combat,delta,campaignWaveSchedule(cleaned),cleaned.campaignRun&&cleaned.map.id==='frontier'?{x:1248,y:144,spacing:32}:undefined):{combat:ai.combat,waves:{...cleaned.waves,elapsedSeconds:cleaned.waves.elapsedSeconds+delta}};
   let updated:MatchState={...cleaned,...(enemyPolicy?{enemyPolicy}:{}),...(vision?{fog:vision}:{}),research,...(enemy.state?{enemyProduction:enemy.state}:{}),...(ai.state?{enemyAI:ai.state}:{}),gathering:soldier.gathering,combat:incoming.combat,waves:incoming.waves,
     production:{...worker.production,nextUnitNumber},soldierProduction:{...soldier.production,nextUnitNumber}};
-  if(scope?.side!=='player')updated=updateExtraEnemyProduction(updated,delta);
+  if(scope?.side!=='player')updated=updateExtraEnemyHarbors(updateExtraEnemyProduction(updated,delta),delta);
   if(scope?.side!=='enemy'){updated=updateExtraBaseProduction(updated,baseStep.productionSeconds);updated=updateCavalryProduction(updated,ownDelta);updated=updateHealerProduction(updated,ownDelta);updated=updateFlightProduction(updated,ownDelta);updated=updateSiegeProduction(updated,ownDelta);updated=updateExtraProducers(updated,ownDelta);}
   const beforeNavyCompletion=readyBuildings(updated);
   updated=updateTransportTransfers(updateNavy(updated,ownDelta),ownDelta);

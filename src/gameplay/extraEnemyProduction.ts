@@ -10,7 +10,7 @@ import type {GatheringState} from './gathering';
 export function updateExtraEnemyProduction(m:MatchState,delta:number):MatchState{
  if(!m.enemyProduction||!hasEnemyBase(m.combat,m.map))return m;
  const f=factionForTeam(m,'enemy');
- for(const original of m.combat.enemies.filter(e=>e.id.startsWith('enemy-producer-')&&e.hp>0&&e.construction?.remainingSeconds===0&&e.production)){
+ for(const original of m.combat.enemies.filter(e=>e.id.startsWith('enemy-producer-')&&e.buildingType!=='harbor'&&e.hp>0&&e.construction?.remainingSeconds===0&&e.production)){
   const site=m.combat.enemies.find(e=>e.id===original.id)!,bank=m.enemyProduction!,base=enemyBase(m.combat,m.map)!,units=m.combat.enemies.filter(e=>!e.footprint&&e.kind!=='worker'&&e.kind!=='ship').map(e=>enemySoldier(e,f.id));
   let g:GatheringState={faction:f.id,units,wood:bank.wood,goldBalance:bank.gold,base:base.position,node:m.gathering.node};
   const tech=technologyFor(m,'enemy'),roles=f.roster.filter((r):r is Exclude<UnitRole,'worker'>=>r!=='worker'&&f.units[r].trainedAt===site.buildingType&&(!m.enemyNaval||r==='air'||r==='scout'||m.combat.enemies.filter(e=>!e.footprint&&e.kind!=='ship'&&e.kind!=='worker'&&e.role!=='air'&&e.role!=='scout').reduce((n,e)=>n+f.units[e.role??'soldier'].supply,0)+(m.enemyNaval.passengers.length??0)+f.units[r].supply<=2)&&!unitAvailability(f,r,tech));

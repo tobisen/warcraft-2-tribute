@@ -44,7 +44,7 @@ function copySites(enemies:Enemy[],p:PlacementState):Enemy[]{return enemies.map(
 export function prepareEnemyConstruction(m:MatchState):MatchState {
  if(!m.enemyConstruction||!m.enemyProduction||!hasEnemyBase(m.combat,m.map))return m;
  let p=enemyBuildingView(m),g=economy(m);const site=m.combat.enemies.find(e=>e.construction&&e.construction.remainingSeconds>0);
- if(site?.buildingType==='harbor')return m;
+ if(site?.buildingType==='harbor'&&!site.id.startsWith('enemy-producer-'))return m;
  if(site){const builder=m.combat.enemies.find(e=>e.id===site.construction!.builderId&&e.hp>0&&e.work?.order.kind==='build');if(builder&&builder.navigation?.status!=='blocked')return m;}
  if(m.waves.elapsedSeconds+1e-9<m.enemyConstruction.nextAttemptSeconds)return m;
  m={...m,enemyConstruction:{nextAttemptSeconds:m.waves.elapsedSeconds+config.retrySeconds}};

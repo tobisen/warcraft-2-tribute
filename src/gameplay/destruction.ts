@@ -26,7 +26,7 @@ export function cleanDestroyed(state:MatchState):MatchState {
   let gathering=removeDeadUnits(state.gathering);
   const drowned=state.navy?.ships.filter(s=>s.hp<=0).flatMap(s=>s.passengers??[])??[];
   if(drowned.length){const lost={...(gathering.lostCargo??{wood:0,gold:0})};for(const u of drowned)if(u.kind==='worker')lost[u.cargoType??'wood']+=u.cargo;gathering={...gathering,lostCargo:lost};}
-  const navalHarborDead=state.combat.enemies.some(e=>e.buildingType==='harbor'&&e.hp<=0);const navalShipAlive=state.combat.enemies.some(e=>e.kind==='ship'&&!e.navalRole&&e.hp>0);
+  const navalHarborDead=state.combat.enemies.some(e=>e.buildingType==='harbor'&&!e.id.startsWith('enemy-producer-')&&e.hp<=0);const navalShipAlive=state.combat.enemies.some(e=>e.kind==='ship'&&!e.navalRole&&e.hp>0);
   if(state.enemyNaval?.phase==='loading'&&!navalShipAlive)state={...state,combat:{...state.combat,enemies:state.combat.enemies.map(e=>e.navalLanding?{...e,navalLanding:undefined,navigation:undefined,order:{kind:'idle'}}:e)}};
   if(state.enemyNaval&&(state.enemyNaval.production.nextUnitNumber>1&&!navalShipAlive||navalHarborDead||!hasEnemyBase(state.combat,state.map))){state={...state,enemyNaval:{...state.enemyNaval,production:!navalHarborDead&&hasEnemyBase(state.combat,state.map)&&state.enemyNaval.production.queue?.[0]?.kind==='submarine'?state.enemyNaval.production:clearProduction(state.enemyNaval.production),...(navalShipAlive?{}:{passengers:[],phase:'finished'})}};}
   const baseDead=state.combat.baseHP<=0,allBasesDead=!hasMainBase(state);
