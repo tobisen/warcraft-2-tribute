@@ -21,10 +21,10 @@ export interface OrderState {
 export const orderQueueLimit=32;
 function supports(u:Unit|Ship,o:QueuedOrder):boolean {
  if(u.kind==='soldier'&&u.archetype==='scout'&&['attack','attack-move','hunt'].includes(o.kind))return false;
- return o.kind==='hunt'?u.kind==='soldier'||u.kind==='ship'&&u.role!=='transport':o.kind==='gather'?u.kind==='worker':o.kind==='attack-move'?u.kind==='soldier':o.kind==='attack'?u.kind==='worker'||u.kind==='soldier'||u.kind==='ship'&&u.role!=='transport':true;
+ return o.kind==='hunt'?u.kind==='soldier'||u.kind==='ship'&&u.role!=='transport'&&u.role!=='submarine':o.kind==='gather'?u.kind==='worker':o.kind==='attack-move'?u.kind==='soldier':o.kind==='attack'?u.kind==='worker'||u.kind==='soldier'||u.kind==='ship'&&u.role!=='transport':true;
 }
 function start(m:MatchState,u:Unit|Ship,o:QueuedOrder):Unit|Ship {
- if(o.kind==='hunt'&&(u.kind==='soldier'||u.kind==='ship'&&u.role!=='transport')){const animal=matchAnimals(m).find(a=>a.id===o.animalId);return {...u,commandMode:undefined,orderQueue:undefined,navigation:undefined,...(u.kind==='soldier'?{attackMoveTarget:undefined,autoOrigin:undefined,autoDisabled:false}:{}),target:{...(animal?.position??u.position)},order:animal?.hp?{kind:'hunt',animalId:o.animalId}:{kind:'idle'}};}
+ if(o.kind==='hunt'&&(u.kind==='soldier'||u.kind==='ship'&&u.role!=='transport'&&u.role!=='submarine')){const animal=matchAnimals(m).find(a=>a.id===o.animalId);return {...u,commandMode:undefined,orderQueue:undefined,navigation:undefined,...(u.kind==='soldier'?{attackMoveTarget:undefined,autoOrigin:undefined,autoDisabled:false}:{}),target:{...(animal?.position??u.position)},order:animal?.hp?{kind:'hunt',animalId:o.animalId}:{kind:'idle'}};}
  const selected={...u,scouting:undefined,selected:true,commandMode:undefined,orderQueue:undefined,navigation:undefined};
  if(o.kind==='hold')return {...selected,selected:u.selected,target:{...u.position},order:{kind:'idle'},...(u.kind==='soldier'?{autoDisabled:false,autoOrigin:undefined,attackMoveTarget:undefined}:{}),commandMode:{kind:'hold'}};
  if(u.kind==='ship'){

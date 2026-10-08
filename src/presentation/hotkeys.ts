@@ -1,6 +1,8 @@
 import {text as uiText} from '../text';
 import { gameplayKeyAllowed,type KeyContext } from './keyboard';
 export const hotkeys=[
+ {key:'F20',button:'research-submarineDesign',label:'Submarine Design:45 wood/30 gold/12s,Forge+Academy; unlocks harbor submarine.'},
+ {key:'F21',button:'train-submarine',label:'Train a stealth submarine at Harbor after Submarine Design; water and ship targets only.'},
  {key:'F15',button:'research-cavalryArmor',label:'Cavalry Armor:20% less incoming damage for your existing and future cavalry,45 wood/30 gold/12s,Forge+Stable.'},
  {key:'F16',button:'research-healerTraining',label:'Healer Training:+50 maximum mana only,45 wood/30 gold/12s,Forge+Academy.'},
  {key:'F17',button:'research-scoutOptics',label:'Scout Optics:128px submarine detection in current team vision,45 wood/30 gold/12s,Forge+flight building.'},

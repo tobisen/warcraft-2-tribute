@@ -12,7 +12,7 @@ import {towerShots} from './towers';
 import {enemyUnitStats,enemyRangedStats,enemySoldier} from './enemyUnits';
 import {factions,type FactionId} from '../config/factions';
 import {enemyBody,enemySize} from './enemyBody';
-import {prepareNavalCombat} from './navalCombat';
+import {prepareNavalCombat,prepareEnemySubmarines} from './navalCombat';
 import type {NavyState} from './navy';
 import {abilityEffects} from './abilities';
 import type { MovementGate, GateFor } from './traffic';
@@ -36,7 +36,7 @@ import type { GatheringState, Unit,WorkerOrder,ResourceType } from './gathering'
 import { moveTowards, type Position } from './movement';
 
 export interface EnemyWork {cargo:number;cargoType?:ResourceType;target:Position;order:WorkerOrder}
-export interface Enemy extends SpellState {scouting?:import('./scouting').ScoutState;healFlash?:number;healAutocast?:boolean;boss?:import('../config/bosses').BossId;playerId?:PlayerId;faction?:FactionId;mana?:number;role?:'soldier'|'archer'|'catapult'|'ballista'|'specialist'|'air'|'cavalry'|'healer'|'giant'|'scout';attackCooldown?:number;ability?:import('./abilities').AbilityState;legacyProfile?:true; owner?:'enemy'; kind?:'ship'|'unit'|'base'|'worker'|'building';navalLanding?:true;buildingType?:'siegeWorks'|'aviary'|'stable'|'academy'|'harbor'|'outpost'|'barracks'|'farm'|'forge';construction?:import('./placement').ConstructionJob;work?:EnemyWork; order?:{kind:'idle'}|{kind:'defend';targetId:string}|{kind:'muster'|'attack-move';destination:Position}; id: string; position: Position; hp: number; footprint?:Footprint; navigation?: RouteState }
+export interface Enemy extends SpellState {navalRole?:'submarine';scouting?:import('./scouting').ScoutState;healFlash?:number;healAutocast?:boolean;boss?:import('../config/bosses').BossId;playerId?:PlayerId;faction?:FactionId;mana?:number;role?:'soldier'|'archer'|'catapult'|'ballista'|'specialist'|'air'|'cavalry'|'healer'|'giant'|'scout';attackCooldown?:number;ability?:import('./abilities').AbilityState;legacyProfile?:true; owner?:'enemy'; kind?:'ship'|'unit'|'base'|'worker'|'building';navalLanding?:true;buildingType?:'siegeWorks'|'aviary'|'stable'|'academy'|'harbor'|'outpost'|'barracks'|'farm'|'forge';construction?:import('./placement').ConstructionJob;work?:EnemyWork; order?:{kind:'idle'}|{kind:'defend';targetId:string}|{kind:'muster'|'attack-move';destination:Position}; id: string; position: Position; hp: number; footprint?:Footprint; navigation?: RouteState }
 export interface CombatState {baseDevelopment?:import('../config/baseUpgrade').BaseDevelopment; baseOwner?:'player'; enemies: Enemy[]; baseHP: number; projectiles?:Projectile[]; nextProjectileNumber?:number; destroyedEnemyFootprints?:Footprint[]; enemyUpgrades?:{cavalryArmor?:number;attack:number;defense:number};upgrades?:{cavalryArmor?:number;attack:number;defense:number} }
 
 export function enemyAt(enemies: Enemy[], point: Position): Enemy | undefined {
@@ -140,14 +140,15 @@ export function updateCombat(gathering: GatheringState, combat: CombatState, del
   // Both sides attack from the same live snapshot, so lethal blows are simultaneous.
   const playerDamage = new Map<string, number>();
   const originalTargets=scope?.targets??playerTargets(gathering,combat,placement,navy);
+  const enemyNavy=prepareEnemySubmarines(combat.enemies,originalTargets,scope?.side==='player'?0:delta,map,nextProjectileNumber,enemyFaction,upgradeMultiplier(opponent.upgrades.attack.multiplier,combat.enemyUpgrades?.attack),playerVisible);nextProjectileNumber=enemyNavy.next;shots.push(...enemyNavy.shots);
   const priority={siegeWorks:7,aviary:7,stable:5,academy:2,wall:2,gate:2,tower:2,ship:0,harbor:2,soldier:0,worker:1,barracks:2,farm:2,forge:2,base:3};
   const enemyGathering={...gathering,faction:enemyFaction};
-  const movingEnemies = combat.enemies.filter(e => e.hp > 0).map(enemy => {
-    if(scope?.side==='player')return enemy;
+  const movingEnemies = enemyNavy.enemies.filter(e => e.hp > 0).map(enemy => {
+    if(scope?.side==='player'||enemy.kind==='ship')return enemy;
     const stats=enemyUnitStats(enemy,enemyFaction),ranged=enemyRangedStats(enemy,enemyFaction);
     const cooling={...enemy,...(ranged?{attackCooldown:Math.max(0,(enemy.attackCooldown??0)-delta)}:{})};
     const enemyMap=map?{...movementMap(enemyNavigationMap(map),enemy),bodyHalf:stats.size/2}:undefined;
-    if(enemy.kind==='ship'||enemy.kind==='worker'||enemy.footprint||enemy.order?.kind==='idle')return cooling;
+    if(enemy.kind==='worker'||enemy.footprint||enemy.order?.kind==='idle')return cooling;
     if(enemy.order?.kind==='muster'){
       const route=enemy.navigation??(map?planRoute(enemyMap!,enemy.position,enemy.order.destination):undefined);
       const step=map&&route?advanceRoute(enemyMap!,enemy.position,route,stats.speed,delta,gateFor?.(`enemy:${enemy.id}`)):{position:moveTowards(enemy.position,enemy.order.destination,stats.speed,delta),route:undefined};

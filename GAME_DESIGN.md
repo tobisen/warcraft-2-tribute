@@ -1590,3 +1590,34 @@ No map terrain/layout change. Heavy Goblin airship damage retains30 raw and40px
 splash, with land×.75/air×.65 to preserve comparable-cost ground AA counters
 and interceptor advantage under the shared heavy-flyer cost; building damage
 is unchanged. Automated balance fixtures are not human match balancing.
+
+## RTS-227 — Submarines and current-vision detection
+
+Harbor unlocks Tide Stalker/Deepfang/Shadowfin/Iron Depth/Sea Sneak after
+Submarine Design (Forge+Academy,45 wood/30 gold/12s,one level,shared research
+FIFO; campaign8). Recipe75 wood/50 gold/20s,3 supply,100HP,125px/s,32px
+water body,160px range,24 damage/1.8s,280px/s torpedo. Water navigation and
+ship targets only; no land/building/air/animal attacks or troop transport.
+Normal attack/defense research applies once. Dedicated five-faction artwork,
+portrait and icon; F20 researches and F21 trains. Tech Tree shows dependencies
+and target/detection rules. Existing surface fleet remains at Harbor.
+
+Stealth remains while firing. Detection requires a live eligible own/allied
+detector within radius AND current team vision: Warship96px (always),
+Scout128px after its owner's Scout Optics. Ordinary vision, transport and
+unresearched scouts cannot reveal submarines. Concealment is a derived cache
+on the existing fog snapshot, not a separate vision simulation or saved
+permission. Entity visibility filters combat, target loss, minimap, clicks,
+audio and projectile presentation. Losing detection drops pursuit/attack
+and torpedoes; reacquisition requires a visible target. Allied research is
+owned by its player; hostile/dead detectors do not share detection.
+
+AI's existing naval harbor queue admits a paid submarine after its own
+research, can replace a sunk submarine, and preserves submarine production
+when the separate carrier dies. AI naval attacks use the shared water
+firing-route/projectile adapter and visible hostile sea targets. Strict
+saves validate hulls, counters, recipe, torpedo masks and ownership; detection
+is rebuilt on load. Four painted source poses/mirrored directions and reused
+cannon/voice feedback are documented inassets/sources/visual-refresh/submarines.md.
+Native800 visual checks and automated combat checks are not human balance
+or actual audio listening.

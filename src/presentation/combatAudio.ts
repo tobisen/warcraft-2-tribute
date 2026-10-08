@@ -30,7 +30,7 @@ export function combatAudioSnapshot(m:MatchState,previous?:CombatAudioSnapshot):
  // A missing formerly visible building is destruction only if its position is
  // still visible AND the entity is actually absent. Fog/reveal never emits it.
  const destroyed=(previous?.bodies??[]).filter(b=>b.building&&b.hp>0&&seen(b.position)&&!bodies.some(n=>n.id===b.id)).map(b=>({id:b.id,position:{...b.position}}));
- return {bodies:bodies.filter(b=>seen(b.position)),attacks:attacks.filter(a=>a.visible),shots:(m.combat.projectiles??[]).map(s=>({id:s.id,shooter:s.shooterId,visible:seen(s.position)})),destroyed};
+ return {bodies:bodies.filter(b=>seen(b.position)&&!m.fog?.concealedIds?.player.includes(b.id)),attacks:attacks.filter(a=>a.visible&&!m.fog?.concealedIds?.player.includes(a.id)),shots:(m.combat.projectiles??[]).map(s=>({id:s.id,shooter:s.shooterId,visible:seen(s.position)&&(!s.submarine||!s.owner||!m.fog?.concealedIds?.player.includes(s.shooterId??''))})),destroyed};
 }
 export function combatDistanceGain(position:Position,listener:Position):number{
  const distance=Math.hypot(position.x-listener.x,position.y-listener.y);

@@ -4657,3 +4657,29 @@ justerades land×.75/air×.65 för jämförbar kostnads AA-motvikt; automatiska
 balanstester passerar, mänsklig balans återstår. Alla observerade felgrupper
 har riktat verifierats gröna; full regression körs igen efter227–228.
 Ingen ny CI/Pages/release hävdas. User CSS/units.mjs/docs bevaras.
+
+## RTS-227 — Ubåt och fog-integrerad upptäckt
+
+Fem fraktionsubåtar i befintlig Harbor efter betald Submarine Design;
+75/50/20s3supply100HP125speed och sea-only torpeder24/1.8s160px.
+Warship96px och ägarforskat ScoutOptics128px+aktuell teamsikt. Ingen
+attack-reveal; detectionförlust tar bort attack/navigation/projektilträff.
+Existing FogState har härledd, icke-sparad concealedIds-cache; visibility
+filtrerar selection/minimap/combat/AI/ljud/projektiler. AI samma research/
+produktion/cost/water-combat, sunk-carrier skiljs från ubåtskön. Strict
+save/naval-role/torpedovalidering, TechTree/actionikon/F20–21.
+
+Review av visibility/teams/queue/save/render och git diff --check PASS.
+Unit511/89 PASS13.55s; riktade navy/enemyNaval/navalCombat/roleResearch/
+multiplePlayers/campaign/wildlife90/8 PASS21.06s; nya submarine+teams/
+teamResults/navalBalance42/4 PASS27.97s; slutligt nya12/1 PASS1.16s
+efter att oanvänd ogiltig ScoutState-fixtur tagits bort. Strict build443ms
+PASS (befintlig bundlevarning). Browsernative800 femras actual research,
+train, torpedoattack, hidden minimap→Warship-detection, TechTree, save/
+load/restart PASS0pageerrors; artifacts/rts-227, Crownbild visuellt granskad.
+Fixtur: befintlig Harbor/Forge/Academy seedade, resurscheat, kontrollerade
+naval-mål och taktisk AI pausad. En kvarvarande historisk transportkö i
+Clans-fixturen tömdes innan staging så Save inte fick duplicerade IDs.
+Artworksource/licens/fyraposer/mirroring och återanvänt cannon/voice är
+konkret redovisade; inget nytt ljud/lyssning/mänskligbalans/CI/Pages/release.
+Full regression efter återstående228; CSS/units.mjs/docs bevarade.

@@ -28,7 +28,7 @@ import {factions} from '../config/factions';
 import {placementObstacles} from './placement';
 import {createMap,terrainPatches} from './map';
 
-export interface AIContext {buildSites:Position[];muster:Position;attackWaypoints:Position[];gateFriendly?:boolean;humanHostile?:boolean;sharedObservers?:VisionObserver[];visionSide?:'player'|'enemy';helpBases?:import('./placement').Footprint[]}
+export interface AIContext {friendlyEntityIds?:string[];concealedTargets?:{id:string;position:Position}[];buildSites:Position[];muster:Position;attackWaypoints:Position[];gateFriendly?:boolean;humanHostile?:boolean;sharedObservers?:VisionObserver[];visionSide?:'player'|'enemy';helpBases?:import('./placement').Footprint[]}
 export interface AIPlayer {id:Exclude<PlayerId,'player'>;state:MatchState;vision:FogTeam}
 export interface MultiplePlayers {roster:PlayerDefinition[];ai:AIPlayer[];kills:Record<PlayerId,number>}
 export function globalEntityId(player:PlayerId,id:string):string{return player==='ai-2'?`${player}:${id}`:id;}
@@ -41,7 +41,7 @@ export function aiContext(m:MatchState,id:PlayerId):AIContext{
  const base=playerStart(m.map.id??'arena',id,m.map.design);
  const helpBases=id==='player'?[]:[...(canSupport(id,'player',m.multiplePlayers?.roster)&&!playerEliminated(m,'player')?playerTargets(m.gathering,m.combat,m.placement).filter(t=>t.kind==='base').map(t=>t.footprint):[]),...(m.multiplePlayers?.ai.filter(bot=>bot.id!==id&&!playerEliminated(m,bot.id)&&canSupport(id,bot.id,m.multiplePlayers!.roster)).flatMap(bot=>bot.state.combat.enemies.filter(e=>e.kind==='base'&&e.hp>0).map(e=>e.footprint!))??[])];
  const hostileStart=m.multiplePlayers?.roster.find(p=>!playerEliminated(m,p.id)&&canHarm(id,p.id,m.multiplePlayers!.roster)),search=hostileStart?playerStart(m.map.id??'arena',hostileStart.id,m.map.design):undefined;
- return {humanHostile:!playerEliminated(m,'player')&&canHarm(id,'player',m.multiplePlayers?.roster),helpBases,sharedObservers:alliedObservers(m,id),visionSide:id==='player'?'player':'enemy',gateFriendly:canSupport(id,'player',m.multiplePlayers?.roster),buildSites:[{x:base.x-192,y:base.y+96},{x:base.x+96,y:base.y+96},{x:base.x-192,y:base.y-96},{x:base.x+96,y:base.y-96}],muster:{x:base.x-144,y:base.y+176},
+ return {friendlyEntityIds:m.combat.enemies.filter(e=>canSupport(id,e.playerId??'enemy',m.multiplePlayers?.roster)).map(e=>e.id),humanHostile:!playerEliminated(m,'player')&&canHarm(id,'player',m.multiplePlayers?.roster),helpBases,sharedObservers:alliedObservers(m,id),visionSide:id==='player'?'player':'enemy',gateFriendly:canSupport(id,'player',m.multiplePlayers?.roster),buildSites:[{x:base.x-192,y:base.y+96},{x:base.x+96,y:base.y+96},{x:base.x-192,y:base.y-96},{x:base.x+96,y:base.y-96}],muster:{x:base.x-144,y:base.y+176},
   attackWaypoints:[{x:base.x-256,y:base.y+224},search?{x:Math.max(32,search.x-160),y:search.y+160}:{x:704,y:480},search??{x:448,y:480}]};
 }
 export function initializeMultiplePlayers(m:MatchState,roster:PlayerDefinition[]):MatchState{
@@ -85,7 +85,7 @@ export function syncProjectedCombat(m:MatchState):MatchState{
 }
 function targets(m:MatchState,actor:PlayerId):PlayerTarget[]{
  const own=actor==='player'||playerEliminated(m,'player')||!canHarm(actor,'player',m.multiplePlayers?.roster)?[]:playerTargets(m.gathering,m.combat,m.placement,m.navy);
- return [...own,...m.combat.enemies.filter(e=>e.playerId!==actor&&!playerEliminated(m,e.playerId??'enemy')&&canHarm(actor,e.playerId??'enemy',m.multiplePlayers?.roster)).map(e=>({id:e.id,owner:'player' as const,hp:e.hp,kind:e.kind==='worker'?'worker' as const:e.kind==='base'?'base' as const:e.footprint?'barracks' as const:'soldier' as const,domain:e.role==='air'||e.role==='scout'?'air' as const:undefined,
+ return [...own,...m.combat.enemies.filter(e=>e.playerId!==actor&&!playerEliminated(m,e.playerId??'enemy')&&canHarm(actor,e.playerId??'enemy',m.multiplePlayers?.roster)).map(e=>({id:e.id,owner:'player' as const,hp:e.hp,...(e.navalRole?{navalRole:e.navalRole}:{}),kind:e.kind==='ship'?'ship' as const:e.kind==='worker'?'worker' as const:e.kind==='base'?'base' as const:e.footprint?'barracks' as const:'soldier' as const,domain:e.kind==='ship'?'sea' as const:e.role==='air'||e.role==='scout'?'air' as const:undefined,
   footprint:enemyBody(e)}))];
 }
 export function shareTeamVision(m:MatchState):MatchState{
@@ -138,9 +138,9 @@ export function updateMultiplePlayers(m:MatchState,delta:number):MatchState{
    const roster=snapshot.multiplePlayers!.roster.find(p=>p.id===bot.id)!;
    const vision=actorVision(snapshot,bot),fog=createFog(snapshot.map);fog.teams.enemy=vision;if(bot.state.fog?.forest)fog.forest={player:{},enemy:{...bot.state.fog.forest.enemy}};
    const hostiles=targets(snapshot,bot.id),foreign=snapshot.multiplePlayers!.ai.filter(other=>!playerEliminated(snapshot,other.id)&&canHarm(bot.id,other.id,snapshot.multiplePlayers!.roster)).flatMap(other=>other.state.combat.enemies.flatMap(e=>{
-    if(e.footprint)return [];const u=e.kind==='worker'?enemyWorker(e):enemySoldier(e,snapshot.multiplePlayers!.roster.find(p=>p.id===other.id)!.faction);return u?[{...u,id:globalEntityId(other.id,e.id)}]:[];
+    if(e.footprint||e.kind==='ship')return [];const u=e.kind==='worker'?enemyWorker(e):enemySoldier(e,snapshot.multiplePlayers!.roster.find(p=>p.id===other.id)!.faction);return u?[{...u,id:globalEntityId(other.id,e.id)}]:[];
    }));
-   const context=aiContext(snapshot,bot.id),remembered=bot.state.enemyKnowledge?.playerBase;
+   const context={...aiContext(snapshot,bot.id),concealedTargets:hostiles.filter(t=>t.navalRole==='submarine').map(t=>({id:t.id,position:{x:t.footprint.x+t.footprint.width/2,y:t.footprint.y+t.footprint.height/2}}))},remembered=bot.state.enemyKnowledge?.playerBase;
    // Eliminations are public match events; no hidden living base/position is read here.
    const retired=!!remembered&&!snapshot.multiplePlayers!.roster.some(p=>!playerEliminated(snapshot,p.id)&&canHarm(bot.id,p.id,snapshot.multiplePlayers!.roster)&&(()=>{const start=playerStart(snapshot.map.id??'arena',p.id,snapshot.map.design);return start.x===remembered.x&&start.y===remembered.y;})());
    const knownBase=hostiles.filter(t=>t.kind==='base'&&entityVisible(fog,'enemy',{position:{x:t.footprint.x+t.footprint.width/2,y:t.footprint.y+t.footprint.height/2},footprint:t.footprint})).sort((a,b)=>a.id.localeCompare(b.id))[0];

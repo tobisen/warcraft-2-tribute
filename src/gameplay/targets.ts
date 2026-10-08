@@ -9,11 +9,11 @@ import { unitBody } from './spawning';
 import type { GatheringState } from './gathering';
 import type { CombatState } from './combat';
 import type { PlacementState, Footprint } from './placement';
-export interface PlayerTarget {domain?:TargetDomain;id:string;kind:'wall'|'gate'|'tower'|'ship'|'harbor'|'soldier'|'worker'|'base'|'barracks'|'farm'|'forge'|'academy'|'stable'|'siegeWorks'|'aviary';owner:'player';hp:number;footprint:Footprint}
+export interface PlayerTarget {navalRole?:'warship'|'transport'|'submarine';domain?:TargetDomain;id:string;kind:'wall'|'gate'|'tower'|'ship'|'harbor'|'soldier'|'worker'|'base'|'barracks'|'farm'|'forge'|'academy'|'stable'|'siegeWorks'|'aviary';owner:'player';hp:number;footprint:Footprint}
 export function playerTargets(g:GatheringState,c:CombatState,p?:PlacementState,navy?:NavyState):PlayerTarget[] {
   const targets:PlayerTarget[]=g.units.flatMap(u=>u.hp!==undefined&&u.hp>0 ? [{domain:targetDomain(u),id:u.id,kind:u.kind,owner:'player',hp:u.hp,
     footprint:unitBody(u.position,u.kind==='soldier'?combatUnitStats(u).size:unitStats.size)}]:[]);
-  for(const ship of navy?.ships??[])if(ship.hp>0)targets.push({domain:'sea',id:ship.id,kind:'ship',owner:'player',hp:ship.hp,footprint:unitBody(ship.position,navyConfig.ship.size)});
+  for(const ship of navy?.ships??[])if(ship.hp>0)targets.push({domain:'sea',id:ship.id,kind:'ship',navalRole:ship.role??'warship',owner:'player',hp:ship.hp,footprint:unitBody(ship.position,navyConfig.ship.size)});
   if(navy?.harbor&&navy.harbor.hp>0)targets.push({id:'harbor',kind:'harbor',owner:'player',hp:navy.harbor.hp,footprint:navy.harbor.footprint});
   for(const b of p?.bases??[])if(b.hp>0)targets.push({id:b.id,kind:'base',owner:'player',hp:b.hp,footprint:b.footprint});
   if(c.baseHP>0)targets.push({id:'base',kind:'base',owner:'player',hp:c.baseHP,footprint:baseFootprint(g.base)});

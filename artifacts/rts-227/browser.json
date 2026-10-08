@@ -1,0 +1,145 @@
+{
+  "fixture": "Actual menu/research/train/combat clicks; existing harbor and Forge/Academy seeded; resource cheat; tactical AI paused for controlled visible naval opponents; .1s gameplay steps; native800",
+  "results": [
+    {
+      "faction": "crown",
+      "queued": {
+        "id": "harbor-job-1",
+        "kind": "submarine",
+        "supply": 3,
+        "cost": {
+          "wood": 75,
+          "gold": 50
+        },
+        "durationSeconds": 20,
+        "remainingSeconds": 20
+      },
+      "fought": {
+        "order": {
+          "kind": "attack",
+          "enemyId": "enemy-ship-1"
+        },
+        "hp": 76
+      },
+      "detection": {
+        "hidden": true,
+        "minimapHidden": true,
+        "detected": true
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "clans",
+      "queued": {
+        "id": "harbor-job-1",
+        "kind": "submarine",
+        "supply": 3,
+        "cost": {
+          "wood": 75,
+          "gold": 50
+        },
+        "durationSeconds": 20,
+        "remainingSeconds": 20
+      },
+      "fought": {
+        "order": {
+          "kind": "attack",
+          "enemyId": "enemy-ship-1"
+        },
+        "hp": 66
+      },
+      "detection": {
+        "hidden": true,
+        "minimapHidden": true,
+        "detected": true
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "elves",
+      "queued": {
+        "id": "harbor-job-1",
+        "kind": "submarine",
+        "supply": 3,
+        "cost": {
+          "wood": 75,
+          "gold": 50
+        },
+        "durationSeconds": 20,
+        "remainingSeconds": 20
+      },
+      "fought": {
+        "order": {
+          "kind": "attack",
+          "enemyId": "enemy-ship-1"
+        },
+        "hp": 66
+      },
+      "detection": {
+        "hidden": true,
+        "minimapHidden": true,
+        "detected": true
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "dwarves",
+      "queued": {
+        "id": "harbor-job-1",
+        "kind": "submarine",
+        "supply": 3,
+        "cost": {
+          "wood": 75,
+          "gold": 50
+        },
+        "durationSeconds": 20,
+        "remainingSeconds": 20
+      },
+      "fought": {
+        "order": {
+          "kind": "attack",
+          "enemyId": "enemy-ship-1"
+        },
+        "hp": 66
+      },
+      "detection": {
+        "hidden": true,
+        "minimapHidden": true,
+        "detected": true
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    },
+    {
+      "faction": "goblins",
+      "queued": {
+        "id": "harbor-job-1",
+        "kind": "submarine",
+        "supply": 3,
+        "cost": {
+          "wood": 75,
+          "gold": 50
+        },
+        "durationSeconds": 20,
+        "remainingSeconds": 20
+      },
+      "fought": {
+        "order": {
+          "kind": "attack",
+          "enemyId": "enemy-ship-1"
+        },
+        "hp": 66
+      },
+      "detection": {
+        "hidden": true,
+        "minimapHidden": true,
+        "detected": true
+      },
+      "saveLoadRestart": true,
+      "errors": []
+    }
+  ]
+}

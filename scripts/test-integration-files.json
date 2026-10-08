@@ -101,6 +101,7 @@
   "src/gameplay/skirmishBalance.test.ts",
   "src/gameplay/spells.test.ts",
   "src/gameplay/statLedger.test.ts",
+  "src/gameplay/submarines.test.ts",
   "src/gameplay/teamResults.test.ts",
   "src/gameplay/teams.test.ts",
   "src/gameplay/towers.test.ts",

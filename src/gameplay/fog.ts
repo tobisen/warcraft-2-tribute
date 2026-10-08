@@ -5,9 +5,9 @@ import { segmentFits } from './navigation';
 import type { Position } from './movement';
 import type { Footprint } from './placement';
 export type Team='player'|'enemy';
-export interface VisionObserver {id:string;owner:Team;position:Position;airborne?:true;radius:number;footprint?:Footprint}
+export interface VisionObserver {id:string;owner:Team;position:Position;detectorRadius?:number;airborne?:true;radius:number;footprint?:Footprint}
 export interface FogTeam {visible:boolean[];explored:boolean[]}
-export interface FogState {revealed?:true;forest?:Record<Team,Record<string,boolean>>;width:number;height:number;tileSize:number;columns:number;rows:number;teams:Record<Team,FogTeam>}
+export interface FogState {concealedIds?:Record<Team,string[]>;revealed?:true;forest?:Record<Team,Record<string,boolean>>;width:number;height:number;tileSize:number;columns:number;rows:number;teams:Record<Team,FogTeam>}
 export function createFog(world:{width:number;height:number},tileSize:number=fogConfig.tileSize):FogState {
  const columns=Math.ceil(world.width/tileSize),rows=Math.ceil(world.height/tileSize),team=()=>({visible:Array<boolean>(columns*rows).fill(false),explored:Array<boolean>(columns*rows).fill(false)});
  return {width:world.width,height:world.height,tileSize,columns,rows,teams:{player:team(),enemy:team()}};

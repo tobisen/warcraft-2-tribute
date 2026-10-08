@@ -46,7 +46,7 @@ Ny lokal verifiering: riktade23/2 PASS13.56s (före ändringen23/2 PASS11.04s), 
 ## Current Focus
 
 Nytt mandat 2026-10-08: RTS-220–228 i ordning, därefter användarens tillägg RTS-229, en task åt gången.
-RTS-220 grafik samt RTS-221–222 verifierade; RTS-223 är verifierad med separat flygbyggnad; 229 är klar enligt senaste styrning om egen belägringsbyggnad/ballista. Aktuell task227, därefter228 och samlad slutregression. Städning, release och kartombyggnad är pausade.
+RTS-220 grafik samt RTS-221–222 verifierade; RTS-223 är verifierad med separat flygbyggnad; 229 är klar enligt senaste styrning om egen belägringsbyggnad/ballista. 227 är klar; aktuell task228, därefter samlad slutregression och HANDOFF. Städning, release och kartombyggnad är pausade.
 Taskvis riktade tester, native800-browser, unit/strict build/diff, docs och
 commit/push till origin/main. Full regression vid etappslut; stanna efter229.
 Befintliga style.css/units.mjs/docs/:memory:.ses bevaras. Ingen delegering.
@@ -5781,7 +5781,7 @@ restart femras PASS0pageerrors, artifacts/rts-226/browser.json. Crown
 researchikoner granskade. Optics config128 klar; faktisk ubåtsdetektion227.
 Ingen mänsklig balans/ljud/nyCI/Pages.
 
-### RTS-227 — Submarine och detection — Todo
+### RTS-227 — Submarine och detection — Done
 Shipyard/nuvarande Harbor efter forskning, endast navigerbart vatten och
 attack mot fartyg. Dold även i vanlig vision utan närliggande behörig/allierad
 detector+sikt. Scout Optics och lämplig befintlig sjödetector. Definiera reveal

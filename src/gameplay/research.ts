@@ -8,7 +8,7 @@ import { canAfford,payCost } from './economy';
 import type { GatheringState } from './gathering';
 import type { PlacementState } from './placement';
 export type ResearchKind=RoleResearchKind|'attack'|'defense'|'workerTools';
-export interface ResearchState {cavalryArmor?:number;healerTraining?:number;scoutOptics?:number;attack:number;defense:number;workerTools?:number;job:{kind:ResearchKind;remainingSeconds:number}|null}
+export interface ResearchState {cavalryArmor?:number;healerTraining?:number;scoutOptics?:number;submarineDesign?:number;attack:number;defense:number;workerTools?:number;job:{kind:ResearchKind;remainingSeconds:number}|null}
 export const createResearch=():ResearchState=>({attack:0,defense:0,job:null});
 export function forgeReady(p:PlacementState){return !!p.forge&&(p.forge.hp??0)>0&&p.forge.construction.remainingSeconds===0;}
 export function academyReady(p:PlacementState){return !!p.academy&&p.academy.hp>0&&p.academy.construction.remainingSeconds===0;}

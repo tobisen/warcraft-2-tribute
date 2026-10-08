@@ -28,6 +28,7 @@ export function updateWildlife(m:MatchState,delta:number):MatchState{
  if(delta<=0||m.paused||m.outcome!=='playing'||!m.gathering.units.some(u=>u.kind==='soldier'&&u.order.kind==='hunt')&&!m.navy?.ships.some(s=>s.order.kind==='hunt'))return m;
  const animals=matchAnimals(m),wildlife={...m.wildlife};
  const apply=(u:Soldier|Ship):Soldier|Ship=>{
+  if(u.kind==='ship'&&u.role==='submarine'&&u.order.kind==='hunt')return {...u,navigation:undefined,order:{kind:'idle' as const}};
   if(u.order.kind!=='hunt')return u;
   const animal=animals.find(a=>u.order.kind==='hunt'&&a.id===u.order.animalId),hp=animal?(wildlife[animal.id]?.hp??animal.hp):0;
   const stop=()=>({...u,order:{kind:'idle' as const},navigation:undefined,target:{...u.position}});

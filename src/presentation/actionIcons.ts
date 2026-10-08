@@ -11,6 +11,7 @@ export function actionIcon(id:ActionId,faction:FactionId):ActionIcon {
  if(id==='upgrade-base')return {atlas:'buildings',frame:buildingFrame(id==='upgrade-base'?'base':'tower','player',0,5,faction,undefined,2),badge:'upgrade'};
  if(id==='research-cavalryArmor')return {...actionIcon('train-cavalry',faction),badge:'research'};
  if(id==='research-healerTraining')return {...actionIcon('train-healer',faction),badge:'research'};
+ if(id==='research-submarineDesign')return {...actionIcon('train-submarine',faction),badge:'research'};
  if(id==='research-scoutOptics')return {...actionIcon('train-scout',faction),badge:'research'};
  if(id==='research-workerTools')return {...actionIcon('train-worker',faction),badge:'research'};
  if(id.startsWith('research-'))return {atlas:'ui',frame:id==='research-attack'?'icon-attack':'icon-shield',badge:'research'};

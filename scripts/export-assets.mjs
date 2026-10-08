@@ -46,3 +46,7 @@ await import('./export-giants.mjs');
 await import('./export-scouts.mjs');
 await import('./export-aviaries.mjs');
 await import('./export-tower-specializations.mjs');
+
+await import('./export-ballistas.mjs');
+await import('./export-siege-works.mjs');
+await import('./export-submarines.mjs');

@@ -9,7 +9,7 @@ import type { GatheringState } from './gathering';
 import type { WorldMap } from './map';
 import type { Position } from './movement';
 export interface ProductionJob {
-  id:string; kind:'transport'|'warship'|'worker'|'soldier'|'archer'|'catapult'|'ballista'|'specialist'|'air'|'cavalry'|'healer'|'giant'|'scout'; supply?:number; cost:ResourceCost;
+  id:string; kind:'submarine'|'transport'|'warship'|'worker'|'soldier'|'archer'|'catapult'|'ballista'|'specialist'|'air'|'cavalry'|'healer'|'giant'|'scout'; supply?:number; cost:ResourceCost;
   durationSeconds:number; remainingSeconds:number;legacyRecipe?:true;
 }
 const base:ProductionBuilding={kind:'base'};

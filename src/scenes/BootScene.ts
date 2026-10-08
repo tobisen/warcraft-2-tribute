@@ -296,7 +296,7 @@ export class BootScene extends Phaser.Scene {
     super('BootScene');
   }
 
-  preload():void {for(const key of ['world','buildings','units','ui','naval','air','reference-terrain','bosses','cavalry','healer','giant','scout','aviary','ballista','siegeWorks','tower-specializations'])if(!this.textures.exists(key))this.load.atlas(key,`${import.meta.env.BASE_URL}assets/${key}-atlas.png`,`${import.meta.env.BASE_URL}assets/${key}-atlas.json`);}
+  preload():void {for(const key of ['world','buildings','units','ui','naval','air','reference-terrain','bosses','cavalry','healer','giant','scout','aviary','ballista','submarine','siegeWorks','tower-specializations'])if(!this.textures.exists(key))this.load.atlas(key,`${import.meta.env.BASE_URL}assets/${key}-atlas.png`,`${import.meta.env.BASE_URL}assets/${key}-atlas.json`);}
 
   create(): void {
     this.audioSnapshot=undefined;this.combatSoundSnapshot=undefined;gameAudio.setPhase('menu');gameAudio.reset();
@@ -494,7 +494,7 @@ export class BootScene extends Phaser.Scene {
     this.forgeButton.addEventListener('click',beginForge);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.forgeButton.removeEventListener('click',beginForge));
     this.researchButtons.clear();
-    for(const kind of ['workerTools','attack','defense','cavalryArmor','healerTraining','scoutOptics'] as const){
+    for(const kind of ['workerTools','attack','defense','cavalryArmor','healerTraining','scoutOptics','submarineDesign'] as const){
       const button=document.querySelector<HTMLButtonElement>(`#research-${kind}`)!;
       const research=()=>{const result=startResearch(this.gathering,this.research,this.placement,kind,this.gameplayActive(),hasMainBase(this.currentMatch()));this.gathering=result.gathering;this.research=result.research;this.syncVisuals();};
       this.researchButtons.set(kind,button);button.addEventListener('click',research);
@@ -521,11 +521,14 @@ export class BootScene extends Phaser.Scene {
       this.farmButton.removeEventListener('click',beginFarm);
     });
     this.harborButton=document.querySelector<HTMLButtonElement>('#build-harbor')!;this.shipButton=document.querySelector<HTMLButtonElement>('#train-ship')!;
+    const submarineButton=document.querySelector<HTMLButtonElement>('#train-submarine')!;submarineButton.disabled=this.selectedBuilding!=='harbor'||!canTrainShip(this.currentMatch(),'submarine');
     const transportButton=document.querySelector<HTMLButtonElement>('#train-transport')!,unloadButton=document.querySelector<HTMLButtonElement>('#unload-transport')!;
     const naval=factions[this.factions.player].naval;
     setActionLabel(this.harborButton,`Build ${naval.harbor.name} – ${costLabel(naval.harbor.cost)}`);
     setActionLabel(this.shipButton,`Train ${naval.units.warship.name} – ${costLabel(naval.units.warship.cost)}`);
+    setActionLabel(submarineButton,`Train ${naval.units.submarine.name} – ${costLabel(naval.units.submarine.cost)}`);
     setActionLabel(transportButton,`Train ${naval.units.transport.name} – ${costLabel(naval.units.transport.cost)}`);
+    const trainSubmarine=()=>{if(!this.gameplayActive()||this.selectedBuilding!=='harbor')return;this.applyMatch(trainShip(this.currentMatch(),'submarine'));this.syncVisuals();};submarineButton.addEventListener('click',trainSubmarine);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>submarineButton.removeEventListener('click',trainSubmarine));
     const trainTransport=()=>{if(!this.gameplayActive()||this.selectedBuilding!=='harbor')return;this.applyMatch(trainShip(this.currentMatch(),'transport'));this.syncVisuals();};
     const beginUnload=()=>{const ship=this.navy?.ships.find(s=>s.selected&&s.role==='transport'&&s.passengers?.length);if(!this.gameplayActive()||!ship)return;const before=this.currentMatch(),after=requestTransport(before,ship.id,'unload');this.applyMatch(after);this.unloadMode=after===before?ship.id:null;this.placement=cancelPlacement(this.placement);this.attackMoveMode=false;this.patrolMode=false;this.drag=undefined;this.dragBox.setVisible(false);this.syncVisuals();};
     transportButton.addEventListener('click',trainTransport);unloadButton.addEventListener('click',beginUnload);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{transportButton.removeEventListener('click',trainTransport);unloadButton.removeEventListener('click',beginUnload);});
@@ -1088,7 +1091,7 @@ export class BootScene extends Phaser.Scene {
         this.removedVisual(id,!this.combat.enemies.some(e=>e.id===id)&&!this.enemyNaval?.passengers.some(e=>e.id===id));visual.body.destroy(); visual.label.destroy(); this.enemyVisuals.delete(id);
       }
     }
-    const visibleShots=this.outcome==='playing'?(this.combat.projectiles??[]).filter(p=>isVisible(this.fog,'player',p.position)):[];
+    const visibleShots=this.outcome==='playing'?(this.combat.projectiles??[]).filter(p=>isVisible(this.fog,'player',p.position)&&(!p.submarine||!p.owner||!this.fog.concealedIds?.player.includes(p.shooterId??''))):[];
     for(const [id,visual] of this.projectileVisuals)if(!visibleShots.some(p=>p.id===id)){visual.destroy();this.projectileVisuals.delete(id);}
     for(const shot of visibleShots){if(!this.projectileVisuals.has(shot.id))this.projectileVisuals.set(shot.id,this.add.graphics().setDepth(effectConfig.projectileDepth));drawProjectile(this.projectileVisuals.get(shot.id)!,shot);}
     for (const enemy of visibleEnemies) {
@@ -1101,7 +1104,7 @@ export class BootScene extends Phaser.Scene {
       }
 
       if (!this.enemyVisuals.has(enemy.id)) this.enemyVisuals.set(enemy.id, {
-        body: enemy.footprint?this.add.image(enemy.position.x,enemy.position.y,enemy.buildingType==='siegeWorks'?'siegeWorks':enemy.buildingType==='aviary'?'aviary':enemy.buildingType==='stable'?'cavalry':'buildings',buildingFrame((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base','enemy',enemy.construction?.remainingSeconds??0,enemy.buildingType==='outpost'||enemy.buildingType==='academy'?10:5,(enemy.faction??this.factions.enemy))).setOrigin(buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').x,buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').y):enemy.kind==='ship'?this.add.image(enemy.position.x,enemy.position.y,'naval',`${factions[(enemy.faction??this.factions.enemy)].artPrefix}transport-enemy-s-idle-0`).setOrigin(.5,40/64):this.add.image(enemy.position.x,enemy.position.y,isAir(enemy)?enemy.role==='scout'?'scout':'air':enemy.role==='scout'?'scout':enemy.role==='ballista'?'ballista':enemy.role==='giant'?'giant':enemy.role==='healer'?'healer':enemy.role==='cavalry'?'cavalry':'units',isAir(enemy)?`${(enemy.faction??this.factions.enemy)}-${enemy.role==='scout'?'scout':'air'}-enemy-s-idle-0`:`${factions[(enemy.faction??this.factions.enemy)].artPrefix}${enemy.kind==='worker'?'worker':enemy.role??'soldier'}-enemy-s-idle-0`).setOrigin(unitOrigin(enemy.kind==='worker'?'worker':enemy.role??'soldier').x,unitOrigin(enemy.kind==='worker'?'worker':enemy.role??'soldier').y),
+        body: enemy.footprint?this.add.image(enemy.position.x,enemy.position.y,enemy.buildingType==='siegeWorks'?'siegeWorks':enemy.buildingType==='aviary'?'aviary':enemy.buildingType==='stable'?'cavalry':'buildings',buildingFrame((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base','enemy',enemy.construction?.remainingSeconds??0,enemy.buildingType==='outpost'||enemy.buildingType==='academy'?10:5,(enemy.faction??this.factions.enemy))).setOrigin(buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').x,buildingOrigin((enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base').y):enemy.kind==='ship'?this.add.image(enemy.position.x,enemy.position.y,enemy.navalRole==='submarine'?'submarine':'naval',`${factions[(enemy.faction??this.factions.enemy)].artPrefix}${enemy.navalRole??'transport'}-enemy-s-idle-0`).setOrigin(.5,40/64):this.add.image(enemy.position.x,enemy.position.y,isAir(enemy)?enemy.role==='scout'?'scout':'air':enemy.role==='scout'?'scout':enemy.role==='ballista'?'ballista':enemy.role==='giant'?'giant':enemy.role==='healer'?'healer':enemy.role==='cavalry'?'cavalry':'units',isAir(enemy)?`${(enemy.faction??this.factions.enemy)}-${enemy.role==='scout'?'scout':'air'}-enemy-s-idle-0`:`${factions[(enemy.faction??this.factions.enemy)].artPrefix}${enemy.kind==='worker'?'worker':enemy.role??'soldier'}-enemy-s-idle-0`).setOrigin(unitOrigin(enemy.kind==='worker'?'worker':enemy.role??'soldier').x,unitOrigin(enemy.kind==='worker'?'worker':enemy.role??'soldier').y),
         label: this.add.text(0, 0, '', { fontSize: '14px', color: '#ffffff' }).setOrigin(0.5, 0),
       });
       const playerColor=this.multiplePlayers?.roster.find(p=>p.id===enemy.playerId)?.color;
@@ -1110,9 +1113,9 @@ export class BootScene extends Phaser.Scene {
       const visual = this.enemyVisuals.get(enemy.id)!;
       visual.body.setPosition(enemy.position.x, enemy.position.y);
       if(enemy.footprint)visual.body.setFrame(buildingFrame(enemy.buildingType==='outpost'?'base':enemy.buildingType??'base','enemy',enemy.construction?.remainingSeconds??0,enemy.buildingType==='outpost'||enemy.buildingType==='academy'?10:5,(enemy.faction??this.factions.enemy),enemy.hp));
-      if(enemy.kind==='ship')this.animateUnit(enemy.id,visual.body,enemy.position,'idle','transport','enemy',undefined,enemy.faction);
+      if(enemy.kind==='ship')this.animateUnit(enemy.id,visual.body,enemy.position,enemy.attackCooldown?'attack':'idle',enemy.navalRole??'transport','enemy',undefined,enemy.faction);
       if(!enemy.footprint&&enemy.kind!=='ship'){const target=enemy.order?.kind==='defend'?this.gathering.units.find(u=>enemy.order?.kind==='defend'&&u.id===enemy.order.targetId)?.position:enemy.navigation?.targetId==='base'?this.gathering.base:undefined;const action:Action=enemy.role==='healer'&&(enemy.healFlash??0)>this.waves.elapsedSeconds?'attack':enemy.navigation?.targetId&&enemy.navigation.targetId!=='explore-goal'&&enemy.navigation.status==='arrived'?'attack':enemy.work?.order.kind==='gather'?'gather':'idle';this.animateUnit(enemy.id,visual.body,enemy.position,action,enemy.kind==='worker'?'worker':enemy.role??'soldier','enemy',target,enemy.faction);}
-      visual.label.setPosition(enemy.position.x,enemy.position.y-(enemy.kind==='ship'?48:90)).setVisible(!!enemy.footprint||enemy.kind==='ship').setText(`${enemy.buildingType==='outpost'?uiText.resourceOutpost:''}${enemy.kind==='ship'?'Transport':enemy.buildingType==='harbor'?uiText.harbor:factions[(enemy.faction??this.factions.enemy)].buildingNames[(enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base']} ${Math.ceil(enemy.hp)} HP`);
+      visual.label.setPosition(enemy.position.x,enemy.position.y-(enemy.kind==='ship'?48:90)).setVisible(!!enemy.footprint||enemy.kind==='ship').setText(`${enemy.buildingType==='outpost'?uiText.resourceOutpost:''}${enemy.kind==='ship'?factions[enemy.faction??this.factions.enemy].naval.units[enemy.navalRole??'transport'].name:enemy.buildingType==='harbor'?uiText.harbor:factions[(enemy.faction??this.factions.enemy)].buildingNames[(enemy.buildingType==='outpost'?'base':enemy.buildingType)??'base']} ${Math.ceil(enemy.hp)} HP`);
       for(const kind of ['buff','debuff'])if(enemy.spellEffects?.some(e=>spellDefinition(e.spell,e.sourceFaction).kind===kind))this.hpBars?.lineStyle(2,kind==='buff'?0x86dbe6:0xc18ce5,.9).strokeCircle(enemy.position.x,enemy.position.y,kind==='buff'?18:21);
       if((enemy.healFlash??0)>this.waves.elapsedSeconds)this.hpBars?.lineStyle(3,0x82e6a0,.9).strokeCircle(enemy.position.x,enemy.position.y,19);
       if(isAir(enemy)){visual.body.setY(enemy.position.y-airPresentation.height).setDepth(12);this.hpBars?.fillStyle(0x091311,.45).fillEllipse(enemy.position.x,enemy.position.y,28,9);}
@@ -1192,7 +1195,7 @@ export class BootScene extends Phaser.Scene {
     const match = updateMatch(this.currentMatch(),dt);
     this.skipGameplayFrame=false;
     this.applyMatch(match);
-    for(const impact of landedEffects(previousShots,this.combat.projectiles??[],dt,this.visualTime,p=>isVisible(this.fog,'player',p)))this.addImpact(impact);
+    for(const impact of landedEffects(previousShots.filter(p=>!p.submarine||!p.owner||!this.fog.concealedIds?.player.includes(p.shooterId??'')),this.combat.projectiles??[],dt,this.visualTime,p=>isVisible(this.fog,'player',p)))this.addImpact(impact);
     if(this.outcome!=='playing')this.session=sessionTransition(this.session,'end');
     this.syncVisuals();
   }
@@ -1243,6 +1246,7 @@ export class BootScene extends Phaser.Scene {
   private setSelectable(units:(Unit|Ship)[]):void {this.gathering.units=units.filter((u):u is Unit=>u.kind!=='ship');if(this.navy)this.navy={...this.navy,ships:units.filter((u):u is Ship=>u.kind==='ship')};}
   private syncNavy():void {
     const harbor=this.navy?.harbor;this.navyGraphics.clear();
+    const submarineButton=document.querySelector<HTMLButtonElement>('#train-submarine')!;submarineButton.disabled=this.selectedBuilding!=='harbor'||!canTrainShip(this.currentMatch(),'submarine');
     const transportButton=document.querySelector<HTMLButtonElement>('#train-transport')!,unloadButton=document.querySelector<HTMLButtonElement>('#unload-transport')!;transportButton.parentElement!.style.visibility=this.selectedBuilding==='harbor'?'visible':'hidden';transportButton.disabled=this.selectedBuilding!=='harbor'||!canTrainShip(this.currentMatch(),'transport');const selectedTransport=this.navy?.ships.find(s=>s.selected&&s.role==='transport');unloadButton.disabled=!this.gameplayActive()||!selectedTransport?.passengers?.length;if(this.unloadMode&&!this.navy?.ships.some(s=>s.id===this.unloadMode&&s.selected&&s.passengers?.length))this.unloadMode=null;document.getElementById('transport-status')!.textContent=this.unloadMode?uiText.clickAVisibleFreeLandingWithin64Px:selectedTransport?`Transport: ${selectedTransport.passengers?.length??0}/4 – ${selectedTransport.transfer?`Moving to coast to ${selectedTransport.transfer.kind}`:'Right-click with troops to board; Unload finds nearby land'}`:uiText.selectATransportToBoardOrUnload;
     this.harborButton.disabled=!this.gameplayActive()||this.placement.active||!!harbor||!this.gathering.units.some(u=>u.kind==='worker'&&u.selected);
     this.harborButton.setAttribute('aria-pressed',String(this.placement.active&&this.placement.kind==='harbor'));
@@ -1254,9 +1258,9 @@ export class BootScene extends Phaser.Scene {
       if(!this.harborVisual)this.harborVisual=this.add.image(r.x+32,r.y+32,'buildings',buildingFrame('harbor','player',harbor.construction.remainingSeconds,5,this.factions.player,harbor.hp)).setOrigin(.5,.75).setDepth(1);this.harborVisual.setFrame(buildingFrame('harbor','player',harbor.construction.remainingSeconds,5,this.factions.player,harbor.hp));}
     for(const [id,body] of this.shipVisuals)if(!this.navy?.ships.some(s=>s.id===id)){this.removedVisual(id,true);body.destroy();this.shipVisuals.delete(id);}
     for(const [id,label] of this.shipLabels)if(!this.navy?.ships.some(s=>s.id===id)){label.destroy();this.shipLabels.delete(id);}
-    for(const ship of this.navy?.ships??[]){const p=ship.position,type=ship.role==='transport'?'transport':'warship';this.drawHP(p,ship.hp,factions[this.factions.player].naval.units[ship.role??'warship'].hp,32,40,0x77c4cf);if(ship.selected)this.navyGraphics.lineStyle(2,0xffdf73).strokeCircle(p.x,p.y,22);
-      if(!this.shipVisuals.has(ship.id))this.shipVisuals.set(ship.id,this.add.image(p.x,p.y,'naval',`${factions[this.factions.player].artPrefix}${type}-player-s-idle-0`).setOrigin(.5,40/64).setDepth(1));const body=this.shipVisuals.get(ship.id)!;body.setPosition(p.x,p.y);const target=ship.order.kind==='hunt'?visibleAnimals(this.currentMatch()).find(a=>ship.order.kind==='hunt'&&a.id===ship.order.animalId)?.position:ship.order.kind==='attack'?this.combat.enemies.find(e=>ship.order.kind==='attack'&&e.id===ship.order.enemyId&&entityVisible(this.fog,'player',e))?.position:undefined;this.animateUnit(ship.id,body,p,target?'attack':'idle',type,'player',target);
-      if(!this.shipLabels.has(ship.id))this.shipLabels.set(ship.id,this.add.text(p.x,p.y-48,uiText.warship,{fontSize:'10px',color:'#d6eef1'}).setOrigin(.5).setDepth(7));this.shipLabels.get(ship.id)!.setPosition(p.x,p.y-48).setText(`${ship.role==='transport'?'Transport '+(ship.passengers?.length??0)+'/4':uiText.warship} ${Math.ceil(ship.hp)} HP`);
+    for(const ship of this.navy?.ships??[]){const p=ship.position,type=ship.role??'warship';this.drawHP(p,ship.hp,factions[this.factions.player].naval.units[ship.role??'warship'].hp,32,40,0x77c4cf);if(ship.selected)this.navyGraphics.lineStyle(2,0xffdf73).strokeCircle(p.x,p.y,22);
+      if(!this.shipVisuals.has(ship.id))this.shipVisuals.set(ship.id,this.add.image(p.x,p.y,artAtlas(type),`${factions[this.factions.player].artPrefix}${type}-player-s-idle-0`).setOrigin(.5,40/64).setDepth(1));const body=this.shipVisuals.get(ship.id)!;body.setPosition(p.x,p.y);const target=ship.order.kind==='hunt'?visibleAnimals(this.currentMatch()).find(a=>ship.order.kind==='hunt'&&a.id===ship.order.animalId)?.position:ship.order.kind==='attack'?this.combat.enemies.find(e=>ship.order.kind==='attack'&&e.id===ship.order.enemyId&&entityVisible(this.fog,'player',e))?.position:undefined;this.animateUnit(ship.id,body,p,target?'attack':'idle',type,'player',target);
+      if(!this.shipLabels.has(ship.id))this.shipLabels.set(ship.id,this.add.text(p.x,p.y-48,uiText.warship,{fontSize:'10px',color:'#d6eef1'}).setOrigin(.5).setDepth(7));this.shipLabels.get(ship.id)!.setPosition(p.x,p.y-48).setText(`${ship.role==='transport'?'Transport '+(ship.passengers?.length??0)+'/4':factions[this.factions.player].naval.units[ship.role??'warship'].name} ${Math.ceil(ship.hp)} HP`);
     }
   }
   private applyMatch(match: MatchState): void {

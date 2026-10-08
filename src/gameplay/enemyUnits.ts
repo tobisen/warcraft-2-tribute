@@ -21,11 +21,11 @@ export function enemySoldier(e:Enemy,faction:FactionId):Soldier{
   ...(e.attackCooldown!==undefined?{attackCooldown:e.attackCooldown}:{}),...(e.ability?{ability:e.ability}:{})};
 }
 export const enemyRangedStats=(e:Enemy,faction:FactionId)=>e.boss?{range:bossRules.range,damage:bossDefinitions[e.boss].damage,attackInterval:bossDefinitions[e.boss].attackInterval,projectileSpeed:bossRules.projectileSpeed,projectileLifetime:bossRules.projectileLifetime,hitRadius:24,splashRadius:bossDefinitions[e.boss].splashRadius}:e.role?rangedStats(enemySoldier(e,faction),faction):undefined;
-export const enemySupply=(e:Enemy,faction:FactionId)=>e.kind==='worker'?1:e.kind==='ship'?factions[faction].naval.units.transport.supply:e.footprint?0:enemyUnitStats(e,faction).supply;
+export const enemySupply=(e:Enemy,faction:FactionId)=>e.kind==='worker'?1:e.kind==='ship'?factions[e.faction??faction].naval.units[e.navalRole??'transport'].supply:e.footprint?0:enemyUnitStats(e,faction).supply;
 export function enemyMaximumHP(e:Enemy,faction:FactionId):number{
  const f=factions[e.faction??faction];
  if(e.kind==='worker')return f.units.worker.hp;
- if(e.kind==='ship')return f.naval.units.transport.hp;
+ if(e.kind==='ship')return f.naval.units[e.navalRole??'transport'].hp;
  if(e.kind==='base')return e.legacyProfile?combatConfig.baseHP:f.buildings.base.hp;
  if(e.kind==='building'){
   if(e.buildingType==='outpost')return enemyExpansionConfig.hp;
