@@ -1,0 +1,41 @@
+{
+  "unit": {
+    "command": "npm run test:unit",
+    "tests": 524,
+    "files": 91,
+    "passed": true,
+    "seconds": 31.36
+  },
+  "build": {
+    "command": "npm run build",
+    "strictTypecheck": true,
+    "passed": true,
+    "viteSeconds": 1.17
+  },
+  "full": {
+    "command": "npm test",
+    "tests": 1866,
+    "files": 214,
+    "passed": true,
+    "seconds": 579.98
+  },
+  "previousFull": {
+    "passedTests": 1865,
+    "failedTests": 1,
+    "files": 214,
+    "seconds": 735.26,
+    "failure": "towers.test.ts: waiting wall segments lost the builder reference; corrected and targeted 20 tests passed"
+  },
+  "browser": {
+    "viewport": "800x600 Native",
+    "script": "scripts/check-multiple-builders.mjs",
+    "passedOnFinalCode": true
+  },
+  "diff": {
+    "command": "git diff --check",
+    "passed": true
+  },
+  "releaseRequested": false,
+  "newCIVerified": false,
+  "newPagesVerified": false
+}

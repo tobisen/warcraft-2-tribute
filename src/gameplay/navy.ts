@@ -99,9 +99,9 @@ export function updateNavy(m:MatchState,delta:number):MatchState {
 
 export function resumeHarbor(m:MatchState):MatchState {
  const harbor=m.navy?.harbor;if(!harbor||harbor.construction.remainingSeconds<=0||m.outcome!=='playing'||m.paused||!!m.multiplePlayers&&!hasMainBase(m))return m;
- const builder=m.gathering.units.filter(u=>u.kind==='worker'&&u.selected).sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}))[0];
+ const builders=m.gathering.units.filter(u=>u.kind==='worker'&&u.selected&&u.hp!>0&&approachRoute(m.map,u.position,harbor.footprint,factionForTeam(m,'player').naval.harbor.constructionRange).status!=='blocked').sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true})),builder=builders[0],ids=new Set(builders.map(u=>u.id));
  if(!builder||approachRoute(m.map,builder.position,harbor.footprint,factionForTeam(m,'player').naval.harbor.constructionRange).status==='blocked')return m;
- return {...m,navy:{...m.navy!,harbor:{...harbor,construction:{...harbor.construction,builderId:builder.id}}},gathering:{...m.gathering,units:m.gathering.units.map(u=>u.kind==='worker'&&u.id===builder.id?{...u,commandMode:undefined,orderQueue:undefined,navigation:undefined,order:{kind:'build' as const,buildingId:'harbor' as const}}:u.order.kind==='build'&&u.order.buildingId==='harbor'?{...u,commandMode:undefined,orderQueue:undefined,navigation:undefined,order:{kind:'idle' as const}}:u)}};
+ return {...m,navy:{...m.navy!,harbor:{...harbor,construction:{...harbor.construction,builderId:builder.id}}},gathering:{...m.gathering,units:m.gathering.units.map(u=>u.kind==='worker'&&ids.has(u.id)?{...u,commandMode:undefined,orderQueue:undefined,navigation:undefined,order:{kind:'build' as const,buildingId:'harbor' as const}}:u)}};
 }
 export function stopShips(navy:NavyState|undefined){return navy?{...navy,ships:navy.ships.map(s=>s.selected?{...s,transfer:undefined,commandMode:undefined,orderQueue:undefined,navigation:undefined,target:{...s.position},order:{kind:'idle' as const}}:s)}:undefined;}
 

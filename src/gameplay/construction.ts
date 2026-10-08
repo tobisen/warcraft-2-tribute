@@ -1,3 +1,4 @@
+import {constructionRate} from '../config/construction';
 import {navyConfig} from '../config/navy';
 import { barracksConfig, farmConfig } from '../config/buildings';
 import type { GateFor } from './traffic';
@@ -19,31 +20,34 @@ export function resumeConstruction(gathering:GatheringState,placement:PlacementS
   const rect=id==='barracks'?placement.barracks:farm?.footprint;
   const job=id==='barracks'?placement.construction:farm?.construction;
   if (!rect || !job || job.remainingSeconds<=0) return {gathering,placement};
-  const builder=gathering.units.filter(u=>u.kind==='worker'&&u.selected)
-    .sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}))[0];
+  const builders=gathering.units.filter(u=>u.kind==='worker'&&u.selected&&u.hp!>0&&approachRoute(map,u.position,rect,barracksConfig.constructionRange).status!=='blocked').sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}));
+  const builder=builders[0],builderIds=new Set(builders.map(u=>u.id));
   if (!builder || approachRoute(map,builder.position,rect,barracksConfig.constructionRange).status==='blocked') return {gathering,placement};
   const updated={...job,builderId:builder.id};
   return {placement:producer?{...placement,producers:placement.producers!.map(p=>p.id===id?{...p,construction:updated}:p)}:id==='barracks'?{...placement,construction:updated}
       :id==='siegeWorks'?{...placement,siegeWorks:{...placement.siegeWorks!,construction:updated}}:id==='aviary'?{...placement,aviary:{...placement.aviary!,construction:updated}}:id==='stable'?{...placement,stable:{...placement.stable!,construction:updated}}:id==='academy'?{...placement,academy:{...placement.academy!,construction:updated}}:expansion?{...placement,bases:placement.bases!.map(b=>b.id===id?{...b,construction:updated}:b)}:tower?{...placement,defenses:placement.defenses!.map(t=>t.id===id?{...t,construction:updated}:t)}:id==='forge'?{...placement,forge:{...placement.forge!,construction:updated}}:{...placement,farms:placement.farms!.map(f=>f.id===id?{...f,construction:updated}:f)},
-    gathering:{...gathering,units:gathering.units.map((u):Unit=>u.id===builder.id&&u.kind==='worker'
+    gathering:{...gathering,units:gathering.units.map((u):Unit=>builderIds.has(u.id)&&u.kind==='worker'
       ? {...u,commandMode:undefined,orderQueue:undefined,navigation:undefined,order:{kind:'build',buildingId:id}}
-      : u.order.kind==='build'&&u.order.buildingId===id?{...u,navigation:undefined,target:{...u.position},order:{kind:'idle'}}:u)}};
+      :u)}};
 }
 export function updateSite(gathering:GatheringState,job:ConstructionJob,rect:Footprint,id:SiteId,map:WorldMap,delta:number,gateFor?:GateFor) {
   if (job.remainingSeconds<=0) return {gathering,job};
-  const builder=gathering.units.find(u=>u.id===job.builderId && u.kind==='worker' && u.order.kind==='build'&&u.order.buildingId===id);
-  if (!builder) return {gathering,job};
-  const range=id==='harbor'?navyConfig.harbor.constructionRange:id==='barracks'?barracksConfig.constructionRange:farmConfig.constructionRange;
-  const goalKey=`build:${id}`,cached=builder.navigation;
-  const route=cached?.goalKey===goalKey&&cached.revision===map.revision?cached
-    : {...approachRoute(map,builder.position,rect,range),goalKey};
-  const step=advanceRoute(map,builder.position,route,workerStats(gathering.faction).speed,Math.max(0,delta),gateFor?.(`player:${builder.id}`));
-  const remainingSeconds=step.route.status==='arrived'&&canInteract(map,step.position,rect,range)
-    ? Math.max(0,job.remainingSeconds-step.remaining):job.remainingSeconds;
-  const done=remainingSeconds<=1e-10;
-  return {completedAfterSeconds:done?Math.max(0,delta-step.remaining+job.remainingSeconds):undefined,job:{...job,remainingSeconds:done?0:remainingSeconds,builderId:done?null:job.builderId},
-    gathering:{...gathering,units:gathering.units.map((u):Unit=>u.id!==builder.id || u.kind!=='worker'?u:
-      {...u,position:step.position,target:{...step.position},navigation:done?undefined:{...step.route,goalKey},order:done?{kind:'idle'}:u.order})}};
+  const builders=gathering.units.filter(u=>u.kind==='worker'&&u.hp!>0&&u.order.kind==='build'&&u.order.buildingId===id);
+  if(!builders.length)return {gathering,job};
+  const range=id==='harbor'?navyConfig.harbor.constructionRange:id==='barracks'?barracksConfig.constructionRange:farmConfig.constructionRange,goalKey=`build:${id}`;
+  const steps=builders.map(builder=>{const cached=builder.navigation,route=cached?.goalKey===goalKey&&cached.revision===map.revision?cached:{...approachRoute(map,builder.position,rect,range),goalKey};
+    const step=advanceRoute(map,builder.position,route,workerStats(gathering.faction).speed,Math.max(0,delta),gateFor?.(`player:${builder.id}`));
+    return {builder,step,arrival:step.route.status==='arrived'&&canInteract(map,step.position,rect,range)?Math.max(0,delta-step.remaining):Infinity};});
+  const arrivals=steps.map(s=>s.arrival).filter(t=>t<=delta).sort((a,b)=>a-b);
+  let remaining=job.remainingSeconds,time=0,count=0,completedAfterSeconds:number|undefined;
+  for(const end of [...new Set(arrivals),Math.max(0,delta)]){const rate=constructionRate(count),work=(end-time)*rate;
+    if(rate>0&&work+1e-10>=remaining){completedAfterSeconds=time+remaining/rate;remaining=0;break;}
+    remaining-=work;time=end;count=arrivals.filter(t=>t<=end).length;}
+  const done=remaining<=1e-10,byId=new Map(steps.map(s=>[s.builder.id,s]));
+  return {completedAfterSeconds,job:{...job,remainingSeconds:done?0:remaining,builderId:done?null:builders[0].id},
+    gathering:{...gathering,units:gathering.units.map((u):Unit=>{const result=byId.get(u.id);if(!result||u.kind!=='worker')return u;
+      let step=result.step;if(done&&completedAfterSeconds!==undefined&&result.arrival>completedAfterSeconds){const route={...approachRoute(map,u.position,rect,range),goalKey};step=advanceRoute(map,u.position,route,workerStats(gathering.faction).speed,completedAfterSeconds,gateFor?.(`player:${u.id}`));}
+      return {...u,position:step.position,target:{...step.position},navigation:done?undefined:{...step.route,goalKey},order:done?{kind:'idle'}:u.order};})}};
 }
 const readyTimes=new WeakMap<ConstructionJob,number>();
 export function productionTimeAfterConstruction(job:ConstructionJob,delta:number){const readyAfter=readyTimes.get(job)??0;readyTimes.delete(job);return job.remainingSeconds>0?0:Math.max(0,delta-readyAfter);}

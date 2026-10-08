@@ -1,3 +1,33 @@
+## 2026-10-08 — Batch RTS-232–237 avslutad
+
+Mandat: endast dessa sex tasks, taskvisa commits/push; ingen release/städning/
+kartombyggnad eller senare roadmapfunktion. Befintliga userändringar i style.css,
+assets/sources/units.mjs, docs/ och :memory:.ses är bevarade/exkluderade.
+
+232: 3c077ce forskningskö med betald FIFO/progress/Save70;233: a1067d5 faktiska
+soloattackstats/kompakt grupp;234: bb26335 ranged ground/sea/air med befintliga
+modifierare och sea-only submarine;235: adb6ca3 I–III/tower ground/airmarkörer;
+236: d9f13ec flera producerinstanser/egna köer/AI/Save71. Alla pushade origin/main;236 AI-hamn kompletterad76d9105, terminala
+research/AI-köer rättade3570cd2.
+237 Done: flera workers med konfigurerbar avtagande nytta1+0.5+0.25…;
+slutliga checks passerade. Sista taskcommit redovisas i git-loggen.
+
+Ny lokal verifiering: riktade tester per task, Chrome800 Native verkliga klick och
+visuellt inspekterade bilder i artifacts/rts-232…237.slutlig unit524/91 PASS31.36s,
+strict build PASS1.17s; första full1865/1 FAIL fann mursekvensfelet, rättat och riktat20/3 PASS.
+Slutlig npm test1866/214 PASS579.98s, diff/review och manifestkontroll PASS.
+237-browser högerklick/tre builders/kostnad/Save/completion passerade även
+efter fixen. Inga nya kodchecks efter denna rena dokumentuppdatering. Historiska release0.6.0-belägg nedan
+är inte denna batchs CI/Pageskontroll. Inga nya release-/CI-/Pagesclaims.
+
+Begränsningar: byggnadsnivåmarkörer kompletterar befintliga godkända sprites,
+ingen ny separat målad nivåatlas. Stats anger outgoing damage före targetarmor.
+Submarine är sea-only; transport/scout saknar attack. AI:s extra hamn använder egen submarinekö efter forskningen och första
+carrier; befintligt ändligt transportanfall består. Skirmish-AI använder två
+instanser som strategi, spelaren har inget sådant producenttak.
+Browser är tekniska fixtures, inte mänskligt balansspeltest; befintlig stor bundle.
+Stoppa efter237; inga nya tasks eller release automatiskt.
+
 
 ## 2026-10-08 — Release0.6.0 publicerad och verifierad
 

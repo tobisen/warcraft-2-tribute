@@ -1,3 +1,28 @@
+## 2026-10-08 — RTS-237 Done och batch232–237 avslutad
+
+Slutlig full npm test1866/214 PASS579.98s efter mursekvensfixen. Unit524/91
+PASS31.36s, npm run build inklusive strict typecheck PASS1.17s, git diff --check
+PASS. Manifest91 unit/123 integration är disjunkt/validerat. Riktade20/3 efter
+murfix PASS5.99s; browser800 Native faktiskt högerklick/tre workers/betalning/
+Save/completion PASS0pageerrors även på slutlig kod. Både foundation och färdig
+byggnad visuellt granskade i artifacts/rts-237. Ingen ytterligare bred simulering.
+Review: shared construction/cost/supply/Save/AI används, inga dubbla betalningar
+eller producer-/workeruppdateringar; väntande murreferens bevaras. HANDOFF och
+BACKLOG uppdaterade,237 Done. Fullregressionens tidigare murfel och avbrutna
+försök redovisas nedan; gröna checks upprepas inte efter denna dokumentändring.
+User CSS/units.mjs/docs/ och :memory:.ses bevarade och exkluderade. Inga nya
+assets/release-/CI-/Pages-/mänsklig balansclaims. Stoppa efter237.
+
+## 2026-10-08 — RTS-237 mursekvens efter fullregression
+
+Första slutförda fullregression1865 PASS/1 FAIL,214 filer,735.26s: befintligt
+walls Save/Load-sekvenstest fann att väntande segment förlorade builder-ID när
+ingen aktiv worker ännu hade order till just det segmentet. updateSite bevarar
+nu väntande referens; aktiva helpers härleds fortsatt ur levande build-orders.
+Riktade mur/multiworker/construction20/3 PASS5.99s. Efter konkret källfix ny
+unit524/91 PASS31.36s och strict build1.17s/diff PASS. Fullregression körs om;
+ingen PASSclaim för första fullkörningen eller tidigare avbrutna försök.
+
 ## 2026-10-08 — Slutlägeskorrigering RTS-232/236
 
 Vid förlust av alla huvudbaser töms aktiv/queued research och extra AI-producerköer,

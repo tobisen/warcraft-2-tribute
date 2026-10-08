@@ -1,0 +1,22 @@
+import assert from 'node:assert/strict';
+import {mkdir,writeFile} from 'node:fs/promises';
+const {chromium}=await import(process.env.W2T_PLAYWRIGHT_MODULE??'playwright-core');
+const browser=await chromium.launch({headless:true,executablePath:process.env.W2T_BROWSER_EXECUTABLE??'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'});
+const out='artifacts/rts-237';await mkdir(out,{recursive:true});const results=[];
+try{for(const faction of ['crown']){
+ const page=await browser.newPage({viewport:{width:800,height:600}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.addInitScript(()=>localStorage.clear());await page.route('**/src/main.ts*',async r=>{const res=await r.fetch();await r.fulfill({response:res,body:(await res.text()).replace('new Phaser.Game({','window.__gameCheck=new Phaser.Game({')});});
+ await page.goto(process.env.W2T_UI_URL??'http://127.0.0.1:5180');await page.locator('#menu-settings').click();await page.selectOption('#display-resolution','800x600');await page.selectOption('#display-mode','native');await page.locator('#menu-back').click();await page.locator('#menu-skirmish').click();await page.selectOption('#faction-select',faction);await page.selectOption('#map-select','arena');await page.locator('#start-match').click();await page.waitForFunction(()=>window.__gameCheck?.scene.keys.BootScene.session.phase==='playing'&&!window.__gameCheck.scene.keys.BootScene.restartPending);
+ const point=await page.evaluate(()=>{const s=window.__gameCheck.scene.keys.BootScene;s.update=()=>{};s.sys.sceneUpdate=()=>{};s.gathering.wood=1000;s.gathering.goldBalance=1000;s.cameras.main.setScroll(s.gathering.base.x-320,s.gathering.base.y-220);s.syncVisuals();const c=s.cameras.main;return {x:c.x+(s.gathering.base.x-c.scrollX)*c.zoom,y:c.y+(s.gathering.base.y-c.scrollY)*c.zoom};});
+ const box=await page.locator('#game canvas').boundingBox(),size=await page.locator('#game canvas').evaluate(c=>({w:c.width,h:c.height}));await page.mouse.click(box.x+point.x*box.width/size.w,box.y+point.y*box.height/size.h);
+
+
+
+ await page.evaluate(async()=>{const s=window.__gameCheck.scene.keys.BootScene,{placeBarracks,placementObstacles}=await import('/src/gameplay/placement.ts');s.gathering.wood=100;s.gathering.units[0].selected=true;const m=s.currentMatch(),r=placeBarracks({...m.placement,active:true},{x:512,y:384},100,placementObstacles(m.gathering),{map:m.map,gathering:m.gathering,enemies:[]});s.applyMatch({...m,...r});s.gathering.units.forEach((u,i)=>{u.position=[{x:496,y:400},{x:496,y:432},{x:544,y:464}][i];u.target=u.position;u.selected=true;u.navigation=undefined;});s.selectedBuilding=null;s.cameras.main.setScroll(300,200);s.syncVisuals();});
+ const canvas=await page.locator('#game canvas').boundingBox();await page.mouse.click(canvas.x+244,canvas.y+216,{button:'right'});
+ assert.equal(await page.evaluate(()=>window.__gameCheck.scene.keys.BootScene.gathering.units.filter(u=>u.order.kind==='build').length),3);
+ const state=await page.evaluate(async()=>{const s=window.__gameCheck.scene.keys.BootScene,{updateConstruction}=await import('/src/gameplay/construction.ts'),{encodeSave,decodeSave}=await import('/src/gameplay/save.ts');s.applyMatch({...s.currentMatch(),...updateConstruction(s.gathering,s.placement,s.map,1)});s.syncVisuals();const remaining=s.placement.construction.remainingSeconds,bank=s.gathering.wood,loaded=decodeSave(encodeSave(s.currentMatch(),{camera:{x:0,y:0},building:null}));if(!loaded.ok)return loaded;return {remaining,bank,builders:loaded.match.gathering.units.filter(u=>u.order.kind==='build').length};});
+ assert.equal(state.remaining,3.25);assert.equal(state.bank,60);assert.equal(state.builders,3);await page.screenshot({path:`${out}/three-builders-800.png`});
+ await page.evaluate(async()=>{const s=window.__gameCheck.scene.keys.BootScene,{updateConstruction}=await import('/src/gameplay/construction.ts');s.applyMatch({...s.currentMatch(),...updateConstruction(s.gathering,s.placement,s.map,2)});s.syncVisuals();});assert.equal(await page.evaluate(()=>window.__gameCheck.scene.keys.BootScene.placement.construction.remainingSeconds),0);await page.screenshot({path:`${out}/completed-800.png`});
+ assert.deepEqual(errors,[]);results.push({physicalRightClickJoin:true,threeWorkers:true,remaining:state.remaining,paidOnce:true,save:true,completion:true,errors});await page.close();
+}await writeFile(`${out}/browser.json`,JSON.stringify(results,null,2)+'\n');}finally{await browser.close();}

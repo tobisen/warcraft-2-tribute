@@ -40,10 +40,10 @@ describe('worker construction',()=>{
     expect(barracksReady(s.placement)).toBe(true);expect(s.gathering.units[0].cargo).toBe(3);
     expect(s.gathering.goldBalance).toBe(5);
   });
-  it('transfers to one selected builder and pauses safely when navigation is blocked',()=>{
+  it('joins the selected builder and pauses safely when navigation is blocked',()=>{
     let s=started();s.gathering.units=s.gathering.units.map((u,i)=>({...u,selected:i===1}));
     s={...s,...resumeConstruction(s.gathering,s.placement,s.map)};
-    expect(s.gathering.units[0].order.kind).toBe('idle');expect(s.placement.construction!.builderId).toBe('unit-2');
+    expect(s.gathering.units[0].order.kind).toBe('build');expect(s.placement.construction!.builderId).toBe('unit-2');
     s.map={...s.map,revision:2,obstacles:[...s.map.obstacles,{x:450,y:0,width:32,height:s.map.height}]};
     const result=updateConstruction(s.gathering,s.placement,s.map,30);
     expect(result.placement.construction!.remainingSeconds).toBe(5);

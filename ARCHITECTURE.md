@@ -622,7 +622,11 @@ den tidigare direkta placeringsmodellen. WorkerOrder har build, som inte
 bearbetas av gathering. [src/gameplay/construction.ts](src/gameplay/construction.ts)
 uppdaterar approach, progress och completion innan produktion i matchsteget.
 Endast aktiv build-order i räckvidd ger progress. Stop/orderbyte pausar;
-högerklick med worker återupptar/tilldelar en builder. Barracks production
+högerklick med markerade workers ansluter alla nåbara workers utan ny kostnad.
+RTS-237 härleder deltagare från levande build-orders; bidrag1 +0.5 +0.25 …
+konfigureras i src/config/construction.ts. Approachankomster integreras styckvis,
+endast kontakt ger arbete och completion frigör samtliga deltagare.
+Save bevarar orders/arbetstid; builder-ID är kvar för bakåtkompatibilitet. Barracks production
 får ready=false tills färdig, både i UI och start/updateProduction.
 [Tester](src/gameplay/construction.test.ts) täcker reservation, approaches,
 tidssteg, paus/resume, builderbyte och blockerad plats.

@@ -90,12 +90,22 @@ Riktade80/7 +47/4 PASS, unit524/91 PASS18.97s, strict build739ms/diff PASS.
 Chrome800 faktiska bygg-/trainklick, två separata köer/parallelspawn och Save-fixture
 PASS, visuellt inspekterat [underlag](artifacts/rts-236/browser.json). Ingen release/CI-claim.
 
-### RTS-237 — Flera workers på samma byggprojekt — In Progress
+### RTS-237 — Flera workers på samma byggprojekt — Done
 
 Krav/acceptans: Anslut till befintligt betalt bygge; konfigurerbar avtagande byggbonus. Nya order/blockering/död lämnar kvarvarande builders korrekta. Ingen dubbeldebitering/progress/completion. Save/restart, riktade tester och browser.
 
 Non-goals: städning, release och andra planerade funktioner.
 
+
+Resultat: alla valda nåbara workers ansluter utan ny kostnad; aktivt arbete
+härleds ur levande build-orders. Konfigurerbar1+0.5+0.25… bonus, styckvis
+ankomst/progress och en completion. Nya order/blockering/död/Save/restart
+verifierade, även hamn. Väntande mursegment behåller sekvensens builderreferens.
+Riktade20/3 efter murfix PASS; slutlig unit524/91 PASS31.36s, strict build1.17s/
+diff PASS. Fullregression1866/214 PASS579.98s; tidigare full1865/1 FAIL735.26s
+fann murfelet och är inte PASS. Chrome800 Native högerklick/tre builders/kostnad/
+Save/completion PASS efter fix, [underlag](artifacts/rts-237/browser.json).
+Batch232–237 avslutad; inga fler tasks/release/kartombyggnad startas.
 
 ### Release0.6.0 — Done
 

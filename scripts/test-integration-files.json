@@ -120,5 +120,6 @@
   "src/presentation/combatAudio.test.ts",
   "src/presentation/technologyView.test.ts",
   "src/presentation/wildlifeSave.test.ts",
-  "tests/referenceTerrain.test.mjs"
+  "tests/referenceTerrain.test.mjs",
+  "src/gameplay/multipleBuilders.test.ts"
 ]
